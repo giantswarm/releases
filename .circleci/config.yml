@@ -8,10 +8,10 @@ jobs:
     - run: docker pull quay.io/giantswarm/opsctl
     - run:
         name: Validate AWS releases
-        command: docker run --rm -v /home/circleci/project/:/run/installations/ quay.io/giantswarm/opsctl validate releases -p /run/installations/release/provider/aws.yaml
+        command: docker run --rm -v /home/circleci/project/:/run/releases/ quay.io/giantswarm/opsctl validate releases -p /run/releases/aws.yaml
     - run:
         name: Validate Azure releases
-        command: docker run --rm -v /home/circleci/project/:/run/installations/ quay.io/giantswarm/opsctl validate releases -p /run/installations/release/provider/azure.yaml
+        command: docker run --rm -v /home/circleci/project/:/run/releases/ quay.io/giantswarm/opsctl validate releases -p /run/releases/azure.yaml
     - run:
         name: Validate KVM releases
-        command: docker run --rm -v /home/circleci/project/:/run/installations/ quay.io/giantswarm/opsctl validate releases -p /run/installations/release/provider/kvm.yaml
+        command: docker run --rm -v /home/circleci/project/:/run/releases/ quay.io/giantswarm/opsctl validate releases -p /run/releases/kvm.yaml
