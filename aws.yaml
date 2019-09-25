@@ -38,7 +38,7 @@
       version: 0.19.0
   date: 2019-09-24T11:00:00Z
   version: 8.4.1
-- active: true
+- active: false
   authorities:
     - endpoint: http://app-operator:8000
       name: app-operator
