@@ -78,7 +78,7 @@
       version: 0.19.0
   date: 2019-08-19T16:30:00Z
   version: 8.4.0
-- active: false
+- active: true
   authorities:
   - endpoint: http://aws-operator:8000
     name: aws-operator
@@ -95,7 +95,7 @@
     version: 0.18.0
   date: 2019-08-19T10:00:00Z
   version: 8.3.0
-- active: false
+- active: true
   authorities:
   - endpoint: http://aws-operator:8000
     name: aws-operator
@@ -112,7 +112,7 @@
     version: 0.17.0
   date: 2019-08-09T10:00:00Z
   version: 8.2.1
-- active: false
+- active: true
   authorities:
   - endpoint: http://aws-operator:8000
     name: aws-operator
