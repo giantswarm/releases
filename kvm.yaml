@@ -84,7 +84,7 @@
     version: 3.7.1
   date: 2019-06-24T10:00:00Z
   version: 8.2.1
-- active: false
+- active: true
   authorities:
   - endpoint: http://cert-operator:8000
     name: cert-operator
