@@ -163,7 +163,7 @@
     version: 0.15.0
   date: 2019-04-17T08:00:00Z
   version: 8.0.0
-- active: false
+- active: true
   authorities:
   - endpoint: http://aws-operator:8000
     name: aws-operator
