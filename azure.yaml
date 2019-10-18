@@ -43,7 +43,7 @@
     version: 0.21.0
   date: 2019-09-04T10:00:00Z
   version: 8.5.0
-- active: false
+- active: true
   authorities:
   - endpoint: app-operator
     name: app-operator
