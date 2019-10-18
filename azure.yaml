@@ -63,7 +63,7 @@
     version: 0.19.0
   date: 2019-10-18T10:00:00Z
   version: 8.4.2
-- active: true
+- active: false
   authorities:
     - name: app-operator
       version: 1.0.0
