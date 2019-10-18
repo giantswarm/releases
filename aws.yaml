@@ -43,7 +43,7 @@
     - endpoint: http://app-operator:8000
       name: app-operator
       version: 1.0.0
-    - endpoint: http://aws-operator:8000
+    - endpoint: http://aws-operator-legacy:8000
       name: aws-operator
       version: 5.5.0
     - endpoint: http://cert-operator:8000
