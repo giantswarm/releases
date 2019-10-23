@@ -5,6 +5,26 @@
       version: 1.0.0
     - endpoint: http://aws-operator-np-6-6-0:8000
       name: aws-operator
+      version: 6.6.1
+    - endpoint: http://cert-operator:8000
+      name: cert-operator
+      version: 0.1.0
+    - endpoint: http://chart-operator:8000
+      name: chart-operator
+      version: 0.7.0
+    - endpoint: http://cluster-operator:8000
+      name: cluster-operator
+      provider: aws
+      version: 0.21.0
+  date: 2019-10-18T12:00:00Z
+  version: 8.8.1
+- active: false
+  authorities:
+    - endpoint: http://app-operator:8000
+      name: app-operator
+      version: 1.0.0
+    - endpoint: http://aws-operator-np-6-6-0:8000
+      name: aws-operator
       version: 6.6.0
     - endpoint: http://cert-operator:8000
       name: cert-operator
