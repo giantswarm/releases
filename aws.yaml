@@ -4,6 +4,7 @@
       name: app-operator
       version: 1.0.0
     - name: aws-operator-np-6-6-0
+      endpoint: http://aws-operator-np-6-6-0:8000
       version: 6.6.0
     - endpoint: http://cert-operator:8000
       name: cert-operator
@@ -23,6 +24,7 @@
       name: app-operator
       version: 1.0.0
     - name: aws-operator-np-6-5-0
+      endpoint: http://aws-operator-np-6-5-0:8000
       version: 6.5.0
     - endpoint: http://cert-operator:8000
       name: cert-operator
@@ -42,6 +44,7 @@
       name: app-operator
       version: 1.0.0
     - name: aws-operator-lock-azs
+      endpoint: http://aws-operator-lock-azs:8000
       version: 6.4.0
     - endpoint: http://cert-operator:8000
       name: cert-operator
