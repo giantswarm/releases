@@ -30,8 +30,13 @@
       version: 0.2.0
     - name: kvm-operator
       version: 3.9.0
+<<<<<<< HEAD
   date: 2019-10-28T12:00:00Z
   version: 9.0.0
+=======
+  date: 2019-09-02T15:30:00Z
+  version: 8.6.0
+>>>>>>> 95fb1bf... rename 8.5 to 8.6 to stay in sync between operators, adjust wip versions
 - active: true
   authorities:
     - name: app-operator
