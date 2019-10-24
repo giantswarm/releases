@@ -20,7 +20,7 @@
       name: kvm-operator
       version: 3.9.0
   date: 2019-09-02T15:30:00Z
-  version: 8.5.0
+  version: 8.6.0
 - active: true
   authorities:
     - endpoint: http://app-operator:8000
