@@ -16,8 +16,8 @@
     name: cluster-operator
     provider: azure
     version: 0.21.0
-  date: 2019-09-04T10:00:00Z
-  version: 8.5.0
+  date: 2019-10-24T11:00:00Z
+  version: 8.6.0
 - active: true
   authorities:
   - endpoint: http://app-operator:8000
@@ -36,8 +36,8 @@
     name: cluster-operator
     provider: azure
     version: 0.19.0
-  date: 2019-10-18T10:00:00Z
-  version: 8.4.2
+  date: 2019-10-24T10:00:00Z
+  version: 8.5.0
 - active: false
   authorities:
   - endpoint: http://app-operator:8000
