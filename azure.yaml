@@ -45,6 +45,26 @@
     version: 1.0.0
   - endpoint: http://azure-operator:8000
     name: azure-operator
+    version: 2.6.2
+  - endpoint: http://cert-operator:8000
+    name: cert-operator
+    version: 0.1.0
+  - endpoint: http://chart-operator:8000
+    name: chart-operator
+    version: 0.7.0
+  - endpoint: http://cluster-operator:8000
+    name: cluster-operator
+    provider: azure
+    version: 0.19.0
+  date: 2019-10-18T10:00:00Z
+  version: 8.4.2
+- active: false
+  authorities:
+  - endpoint: http://app-operator:8000
+    name: app-operator
+    version: 1.0.0
+  - endpoint: http://azure-operator:8000
+    name: azure-operator
     version: 2.6.1
   - endpoint: http://cert-operator:8000
     name: cert-operator
