@@ -5,7 +5,7 @@
     version: 1.0.0
   - endpoint: http://azure-operator:8000
     name: azure-operator
-    version: 2.7.0
+    version: 2.8.0
   - endpoint: http://cert-operator:8000
     name: cert-operator
     version: 0.1.0
