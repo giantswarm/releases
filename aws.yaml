@@ -15,7 +15,7 @@
     - endpoint: http://cluster-operator:8000
       name: cluster-operator
       provider: aws
-      version: 0.21.0
+      version: 0.22.0
   date: 2019-09-26T12:00:00Z
   version: 8.6.0
 - active: true
