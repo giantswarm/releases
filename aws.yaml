@@ -15,7 +15,7 @@
     - endpoint: http://cluster-operator:8000
       name: cluster-operator
       provider: aws
-      version: 0.21.0
+      version: 0.22.0
   date: 2019-10-23T12:00:00Z
   version: 8.8.1
 - active: false
@@ -35,7 +35,7 @@
     - endpoint: http://cluster-operator:8000
       name: cluster-operator
       provider: aws
-      version: 0.21.0
+      version: 0.22.0
   date: 2019-10-18T12:00:00Z
   version: 8.8.0
 - active: false
@@ -55,7 +55,7 @@
     - endpoint: http://cluster-operator:8000
       name: cluster-operator
       provider: aws
-      version: 0.20.0
+      version: 0.22.0
   date: 2019-10-18T11:00:00Z
   version: 8.7.0
 - active: true
