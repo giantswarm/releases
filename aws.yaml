@@ -5,7 +5,7 @@
       version: 1.0.0
     - endpoint: http://aws-operator:8000
       name: aws-operator
-      version: 5.5.0
+      version: 5.6.0
     - endpoint: http://cert-operator:8000
       name: cert-operator
       version: 0.1.0
@@ -16,8 +16,28 @@
       name: cluster-operator
       provider: aws
       version: 0.22.0
-  date: 2019-09-26T12:00:00Z
-  version: 8.6.0
+  date: 2019-10-28T12:00:00Z
+  version: 9.1.0
+- active: true
+  authorities:
+    - endpoint: http://app-operator:8000
+      name: app-operator
+      version: 1.0.0
+    - endpoint: http://aws-operator:8000
+      name: aws-operator
+      version: 5.5.0
+    - endpoint: http://cert-operator:8000
+      name: cert-operator
+      version: 0.1.0
+    - endpoint: http://chart-operator:8000
+      name: chart-operator
+      version: 0.7.0
+    - endpoint: http://cluster-operator:8000
+      name: cluster-operator
+      provider: aws
+      version: 0.21.0
+  date: 2019-10-28T12:00:00Z
+  version: 9.0.0
 - active: true
   authorities:
     - endpoint: http://app-operator:8000
@@ -163,7 +183,7 @@
     version: 0.15.0
   date: 2019-04-17T08:00:00Z
   version: 8.0.0
-- active: true
+- active: false
   authorities:
   - endpoint: http://aws-operator:8000
     name: aws-operator
@@ -265,7 +285,7 @@
     version: 0.11.0
   date: 2019-02-20T12:00:00Z
   version: 7.0.0
-- active: true
+- active: false
   authorities:
   - endpoint: http://aws-operator:8000
     name: aws-operator
@@ -520,7 +540,7 @@
     version: 0.6.0
   date: 2018-08-30T08:00:00Z
   version: 5.0.0
-- active: true
+- active: false
   authorities:
   - endpoint: http://aws-operator:8000
     name: aws-operator
