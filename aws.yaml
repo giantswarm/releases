@@ -5,7 +5,7 @@
       version: 1.0.0
     - endpoint: http://aws-operator:8000
       name: aws-operator
-      version: 5.6.0
+      version: 5.5.1-dev
     - endpoint: http://cert-operator:8000
       name: cert-operator
       version: 0.1.0
