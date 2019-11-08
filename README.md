@@ -11,6 +11,7 @@ This repository contains giantswarm releases and changelogs.
 ### Azure
  - [9.0.0](https://github.com/giantswarm/releases/blob/master/release-notes/azure/v9.0.0.md)
  - [8.4.1](https://github.com/giantswarm/releases/blob/master/release-notes/azure/v8.4.1.md)
+ - [8.4.0](https://github.com/giantswarm/releases/blob/master/release-notes/azure/v8.4.0.md)
 
 ### KVM
  - [9.0.0](https://github.com/giantswarm/releases/blob/master/release-notes/kvm/v9.0.0.md)
