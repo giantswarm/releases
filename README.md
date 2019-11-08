@@ -6,9 +6,12 @@ This repository contains giantswarm releases and changelogs.
 
 ### AWS
  - [9.0.0](https://github.com/giantswarm/releases/blob/master/release-notes/aws/v9.0.0.md)
+ - [8.5.0](https://github.com/giantswarm/releases/blob/master/release-notes/aws/v8.5.0.md)
 
 ### Azure
  - [9.0.0](https://github.com/giantswarm/releases/blob/master/release-notes/azure/v9.0.0.md)
+ - [8.4.1](https://github.com/giantswarm/releases/blob/master/release-notes/azure/v8.4.1.md)
 
 ### KVM
  - [9.0.0](https://github.com/giantswarm/releases/blob/master/release-notes/kvm/v9.0.0.md)
+ - [8.4.0](https://github.com/giantswarm/releases/blob/master/release-notes/kvm/v8.4.0.md)
