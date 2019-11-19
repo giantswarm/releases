@@ -1,4 +1,4 @@
-- active: false
+- active: true
   authorities:
     - endpoint: http://app-operator:8000
       name: app-operator
