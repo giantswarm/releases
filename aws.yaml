@@ -5,7 +5,7 @@
       version: 1.0.0
     - endpoint: http://aws-operator:8000
       name: aws-operator
-      version: 9.9.9
+      version: 10.9.9
     - endpoint: http://cert-operator:8000
       name: cert-operator
       version: 0.1.0
@@ -17,7 +17,7 @@
       provider: aws
       version: 0.22.0
   date: 2019-11-18T12:00:00Z
-  version: 9.9.9
+  version: 10.9.9
 - active: false
   authorities:
     - endpoint: http://app-operator:8000
