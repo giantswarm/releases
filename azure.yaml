@@ -28,21 +28,6 @@
       version: 0.21.0
   date: 2019-10-25T10:00:00Z
   version: 9.0.0
-- active: false
-  authorities:
-  - name: app-operator
-    version: 1.0.0
-  - name: azure-operator
-    version: 2.7.0
-  - name: cert-operator
-    version: 0.1.0
-  - name: chart-operator
-    version: 0.7.0
-  - name: cluster-operator
-    provider: azure
-    version: 0.21.0
-  date: 2019-10-24T11:00:00Z
-  version: 8.7.0
 - active: true
   authorities:
   - endpoint: app-operator
@@ -60,8 +45,8 @@
   - endpoint: cluster-operator
     name: cluster-operator
     provider: azure
-    version: 0.19.0
-  date: 2019-10-24T10:00:00Z
+    version: 0.21.0
+  date: 2019-12-31T10:00:00Z
   version: 8.6.0
 - active: false
   authorities:
