@@ -15,9 +15,9 @@
     - endpoint: http://cluster-operator:8000
       name: cluster-operator
       provider: aws
-      version: 0.22.0
-  date: 2019-11-20T12:00:00Z
-  version: 10.1.0
+      version: 2.0.0-dev
+  date: 2019-12-03T12:00:00Z
+  version: 11.1.0
 - active: true
   authorities:
     - endpoint: http://app-operator:8000
@@ -35,9 +35,9 @@
     - endpoint: http://cluster-operator:8000
       name: cluster-operator
       provider: aws
-      version: 0.22.0
-  date: 2019-11-20T12:00:00Z
-  version: 10.0.0
+      version: 2.0.0-dev
+  date: 2019-12-03T12:00:00Z
+  version: 11.0.0
 - active: true
   authorities:
     - endpoint: http://app-operator:8000
