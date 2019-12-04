@@ -15,7 +15,7 @@
   - endpoint: http://cluster-operator:8000
     name: cluster-operator
     provider: azure
-    version: 0.21.1-dev
+    version: 0.22.0
   date: 2019-10-25T10:00:00Z
   version: 9.1.0
 - active: true
