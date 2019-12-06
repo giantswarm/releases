@@ -35,7 +35,7 @@
     - endpoint: http://cluster-operator:8000
       name: cluster-operator
       provider: kvm
-      version: 2.0.0-dev
+      version: 0.21.1-dev
     - endpoint: http://flannel-operator:8000
       name: flannel-operator
       version: 0.2.0
