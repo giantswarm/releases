@@ -15,7 +15,7 @@
     - endpoint: http://cluster-operator:8000
       name: cluster-operator
       provider: aws
-      version: 0.21.1-dev
+      version: 2.0.0-dev
   date: 2019-11-05T12:00:00Z
   version: 9.1.0-tuommaki
 - active: false
