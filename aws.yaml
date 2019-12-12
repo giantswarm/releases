@@ -1,19 +1,14 @@
 - active: true
   authorities:
-    - endpoint: http://app-operator:8000
-      name: app-operator
+    - name: app-operator
       version: 1.0.0
-    - endpoint: http://aws-operator:8000
-      name: aws-operator
+    - name: aws-operator
       version: 7.0.0
-    - endpoint: http://cert-operator:8000
-      name: cert-operator
+    - name: cert-operator
       version: 0.1.0
-    - endpoint: http://chart-operator:8000
-      name: chart-operator
+    - name: chart-operator
       version: 0.7.0
-    - endpoint: http://cluster-operator:8000
-      name: cluster-operator
+    - name: cluster-operator
       provider: aws
       version: 2.0.0-dev
   date: 2019-11-26T11:16:00Z
