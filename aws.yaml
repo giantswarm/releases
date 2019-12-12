@@ -1,4 +1,4 @@
-- active: false
+- active: true
   authorities:
     - name: app-operator
       version: 1.0.0
