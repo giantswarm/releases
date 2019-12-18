@@ -2,7 +2,7 @@
 
 We are pleased to announce that Node Pools is now released! 
 
-Please see here the supported material which we recomend reading before getting started: https://docs.giantswarm.io/basics/nodepools
+Please see here the supported material which we recommend reading before getting started: https://docs.giantswarm.io/basics/nodepools
 
 We also kindly remind you that from this release and for a period of SIX months onwards, to give you a chance to move your clusters, we will be supporting both the 'Legacy' and the 'New' branches separately which will include:
 
