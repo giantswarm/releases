@@ -1,29 +1,14 @@
-## :zap:  Giant Swarm Release 10.0.0-rc1 for AWS is now active for you! :zap:
+## :zap:  Giant Swarm Release 10.1.0 for AWS is now active for you! :zap:
 
-We are pleased to announce that Node Pools is now released! 
+We are pleased to announce that this new branch (10.1.0)contains the much anticipated Node Pools release and will contain all
+other releases thereafter such as High Availability of Masters and Spot Instances which are due to be released next year. 
 
-Please see here the supported material which we recommend reading before getting started: https://docs.giantswarm.io/basics/nodepools
+We therefore kindly remind you that from this release and for a period of SIX months onwards, 
+to give you a chance to move your clusters, we will be supporting both this new branch and the 'Legacy' 9.0.0 branch which we will
+continue to maintain during this period. 
 
-We also kindly remind you that from this release and for a period of SIX months onwards, to give you a chance to move your clusters, we will be supporting both the 'Legacy' and the 'New' branches separately which will include:
-
-:older_adult: 'Legacy' Branch: 
-
-pre-NodePools releases including 9.x/ k8s 1.15
-security patches
-critical bug fixes to existing functionality
-updates to Managed Apps such as the Ingress Controller (with the exception of features that cannot be back-ported without significant invest)
-Plus, the upcoming k8s 1.16 release 
-
-Also, please note,
-there will be no direct upgrade path from release 9.x to 10.x and you will need to move your cluster
-the six month window for this will start on the date of the NodePool release and run until approximately mid-June. We will give you plenty of prior warning. 
-
-:baby: 'New' Branch: 
-
-NodePools release 10.x
-all releases thereafter such as High Availability of Masters, Spot Instances and many more eagerly anticipated releases to come!
-
-And here are the full release details: 
+In the meantime, we hope you enjoy using Node Pools of which the documentation can be found here: https://docs.giantswarm.io/basics/nodepools/ 
+including the other release changes which are listed below: 
 
 ### Kubernetes v1.15.5
 - Updated from v1.14.6 - [changelog](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG-1.15.md#kubernetes-v115-release-notes)
@@ -54,10 +39,7 @@ And here are the full release details:
 ### Cluster Autoscaler v1.15.2 ([GS v0.9.0](https://github.com/giantswarm/cluster-autoscaler-app/blob/master/CHANGELOG.md#v090))
 - Updated from upstream `Cluster Autoscaler` v1.14.3 - [changelog](https://github.com/kubernetes/autoscaler/releases/tag/cluster-autoscaler-1.15.2)
 
-
-
-
-We look forward to hearing your feedback and we hope you have a wonderful Christmas!
+From all of us at Giant Swarm, we hope you have a wonderful Christmas!
  
 Jessica,
 Product Owner (AWS Team) 
