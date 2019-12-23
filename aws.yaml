@@ -27,7 +27,7 @@
       provider: aws
       version: 0.21.1-dev-rossf7
   date: 2019-12-23T12:00:00Z
-  version: 9.1.0
+  version: 9.1.1
 - active: false
   authorities:
     - name: app-operator
