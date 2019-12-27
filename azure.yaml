@@ -11,7 +11,7 @@
   - name: cluster-operator
     provider: azure
     version: 2.1.0-dev
-  date: 2019-12-03T12:00:00Z
+  date: 2019-12-27T12:00:00Z
   version: 11.1.0
 - active: true
   authorities:
@@ -26,7 +26,7 @@
   - name: cluster-operator
     provider: azure
     version: 2.0.0
-  date: 2019-12-03T12:00:00Z
+  date: 2019-12-27T12:00:00Z
   version: 11.0.0
 - active: true
   authorities:
@@ -43,7 +43,7 @@
       version: 0.21.0
   date: 2019-10-25T10:00:00Z
   version: 9.0.0
-- active: true
+- active: false
   authorities:
     - name: app-operator
       version: 1.0.0
