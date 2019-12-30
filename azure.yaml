@@ -27,7 +27,7 @@
       provider: azure
       version: 0.21.1-dev-rossf7
   date: 2019-12-30T10:00:00Z
-  version: 9.0.0
+  version: 9.0.1
 - active: true
   authorities:
     - name: app-operator
