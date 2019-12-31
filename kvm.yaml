@@ -30,7 +30,7 @@
       version: 0.2.0
     - name: kvm-operator
       version: 3.9.0
-  date: 2019-09-02T15:30:00Z
+  date: 2019-10-28T12:00:00Z
   version: 9.0.0
 - active: true
   authorities:
@@ -42,7 +42,7 @@
       version: 0.7.0
     - name: cluster-operator
       provider: kvm
-      version: 0.19.0
+      version: 0.20.0
     - name: flannel-operator
       version: 0.2.0
     - name: kvm-operator
