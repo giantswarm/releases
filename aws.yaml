@@ -63,6 +63,21 @@
     - name: app-operator
       version: 1.0.0
     - name: aws-operator
+      version: 5.4.1
+    - name: cert-operator
+      version: 0.1.0
+    - name: chart-operator
+      version: 0.7.0
+    - name: cluster-operator
+      provider: aws
+      version: 0.20.0
+  date: 2019-12-31T10:00:00Z
+  version: 8.6.0  
+- active: false
+  authorities:
+    - name: app-operator
+      version: 1.0.0
+    - name: aws-operator
       version: 5.4.0
     - name: cert-operator
       version: 0.1.0
