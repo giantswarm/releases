@@ -1,3 +1,18 @@
+- active: false
+  authorities:
+    - name: app-operator
+      version: 1.0.0
+    - name: aws-operator
+      version: 8.0.3-dev
+    - name: cert-operator
+      version: 0.1.0
+    - name: chart-operator
+      version: 0.7.0
+    - name: cluster-operator
+      provider: aws
+      version: 2.0.1-dev
+  date: 2020-01-03T14:00:00Z
+  version: 10.1.1
 - active: true
   authorities:
     - name: app-operator
