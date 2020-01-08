@@ -5,6 +5,7 @@
 This repository contains giantswarm releases and changelogs.
 
 ### AWS
+ - [11.0.0](https://github.com/giantswarm/releases/blob/master/release-notes/aws/v11.0.0.md)
  - [10.1.0](https://github.com/giantswarm/releases/blob/master/release-notes/aws/v10.1.0.md)
  - [9.0.0](https://github.com/giantswarm/releases/blob/master/release-notes/aws/v9.0.0.md)
  - [8.5.0](https://github.com/giantswarm/releases/blob/master/release-notes/aws/v8.5.0.md)
