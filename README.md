@@ -2,7 +2,7 @@
 
 # releases
 
-This repository contains giantswarm releases and changelogs.
+This repository contains Giant Swarm releases and changelogs.
 
 ### AWS
  - [10.1.0](https://github.com/giantswarm/releases/blob/master/release-notes/aws/v10.1.0.md)
@@ -15,5 +15,7 @@ This repository contains giantswarm releases and changelogs.
  - [8.4.0](https://github.com/giantswarm/releases/blob/master/release-notes/azure/v8.4.0.md)
 
 ### KVM
+ - [11.0.0](https://github.com/giantswarm/releases/blob/master/release-notes/kvm/v11.0.0.md)
+ - 10.0.0 - Skipped to stay in sync with AWS releases
  - [9.0.0](https://github.com/giantswarm/releases/blob/master/release-notes/kvm/v9.0.0.md)
  - [8.4.0](https://github.com/giantswarm/releases/blob/master/release-notes/kvm/v8.4.0.md)
