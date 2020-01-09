@@ -8,6 +8,23 @@
       version: 0.7.0
     - name: cluster-operator
       provider: kvm
+      version: 0.21.1-dev-rossf7
+    - name: flannel-operator
+      version: 0.2.0
+    - name: kvm-operator
+      version: 3.10.0
+  date: 2020-01-09T12:00:00Z
+  version: 9.1.1
+- active: false
+  authorities:
+    - name: app-operator
+      version: 1.0.0
+    - name: cert-operator
+      version: 0.1.0
+    - name: chart-operator
+      version: 0.7.0
+    - name: cluster-operator
+      provider: kvm
       version: 0.21.1-dev
     - name: flannel-operator
       version: 0.2.0
