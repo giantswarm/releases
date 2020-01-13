@@ -1,18 +1,3 @@
-- active: false
-  authorities:
-    - name: app-operator
-      version: 1.0.0
-    - name: aws-operator
-      version: 8.0.4-dev
-    - name: cert-operator
-      version: 0.1.0
-    - name: chart-operator
-      version: 0.7.0
-    - name: cluster-operator
-      provider: aws
-      version: 2.0.1-dev
-  date: 2020-01-08T13:00:00Z
-  version: 11.0.1
 - active: true
   authorities:
     - name: app-operator
@@ -25,10 +10,25 @@
       version: 0.7.0
     - name: cluster-operator
       provider: aws
-      version: 2.0.1-dev
-  date: 2019-01-08T12:00:00Z
+      version: 2.0.2-dev
+  date: 2020-01-13T12:00:00Z
   version: 11.0.0
 - active: true
+  authorities:
+    - name: app-operator
+      version: 1.0.0
+    - name: aws-operator
+      version: 8.0.2
+    - name: cert-operator
+      version: 0.1.0
+    - name: chart-operator
+      version: 0.7.0
+    - name: cluster-operator
+      provider: aws
+      version: 2.0.1
+  date: 2020-01-10T08:00:00Z
+  version: 10.1.1
+- active: false
   authorities:
     - name: app-operator
       version: 1.0.0
@@ -43,6 +43,21 @@
       version: 2.0.0
   date: 2019-12-18T14:00:00Z
   version: 10.1.0
+- active: false
+  authorities:
+    - name: app-operator
+      version: 1.0.0
+    - name: aws-operator
+      version: 5.5.1-dev
+    - name: cert-operator
+      version: 0.1.0
+    - name: chart-operator
+      version: 0.7.0
+    - name: cluster-operator
+      provider: aws
+      version: 0.21.2-dev
+  date: 2020-01-10T12:00:00Z
+  version: 9.1.1
 - active: false
   authorities:
     - name: app-operator
