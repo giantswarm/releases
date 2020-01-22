@@ -1,7 +1,7 @@
 - active: false
   apps:
     - app: chart-operator
-      version: 0.11.2
+      version: 0.11.3
     - app: coredns
       componentVersion: 1.6.5
       version: 1.1.3
@@ -14,7 +14,10 @@
       componentVersion: 0.3.3
       version: 1.0.0
     - app: net-exporter
-      version: 1.4.3
+      version: 1.5.1
+    - app: nginx-ingress-controller
+      componentVersion: 0.27.0
+      version: 1.1.1
     - app: node-exporter
       componentVersion: 0.18.1
       version: 1.2.0
