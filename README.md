@@ -11,7 +11,6 @@ This repository contains giantswarm releases and changelogs.
 
 ### Azure
  - [11.0.0](https://github.com/giantswarm/releases/blob/master/release-notes/azure/v11.0.0.md)
- - 10.0.0 - Skipped to stay in sync with AWS releases
  - [9.0.0](https://github.com/giantswarm/releases/blob/master/release-notes/azure/v9.0.0.md)
  - [8.4.1](https://github.com/giantswarm/releases/blob/master/release-notes/azure/v8.4.1.md)
  - [8.4.0](https://github.com/giantswarm/releases/blob/master/release-notes/azure/v8.4.0.md)
