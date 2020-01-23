@@ -35,7 +35,7 @@
       version: 0.7.0
     - name: cluster-operator
       provider: azure
-      version: 0.21.2-dev
+      version: 0.21.4-dev
   date: 2020-01-10T12:00:00Z
   version: 9.1.1
 - active: false
