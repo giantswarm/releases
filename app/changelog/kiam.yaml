@@ -1,0 +1,6 @@
+- version: 1.0.2
+  componentVersion: 3.4.0
+  description: Removed CPU limits.
+  type: Changed
+  urls:
+    - https://github.com/giantswarm/kiam-app/blob/master/CHANGELOG.md#v102-2020-01-04

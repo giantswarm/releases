@@ -1,0 +1,6 @@
+- version: 1.0.0
+  componentVersion: 0.3.3
+  description: Updated manifests for Kubernetes 1.16.
+  type: Changed
+  urls:
+    - https://github.com/giantswarm/metrics-server-app/blob/master/CHANGELOG.md#v100-2020-01-03

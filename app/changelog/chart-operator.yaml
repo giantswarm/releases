@@ -1,0 +1,5 @@
+- version: 0.11.2
+  description: Remove CPU Limits
+  type: Changed
+  urls:
+    - https://github.com/giantswarm/chart-operator/pull/335
