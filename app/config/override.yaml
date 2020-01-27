@@ -1,12 +1,12 @@
 cert-exporter:
-  chart: "cert-exporter",
+  chart: "cert-exporter"
 # chart-operator must be installed first so the chart CRD is
 # created in the tenant cluster.
 chart-operator:
-  chart:     "chart-operator",
-  namespace: "giantswarm",
+  chart:     "chart-operator"
+  namespace: "giantswarm"
 # CoreDNS's Upgrade force is disabled to avoid affecting customer workloads.
 coredns:
-  useUpgradeForce: false,
+  useUpgradeForce: false
 net-exporter:
-  chart: "net-exporter",
+  chart: "net-exporter"
