@@ -11,6 +11,7 @@ This repository contains giantswarm releases and changelogs.
  - [8.5.0](https://github.com/giantswarm/releases/blob/master/release-notes/aws/v8.5.0.md)
 
 ### Azure
+ - [11.0.0](https://github.com/giantswarm/releases/blob/master/release-notes/azure/v11.0.0.md)
  - [9.0.0](https://github.com/giantswarm/releases/blob/master/release-notes/azure/v9.0.0.md)
  - [8.4.1](https://github.com/giantswarm/releases/blob/master/release-notes/azure/v8.4.1.md)
  - [8.4.0](https://github.com/giantswarm/releases/blob/master/release-notes/azure/v8.4.0.md)
