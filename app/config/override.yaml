@@ -10,3 +10,5 @@ coredns:
   useUpgradeForce: false
 net-exporter:
   chart: "net-exporter"
+nginx-ingress-controller:
+  useUpgradeForce: false
