@@ -1,2 +1,2 @@
-namespace: default
+namespace: kube-system
 useUpgradeForce: true
