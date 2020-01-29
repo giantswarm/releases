@@ -11,7 +11,7 @@
     - name: cluster-operator
       provider: aws
       version: 2.0.2
-  date: 2020-01-27T12:00:00Z
+  date: 2020-01-29T12:00:00Z
   version: 11.0.0
 - active: true
   authorities:
