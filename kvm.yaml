@@ -8,7 +8,7 @@
       version: 0.7.0
     - name: cluster-operator
       provider: kvm
-      version: 0.21.6-dev
+      version: 0.22.1-dev
     - name: flannel-operator
       version: 0.2.0
     - name: kvm-operator
@@ -25,7 +25,7 @@
       version: 0.7.0
     - name: cluster-operator
       provider: kvm
-      version: 0.21.5
+      version: 0.22.0
     - name: flannel-operator
       version: 0.2.0
     - name: kvm-operator
