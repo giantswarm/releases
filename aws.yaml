@@ -72,7 +72,7 @@
       provider: aws
       version: 0.22.0
   date: 2019-11-05T12:00:00Z
-  version: 9.1.0
+  version: 9.0.1
 - active: true
   authorities:
     - name: app-operator
