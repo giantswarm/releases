@@ -5,11 +5,11 @@ cert-exporter:
 chart-operator:
   chart:     "chart-operator"
   namespace: "giantswarm"
-# CoreDNS's Upgrade force is disabled to avoid affecting customer workloads.
+# Upgrade force is disabled to avoid affecting customer workloads.
 coredns:
   useUpgradeForce: false
 net-exporter:
   chart: "net-exporter"
-# nginx's Upgrade force is disabled to avoid affecting customer workloads.
+# Upgrade force is disabled to avoid affecting customer workloads.
 nginx-ingress-controller:
   useUpgradeForce: false
