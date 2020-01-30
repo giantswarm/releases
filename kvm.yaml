@@ -8,14 +8,31 @@
       version: 0.7.0
     - name: cluster-operator
       provider: kvm
-      version: 0.21.5-dev
+      version: 0.22.1-dev
     - name: flannel-operator
       version: 0.2.0
     - name: kvm-operator
       version: 3.11.0
-  date: 2020-01-28T12:00:00Z
-  version: 11.1.0
+  date: 2020-01-29T13:00:00Z
+  version: 11.1.1
 - active: true
+  authorities:
+    - name: app-operator
+      version: 1.0.0
+    - name: cert-operator
+      version: 0.1.0
+    - name: chart-operator
+      version: 0.7.0
+    - name: cluster-operator
+      provider: kvm
+      version: 0.22.0
+    - name: flannel-operator
+      version: 0.2.0
+    - name: kvm-operator
+      version: 3.10.0
+  date: 2020-01-29T12:00:00Z
+  version: 11.1.0
+- active: false
   authorities:
     - name: app-operator
       version: 1.0.0
