@@ -1,6 +1,6 @@
 - version: 1.2.0
   componentVersion: 0.18.1
   description: Change Priority Class to system-node-critical
-  type: Changed
+  kind: changed
   urls:
     - https://github.com/giantswarm/node-exporter-app/blob/master/CHANGELOG.md#120-2020-01-08

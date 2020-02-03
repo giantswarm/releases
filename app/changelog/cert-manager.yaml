@@ -1,6 +1,6 @@
 - version: 1.0.3
   componentVersion: 0.9.0
   description: Updated manifests for Kubernetes 1.16.
-  type: Changed
+  kind: changed
   urls:
     - https://github.com/giantswarm/cert-manager-app/blob/master/CHANGELOG.md#v103-2020-01-03

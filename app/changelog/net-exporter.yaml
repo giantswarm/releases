@@ -1,5 +1,5 @@
 - version: 1.4.3
   description: Fix invalid image reference.
-  type: Changed
+  kind: changed
   urls:
     - https://github.com/giantswarm/net-exporter/blob/master/CHANGELOG.md#143-2019-12-27

@@ -1,6 +1,6 @@
 - version: 1.0.0
   componentVersion: 1.9.0
   description: Upgraded to kube-state-metrics new release 1.9.0
-  type: Changed
+  kind: changed
   urls:
     - https://github.com/giantswarm/cert-exporter/blob/master/CHANGELOG.md#121-2019-12-24
