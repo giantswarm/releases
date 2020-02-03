@@ -1,4 +1,4 @@
-- active: false
+- active: true
   apps:
     - app: cert-exporter
       version: 1.2.1
@@ -34,8 +34,8 @@
     - name: flannel-operator
       version: 0.2.0
     - name: kvm-operator
-      version: 3.11.0-dev
-  date: 2020-01-29T13:00:00Z
+      version: 3.10.0
+  date: 2020-02-12T13:00:00Z
   version: 11.1.1
 - active: true
   authorities:
