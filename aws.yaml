@@ -102,7 +102,7 @@
       version: 2.0.0
   date: 2019-12-18T14:00:00Z
   version: 10.1.0
-- active: false
+- active: true
   apps:
     - app: cert-exporter
       version: 1.2.1
@@ -149,7 +149,7 @@
     - name: cluster-operator
       provider: aws
       version: 0.23.0
-  date: 2020-02-03T12:00:00Z
+  date: 2020-02-12T12:00:00Z
   version: 9.1.1
 - active: true
   authorities:
