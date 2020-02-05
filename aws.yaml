@@ -1,4 +1,4 @@
-- active: true
+- active: false
   apps:
     - app: chart-operator
       version: 0.11.4
@@ -19,8 +19,8 @@
       version: 1.2.0
       componentVersion: 0.18.1
     - app: cert-manager
-      version: 1.1.0
-      componentVersion: 0.13.0
+      version: 1.0.4
+      componentVersion: 0.9.0
     - app: cluster-autoscaler
       version: 1.1.4
       componentVersion: 1.16.2
@@ -30,6 +30,21 @@
     - app: kiam
       version: 1.1.0
       componentVersion: 3.5.0
+  authorities:
+    - name: app-operator
+      version: 1.0.0
+    - name: aws-operator
+      version: 8.1.0
+    - name: cert-operator
+      version: 0.1.0
+    - name: chart-operator
+      version: 0.7.0
+    - name: cluster-operator
+      provider: aws
+      version: 2.1.0-dev
+  date: 2020-02-05T12:00:00Z
+  version: 11.0.1
+- active: true
   authorities:
     - name: app-operator
       version: 1.0.0
