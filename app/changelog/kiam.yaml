@@ -1,0 +1,12 @@
+- version: 1.1.0
+  componentVersion: 3.5.0
+  description: Updated kiam app version to v3.5.
+  kind: changed
+  urls:
+    - https://github.com/giantswarm/kiam-app/blob/master/CHANGELOG.md#v110-2020-02-04
+- version: 1.0.2
+  componentVersion: 3.4.0
+  description: Removed CPU limits.
+  kind: changed
+  urls:
+    - https://github.com/giantswarm/kiam-app/blob/master/CHANGELOG.md#v102-2020-01-04
