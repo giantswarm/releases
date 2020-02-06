@@ -12,7 +12,7 @@
     - name: flannel-operator
       version: 0.2.0
     - name: kvm-operator
-      version: 3.11.0
+      version: 3.11.0-dev
   date: 2020-01-29T13:00:00Z
   version: 11.1.1
 - active: true
