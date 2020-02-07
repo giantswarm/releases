@@ -86,7 +86,7 @@
     - name: cluster-operator
       provider: aws
       version: 0.21.4
-  date: 2020-01-04T12:00:00Z
+  date: 2020-01-07T12:00:00Z
   version: 9.0.1
 - active: false
   authorities:
