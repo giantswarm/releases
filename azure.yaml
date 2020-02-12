@@ -1,4 +1,6 @@
-- active: false
+- version: 11.1.0
+  active: false
+  date: 2020-01-29 12:00:00+00:00
   apps:
     - app: cert-exporter
       version: 1.2.1
@@ -25,35 +27,35 @@
       componentVersion: 0.18.1
       version: 1.2.0
   authorities:
-  - name: app-operator
-    version: 1.0.0
-  - name: azure-operator
-    version: 2.9.0
-  - name: cert-operator
-    version: 0.1.0
-  - name: chart-operator
-    version: 0.7.0
-  - name: cluster-operator
-    provider: azure
-    version: 0.23.0
-  date: 2020-01-29T12:00:00Z
-  version: 11.1.0
-- active: true
+    - name: app-operator
+      version: 1.0.0
+    - name: azure-operator
+      version: 2.9.0
+    - name: cert-operator
+      version: 0.1.0
+    - name: chart-operator
+      version: 0.7.0
+    - name: cluster-operator
+      provider: azure
+      version: 0.23.0
+- version: 11.0.0
+  active: true
+  date: 2020-01-08 12:00:00+00:00
   authorities:
-  - name: app-operator
-    version: 1.0.0
-  - name: azure-operator
-    version: 2.8.0
-  - name: cert-operator
-    version: 0.1.0
-  - name: chart-operator
-    version: 0.7.0
-  - name: cluster-operator
-    provider: azure
-    version: 0.21.4
-  date: 2020-01-08T12:00:00Z
-  version: 11.0.0
-- active: true
+    - name: app-operator
+      version: 1.0.0
+    - name: azure-operator
+      version: 2.8.0
+    - name: cert-operator
+      version: 0.1.0
+    - name: chart-operator
+      version: 0.7.0
+    - name: cluster-operator
+      provider: azure
+      version: 0.21.4
+- version: 9.0.0
+  active: true
+  date: 2019-10-25 10:00:00+00:00
   authorities:
     - name: app-operator
       version: 1.0.0
@@ -66,9 +68,9 @@
     - name: cluster-operator
       provider: azure
       version: 0.21.0
-  date: 2019-10-25T10:00:00Z
-  version: 9.0.0
-- active: false
+- version: 8.4.1
+  active: false
+  date: 2019-09-26 17:00:00+00:00
   authorities:
     - name: app-operator
       version: 1.0.0
@@ -81,9 +83,9 @@
     - name: cluster-operator
       provider: azure
       version: 0.19.0
-  date: 2019-09-26T17:00:00Z
-  version: 8.4.1
-- active: false
+- version: 8.4.0
+  active: false
+  date: 2019-08-14 10:00:00+00:00
   authorities:
     - name: app-operator
       version: 1.0.0
@@ -96,9 +98,9 @@
     - name: cluster-operator
       provider: azure
       version: 0.19.0
-  date: 2019-08-14T10:00:00Z
-  version: 8.4.0
-- active: false
+- version: 8.3.0
+  active: false
+  date: 2019-07-11 10:00:00+00:00
   authorities:
     - name: azure-operator
       version: 2.5.0
@@ -109,9 +111,9 @@
     - name: cluster-operator
       provider: azure
       version: 0.18.0
-  date: 2019-07-11T10:00:00Z
-  version: 8.3.0
-- active: false
+- version: 8.2.1
+  active: false
+  date: 2019-03-30 10:00:00+00:00
   authorities:
     - name: azure-operator
       version: 2.4.1
@@ -122,9 +124,9 @@
     - name: cluster-operator
       provider: azure
       version: 0.17.0
-  date: 2019-03-30T10:00:00Z
-  version: 8.2.1
-- active: false
+- version: 8.2.0
+  active: false
+  date: 2019-03-30 10:00:00+00:00
   authorities:
     - name: azure-operator
       version: 2.4.0
@@ -135,9 +137,9 @@
     - name: cluster-operator
       provider: azure
       version: 0.17.0
-  date: 2019-03-30T10:00:00Z
-  version: 8.2.0
-- active: false
+- version: 8.0.0
+  active: false
+  date: 2019-03-21 10:00:00+00:00
   authorities:
     - name: azure-operator
       version: 2.3.0
@@ -148,9 +150,9 @@
     - name: cluster-operator
       provider: azure
       version: 0.15.0
-  date: 2019-03-21T10:00:00Z
-  version: 8.0.0
-- active: false
+- version: 7.2.1
+  active: false
+  date: 2019-04-25 18:00:00+00:00
   authorities:
     - name: azure-operator
       version: 2.2.0
@@ -161,9 +163,9 @@
     - name: cluster-operator
       provider: azure
       version: 0.14.1
-  date: 2019-04-25T18:00:00Z
-  version: 7.2.1
-- active: false
+- version: 7.2.0
+  active: false
+  date: 2019-03-21 10:00:00+00:00
   authorities:
     - name: azure-operator
       version: 2.2.0
@@ -174,9 +176,9 @@
     - name: cluster-operator
       provider: azure
       version: 0.13.0
-  date: 2019-03-21T10:00:00Z
-  version: 7.2.0
-- active: false
+- version: 7.1.1
+  active: false
+  date: 2019-03-12 10:00:00+00:00
   authorities:
     - name: azure-operator
       version: 2.2.0
@@ -187,9 +189,9 @@
     - name: cluster-operator
       provider: azure
       version: 0.12.0
-  date: 2019-03-12T10:00:00Z
-  version: 7.1.1
-- active: false
+- version: 7.1.0
+  active: false
+  date: 2019-03-04 10:00:00+00:00
   authorities:
     - name: azure-operator
       version: 2.1.0
@@ -200,9 +202,9 @@
     - name: cluster-operator
       provider: azure
       version: 0.12.0
-  date: 2019-03-04T10:00:00Z
-  version: 7.1.0
-- active: false
+- version: 7.0.0
+  active: false
+  date: 2019-03-01 15:00:00+00:00
   authorities:
     - name: azure-operator
       version: 2.1.0
@@ -213,9 +215,9 @@
     - name: cluster-operator
       provider: azure
       version: 0.11.0
-  date: 2019-03-01T15:00:00Z
-  version: 7.0.0
-- active: false
+- version: 2.0.3
+  active: false
+  date: 2019-02-12 13:09:00+00:00
   authorities:
     - name: azure-operator
       version: 2.0.2
@@ -226,9 +228,9 @@
     - name: cluster-operator
       provider: azure
       version: 0.9.0
-  date: 2019-02-12T13:09:00Z
-  version: 2.0.3
-- active: false
+- version: 2.0.2
+  active: false
+  date: 2018-11-05 12:31:00+00:00
   authorities:
     - name: azure-operator
       version: 2.0.1
@@ -239,9 +241,9 @@
     - name: cluster-operator
       provider: azure
       version: 0.9.0
-  date: 2018-11-05T12:31:00Z
-  version: 2.0.2
-- active: false
+- version: 2.0.1
+  active: false
+  date: 2018-11-05 12:30:00+00:00
   authorities:
     - name: azure-operator
       version: 2.0.0
@@ -252,9 +254,9 @@
     - name: cluster-operator
       provider: azure
       version: 0.7.1
-  date: 2018-11-05T12:30:00Z
-  version: 2.0.1
-- active: false
+- version: 2.0.0
+  active: false
+  date: 2018-08-28 09:00:00+00:00
   authorities:
     - name: azure-operator
       version: 2.0.0
@@ -265,9 +267,9 @@
     - name: cluster-operator
       provider: azure
       version: 0.7.0
-  date: 2018-08-28T09:00:00Z
-  version: 2.0.0
-- active: false
+- version: 1.1.2
+  active: false
+  date: 2018-12-03 22:55:00+00:00
   authorities:
     - name: azure-operator
       version: 1.1.2
@@ -278,9 +280,9 @@
     - name: cluster-operator
       provider: azure
       version: 0.6.0
-  date: 2018-12-03T22:55:00Z
-  version: 1.1.2
-- active: false
+- version: 1.1.1
+  active: false
+  date: 2018-09-17 14:00:00+00:00
   authorities:
     - name: azure-operator
       version: 1.1.1
@@ -291,9 +293,9 @@
     - name: cluster-operator
       provider: azure
       version: 0.6.0
-  date: 2018-09-17T14:00:00Z
-  version: 1.1.1
-- active: false
+- version: 1.1.0
+  active: false
+  date: 2018-08-16 17:00:00+00:00
   authorities:
     - name: azure-operator
       version: 1.1.0
@@ -304,9 +306,9 @@
     - name: cluster-operator
       provider: azure
       version: 0.6.0
-  date: 2018-08-16T17:00:00Z
-  version: 1.1.0
-- active: false
+- version: 1.0.1
+  active: false
+  date: 2018-08-07 12:00:00+00:00
   authorities:
     - name: azure-operator
       version: 1.0.1
@@ -315,9 +317,9 @@
     - name: cluster-operator
       provider: azure
       version: 0.4.0
-  date: 2018-08-07T12:00:00Z
-  version: 1.0.1
-- active: false
+- version: 1.0.0
+  active: false
+  date: 2018-06-21 12:00:00+00:00
   authorities:
     - name: azure-operator
       version: 1.0.0
@@ -326,9 +328,9 @@
     - name: cluster-operator
       provider: azure
       version: 0.4.0
-  date: 2018-06-21T12:00:00Z
-  version: 1.0.0
-- active: false
+- version: 0.4.0
+  active: false
+  date: 2018-04-16 12:00:00+00:00
   authorities:
     - name: azure-operator
       version: 0.1.0
@@ -337,9 +339,9 @@
     - name: cluster-operator
       provider: azure
       version: 0.2.0
-  date: 2018-04-16T12:00:00Z
-  version: 0.4.0
-- active: false
+- version: 0.3.0
+  active: false
+  date: 2018-03-28 07:30:00+00:00
   authorities:
     - name: azure-operator
       version: 0.1.0
@@ -348,13 +350,11 @@
     - name: cluster-operator
       provider: azure
       version: 0.1.0
-  date: 2018-03-28T07:30:00Z
-  version: 0.3.0
-- active: false
+- version: 0.2.0
+  active: false
+  date: 2018-01-07 08:35:00+00:00
   authorities:
     - name: azure-operator
       version: 0.1.0
     - name: cert-operator
       version: 0.1.0
-  date: 2018-01-07T08:35:00Z
-  version: 0.2.0
