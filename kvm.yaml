@@ -1,4 +1,6 @@
-- active: false
+- version: 11.1.1
+  active: false
+  date: 2020-01-29T13:00:00Z
   apps:
     - app: cert-exporter
       version: 1.2.1
@@ -35,9 +37,9 @@
       version: 0.2.0
     - name: kvm-operator
       version: 3.11.0-dev
-  date: 2020-01-29T13:00:00Z
-  version: 11.1.1
-- active: true
+- version: 11.1.0
+  active: true
+  date: 2020-01-29T12:00:00Z
   authorities:
     - name: app-operator
       version: 1.0.0
@@ -52,9 +54,9 @@
       version: 0.2.0
     - name: kvm-operator
       version: 3.10.0
-  date: 2020-01-29T12:00:00Z
-  version: 11.1.0
-- active: false
+- version: 11.0.0
+  active: false
+  date: 2020-01-10T12:00:00Z
   authorities:
     - name: app-operator
       version: 1.0.0
@@ -69,9 +71,9 @@
       version: 0.2.0
     - name: kvm-operator
       version: 3.10.0
-  date: 2020-01-10T12:00:00Z
-  version: 11.0.0
-- active: true
+- version: 9.0.0
+  active: true
+  date: 2019-10-28T12:00:00Z
   authorities:
     - name: app-operator
       version: 1.0.0
@@ -86,9 +88,9 @@
       version: 0.2.0
     - name: kvm-operator
       version: 3.9.0
-  date: 2019-10-28T12:00:00Z
-  version: 9.0.0
-- active: false
+- version: 8.4.0
+  active: false
+  date: 2019-08-20T17:00:00Z
   authorities:
     - name: app-operator
       version: 1.0.0
@@ -103,9 +105,9 @@
       version: 0.2.0
     - name: kvm-operator
       version: 3.8.0
-  date: 2019-08-20T17:00:00Z
-  version: 8.4.0
-- active: false
+- version: 8.3.0
+  active: false
+  date: 2019-08-20T16:40:00Z
   authorities:
     - name: cert-operator
       version: 0.1.0
@@ -118,9 +120,9 @@
       version: 0.2.0
     - name: kvm-operator
       version: 3.7.1
-  date: 2019-08-20T16:40:00Z
-  version: 8.3.0
-- active: false
+- version: 8.2.1
+  active: false
+  date: 2019-06-24T10:00:00Z
   authorities:
     - name: cert-operator
       version: 0.1.0
@@ -133,9 +135,9 @@
       version: 0.2.0
     - name: kvm-operator
       version: 3.7.1
+- version: 8.2.0
+  active: false
   date: 2019-06-24T10:00:00Z
-  version: 8.2.1
-- active: false
   authorities:
     - name: cert-operator
       version: 0.1.0
@@ -148,9 +150,9 @@
       version: 0.2.0
     - name: kvm-operator
       version: 3.7.0
-  date: 2019-06-24T10:00:00Z
-  version: 8.2.0
-- active: false
+- version: 8.1.0
+  active: false
+  date: 2019-04-30T10:00:00Z
   authorities:
     - name: cert-operator
       version: 0.1.0
@@ -163,9 +165,9 @@
       version: 0.2.0
     - name: kvm-operator
       version: 3.6.0
-  date: 2019-04-30T10:00:00Z
-  version: 8.1.0
-- active: false
+- version: 8.0.0
+  active: false
+  date: 2019-03-21T10:00:00Z
   authorities:
     - name: cert-operator
       version: 0.1.0
@@ -178,9 +180,9 @@
       version: 0.2.0
     - name: kvm-operator
       version: 3.5.0
-  date: 2019-03-21T10:00:00Z
-  version: 8.0.0
-- active: false
+- version: 7.2.1
+  active: false
+  date: 2019-04-25T18:00:00Z
   authorities:
     - name: cert-operator
       version: 0.1.0
@@ -193,9 +195,9 @@
       version: 0.2.0
     - name: kvm-operator
       version: 3.4.0
-  date: 2019-04-25T18:00:00Z
-  version: 7.2.1
-- active: false
+- version: 7.2.0
+  active: false
+  date: 2019-03-21T10:00:00Z
   authorities:
     - name: cert-operator
       version: 0.1.0
@@ -208,9 +210,9 @@
       version: 0.2.0
     - name: kvm-operator
       version: 3.4.0
+- version: 7.1.0
+  active: false
   date: 2019-03-21T10:00:00Z
-  version: 7.2.0
-- active: false
   authorities:
     - name: cert-operator
       version: 0.1.0
@@ -223,9 +225,9 @@
       version: 0.2.0
     - name: kvm-operator
       version: 3.3.0
-  date: 2019-03-21T10:00:00Z
-  version: 7.1.0
-- active: false
+- version: 7.0.1
+  active: false
+  date: 2019-03-12T10:00:00Z
   authorities:
     - name: cert-operator
       version: 0.1.0
@@ -238,9 +240,9 @@
       version: 0.2.0
     - name: kvm-operator
       version: 3.3.0
-  date: 2019-03-12T10:00:00Z
-  version: 7.0.1
-- active: false
+- version: 7.0.0
+  active: false
+  date: 2019-03-01T15:00:00Z
   authorities:
     - name: cert-operator
       version: 0.1.0
@@ -253,9 +255,9 @@
       version: 0.2.0
     - name: kvm-operator
       version: 3.2.0
-  date: 2019-03-01T15:00:00Z
-  version: 7.0.0
-- active: false
+- version: 6.0.2
+  active: false
+  date: 2019-02-12T13:29:00Z
   authorities:
     - name: cert-operator
       version: 0.1.0
@@ -268,9 +270,9 @@
       version: 0.2.0
     - name: kvm-operator
       version: 3.1.2
-  date: 2019-02-12T13:29:00Z
-  version: 6.0.2
-- active: false
+- version: 6.0.1
+  active: false
+  date: 2018-12-04T16:01:00Z
   authorities:
     - name: cert-operator
       version: 0.1.0
@@ -283,9 +285,9 @@
       version: 0.2.0
     - name: kvm-operator
       version: 3.1.1
-  date: 2018-12-04T16:01:00Z
-  version: 6.0.1
-- active: false
+- version: 6.0.0
+  active: false
+  date: 2018-11-09T21:00:00Z
   authorities:
     - name: cert-operator
       version: 0.1.0
@@ -298,9 +300,9 @@
       version: 0.2.0
     - name: kvm-operator
       version: 3.1.0
-  date: 2018-11-09T21:00:00Z
-  version: 6.0.0
-- active: false
+- version: 3.0.0
+  active: false
+  date: 2018-08-09T13:00:00Z
   authorities:
     - name: cert-operator
       version: 0.1.0
@@ -313,9 +315,9 @@
       version: 0.2.0
     - name: kvm-operator
       version: 3.0.0
-  date: 2018-08-09T13:00:00Z
-  version: 3.0.0
-- active: false
+- version: 2.12.4
+  active: false
+  date: 2019-02-12T13:12:00Z
   authorities:
     - name: cert-operator
       version: 0.1.0
@@ -328,9 +330,9 @@
       version: 0.2.0
     - name: kvm-operator
       version: 2.5.4
-  date: 2019-02-12T13:12:00Z
-  version: 2.12.4
-- active: false
+- version: 2.12.3
+  active: false
+  date: 2019-01-23T12:00:00Z
   authorities:
     - name: cert-operator
       version: 0.1.0
@@ -343,9 +345,9 @@
       version: 0.2.0
     - name: kvm-operator
       version: 2.5.3
-  date: 2019-01-23T12:00:00Z
-  version: 2.12.3
-- active: false
+- version: 2.12.2
+  active: false
+  date: 2018-12-04T16:00:00Z
   authorities:
     - name: cert-operator
       version: 0.1.0
@@ -358,9 +360,9 @@
       version: 0.2.0
     - name: kvm-operator
       version: 2.5.3
-  date: 2018-12-04T16:00:00Z
-  version: 2.12.2
-- active: false
+- version: 2.12.1
+  active: false
+  date: 2018-09-17T14:00:00Z
   authorities:
     - name: cert-operator
       version: 0.1.0
@@ -373,9 +375,9 @@
       version: 0.2.0
     - name: kvm-operator
       version: 2.5.2
-  date: 2018-09-17T14:00:00Z
-  version: 2.12.1
-- active: false
+- version: 2.12.0
+  active: false
+  date: 2018-08-29T15:00:00Z
   authorities:
     - name: cert-operator
       version: 0.1.0
@@ -388,9 +390,9 @@
       version: 0.2.0
     - name: kvm-operator
       version: 2.5.1
-  date: 2018-08-29T15:00:00Z
-  version: 2.12.0
-- active: false
+- version: 2.11.0
+  active: false
+  date: 2018-08-09T12:00:00Z
   authorities:
     - name: cert-operator
       version: 0.1.0
@@ -403,9 +405,9 @@
       version: 0.2.0
     - name: kvm-operator
       version: 2.5.0
-  date: 2018-08-09T12:00:00Z
-  version: 2.11.0
-- active: false
+- version: 2.10.0
+  active: false
+  date: 2018-06-01T15:00:00Z
   authorities:
     - name: cert-operator
       version: 0.1.0
@@ -416,9 +418,9 @@
       version: 0.2.0
     - name: kvm-operator
       version: 2.4.0
-  date: 2018-06-01T15:00:00Z
-  version: 2.10.0
-- active: false
+- version: 2.9.0
+  active: false
+  date: 2018-06-01T13:00:00Z
   authorities:
     - name: cert-operator
       version: 0.1.0
@@ -429,9 +431,9 @@
       version: 0.2.0
     - name: kvm-operator
       version: 2.3.0
-  date: 2018-06-01T13:00:00Z
-  version: 2.9.0
-- active: false
+- version: 2.7.0
+  active: false
+  date: 2018-04-25T12:00:00Z
   authorities:
     - name: cert-operator
       version: 0.1.0
@@ -442,9 +444,9 @@
       version: 0.2.0
     - name: kvm-operator
       version: 2.2.0
-  date: 2018-04-25T12:00:00Z
-  version: 2.7.0
-- active: false
+- version: 1.4.0
+  active: false
+  date: 2018-02-08T12:00:00Z
   authorities:
     - name: cert-operator
       version: 0.1.0
@@ -452,9 +454,9 @@
       version: 0.1.0
     - name: kvm-operator
       version: 1.2.0
-  date: 2018-02-08T12:00:00Z
-  version: 1.4.0
-- active: false
+- version: 1.2.0
+  active: false
+  date: 2017-12-12T12:00:00Z
   authorities:
     - name: cert-operator
       version: 0.1.0
@@ -462,9 +464,9 @@
       version: 0.1.0
     - name: kvm-operator
       version: 1.0.0
-  date: 2017-12-12T12:00:00Z
-  version: 1.2.0
-- active: false
+- version: 0.3.0
+  active: false
+  date: 2017-10-26T12:00:00Z
   authorities:
     - name: cert-operator
       version: 0.1.0
@@ -472,5 +474,3 @@
       version: 0.1.0
     - name: kvm-operator
       version: 0.1.0
-  date: 2017-10-26T12:00:00Z
-  version: 0.3.0
