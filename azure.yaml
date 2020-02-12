@@ -1,4 +1,4 @@
-- active: true
+- active: false
   apps:
     - app: cert-exporter
       version: 1.2.1
