@@ -1,3 +1,10 @@
+- version: 1.5.0
+  componentVersion: 0.29.0
+  description: Upgrade to nginx-ingress-controller 0.29.0, and fix NodePort Service regression for legacy AWS clusters.
+  kind: changed
+  urls:
+    - https://github.com/giantswarm/nginx-ingress-controller-app/pull/29
+    - https://github.com/giantswarm/nginx-ingress-controller-app/pull/30
 - version: 1.4.0
   componentVersion: 0.28.0
   description: Support overriding all nginx configmap settings.
