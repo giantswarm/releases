@@ -1,5 +1,5 @@
 - version: 11.0.1
-  active: false
+  active: true
   date: 2020-02-05T12:00:00Z
   apps:
     - app: cert-exporter
@@ -36,7 +36,7 @@
     - name: app-operator
       version: 1.0.0
     - name: aws-operator
-      version: 8.1.1-dev
+      version: 8.1.1
     - name: cert-operator
       version: 0.1.0
     - name: cluster-operator
