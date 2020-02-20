@@ -1,6 +1,6 @@
 - version: 11.1.1
-  active: true
-  date: 2020-02-12T13:00:00Z
+  active: false
+  date: 2020-02-21T13:00:00Z
   apps:
     - app: cert-exporter
       version: 1.2.1
