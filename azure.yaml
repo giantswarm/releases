@@ -38,7 +38,7 @@
       version: 0.23.1
 - version: 11.1.0
   active: true
-  date: 2020-01-08T12:00:00Z
+  date: 2020-02-20T12:00:00Z
   authorities:
     - name: app-operator
       version: 1.0.0
