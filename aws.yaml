@@ -20,7 +20,7 @@
       version: 1.2.0
     - app: kiam
       componentVersion: 3.5.0
-      version: 1.1.0
+      version: 1.1.1
     - app: kube-state-metrics
       componentVersion: 1.9.0
       version: 1.0.0
