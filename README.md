@@ -6,6 +6,7 @@ This repository contains Giant Swarm releases and changelogs.
 
 ### AWS
  - [11.0.0](https://github.com/giantswarm/releases/blob/master/release-notes/aws/v11.0.0.md)
+ - [10.2.0](https://github.com/giantswarm/releases/blob/master/release-notes/aws/v10.2.0.md)
  - [10.1.2](https://github.com/giantswarm/releases/blob/master/release-notes/aws/v10.1.2.md)
  - [10.1.1](https://github.com/giantswarm/releases/blob/master/release-notes/aws/v10.1.1.md)
  - [10.1.0](https://github.com/giantswarm/releases/blob/master/release-notes/aws/v10.1.0.md)
