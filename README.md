@@ -10,7 +10,6 @@ This repository contains Giant Swarm releases and changelogs.
  - [10.1.1](https://github.com/giantswarm/releases/blob/master/release-notes/aws/v10.1.1.md)
  - [10.1.0](https://github.com/giantswarm/releases/blob/master/release-notes/aws/v10.1.0.md)
  - [9.2.0](https://github.com/giantswarm/releases/blob/master/release-notes/aws/v9.2.0.md)
- - [9.1.0](https://github.com/giantswarm/releases/blob/master/release-notes/aws/v9.1.0.md)
  - [9.0.0](https://github.com/giantswarm/releases/blob/master/release-notes/aws/v9.0.0.md)
  - [8.5.0](https://github.com/giantswarm/releases/blob/master/release-notes/aws/v8.5.0.md)
 
