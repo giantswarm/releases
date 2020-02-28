@@ -1,3 +1,9 @@
+- version: 1.0.6
+  componentVersion: 0.9.0
+  description: Configured app icon.
+  kind: changed
+  urls:
+    - https://github.com/giantswarm/cert-manager-app/blob/master/CHANGELOG.md#v106-2020-02-28
 - version: 1.0.5
   componentVersion: 0.9.0
   description: Updated helm chart to use a same image registry for parent and cluster-issuer subchart.
