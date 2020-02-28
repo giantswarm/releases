@@ -14,7 +14,7 @@
       version: 1.2.0
     - app: kube-state-metrics
       componentVersion: 1.9.2
-      version: 1.0.3
+      version: 1.0.2
     - app: metrics-server
       componentVersion: 0.3.3
       version: 1.0.0
