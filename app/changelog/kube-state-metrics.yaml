@@ -1,7 +1,7 @@
 - version: 1.0.3
   componentVersion: 1.9.2
   description: Remove CPU and memory limits.
-  kind: fixed
+  kind: changed
   urls:
     - https://github.com/giantswarm/kube-state-metrics-app/blob/master/CHANGELOG.md#v103
 - version: 1.0.2
