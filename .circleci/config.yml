@@ -6,20 +6,22 @@ orbs:
 
 jobs:
   validate:
-    machine: true
+    docker:
+      - image: quay.io/giantswarm/opsctl
+        auth:
+          username: $DOCKER_USER
+          password: $DOCKER_PASS
     steps:
       - checkout
-      - run: docker login -u $DOCKER_USER -p $DOCKER_PASS quay.io
-      - run: docker pull quay.io/giantswarm/opsctl
       - run:
           name: Validate AWS releases
-          command: docker run --rm -v /home/circleci/project/:/run/releases/ quay.io/giantswarm/opsctl validate releases -p /run/releases/aws.yaml
+          command: opsctl validate releases -p aws.yaml
       - run:
           name: Validate Azure releases
-          command: docker run --rm -v /home/circleci/project/:/run/releases/ quay.io/giantswarm/opsctl validate releases -p /run/releases/azure.yaml
+          command: opsctl validate releases -p azure.yaml
       - run:
           name: Validate KVM releases
-          command: docker run --rm -v /home/circleci/project/:/run/releases/ quay.io/giantswarm/opsctl validate releases -p /run/releases/kvm.yaml
+          command: opsctl validate releases -p kvm.yaml
   prepare-helm:
     machine: true
     parameters:
@@ -38,6 +40,10 @@ jobs:
           name: <<parameters.app_name>>
           version: [[ .Version ]]
           EOF
+      - persist_to_workspace:
+        root: /root/project
+        paths:
+          - helm
 
 workflows:
   workflow:
@@ -50,16 +56,18 @@ workflows:
             - validate
           source: kvm
       - architect/push-to-app-catalog:
-          name: push-releases-to-control-plane-app-catalog-kvm
+          name: push-kvm-releases-to-control-plane-app-catalog
           app_catalog: control-plane-catalog
           app_catalog_test: control-plane-test-catalog
           chart: releases-kvm
           requires:
             - prepare-helm-kvm
+            - attach_workspace:
+              at: /tmp/workspace
       - architect/push-to-app-collection:
           name: push-releases-to-kvm-app-collection
-          app_name: releases
+          app_name: releases-kvm
           app_collection_repo: kvm-app-collection
           unique: "true"
           requires:
-            - push-releases-to-control-plane-app-catalog-kvm
+            - push-kvm-releases-to-control-plane-app-catalog
