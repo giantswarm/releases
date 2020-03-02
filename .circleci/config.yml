@@ -34,7 +34,7 @@ jobs:
         type: "string"
     steps:
       - checkout
-      - run: mkdir -p helm/<<parameters.app_name>>/template
+      - run: mkdir -p helm/<<parameters.app_name>>
       - run: cp -R <<parameters.source>> helm/<<parameters.app_name>>/template
       - run: |
           cat \<<EOF > helm/<<parameters.app_name>>/Chart.yaml
@@ -44,7 +44,7 @@ jobs:
       - persist_to_workspace:
           root: .
           paths:
-            - ./project/helm
+            - ./helm
   push-to-app-catalog:
     executor: architect/architect
     parameters:
