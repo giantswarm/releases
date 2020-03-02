@@ -165,3 +165,5 @@ workflows:
           helm_path: "kvm"
           unique: "true"
           use_alternative_helm_path: true
+          requires:
+            - validate
