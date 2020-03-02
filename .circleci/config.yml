@@ -44,18 +44,18 @@ workflows:
     jobs:
       - validate
       - architect/push-to-app-catalog:
-        name: push-releases-to-control-plane-app-catalog
-        app_catalog: control-plane-catalog
-        app_catalog_test: control-plane-test-catalog
-        chart: releases
-        requires:
-          - validate
+          name: push-releases-to-control-plane-app-catalog
+          app_catalog: control-plane-catalog
+          app_catalog_test: control-plane-test-catalog
+          chart: releases
+          requires:
+            - validate
       - prepare-helm:
-        name: prepare-helm-kvm
-        app_name: releases
-        requires:
-          - validate
-        source: kvm
+          name: prepare-helm-kvm
+          app_name: releases
+          requires:
+            - validate
+          source: kvm
       - architect/push-to-app-collection:
           name: push-releases-to-kvm-app-collection
           app_name: releases
