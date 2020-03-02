@@ -32,12 +32,6 @@ jobs:
       source:
         description: "Directory to deploy as helm chart."
         type: "string"
-      app_catalog:
-        description: "Directory to deploy as helm chart."
-        type: "string"
-      app_catalog_test:
-        description: "Directory to deploy as helm chart."
-        type: "string"
     steps:
       - checkout
       - run: mkdir -p helm/<<parameters.app_name>>/template
