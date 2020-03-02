@@ -2,140 +2,7 @@
 version: 2.1
 
 orbs:
-  architect:
-    commands:
-      prepare-catalogbot-git-ssh:
-        steps:
-          - run: |
-              [ ! -z "${CATALOGBOT_SSH_KEY_PRIVATE_BASE64}" ] && exit 0 || echo "CATALOGBOT_SSH_KEY_PRIVATE_BASE64 env variable must not be empty" ; exit 1
-          - run: |
-              mkdir -p ~/.ssh
-          - run: |
-              echo ${CATALOGBOT_SSH_KEY_PRIVATE_BASE64} | base64 -d > ~/.ssh/id_rsa
-          - run: |
-              chmod 0600 ~/.ssh/id_rsa
-          - run: |
-              git config --global url."ssh://git@github.com".insteadOf "https://github.com"
-          - run: |
-              git config --global gc.auto 0
-          - run: |
-              git config --global user.email "catalogbot@giantswarm.io"
-          - run: |
-              git config --global user.name "CatalogBot"        
-      push-to-app-collection:
-        description: >
-          Generates and adds an App CR to an app-collection.
-          Note: version will be detected automatically by architect.
-        parameters:
-          app_name:
-            type: "string"
-          app_catalog:
-            type: "string"
-          app_collection_repo:
-            type: "string"
-          helm_path:
-            type: "string"
-          unique:
-            type: "string"
-        steps:
-          - run: |
-              architect project version > .version
-          - when:
-              condition: <<parameters.unique>>
-              steps:
-                - run: |
-                      echo -n "<<parameters.app_name>>-unique" > .cr_name
-          - unless:
-              condition: <<parameters.unique>>
-              steps:
-                - run: |
-                      echo -n "<<parameters.app_name>>-$(cat .version)" | head -c 53 > .cr_name
-          - run: |
-                architect create appcr --name $(cat .cr_name) --app-name <<parameters.app_name>> --app-version $(cat .version) --catalog <<parameters.app_catalog>> -o yaml > .app.yaml
-          - run: |
-                git clone -q --depth=1 --single-branch -b master git@github.com:giantswarm/<<parameters.app_collection_repo>>.git .app-collection
-          - run: |
-                mkdir -p .app-collection/<<parameters.helm_path>>/templates
-          - when:
-              condition: <<parameters.unique>>
-              steps:
-                - run: |
-                      cd .app-collection && git rm --ignore-unmatch <<parameters.helm_path>>/templates/<<parameters.app_name>>-*.yaml
-                - run: |
-                      echo -n "<<parameters.app_name>>-unique.yaml" > .app_file_name
-                - run: |
-                      echo -n "update <<parameters.app_name>>-unique to $(cat .version)" > .git_commit_message
-          - unless:
-              condition: <<parameters.unique>>
-              steps:
-                - run: |
-                      echo -n "<<parameters.app_name>>-$(cat .version).yaml" > .app_file_name
-                - run: |
-                      echo -n "add <<parameters.app_name>>-$(cat .version)" > .git_commit_message
-          - run: |
-                mv -n .app.yaml .app-collection/<<parameters.helm_path>>/templates/$(cat .app_file_name)
-          - run: |
-                cd .app-collection && git add <<parameters.helm_path>>/templates/$(cat ../.app_file_name)
-          - run: |
-                cd .app-collection && git commit -m "$(cat ../.git_commit_message)"
-          - run: |
-                cd .app-collection && git push || (echo "Error pushing app to the collection. See known errors in https://github.com/giantswarm/architect-orb/blob/master/README.md#push-to-app-collection" && exit 1)
-          - run: |
-                rm .cr_name .version .app_file_name .git_commit_message      
-    executors:
-      architect:
-        docker:
-          - entrypoint: /bin/bash
-            image: quay.io/giantswarm/architect:latest
-    jobs:
-      push-to-app-collection:
-        description: >
-          Generates and adds an App CR to an app-collection.
-          Note: version will be detected automatically by architect.
-        executor: architect
-        parameters:
-          app_name:
-            description: "Name of the application."
-            type: "string"
-          app_catalog:
-            description: "Name of the catalog CR where the application belongs."
-            type: "string"
-            default: "control-plane-catalog"
-          app_collection_repo:
-            description: "Name of the app collection repository."
-            type: "string"
-          use_alternative_helm_path:
-            description: "Use provided helm_path parameter instead of default"
-            default: false
-            type: "boolean"
-          helm_path:
-            description: "Alternative directory for helm chart (only set if different from `helm/<repo>-chart`)"
-            type: "string"
-          unique:
-            description: "Whether the previous App versions in the collection should be replaced with this one. Any non-empty string means true. This is useful when only one (usually latest) version of the app should be installed at a time. E.g. OPA gatekeeper."
-            type: "string"
-            default: ""
-        steps:
-          - checkout
-          - prepare-catalogbot-git-ssh
-          - unless:
-              condition: <<parameters.use_alternative_helm_path>>
-              steps:
-                - push-to-app-collection:
-                    app_name: <<parameters.app_name>>
-                    app_catalog: <<parameters.app_catalog>>
-                    app_collection_repo: <<parameters.app_collection_repo>>
-                    helm_path: helm/<<parameters.app_collection_repo>>-chart
-                    unique: <<parameters.unique>>
-          - when:
-              condition: <<parameters.use_alternative_helm_path>>
-              steps:
-                - push-to-app-collection:
-                    app_name: <<parameters.app_name>>
-                    app_catalog: <<parameters.app_catalog>>
-                    app_collection_repo: <<parameters.app_collection_repo>>
-                    helm_path: <<parameters.helm_path>>
-                    unique: <<parameters.unique>>
+  architect: giantswarm/architect@0.6.0
 
 jobs:
   validate:
@@ -153,17 +20,37 @@ jobs:
       - run:
           name: Validate KVM releases
           command: docker run --rm -v /home/circleci/project/:/run/releases/ quay.io/giantswarm/opsctl validate releases -p /run/releases/kvm.yaml
+  prepare:
+    machine: true
+    parameters:
+      app_name:
+        description: "Directory to deploy as helm chart."
+        type: "string"
+      source:
+        description: "Directory to deploy as helm chart."
+        type: "string"
+    steps:
+      - run: mkdir -p helm/<<parameters.app_name>>/template
+      - run: cp -R <<parameters.source>> helm/<<parameters.app_name>>/template
+      - run: |
+        cat <<EOF > helm/<<parameters.source>>/Chart.yaml
+        name: <<parameters.app_name>>
+        version: [[ .Version ]]
+        EOF
 
 workflows:
   workflow:
     jobs:
       - validate
-      - architect/push-to-app-collection:
-          name: push-releases-to-aws-app-collection
-          app_name: "releases"
-          app_collection_repo: "kvm-app-collection"
-          helm_path: "kvm"
-          unique: "true"
-          use_alternative_helm_path: true
+      - prepare:
+          app_name: releases
+          directory: kvm
           requires:
             - validate
+      - architect/push-to-app-collection:
+          name: push-releases-to-kvm-app-collection
+          app_name: releases
+          app_collection_repo: kvm-app-collection
+          unique: true
+          requires:
+            - prepare
