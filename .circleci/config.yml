@@ -4,6 +4,24 @@ version: 2.1
 orbs:
   architect:
     commands:
+      prepare-catalogbot-git-ssh:
+        steps:
+          - run: |
+              [ ! -z "${CATALOGBOT_SSH_KEY_PRIVATE_BASE64}" ] && exit 0 || echo "CATALOGBOT_SSH_KEY_PRIVATE_BASE64 env variable must not be empty" ; exit 1
+          - run: |
+              mkdir -p ~/.ssh
+          - run: |
+              echo ${CATALOGBOT_SSH_KEY_PRIVATE_BASE64} | base64 -d > ~/.ssh/id_rsa
+          - run: |
+              chmod 0600 ~/.ssh/id_rsa
+          - run: |
+              git config --global url."ssh://git@github.com".insteadOf "https://github.com"
+          - run: |
+              git config --global gc.auto 0
+          - run: |
+              git config --global user.email "catalogbot@giantswarm.io"
+          - run: |
+              git config --global user.name "CatalogBot"        
       push-to-app-collection:
         description: >
           Generates and adds an App CR to an app-collection.
