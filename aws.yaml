@@ -142,8 +142,6 @@
       version: 8.0.4
     - name: cert-operator
       version: 0.1.0
-    - name: chart-operator
-      version: 0.7.0
     - name: cluster-operator
       provider: aws
       version: 2.1.2
