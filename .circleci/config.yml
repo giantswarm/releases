@@ -23,6 +23,8 @@ jobs:
           name: Validate KVM releases
           command: opsctl validate releases -p kvm.yaml
   prepare-helm:
+    docker:
+      - image: bash:5.0.16
     parameters:
       app_name:
         description: "Name of helm chart."
@@ -61,8 +63,6 @@ workflows:
           chart: releases-kvm
           requires:
             - prepare-helm-kvm
-            - attach_workspace:
-              at: /tmp/workspace
       - architect/push-to-app-collection:
           name: push-releases-to-kvm-app-collection
           app_name: releases-kvm
