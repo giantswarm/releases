@@ -21,7 +21,7 @@ orbs:
             type: "string"
         steps:
           - run: |
-                architect project version > .version
+              architect project version > .version
           - when:
               condition: <<parameters.unique>>
               steps:
@@ -100,23 +100,23 @@ orbs:
           - checkout
           - prepare-catalogbot-git-ssh
           - unless:
-            condition: <<parameters.use_alternative_helm_path>>
-            steps:
-              - push-to-app-collection:
-                  app_name: <<parameters.app_name>>
-                  app_catalog: <<parameters.app_catalog>>
-                  app_collection_repo: <<parameters.app_collection_repo>>
-                  helm_path: helm/<<parameters.app_collection_repo>>-chart
-                  unique: <<parameters.unique>>
+              condition: <<parameters.use_alternative_helm_path>>
+              steps:
+                - push-to-app-collection:
+                    app_name: <<parameters.app_name>>
+                    app_catalog: <<parameters.app_catalog>>
+                    app_collection_repo: <<parameters.app_collection_repo>>
+                    helm_path: helm/<<parameters.app_collection_repo>>-chart
+                    unique: <<parameters.unique>>
           - when:
-            condition: <<parameters.use_alternative_helm_path>>
-            steps:
-              - push-to-app-collection:
-                  app_name: <<parameters.app_name>>
-                  app_catalog: <<parameters.app_catalog>>
-                  app_collection_repo: <<parameters.app_collection_repo>>
-                  helm_path: <<paramters.helm_path>>
-                  unique: <<parameters.unique>>
+              condition: <<parameters.use_alternative_helm_path>>
+              steps:
+                - push-to-app-collection:
+                    app_name: <<parameters.app_name>>
+                    app_catalog: <<parameters.app_catalog>>
+                    app_collection_repo: <<parameters.app_collection_repo>>
+                    helm_path: <<paramters.helm_path>>
+                    unique: <<parameters.unique>>
 
 jobs:
   build:
