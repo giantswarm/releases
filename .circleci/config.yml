@@ -140,9 +140,9 @@ workflows:
     jobs:
       - validate
       - architect/push-to-app-collection:
-        name: push-releases-to-aws-app-collection
-        app_name: "releases"
-        app_collection_repo: "kvm-app-collection"
-        helm_path: "kvm"
-        unique: "true"
-        use_alternative_helm_path: true
+          name: push-releases-to-aws-app-collection
+          app_name: "releases"
+          app_collection_repo: "kvm-app-collection"
+          helm_path: "kvm"
+          unique: "true"
+          use_alternative_helm_path: true
