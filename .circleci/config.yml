@@ -23,7 +23,6 @@ jobs:
           name: Validate KVM releases
           command: opsctl validate releases -p kvm.yaml
   prepare-helm:
-    machine: true
     parameters:
       app_name:
         description: "Name of helm chart."
@@ -41,9 +40,9 @@ jobs:
           version: [[ .Version ]]
           EOF
       - persist_to_workspace:
-        root: /root/project
-        paths:
-          - helm
+          root: /root/project
+          paths:
+            - helm
 
 workflows:
   workflow:
