@@ -32,6 +32,12 @@ jobs:
       source:
         description: "Directory to deploy as helm chart."
         type: "string"
+      app_catalog:
+        description: "Directory to deploy as helm chart."
+        type: "string"
+      app_catalog_test:
+        description: "Directory to deploy as helm chart."
+        type: "string"
     steps:
       - checkout
       - run: mkdir -p helm/<<parameters.app_name>>/template
@@ -42,9 +48,30 @@ jobs:
           version: [[ .Version ]]
           EOF
       - persist_to_workspace:
-          root: /root/project
+          root: .
           paths:
-            - helm
+            - ./project/helm
+  push-to-app-catalog:
+    executor: architect
+    parameters:
+      app_catalog:
+        description: "Name of the Github repository inside giantswarm organization hosting the App Catalog for tagged builds."
+        type: "string"
+      app_catalog_test:
+        description: "Name of the Github repository inside giantswarm organization hosting the App Catalog for test builds."
+        type: "string"
+      chart:
+        description: "Name of the chart inside helm directory to push to the App Catalog."
+        type: "string"
+    steps:
+      - attach_workspace:
+          at: .
+      - architect/tools-info
+      - architect/prepare-catalogbot-git-ssh
+      - architect/package-and-push:
+          app_catalog: <<parameters.app_catalog>>
+          app_catalog_test: <<parameters.app_catalog_test>>
+          chart: <<parameters.chart>>
 
 workflows:
   workflow:
@@ -56,8 +83,8 @@ workflows:
           requires:
             - validate
           source: kvm
-      - architect/push-to-app-catalog:
-          name: push-kvm-releases-to-control-plane-app-catalog
+      - push-to-app-catalog:
+          name: push-releases-kvm-to-control-plane-app-catalog
           app_catalog: control-plane-catalog
           app_catalog_test: control-plane-test-catalog
           chart: releases-kvm
