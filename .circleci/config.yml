@@ -33,7 +33,7 @@ jobs:
       - run: mkdir -p helm/<<parameters.app_name>>/template
       - run: cp -R <<parameters.source>> helm/<<parameters.app_name>>/template
       - run: |
-          cat <<EOF > helm/<<parameters.source>>/Chart.yaml
+          cat \<<EOF > helm/<<parameters.source>>/Chart.yaml
           name: <<parameters.app_name>>
           version: [[ .Version ]]
           EOF
