@@ -46,7 +46,7 @@ jobs:
           paths:
             - ./project/helm
   push-to-app-catalog:
-    executor: architect
+    executor: architect/architect
     parameters:
       app_catalog:
         description: "Name of the Github repository inside giantswarm organization hosting the App Catalog for tagged builds."
