@@ -20,11 +20,11 @@ jobs:
       - run:
           name: Validate KVM releases
           command: docker run --rm -v /home/circleci/project/:/run/releases/ quay.io/giantswarm/opsctl validate releases -p /run/releases/kvm.yaml
-  prepare:
+  prepare-helm:
     machine: true
     parameters:
       app_name:
-        description: "Directory to deploy as helm chart."
+        description: "Name of helm chart."
         type: "string"
       source:
         description: "Directory to deploy as helm chart."
@@ -43,15 +43,24 @@ workflows:
   workflow:
     jobs:
       - validate
-      - prepare:
-          app_name: releases
-          requires:
-            - validate
-          source: kvm
+      - architect/push-to-app-catalog:
+        name: push-releases-to-control-plane-app-catalog
+        app_catalog: control-plane-catalog
+        app_catalog_test: control-plane-test-catalog
+        chart: releases
+        requires:
+          - validate
+      - prepare-helm:
+        name: prepare-helm-kvm
+        app_name: releases
+        requires:
+          - validate
+        source: kvm
       - architect/push-to-app-collection:
           name: push-releases-to-kvm-app-collection
           app_name: releases
           app_collection_repo: kvm-app-collection
           unique: "true"
           requires:
-            - prepare
+            - prepare-helm-kvm
+            - push-releases-to-control-plane-app-catalog
