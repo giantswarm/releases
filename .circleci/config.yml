@@ -44,9 +44,9 @@ workflows:
       - validate
       - prepare:
           app_name: releases
-          directory: kvm
           requires:
             - validate
+          source: kvm
       - architect/push-to-app-collection:
           name: push-releases-to-kvm-app-collection
           app_name: releases
