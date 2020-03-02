@@ -1,0 +1,5 @@
+- version: 1.2.1
+  description: Remove CPU limits.
+  kind: changed
+  urls:
+    - https://github.com/giantswarm/cert-exporter/blob/master/CHANGELOG.md#121-2019-12-24
