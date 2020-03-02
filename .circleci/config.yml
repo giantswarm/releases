@@ -58,6 +58,7 @@ jobs:
         description: "Name of the chart inside helm directory to push to the App Catalog."
         type: "string"
     steps:
+      - checkout
       - attach_workspace:
           at: .
       - architect/tools-info
