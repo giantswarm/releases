@@ -122,18 +122,18 @@ jobs:
   build:
     machine: true
     steps:
-    - checkout
-    - run: docker login -u $DOCKER_USER -p $DOCKER_PASS quay.io
-    - run: docker pull quay.io/giantswarm/opsctl
-    - run:
-        name: Validate AWS releases
-        command: docker run --rm -v /home/circleci/project/:/run/releases/ quay.io/giantswarm/opsctl validate releases -p /run/releases/aws.yaml
-    - run:
-        name: Validate Azure releases
-        command: docker run --rm -v /home/circleci/project/:/run/releases/ quay.io/giantswarm/opsctl validate releases -p /run/releases/azure.yaml
-    - run:
-        name: Validate KVM releases
-        command: docker run --rm -v /home/circleci/project/:/run/releases/ quay.io/giantswarm/opsctl validate releases -p /run/releases/kvm.yaml
+      - checkout
+      - run: docker login -u $DOCKER_USER -p $DOCKER_PASS quay.io
+      - run: docker pull quay.io/giantswarm/opsctl
+      - run:
+          name: Validate AWS releases
+          command: docker run --rm -v /home/circleci/project/:/run/releases/ quay.io/giantswarm/opsctl validate releases -p /run/releases/aws.yaml
+      - run:
+          name: Validate Azure releases
+          command: docker run --rm -v /home/circleci/project/:/run/releases/ quay.io/giantswarm/opsctl validate releases -p /run/releases/azure.yaml
+      - run:
+          name: Validate KVM releases
+          command: docker run --rm -v /home/circleci/project/:/run/releases/ quay.io/giantswarm/opsctl validate releases -p /run/releases/kvm.yaml
 
 workflows:
   workflow:
