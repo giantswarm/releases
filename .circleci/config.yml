@@ -119,7 +119,7 @@ orbs:
                     unique: <<parameters.unique>>
 
 jobs:
-  build:
+  validate:
     machine: true
     steps:
       - checkout
