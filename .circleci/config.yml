@@ -41,6 +41,7 @@ jobs:
           name: <<parameters.app_name>>
           version: [[ .Version ]]
           EOF
+      - run: touch helm/<<parameters.app_name>>/values.yaml
       - persist_to_workspace:
           root: .
           paths:
