@@ -8,9 +8,9 @@ jobs:
   validate:
     docker:
       - image: quay.io/giantswarm/opsctl
-          auth:
-            username: $DOCKER_USER
-            password: $DOCKER_PASS
+        auth:
+          username: $DOCKER_USER
+          password: $DOCKER_PASS
     steps:
       - checkout
       - run:
