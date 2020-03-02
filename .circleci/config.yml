@@ -30,6 +30,7 @@ jobs:
         description: "Directory to deploy as helm chart."
         type: "string"
     steps:
+      - checkout
       - run: mkdir -p helm/<<parameters.app_name>>/template
       - run: cp -R <<parameters.source>> helm/<<parameters.app_name>>/template
       - run: |
