@@ -96,4 +96,4 @@ workflows:
           app_collection_repo: kvm-app-collection
           unique: "true"
           requires:
-            - push-kvm-releases-to-control-plane-app-catalog
+            - push-releases-kvm-to-control-plane-app-catalog
