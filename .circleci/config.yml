@@ -116,7 +116,7 @@ orbs:
                     app_name: <<parameters.app_name>>
                     app_catalog: <<parameters.app_catalog>>
                     app_collection_repo: <<parameters.app_collection_repo>>
-                    helm_path: <<paramters.helm_path>>
+                    helm_path: <<parameters.helm_path>>
                     unique: <<parameters.unique>>
 
 jobs:
