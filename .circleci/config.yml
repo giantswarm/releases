@@ -88,7 +88,8 @@ orbs:
             type: "string"
           use_alternative_helm_path:
             description: "Use provided helm_path parameter instead of default"
-            type: "string"
+            default: false
+            type: "boolean"
           helm_path:
             description: "Alternative directory for helm chart (only set if different from `helm/<repo>-chart`)"
             type: "string"
