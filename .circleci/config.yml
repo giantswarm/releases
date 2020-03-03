@@ -2,7 +2,7 @@
 version: 2.1
 
 orbs:
-  architect: giantswarm/architect@0.6.0
+  architect: giantswarm/architect@dev:persist-attach
 
 jobs:
   validate:
@@ -46,28 +46,6 @@ jobs:
           root: .
           paths:
             - ./helm
-  push-to-app-catalog:
-    executor: architect/architect
-    parameters:
-      app_catalog:
-        description: "Name of the Github repository inside giantswarm organization hosting the App Catalog for tagged builds."
-        type: "string"
-      app_catalog_test:
-        description: "Name of the Github repository inside giantswarm organization hosting the App Catalog for test builds."
-        type: "string"
-      chart:
-        description: "Name of the chart inside helm directory to push to the App Catalog."
-        type: "string"
-    steps:
-      - checkout
-      - attach_workspace:
-          at: .
-      - architect/tools-info
-      - architect/prepare-catalogbot-git-ssh
-      - architect/package-and-push:
-          app_catalog: <<parameters.app_catalog>>
-          app_catalog_test: <<parameters.app_catalog_test>>
-          chart: <<parameters.chart>>
 
 workflows:
   workflow:
@@ -79,10 +57,11 @@ workflows:
           requires:
             - validate
           source: kvm
-      - push-to-app-catalog:
+      - architect/push-to-app-catalog:
           name: push-releases-kvm-to-control-plane-app-catalog
           app_catalog: control-plane-catalog
           app_catalog_test: control-plane-test-catalog
+          attach_workspace: true
           chart: releases-kvm
           requires:
             - prepare-helm-kvm
