@@ -1,0 +1,15 @@
+- version: 1.6.0
+  description: Allow to disable DNS TCP check.
+  kind: changed
+  urls:
+    - https://github.com/giantswarm/net-exporter/blob/master/CHANGELOG.md#160-2020-01-29
+- version: 1.5.1
+  description: Changed Priority Class to system-node-critical for net-exporter deployed in TC.
+  kind: changed
+  urls:
+    - https://github.com/giantswarm/net-exporter/blob/master/CHANGELOG.md#151-2020-01-08
+- version: 1.4.3
+  description: Fix invalid image reference.
+  kind: changed
+  urls:
+    - https://github.com/giantswarm/net-exporter/blob/master/CHANGELOG.md#143-2019-12-27
