@@ -35,13 +35,13 @@ jobs:
     steps:
       - checkout
       - run: mkdir -p helm/<<parameters.app_name>>
-      - run: cp -R <<parameters.source>> helm/<<parameters.app_name>>/templates
+      - run: mv helm/templates helm/<<parameters.app_name>>/templates
+      - run: cp <<parameters.app_name>>.yaml helm/<<parameters.app_name>>/values.yaml
       - run: |
           cat \<<EOF > helm/<<parameters.app_name>>/Chart.yaml
           name: <<parameters.app_name>>
           version: [[ .Version ]]
           EOF
-      - run: touch helm/<<parameters.app_name>>/values.yaml
       - persist_to_workspace:
           root: .
           paths:
