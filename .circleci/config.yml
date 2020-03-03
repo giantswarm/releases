@@ -33,7 +33,7 @@ jobs:
       - checkout
       - run: mkdir -p helm/<<parameters.app_name>>
       - run: mv helm/templates helm/<<parameters.app_name>>/templates
-      - run: cp <<parameters.app_name>>.yaml helm/<<parameters.app_name>>/values.yaml
+      - run: cp <<parameters.source>>.yaml helm/<<parameters.app_name>>/values.yaml
       - run: |
           cat \<<EOF > helm/<<parameters.app_name>>/Chart.yaml
           name: <<parameters.app_name>>
