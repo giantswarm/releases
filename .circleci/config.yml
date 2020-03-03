@@ -19,9 +19,6 @@ jobs:
       - run:
           name: Validate Azure releases
           command: opsctl validate releases -p azure.yaml
-      - run:
-          name: Validate KVM releases
-          command: opsctl validate releases -p kvm.yaml
   prepare-helm:
     docker:
       - image: bash:5.0.16
