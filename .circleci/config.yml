@@ -69,3 +69,7 @@ workflows:
           unique: "true"
           requires:
             - push-releases-kvm-to-control-plane-app-catalog
+          filters:
+            # Trigger the job on merge to master.
+            branches:
+              only: master
