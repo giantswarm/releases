@@ -2,7 +2,7 @@
 version: 2.1
 
 orbs:
-  architect: giantswarm/architect@dev:persist-attach
+  architect: giantswarm/architect@0.8.0
 
 jobs:
   validate:
