@@ -27,7 +27,7 @@ spec:
   - name: {{ .name }}
     version: {{ .version }}
 {{- end }}
+  date: {{ .date }}
   state: {{ .state }}
-  version: {{ .version }}
 ---
 {{- end }}
