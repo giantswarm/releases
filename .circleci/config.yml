@@ -75,7 +75,7 @@ workflows:
           attach_workspace: true
           chart: releases-kvm
           requires:
-            - prepare-helm-kvm
+            - prepare-helm-chart-kvm
       - architect/push-to-app-collection:
           name: push-releases-to-kvm-app-collection
           app_name: releases-kvm
@@ -101,7 +101,7 @@ workflows:
           attach_workspace: true
           chart: releases-aws
           requires:
-            - prepare-helm-aws
+            - prepare-helm-chart-aws
       - architect/push-to-app-collection:
           name: push-releases-to-aws-app-collection
           app_name: releases-aws
@@ -127,7 +127,7 @@ workflows:
           attach_workspace: true
           chart: releases-azure
           requires:
-            - prepare-helm-azure
+            - prepare-helm-chart-azure
       - architect/push-to-app-collection:
           name: push-releases-to-azure-app-collection
           app_name: releases-azure
