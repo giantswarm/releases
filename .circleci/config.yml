@@ -14,12 +14,15 @@ jobs:
     steps:
       - checkout
       - run:
+          name: Validate KVM releases
+          command: opsctl validate releases -p kvm.yaml
+      - run:
           name: Validate AWS releases
           command: opsctl validate releases -p aws.yaml
       - run:
           name: Validate Azure releases
           command: opsctl validate releases -p azure.yaml
-  prepare-helm:
+  prepare-helm-chart:
     docker:
       - image: bash:5.0.16
     parameters:
@@ -27,18 +30,28 @@ jobs:
         description: "Name of helm chart."
         type: "string"
       source:
-        description: "Directory to deploy as helm chart."
+        description: "Platform releases YAML to deploy as helm chart."
         type: "string"
     steps:
       - checkout
-      - run: mkdir -p helm/<<parameters.app_name>>
-      - run: mv helm/templates helm/<<parameters.app_name>>/templates
-      - run: cp <<parameters.source>>.yaml helm/<<parameters.app_name>>/values.yaml
-      - run: |
-          cat \<<EOF > helm/<<parameters.app_name>>/Chart.yaml
-          name: <<parameters.app_name>>
-          version: [[ .Version ]]
-          EOF
+      - run:
+          name: Create chart directory
+          command: mkdir -p helm/<<parameters.app_name>>
+      - run:
+          name: Copy template release into chart templates
+          command: mv helm/templates helm/<<parameters.app_name>>/templates
+      - run:
+          name: Copy releases to values.yaml
+          command: |
+            echo "versions:" > helm/<<parameters.app_name>>/values.yaml
+            sed 's/^/  /' aws.yaml >> helm/<<parameters.app_name>>/values.yaml
+      - run: 
+          name: Create Chart.yaml
+          command: |
+            cat \<<EOF > helm/<<parameters.app_name>>/Chart.yaml
+            name: <<parameters.app_name>>
+            version: [[ .Version ]]
+            EOF
       - persist_to_workspace:
           root: .
           paths:
@@ -48,8 +61,9 @@ workflows:
   workflow:
     jobs:
       - validate
-      - prepare-helm:
-          name: prepare-helm-kvm
+      # KVM
+      - prepare-helm-chart:
+          name: prepare-helm-chart-kvm
           app_name: releases-kvm
           requires:
             - validate
@@ -69,6 +83,58 @@ workflows:
           unique: "true"
           requires:
             - push-releases-kvm-to-control-plane-app-catalog
+          filters:
+            # Trigger the job on merge to master.
+            branches:
+              only: master
+      # AWS
+      - prepare-helm-chart:
+          name: prepare-helm-chart-aws
+          app_name: releases-aws
+          requires:
+            - validate
+          source: aws
+      - architect/push-to-app-catalog:
+          name: push-releases-aws-to-control-plane-app-catalog
+          app_catalog: control-plane-catalog
+          app_catalog_test: control-plane-test-catalog
+          attach_workspace: true
+          chart: releases-aws
+          requires:
+            - prepare-helm-aws
+      - architect/push-to-app-collection:
+          name: push-releases-to-aws-app-collection
+          app_name: releases-aws
+          app_collection_repo: aws-app-collection
+          unique: "true"
+          requires:
+            - push-releases-aws-to-control-plane-app-catalog
+          filters:
+            # Trigger the job on merge to master.
+            branches:
+              only: master
+      # Azure
+      - prepare-helm-chart:
+          name: prepare-helm-chart-azure
+          app_name: releases-azure
+          requires:
+            - validate
+          source: azure
+      - architect/push-to-app-catalog:
+          name: push-releases-azure-to-control-plane-app-catalog
+          app_catalog: control-plane-catalog
+          app_catalog_test: control-plane-test-catalog
+          attach_workspace: true
+          chart: releases-azure
+          requires:
+            - prepare-helm-azure
+      - architect/push-to-app-collection:
+          name: push-releases-to-azure-app-collection
+          app_name: releases-azure
+          app_collection_repo: azure-app-collection
+          unique: "true"
+          requires:
+            - push-releases-azure-to-control-plane-app-catalog
           filters:
             # Trigger the job on merge to master.
             branches:
