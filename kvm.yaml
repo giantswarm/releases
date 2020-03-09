@@ -1,5 +1,5 @@
 - version: 11.2.0
-  active: true
+  state: active
   date: 2020-02-26T12:00:00Z
   apps:
     - app: cert-exporter
@@ -29,97 +29,147 @@
     - name: cert-operator
       version: 0.1.0
     - name: cluster-operator
-      provider: kvm
       version: 0.23.1
     - name: flannel-operator
       version: 0.2.0
     - name: kvm-operator
       version: 3.10.0
+  components:
+    - name: kubernetes
+      version: 1.16.3
+    - name: containerlinux
+      version: 2247.6.0
+    - name: coredns
+      version: 1.6.5
+    - name: calico
+      version: 3.10.1
+    - name: etcd
+      version: 3.3.17
 - version: 11.1.0
-  active: true
+  state: active
   date: 2020-01-29T12:00:00Z
   authorities:
     - name: app-operator
       version: 1.0.0
     - name: cert-operator
       version: 0.1.0
-    - name: chart-operator
-      version: 0.7.0
     - name: cluster-operator
-      provider: kvm
       version: 0.22.0
     - name: flannel-operator
       version: 0.2.0
     - name: kvm-operator
       version: 3.10.0
+  components:
+    - name: kubernetes
+      version: 1.16.3
+    - name: containerlinux
+      version: 2247.6.0
+    - name: coredns
+      version: 1.6.5
+    - name: calico
+      version: 3.10.1
+    - name: etcd
+      version: 3.3.17
 - version: 11.0.0
-  active: false
+  state: deprecated
   date: 2020-01-10T12:00:00Z
   authorities:
     - name: app-operator
       version: 1.0.0
     - name: cert-operator
       version: 0.1.0
-    - name: chart-operator
-      version: 0.7.0
     - name: cluster-operator
-      provider: kvm
       version: 0.21.4
     - name: flannel-operator
       version: 0.2.0
     - name: kvm-operator
       version: 3.10.0
+  components:
+    - name: kubernetes
+      version: 1.16.3
+    - name: containerlinux
+      version: 2247.6.0
+    - name: coredns
+      version: 1.6.5
+    - name: calico
+      version: 3.10.1
+    - name: etcd
+      version: 3.3.17
 - version: 9.0.0
-  active: true
+  state: active
   date: 2019-10-28T12:00:00Z
   authorities:
     - name: app-operator
       version: 1.0.0
     - name: cert-operator
       version: 0.1.0
-    - name: chart-operator
-      version: 0.7.0
     - name: cluster-operator
-      provider: kvm
       version: 0.21.0
     - name: flannel-operator
       version: 0.2.0
     - name: kvm-operator
       version: 3.9.0
+  components:
+    - name: kubernetes
+      version: 1.15.5
+    - name: containerlinux
+      version: 2191.5.0
+    - name: coredns
+      version: 1.6.4
+    - name: calico
+      version: 3.9.1
+    - name: etcd
+      version: 3.3.15
 - version: 8.4.0
-  active: false
+  state: deprecated
   date: 2019-08-20T17:00:00Z
   authorities:
     - name: app-operator
       version: 1.0.0
     - name: cert-operator
       version: 0.1.0
-    - name: chart-operator
-      version: 0.7.0
     - name: cluster-operator
-      provider: kvm
       version: 0.19.0
     - name: flannel-operator
       version: 0.2.0
     - name: kvm-operator
       version: 3.8.0
+  components:
+    - name: kubernetes
+      version: 1.14.6
+    - name: containerlinux
+      version: 2135.4.0
+    - name: coredns
+      version: 1.6.2
+    - name: calico
+      version: 3.8.2
+    - name: etcd
+      version: 3.3.13
 - version: 8.3.0
-  active: false
+  state: deprecated
   date: 2019-08-20T16:40:00Z
   authorities:
     - name: cert-operator
       version: 0.1.0
-    - name: chart-operator
-      version: 0.7.0
     - name: cluster-operator
-      provider: kvm
       version: 0.18.0
     - name: flannel-operator
       version: 0.2.0
     - name: kvm-operator
       version: 3.7.1
+  components:
+    - name: kubernetes
+      version: 1.14.5
+    - name: containerlinux
+      version: 2135.4.0
+    - name: coredns
+      version: 1.5.1
+    - name: calico
+      version: 3.7.2
+    - name: etcd
+      version: 3.3.13
 - version: 8.2.1
-  active: false
+  state: deprecated
   date: 2019-06-24T10:00:00Z
   authorities:
     - name: cert-operator
@@ -127,14 +177,24 @@
     - name: chart-operator
       version: 0.6.0
     - name: cluster-operator
-      provider: kvm
       version: 0.17.0
     - name: flannel-operator
       version: 0.2.0
     - name: kvm-operator
       version: 3.7.1
+  components:
+    - name: kubernetes
+      version: 1.14.5
+    - name: containerlinux
+      version: 2135.4.0
+    - name: coredns
+      version: 1.5.1
+    - name: calico
+      version: 3.7.2
+    - name: etcd
+      version: 3.3.13
 - version: 8.2.0
-  active: false
+  state: deprecated
   date: 2019-06-24T10:00:00Z
   authorities:
     - name: cert-operator
@@ -142,14 +202,24 @@
     - name: chart-operator
       version: 0.6.0
     - name: cluster-operator
-      provider: kvm
       version: 0.17.0
     - name: flannel-operator
       version: 0.2.0
     - name: kvm-operator
       version: 3.7.0
+  components:
+    - name: kubernetes
+      version: 1.14.3
+    - name: containerlinux
+      version: 2135.4.0
+    - name: coredns
+      version: 1.5.1
+    - name: calico
+      version: 3.7.2
+    - name: etcd
+      version: 3.3.13
 - version: 8.1.0
-  active: false
+  state: deprecated
   date: 2019-04-30T10:00:00Z
   authorities:
     - name: cert-operator
@@ -157,14 +227,24 @@
     - name: chart-operator
       version: 0.6.0
     - name: cluster-operator
-      provider: kvm
       version: 0.17.0
     - name: flannel-operator
       version: 0.2.0
     - name: kvm-operator
       version: 3.6.0
+  components:
+    - name: kubernetes
+      version: 1.14.1
+    - name: containerlinux
+      version: 2023.5.0
+    - name: coredns
+      version: 1.5.0
+    - name: calico
+      version: 3.6.1
+    - name: etcd
+      version: 3.3.12
 - version: 8.0.0
-  active: false
+  state: deprecated
   date: 2019-03-21T10:00:00Z
   authorities:
     - name: cert-operator
@@ -172,9 +252,19 @@
     - name: chart-operator
       version: 0.5.0
     - name: cluster-operator
-      provider: kvm
       version: 0.15.0
     - name: flannel-operator
       version: 0.2.0
     - name: kvm-operator
       version: 3.5.0
+  components:
+    - name: kubernetes
+      version: 1.14.1
+    - name: containerlinux
+      version: 2023.5.0
+    - name: coredns
+      version: 1.5.0
+    - name: calico
+      version: 3.6.1
+    - name: etcd
+      version: 3.3.12
