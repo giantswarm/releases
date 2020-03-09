@@ -2,7 +2,7 @@
 version: 2.1
 
 orbs:
-  architect: giantswarm/architect@0.8.0
+  architect: giantswarm/architect@0.8.1
 
 jobs:
   validate:
@@ -102,6 +102,7 @@ workflows:
           chart: releases-aws
           requires:
             - prepare-helm-chart-aws
+            - push-releases-kvm-to-control-plane-app-catalog
       - architect/push-to-app-collection:
           name: push-releases-to-aws-app-collection
           app_name: releases-aws
@@ -109,6 +110,7 @@ workflows:
           unique: "true"
           requires:
             - push-releases-aws-to-control-plane-app-catalog
+            - push-releases-to-kvm-app-collection
           filters:
             # Trigger the job on merge to master.
             branches:
@@ -128,6 +130,7 @@ workflows:
           chart: releases-azure
           requires:
             - prepare-helm-chart-azure
+            - push-releases-aws-to-control-plane-app-catalog
       - architect/push-to-app-collection:
           name: push-releases-to-azure-app-collection
           app_name: releases-azure
@@ -135,6 +138,7 @@ workflows:
           unique: "true"
           requires:
             - push-releases-azure-to-control-plane-app-catalog
+            - push-releases-to-aws-app-collection
           filters:
             # Trigger the job on merge to master.
             branches:
