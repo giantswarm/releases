@@ -41,6 +41,7 @@
     - name: cert-operator
       version: 0.1.0
     - name: cluster-operator
+      provider: aws
       version: 2.1.1
   components:
     - name: kubernetes
@@ -96,6 +97,7 @@
     - name: cert-operator
       version: 0.1.0
     - name: cluster-operator
+      provider: aws
       version: 2.1.1
   components:
     - name: kubernetes
@@ -122,6 +124,7 @@
     - name: chart-operator
       version: 0.7.0
     - name: cluster-operator
+      provider: aws
       version: 2.0.2
   components:
     - name: kubernetes
@@ -148,6 +151,7 @@
     - name: chart-operator
       version: 0.7.0
     - name: cluster-operator
+      provider: aws
       version: 2.0.2
   components:
     - name: kubernetes
@@ -174,6 +178,7 @@
     - name: chart-operator
       version: 0.7.0
     - name: cluster-operator
+      provider: aws
       version: 2.0.1
   components:
     - name: kubernetes
@@ -200,6 +205,7 @@
     - name: chart-operator
       version: 0.7.0
     - name: cluster-operator
+      provider: aws
       version: 2.0.0
   components:
     - name: kubernetes
@@ -249,6 +255,7 @@
     - name: cert-operator
       version: 0.1.0
     - name: cluster-operator
+      provider: aws
       version: 0.23.1
   components:
     - name: kubernetes
@@ -275,6 +282,7 @@
     - name: chart-operator
       version: 0.7.0
     - name: cluster-operator
+      provider: aws
       version: 0.21.4
   components:
     - name: kubernetes
@@ -301,6 +309,7 @@
     - name: chart-operator
       version: 0.7.0
     - name: cluster-operator
+      provider: aws
       version: 0.21.0
   components:
     - name: kubernetes
@@ -327,6 +336,7 @@
     - name: chart-operator
       version: 0.7.0
     - name: cluster-operator
+      provider: aws
       version: 0.20.0
   components:
     - name: kubernetes
@@ -353,6 +363,7 @@
     - name: chart-operator
       version: 0.7.0
     - name: cluster-operator
+      provider: aws
       version: 0.19.0
   components:
     - name: kubernetes
@@ -379,6 +390,7 @@
     - name: chart-operator
       version: 0.7.0
     - name: cluster-operator
+      provider: aws
       version: 0.19.0
   components:
     - name: kubernetes
@@ -403,6 +415,7 @@
     - name: chart-operator
       version: 0.7.0
     - name: cluster-operator
+      provider: aws
       version: 0.18.0
   components:
     - name: kubernetes
@@ -427,6 +440,7 @@
     - name: chart-operator
       version: 0.6.0
     - name: cluster-operator
+      provider: aws
       version: 0.17.0
   components:
     - name: kubernetes
@@ -451,6 +465,7 @@
     - name: chart-operator
       version: 0.6.0
     - name: cluster-operator
+      provider: aws
       version: 0.17.0
   components:
     - name: kubernetes
@@ -475,6 +490,7 @@
     - name: chart-operator
       version: 0.6.0
     - name: cluster-operator
+      provider: aws
       version: 0.16.0
   components:
     - name: kubernetes
@@ -499,6 +515,7 @@
     - name: chart-operator
       version: 0.5.0
     - name: cluster-operator
+      provider: aws
       version: 0.15.0
   components:
     - name: kubernetes
