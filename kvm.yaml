@@ -1,5 +1,6 @@
 - version: 11.2.0
   state: active
+  active: true
   date: 2020-02-26T12:00:00Z
   apps:
     - app: cert-exporter
@@ -47,6 +48,7 @@
       version: 3.3.17
 - version: 11.1.0
   state: active
+  active: true
   date: 2020-01-29T12:00:00Z
   authorities:
     - name: app-operator
@@ -72,6 +74,7 @@
       version: 3.3.17
 - version: 11.0.0
   state: deprecated
+  active: false
   date: 2020-01-10T12:00:00Z
   authorities:
     - name: app-operator
@@ -97,6 +100,7 @@
       version: 3.3.17
 - version: 9.0.0
   state: active
+  active: true
   date: 2019-10-28T12:00:00Z
   authorities:
     - name: app-operator
@@ -122,6 +126,7 @@
       version: 3.3.15
 - version: 8.4.0
   state: deprecated
+  active: false
   date: 2019-08-20T17:00:00Z
   authorities:
     - name: app-operator
@@ -147,6 +152,7 @@
       version: 3.3.13
 - version: 8.3.0
   state: deprecated
+  active: false
   date: 2019-08-20T16:40:00Z
   authorities:
     - name: cert-operator
@@ -170,6 +176,7 @@
       version: 3.3.13
 - version: 8.2.1
   state: deprecated
+  active: false
   date: 2019-06-24T10:00:00Z
   authorities:
     - name: cert-operator
@@ -195,6 +202,7 @@
       version: 3.3.13
 - version: 8.2.0
   state: deprecated
+  active: false
   date: 2019-06-24T10:00:00Z
   authorities:
     - name: cert-operator
@@ -220,6 +228,7 @@
       version: 3.3.13
 - version: 8.1.0
   state: deprecated
+  active: false
   date: 2019-04-30T10:00:00Z
   authorities:
     - name: cert-operator
@@ -245,6 +254,7 @@
       version: 3.3.12
 - version: 8.0.0
   state: deprecated
+  active: false
   date: 2019-03-21T10:00:00Z
   authorities:
     - name: cert-operator
