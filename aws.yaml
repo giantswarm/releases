@@ -236,7 +236,7 @@
       version: 0.1.0
     - name: cluster-operator
       provider: aws
-      version: 0.23.2
+      version: 0.23.4
 - version: 9.0.0
   active: true
   date: 2019-10-28T12:00:00Z
