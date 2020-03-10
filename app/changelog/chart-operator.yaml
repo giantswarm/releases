@@ -1,3 +1,13 @@
+- version: 0.12.0
+  description: Improvements to release and status resources.
+  kind: changed
+  urls:
+    - https://github.com/giantswarm/chart-operator/blob/master/CHANGELOG.md#v0120-2020-03-09
+- version: 0.11.5
+  description: Make Kubernetes domain configurable.
+  kind: changed
+  urls:
+    - https://github.com/giantswarm/chart-operator/pull/357
 - version: 0.11.4
   description: Handle timeouts pulling chart tarballs.
   kind: changed
