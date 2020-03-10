@@ -333,7 +333,7 @@
       version: 0.1.0
     - name: cluster-operator
       provider: aws
-      version: 0.23.4
+      version: 0.23.5
   components:
     - name: kubernetes
       version: 1.15.5
