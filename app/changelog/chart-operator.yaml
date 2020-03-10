@@ -1,3 +1,8 @@
+- version: 0.12.0
+  description: Add chartmigration resource to allow legacy chartconfig controller to be removed.
+  kind: changed
+  urls:
+    - https://github.com/giantswarm/chart-operator/blob/master/CHANGELOG.md#v0120-2020-03-09
 - version: 0.11.4
   description: Handle timeouts pulling chart tarballs.
   kind: changed
