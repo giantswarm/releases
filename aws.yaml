@@ -298,7 +298,7 @@
 - version: 9.0.1
   state: active
   active: true
-  date: 2020-03-09T19:00:00Z
+  date: 2020-03-11T19:00:00Z
   apps:
     - app: cert-exporter
       version: 1.2.1
