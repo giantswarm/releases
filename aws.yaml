@@ -1,4 +1,5 @@
 - version: 11.0.2
+  state: wip
   active: false
   date: 2020-02-21T12:00:00Z
   apps:
@@ -42,7 +43,19 @@
     - name: cluster-operator
       provider: aws
       version: 2.1.1
+  components:
+    - name: kubernetes
+      version: 1.16.3
+    - name: containerlinux
+      version: 2247.6.0
+    - name: coredns
+      version: 1.6.5
+    - name: calico
+      version: 3.10.1
+    - name: etcd
+      version: 3.3.17
 - version: 11.0.1
+  state: active
   active: true
   date: 2020-02-05T12:00:00Z
   apps:
@@ -86,7 +99,19 @@
     - name: cluster-operator
       provider: aws
       version: 2.1.1
+  components:
+    - name: kubernetes
+      version: 1.16.3
+    - name: containerlinux
+      version: 2247.6.0
+    - name: coredns
+      version: 1.6.5
+    - name: calico
+      version: 3.10.1
+    - name: etcd
+      version: 3.3.17
 - version: 11.0.0
+  state: deprecated
   active: false
   date: 2020-01-29T12:00:00Z
   authorities:
@@ -101,7 +126,19 @@
     - name: cluster-operator
       provider: aws
       version: 2.0.2
+  components:
+    - name: kubernetes
+      version: 1.16.3
+    - name: containerlinux
+      version: 2247.6.0
+    - name: coredns
+      version: 1.6.5
+    - name: calico
+      version: 3.10.1
+    - name: etcd
+      version: 3.3.17
 - version: 10.1.2
+  state: deprecated
   active: false
   date: 2020-02-06T08:00:00Z
   authorities:
@@ -116,7 +153,19 @@
     - name: cluster-operator
       provider: aws
       version: 2.0.2
+  components:
+    - name: kubernetes
+      version: 1.15.5
+    - name: containerlinux
+      version: 2191.5.0
+    - name: coredns
+      version: 1.6.5
+    - name: calico
+      version: 3.9.1
+    - name: etcd
+      version: 3.3.15
 - version: 10.1.1
+  state: deprecated
   active: false
   date: 2020-01-10T08:00:00Z
   authorities:
@@ -131,7 +180,19 @@
     - name: cluster-operator
       provider: aws
       version: 2.0.1
+  components:
+    - name: kubernetes
+      version: 1.15.5
+    - name: containerlinux
+      version: 2191.5.0
+    - name: coredns
+      version: 1.6.5
+    - name: calico
+      version: 3.9.1
+    - name: etcd
+      version: 3.3.15
 - version: 10.1.0
+  state: deprecated
   active: false
   date: 2019-12-18T14:00:00Z
   authorities:
@@ -146,7 +207,19 @@
     - name: cluster-operator
       provider: aws
       version: 2.0.0
+  components:
+    - name: kubernetes
+      version: 1.15.5
+    - name: containerlinux
+      version: 2191.5.0
+    - name: coredns
+      version: 1.6.5
+    - name: calico
+      version: 3.9.1
+    - name: etcd
+      version: 3.3.15
 - version: 9.2.0
+  state: active
   active: true
   date: 2020-02-26T12:00:00Z
   apps:
@@ -184,7 +257,19 @@
     - name: cluster-operator
       provider: aws
       version: 0.23.1
+  components:
+    - name: kubernetes
+      version: 1.16.3
+    - name: containerlinux
+      version: 2247.6.0
+    - name: coredns
+      version: 1.6.5
+    - name: calico
+      version: 3.10.1
+    - name: etcd
+      version: 3.3.17
 - version: 9.1.0
+  state: deprecated
   active: false
   date: 2020-01-28T12:00:00Z
   authorities:
@@ -199,7 +284,19 @@
     - name: cluster-operator
       provider: aws
       version: 0.21.4
+  components:
+    - name: kubernetes
+      version: 1.16.3
+    - name: containerlinux
+      version: 2247.6.0
+    - name: coredns
+      version: 1.6.5
+    - name: calico
+      version: 3.10.1
+    - name: etcd
+      version: 3.3.17
 - version: 9.0.1
+  state: active
   active: true
   date: 2020-03-09T19:00:00Z
   apps:
@@ -237,6 +334,17 @@
     - name: cluster-operator
       provider: aws
       version: 0.23.4
+  components:
+    - name: kubernetes
+      version: 1.15.5
+    - name: containerlinux
+      version: 2191.5.0
+    - name: coredns
+      version: 1.6.4
+    - name: calico
+      version: 3.9.1
+    - name: etcd
+      version: 3.3.15
 - version: 9.0.0
   active: false
   date: 2019-10-28T12:00:00Z
@@ -252,7 +360,19 @@
     - name: cluster-operator
       provider: aws
       version: 0.21.0
+  components:
+    - name: kubernetes
+      version: 1.15.5
+    - name: containerlinux
+      version: 2191.5.0
+    - name: coredns
+      version: 1.6.4
+    - name: calico
+      version: 3.9.1
+    - name: etcd
+      version: 3.3.15
 - version: 8.5.0
+  state: active
   active: true
   date: 2019-09-02T13:30:00Z
   authorities:
@@ -267,7 +387,19 @@
     - name: cluster-operator
       provider: aws
       version: 0.20.0
+  components:
+    - name: kubernetes
+      version: 1.14.6
+    - name: containerlinux
+      version: 2135.4.0
+    - name: coredns
+      version: 1.6.2
+    - name: calico
+      version: 3.8.2
+    - name: etcd
+      version: 3.3.13
 - version: 8.4.1
+  state: deprecated
   active: false
   date: 2019-09-24T11:00:00Z
   authorities:
@@ -282,7 +414,19 @@
     - name: cluster-operator
       provider: aws
       version: 0.19.0
+  components:
+    - name: kubernetes
+      version: 1.14.6
+    - name: containerlinux
+      version: 2135.4.0
+    - name: coredns
+      version: 1.6.2
+    - name: calico
+      version: 3.8.2
+    - name: etcd
+      version: 3.3.13
 - version: 8.4.0
+  state: deprecated
   active: false
   date: 2019-08-19T16:30:00Z
   authorities:
@@ -297,7 +441,19 @@
     - name: cluster-operator
       provider: aws
       version: 0.19.0
+  components:
+    - name: kubernetes
+      version: 1.14.6
+    - name: containerlinux
+      version: 2135.4.0
+    - name: coredns
+      version: 1.6.2
+    - name: calico
+      version: 3.8.2
+    - name: etcd
+      version: 3.3.13
 - version: 8.3.0
+  state: deprecated
   active: false
   date: 2019-08-19T10:00:00Z
   authorities:
@@ -310,7 +466,19 @@
     - name: cluster-operator
       provider: aws
       version: 0.18.0
+  components:
+    - name: kubernetes
+      version: 1.14.5
+    - name: containerlinux
+      version: 2135.4.0
+    - name: coredns
+      version: 1.5.1
+    - name: calico
+      version: 3.7.2
+    - name: etcd
+      version: 3.3.13
 - version: 8.2.1
+  state: deprecated
   active: false
   date: 2019-08-09T10:00:00Z
   authorities:
@@ -323,7 +491,19 @@
     - name: cluster-operator
       provider: aws
       version: 0.17.0
+  components:
+    - name: kubernetes
+      version: 1.14.5
+    - name: containerlinux
+      version: 2135.4.0
+    - name: coredns
+      version: 1.5.1
+    - name: calico
+      version: 3.7.2
+    - name: etcd
+      version: 3.3.13
 - version: 8.2.0
+  state: deprecated
   active: false
   date: 2019-06-03T10:00:00Z
   authorities:
@@ -336,7 +516,19 @@
     - name: cluster-operator
       provider: aws
       version: 0.17.0
+  components:
+    - name: kubernetes
+      version: 1.14.3
+    - name: containerlinux
+      version: 2135.4.0
+    - name: coredns
+      version: 1.5.1
+    - name: calico
+      version: 3.7.2
+    - name: etcd
+      version: 3.3.13
 - version: 8.1.0
+  state: deprecated
   active: false
   date: 2019-06-04T16:00:00Z
   authorities:
@@ -349,7 +541,19 @@
     - name: cluster-operator
       provider: aws
       version: 0.16.0
+  components:
+    - name: kubernetes
+      version: 1.14.1
+    - name: containerlinux
+      version: 2023.5.0
+    - name: coredns
+      version: 1.5.0
+    - name: calico
+      version: 3.6.1
+    - name: etcd
+      version: 3.3.12
 - version: 8.0.0
+  state: deprecated
   active: false
   date: 2019-04-17T08:00:00Z
   authorities:
@@ -362,3 +566,14 @@
     - name: cluster-operator
       provider: aws
       version: 0.15.0
+  components:
+    - name: kubernetes
+      version: 1.14.1
+    - name: containerlinux
+      version: 2023.5.0
+    - name: coredns
+      version: 1.5.0
+    - name: calico
+      version: 3.6.1
+    - name: etcd
+      version: 3.3.12

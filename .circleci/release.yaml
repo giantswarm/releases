@@ -1,0 +1,33 @@
+{{- range .Values.versions }}
+apiVersion: release.giantswarm.io/v1alpha1
+kind: Release
+metadata:
+  annotations:
+    giantswarm.io/docs: https://pkg.go.dev/github.com/giantswarm/apiextensions/pkg/apis/release/v1alpha1?tab=doc#Release
+  name: v{{ .version }}
+spec:
+{{- if .apps }}
+  apps:
+{{- range .apps }}
+  - name: {{ .app }}
+{{- if .componentVersion }}
+    componentVersion: {{ .componentVersion }}
+{{- end }}
+    version: {{ .version }}
+{{- end }}
+{{- else }}
+  apps: []
+{{- end }}
+  components:
+{{- range .authorities }}
+  - name: {{ .name }}
+    version: {{ .version }}
+{{- end }}
+{{- range .components }}
+  - name: {{ .name }}
+    version: {{ .version }}
+{{- end }}
+  date: {{ .date }}
+  state: {{ .state }}
+---
+{{- end }}
