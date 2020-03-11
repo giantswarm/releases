@@ -36,21 +36,25 @@ jobs:
       - checkout
       - run:
           name: Create chart directory
-          command: mkdir -p helm/<<parameters.app_name>>/templates
+          command: mkdir -p helm/<< parameters.app_name >>/templates
       - run:
           name: Copy template release into chart templates
-          command: mv .circleci/release.yaml helm/<<parameters.app_name>>/templates
+          command: mv .circleci/release.yaml helm/<< parameters.app_name >>/templates
       - run:
           name: Copy releases to values.yaml
           command: |
-            echo "versions:" > helm/<<parameters.app_name>>/values.yaml
-            sed 's/^/  /' aws.yaml >> helm/<<parameters.app_name>>/values.yaml
+            echo "versions:" > helm/<< parameters.app_name >>/values.yaml
+            sed 's/^/  /' << parameters.source >>.yaml >> helm/<< parameters.app_name >>/values.yaml
       - run: 
           name: Create Chart.yaml
           command: |
-            cat \<<EOF > helm/<<parameters.app_name>>/Chart.yaml
-            name: <<parameters.app_name>>
+            cat \<<EOF > helm/<< parameters.app_name >>/Chart.yaml
+            apiVersion: v1
+            name: << parameters.app_name >>
             version: [[ .Version ]]
+            appVersion: master
+            description: Giant Swarm releases for << parameters.source >>.
+            home: https://github.com/giantswarm/releases
             EOF
       - persist_to_workspace:
           root: .
