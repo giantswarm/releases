@@ -78,7 +78,7 @@ workflows:
           app_catalog_test: control-plane-test-catalog
           attach_workspace: true
           chart: releases-kvm
-          production_branch: master
+          production_branch: test-architect-orb
           requires:
             - prepare-helm-chart-kvm
       - architect/push-to-app-collection:
@@ -91,7 +91,7 @@ workflows:
           filters:
             # Trigger the job on merge to master.
             branches:
-              only: master
+              only: test-architect-orb
       # AWS
       - prepare-helm-chart:
           name: prepare-helm-chart-aws
@@ -105,7 +105,7 @@ workflows:
           app_catalog_test: control-plane-test-catalog
           attach_workspace: true
           chart: releases-aws
-          production_branch: master
+          production_branch: test-architect-orb
           requires:
             - prepare-helm-chart-aws
             - push-releases-kvm-to-control-plane-app-catalog
@@ -120,7 +120,7 @@ workflows:
           filters:
             # Trigger the job on merge to master.
             branches:
-              only: master
+              only: test-architect-orb
       # Azure
       - prepare-helm-chart:
           name: prepare-helm-chart-azure
@@ -134,7 +134,7 @@ workflows:
           app_catalog_test: control-plane-test-catalog
           attach_workspace: true
           chart: releases-azure
-          production_branch: master
+          production_branch: test-architect-orb
           requires:
             - prepare-helm-chart-azure
             - push-releases-aws-to-control-plane-app-catalog
@@ -149,4 +149,4 @@ workflows:
           filters:
             # Trigger the job on merge to master.
             branches:
-              only: master
+              only: test-architect-orb
