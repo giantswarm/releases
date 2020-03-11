@@ -2,7 +2,7 @@
 version: 2.1
 
 orbs:
-  architect: giantswarm/architect@dev:deploy-without-tag
+  architect: giantswarm/architect@0.8.1
 
 jobs:
   validate:
@@ -74,7 +74,6 @@ workflows:
           app_catalog_test: control-plane-test-catalog
           attach_workspace: true
           chart: releases-kvm
-          production_branch: master
           requires:
             - prepare-helm-chart-kvm
       - architect/push-to-app-collection:
@@ -101,7 +100,6 @@ workflows:
           app_catalog_test: control-plane-test-catalog
           attach_workspace: true
           chart: releases-aws
-          production_branch: master
           requires:
             - prepare-helm-chart-aws
             - push-releases-kvm-to-control-plane-app-catalog
@@ -130,7 +128,6 @@ workflows:
           app_catalog_test: control-plane-test-catalog
           attach_workspace: true
           chart: releases-azure
-          production_branch: master
           requires:
             - prepare-helm-chart-azure
             - push-releases-aws-to-control-plane-app-catalog
