@@ -1,3 +1,9 @@
+- version: 1.6.2
+  componentVersion: 0.30.0
+  description: Reintroduced config properties which should have been just deprecated but got dropped prematurely in v1.4.0.
+  kind: changed
+  urls:
+    - https://github.com/giantswarm/nginx-ingress-controller-app/pull/36
 - version: 1.6.1
   componentVersion: 0.30.0
   description: Disable HPA, PDB and clear resource requests for extra small clusters.
