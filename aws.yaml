@@ -36,7 +36,7 @@
     - name: app-operator
       version: 1.0.0
     - name: aws-operator
-      version: 8.1.2-dev
+      version: 8.1.2-anvddriesch
     - name: cert-operator
       version: 0.1.0
     - name: cluster-operator
