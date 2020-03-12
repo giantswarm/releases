@@ -73,7 +73,7 @@ workflows:
             - validate
           source: kvm
       - architect/push-to-app-catalog:
-          name: push-releases-kvm-to-control-plane-app-catalog
+          name: push-releases-kvm-to-releases-catalog
           app_catalog: releases-catalog
           app_catalog_test: releases-test-catalog
           attach_workspace: true
@@ -88,7 +88,7 @@ workflows:
           app_collection_repo: kvm-app-collection
           unique: "true"
           requires:
-            - push-releases-kvm-to-control-plane-app-catalog
+            - push-releases-kvm-to-releases-catalog
           filters:
             # Trigger the job on merge to master.
             branches:
@@ -101,7 +101,7 @@ workflows:
             - validate
           source: aws
       - architect/push-to-app-catalog:
-          name: push-releases-aws-to-control-plane-app-catalog
+          name: push-releases-aws-to-releases-catalog
           app_catalog: releases-catalog
           app_catalog_test: releases-test-catalog
           attach_workspace: true
@@ -109,7 +109,7 @@ workflows:
           on_tag: false
           requires:
             - prepare-helm-chart-aws
-            - push-releases-kvm-to-control-plane-app-catalog
+            - push-releases-kvm-to-releases-catalog
       - architect/push-to-app-collection:
           name: push-releases-to-aws-app-collection
           app_catalog: releases-catalog
@@ -117,7 +117,7 @@ workflows:
           app_collection_repo: aws-app-collection
           unique: "true"
           requires:
-            - push-releases-aws-to-control-plane-app-catalog
+            - push-releases-aws-to-releases-catalog
             - push-releases-to-kvm-app-collection
           filters:
             # Trigger the job on merge to master.
@@ -131,7 +131,7 @@ workflows:
             - validate
           source: azure
       - architect/push-to-app-catalog:
-          name: push-releases-azure-to-control-plane-app-catalog
+          name: push-releases-azure-to-releases-catalog
           app_catalog: releases-catalog
           app_catalog_test: releases-test-catalog
           attach_workspace: true
@@ -139,7 +139,7 @@ workflows:
           on_tag: false
           requires:
             - prepare-helm-chart-azure
-            - push-releases-aws-to-control-plane-app-catalog
+            - push-releases-aws-to-releases-catalog
       - architect/push-to-app-collection:
           name: push-releases-to-azure-app-collection
           app_catalog: releases-catalog
@@ -147,7 +147,7 @@ workflows:
           app_collection_repo: azure-app-collection
           unique: "true"
           requires:
-            - push-releases-azure-to-control-plane-app-catalog
+            - push-releases-azure-to-releases-catalog
             - push-releases-to-aws-app-collection
           filters:
             # Trigger the job on merge to master.
