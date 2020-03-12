@@ -74,15 +74,16 @@ workflows:
           source: kvm
       - architect/push-to-app-catalog:
           name: push-releases-kvm-to-control-plane-app-catalog
-          app_catalog: control-plane-catalog
-          app_catalog_test: control-plane-test-catalog
+          app_catalog: releases-catalog
+          app_catalog_test: releases-test-catalog
           attach_workspace: true
           chart: releases-kvm
-          production_branch: master
+          on_tag: false
           requires:
             - prepare-helm-chart-kvm
       - architect/push-to-app-collection:
           name: push-releases-to-kvm-app-collection
+          app_catalog: releases-catalog
           app_name: releases-kvm
           app_collection_repo: kvm-app-collection
           unique: "true"
@@ -101,16 +102,17 @@ workflows:
           source: aws
       - architect/push-to-app-catalog:
           name: push-releases-aws-to-control-plane-app-catalog
-          app_catalog: control-plane-catalog
-          app_catalog_test: control-plane-test-catalog
+          app_catalog: releases-catalog
+          app_catalog_test: releases-test-catalog
           attach_workspace: true
           chart: releases-aws
-          production_branch: master
+          on_tag: false
           requires:
             - prepare-helm-chart-aws
             - push-releases-kvm-to-control-plane-app-catalog
       - architect/push-to-app-collection:
           name: push-releases-to-aws-app-collection
+          app_catalog: releases-catalog
           app_name: releases-aws
           app_collection_repo: aws-app-collection
           unique: "true"
@@ -130,16 +132,17 @@ workflows:
           source: azure
       - architect/push-to-app-catalog:
           name: push-releases-azure-to-control-plane-app-catalog
-          app_catalog: control-plane-catalog
-          app_catalog_test: control-plane-test-catalog
+          app_catalog: releases-catalog
+          app_catalog_test: releases-test-catalog
           attach_workspace: true
           chart: releases-azure
-          production_branch: master
+          on_tag: false
           requires:
             - prepare-helm-chart-azure
             - push-releases-aws-to-control-plane-app-catalog
       - architect/push-to-app-collection:
           name: push-releases-to-azure-app-collection
+          app_catalog: releases-catalog
           app_name: releases-azure
           app_collection_repo: azure-app-collection
           unique: "true"
