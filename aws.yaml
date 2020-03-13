@@ -138,7 +138,8 @@
     - name: etcd
       version: 3.3.17
 - version: 10.2.0
-  active: wip
+  state: wip
+  active: false
   date: 2020-03-13T12:00:00Z
   apps:
     - app: cert-exporter
