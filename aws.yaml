@@ -181,7 +181,7 @@
       version: 0.1.0
     - name: cluster-operator
       provider: aws
-      version: 2.1.2
+      version: 2.1.5
 - version: 10.1.2
   state: deprecated
   active: false
