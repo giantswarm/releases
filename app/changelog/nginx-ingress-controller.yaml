@@ -1,3 +1,9 @@
+- version: 1.6.4
+  componentVersion: 0.30.0
+  description: Disable HPA for xs cluster profiles.
+  kind: changed
+  urls:
+    - https://github.com/giantswarm/nginx-ingress-controller-app/pull/40
 - version: 1.6.3
   componentVersion: 0.30.0
   description: Differentiate resource requests and autoscaling for xxs, xs and s cluster profiles.
