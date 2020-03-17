@@ -292,7 +292,7 @@
 - version: 9.0.1
   state: active
   active: true
-  date: 2020-03-11T19:00:00Z
+  date: 2020-03-17T19:00:00Z
   apps:
     - app: cert-exporter
       version: 1.2.1
@@ -314,7 +314,7 @@
       version: 1.6.0
     - app: nginx-ingress-controller
       componentVersion: 0.30.0
-      version: 1.6.1
+      version: 1.6.4
     - app: node-exporter
       componentVersion: 0.18.1
       version: 1.2.0
@@ -327,7 +327,7 @@
       version: 0.1.0
     - name: cluster-operator
       provider: aws
-      version: 0.23.5
+      version: 0.23.6
   components:
     - name: kubernetes
       version: 1.15.10
