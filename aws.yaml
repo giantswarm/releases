@@ -55,8 +55,8 @@
     - name: etcd
       version: 3.3.17
 - version: 11.0.1
-  state: active
-  active: true
+  state: deprecated
+  active: false
   date: 2020-02-05T12:00:00Z
   apps:
     - app: cert-exporter
