@@ -1,17 +1,155 @@
-version: 2
+
+version: 2.1
+
+orbs:
+  architect: giantswarm/architect@0.8.3
+
 jobs:
-  build:
-    machine: true
+  validate:
+    docker:
+      - image: quay.io/giantswarm/opsctl
+        auth:
+          username: $DOCKER_USER
+          password: $DOCKER_PASS
     steps:
-    - checkout
-    - run: docker login -u $DOCKER_USER -p $DOCKER_PASS quay.io
-    - run: docker pull quay.io/giantswarm/opsctl
-    - run:
-        name: Validate AWS releases
-        command: docker run --rm -v /home/circleci/project/:/run/releases/ quay.io/giantswarm/opsctl validate releases -p /run/releases/aws.yaml
-    - run:
-        name: Validate Azure releases
-        command: docker run --rm -v /home/circleci/project/:/run/releases/ quay.io/giantswarm/opsctl validate releases -p /run/releases/azure.yaml
-    - run:
-        name: Validate KVM releases
-        command: docker run --rm -v /home/circleci/project/:/run/releases/ quay.io/giantswarm/opsctl validate releases -p /run/releases/kvm.yaml
+      - checkout
+      - run:
+          name: Validate KVM releases
+          command: opsctl validate releases -p kvm.yaml
+      - run:
+          name: Validate AWS releases
+          command: opsctl validate releases -p aws.yaml
+      - run:
+          name: Validate Azure releases
+          command: opsctl validate releases -p azure.yaml
+  prepare-helm-chart:
+    docker:
+      - image: bash:5.0.16
+    parameters:
+      app_name:
+        description: "Name of helm chart."
+        type: "string"
+      source:
+        description: "Platform releases YAML to deploy as helm chart."
+        type: "string"
+    steps:
+      - checkout
+      - run:
+          name: Create chart directory
+          command: mkdir -p helm/<< parameters.app_name >>/templates
+      - run:
+          name: Copy template release into chart templates
+          command: mv .circleci/release.yaml helm/<< parameters.app_name >>/templates
+      - run:
+          name: Copy releases to values.yaml
+          command: |
+            echo "versions:" > helm/<< parameters.app_name >>/values.yaml
+            sed 's/^/  /' << parameters.source >>.yaml >> helm/<< parameters.app_name >>/values.yaml
+      - run: 
+          name: Create Chart.yaml
+          command: |
+            cat \<<EOF > helm/<< parameters.app_name >>/Chart.yaml
+            apiVersion: v1
+            name: << parameters.app_name >>
+            version: [[ .Version ]]
+            appVersion: master
+            description: Giant Swarm releases for << parameters.source >>.
+            home: https://github.com/giantswarm/releases
+            EOF
+      - persist_to_workspace:
+          root: .
+          paths:
+            - ./helm
+
+workflows:
+  workflow:
+    jobs:
+      - validate
+      # KVM
+      - prepare-helm-chart:
+          name: prepare-helm-chart-kvm
+          app_name: releases-kvm
+          requires:
+            - validate
+          source: kvm
+      - architect/push-to-app-catalog:
+          name: push-releases-kvm-to-releases-catalog
+          app_catalog: releases-catalog
+          app_catalog_test: releases-test-catalog
+          attach_workspace: true
+          chart: releases-kvm
+          on_tag: false
+          requires:
+            - prepare-helm-chart-kvm
+      - architect/push-to-app-collection:
+          name: push-releases-to-kvm-app-collection
+          app_catalog: releases-catalog
+          app_name: releases-kvm
+          app_collection_repo: kvm-app-collection
+          unique: "true"
+          requires:
+            - push-releases-kvm-to-releases-catalog
+          filters:
+            # Trigger the job on merge to master.
+            branches:
+              only: master
+      # AWS
+      - prepare-helm-chart:
+          name: prepare-helm-chart-aws
+          app_name: releases-aws
+          requires:
+            - validate
+          source: aws
+      - architect/push-to-app-catalog:
+          name: push-releases-aws-to-releases-catalog
+          app_catalog: releases-catalog
+          app_catalog_test: releases-test-catalog
+          attach_workspace: true
+          chart: releases-aws
+          on_tag: false
+          requires:
+            - prepare-helm-chart-aws
+            - push-releases-kvm-to-releases-catalog
+      - architect/push-to-app-collection:
+          name: push-releases-to-aws-app-collection
+          app_catalog: releases-catalog
+          app_name: releases-aws
+          app_collection_repo: aws-app-collection
+          unique: "true"
+          requires:
+            - push-releases-aws-to-releases-catalog
+            - push-releases-to-kvm-app-collection
+          filters:
+            # Trigger the job on merge to master.
+            branches:
+              only: master
+      # Azure
+      - prepare-helm-chart:
+          name: prepare-helm-chart-azure
+          app_name: releases-azure
+          requires:
+            - validate
+          source: azure
+      - architect/push-to-app-catalog:
+          name: push-releases-azure-to-releases-catalog
+          app_catalog: releases-catalog
+          app_catalog_test: releases-test-catalog
+          attach_workspace: true
+          chart: releases-azure
+          on_tag: false
+          requires:
+            - prepare-helm-chart-azure
+            - push-releases-aws-to-releases-catalog
+      - architect/push-to-app-collection:
+          name: push-releases-to-azure-app-collection
+          app_catalog: releases-catalog
+          app_name: releases-azure
+          app_collection_repo: azure-app-collection
+          unique: "true"
+          requires:
+            - push-releases-azure-to-releases-catalog
+            - push-releases-to-aws-app-collection
+          filters:
+            # Trigger the job on merge to master.
+            branches:
+              only: master
