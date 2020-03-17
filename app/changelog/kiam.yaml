@@ -1,3 +1,9 @@
+- version: 1.2.1
+  componentVersion: 3.5.0
+  description: Interface name as string
+  kind: changed
+  urls:
+    - https://github.com/giantswarm/kiam-app/blob/master/CHANGELOG.md#v120-2020-03-14
 - version: 1.2.0
   componentVersion: 3.5.0
   description: Modify interface name for AWS CNI

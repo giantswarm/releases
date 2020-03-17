@@ -5,6 +5,8 @@
 This repository contains Giant Swarm releases and changelogs.
 
 ### AWS
+
+ - [11.1.1](https://github.com/giantswarm/releases/blob/master/release-notes/aws/v11.1.1.md)
  - [11.0.1](https://github.com/giantswarm/releases/blob/master/release-notes/aws/v11.0.1.md)
  - [11.0.0](https://github.com/giantswarm/releases/blob/master/release-notes/aws/v11.0.0.md)
  - [10.1.2](https://github.com/giantswarm/releases/blob/master/release-notes/aws/v10.1.2.md)
@@ -16,6 +18,7 @@ This repository contains Giant Swarm releases and changelogs.
  - [8.5.0](https://github.com/giantswarm/releases/blob/master/release-notes/aws/v8.5.0.md)
 
 ### Azure
+
  - [11.2.0](https://github.com/giantswarm/releases/blob/master/release-notes/azure/v11.2.0.md)
  - [11.1.0](https://github.com/giantswarm/releases/blob/master/release-notes/azure/v11.1.0.md)
  - [11.0.0](https://github.com/giantswarm/releases/blob/master/release-notes/azure/v11.0.0.md)
@@ -24,6 +27,7 @@ This repository contains Giant Swarm releases and changelogs.
  - [8.4.0](https://github.com/giantswarm/releases/blob/master/release-notes/azure/v8.4.0.md)
 
 ### KVM
+
  - [11.2.0](https://github.com/giantswarm/releases/blob/master/release-notes/kvm/v11.2.0.md)
  - [11.1.0](https://github.com/giantswarm/releases/blob/master/release-notes/kvm/v11.1.0.md)
  - [11.0.0](https://github.com/giantswarm/releases/blob/master/release-notes/kvm/v11.0.0.md)
