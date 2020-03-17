@@ -1,3 +1,21 @@
+- version: 1.1.6
+  componentVersion: 1.6.5
+  description: Add Pod Disruption Budget.
+  kind: changed
+  urls:
+    - https://github.com/giantswarm/coredns-app/blob/master/CHANGELOG.md#v116-2020-02-28
+- version: 1.1.5
+  componentVersion: 1.6.5
+  description: Allow custom forward configuration destination and options.
+  kind: changed
+  urls:
+    - https://github.com/giantswarm/coredns-app/blob/master/CHANGELOG.md#v115-2020-02-28
+- version: 1.1.4
+  componentVersion: 1.6.5
+  description: Add `autopath` variable in the values file to make possible to configure or disable the plugin.
+  kind: changed
+  urls:
+    - https://github.com/giantswarm/coredns-app/blob/master/CHANGELOG.md#v114-2020-02-27
 - version: 1.1.3
   componentVersion: 1.6.5
   description: Fix HPA manifests for Kubernetes 1.16.
