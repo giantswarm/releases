@@ -83,7 +83,7 @@ workflows:
             - prepare-helm-chart-kvm
       - architect/push-to-app-collection:
           name: push-releases-to-kvm-app-collection
-          app_catalog: releases-catalog
+          app_catalog: releases
           app_name: releases-kvm
           app_collection_repo: kvm-app-collection
           unique: "true"
@@ -112,7 +112,7 @@ workflows:
             - push-releases-kvm-to-releases-catalog
       - architect/push-to-app-collection:
           name: push-releases-to-aws-app-collection
-          app_catalog: releases-catalog
+          app_catalog: releases
           app_name: releases-aws
           app_collection_repo: aws-app-collection
           unique: "true"
@@ -142,7 +142,7 @@ workflows:
             - push-releases-aws-to-releases-catalog
       - architect/push-to-app-collection:
           name: push-releases-to-azure-app-collection
-          app_catalog: releases-catalog
+          app_catalog: releases
           app_name: releases-azure
           app_collection_repo: azure-app-collection
           unique: "true"
