@@ -47,7 +47,7 @@
     - name: kubernetes
       version: 1.16.3
     - name: containerlinux
-      version: 2247.6.0
+      version: 2191.5.0
     - name: calico
       version: 3.10.1
     - name: etcd
@@ -101,7 +101,7 @@
     - name: kubernetes
       version: 1.16.3
     - name: containerlinux
-      version: 2247.6.0
+      version: 2191.5.0
     - name: calico
       version: 3.10.1
     - name: etcd
@@ -126,7 +126,7 @@
     - name: kubernetes
       version: 1.16.3
     - name: containerlinux
-      version: 2247.6.0
+      version: 2191.5.0
     - name: coredns
       version: 1.6.5
     - name: calico
@@ -257,7 +257,7 @@
     - name: kubernetes
       version: 1.16.3
     - name: containerlinux
-      version: 2247.6.0
+      version: 2191.5.0
     - name: calico
       version: 3.10.1
     - name: etcd
@@ -282,7 +282,7 @@
     - name: kubernetes
       version: 1.16.3
     - name: containerlinux
-      version: 2247.6.0
+      version: 2191.5.0
     - name: coredns
       version: 1.6.5
     - name: calico
