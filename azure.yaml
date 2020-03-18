@@ -92,8 +92,6 @@
       version: 1.16.3
     - name: containerlinux
       version: 2191.5.0
-    - name: coredns
-      version: 1.6.5
     - name: calico
       version: 3.10.1
     - name: etcd
@@ -205,6 +203,7 @@
     - name: etcd
       version: 3.3.13
 - version: 8.4.0
+  state: deprecated
   active: false
   date: 2019-08-14T10:00:00Z
   authorities:
@@ -231,6 +230,7 @@
     - name: etcd
       version: 3.3.13
 - version: 8.3.0
+  state: deprecated
   active: false
   date: 2019-07-11T10:00:00Z
   authorities:
@@ -255,6 +255,7 @@
     - name: etcd
       version: 3.3.13
 - version: 8.2.1
+  state: deprecated
   active: false
   date: 2019-03-30T10:00:00Z
   authorities:
@@ -279,6 +280,7 @@
     - name: etcd
       version: 3.3.13
 - version: 8.2.0
+  state: deprecated
   active: false
   date: 2019-03-30T10:00:00Z
   authorities:
@@ -303,6 +305,7 @@
     - name: etcd
       version: 3.3.13
 - version: 8.0.0
+  state: deprecated
   active: false
   date: 2019-03-21T10:00:00Z
   authorities:
