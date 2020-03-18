@@ -19,7 +19,6 @@ This repository contains Giant Swarm releases and changelogs.
 
 ### Azure
 
- - [11.2.1](https://github.com/giantswarm/releases/blob/master/release-notes/azure/v11.2.1.md)
  - [11.2.0](https://github.com/giantswarm/releases/blob/master/release-notes/azure/v11.2.0.md)
  - [11.1.0](https://github.com/giantswarm/releases/blob/master/release-notes/azure/v11.1.0.md)
  - [11.0.0](https://github.com/giantswarm/releases/blob/master/release-notes/azure/v11.0.0.md)
