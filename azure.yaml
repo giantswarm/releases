@@ -1,7 +1,7 @@
 - version: 11.2.1
-  state: active
-  active: true
-  date: 2020-03-17T12:00:00Z
+  state: wip
+  active: false
+  date: 2020-03-18T12:00:00Z
   apps:
     - app: cert-exporter
       version: 1.2.1
@@ -49,8 +49,8 @@
     - name: etcd
       version: 3.3.17
 - version: 11.2.0
-  state: deprecated
-  active: false
+  state: active
+  active: true
   date: 2020-02-26T12:00:00Z
   apps:
     - app: cert-exporter
