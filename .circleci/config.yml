@@ -22,56 +22,12 @@ jobs:
       - run:
           name: Validate Azure releases
           command: opsctl validate releases -p azure.yaml
-  prepare-helm-chart:
-    docker:
-      - image: bash:5.0.16
-    parameters:
-      app_name:
-        description: "Name of helm chart."
-        type: "string"
-      source:
-        description: "Platform releases YAML to deploy as helm chart."
-        type: "string"
-    steps:
-      - checkout
-      - run:
-          name: Create chart directory
-          command: mkdir -p helm/<< parameters.app_name >>/templates
-      - run:
-          name: Copy template release into chart templates
-          command: mv .circleci/release.yaml helm/<< parameters.app_name >>/templates
-      - run:
-          name: Copy releases to values.yaml
-          command: |
-            echo "versions:" > helm/<< parameters.app_name >>/values.yaml
-            sed 's/^/  /' << parameters.source >>.yaml >> helm/<< parameters.app_name >>/values.yaml
-      - run: 
-          name: Create Chart.yaml
-          command: |
-            cat \<<EOF > helm/<< parameters.app_name >>/Chart.yaml
-            apiVersion: v1
-            name: << parameters.app_name >>
-            version: [[ .Version ]]
-            appVersion: master
-            description: Giant Swarm releases for << parameters.source >>.
-            home: https://github.com/giantswarm/releases
-            EOF
-      - persist_to_workspace:
-          root: .
-          paths:
-            - ./helm
 
 workflows:
   workflow:
     jobs:
       - validate
       # KVM
-      - prepare-helm-chart:
-          name: prepare-helm-chart-kvm
-          app_name: releases-kvm
-          requires:
-            - validate
-          source: kvm
       - architect/push-to-app-catalog:
           name: push-releases-kvm-to-releases-catalog
           app_catalog: releases-catalog
@@ -94,12 +50,6 @@ workflows:
             branches:
               only: master
       # AWS
-      - prepare-helm-chart:
-          name: prepare-helm-chart-aws
-          app_name: releases-aws
-          requires:
-            - validate
-          source: aws
       - architect/push-to-app-catalog:
           name: push-releases-aws-to-releases-catalog
           app_catalog: releases-catalog
@@ -124,12 +74,6 @@ workflows:
             branches:
               only: master
       # Azure
-      - prepare-helm-chart:
-          name: prepare-helm-chart-azure
-          app_name: releases-azure
-          requires:
-            - validate
-          source: azure
       - architect/push-to-app-catalog:
           name: push-releases-azure-to-releases-catalog
           app_catalog: releases-catalog
