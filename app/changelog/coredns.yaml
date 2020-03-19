@@ -1,3 +1,9 @@
+- version: 1.1.7
+  componentVersion: 1.6.5
+  description: Disable autopath by default
+  kind: changed
+  urls:
+    - https://github.com/giantswarm/coredns-app/blob/master/CHANGELOG.md#v117-2020-03-19
 - version: 1.1.6
   componentVersion: 1.6.5
   description: Add Pod Disruption Budget.
