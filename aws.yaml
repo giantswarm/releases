@@ -15,7 +15,7 @@
       version: 1.1.4
     - app: coredns
       componentVersion: 1.6.5
-      version: 1.1.6
+      version: 1.1.7
     - app: external-dns
       componentVersion: 0.5.18
       version: 1.2.0
