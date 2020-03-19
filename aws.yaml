@@ -1,6 +1,5 @@
 - version: 11.1.1
   state: wip
-  active: false
   date: 2020-03-17T12:00:00Z
   apps:
     - app: cert-exporter
@@ -108,7 +107,6 @@
       version: 3.3.17
 - version: 11.0.0
   state: deprecated
-  active: false
   date: 2020-01-29T12:00:00Z
   authorities:
     - name: app-operator
@@ -135,7 +133,6 @@
       version: 3.3.17
 - version: 10.1.2
   state: deprecated
-  active: false
   date: 2020-02-06T08:00:00Z
   authorities:
     - name: app-operator
@@ -162,7 +159,6 @@
       version: 3.3.15
 - version: 10.1.1
   state: deprecated
-  active: false
   date: 2020-01-10T08:00:00Z
   authorities:
     - name: app-operator
@@ -189,7 +185,6 @@
       version: 3.3.15
 - version: 10.1.0
   state: deprecated
-  active: false
   date: 2019-12-18T14:00:00Z
   authorities:
     - name: app-operator
@@ -216,7 +211,6 @@
       version: 3.3.15
 - version: 9.2.1
   state: active
-  active: true
   date: 2020-03-18T12:00:00Z
   apps:
     - app: cert-exporter
@@ -266,7 +260,6 @@
       version: 3.3.17
 - version: 9.2.0
   state: deprecated
-  active: false
   date: 2020-02-26T12:00:00Z
   apps:
     - app: cert-exporter
@@ -314,7 +307,6 @@
       version: 3.3.17
 - version: 9.1.0
   state: deprecated
-  active: false
   date: 2020-01-28T12:00:00Z
   authorities:
     - name: app-operator
@@ -341,7 +333,6 @@
       version: 3.3.17
 - version: 9.0.0
   state: active
-  active: true
   date: 2019-10-28T12:00:00Z
   authorities:
     - name: app-operator
@@ -368,7 +359,6 @@
       version: 3.3.15
 - version: 8.5.0
   state: active
-  active: true
   date: 2019-09-02T13:30:00Z
   authorities:
     - name: app-operator
@@ -395,7 +385,6 @@
       version: 3.3.13
 - version: 8.4.1
   state: deprecated
-  active: false
   date: 2019-09-24T11:00:00Z
   authorities:
     - name: app-operator
@@ -422,7 +411,6 @@
       version: 3.3.13
 - version: 8.4.0
   state: deprecated
-  active: false
   date: 2019-08-19T16:30:00Z
   authorities:
     - name: app-operator
@@ -449,7 +437,6 @@
       version: 3.3.13
 - version: 8.3.0
   state: deprecated
-  active: false
   date: 2019-08-19T10:00:00Z
   authorities:
     - name: aws-operator
@@ -474,7 +461,6 @@
       version: 3.3.13
 - version: 8.2.1
   state: deprecated
-  active: false
   date: 2019-08-09T10:00:00Z
   authorities:
     - name: aws-operator
@@ -499,7 +485,6 @@
       version: 3.3.13
 - version: 8.2.0
   state: deprecated
-  active: false
   date: 2019-06-03T10:00:00Z
   authorities:
     - name: aws-operator
@@ -524,7 +509,6 @@
       version: 3.3.13
 - version: 8.1.0
   state: deprecated
-  active: false
   date: 2019-06-04T16:00:00Z
   authorities:
     - name: aws-operator
@@ -549,7 +533,6 @@
       version: 3.3.12
 - version: 8.0.0
   state: deprecated
-  active: false
   date: 2019-04-17T08:00:00Z
   authorities:
     - name: aws-operator
