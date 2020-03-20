@@ -7,21 +7,12 @@ orbs:
 jobs:
   validate:
     docker:
-      - image: quay.io/giantswarm/opsctl
-        auth:
-          username: $DOCKER_USER
-          password: $DOCKER_PASS
+      - image: quay.io/giantswarm/architect
     steps:
       - checkout
       - run:
-          name: Validate KVM releases
-          command: opsctl validate releases -p kvm.yaml
-      - run:
-          name: Validate AWS releases
-          command: opsctl validate releases -p aws.yaml
-      - run:
-          name: Validate Azure releases
-          command: opsctl validate releases -p azure.yaml
+          name: Validate releases
+          command: go run validate/main.go
 
 workflows:
   workflow:

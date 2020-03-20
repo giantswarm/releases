@@ -58,6 +58,7 @@ spec:
     version: 3.3.17
   date: 2020-03-17T12:00:00Z
   state: wip
+
 ---
 apiVersion: release.giantswarm.io/v1alpha1
 kind: Release
