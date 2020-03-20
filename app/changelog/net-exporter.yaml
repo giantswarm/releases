@@ -1,3 +1,8 @@
+- version: 1.7.0
+  description: Ignore non-existing pods
+  kind: changed
+  urls:
+    - https://github.com/giantswarm/net-exporter/blob/master/CHANGELOG.md#160-2020-03-20
 - version: 1.6.0
   description: Allow to disable DNS TCP check.
   kind: changed
