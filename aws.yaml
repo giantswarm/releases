@@ -1,6 +1,6 @@
 - version: 11.1.2
   state: wip
-  date: 2020-03-20T12:00:00Z
+  date: 2020-03-23T12:00:00Z
   apps:
     - app: cert-exporter
       version: 1.2.1
