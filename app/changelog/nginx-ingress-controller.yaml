@@ -1,3 +1,9 @@
+- version: 1.6.5
+  componentVersion: 0.30.0
+  description: Fix small cluster profile resource requests configuration.
+  kind: changed
+  urls:
+    - https://github.com/giantswarm/nginx-ingress-controller-app/pull/42
 - version: 1.6.4
   componentVersion: 0.30.0
   description: Disable HPA for xs cluster profiles.
