@@ -16,7 +16,7 @@
       componentVersion: 0.3.3
       version: 1.0.0
     - app: net-exporter
-      version: 1.6.0
+      version: 1.7.0
     - app: nginx-ingress-controller
       componentVersion: 0.30.0
       version: 1.6.5
