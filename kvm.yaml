@@ -30,7 +30,7 @@
       version: 0.1.0
     - name: cluster-operator
       provider: kvm
-      version: 0.23.6
+      version: 0.23.7
     - name: flannel-operator
       version: 0.2.0
     - name: kvm-operator
