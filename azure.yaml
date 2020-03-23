@@ -35,7 +35,7 @@
       version: 0.1.0
     - name: cluster-operator
       provider: azure
-      version: 0.23.7
+      version: 0.23.8
   components:
     - name: kubernetes
       version: 1.16.7
