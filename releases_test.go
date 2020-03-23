@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"testing"
 
 	"github.com/fatih/color"
 	"github.com/giantswarm/apiextensions/pkg/apis/release/v1alpha1"
@@ -113,7 +114,7 @@ func validateCombinedReleases(releases []v1alpha1.Release) error {
 	return nil
 }
 
-func main() {
+func Test_Releases(t *testing.T) {
 	files := []string{
 		"aws.yaml",
 		"azure.yaml",

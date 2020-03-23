@@ -12,7 +12,7 @@ jobs:
       - checkout
       - run:
           name: Validate releases
-          command: go run validate/main.go
+          command: go test .
 
 workflows:
   workflow:

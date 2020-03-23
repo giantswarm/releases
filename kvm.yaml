@@ -9,25 +9,25 @@ metadata:
   name: v11.2.1
 spec:
   apps:
-  - app: cert-exporter
+  - name: cert-exporter
     version: 1.2.1
-  - app: chart-operator
+  - name: chart-operator
     version: 0.12.1
-  - app: coredns
+  - name: coredns
     componentVersion: 1.6.5
     version: 1.1.8
-  - app: kube-state-metrics
+  - name: kube-state-metrics
     componentVersion: 1.9.2
     version: 1.0.4
-  - app: metrics-server
+  - name: metrics-server
     componentVersion: 0.3.3
     version: 1.0.0
-  - app: net-exporter
+  - name: net-exporter
     version: 1.7.0
-  - app: nginx-ingress-controller
+  - name: nginx-ingress-controller
     componentVersion: 0.30.0
     version: 1.6.5
-  - app: node-exporter
+  - name: node-exporter
     componentVersion: 0.18.1
     version: 1.2.0
   components:
