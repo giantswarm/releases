@@ -1,7 +1,6 @@
 - version: 11.2.1
   state: wip
-  active: false
-  date: 2020-03-18T12:00:00Z
+  date: 2020-03-23T12:00:00Z
   apps:
     - app: cert-exporter
       version: 1.2.1
@@ -23,7 +22,7 @@
       version: 1.6.0
     - app: nginx-ingress-controller
       componentVersion: 0.30.0
-      version: 1.6.4
+      version: 1.6.5
     - app: node-exporter
       componentVersion: 0.18.1
       version: 1.2.0
@@ -36,7 +35,7 @@
       version: 0.1.0
     - name: cluster-operator
       provider: azure
-      version: 0.23.6
+      version: 0.23.7
   components:
     - name: kubernetes
       version: 1.16.7
