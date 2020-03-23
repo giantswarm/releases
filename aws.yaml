@@ -21,7 +21,7 @@ spec:
     version: 1.1.4
   - name: coredns
     componentVersion: 1.6.5
-    version: 1.1.6
+    version: 1.1.7
   - name: external-dns
     componentVersion: 0.5.18
     version: 1.2.0
@@ -662,4 +662,3 @@ spec:
   date: 2019-04-17T08:00:00Z
   state: deprecated
 ---
-
