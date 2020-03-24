@@ -2,13 +2,9 @@ package main
 
 import (
 	"bufio"
-	"errors"
-	"fmt"
-	"log"
 	"os"
 	"testing"
 
-	"github.com/fatih/color"
 	"github.com/giantswarm/apiextensions/pkg/apis/release/v1alpha1"
 	"github.com/giantswarm/microerror"
 	"github.com/giantswarm/versionbundle"
@@ -18,6 +14,9 @@ import (
 	"sigs.k8s.io/yaml"
 )
 
+// sigs.k8s.io/yaml can't handle multi-part YAML documents (separated by "---")
+// so documents such as aws.yaml must be split on boundaries and parsed
+// individually.
 func scanDocuments(filename string) ([]string, error) {
 	data, err := os.Open(filename)
 	if err != nil {
@@ -41,6 +40,8 @@ func scanDocuments(filename string) ([]string, error) {
 	return documents, nil
 }
 
+// Given a slice of strings defining Release CRs as YAML, this function
+// simply parses the YAML and returns a slice of Releases.
 func parseReleases(documents []string) ([]v1alpha1.Release, error) {
 	var releases []v1alpha1.Release
 	for _, document := range documents {
@@ -54,30 +55,9 @@ func parseReleases(documents []string) ([]v1alpha1.Release, error) {
 	return releases, nil
 }
 
-func validateIndividualReleases(releases []v1alpha1.Release) error {
-	crd := v1alpha1.NewReleaseCRD()
-	var v apiextensions.CustomResourceValidation
-	err := v1beta1.Convert_v1beta1_CustomResourceValidation_To_apiextensions_CustomResourceValidation(crd.Spec.Validation, &v, nil)
-	if err != nil {
-		return microerror.Mask(err)
-	}
-
-	validator, _, err := validation.NewSchemaValidator(&v)
-	if err != nil {
-		return microerror.Mask(err)
-	}
-
-	for _, release := range releases {
-		result := validator.Validate(release)
-		if len(result.Errors) > 0 {
-			return microerror.Mask(errors.New(fmt.Sprintf("invalid release: %#v", result.Errors)))
-		}
-	}
-
-	return nil
-}
-
-func validateCombinedReleases(releases []v1alpha1.Release) error {
+// To reuse versionbundle.ValidateIndexReleases, the slice of Releases must first be
+// converted into a slice of versionbundle.IndexRelease.
+func releasesToIndex(releases []v1alpha1.Release) []versionbundle.IndexRelease {
 	var indexReleases []versionbundle.IndexRelease
 	for _, release := range releases {
 		var apps []versionbundle.App
@@ -107,36 +87,70 @@ func validateCombinedReleases(releases []v1alpha1.Release) error {
 		}
 		indexReleases = append(indexReleases, indexRelease)
 	}
-	err := versionbundle.ValidateIndexReleases(indexReleases)
-	if err != nil {
-		return microerror.Mask(err)
-	}
-	return nil
+	return indexReleases
 }
 
 func Test_Releases(t *testing.T) {
-	files := []string{
-		"aws.yaml",
-		"azure.yaml",
-		"kvm.yaml",
+	testCases := []struct{
+		filename string
+		name string
+	}{
+		{
+			filename: "aws.yaml",
+			name:     "case 1: aws.yaml is valid",
+		},
+		{
+			filename: "azure.yaml",
+			name:     "case 2: azure.yaml is valid",
+		},
+		{
+			filename: "kvm.yaml",
+			name:     "case 3: kvm.yaml is valid",
+		},
 	}
-	for _, file := range files {
-		documents, err := scanDocuments(file)
-		if err != nil {
-			log.Fatal(err)
-		}
-		releases, err := parseReleases(documents)
-		if err != nil {
-			log.Fatal(err)
-		}
-		err = validateIndividualReleases(releases)
-		if err != nil {
-			log.Fatal(err)
-		}
-		err = validateCombinedReleases(releases)
-		if err != nil {
-			log.Fatal(err)
-		}
+
+	for _, tc := range testCases {
+		t.Run(tc.name, func(t *testing.T) {
+			documents, err := scanDocuments(tc.filename)
+			if err != nil {
+				t.Fatal(err)
+			}
+
+			releases, err := parseReleases(documents)
+			if err != nil {
+				t.Fatal(err)
+			}
+
+			crd := v1alpha1.NewReleaseCRD()
+			var v apiextensions.CustomResourceValidation
+			// Convert the CRD validation into the version-independent form.
+			err = v1beta1.Convert_v1beta1_CustomResourceValidation_To_apiextensions_CustomResourceValidation(crd.Spec.Validation, &v, nil)
+			if err != nil {
+				t.Fatal(err)
+			}
+
+			validator, _, err := validation.NewSchemaValidator(&v)
+			if err != nil {
+				t.Fatal(err)
+			}
+
+			// Ensure that releases satisfy OpenAPI validation.
+			for _, release := range releases {
+				result := validator.Validate(release)
+				if len(result.Errors) > 0 {
+					t.Errorf("invalid release: %#v", release)
+					for i, err := range result.Errors {
+						t.Errorf("validation error %d: %#v", i, err)
+					}
+				}
+			}
+
+			// Ensure that releases are unique.
+			indexReleases := releasesToIndex(releases)
+			err = versionbundle.ValidateIndexReleases(indexReleases)
+			if err != nil {
+				t.Error(err)
+			}
+		})
 	}
-	fmt.Printf(color.GreenString("Verified given releases are valid.\n"))
 }

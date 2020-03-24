@@ -1,6 +1,3 @@
----
-# Source: releases-azure/templates/release.yaml
-
 apiVersion: release.giantswarm.io/v1alpha1
 kind: Release
 metadata:
