@@ -1,6 +1,6 @@
 - version: 11.2.1
   state: wip
-  date: 2020-03-23T12:00:00Z
+  date: 2020-03-30T12:00:00Z
   apps:
     - app: cert-exporter
       version: 1.2.1
@@ -8,7 +8,7 @@
       version: 0.12.1
     - app: coredns
       componentVersion: 1.6.5
-      version: 1.1.7
+      version: 1.1.8
     - app: external-dns
       componentVersion: 0.5.18
       version: 1.2.0
@@ -19,7 +19,7 @@
       componentVersion: 0.3.3
       version: 1.0.0
     - app: net-exporter
-      version: 1.6.0
+      version: 1.7.0
     - app: nginx-ingress-controller
       componentVersion: 0.30.0
       version: 1.6.5
