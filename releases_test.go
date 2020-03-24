@@ -72,9 +72,8 @@ func releasesToIndex(releases []v1alpha1.Release) []versionbundle.IndexRelease {
 		var authorities []versionbundle.Authority
 		for _, component := range release.Spec.Components {
 			indexAuthority := versionbundle.Authority{
-				Name:     component.Name,
-				Provider: component.Name,
-				Version:  component.Version,
+				Name:    component.Name,
+				Version: component.Version,
 			}
 			authorities = append(authorities, indexAuthority)
 		}
@@ -91,9 +90,9 @@ func releasesToIndex(releases []v1alpha1.Release) []versionbundle.IndexRelease {
 }
 
 func Test_Releases(t *testing.T) {
-	testCases := []struct{
+	testCases := []struct {
 		filename string
-		name string
+		name     string
 	}{
 		{
 			filename: "aws.yaml",
