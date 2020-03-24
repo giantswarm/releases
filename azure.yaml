@@ -38,7 +38,7 @@
       version: 0.23.8
   components:
     - name: kubernetes
-      version: 1.16.7
+      version: 1.16.8
     - name: containerlinux
       version: 2191.5.0
     - name: coredns
