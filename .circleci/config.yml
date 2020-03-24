@@ -12,7 +12,7 @@ jobs:
       - checkout
       - run:
           name: Validate releases
-          command: go test .
+          command: CGO_ENABLED=0 go test ./...
 
 workflows:
   workflow:
