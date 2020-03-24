@@ -26,6 +26,8 @@ workflows:
           attach_workspace: true
           chart: releases-kvm
           on_tag: false
+          requires:
+            - validate
       - architect/push-to-app-collection:
           name: push-releases-to-kvm-app-collection
           app_catalog: releases
@@ -47,6 +49,7 @@ workflows:
           chart: releases-aws
           on_tag: false
           requires:
+            - validate
             - push-releases-kvm-to-releases-catalog
       - architect/push-to-app-collection:
           name: push-releases-to-aws-app-collection
@@ -70,6 +73,7 @@ workflows:
           chart: releases-azure
           on_tag: false
           requires:
+            - validate
             - push-releases-aws-to-releases-catalog
       - architect/push-to-app-collection:
           name: push-releases-to-azure-app-collection
