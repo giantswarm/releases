@@ -224,8 +224,8 @@
       componentVersion: 1.6.5
       version: 1.1.8
     - app: kube-state-metrics
-      componentVersion: 1.9.2
-      version: 1.0.4
+      componentVersion: 1.9.5
+      version: 1.0.5
     - app: metrics-server
       componentVersion: 0.3.3
       version: 1.0.0
