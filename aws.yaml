@@ -428,7 +428,7 @@
     - name: etcd
       version: 3.3.15
 - version: 9.0.0
-  state: deprecated
+  state: active
   date: 2019-10-28T12:00:00Z
   authorities:
     - name: app-operator
