@@ -381,7 +381,7 @@
     - name: etcd
       version: 3.3.17
 - version: 9.0.1
-  state: wip
+  state: active
   date: 2020-03-27T19:00:00Z
   apps:
     - app: cert-exporter
@@ -428,7 +428,7 @@
     - name: etcd
       version: 3.3.15
 - version: 9.0.0
-  state: active
+  state: deprecated
   date: 2019-10-28T12:00:00Z
   authorities:
     - name: app-operator
