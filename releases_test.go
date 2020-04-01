@@ -112,12 +112,12 @@ func Test_Releases(t *testing.T) {
 		t.Run(tc.name, func(t *testing.T) {
 			documents, err := scanDocuments(tc.filename)
 			if err != nil {
-				t.Fatal(err)
+				t.Fatal(microerror.Mask(err))
 			}
 
 			releases, err := parseReleases(documents)
 			if err != nil {
-				t.Fatal(err)
+				t.Fatal(microerror.Mask(err))
 			}
 
 			crd := v1alpha1.NewReleaseCRD()
@@ -125,12 +125,12 @@ func Test_Releases(t *testing.T) {
 			// Convert the CRD validation into the version-independent form.
 			err = v1beta1.Convert_v1beta1_CustomResourceValidation_To_apiextensions_CustomResourceValidation(crd.Spec.Validation, &v, nil)
 			if err != nil {
-				t.Fatal(err)
+				t.Fatal(microerror.Mask(err))
 			}
 
 			validator, _, err := validation.NewSchemaValidator(&v)
 			if err != nil {
-				t.Fatal(err)
+				t.Fatal(microerror.Mask(err))
 			}
 
 			// Ensure that releases satisfy OpenAPI validation.
@@ -148,7 +148,7 @@ func Test_Releases(t *testing.T) {
 			indexReleases := releasesToIndex(releases)
 			err = versionbundle.ValidateIndexReleases(indexReleases)
 			if err != nil {
-				t.Error(err)
+				t.Fatal(microerror.Mask(err))
 			}
 		})
 	}
