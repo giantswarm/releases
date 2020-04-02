@@ -41,7 +41,7 @@
       version: 0.1.0
     - name: cluster-operator
       provider: aws
-      version: 2.1.6
+      version: 2.1.6-dev
   components:
     - name: kubernetes
       version: 1.16.3
