@@ -205,7 +205,7 @@ spec:
   - name: flannel-operator
     version: 0.2.0
   - name: kvm-operator
-    version: 3.9.0
+    version: 3.9.1-dev
   - name: kubernetes
     version: 1.15.11
   - name: containerlinux
