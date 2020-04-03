@@ -5,8 +5,8 @@ metadata:
     giantswarm.io/docs: https://docs.giantswarm.io/reference/cp-k8s-api/releases.release.giantswarm.io/
   name: v11.1.2
 spec:
-  state: wip
-  date: 2020-04-02T12:00:00Z
+  state: active
+  date: 2020-04-06T08:00:00Z
   apps:
   - name: cert-exporter
     version: 1.2.1
