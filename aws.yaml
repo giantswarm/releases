@@ -37,7 +37,7 @@
     - name: app-operator
       version: 1.0.0
     - name: aws-operator
-      version: 8.2.2-calvix
+      version: 8.2.3-calvix
     - name: cert-operator
       version: 0.1.0
     - name: cluster-operator
