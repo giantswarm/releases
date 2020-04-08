@@ -60,7 +60,7 @@ metadata:
   name: v11.2.2
 spec:
   state: active
-  date: 2020-03-30T12:00:00Z
+  date: 2020-04-08T12:00:00Z
   apps:
   - name: cert-exporter
     version: 1.2.1
@@ -73,8 +73,8 @@ spec:
     componentVersion: 0.5.18
     version: 1.2.0
   - name: kube-state-metrics
-    componentVersion: 1.9.2
-    version: 1.0.4
+    componentVersion: 1.9.5
+    version: 1.0.5
   - name: metrics-server
     componentVersion: 0.3.3
     version: 1.0.0
@@ -82,7 +82,7 @@ spec:
     version: 1.7.0
   - name: nginx-ingress-controller
     componentVersion: 0.30.0
-    version: 1.6.5
+    version: 1.6.7
   - name: node-exporter
     componentVersion: 0.18.1
     version: 1.2.0
