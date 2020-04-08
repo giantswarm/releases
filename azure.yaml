@@ -90,7 +90,7 @@ spec:
   - name: app-operator
     version: 1.0.0
   - name: azure-operator
-    version: 3.0.5
+    version: 3.0.5-dev
   - name: cert-operator
     version: 0.1.0
   - name: cluster-operator
