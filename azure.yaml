@@ -44,7 +44,7 @@ spec:
   - name: kubernetes
     version: 1.16.8
   - name: containerlinux
-    version: 2345.4.0
+    version: 2345.3.1
   - name: coredns
     version: 1.6.5
   - name: calico
