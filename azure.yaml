@@ -5,8 +5,8 @@ metadata:
     giantswarm.io/docs: https://docs.giantswarm.io/reference/cp-k8s-api/releases.release.giantswarm.io/
   name: v11.2.4
 spec:
-  state: wip
-  date: 2020-04-09T14:00:00Z
+  state: active
+  date: 2020-04-14T14:00:00Z
   apps:
   - name: cert-exporter
     version: 1.2.1
@@ -19,8 +19,8 @@ spec:
     componentVersion: 0.5.18
     version: 1.2.0
   - name: kube-state-metrics
-    componentVersion: 1.9.2
-    version: 1.0.4
+    componentVersion: 1.9.5
+    version: 1.0.5
   - name: metrics-server
     componentVersion: 0.3.3
     version: 1.0.0
@@ -28,7 +28,7 @@ spec:
     version: 1.7.0
   - name: nginx-ingress-controller
     componentVersion: 0.30.0
-    version: 1.6.5
+    version: 1.6.8
   - name: node-exporter
     componentVersion: 0.18.1
     version: 1.2.0
