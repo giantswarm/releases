@@ -2,7 +2,12 @@
 
 # releases
 
-This repository contains Giant Swarm releases and changelogs.
+This repository contains Giant Swarm releases and changelogs. Releases can be in
+different states, namely `active`, `deprecated` and `wip`. With pull requests
+merged to the `master` branch releases get automatically deployed to all Giant
+Swarm Control Planes.
+
+
 
 ### AWS
 
