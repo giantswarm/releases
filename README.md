@@ -1,8 +1,13 @@
-[![CircleCI](https://circleci.com/gh/giantswarm/releases.svg?style=shield&circle-token=76d582a275a80545c9b0c403d19321c5197b5c87)](https://circleci.com/gh/giantswarm/releases)
+[![CircleCI](https://circleci.com/gh/giantswarm/releases.svg?style=shield)](https://circleci.com/gh/giantswarm/releases)
 
 # releases
 
-This repository contains Giant Swarm releases and changelogs.
+This repository contains Giant Swarm releases and changelogs. Releases can be in
+different states, namely `active`, `deprecated` and `wip`. With pull requests
+merged to the `master` branch releases get automatically deployed to all Giant
+Swarm Control Planes.
+
+
 
 ### AWS
 
@@ -23,6 +28,8 @@ This repository contains Giant Swarm releases and changelogs.
 - [9.0.0](https://github.com/giantswarm/releases/blob/master/release-notes/aws/v9.0.0.md)
 - [8.5.0](https://github.com/giantswarm/releases/blob/master/release-notes/aws/v8.5.0.md)
 
+
+
 ### Azure
 
 - [11.2.4](https://github.com/giantswarm/releases/blob/master/release-notes/azure/v11.2.4.md)
@@ -35,6 +42,8 @@ This repository contains Giant Swarm releases and changelogs.
 - [9.0.0](https://github.com/giantswarm/releases/blob/master/release-notes/azure/v9.0.0.md)
 - [8.4.1](https://github.com/giantswarm/releases/blob/master/release-notes/azure/v8.4.1.md)
 - [8.4.0](https://github.com/giantswarm/releases/blob/master/release-notes/azure/v8.4.0.md)
+
+
 
 ### KVM
 
