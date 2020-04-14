@@ -28,6 +28,8 @@ Swarm Control Planes.
 - [9.0.0](https://github.com/giantswarm/releases/blob/master/release-notes/aws/v9.0.0.md)
 - [8.5.0](https://github.com/giantswarm/releases/blob/master/release-notes/aws/v8.5.0.md)
 
+
+
 ### Azure
 
 - [11.2.4](https://github.com/giantswarm/releases/blob/master/release-notes/azure/v11.2.4.md)
@@ -40,6 +42,8 @@ Swarm Control Planes.
 - [9.0.0](https://github.com/giantswarm/releases/blob/master/release-notes/azure/v9.0.0.md)
 - [8.4.1](https://github.com/giantswarm/releases/blob/master/release-notes/azure/v8.4.1.md)
 - [8.4.0](https://github.com/giantswarm/releases/blob/master/release-notes/azure/v8.4.0.md)
+
+
 
 ### KVM
 
