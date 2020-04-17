@@ -42,7 +42,7 @@ spec:
   - name: app-operator
     version: 1.0.0
   - name: aws-operator
-    version: 8.2.3
+    version: 8.3.0
   - name: cert-operator
     version: 0.1.0
   - name: cluster-operator
