@@ -228,7 +228,7 @@ spec:
   - name: cert-exporter
     version: 1.2.2
   - name: chart-operator
-    version: 0.12.4
+    version: 0.13.0
   - name: coredns
     componentVersion: 1.6.5
     version: 1.1.8
@@ -273,7 +273,7 @@ metadata:
     giantswarm.io/docs: https://docs.giantswarm.io/reference/cp-k8s-api/releases.release.giantswarm.io/
   name: v9.0.0
 spec:
-  state: active
+  state: deprecated
   date: 2019-10-28T12:00:00Z
   apps: []
   components:
