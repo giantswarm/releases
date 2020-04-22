@@ -34,6 +34,7 @@ Swarm Control Planes.
 
 ### Azure
 
+- [11.2.5](https://github.com/giantswarm/releases/blob/master/release-notes/azure/v11.2.5.md)
 - [11.2.4](https://github.com/giantswarm/releases/blob/master/release-notes/azure/v11.2.4.md)
 - [11.2.3](https://github.com/giantswarm/releases/blob/master/release-notes/azure/v11.2.3.md)
 - [11.2.2](https://github.com/giantswarm/releases/blob/master/release-notes/azure/v11.2.2.md)
