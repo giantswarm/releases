@@ -28,8 +28,8 @@ spec:
     componentVersion: 3.5.0
     version: 1.2.2
   - name: kube-state-metrics
-    componentVersion: 1.9.2
-    version: 1.0.4
+    componentVersion: 1.9.5
+    version: 1.0.5
   - name: metrics-server
     componentVersion: 0.3.3
     version: 1.0.0
@@ -86,8 +86,8 @@ spec:
     componentVersion: 3.5.0
     version: 1.2.2
   - name: kube-state-metrics
-    componentVersion: 1.9.5
-    version: 1.0.5
+    componentVersion: 1.9.2
+    version: 1.0.4
   - name: metrics-server
     componentVersion: 0.3.3
     version: 1.0.0
