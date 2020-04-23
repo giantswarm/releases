@@ -6,7 +6,7 @@ metadata:
   name: v11.2.0
 spec:
   state: active
-  date: 2020-04-25T12:00:00Z
+  date: 2020-04-23T15:00:00Z
   apps:
   - name: cert-exporter
     version: 1.2.1
