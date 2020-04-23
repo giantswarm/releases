@@ -223,7 +223,7 @@ metadata:
   name: v9.0.1
 spec:
   state: active
-  date: 2020-04-20T12:00:00Z
+  date: 2020-04-24T12:00:00Z
   apps:
   - name: cert-exporter
     version: 1.2.2
@@ -256,7 +256,7 @@ spec:
   - name: flannel-operator
     version: 0.2.0
   - name: kvm-operator
-    version: 3.9.1-dev
+    version: 3.9.1
   - name: kubernetes
     version: 1.15.11
   - name: containerlinux
@@ -273,7 +273,7 @@ metadata:
     giantswarm.io/docs: https://docs.giantswarm.io/reference/cp-k8s-api/releases.release.giantswarm.io/
   name: v9.0.0
 spec:
-  state: active
+  state: deprecated
   date: 2019-10-28T12:00:00Z
   apps: []
   components:
