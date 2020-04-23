@@ -42,11 +42,11 @@ spec:
   - name: app-operator
     version: 1.0.0
   - name: aws-operator
-    version: 8.3.1-spot
+    version: 8.4.0
   - name: cert-operator
     version: 0.1.0
   - name: cluster-operator
-    version: 2.1.9-spot
+    version: 2.1.9
   - name: kubernetes
     version: 1.16.3
   - name: containerlinux
@@ -86,8 +86,8 @@ spec:
     componentVersion: 3.5.0
     version: 1.2.2
   - name: kube-state-metrics
-    componentVersion: 1.9.2
-    version: 1.0.4
+    componentVersion: 1.9.5
+    version: 1.0.5
   - name: metrics-server
     componentVersion: 0.3.3
     version: 1.0.0
