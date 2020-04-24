@@ -11,6 +11,7 @@ Swarm Control Planes.
 
 ### AWS
 
+- [11.2.0](https://github.com/giantswarm/releases/blob/master/release-notes/aws/v11.2.0.md)
 - [11.1.4](https://github.com/giantswarm/releases/blob/master/release-notes/aws/v11.1.4.md)
 - [11.1.3](https://github.com/giantswarm/releases/blob/master/release-notes/aws/v11.1.3.md)
 - [11.1.2](https://github.com/giantswarm/releases/blob/master/release-notes/aws/v11.1.2.md)
@@ -25,6 +26,7 @@ Swarm Control Planes.
 - [9.2.1](https://github.com/giantswarm/releases/blob/master/release-notes/aws/v9.2.1.md)
 - [9.2.0](https://github.com/giantswarm/releases/blob/master/release-notes/aws/v9.2.0.md)
 - [9.1.0](https://github.com/giantswarm/releases/blob/master/release-notes/aws/v9.1.0.md)
+- [9.0.3](https://github.com/giantswarm/releases/blob/master/release-notes/aws/v9.0.3.md)
 - [9.0.2](https://github.com/giantswarm/releases/blob/master/release-notes/aws/v9.0.2.md)
 - [9.0.1](https://github.com/giantswarm/releases/blob/master/release-notes/aws/v9.0.1.md)
 - [9.0.0](https://github.com/giantswarm/releases/blob/master/release-notes/aws/v9.0.0.md)
@@ -50,6 +52,7 @@ Swarm Control Planes.
 
 ### KVM
 
+- [11.2.3](https://github.com/giantswarm/releases/blob/master/release-notes/kvm/v11.2.3.md)
 - [11.2.2](https://github.com/giantswarm/releases/blob/master/release-notes/kvm/v11.2.2.md)
 - [11.2.1](https://github.com/giantswarm/releases/blob/master/release-notes/kvm/v11.2.1.md)
 - [11.2.0](https://github.com/giantswarm/releases/blob/master/release-notes/kvm/v11.2.0.md)
