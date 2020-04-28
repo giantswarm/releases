@@ -42,11 +42,11 @@ spec:
   - name: app-operator
     version: 1.0.0
   - name: aws-operator
-    version: 8.4.1-xh3b4sd
+    version: 8.4.0
   - name: cert-operator
     version: 0.1.0
   - name: cluster-operator
-    version: 2.1.9
+    version: 2.1.10-xh3b4sd
   - name: kubernetes
     version: 1.16.3
   - name: containerlinux
