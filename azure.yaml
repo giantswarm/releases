@@ -59,8 +59,8 @@ metadata:
     giantswarm.io/docs: https://docs.giantswarm.io/reference/cp-k8s-api/releases.release.giantswarm.io/
   name: v11.2.6
 spec:
-  state: wip
-  date: 2020-04-27T13:00:00Z
+  state: active
+  date: 2020-04-28T14:00:00Z
   apps:
   - name: cert-exporter
     version: 1.2.1
@@ -90,7 +90,7 @@ spec:
   - name: app-operator
     version: 1.0.0
   - name: azure-operator
-    version: 3.0.7-testing
+    version: 3.0.7
   - name: cert-operator
     version: 0.1.0
   - name: cluster-operator
