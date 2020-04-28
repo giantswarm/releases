@@ -421,7 +421,7 @@ kind: Release
 metadata:
   annotations:
     giantswarm.io/docs: https://docs.giantswarm.io/reference/cp-k8s-api/releases.release.giantswarm.io/
-  name: v9.3.2
+  name: v9.3.3
 spec:
   state: active
   date: 2020-04-23T12:00:00Z
