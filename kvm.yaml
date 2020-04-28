@@ -405,7 +405,7 @@ spec:
   - name: cert-operator
     version: 0.1.0
   - name: cluster-operator
-    version: 0.23.8
+    version: 0.23.9-dev
   - name: flannel-operator
     version: 0.2.0
   - name: kvm-operator
