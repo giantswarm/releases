@@ -37,7 +37,7 @@ Additionally, you will find some apps created for non-commercial purposes (e.g. 
 Bear in mind that we do NOT support Playground apps and they aren’t a priority in terms of our workload. This means they might not ever make it into the Giant Swarm Catalog. What you will get is an app at a basic maturity level that should work for a certain use case.
 
 
-## 3. Your Enterprise App Catalog
+## 3. Your Own App Catalog
 
 Finally, the App Platform infrastructure enables you to create enterprise App Catalogs with your own apps. This lets you provide standards-compliant and easy-to-use sets of apps to your engineers.
 
