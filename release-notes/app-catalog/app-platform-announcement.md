@@ -1,7 +1,7 @@
 # Announcing Giant Swarm App Platform
 We are pleased to announce that the Giant Swarm App Platform is generally available.
 
-In the past few months, you may have noticed that we have been working on this. We even answered some questions we received as a result of the preview. This has helped us shape the platform and bring it to where it is today.
+In the past few months, you may have noticed that we have been working on this. We have answered questions and fixed issues that we found as a result of the preview. This has helped us shape the platform and bring it to where it is today.
 
 There are two ways to benefit:
 
