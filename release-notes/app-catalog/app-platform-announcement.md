@@ -3,7 +3,12 @@ We are pleased to announce that the Giant Swarm App Platform is generally availa
 
 In the past few months, you may have noticed that we have been working on this. We even answered some questions we received as a result of the preview. This has helped us shape the platform and bring it to where it is today.
 
-The App Platform was designed to support multiple App Catalogs. Let’s take a look at some examples:
+There are two ways to benefit:
+
+* One, install the apps in the Giant Swarm Catalog on your clusters. Some apps we are working towards fully supporting are NGINX Ingress Controller, Kong, and Prometheus Operator.
+* Two, build your own App Catalogs and build a pipeline of your own apps into your clusters.
+
+Below, you can find more details on the multiple catalogs in the current App Platform.
 
 
 ## 1. **The Giant Swarm Catalog**
