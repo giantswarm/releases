@@ -41,7 +41,7 @@ Bear in mind that we do NOT support Playground apps and they aren’t a priority
 
 Finally, the App Platform infrastructure enables you to create enterprise App Catalogs with your own apps. This lets you provide standards-compliant and easy-to-use sets of apps to your engineers.
 
-It’s already possible for you to add your own catalog(s) via the Kubernetes API in your Control Plane. We are working on documentation for how to do this. In the meantime, you can request access from your Solution Engineer.
+It’s already possible for you to add your own catalog(s) via the Kubernetes API in your Control Plane. We are working on documentation for how to do this. In the meantime, you can request access and a preview of said documentation from your Solution Engineer.
 
 
 ----------
