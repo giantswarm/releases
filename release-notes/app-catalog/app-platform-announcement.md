@@ -34,7 +34,7 @@ Additionally, you will find some apps created for non-commercial purposes (e.g. 
 ![The Playground Catalog](https://p80.f1.n0.cdn.getcloudapp.com/items/z8uxX8wL/Image%202020-04-22%20at%2010.03.00%20AM.png?v=1439b2120f9203b7e4ba13ce26b83af3)
 
 
-Bear in mind that we do NOT support Playground apps and they aren’t a priority in terms of our workload. This means they might not ever make it into the Giant Swarm Catalog. What you will get is an app at a basic maturity level at a specific point in time.
+Bear in mind that we do NOT support Playground apps and they aren’t a priority in terms of our workload. This means they might not ever make it into the Giant Swarm Catalog. What you will get is an app at a basic maturity level that should work for a certain use case.
 
 
 ## 3. Your Enterprise App Catalog
