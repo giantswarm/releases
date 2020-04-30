@@ -6,7 +6,7 @@ In the past few months, you may have noticed that we have been working on this. 
 There are two ways to benefit:
 
 * One, install the apps in the Giant Swarm Catalog on your clusters. Some apps we are working towards fully supporting are NGINX Ingress Controller, Kong, and Prometheus Operator.
-* Two, build your own App Catalogs and build a pipeline of your own apps into your clusters.
+* Two, create your own App Catalogs and build a pipeline of your own apps into your clusters.
 
 Below, you can find more details on the multiple catalogs in the current App Platform.
 
