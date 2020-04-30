@@ -46,6 +46,6 @@ It’s already possible for you to add your own catalog(s) via the Kubernetes AP
 
 ----------
 
-We encourage you to check out the app catalogs and try some of the apps there. You can also work with your Solution Engineer to create your own enterprise app catalog. As always, feedback is welcome.
+We encourage you to check out the App Catalogs and try some of the apps there. You can also work with your Solution Engineer to create your own enterprise App Catalog. As always, feedback is welcome.
 
 We look forward to enabling you to build the cloud-native stack that is most useful to you with the Giant Swarm App Platform.
