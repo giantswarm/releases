@@ -75,6 +75,8 @@ Swarm Control Planes.
 ### KVM
 
 - v11
+  - v11.4
+    - [v11.4.0](https://github.com/giantswarm/releases/blob/master/release-notes/kvm/v11.4.0.md)
   - v11.3
     - [v11.3.1](https://github.com/giantswarm/releases/blob/master/release-notes/kvm/v11.3.1.md)
     - [v11.3.0](https://github.com/giantswarm/releases/blob/master/release-notes/kvm/v11.3.0.md)
