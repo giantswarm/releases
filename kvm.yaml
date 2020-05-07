@@ -477,7 +477,7 @@ metadata:
     giantswarm.io/docs: https://docs.giantswarm.io/reference/cp-k8s-api/releases.release.giantswarm.io/
   name: v9.0.2
 spec:
-  state: active
+  state: deprecated
   date: 2020-05-04T12:00:00Z
   apps:
   - name: cert-exporter
