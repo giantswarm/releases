@@ -1,0 +1,31 @@
+apiVersion: release.giantswarm.io/v1alpha1
+kind: Release
+metadata:
+  annotations:
+    giantswarm.io/docs: https://docs.giantswarm.io/reference/cp-k8s-api/releases.release.giantswarm.io/
+  name: v11.0.0
+spec:
+  state: deprecated
+  date: 2020-01-29T12:00:00Z
+  apps: []
+  components:
+  - name: app-operator
+    version: 1.0.0
+  - name: aws-operator
+    version: 8.1.0
+  - name: cert-operator
+    version: 0.1.0
+  - name: chart-operator
+    version: 0.7.0
+  - name: cluster-operator
+    version: 2.0.2
+  - name: kubernetes
+    version: 1.16.3
+  - name: containerlinux
+    version: 2191.5.0
+  - name: coredns
+    version: 1.6.5
+  - name: calico
+    version: 3.10.1
+  - name: etcd
+    version: 3.3.17
