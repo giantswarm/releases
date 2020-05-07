@@ -238,7 +238,7 @@ metadata:
   name: v9.3.0
 spec:
   state: active
-  date: 2020-05-05T12:00:00Z
+  date: 2020-05-07T12:00:00Z
   apps:
   - name: cert-exporter
     version: 1.2.1
@@ -268,7 +268,7 @@ spec:
   - name: app-operator
     version: 1.0.0
   - name: aws-operator
-    version: 5.7.1-dev
+    version: 5.7.1
   - name: cert-operator
     version: 0.1.0
   - name: cluster-operator
@@ -289,7 +289,7 @@ metadata:
     giantswarm.io/docs: https://docs.giantswarm.io/reference/cp-k8s-api/releases.release.giantswarm.io/
   name: v9.2.6
 spec:
-  state: active
+  state: deprecated
   date: 2020-05-07T12:00:00Z
   apps:
   - name: cert-exporter
