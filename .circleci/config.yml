@@ -11,6 +11,23 @@ jobs:
     steps:
       - checkout
       - run:
+          name: Install kustomize
+          command: |
+            go install sigs.k8s.io/kustomize/kustomize/v3
+      - run:
+          name: Kustomize helm charts
+          command: |
+            for i in aws azure kvm; do mkdir -p helm/releases-$i/templates; kustomize build ./$i > helm/releases-$i/templates/releases.yaml; done
+      - persist_to_workspace:
+          root: .
+          paths:
+            - helm
+  validate:
+    docker:
+      - image: quay.io/giantswarm/architect
+    steps:
+      - checkout
+      - run:
           name: Validate releases
           command: CGO_ENABLED=0 go test ./...
 
@@ -18,6 +35,7 @@ workflows:
   workflow:
     jobs:
       - validate
+      - build
       # KVM
       - architect/push-to-app-catalog:
           name: push-releases-kvm-to-releases-catalog
@@ -27,6 +45,7 @@ workflows:
           chart: releases-kvm
           on_tag: false
           requires:
+            - build
             - validate
       - architect/push-to-app-collection:
           name: push-releases-to-kvm-app-collection
@@ -49,6 +68,7 @@ workflows:
           chart: releases-aws
           on_tag: false
           requires:
+            - build
             - validate
             - push-releases-kvm-to-releases-catalog
       - architect/push-to-app-collection:
@@ -73,6 +93,7 @@ workflows:
           chart: releases-azure
           on_tag: false
           requires:
+            - build
             - validate
             - push-releases-aws-to-releases-catalog
       - architect/push-to-app-collection:
