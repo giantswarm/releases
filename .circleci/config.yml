@@ -5,7 +5,7 @@ orbs:
   architect: giantswarm/architect@0.8.3
 
 jobs:
-  validate:
+  build:
     docker:
       - image: quay.io/giantswarm/architect
     steps:
