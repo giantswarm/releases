@@ -1,8 +1,9 @@
 package main
 
 import (
-	"bufio"
-	"os"
+	"fmt"
+	"io/ioutil"
+	"path/filepath"
 	"testing"
 
 	"github.com/giantswarm/apiextensions/pkg/apis/release/v1alpha1"
@@ -14,39 +15,23 @@ import (
 	"sigs.k8s.io/yaml"
 )
 
-// sigs.k8s.io/yaml can't handle multi-part YAML documents (separated by "---")
-// so documents such as aws.yaml must be split on boundaries and parsed
-// individually.
-func scanDocuments(filename string) ([]string, error) {
-	data, err := os.Open(filename)
+func findReleases(provider string) ([]v1alpha1.Release, error) {
+	releaseDirectories, err := ioutil.ReadDir(provider)
 	if err != nil {
 		return nil, microerror.Mask(err)
 	}
-	scanner := bufio.NewScanner(data)
-	var document string
-	var documents []string
-	for scanner.Scan() {
-		line := scanner.Text()
-		if line != "---" {
-			document += line + "\n"
-			continue
-		}
-		if document == "" {
-			continue
-		}
-		documents = append(documents, document)
-		document = ""
-	}
-	return documents, nil
-}
-
-// Given a slice of strings defining Release CRs as YAML, this function
-// simply parses the YAML and returns a slice of Releases.
-func parseReleases(documents []string) ([]v1alpha1.Release, error) {
 	var releases []v1alpha1.Release
-	for _, document := range documents {
+	for _, releaseDirectory := range releaseDirectories {
+		if !releaseDirectory.IsDir() {
+			continue
+		}
+		releaseFilename := filepath.Join(provider, releaseDirectory.Name(), "release.yaml")
+		data, err := ioutil.ReadFile(releaseFilename)
+		if err != nil {
+			return nil, microerror.Mask(err)
+		}
 		var release v1alpha1.Release
-		err := yaml.Unmarshal([]byte(document), &release)
+		err = yaml.Unmarshal(data, &release)
 		if err != nil {
 			return nil, microerror.Mask(err)
 		}
@@ -91,31 +76,26 @@ func releasesToIndex(releases []v1alpha1.Release) []versionbundle.IndexRelease {
 
 func Test_Releases(t *testing.T) {
 	testCases := []struct {
-		filename string
+		provider string
 		name     string
 	}{
 		{
-			filename: "aws.yaml",
-			name:     "case 1: aws.yaml is valid",
+			provider: "aws",
+			name:     "case 1: aws releases are valid",
 		},
 		{
-			filename: "azure.yaml",
-			name:     "case 2: azure.yaml is valid",
+			provider: "azure",
+			name:     "case 2: azure releases are valid",
 		},
 		{
-			filename: "kvm.yaml",
-			name:     "case 3: kvm.yaml is valid",
+			provider: "kvm",
+			name:     "case 3: kvm releases are valid",
 		},
 	}
 
 	for _, tc := range testCases {
 		t.Run(tc.name, func(t *testing.T) {
-			documents, err := scanDocuments(tc.filename)
-			if err != nil {
-				t.Fatal(microerror.Mask(err))
-			}
-
-			releases, err := parseReleases(documents)
+			releases, err := findReleases(tc.provider)
 			if err != nil {
 				t.Fatal(microerror.Mask(err))
 			}
@@ -135,6 +115,7 @@ func Test_Releases(t *testing.T) {
 
 			// Ensure that releases satisfy OpenAPI validation.
 			for _, release := range releases {
+				fmt.Println(release.ObjectMeta)
 				result := validator.Validate(release)
 				if len(result.Errors) > 0 {
 					t.Errorf("invalid release: %#v", release)
