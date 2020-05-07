@@ -29,6 +29,7 @@ Swarm Control Planes.
     - [v10.1.0](https://github.com/giantswarm/releases/blob/master/release-notes/aws/v10.1.0.md)
 - v9
   - v9.2
+    - [v9.2.6](https://github.com/giantswarm/releases/blob/master/release-notes/aws/v9.2.6.md)
     - [v9.2.5](https://github.com/giantswarm/releases/blob/master/release-notes/aws/v9.2.5.md)
     - [v9.2.4](https://github.com/giantswarm/releases/blob/master/release-notes/aws/v9.2.4.md)
     - [v9.2.3](https://github.com/giantswarm/releases/blob/master/release-notes/aws/v9.2.3.md)
