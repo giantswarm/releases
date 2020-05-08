@@ -1,4 +1,4 @@
-## :zap: Giant Swarm Release 9.1.0 for AWS :zap:
+# :zap: Giant Swarm Release 9.1.0 for AWS :zap:
 
 This is the first Giant Swarm release which includes Kubernetes v1.16. In addition to this update, CPU limits have been removed from several supporting components and priority classes have been adjusted to ensure system reliability under heavy load. Further details about changes to individual components can be found below.
 

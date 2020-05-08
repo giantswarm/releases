@@ -1,4 +1,4 @@
-## :zap: Giant Swarm Release 9.2.1 for AWS :zap:
+# :zap: Giant Swarm Release 9.2.1 for AWS :zap:
 
 **With this release, horizontal pod autoscaling (HPA) is enabled by default for NGINX Ingress Controller (NGINX IC) on selected cluster profiles.**
 
