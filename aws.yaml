@@ -6,7 +6,7 @@ metadata:
   name: v11.3.0
 spec:
   state: active
-  date: 2020-05-05T15:00:00Z
+  date: 2020-05-08T15:00:00Z
   apps:
   - name: cert-exporter
     version: 1.2.1
@@ -41,6 +41,8 @@ spec:
   components:
   - name: app-operator
     version: 1.0.0
+  - name: aws-cni
+    version: 1.6.0
   - name: aws-operator
     version: 8.4.1-dev
   - name: cert-operator
