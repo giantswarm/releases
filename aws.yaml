@@ -44,7 +44,7 @@ spec:
   - name: aws-cni
     version: 1.6.0
   - name: aws-operator
-    version: 8.4.1-dev
+    version: 8.5.0
   - name: cert-operator
     version: 0.1.0
   - name: cluster-operator
