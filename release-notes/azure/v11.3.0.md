@@ -9,7 +9,7 @@ The migration process requires replacing the VMSS CoreOS Container Linux image w
 ### Warning
 The following steps will be undertaken during the upgrade procedure:
 1. Once you start the upgrade, we will be notified in order to be hands on during the procedure.
-2. The upgrade will start by replacing the master. The old master will be stopped as we need the final state of the ETCD data to be frozen for the migration. Once this is done, the new VMSS for the master instance will be created (:information_source: Due to the recent Azure disk provisioning performance,  this can take several tries, hence extend the upgrade time). 
+2. The upgrade will start by replacing the master. The old master will be stopped as we need the final state of the ETCD data to be frozen for the migration. Once this is done, the new VMSS for the master instance will be created (:information_source: Due to the recent Azure disk provisioning performance,  this can take several tries, hence extend the upgrade time).
 It is important to remember that while the switch is in progress for the master instance, the workloads will be unaffected as long as the pods do not fail, as rescheduling will not be possible as long as the master is not up.
 3. When the new VMSS master instance is ready, the upgrade will be waiting for the GS staff to migrate the ETCD data manually from the old master instance to the new one. After the migration is done on our side, the old instance will be removed and the new instance will join the cluster.
 4. After the master is upgraded successfully, the upgrade will proceed with the worker instances. Here, the process is simpler. The Azure Operator will create a VMSS with Flatcar Container Linux images and migrate the workloads, as you are used to during the previous upgrades.
@@ -18,3 +18,22 @@ It is important to remember that while the switch is in progress for the master 
 Due to the additional steps in the upgrade process, the whole procedure will take more time. As it also requires a manual intervention on our side, could you please **schedule all the upgrades to 11.3.0 with your Solution Engineer at least a day in advance**. This will allow us to prepare and guarantee you the appropriate support throughout the upgrade process.
 
 Our initial tests showed up to 2% loss of incoming traffic over the time period of 5-10min. It was not reproduced in the following tests but because of the complexity of the process you should be aware that this may occur.
+
+### Workflow change notice
+
+If you are upgrading from 8.4.1 or 9.0.0:
+
+Configuration that used to be on the Tenant Cluster has been moved to the Control Plane.
+
+Services like the `nginx-ingress-controller`, `coredns`, and `cluster-autoscaler`
+are no longer configurable through ConfigMaps on the tenant cluster.
+
+Existing ConfigMaps will be automatically migrated when you upgrade, however if
+you do not have access to the Control Plane API you will not be able to
+manually configure these services.
+
+e.g: If you had a cluster with id `e05c8`, then you'll find your
+`nginx-ingress-controller-user-values` configmap now in a namespace called `e05c8`
+on the Control Plane.
+
+Please contact your Solution Engineer for more information.
