@@ -83,22 +83,22 @@ Swarm Control Planes.
 
 - v11
   - v11.3
-    - [v11.3.1](https://github.com/giantswarm/releases/blob/master/azure/v11.3.1/release-notes.md)
-    - [v11.3.0](https://github.com/giantswarm/releases/blob/master/azure/v11.3.0/release-notes.md)
+    - [v11.3.1](https://github.com/giantswarm/releases/blob/master/kvm/v11.3.1/release-notes.md)
+    - [v11.3.0](https://github.com/giantswarm/releases/blob/master/kvm/v11.3.0/release-notes.md)
   - v11.2
-    - [v11.2.3](https://github.com/giantswarm/releases/blob/master/azure/v11.2.3/release-notes.md)
-    - [v11.2.2](https://github.com/giantswarm/releases/blob/master/azure/v11.2.2/release-notes.md)
-    - [v11.2.1](https://github.com/giantswarm/releases/blob/master/azure/v11.2.1/release-notes.md)
-    - [v11.2.0](https://github.com/giantswarm/releases/blob/master/azure/v11.2.0/release-notes.md)
+    - [v11.2.3](https://github.com/giantswarm/releases/blob/master/kvm/v11.2.3/release-notes.md)
+    - [v11.2.2](https://github.com/giantswarm/releases/blob/master/kvm/v11.2.2/release-notes.md)
+    - [v11.2.1](https://github.com/giantswarm/releases/blob/master/kvm/v11.2.1/release-notes.md)
+    - [v11.2.0](https://github.com/giantswarm/releases/blob/master/kvm/v11.2.0/release-notes.md)
   - v11.1
-    - [v11.1.0](https://github.com/giantswarm/releases/blob/master/azure/v11.1.0/release-notes.md)
+    - [v11.1.0](https://github.com/giantswarm/releases/blob/master/kvm/v11.1.0/release-notes.md)
   - v11.0
-    - [v11.0.0](https://github.com/giantswarm/releases/blob/master/azure/v11.0.0/release-notes.md)
+    - [v11.0.0](https://github.com/giantswarm/releases/blob/master/kvm/v11.0.0/release-notes.md)
 - v9
   - v9.0
-    - [v9.0.2](https://github.com/giantswarm/releases/blob/master/azure/v9.0.2/release-notes.md)
-    - [v9.0.1](https://github.com/giantswarm/releases/blob/master/azure/v9.0.1/release-notes.md)
-    - [v9.0.0](https://github.com/giantswarm/releases/blob/master/azure/v9.0.0/release-notes.md)
+    - [v9.0.2](https://github.com/giantswarm/releases/blob/master/kvm/v9.0.2/release-notes.md)
+    - [v9.0.1](https://github.com/giantswarm/releases/blob/master/kvm/v9.0.1/release-notes.md)
+    - [v9.0.0](https://github.com/giantswarm/releases/blob/master/kvm/v9.0.0/release-notes.md)
 - v8
   - v8.4
-    - [v8.4.0](https://github.com/giantswarm/releases/blob/master/azure/v8.4.0/release-notes.md)
+    - [v8.4.0](https://github.com/giantswarm/releases/blob/master/kvm/v8.4.0/release-notes.md)
