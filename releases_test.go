@@ -102,26 +102,32 @@ func Test_Releases(t *testing.T) {
 		},
 	}
 
-	readmeContentBytes, err := ioutil.ReadFile("README.md")
-	if err != nil {
-		t.Fatal(err)
+	// Load the README so we can check links for each release.
+	var readmeContent string
+	{
+		readmeContentBytes, err := ioutil.ReadFile("README.md")
+		if err != nil {
+			t.Fatal(err)
+		}
+		readmeContent = string(readmeContentBytes)
 	}
-	readmeContent := string(readmeContentBytes)
 
 	for _, tc := range testCases {
 		t.Run(tc.name, func(t *testing.T) {
 			providerResources := map[string]bool{}
-			var providerKustomization kustomizationFile
-			providerKustomizationData, err := ioutil.ReadFile(filepath.Join(tc.provider, "kustomization.yaml"))
-			if err != nil {
-				t.Fatal(err)
-			}
-			err = yaml.UnmarshalStrict(providerKustomizationData, &providerKustomization)
-			if err != nil {
-				t.Fatal(err)
-			}
-			for _, resource := range providerKustomization.Resources {
-				providerResources[resource] = false
+			{
+				var providerKustomization kustomizationFile
+				providerKustomizationData, err := ioutil.ReadFile(filepath.Join(tc.provider, "kustomization.yaml"))
+				if err != nil {
+					t.Fatal(err)
+				}
+				err = yaml.UnmarshalStrict(providerKustomizationData, &providerKustomization)
+				if err != nil {
+					t.Fatal(err)
+				}
+				for _, resource := range providerKustomization.Resources {
+					providerResources[resource] = false
+				}
 			}
 
 			releases, err := findReleases(tc.provider)
@@ -144,9 +150,6 @@ func Test_Releases(t *testing.T) {
 
 			// Ensure that releases satisfy OpenAPI validation.
 			for _, release := range releases {
-				if _, ok := providerResources[release.Name]; !ok {
-					t.Errorf("release %s not registered in %s/kustomization.yaml", release.Name, tc.provider)
-				}
 				providerResources[release.Name] = true
 				result := validator.Validate(release)
 				if len(result.Errors) > 0 {
@@ -155,31 +158,46 @@ func Test_Releases(t *testing.T) {
 						t.Errorf("validation error %d: %#v", i, err)
 					}
 				}
+			}
 
-				releaseKustomizationData, err := ioutil.ReadFile(filepath.Join(tc.provider, release.Name, "kustomization.yaml"))
-				if err != nil {
-					t.Errorf("missing file for %s release %s: %s", tc.provider, release.Name, err)
-				}
-				var releaseKustomization kustomizationFile
-				err = yaml.UnmarshalStrict(releaseKustomizationData, &releaseKustomization)
-				if len(releaseKustomization.Resources) != 1 || releaseKustomization.Resources[0] != "release.yaml" {
-					t.Errorf("kustomization.yaml for %s release %s should contain only one resource, \"release.yaml\"", tc.provider, release.Name)
+			for _, release := range releases {
+				// Check that the release is registered in the main provider kustomization.yaml resources.
+				if _, ok := providerResources[release.Name]; !ok {
+					t.Errorf("release %s not registered in %s/kustomization.yaml", release.Name, tc.provider)
 				}
 
-				releaseNotesData, err := ioutil.ReadFile(filepath.Join(tc.provider, release.Name, "release-notes.md"))
-				if err != nil {
-					t.Errorf("missing file for %s release %s: %s", tc.provider, release.Name, err)
-				}
-				releaseNotesLines := strings.Split(string(releaseNotesData), "\n")
-				if len(releaseNotesLines) == 0 || !strings.Contains(releaseNotesLines[0], strings.TrimPrefix(release.Name, "v")) {
-					t.Errorf("expected release notes for %s release %s to contain the release version on the first line", tc.provider, release.Name)
+				// Check that the release-specific kustomization.yaml file points to the release manifest.
+				{
+					releaseKustomizationData, err := ioutil.ReadFile(filepath.Join(tc.provider, release.Name, "kustomization.yaml"))
+					if err != nil {
+						t.Errorf("missing file for %s release %s: %s", tc.provider, release.Name, err)
+					}
+					var releaseKustomization kustomizationFile
+					err = yaml.UnmarshalStrict(releaseKustomizationData, &releaseKustomization)
+					if len(releaseKustomization.Resources) != 1 || releaseKustomization.Resources[0] != "release.yaml" {
+						t.Errorf("kustomization.yaml for %s release %s should contain only one resource, \"release.yaml\"", tc.provider, release.Name)
+					}
 				}
 
+				// Check that the version in the first line of the release notes is correct.
+				{
+					releaseNotesData, err := ioutil.ReadFile(filepath.Join(tc.provider, release.Name, "release-notes.md"))
+					if err != nil {
+						t.Errorf("missing file for %s release %s: %s", tc.provider, release.Name, err)
+					}
+					releaseNotesLines := strings.Split(string(releaseNotesData), "\n")
+					if len(releaseNotesLines) == 0 || !strings.Contains(releaseNotesLines[0], strings.TrimPrefix(release.Name, "v")) {
+						t.Errorf("expected release notes for %s release %s to contain the release version on the first line", tc.provider, release.Name)
+					}
+				}
+
+				// Check that the README links to the release.
 				if !strings.Contains(readmeContent, fmt.Sprintf("https://github.com/giantswarm/releases/blob/master/%s/%s/release-notes.md", tc.provider, release.Name)) {
 					t.Errorf("expected link in README.md to %s release %s", tc.provider, release.Name)
 				}
 			}
 
+			// Check for extra resources in provider kustomization.yaml that don't have a corresponding release.
 			for release, processed := range providerResources {
 				if !processed {
 					t.Errorf("release %s registered in %s/kustomization.yaml resources but not found", release, tc.provider)
