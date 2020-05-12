@@ -307,7 +307,7 @@ spec:
   date: 2020-05-12T11:00:00Z
   apps:
     - name: cert-exporter
-      version: 1.2.1
+      version: 1.2.2
     - name: chart-operator
       version: 0.13.0
     - name: cluster-autoscaler
@@ -323,7 +323,7 @@ spec:
       componentVersion: 0.3.3
       version: 1.0.0
     - name: net-exporter
-      version: 1.7.0
+      version: 1.7.1
     - name: nginx-ingress-controller
       componentVersion: 0.30.0
       version: 1.6.9
@@ -619,7 +619,7 @@ spec:
   date: 2020-05-12T11:00:00Z
   apps:
     - name: cert-exporter
-      version: 1.2.1
+      version: 1.2.2
     - name: chart-operator
       version: 0.13.0
     - name: cluster-autoscaler
@@ -635,7 +635,7 @@ spec:
       componentVersion: 0.3.3
       version: 1.0.0
     - name: net-exporter
-      version: 1.7.0
+      version: 1.7.1
     - name: nginx-ingress-controller
       componentVersion: 0.30.0
       version: 1.6.9
