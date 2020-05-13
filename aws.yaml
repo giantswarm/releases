@@ -3,9 +3,9 @@ kind: Release
 metadata:
   annotations:
     giantswarm.io/docs: https://docs.giantswarm.io/reference/cp-k8s-api/releases.release.giantswarm.io/
-  name: v11.3.0
+  name: v12.0.1
 spec:
-  state: active
+  state: wip
   date: 2020-05-11T15:00:00Z
   apps:
   - name: cert-exporter
