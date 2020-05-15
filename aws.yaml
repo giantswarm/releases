@@ -3,7 +3,7 @@ kind: Release
 metadata:
   annotations:
     giantswarm.io/docs: https://docs.giantswarm.io/reference/cp-k8s-api/releases.release.giantswarm.io/
-  name: v11.3.0
+  name: v200.0.0
 spec:
   state: active
   date: 2020-05-11T15:00:00Z
@@ -48,7 +48,7 @@ spec:
   - name: cert-operator
     version: 0.1.0
   - name: cluster-operator
-    version: 2.1.10
+    version: 2.1.12-dev
   - name: kubernetes
     version: 1.16.9
   - name: containerlinux
