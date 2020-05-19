@@ -6,7 +6,7 @@ metadata:
   name: v11.4.0
 spec:
   state: active
-  date: 2020-05-07T07:00:00Z
+  date: 2020-05-22T07:00:00Z
   apps:
   - name: cert-exporter
     version: 1.2.1
@@ -40,7 +40,7 @@ spec:
   - name: cert-operator
     version: 0.1.0
   - name: cluster-operator
-    version: 0.23.9
+    version: 0.23.10-dev
   - name: kubernetes
     version: 1.16.8
   - name: containerlinux
