@@ -5,7 +5,7 @@ metadata:
     giantswarm.io/docs: https://docs.giantswarm.io/reference/cp-k8s-api/releases.release.giantswarm.io/
   name: v11.3.1
 spec:
-  state: wip
+  state: active
   date: 2020-05-11T15:00:00Z
   apps:
   - name: cert-exporter
@@ -66,7 +66,7 @@ metadata:
     giantswarm.io/docs: https://docs.giantswarm.io/reference/cp-k8s-api/releases.release.giantswarm.io/
   name: v11.3.0
 spec:
-  state: active
+  state: deprecated
   date: 2020-05-11T15:00:00Z
   apps:
   - name: cert-exporter
