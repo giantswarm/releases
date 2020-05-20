@@ -36,7 +36,7 @@ spec:
   - name: app-operator
     version: 1.0.0
   - name: azure-operator
-    version: 4.0.1-dev
+    version: 4.1.0-dev
   - name: cert-operator
     version: 0.1.0
   - name: cluster-operator
