@@ -373,9 +373,60 @@ kind: Release
 metadata:
   annotations:
     giantswarm.io/docs: https://docs.giantswarm.io/reference/cp-k8s-api/releases.release.giantswarm.io/
-  name: v9.0.2
+  name: v9.0.3
 spec:
   state: active
+  date: 2020-05-13T19:00:00Z
+  apps:
+    - name: cert-exporter
+      version: 1.2.2
+    - name: chart-operator
+      version: 0.13.0
+    - name: coredns
+      componentVersion: 1.6.5
+      version: 1.1.8
+    - name: kube-state-metrics
+      componentVersion: 1.8.0
+      version: 0.6.0
+    - name: metrics-server
+      componentVersion: 0.3.3
+      version: 1.0.0
+    - name: net-exporter
+      version: 1.7.1
+    - name: nginx-ingress-controller
+      componentVersion: 0.30.0
+      version: 1.6.9
+    - name: node-exporter
+      componentVersion: 0.18.1
+      version: 1.2.0
+  components:
+    - name: app-operator
+      version: 1.0.0
+    - name: cert-operator
+      version: 0.1.0
+    - name: cluster-operator
+      version: 0.23.9
+    - name: flannel-operator
+      version: 0.2.0
+    - name: kvm-operator
+      version: 3.9.2
+    - name: kubernetes
+      version: 1.15.11
+    - name: containerlinux
+      version: 2345.3.1
+    - name: calico
+      version: 3.9.1
+    - name: etcd
+      version: 3.3.1
+---
+apiVersion: release.giantswarm.io/v1alpha1
+kind: Release
+metadata:
+  annotations:
+    giantswarm.io/docs: https://docs.giantswarm.io/reference/cp-k8s-api/releases.release.giantswarm.io/
+  name: v9.0.2
+spec:
+  state: deprecated
   date: 2020-05-04T12:00:00Z
   apps:
   - name: cert-exporter
