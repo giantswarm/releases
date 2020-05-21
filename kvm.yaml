@@ -3,6 +3,159 @@ kind: Release
 metadata:
   annotations:
     giantswarm.io/docs: https://docs.giantswarm.io/reference/cp-k8s-api/releases.release.giantswarm.io/
+  name: v14.0.0
+spec:
+  state: active
+  date: 2020-05-21T12:00:00Z
+  apps:
+  - name: cert-exporter
+    version: 1.2.3
+  - name: chart-operator
+    version: 0.13.0
+  - name: coredns
+    componentVersion: 1.6.5
+    version: 1.1.9
+  - name: kube-state-metrics
+    componentVersion: 1.9.5
+    version: 1.0.5
+  - name: metrics-server
+    componentVersion: 0.3.3
+    version: 1.0.0
+  - name: net-exporter
+    version: 1.8.1
+  - name: nginx-ingress-controller
+    componentVersion: 0.30.0
+    version: 1.6.9
+  - name: node-exporter
+    componentVersion: 0.18.1
+    version: 1.2.0
+  components:
+  - name: app-operator
+    version: 1.0.0
+  - name: cert-operator
+    version: 0.1.0
+  - name: cluster-operator
+    version: 0.23.9
+  - name: flannel-operator
+    version: 0.2.0
+  - name: kvm-operator
+    version: 3.11.2-dev
+  - name: kubernetes
+    version: 1.19.0-beta.0
+  - name: containerlinux
+    version: 2345.3.1
+  - name: calico
+    version: 3.14.0
+  - name: etcd
+    version: 3.4.8
+---
+apiVersion: release.giantswarm.io/v1alpha1
+kind: Release
+metadata:
+  annotations:
+    giantswarm.io/docs: https://docs.giantswarm.io/reference/cp-k8s-api/releases.release.giantswarm.io/
+  name: v13.0.0
+spec:
+  state: active
+  date: 2020-05-21T12:00:00Z
+  apps:
+  - name: cert-exporter
+    version: 1.2.3
+  - name: chart-operator
+    version: 0.13.0
+  - name: coredns
+    componentVersion: 1.6.5
+    version: 1.1.9
+  - name: kube-state-metrics
+    componentVersion: 1.9.5
+    version: 1.0.5
+  - name: metrics-server
+    componentVersion: 0.3.3
+    version: 1.0.0
+  - name: net-exporter
+    version: 1.8.1
+  - name: nginx-ingress-controller
+    componentVersion: 0.30.0
+    version: 1.6.9
+  - name: node-exporter
+    componentVersion: 0.18.1
+    version: 1.2.0
+  components:
+  - name: app-operator
+    version: 1.0.0
+  - name: cert-operator
+    version: 0.1.0
+  - name: cluster-operator
+    version: 0.23.9
+  - name: flannel-operator
+    version: 0.2.0
+  - name: kvm-operator
+    version: 3.11.2-dev
+  - name: kubernetes
+    version: 1.18.3
+  - name: containerlinux
+    version: 2345.3.1
+  - name: calico
+    version: 3.14.0
+  - name: etcd
+    version: 3.4.8
+---
+apiVersion: release.giantswarm.io/v1alpha1
+kind: Release
+metadata:
+  annotations:
+    giantswarm.io/docs: https://docs.giantswarm.io/reference/cp-k8s-api/releases.release.giantswarm.io/
+  name: v12.0.0
+spec:
+  state: active
+  date: 2020-05-21T12:00:00Z
+  apps:
+  - name: cert-exporter
+    version: 1.2.3
+  - name: chart-operator
+    version: 0.13.0
+  - name: coredns
+    componentVersion: 1.6.5
+    version: 1.1.9
+  - name: kube-state-metrics
+    componentVersion: 1.9.5
+    version: 1.0.5
+  - name: metrics-server
+    componentVersion: 0.3.3
+    version: 1.0.0
+  - name: net-exporter
+    version: 1.8.1
+  - name: nginx-ingress-controller
+    componentVersion: 0.30.0
+    version: 1.6.9
+  - name: node-exporter
+    componentVersion: 0.18.1
+    version: 1.2.0
+  components:
+  - name: app-operator
+    version: 1.0.0
+  - name: cert-operator
+    version: 0.1.0
+  - name: cluster-operator
+    version: 0.23.9
+  - name: flannel-operator
+    version: 0.2.0
+  - name: kvm-operator
+    version: 3.11.2-dev
+  - name: kubernetes
+    version: 1.17.6
+  - name: containerlinux
+    version: 2345.3.1
+  - name: calico
+    version: 3.14.0
+  - name: etcd
+    version: 3.4.8
+---
+apiVersion: release.giantswarm.io/v1alpha1
+kind: Release
+metadata:
+  annotations:
+    giantswarm.io/docs: https://docs.giantswarm.io/reference/cp-k8s-api/releases.release.giantswarm.io/
   name: v11.3.1
 spec:
   state: active
