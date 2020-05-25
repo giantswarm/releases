@@ -22,7 +22,7 @@ spec:
     componentVersion: 0.3.3
     version: 1.0.0
   - name: net-exporter
-    version: 1.8.1
+    version: 1.8.0
   - name: nginx-ingress-controller
     componentVersion: 0.30.0
     version: 1.6.9
@@ -73,7 +73,7 @@ spec:
     componentVersion: 0.3.3
     version: 1.0.0
   - name: net-exporter
-    version: 1.8.1
+    version: 1.8.0
   - name: nginx-ingress-controller
     componentVersion: 0.30.0
     version: 1.6.9
@@ -124,7 +124,7 @@ spec:
     componentVersion: 0.3.3
     version: 1.0.0
   - name: net-exporter
-    version: 1.8.1
+    version: 1.8.0
   - name: nginx-ingress-controller
     componentVersion: 0.30.0
     version: 1.6.9
