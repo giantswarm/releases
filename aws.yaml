@@ -3,10 +3,10 @@ kind: Release
 metadata:
   annotations:
     giantswarm.io/docs: https://docs.giantswarm.io/reference/cp-k8s-api/releases.release.giantswarm.io/
-  name: v11.3.1
+  name: v101.0.0
 spec:
   state: active
-  date: 2020-05-21T15:00:00Z
+  date: 2020-05-26T15:00:00Z
   apps:
   - name: cert-exporter
     version: 1.2.1
@@ -14,7 +14,6 @@ spec:
     componentVersion: 0.9.0
     version: 1.0.7
   - name: chart-operator
-    # version: 0.13.2-dev
     version: 0.12.4
   - name: cluster-autoscaler
     componentVersion: 1.16.2
@@ -49,7 +48,7 @@ spec:
   - name: cert-operator
     version: 0.1.0
   - name: cluster-operator
-    version: 2.2.0
+    version: 2.2.1-dev
   - name: kubernetes
     version: 1.16.9
   - name: containerlinux
