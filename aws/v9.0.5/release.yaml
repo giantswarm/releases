@@ -30,20 +30,20 @@ spec:
   - name: node-exporter
     componentVersion: 0.18.1
     version: 1.2.0
-components:
-  - name: app-operator
-    version: 1.0.0
-  - name: aws-operator
-    version: 5.5.2
-  - name: cert-operator
-    version: 0.1.0
-  - name: cluster-operator
-    version: 0.23.9
-  - name: kubernetes
-    version: 1.15.11
-  - name: containerlinux
-    version: 2191.5.0
-  - name: calico
-    version: 3.9.1
-  - name: etcd
-    version: 3.3.15
+  components:
+    - name: app-operator
+      version: 1.0.0
+    - name: aws-operator
+      version: 5.5.2
+    - name: cert-operator
+      version: 0.1.0
+    - name: cluster-operator
+      version: 0.23.9
+    - name: kubernetes
+      version: 1.15.11
+    - name: containerlinux
+      version: 2191.5.0
+    - name: calico
+      version: 3.9.1
+    - name: etcd
+      version: 3.3.15

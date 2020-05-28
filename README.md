@@ -12,6 +12,9 @@ Swarm Control Planes.
 ### AWS
 
 - v11
+  - v11.3
+    - [v11.3.1](https://github.com/giantswarm/releases/blob/master/aws/v11.3.1/release-notes.md)
+    - [v11.3.0](https://github.com/giantswarm/releases/blob/master/aws/v11.3.0/release-notes.md)
   - v11.2
     - [v11.2.1](https://github.com/giantswarm/releases/blob/master/aws/v11.2.1/release-notes.md)
     - [v11.2.0](https://github.com/giantswarm/releases/blob/master/aws/v11.2.0/release-notes.md)
@@ -52,7 +55,8 @@ Swarm Control Planes.
 - v8
   - v8.5
     - [v8.5.0](https://github.com/giantswarm/releases/blob/master/aws/v8.5.0/release-notes.md)
-
+  - v8.2
+    - [v8.2.0](https://github.com/giantswarm/releases/blob/master/aws/v8.2.0/release-notes.md)
 
 
 ### Azure
@@ -80,7 +84,13 @@ Swarm Control Planes.
   - v8.4
     - [v8.4.1](https://github.com/giantswarm/releases/blob/master/azure/v8.4.1/release-notes.md)
     - [v8.4.0](https://github.com/giantswarm/releases/blob/master/azure/v8.4.0/release-notes.md)
-
+  - v8.3
+    - [v8.3.0](https://github.com/giantswarm/releases/blob/master/azure/v8.3.0/release-notes.md)
+  - v8.2
+    - [v8.2.1](https://github.com/giantswarm/releases/blob/master/azure/v8.2.1/release-notes.md)
+    - [v8.2.0](https://github.com/giantswarm/releases/blob/master/azure/v8.2.0/release-notes.md)
+  - v8.0
+    - [v8.0.0](https://github.com/giantswarm/releases/blob/master/azure/v8.0.0/release-notes.md)
 
 
 ### KVM
@@ -107,3 +117,12 @@ Swarm Control Planes.
 - v8
   - v8.4
     - [v8.4.0](https://github.com/giantswarm/releases/blob/master/kvm/v8.4.0/release-notes.md)
+  - v8.3
+    - [v8.3.0](https://github.com/giantswarm/releases/blob/master/kvm/v8.3.0/release-notes.md)
+  - v8.2
+    - [v8.2.1](https://github.com/giantswarm/releases/blob/master/kvm/v8.2.1/release-notes.md)
+    - [v8.2.0](https://github.com/giantswarm/releases/blob/master/kvm/v8.2.0/release-notes.md)
+  - v8.1
+    - [v8.1.0](https://github.com/giantswarm/releases/blob/master/kvm/v8.1.0/release-notes.md)
+  - v8.0
+    - [v8.0.0](https://github.com/giantswarm/releases/blob/master/kvm/v8.0.0/release-notes.md)
