@@ -150,6 +150,10 @@ func Test_Releases(t *testing.T) {
 
 			// Ensure that releases satisfy OpenAPI validation.
 			for _, release := range releases {
+				// Check that the release is registered in the main provider kustomization.yaml resources.
+				if _, ok := providerResources[release.Name]; !ok {
+					t.Errorf("release %s not registered in %s/kustomization.yaml", release.Name, tc.provider)
+				}
 				providerResources[release.Name] = true
 				result := validator.Validate(release)
 				if len(result.Errors) > 0 {
@@ -161,11 +165,6 @@ func Test_Releases(t *testing.T) {
 			}
 
 			for _, release := range releases {
-				// Check that the release is registered in the main provider kustomization.yaml resources.
-				if _, ok := providerResources[release.Name]; !ok {
-					t.Errorf("release %s not registered in %s/kustomization.yaml", release.Name, tc.provider)
-				}
-
 				// Check that the release-specific kustomization.yaml file points to the release manifest.
 				{
 					releaseKustomizationData, err := ioutil.ReadFile(filepath.Join(tc.provider, release.Name, "kustomization.yaml"))
