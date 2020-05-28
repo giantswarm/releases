@@ -48,6 +48,7 @@ spec:
     version: 8.6.2-hama
   - name: cert-operator
     version: 0.1.0
+  # opsctl deploy cluster-operator@xh3b4sd -i gauss
   - name: cluster-operator
     version: 2.2.1-xh3b4sd
   - name: kubernetes
