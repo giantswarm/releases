@@ -6,7 +6,7 @@ metadata:
   name: v200.0.0
 spec:
   state: active
-  date: 2020-05-21T15:00:00Z
+  date: 2020-05-27T12:00:00Z
   apps:
   - name: cert-exporter
     version: 1.2.1
@@ -17,8 +17,8 @@ spec:
     # version: 0.13.2-dev
     version: 0.12.4
   - name: cluster-autoscaler
-    componentVersion: 1.16.2
-    version: 1.1.4
+    componentVersion: 1.16.5
+    version: 1.16.0
   - name: coredns
     componentVersion: 1.6.5
     version: 1.1.8
@@ -45,9 +45,10 @@ spec:
   - name: aws-cni
     version: 1.6.0
   - name: aws-operator
-    version: 8.6.1
+    version: 8.6.2-hama
   - name: cert-operator
     version: 0.1.0
+  # opsctl deploy cluster-operator@njuettner -i gauss
   - name: cluster-operator
     version: 2.2.1-njuettner
   - name: kubernetes
@@ -468,7 +469,7 @@ metadata:
     giantswarm.io/docs: https://docs.giantswarm.io/reference/cp-k8s-api/releases.release.giantswarm.io/
   name: v9.2.6
 spec:
-  state: deprecated
+  state: active
   date: 2020-05-07T12:00:00Z
   apps:
   - name: cert-exporter
