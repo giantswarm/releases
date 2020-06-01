@@ -94,7 +94,7 @@ spec:
   - name: cert-operator
     version: 0.1.0
   - name: cluster-operator
-    version: 0.23.10-dev
+    version: 0.23.8
   - name: kubernetes
     version: 1.16.8
   - name: containerlinux
