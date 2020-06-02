@@ -729,7 +729,7 @@ metadata:
   name: v9.0.6
 spec:
   state: active
-  date: 2020-06-01T11:00:00Z
+  date: 2020-06-02T11:00:00Z
   apps:
     - name: cert-exporter
       version: 1.2.2
@@ -765,11 +765,11 @@ spec:
     - name: cluster-operator
       version: 0.23.9
     - name: kubernetes
-      version: 1.15.11
+      version: 1.15.12
     - name: containerlinux
-      version: 2345.3.1
+      version: 2512.2.0
     - name: calico
-      version: 3.9.1
+      version: 3.9.6
     - name: etcd
       version: 3.3.15
 ---
