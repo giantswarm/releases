@@ -759,7 +759,7 @@ spec:
     - name: app-operator
       version: 1.0.0
     - name: aws-operator
-      version: 5.5.3-dev
+      version: 5.5.3
     - name: cert-operator
       version: 0.1.0
     - name: cluster-operator
