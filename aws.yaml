@@ -6,7 +6,7 @@ metadata:
   name: v11.3.2
 spec:
   state: active
-  date: 2020-06-03T15:00:00Z
+  date: 2020-06-04T15:00:00Z
   apps:
   - name: cert-exporter
     version: 1.2.1
@@ -54,7 +54,7 @@ spec:
   - name: containerlinux
     version: 2345.3.1
   - name: calico
-    version: 3.10.4
+    version: 3.10.1
   - name: etcd
     version: 3.3.17
 ---
