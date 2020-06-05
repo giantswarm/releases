@@ -13,6 +13,7 @@ Swarm Control Planes.
 
 - v11
   - v11.3
+    - [v11.3.3](https://github.com/giantswarm/releases/blob/master/release-notes/aws/v11.3.3.md)
     - [v11.3.2](https://github.com/giantswarm/releases/blob/master/release-notes/aws/v11.3.2.md)
     - [v11.3.1](https://github.com/giantswarm/releases/blob/master/release-notes/aws/v11.3.1.md)
     - [v11.3.0](https://github.com/giantswarm/releases/blob/master/release-notes/aws/v11.3.0.md)
