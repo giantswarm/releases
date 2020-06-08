@@ -23,7 +23,7 @@ spec:
     version: 1.1.8
   - name: external-dns
     componentVersion: 0.5.18
-    version: 1.2.0
+    version: 1.2.1
   - name: kiam
     componentVersion: 3.5.0
     version: 1.2.2
