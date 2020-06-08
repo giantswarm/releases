@@ -28,7 +28,7 @@ func findReleases(provider string) ([]v1alpha1.Release, error) {
 	}
 	var releases []v1alpha1.Release
 	for _, releaseDirectory := range releaseDirectories {
-		if !releaseDirectory.IsDir() {
+		if !releaseDirectory.IsDir() || releaseDirectory.Name() == "archived" {
 			continue
 		}
 		releaseFilename := filepath.Join(provider, releaseDirectory.Name(), "release.yaml")
