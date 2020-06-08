@@ -13,6 +13,7 @@ Swarm Control Planes.
 
 - v11
   - v11.3
+    - [v11.3.3](https://github.com/giantswarm/releases/blob/master/aws/v11.3.3/release-notes.md)
     - [v11.3.2](https://github.com/giantswarm/releases/blob/master/aws/v11.3.2/release-notes.md)
     - [v11.3.1](https://github.com/giantswarm/releases/blob/master/aws/v11.3.1/release-notes.md)
     - [v11.3.0](https://github.com/giantswarm/releases/blob/master/aws/v11.3.0/release-notes.md)
@@ -33,9 +34,10 @@ Swarm Control Planes.
     - [v10.1.0](https://github.com/giantswarm/releases/blob/master/aws/v10.1.0/release-notes.md)
 - v9
   - v9.3
-    - [v9.3.0](https://github.com/giantswarm/releases/blob/master/aws/v9.3.0/release-notes.md)
-    - [v9.3.1](https://github.com/giantswarm/releases/blob/master/aws/v9.3.1/release-notes.md)
+    - [v9.3.3](https://github.com/giantswarm/releases/blob/master/aws/v9.3.3/release-notes.md)
     - [v9.3.2](https://github.com/giantswarm/releases/blob/master/aws/v9.3.2/release-notes.md)
+    - [v9.3.1](https://github.com/giantswarm/releases/blob/master/aws/v9.3.1/release-notes.md)
+    - [v9.3.0](https://github.com/giantswarm/releases/blob/master/aws/v9.3.0/release-notes.md)
   - v9.2
     - [v9.2.6](https://github.com/giantswarm/releases/blob/master/aws/v9.2.6/release-notes.md)
     - [v9.2.5](https://github.com/giantswarm/releases/blob/master/aws/v9.2.5/release-notes.md)
@@ -47,6 +49,7 @@ Swarm Control Planes.
   - v9.1
     - [v9.1.0](https://github.com/giantswarm/releases/blob/master/aws/v9.1.0/release-notes.md)
   - v9.0
+    - [v9.0.6](https://github.com/giantswarm/releases/blob/master/aws/v9.0.6/release-notes.md)
     - [v9.0.5](https://github.com/giantswarm/releases/blob/master/aws/v9.0.5/release-notes.md)
     - [v9.0.4](https://github.com/giantswarm/releases/blob/master/aws/v9.0.4/release-notes.md)
     - [v9.0.3](https://github.com/giantswarm/releases/blob/master/aws/v9.0.3/release-notes.md)

@@ -3,7 +3,7 @@ kind: Release
 metadata:
   name: v9.3.2
 spec:
-  state: active
+  state: deprecated
   date: 2020-05-26T15:00:00Z
   apps:
     - name: cert-exporter

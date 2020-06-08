@@ -1,11 +1,9 @@
 apiVersion: release.giantswarm.io/v1alpha1
 kind: Release
 metadata:
-  annotations:
-    giantswarm.io/docs: https://docs.giantswarm.io/reference/cp-k8s-api/releases.release.giantswarm.io/
   name: v11.3.1
 spec:
-  state: active
+  state: deprecated
   date: 2020-05-21T15:00:00Z
   apps:
   - name: cert-exporter
@@ -14,7 +12,6 @@ spec:
     componentVersion: 0.9.0
     version: 1.0.7
   - name: chart-operator
-    # version: 0.13.2-dev
     version: 0.12.4
   - name: cluster-autoscaler
     componentVersion: 1.16.2
