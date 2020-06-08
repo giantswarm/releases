@@ -1,8 +1,10 @@
 package main
 
 import (
-	"bufio"
-	"os"
+	"fmt"
+	"io/ioutil"
+	"path/filepath"
+	"strings"
 	"testing"
 
 	"github.com/giantswarm/apiextensions/pkg/apis/release/v1alpha1"
@@ -14,41 +16,33 @@ import (
 	"sigs.k8s.io/yaml"
 )
 
-// sigs.k8s.io/yaml can't handle multi-part YAML documents (separated by "---")
-// so documents such as aws.yaml must be split on boundaries and parsed
-// individually.
-func scanDocuments(filename string) ([]string, error) {
-	data, err := os.Open(filename)
+type kustomizationFile struct {
+	CommonAnnotations map[string]string `yaml:"commonAnnotations"`
+	Resources         []string          `yaml:"resources"`
+}
+
+func findReleases(provider string) ([]v1alpha1.Release, error) {
+	releaseDirectories, err := ioutil.ReadDir(provider)
 	if err != nil {
 		return nil, microerror.Mask(err)
 	}
-	scanner := bufio.NewScanner(data)
-	var document string
-	var documents []string
-	for scanner.Scan() {
-		line := scanner.Text()
-		if line != "---" {
-			document += line + "\n"
-			continue
-		}
-		if document == "" {
-			continue
-		}
-		documents = append(documents, document)
-		document = ""
-	}
-	return documents, nil
-}
-
-// Given a slice of strings defining Release CRs as YAML, this function
-// simply parses the YAML and returns a slice of Releases.
-func parseReleases(documents []string) ([]v1alpha1.Release, error) {
 	var releases []v1alpha1.Release
-	for _, document := range documents {
-		var release v1alpha1.Release
-		err := yaml.Unmarshal([]byte(document), &release)
+	for _, releaseDirectory := range releaseDirectories {
+		if !releaseDirectory.IsDir() {
+			continue
+		}
+		releaseFilename := filepath.Join(provider, releaseDirectory.Name(), "release.yaml")
+		data, err := ioutil.ReadFile(releaseFilename)
 		if err != nil {
 			return nil, microerror.Mask(err)
+		}
+		var release v1alpha1.Release
+		err = yaml.Unmarshal(data, &release)
+		if err != nil {
+			return nil, microerror.Mask(err)
+		}
+		if releaseDirectory.Name() != release.Name {
+			return nil, fmt.Errorf("%s release %s is in directory %s which doesn't match its name", provider, release.Name, releaseDirectory)
 		}
 		releases = append(releases, release)
 	}
@@ -91,31 +85,52 @@ func releasesToIndex(releases []v1alpha1.Release) []versionbundle.IndexRelease {
 
 func Test_Releases(t *testing.T) {
 	testCases := []struct {
-		filename string
+		provider string
 		name     string
 	}{
 		{
-			filename: "aws.yaml",
-			name:     "case 1: aws.yaml is valid",
+			provider: "aws",
+			name:     "case 1: aws releases are valid",
 		},
 		{
-			filename: "azure.yaml",
-			name:     "case 2: azure.yaml is valid",
+			provider: "azure",
+			name:     "case 2: azure releases are valid",
 		},
 		{
-			filename: "kvm.yaml",
-			name:     "case 3: kvm.yaml is valid",
+			provider: "kvm",
+			name:     "case 3: kvm releases are valid",
 		},
+	}
+
+	// Load the README so we can check links for each release.
+	var readmeContent string
+	{
+		readmeContentBytes, err := ioutil.ReadFile("README.md")
+		if err != nil {
+			t.Fatal(err)
+		}
+		readmeContent = string(readmeContentBytes)
 	}
 
 	for _, tc := range testCases {
 		t.Run(tc.name, func(t *testing.T) {
-			documents, err := scanDocuments(tc.filename)
-			if err != nil {
-				t.Fatal(microerror.Mask(err))
+			providerResources := map[string]bool{}
+			{
+				var providerKustomization kustomizationFile
+				providerKustomizationData, err := ioutil.ReadFile(filepath.Join(tc.provider, "kustomization.yaml"))
+				if err != nil {
+					t.Fatal(err)
+				}
+				err = yaml.UnmarshalStrict(providerKustomizationData, &providerKustomization)
+				if err != nil {
+					t.Fatal(err)
+				}
+				for _, resource := range providerKustomization.Resources {
+					providerResources[resource] = false
+				}
 			}
 
-			releases, err := parseReleases(documents)
+			releases, err := findReleases(tc.provider)
 			if err != nil {
 				t.Fatal(microerror.Mask(err))
 			}
@@ -135,12 +150,56 @@ func Test_Releases(t *testing.T) {
 
 			// Ensure that releases satisfy OpenAPI validation.
 			for _, release := range releases {
+				// Check that the release is registered in the main provider kustomization.yaml resources.
+				if _, ok := providerResources[release.Name]; !ok {
+					t.Errorf("release %s not registered in %s/kustomization.yaml", release.Name, tc.provider)
+				}
+				providerResources[release.Name] = true
 				result := validator.Validate(release)
 				if len(result.Errors) > 0 {
 					t.Errorf("invalid release: %#v", release)
 					for i, err := range result.Errors {
 						t.Errorf("validation error %d: %#v", i, err)
 					}
+				}
+			}
+
+			for _, release := range releases {
+				// Check that the release-specific kustomization.yaml file points to the release manifest.
+				{
+					releaseKustomizationData, err := ioutil.ReadFile(filepath.Join(tc.provider, release.Name, "kustomization.yaml"))
+					if err != nil {
+						t.Errorf("missing file for %s release %s: %s", tc.provider, release.Name, err)
+					}
+					var releaseKustomization kustomizationFile
+					err = yaml.UnmarshalStrict(releaseKustomizationData, &releaseKustomization)
+					if len(releaseKustomization.Resources) != 1 || releaseKustomization.Resources[0] != "release.yaml" {
+						t.Errorf("kustomization.yaml for %s release %s should contain only one resource, \"release.yaml\"", tc.provider, release.Name)
+					}
+				}
+
+				// Check that the version in the first line of the release notes is correct.
+				{
+					releaseNotesData, err := ioutil.ReadFile(filepath.Join(tc.provider, release.Name, "release-notes.md"))
+					if err != nil {
+						t.Errorf("missing file for %s release %s: %s", tc.provider, release.Name, err)
+					}
+					releaseNotesLines := strings.Split(string(releaseNotesData), "\n")
+					if len(releaseNotesLines) == 0 || !strings.Contains(releaseNotesLines[0], strings.TrimPrefix(release.Name, "v")) {
+						t.Errorf("expected release notes for %s release %s to contain the release version on the first line", tc.provider, release.Name)
+					}
+				}
+
+				// Check that the README links to the release.
+				if !strings.Contains(readmeContent, fmt.Sprintf("https://github.com/giantswarm/releases/blob/master/%s/%s/release-notes.md", tc.provider, release.Name)) {
+					t.Errorf("expected link in README.md to %s release %s", tc.provider, release.Name)
+				}
+			}
+
+			// Check for extra resources in provider kustomization.yaml that don't have a corresponding release.
+			for release, processed := range providerResources {
+				if !processed {
+					t.Errorf("release %s registered in %s/kustomization.yaml resources but not found", release, tc.provider)
 				}
 			}
 
