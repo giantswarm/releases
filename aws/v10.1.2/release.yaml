@@ -1,0 +1,29 @@
+apiVersion: release.giantswarm.io/v1alpha1
+kind: Release
+metadata:
+  name: v10.1.2
+spec:
+  state: deprecated
+  date: 2020-02-06T08:00:00Z
+  apps: []
+  components:
+  - name: app-operator
+    version: 1.0.0
+  - name: aws-operator
+    version: 8.0.2
+  - name: cert-operator
+    version: 0.1.0
+  - name: chart-operator
+    version: 0.7.0
+  - name: cluster-operator
+    version: 2.0.2
+  - name: kubernetes
+    version: 1.15.5
+  - name: containerlinux
+    version: 2191.5.0
+  - name: coredns
+    version: 1.6.5
+  - name: calico
+    version: 3.9.1
+  - name: etcd
+    version: 3.3.15
