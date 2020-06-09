@@ -6,7 +6,7 @@ metadata:
   name: v11.5.0
 spec:
   state: wip
-  date: 2020-05-27T12:00:00Z
+  date: 2020-06-09T12:00:00Z
   apps:
   - name: cert-exporter
     version: 1.2.1
@@ -44,12 +44,11 @@ spec:
   - name: aws-cni
     version: 1.6.0
   - name: aws-operator
-    version: 8.6.2-hama
+    version: 8.6.2-dev
   - name: cert-operator
     version: 0.1.0
-  # opsctl deploy cluster-operator@xh3b4sd -i gauss
   - name: cluster-operator
-    version: 2.2.1-xh3b4sd
+    version: 2.2.1-dev
   - name: kubernetes
     version: 1.16.9
   - name: containerlinux
