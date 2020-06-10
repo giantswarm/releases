@@ -1,0 +1,29 @@
+apiVersion: release.giantswarm.io/v1alpha1
+kind: Release
+metadata:
+  name: v8.2.0
+spec:
+  state: deprecated
+  date: 2019-06-24T10:00:00Z
+  apps: []
+  components:
+  - name: cert-operator
+    version: 0.1.0
+  - name: chart-operator
+    version: 0.6.0
+  - name: cluster-operator
+    version: 0.17.0
+  - name: flannel-operator
+    version: 0.2.0
+  - name: kvm-operator
+    version: 3.7.0
+  - name: kubernetes
+    version: 1.14.3
+  - name: containerlinux
+    version: 2135.4.0
+  - name: coredns
+    version: 1.5.1
+  - name: calico
+    version: 3.7.2
+  - name: etcd
+    version: 3.3.13
