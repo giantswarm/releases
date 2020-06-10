@@ -1,10 +1,10 @@
 apiVersion: release.giantswarm.io/v1alpha1
 kind: Release
 metadata:
-  name: v11.3.1
+  name: v11.3.2
 spec:
-  state: deprecated
-  date: 2020-05-04T12:00:00Z
+  state: active
+  date: 2020-06-11T12:00:00Z
   apps:
   - name: cert-exporter
     version: 1.2.1
@@ -23,7 +23,7 @@ spec:
     version: 1.7.0
   - name: nginx-ingress-controller
     componentVersion: 0.30.0
-    version: 1.6.9
+    version: 1.6.12
   - name: node-exporter
     componentVersion: 0.18.1
     version: 1.2.0
