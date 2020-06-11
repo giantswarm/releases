@@ -67,7 +67,6 @@ Swarm Control Planes.
 
 - v11
   - v11.3
-    - [v11.3.3](https://github.com/giantswarm/releases/blob/master/azure/v11.3.3/release-notes.md)
     - [v11.3.2](https://github.com/giantswarm/releases/blob/master/azure/v11.3.2/release-notes.md)
     - [v11.3.1](https://github.com/giantswarm/releases/blob/master/azure/v11.3.1/release-notes.md)
     - [v11.3.0](https://github.com/giantswarm/releases/blob/master/azure/v11.3.0/release-notes.md)
@@ -103,6 +102,7 @@ Swarm Control Planes.
 
 - v11
   - v11.3
+    - [v11.3.3](https://github.com/giantswarm/releases/blob/master/kvm/v11.3.3/release-notes.md)
     - [v11.3.2](https://github.com/giantswarm/releases/blob/master/kvm/v11.3.2/release-notes.md)
     - [v11.3.1](https://github.com/giantswarm/releases/blob/master/kvm/v11.3.1/release-notes.md)
     - [v11.3.0](https://github.com/giantswarm/releases/blob/master/kvm/v11.3.0/release-notes.md)
