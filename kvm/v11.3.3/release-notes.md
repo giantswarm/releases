@@ -8,4 +8,5 @@ Below, you can find more details on components that were changed with this relea
 
 ### chart-operator v0.13.2 ([Giant Swarm app](https://github.com/giantswarm/chart-operator/releases/tag/v0.13.2))
 
+- Getting md5 hash from user-value more reliable way. 
 - Upgrade helm `tiller` pod to v2.16.8 version which including [CVE issue](https://github.com/helm/helm/security/advisories/GHSA-cjjc-xp8v-855w) patch  
