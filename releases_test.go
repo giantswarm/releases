@@ -180,7 +180,7 @@ func Test_Releases(t *testing.T) {
 
 				// Check that the version in the first line of the release notes is correct.
 				{
-					releaseNotesData, err := ioutil.ReadFile(filepath.Join(tc.provider, release.Name, "release-notes.md"))
+					releaseNotesData, err := ioutil.ReadFile(filepath.Join(tc.provider, release.Name, "README.md"))
 					if err != nil {
 						t.Errorf("missing file for %s release %s: %s", tc.provider, release.Name, err)
 					}
@@ -191,7 +191,7 @@ func Test_Releases(t *testing.T) {
 				}
 
 				// Check that the README links to the release.
-				if !strings.Contains(readmeContent, fmt.Sprintf("https://github.com/giantswarm/releases/blob/master/%s/%s/release-notes.md", tc.provider, release.Name)) {
+				if !strings.Contains(readmeContent, fmt.Sprintf("https://github.com/giantswarm/releases/blob/master/%s/%s/README.md", tc.provider, release.Name)) {
 					t.Errorf("expected link in README.md to %s release %s", tc.provider, release.Name)
 				}
 			}
