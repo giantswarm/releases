@@ -7,13 +7,11 @@ different states, namely `active`, `deprecated` and `wip`. With pull requests
 merged to the `master` branch releases get automatically deployed to all Giant
 Swarm Control Planes.
 
-
-
 ### AWS
 
 - v11
-  - v11.5
-    - [v11.5.0](https://github.com/giantswarm/releases/blob/master/aws/v11.5.0/release-notes.md)
+  - v11.4
+    - [v11.4.0](https://github.com/giantswarm/releases/blob/master/aws/v11.4.0/release-notes.md)
   - v11.3
     - [v11.3.3](https://github.com/giantswarm/releases/blob/master/aws/v11.3.3/release-notes.md)
     - [v11.3.2](https://github.com/giantswarm/releases/blob/master/aws/v11.3.2/release-notes.md)
