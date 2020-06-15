@@ -44,11 +44,11 @@ spec:
   - name: aws-cni
     version: 1.6.0
   - name: aws-operator
-    version: 8.6.2-dev
+    version: 8.7.0
   - name: cert-operator
     version: 0.1.0
   - name: cluster-operator
-    version: 2.2.1-dev
+    version: 2.3.0
   - name: kubernetes
     version: 1.16.9
   - name: containerlinux

@@ -10,17 +10,17 @@ This release introduces master node high availability, which means that clusters
 
 ## Change details
 
-### aws-operator vX.X.X
+### aws-operator v8.7.0
 
 - Several changes to support running clusters with multiple master nodes as well as migrating from a single to multiple masters.
-- Several improvements regarding the deletion of  tenant clusters and related AWS resources.
+- Several improvements regarding the deletion of tenant clusters and related AWS resources.
 - Kubernetes master nodes in tenant clusters will now receive the label `giantswarm.io/control-plane` in metadata.
 - Fixed Prometheus metrics gathering from calico endpoint.
 - The Docker image now uses alpine v3.12 as a base.
 
-### cluster-operator vX.X.X
+### cluster-operator v2.3.0
 
-- Several improvements regarding the deletion of  tenant clusters and related AWS resources.
+- Several improvements regarding the deletion of tenant clusters and related AWS resources.
 - The Docker image now uses alpine v3.12 as a base.
 
 ### cluster-autoscaler 1.16.5 (Giant Swarm app [v1.16.0](https://github.com/giantswarm/cluster-autoscaler-app/blob/master/CHANGELOG.md))
