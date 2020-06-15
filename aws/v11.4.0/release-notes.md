@@ -1,8 +1,6 @@
 ## :zap: Giant Swarm Release v11.4.0 for AWS :zap:
 
-This release introduces master node high availability, which means that clusters will have three master nodes by default in three different availability zones (or ).
-
-- Multiple master nodes are only supported in AWS regions having at least three availability zones. This excludes China/Beijing (`cn-north-1`).
+This release introduces master node high availability, which means that clusters will have three master nodes by default in different availability zones.
 
 **Note for SEs:** This release contains an external-dns fix introduced in [11.3.2](https://github.com/giantswarm/releases/blob/master/aws/v11.3.2/release-notes.md). It requires manual intervention for cluster upgrades in China to work. When upgrading a cluster, existing ingress A+TXT record sets do not get replaced with CNAME+TXT record sets even when external-dns is configured with CNAMEs as preferred. After upgrading, delete the ingress A+TXT record sets. external-dns will then automatically create CNAME+TXT record sets.
 
