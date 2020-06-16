@@ -21,8 +21,12 @@ type kustomizationFile struct {
 	Resources         []string          `yaml:"resources"`
 }
 
-func findReleases(provider string) ([]v1alpha1.Release, error) {
-	releaseDirectories, err := ioutil.ReadDir(provider)
+func findReleases(provider string, archived bool) ([]v1alpha1.Release, error) {
+	path := provider
+	if archived {
+		path = filepath.Join(provider, "archived")
+	}
+	releaseDirectories, err := ioutil.ReadDir(path)
 	if err != nil {
 		return nil, microerror.Mask(err)
 	}
@@ -31,7 +35,7 @@ func findReleases(provider string) ([]v1alpha1.Release, error) {
 		if !releaseDirectory.IsDir() || releaseDirectory.Name() == "archived" {
 			continue
 		}
-		releaseFilename := filepath.Join(provider, releaseDirectory.Name(), "release.yaml")
+		releaseFilename := filepath.Join(path, releaseDirectory.Name(), "release.yaml")
 		data, err := ioutil.ReadFile(releaseFilename)
 		if err != nil {
 			return nil, microerror.Mask(err)
@@ -130,7 +134,7 @@ func Test_Releases(t *testing.T) {
 				}
 			}
 
-			releases, err := findReleases(tc.provider)
+			releases, err := findReleases(tc.provider, false)
 			if err != nil {
 				t.Fatal(microerror.Mask(err))
 			}
@@ -193,6 +197,18 @@ func Test_Releases(t *testing.T) {
 				// Check that the README links to the release.
 				if !strings.Contains(readmeContent, fmt.Sprintf("https://github.com/giantswarm/releases/blob/master/%s/%s/release-notes.md", tc.provider, release.Name)) {
 					t.Errorf("expected link in README.md to %s release %s", tc.provider, release.Name)
+				}
+			}
+
+			archived, err := findReleases(tc.provider, true)
+			if err != nil {
+				t.Fatal(microerror.Mask(err))
+			}
+
+			for _, release := range archived {
+				// Check that the README links to the release.
+				if !strings.Contains(readmeContent, fmt.Sprintf("https://github.com/giantswarm/releases/blob/master/%s/archived/%s/release-notes.md", tc.provider, release.Name)) {
+					t.Errorf("expected link in README.md to archived %s release %s", tc.provider, release.Name)
 				}
 			}
 
