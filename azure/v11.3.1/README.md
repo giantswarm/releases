@@ -12,4 +12,4 @@ This release does not add any value if you upgrade from 11.3.0 to 11.3.1 thus yo
 
 **Customers upgrading from 11.2.x to 11.3.1**
 
-Please also read carefully release notes for 11.3.0 including Flatcar OS migration [steps](https://github.com/giantswarm/releases/blob/master/release-notes/azure/v11.3.0.md).
+Please also read carefully release notes for 11.3.0 including Flatcar OS migration [steps](https://github.com/giantswarm/releases/tree/master/azure/v11.3.0).

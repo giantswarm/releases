@@ -2,7 +2,7 @@
 
 This is the first Giant Swarm release which includes Kubernetes v1.16. In addition to this update, CPU limits have been removed from several supporting components and priority classes have been adjusted to ensure system reliability under heavy load. Further details about changes to individual components can be found below.
 
-**Note** This is a legacy port of [AWS release v11.0.0](https://github.com/giantswarm/releases/blob/master/release-notes/aws/v11.0.0.md) with Kubernetes v1.16.3 for non-node pool clusters (i.e. cluster versions < 10).
+**Note** This is a legacy port of [AWS release v11.0.0](https://github.com/giantswarm/releases/tree/master/aws/archived/v11.0.0) with Kubernetes v1.16.3 for non-node pool clusters (i.e. cluster versions < 10).
 
 ### Important upgrade notes
 - This release includes a new [network policy](https://docs.giantswarm.io/guides/limiting-pod-communication-with-network-policies/#default-policies) which blocks network traffic to and from pods in the `giantswarm` and `kube-system` namespaces by default to improve security. Giant Swarm components have been modified to work under this environment, but any other pods in the cluster communicating with these system pods may cease to function without a network policy allowing traffic. Thus, if you are running pods that need to talk to system pods, you will need to allow those explicitly by adding a [network policy](https://docs.giantswarm.io/guides/limiting-pod-communication-with-network-policies/) for them.

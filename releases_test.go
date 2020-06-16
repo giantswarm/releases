@@ -195,7 +195,7 @@ func Test_Releases(t *testing.T) {
 				}
 
 				// Check that the README links to the release.
-				if !strings.Contains(readmeContent, fmt.Sprintf("https://github.com/giantswarm/releases/blob/master/%s/%s/README.md", tc.provider, release.Name)) {
+				if !strings.Contains(readmeContent, fmt.Sprintf("https://github.com/giantswarm/releases/tree/master/%s/%s", tc.provider, release.Name)) {
 					t.Errorf("expected link in README.md to %s release %s", tc.provider, release.Name)
 				}
 			}
@@ -207,7 +207,7 @@ func Test_Releases(t *testing.T) {
 
 			for _, release := range archived {
 				// Check that the README links to the release.
-				if !strings.Contains(readmeContent, fmt.Sprintf("https://github.com/giantswarm/releases/blob/master/%s/archived/%s/README.md", tc.provider, release.Name)) {
+				if !strings.Contains(readmeContent, fmt.Sprintf("https://github.com/giantswarm/releases/tree/master/%s/archived/%s", tc.provider, release.Name)) {
 					t.Errorf("expected link in README.md to archived %s release %s", tc.provider, release.Name)
 				}
 			}
