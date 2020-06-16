@@ -1,10 +1,21 @@
-## :zap: Giant Swarm Release v11.4.0 for AWS :zap:
+# :zap: Giant Swarm Release v11.4.0 for AWS :zap:
 
-This release introduces master node high availability, which means that clusters will have three master nodes by default in different availability zones.
+This release introduces [master node high availability](https://docs.giantswarm.io/basics/ha-masters/),
+which means that clusters can have three master nodes instead of one in different
+availability zones.
 
-**Note for SEs:** This release contains an external-dns fix introduced in [11.3.2](https://github.com/giantswarm/releases/blob/master/aws/v11.3.2/release-notes.md). It requires manual intervention for cluster upgrades in China to work. When upgrading a cluster, existing ingress A+TXT record sets do not get replaced with CNAME+TXT record sets even when external-dns is configured with CNAMEs as preferred. After upgrading, delete the ingress A+TXT record sets. external-dns will then automatically create CNAME+TXT record sets.
+## Important
 
-**Note for future 11.3.x releases:** Until upstream external-dns issue is fixed, please include this note and the one above in all future 11.3.x releases.
+- High availability master nodes is the default setting as of this release. If needed,
+  clusters can be created with only a single master node instead.
+- Single master clusters as of this release can be converted to multi master. However
+  a conversion from multi master to single master is not possible.
+- Selecting the master node availability zone is no longer supported as of this release.
+
+Read our [dedicated documentation article](https://docs.giantswarm.io/basics/ha-masters/)
+for more details and instructions.
+
+**Note for Solution Engineers:** This release contains an external-dns fix introduced in [11.3.2](https://github.com/giantswarm/releases/blob/master/aws/v11.3.2/release-notes.md). It requires manual intervention for cluster upgrades in China to work. When upgrading a cluster, existing ingress A+TXT record sets do not get replaced with CNAME+TXT record sets even when external-dns is configured with CNAMEs as preferred. After upgrading, delete the ingress A+TXT record sets. external-dns will then automatically create CNAME+TXT record sets.
 
 ## Change details
 
