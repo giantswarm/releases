@@ -8,7 +8,7 @@ Specifically, liveness probe is configured to be more fault tolerant than readin
 
 **Note when upgrading from v11.2.x to v11.3.x:**
 
-This release contains the replacement of CoreOS with Flatcar introduced in v11.3.0. Please carefully read release notes for 11.3.0 including Flatcar OS migration [steps](https://github.com/giantswarm/releases/blob/master/release-notes/azure/v11.3.0.md) .
+This release contains the replacement of CoreOS with Flatcar introduced in v11.3.0. Please carefully read release notes for 11.3.0 including Flatcar OS migration [steps](https://github.com/giantswarm/releases/tree/master/azure/v11.3.0) .
 
 **Note for future v11.3.x releases:**
 
