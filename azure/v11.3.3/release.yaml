@@ -21,7 +21,7 @@ spec:
     version: 1.1.0
   - name: metrics-server
     componentVersion: 0.3.3
-    version: 1.0.1
+    version: 1.1.0
   - name: net-exporter
     version: 1.8.1
   - name: nginx-ingress-controller
