@@ -1,7 +1,7 @@
 apiVersion: release.giantswarm.io/v1alpha1
 kind: Release
 metadata:
-  name: v200.0.0
+  name: v11.3.4
 spec:
   state: active
   date: 2020-06-05T15:00:00Z
