@@ -22,6 +22,6 @@ Below, you can find more details on components that were changed with this relea
 
 - Add the installation's IPAM cidr to the allowed egress subnets.
 
-### kube-state-metrics v1.0.6 ([Giant Swarm app v1.0.6](https://github.com/giantswarm/kube-state-metrics-app/blob/master/CHANGELOG.md#v106))
+### kube-state-metrics v1.9.5 ([Giant Swarm app v1.1.0](https://github.com/giantswarm/kube-state-metrics-app/blob/master/CHANGELOG.md#110---2020-06-17))
 
 - Add the installation's IPAM cidr to the allowed egress subnets.
