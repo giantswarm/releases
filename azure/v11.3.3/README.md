@@ -18,7 +18,7 @@ Below, you can find more details on components that were changed with this relea
 
 - Add the installation's IPAM cidr to the allowed egress subnets.
 
-### net-exporter v1.8.1 ([Giant Swarm app v1.8.1](https://github.com/giantswarm/net-exporter/blob/master/CHANGELOG.md#181))
+### net-exporter ([v1.8.1](https://github.com/giantswarm/net-exporter/blob/master/CHANGELOG.md#181---2020-06-17))
 
 - Add the installation's IPAM cidr to the allowed egress subnets.
 
