@@ -14,7 +14,7 @@ Please persist this and the above note until all customers are in v11.3.0 and ab
 
 Below, you can find more details on components that were changed with this release.
 
-### metrics-server v1.0.1 ([Giant Swarm app v1.0.1](https://github.com/giantswarm/metrics-server-app/blob/master/CHANGELOG.md#v101-2020-06-16))
+### metrics-server v0.3.3 ([Giant Swarm app v1.1.0](https://github.com/giantswarm/metrics-server-app/blob/master/CHANGELOG.md#110---2020-06-17))
 
 - Add the installation's IPAM cidr to the allowed egress subnets.
 
