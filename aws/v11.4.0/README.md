@@ -1,8 +1,11 @@
 # :zap: Giant Swarm Release v11.4.0 for AWS :zap:
 
-This release introduces [master node high availability](https://docs.giantswarm.io/basics/ha-masters/),
-which means that clusters can have three master nodes instead of one in different
-availability zones.
+This release introduces [high availability Kubernetes masters](https://docs.giantswarm.io/basics/ha-masters/),
+which means that clusters can have three master nodes in different availability zones
+instead of one master node.
+
+Please upgrade [`gsctl`](https://docs.giantswarm.io/reference/gsctl/#install) to the latest
+version in order to work with the master node high availability functions.
 
 ## Important
 
@@ -11,6 +14,13 @@ availability zones.
 - Single master clusters as of this release can be converted to multi master. However
   a conversion from multi master to single master is not possible.
 - Selecting the master node availability zone is no longer supported as of this release.
+- Some v5 functions in the [Giant Swarm Rest API](https://docs.giantswarm.io/api/) regarding
+  [cluster creation](https://docs.giantswarm.io/api/#operation/addClusterV5) and [fetching
+  cluster details](https://docs.giantswarm.io/api/#operation/getClusterV5) are changing.
+  The old `master` attribute in the request/response will be deprecated by August 31.
+  Please change implementations to use the `master_nodes` attribute instead. Also be aware
+  that specifying the availability zone of the single master node will no longer be
+  supported after August 31.
 
 Read our [dedicated documentation article](https://docs.giantswarm.io/basics/ha-masters/)
 for more details and instructions.
@@ -42,28 +52,36 @@ sets.
 
 ### cluster-autoscaler 1.16.5 (Giant Swarm app [v1.16.0](https://github.com/giantswarm/cluster-autoscaler-app/blob/master/CHANGELOG.md))
 
-- Version v1.16.5 introduces a new method to read AWS EC2 instance type details from an AWS API. Since this API is not reachable from the AWS China regions, the autoscaler is started with the `--aws-use-static-instance-list=true` flag.
+- Version v1.16.5 introduces a new method to read AWS EC2 instance type details from an AWS API.
+  Since this API is not reachable from the AWS China regions, the autoscaler is started with the
+  `--aws-use-static-instance-list=true` flag.
 - Set `scan-interval` to 30 seconds (from 10 seconds) to save resources and reduce AWS API calls.
-- Set `scale-down-unneeded-time` to 5 minutes (from the default of 10 minutes) to release unneeded nodes earlier.
+- Set `scale-down-unneeded-time` to 5 minutes (from the default of 10 minutes) to release unneeded
+  nodes earlier.
 - Lower `scaleDownUtilizationThreshold` to 0.5.
 
 ### chart-operator [v0.13.0](https://github.com/giantswarm/chart-operator/releases/tag/v0.13.0)
 
-Please check the [changelog](https://github.com/giantswarm/chart-operator/blob/master/CHANGELOG.md) for changes since v0.12.4.
+Please check the [changelog](https://github.com/giantswarm/chart-operator/blob/master/CHANGELOG.md)
+for changes since v0.12.4.
 
 ### cert-exporter [v1.2.3](https://github.com/giantswarm/cert-exporter/releases/tag/v1.2.3)
 
-Please check the [changelog](https://github.com/giantswarm/cert-exporter/blob/master/CHANGELOG.md) for changes since v1.2.1.
+Please check the [changelog](https://github.com/giantswarm/cert-exporter/blob/master/CHANGELOG.md)
+for changes since v1.2.1.
 
 ### net-exporter [v1.8.0](https://github.com/giantswarm/net-exporter/releases/tag/v1.8.0)
 
-Please check the [changelog](https://github.com/giantswarm/net-exporter/blob/master/CHANGELOG.md) for changes since v1.7.0.
+Please check the [changelog](https://github.com/giantswarm/net-exporter/blob/master/CHANGELOG.md)
+for changes since v1.7.0.
 
 ### calico v3.10.4
 
-- Fixes IPv6 rogue router advertisement vulnerability [CVE-2020-13597](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2020-13597).
+- Fixes IPv6 rogue router advertisement vulnerability
+  [CVE-2020-13597](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2020-13597).
 
-Complete details for changes since v3.10.1 please check the upstream release notes at https://docs.projectcalico.org/archive/v3.10/release-notes/
+Complete details for changes since v3.10.1 please check the upstream release notes at
+https://docs.projectcalico.org/archive/v3.10/release-notes/
 
 ### etcd v3.4.9
 
