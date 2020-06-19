@@ -43,6 +43,8 @@ sets.
 - Kubernetes master nodes in tenant clusters will now receive the label
   `giantswarm.io/control-plane` in metadata.
 - Fixed Prometheus metrics gathering from calico endpoint.
+- The number of calls to the AWS API for collection of Elastic Load Balancer (ELB) details
+  has been reduced by adding a local cache, to avoid throttling errors.
 - The Docker image now uses alpine v3.12 as a base.
 
 ### cluster-operator [v2.3.0](https://github.com/giantswarm/cluster-operator/releases/tag/v2.3.0)
