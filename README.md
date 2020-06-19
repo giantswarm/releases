@@ -1,17 +1,17 @@
 [![CircleCI](https://circleci.com/gh/giantswarm/releases.svg?style=shield)](https://circleci.com/gh/giantswarm/releases)
 
-# releases
+# Giant Swarm Releases
 
 This repository contains Giant Swarm releases and changelogs. Releases can be in
 different states, namely `active`, `deprecated` and `wip`. With pull requests
 merged to the `master` branch releases get automatically deployed to all Giant
-Swarm Control Planes.
+Swarm control planes.
 
-
-
-### AWS
+## AWS
 
 - v11
+  - v11.4
+    - [v11.4.0](https://github.com/giantswarm/releases/tree/master/aws/v11.4.0)
   - v11.3
     - [v11.3.3](https://github.com/giantswarm/releases/tree/master/aws/v11.3.3)
     - [v11.3.2](https://github.com/giantswarm/releases/tree/master/aws/v11.3.2)
@@ -62,8 +62,7 @@ Swarm Control Planes.
   - v8.2
     - [v8.2.0](https://github.com/giantswarm/releases/tree/master/aws/v8.2.0)
 
-
-### Azure
+## Azure
 
 - v11
   - v11.3
@@ -98,8 +97,7 @@ Swarm Control Planes.
   - v8.0
     - [v8.0.0](https://github.com/giantswarm/releases/tree/master/azure/archived/v8.0.0)
 
-
-### KVM
+## KVM
 
 - v11
   - v11.3
