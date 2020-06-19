@@ -15,19 +15,27 @@ availability zones.
 Read our [dedicated documentation article](https://docs.giantswarm.io/basics/ha-masters/)
 for more details and instructions.
 
-**Note for Solution Engineers:** This release contains an external-dns fix introduced in [11.3.2](https://github.com/giantswarm/releases/blob/master/aws/v11.3.2/release-notes.md). It requires manual intervention for cluster upgrades in China to work. When upgrading a cluster, existing ingress A+TXT record sets do not get replaced with CNAME+TXT record sets even when external-dns is configured with CNAMEs as preferred. After upgrading, delete the ingress A+TXT record sets. external-dns will then automatically create CNAME+TXT record sets.
+**Note for Solution Engineers:** This release contains an external-dns fix introduced in
+[11.3.2](https://github.com/giantswarm/releases/blob/master/aws/v11.3.2/release-notes.md).
+It requires manual intervention for cluster upgrades in China to work. When upgrading a
+cluster, existing ingress `A+TXT` record sets do not get replaced with `CNAME+TXT` record sets
+even when external-dns is configured with CNAMEs as preferred. After upgrading, delete the
+ingress `A+TXT` record sets. external-dns will then automatically create `CNAME+TXT` record
+sets.
 
 ## Change details
 
-### aws-operator v8.7.0
+### aws-operator [v8.7.0](https://github.com/giantswarm/aws-operator/releases/tag/v8.7.0)
 
-- Several changes to support running clusters with multiple master nodes as well as migrating from a single to multiple masters.
+- Several changes to support running clusters with multiple master nodes as well as migrating
+  from a single to multiple masters.
 - Several improvements regarding the deletion of tenant clusters and related AWS resources.
-- Kubernetes master nodes in tenant clusters will now receive the label `giantswarm.io/control-plane` in metadata.
+- Kubernetes master nodes in tenant clusters will now receive the label
+  `giantswarm.io/control-plane` in metadata.
 - Fixed Prometheus metrics gathering from calico endpoint.
 - The Docker image now uses alpine v3.12 as a base.
 
-### cluster-operator v2.3.0
+### cluster-operator [v2.3.0](https://github.com/giantswarm/cluster-operator/releases/tag/v2.3.0)
 
 - Several improvements regarding the deletion of tenant clusters and related AWS resources.
 - The Docker image now uses alpine v3.12 as a base.
@@ -39,15 +47,15 @@ for more details and instructions.
 - Set `scale-down-unneeded-time` to 5 minutes (from the default of 10 minutes) to release unneeded nodes earlier.
 - Lower `scaleDownUtilizationThreshold` to 0.5.
 
-### chart-operator 0.13.0
+### chart-operator [v0.13.0](https://github.com/giantswarm/chart-operator/releases/tag/v0.13.0)
 
 Please check the [changelog](https://github.com/giantswarm/chart-operator/blob/master/CHANGELOG.md) for changes since v0.12.4.
 
-### cert-exporter 1.2.3
+### cert-exporter [v1.2.3](https://github.com/giantswarm/cert-exporter/releases/tag/v1.2.3)
 
 Please check the [changelog](https://github.com/giantswarm/cert-exporter/blob/master/CHANGELOG.md) for changes since v1.2.1.
 
-### net-exporter v1.8.0
+### net-exporter [v1.8.0](https://github.com/giantswarm/net-exporter/releases/tag/v1.8.0)
 
 Please check the [changelog](https://github.com/giantswarm/net-exporter/blob/master/CHANGELOG.md) for changes since v1.7.0.
 
