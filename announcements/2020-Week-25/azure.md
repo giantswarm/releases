@@ -4,7 +4,7 @@
 
 **If you are upgrading from 11.3.1 or 11.3.2, upgrading to this release will not roll your nodes. It will only update the apps.**
 
-This release adds support for having the control plane and the tenant clusters in a different subnet.
+[Azure v11.3.3](https://github.com/giantswarm/releases/tree/master/azure/v11.3.3) adds support for using a different CIDR for the control plane and the tenant clusters which makes it more flexible when users need to connect the tenant cluster network with their own virtual or on-premise networks.
 
 
 ---
