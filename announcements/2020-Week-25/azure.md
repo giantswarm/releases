@@ -15,7 +15,7 @@ Note: Use `<https://link.com/|My Text>` to show links as hyperlinks (and not sho
 ```
 :zap: *This Week in Releases (June 19, 2020)* :zap:
 
-*<https://github.com/giantswarm/releases/edit/master/azure/v11.3.3/README.md|Azure v11.3.3>*
+*<https://github.com/giantswarm/releases/edit/master/azure/v11.3.3|Azure v11.3.3>*
 
 *If you are upgrading from 11.3.1 or 11.3.2, upgrading to this release will not roll your nodes. It will only update the apps.*
 
