@@ -1,5 +1,7 @@
 ## :zap:  Giant Swarm Release 11.4.0 for Azure :zap:
 
+**If you are upgrading from 11.3.3, upgrading to this release will not roll your nodes. It will only update the apps.**
+
 In this release NGINX Ingress Controller LoadBalancer Service external traffic policy has been made configurable, and the policy default has been changed from `Cluster` to `Local`. These changes:
 
 - Enable source IP preservation, needed for IP based security access control.
