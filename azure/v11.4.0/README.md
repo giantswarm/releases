@@ -23,6 +23,14 @@ When upgrading existing clusters from older Azure platform releases, migration o
   - Azure `kubernetes` load balancer backend pool includes the worker VM scale set, and that
   - All the worker VM scale set instances have latest model applied.
 
+**Note when upgrading from v11.2.x to v11.3.x or v11.4.x:**
+
+This release contains the replacement of CoreOS with Flatcar introduced in v11.3.0. Please carefully read release notes for 11.3.0 including Flatcar OS migration [steps](https://github.com/giantswarm/releases/tree/master/azure/v11.3.0).
+
+**Note for future v11.4.x releases:**
+
+Please persist this and the above note until all customers are in v11.3.0 and above.
+
 Below, you can find more details on components that were changed with this release.
 
 ### azure-operator [v4.1.0](https://github.com/giantswarm/azure-operator/releases/tag/v4.1.0)
