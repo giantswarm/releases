@@ -1,4 +1,4 @@
-# :zap: Giant Swarm Release v11.4.0 for AWS :zap:
+# :zap: Giant Swarm Release v100.0.0 for AWS :zap:
 
 This release introduces [high availability Kubernetes masters](https://docs.giantswarm.io/basics/ha-masters/),
 which means that clusters can have three master nodes in different availability zones
