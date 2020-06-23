@@ -29,13 +29,17 @@ Below, you can find more details on components that were changed with this relea
 
 - Move NGINX LoadBalancer Service management from azure-operator to nginx-ingress-controller app.
 
-### nginx-ingress-controller v0.30.0 ([Giant Swarm app v1.7.0](https://github.com/giantswarm/nginx-ingress-controller-app/blob/master/CHANGELOG.md#v170-2020-06-23))
+### CoreDNS v1.6.5 ([Giant Swarm app v1.1.9](https://github.com/giantswarm/coredns-app/blob/master/CHANGELOG.md#v119-2020-05-04))
 
-- Change NGINX Service type from NodePort to LoadBalancer for Azure.
-- Make NGINX LoadBalancer Service external traffic policy configurable.
-- Use Local as NGINX LoadBalancer Service default external traffic policy.
+- Make forward options optional..
 
 ### cluster-operator [v0.23.10](https://github.com/giantswarm/cluster-operator/releases/tag/v0.23.10)
 
 - Fix a bug in user values migration logic for apps.
 - Enable NGINX LoadBalancer Service on Azure.
+
+### nginx-ingress-controller v0.30.0 ([Giant Swarm app v1.7.0](https://github.com/giantswarm/nginx-ingress-controller-app/blob/master/CHANGELOG.md#v170-2020-06-23))
+
+- Change NGINX Service type from NodePort to LoadBalancer for Azure.
+- Make NGINX LoadBalancer Service external traffic policy configurable.
+- Use Local as NGINX LoadBalancer Service default external traffic policy.
