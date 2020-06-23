@@ -35,19 +35,24 @@ Below, you can find more details on components that were changed with this relea
 
 ### azure-operator [v4.1.0](https://github.com/giantswarm/azure-operator/releases/tag/v4.1.0)
 
-- Move NGINX LoadBalancer Service management from azure-operator to nginx-ingress-controller app.
+- Moved NGINX LoadBalancer Service management from azure-operator to nginx-ingress-controller app.
 
 ### CoreDNS v1.6.5 ([Giant Swarm app v1.1.9](https://github.com/giantswarm/coredns-app/blob/master/CHANGELOG.md#v119-2020-05-04))
 
-- Make forward options optional..
+- Made forward options optional.
 
 ### cluster-operator [v0.23.10](https://github.com/giantswarm/cluster-operator/releases/tag/v0.23.10)
 
-- Fix a bug in user values migration logic for apps.
-- Enable NGINX LoadBalancer Service on Azure.
+- Fixed a bug in user values migration logic for apps.
+- Enabled NGINX LoadBalancer Service on Azure.
 
-### nginx-ingress-controller v0.30.0 ([Giant Swarm app v1.7.0](https://github.com/giantswarm/nginx-ingress-controller-app/blob/master/CHANGELOG.md#v170-2020-06-23))
+### Kubernetes v1.16.10
+- Updated from v1.16.8 - changelog since [v1.16.9](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.16.md#changelog-since-v1169) and [v1.16.8](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.16.md#changelog-since-v1168)
+- Includes a fix for CVE-2019-11253 related to json/yaml decoding where large or malformed documents could consume excessive server resources. Request bodies for normal API requests (create/delete/update/patch operations of regular resources) are now limited to 3MB.
 
-- Change NGINX Service type from NodePort to LoadBalancer for Azure.
-- Make NGINX LoadBalancer Service external traffic policy configurable.
+### nginx-ingress-controller v0.33.0 ([Giant Swarm app v1.7.0](https://github.com/giantswarm/nginx-ingress-controller-app/blob/master/CHANGELOG.md#v170-2020-06-23))
+
+- Changed NGINX Service type from NodePort to LoadBalancer for Azure.
+- Made NGINX LoadBalancer Service external traffic policy configurable.
 - Use Local as NGINX LoadBalancer Service default external traffic policy.
+- Upgraded to ingress-nginx [0.33.0](https://github.com/kubernetes/ingress-nginx/blob/master/Changelog.md#0330).
