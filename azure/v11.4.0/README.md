@@ -36,6 +36,7 @@ Below, you can find more details on components that were changed with this relea
 ### azure-operator [v4.1.0](https://github.com/giantswarm/azure-operator/releases/tag/v4.1.0)
 
 - Moved NGINX LoadBalancer Service management from azure-operator to nginx-ingress-controller app.
+- The default egress strategy for worker nodes VMSS is now a VNET Gateway rather than the Load Balancer.
 
 ### CoreDNS v1.6.5 ([Giant Swarm app v1.1.9](https://github.com/giantswarm/coredns-app/blob/master/CHANGELOG.md#v119-2020-05-04))
 
