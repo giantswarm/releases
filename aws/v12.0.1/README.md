@@ -26,7 +26,7 @@ Read our [dedicated documentation article](https://docs.giantswarm.io/basics/ha-
 for more details and instructions.
 
 **Note for Solution Engineers:** This release contains an external-dns fix introduced in
-[11.3.2](https://github.com/giantswarm/releases/blob/master/aws/v11.3.2/release-notes.md).
+[12.0.1](https://github.com/giantswarm/releases/blob/master/aws/v12.0.1/release-notes.md).
 It requires manual intervention for cluster upgrades in China to work. When upgrading a
 cluster, existing ingress `A+TXT` record sets do not get replaced with `CNAME+TXT` record sets
 even when external-dns is configured with CNAMEs as preferred. After upgrading, delete the
