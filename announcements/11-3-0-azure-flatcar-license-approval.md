@@ -2,7 +2,7 @@
 
 Prior to upgrading to version 11.3.0 replacing CoreOS Container Linux with Flatcar Container Linux, there is a need to accept the legal terms of the image deployment on Azure.
 
-This has to be done for every subscription you are running, otherwise during upgrade or creation of new cluster the deployments will fail with Bad Request of: ```MarketplacePurchaseEligibilityFailed```.
+This has to be done for every subscription you are running, otherwise during upgrade or creation of new cluster the deployments will fail with Bad Request of: `MarketplacePurchaseEligibilityFailed`.
 
 
 Instructions are passed by Microsoft and they are following:
