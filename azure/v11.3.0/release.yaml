@@ -34,10 +34,12 @@ spec:
   - name: app-operator
     version: 1.0.0
   - name: azure-operator
+    reference: 4.0.0-3
     version: 4.0.0
   - name: cert-operator
     version: 0.1.0
   - name: cluster-operator
+    reference: 0.23.8-1
     version: 0.23.8
   - name: kubernetes
     version: 1.16.8
