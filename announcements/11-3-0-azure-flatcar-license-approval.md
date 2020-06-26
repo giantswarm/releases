@@ -17,3 +17,4 @@ Offer:     "flatcar-container-linux"
 Publisher: "kinvolk"
 SKU:       "stable"
 Version:   "distroVersion"
+```
