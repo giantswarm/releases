@@ -21,7 +21,7 @@ When upgrading existing clusters from older Azure platform releases, migration o
 
 Below, you can find more details on components that were changed with this release.
 
-### azure-operator [v4.1.0](https://github.com/giantswarm/azure-operator/releases/tag/v4.1.0)
+### azure-operator [v4.1.0](https://github.com/giantswarm/azure-operator/blob/v4.1.0/CHANGELOG.md#410---2020-06-24)
 
 - Moved NGINX LoadBalancer Service management from azure-operator to nginx-ingress-controller app.
 - The default egress strategy for worker nodes VMSS is now a VNET Gateway rather than the Load Balancer.
