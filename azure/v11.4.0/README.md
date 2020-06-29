@@ -1,7 +1,5 @@
 ## :zap:  Giant Swarm Release 11.4.0 for Azure :zap:
 
-**If you are upgrading from 11.3.3, upgrading to this release will not roll your nodes. It will only update the apps.**
-
 In this release NGINX Ingress Controller LoadBalancer Service external traffic policy has been made configurable, and the policy default has been changed from `Cluster` to `Local`. These changes:
 
 - Enable source IP preservation, needed for IP based security access control.
@@ -19,18 +17,7 @@ When upgrading existing clusters from older Azure platform releases, migration o
 
 - Together with the customer have any firewall in front of NGINX reconfigured to allow both old and new LoadBalancer Service IPs.
 - Next use [the migration script](https://github.com/giantswarm/azure-operator/blob/master/scripts/migrate-nginx-ingress-controller.sh) to switch DNS records to the new load balancer IP. The script ensures IP is assigned to the new LB, and also that the cluster DNS records resolve to it instead of old IP.
-- Now delete the old NGINX IC LoadBalancer Service.
-- Finally, ensure that the tenant cluster's
-  - Azure `kubernetes` load balancer backend pool includes the worker VM scale set, and that
-  - All the worker VM scale set instances have latest model applied.
-
-**Note when upgrading from v11.2.x to v11.3.x or v11.4.x:**
-
-This release contains the replacement of CoreOS with Flatcar introduced in v11.3.0. Please carefully read release notes for 11.3.0 including Flatcar OS migration [steps](https://github.com/giantswarm/releases/tree/master/azure/v11.3.0).
-
-**Note for future v11.4.x releases:**
-
-Please persist this and the above note until all customers are in v11.3.0 and above.
+- Now delete the old NGINX IC LoadBalancer Service (the one called `ingress-loadbalancer`).
 
 Below, you can find more details on components that were changed with this release.
 
