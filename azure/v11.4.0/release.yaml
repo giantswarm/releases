@@ -12,7 +12,7 @@ spec:
     version: 0.13.0
   - name: coredns
     componentVersion: 1.6.5
-    version: 1.1.9
+    version: 1.1.10
   - name: external-dns
     componentVersion: 0.5.18
     version: 1.2.1
