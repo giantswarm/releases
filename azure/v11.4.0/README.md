@@ -48,8 +48,17 @@ Below, you can find more details on components that were changed with this relea
 - Fixed a bug in user values migration logic for apps.
 - Enabled NGINX LoadBalancer Service on Azure.
 
-### Kubernetes v1.16.10
-- Updated from v1.16.8 - changelog since [v1.16.9](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.16.md#changelog-since-v1169) and [v1.16.8](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.16.md#changelog-since-v1168)
+### Flatcar v2512.2.1
+- Updated from v2345.3.1 - 
+changelog since [v2345.3.1](https://www.flatcar-linux.org/releases/#release-2512.2.0) and [v2512.2.0](https://www.flatcar-linux.org/releases/#release-2512.2.1)
+- Includes a fix for [CVE-2020-0543](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2020-0543) regarding Intel Microcode vulnerabilities.
+
+### Kubernetes v1.16.12
+- Updated from v1.16.8 - 
+changelog since [v1.16.11](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.16.md#changelog-since-v11611-1),
+since [v1.16.10](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.16.md#changelog-since-v11610),
+since [v1.16.9](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.16.md#changelog-since-v1169) and
+since [v1.16.8](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.16.md#changelog-since-v1168)
 - Includes a fix for CVE-2019-11253 related to json/yaml decoding where large or malformed documents could consume excessive server resources. Request bodies for normal API requests (create/delete/update/patch operations of regular resources) are now limited to 3MB.
 
 ### nginx-ingress-controller v0.33.0 ([Giant Swarm app v1.7.0](https://github.com/giantswarm/nginx-ingress-controller-app/blob/master/CHANGELOG.md#v170-2020-06-23))
