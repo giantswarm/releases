@@ -40,9 +40,9 @@ spec:
   - name: cluster-operator
     version: 0.23.10-dev
   - name: kubernetes
-    version: 1.16.10
+    version: 1.16.12
   - name: containerlinux
-    version: 2345.3.1
+    version: 2512.2.1
   - name: coredns
     version: 1.6.5
   - name: calico
