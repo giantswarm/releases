@@ -4,7 +4,7 @@ In this release NGINX Ingress Controller LoadBalancer Service external traffic p
 
 - Enable source IP preservation, needed for IP based security access control.
 - Remove unnecessary ingress traffic intra-cluster network hops, increasing concurrent connection capacity and reducing latency.
-- Allow configuration to be reverted, where these defaults and associated tradeoffs are found not to be appropriate.
+- Allow configuration to be reverted, where these defaults and associated tradeoffs are found to be inappropriate.
 
 Management of NGINX IC LoadBalancer Service is moved from azure-operator to NGINX IC App itself to:
 
