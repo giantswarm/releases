@@ -25,7 +25,7 @@ After cluster upgrade to 11.4.0, both old `ingress-loadbalancer` LoadBalancer Se
 - Next use [the migration script](https://github.com/giantswarm/azure-operator/blob/master/scripts/migrate-nginx-ingress-controller.sh) to switch DNS records to the new load balancer IP. The script ensures IP is assigned to the new LB, and also that the cluster DNS records resolve to it instead of old IP.
 - Now delete the old NGINX IC LoadBalancer Service (the one called `ingress-loadbalancer`).  
 
-**Note for future 11.4.x releases:**. 
+**Note for future 11.4.x releases:**  
 
 To prevent downtime, please persist this and the above note until all customers are in 11.4.0 and above.  
 
