@@ -11,7 +11,7 @@ Management of NGINX IC LoadBalancer Service is moved from azure-operator to NGIN
 - Enable external traffic policy configurability, in a way consistent with other NGINX IC configuration options.
 - Lay the foundation for making NGINX IC App optional and not pre-installed in a future Azure platform release.
 
-When upgrading existing clusters from older Azure platform releases, migration of LoadBalancer Service is automated but not fully automatic. Therefore we ask of you to delegate cluster upgrades to your SE.
+When upgrading clusters, migration of LoadBalancer Service is automated but not fully automatic. Therefore, please delegate cluster upgrades to your SE.
 
 **Note for SEs:** After cluster upgrade to 11.4.0, both old `ingress-loadbalancer` LoadBalancer Service managed by azure-operator and new one `nginx-ingress-controller` managed by NGINX IC App remain on the cluster. To switch the ingress traffic to the new LoadBalancer and remove old NGINX LoadBalancer Service without downtime please:
 
