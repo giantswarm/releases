@@ -13,7 +13,7 @@ These changes:
 - Enable external traffic policy configurability, in a way consistent with other NGINX IC configuration options.
 - Lay the foundation for making NGINX IC App optional and not pre-installed in a future Azure platform release.
 
-Along with azure-operator and NGINX IC, minor improvements were also made to coreDNS, cluster-operator, Flatcar, and Kubernetes.
+Along with azure-operator and NGINX IC, minor improvements were also made to CoreDNS, cluster-operator, Flatcar, and Kubernetes.
 
 **When upgrading clusters, migration of LoadBalancer Service is automated but not fully automatic. Therefore, please delegate cluster upgrades to your SE.**
 
