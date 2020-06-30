@@ -17,15 +17,19 @@ Along with azure-operator and NGINX IC, minor improvements were also made to Cor
 
 **When upgrading clusters, migration of LoadBalancer Service is automated but not fully automatic. Therefore, please delegate cluster upgrades to your SE.**
 
-**Note for SEs:** After cluster upgrade to 11.4.0, both old `ingress-loadbalancer` LoadBalancer Service managed by azure-operator and new one `nginx-ingress-controller` managed by NGINX IC App remain on the cluster. To switch the ingress traffic to the new LoadBalancer and remove old NGINX LoadBalancer Service without downtime please:
+**Note for SEs:**  
+
+After cluster upgrade to 11.4.0, both old `ingress-loadbalancer` LoadBalancer Service managed by azure-operator and new one `nginx-ingress-controller` managed by NGINX IC App remain on the cluster. To switch the ingress traffic to the new LoadBalancer and remove old NGINX LoadBalancer Service without downtime please:
 
 - Together with the customer have any firewall in front of NGINX reconfigured to allow both old and new LoadBalancer Service IPs.
 - Next use [the migration script](https://github.com/giantswarm/azure-operator/blob/master/scripts/migrate-nginx-ingress-controller.sh) to switch DNS records to the new load balancer IP. The script ensures IP is assigned to the new LB, and also that the cluster DNS records resolve to it instead of old IP.
-- Now delete the old NGINX IC LoadBalancer Service (the one called `ingress-loadbalancer`).
-**Note for future 11.4.x releases:**
+- Now delete the old NGINX IC LoadBalancer Service (the one called `ingress-loadbalancer`).  
 
-To prevent downtime, please persist this and the above note until all customers are in 11.4.0 and above.
-Below, you can find more details on components that were changed with this release.
+**Note for future 11.4.x releases:**. 
+
+To prevent downtime, please persist this and the above note until all customers are in 11.4.0 and above.  
+
+Below, you can find more details on components that were changed with this release.  
 
 ### azure-operator [v4.1.0](https://github.com/giantswarm/azure-operator/blob/v4.1.0/CHANGELOG.md#410---2020-06-24)
 
