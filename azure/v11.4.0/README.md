@@ -6,7 +6,7 @@ In this release NGINX Ingress Controller LoadBalancer Service external traffic p
 - Remove unnecessary ingress traffic intra-cluster network hops, increasing concurrent connection capacity and reducing latency.
 - Allow configuration to be reverted, where these defaults and associated tradeoffs are found to be inappropriate.
 
-Management of NGINX IC LoadBalancer Service is moved from azure-operator to NGINX IC App itself to:
+**Management of NGINX IC LoadBalancer Service is moved from azure-operator to NGINX IC App itself** to:
 
 - Enable external traffic policy configurability, in a way consistent with other NGINX IC configuration options.
 - Lay the foundation for making NGINX IC App optional and not pre-installed in a future Azure platform release.
