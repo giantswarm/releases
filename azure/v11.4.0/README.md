@@ -19,6 +19,10 @@ Along with azure-operator and NGINX IC, minor improvements were also made to Cor
 
 **Note for SEs:**  
 
+Before cluster upgrade to 11.4.0, check if the DNS zone has a TXT DNS record called `<clusterid>ingress.<clusterid>.<region>.azure.gigantic.io`.
+If the record is not there, but there is another TXT one called `ingress.<clusterid>.<region>.azure.gigantic.io`, please copy the latter using the right name (with the cluster id at the beginning).
+If you don't do that the migration script execution (see below) will fail.
+
 After cluster upgrade to 11.4.0, both old `ingress-loadbalancer` LoadBalancer Service managed by azure-operator and new one `nginx-ingress-controller` managed by NGINX IC App remain on the cluster. To switch the ingress traffic to the new LoadBalancer and remove old NGINX LoadBalancer Service without downtime please:
 
 - Together with the customer have any firewall in front of NGINX reconfigured to allow both old and new LoadBalancer Service IPs.
