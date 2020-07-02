@@ -17,7 +17,7 @@ jobs:
       - run:
           name: Compile releaseNotesAnnotator kustomize plugin
           command: |
-            go build -buildmode plugin -o "${PLUGIN_PATH}" "${PLUGIN_PATH}.go"
+            CGO_ENABLED=0 go build -o "${PLUGIN_PATH}" "${PLUGIN_PATH}.go"
           environment:
             PLUGIN_PATH: "./kustomize/plugin/giantswarm.io/v1/releasenoteurlannotationgenerator/releaseNoteURLAnnotationGenerator"
       - run:
