@@ -17,8 +17,9 @@ jobs:
       - run:
           name: Compile releaseNotesAnnotator kustomize plugin
           command: |
-            export PLUGIN_PATH="$CIRCLE_WORKING_DIRECTORY/kustomize/plugin/giantswarm.io/v1/releasenoteurlannotationgenerator/releaseNoteURLAnnotationGenerator"
             CGO_ENABLED=0 go build -o "${PLUGIN_PATH}" "${PLUGIN_PATH}.go"
+          environment:
+            PLUGIN_PATH: "./kustomize/plugin/giantswarm.io/v1/releasenoteurlannotationgenerator/releaseNoteURLAnnotationGenerator"
       - run:
           name: Kustomize helm charts
           command: |
