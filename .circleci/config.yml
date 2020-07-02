@@ -15,9 +15,16 @@ jobs:
           command: |
             CGO_ENABLED=0 go install sigs.k8s.io/kustomize/kustomize/v3
       - run:
+          name: Compile releaseNotesAnnotator kustomize plugin
+          command: |
+            go build -buildmode plugin -o "${PLUGIN_PATH}" "${PLUGIN_PATH}.go"
+          environment:
+            PLUGIN_PATH: "./kustomize/plugin/giantswarm.io/v1/releasenoteurlannotationgenerator/releaseNoteURLAnnotationGenerator"
+      - run:
           name: Kustomize helm charts
           command: |
-            for i in aws azure kvm; do mkdir -p helm/releases-$i/templates; kustomize build ./$i > helm/releases-$i/templates/releases.yaml; done
+            export XDG_CONFIG_HOME=$CIRCLE_WORKING_DIRECTORY
+            for i in aws azure kvm; do mkdir -p helm/releases-$i/templates; kustomize build --enable_alpha_plugins ./$i > helm/releases-$i/templates/releases.yaml; done
       - persist_to_workspace:
           root: .
           paths:
