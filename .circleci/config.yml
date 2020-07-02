@@ -23,6 +23,7 @@ jobs:
       - run:
           name: Kustomize helm charts
           command: |
+            export XDG_CONFIG_HOME=$CIRCLE_WORKING_DIRECTORY
             export PLUGIN_ROOT="$CIRCLE_WORKING_DIRECTORY/kustomize/plugin"
             for i in aws azure kvm; do mkdir -p helm/releases-$i/templates; kustomize build --enable_alpha_plugins ./$i > helm/releases-$i/templates/releases.yaml; done
       - persist_to_workspace:
