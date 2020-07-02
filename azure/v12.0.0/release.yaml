@@ -1,7 +1,7 @@
 apiVersion: release.giantswarm.io/v1alpha1
 kind: Release
 metadata:
-  name: v11.5.0
+  name: v12.0.0
 spec:
   state: active
   date: 2020-07-08T15:00:00Z
@@ -40,7 +40,7 @@ spec:
   - name: cluster-operator
     version: 0.23.10
   - name: kubernetes
-    version: 1.16.12
+    version: 1.17.8
   - name: containerlinux
     version: 2512.2.1
   - name: coredns
