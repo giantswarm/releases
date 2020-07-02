@@ -17,13 +17,12 @@ jobs:
       - run:
           name: Compile releaseNotesAnnotator kustomize plugin
           command: |
+            export PLUGIN_PATH="$CIRCLE_WORKING_DIRECTORY/kustomize/plugin/giantswarm.io/v1/releasenoteurlannotationgenerator/releaseNoteURLAnnotationGenerator"
             CGO_ENABLED=0 go build -o "${PLUGIN_PATH}" "${PLUGIN_PATH}.go"
-          environment:
-            PLUGIN_PATH: "./kustomize/plugin/giantswarm.io/v1/releasenoteurlannotationgenerator/releaseNoteURLAnnotationGenerator"
       - run:
           name: Kustomize helm charts
           command: |
-            export XDG_CONFIG_HOME=$CIRCLE_WORKING_DIRECTORY
+            export PLUGIN_ROOT="$CIRCLE_WORKING_DIRECTORY/kustomize/plugin"
             for i in aws azure kvm; do mkdir -p helm/releases-$i/templates; kustomize build --enable_alpha_plugins ./$i > helm/releases-$i/templates/releases.yaml; done
       - persist_to_workspace:
           root: .
