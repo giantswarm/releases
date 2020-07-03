@@ -1,4 +1,4 @@
-# This Week in KVM Releases (July 3, 2020)
+# :zap: This Week in KVM Releases (July 3, 2020):zap:
 
 **Optional Apps Releases**  
 (Can be installed from App Catalogs)
