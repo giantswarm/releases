@@ -2,6 +2,8 @@
 
 [Azure v11.4.0](https://github.com/giantswarm/releases/tree/master/azure/v11.4.0) makes changes to NGINX IC and azure-operator. This **improves IP based security access control, increases concurrent connection capacity, and reduces latency. It also enables configurability of external traffic policy.**
 
+**Please read release notes carefully.** Manual actions are required after the upgrade and we recommend discussing cluster upgrades with your SE.
+
 **Optional Apps Releases**  
 (Can be installed from App Catalogs)
 
