@@ -1,6 +1,6 @@
 # :zap: This Week in Azure Releases (July 3, 2020):zap:
 
-[Azure v11.4.0](https://github.com/giantswarm/releases/tree/master/azure/v11.4.0) makes changes to NGINX IC and azure-operator. This **improves IP based security access control, increases concurrent connection capacity, ands reduce latency. It also enables configurability of external traffic policy.**
+[Azure v11.4.0](https://github.com/giantswarm/releases/tree/master/azure/v11.4.0) makes changes to NGINX IC and azure-operator. This **improves IP based security access control, increases concurrent connection capacity, and reduces latency. It also enables configurability of external traffic policy.**
 
 **Optional Apps Releases**  
 (Can be installed from App Catalogs)
