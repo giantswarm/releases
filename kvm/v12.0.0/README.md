@@ -28,6 +28,10 @@ This is the first Giant Swarm release which includes Kubernetes v1.17. Component
 
 - Make resource requests/limits configurable.
 
+### cluster-operator v0.23.10
+
+- Align with NGINX IC App 1.7.0, move of LB Service management from azure-operator to the app itself.
+
 ### kube-state-metrics-app v1.1.0
 
 - Added `100.64.0.0/10` to the allowed egress subnets in NetworkPolicy.
