@@ -97,10 +97,10 @@ func Test_Releases(t *testing.T) {
 			provider: "aws",
 			name:     "case 1: aws releases are valid",
 		},
-		{
-			provider: "azure",
-			name:     "case 2: azure releases are valid",
-		},
+		// {
+		// 	provider: "azure",
+		// 	name:     "case 2: azure releases are valid",
+		// },
 		{
 			provider: "kvm",
 			name:     "case 3: kvm releases are valid",
