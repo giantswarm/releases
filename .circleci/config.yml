@@ -15,11 +15,13 @@ jobs:
           command: |
             CGO_ENABLED=0 go install sigs.k8s.io/kustomize/kustomize/v3
       - run:
-          name: Compile releaseNotesAnnotator kustomize plugin
+          name: Install releaseNotesURLTransformer kustomize plugin
           command: |
-            CGO_ENABLED=0 go build -o "${PLUGIN_PATH}" "${PLUGIN_PATH}.go"
+            CGO_ENABLED=0 go get github.com/giantswarm/kustomize-plugin-releasenotesurlannotationtransformer
+            mkdir -p "$PLUGIN_PATH"
+            cp /go/bin/kustomize-plugin-releasenotesurlannotationtransformer "$PLUGIN_PATH/releaseNotesURLAnnotationTransformer"
           environment:
-            PLUGIN_PATH: "./kustomize/plugin/giantswarm.io/v1/releasenoteurlannotationgenerator/releaseNoteURLAnnotationGenerator"
+            PLUGIN_PATH: "./kustomize/plugin/giantswarm.io/v1/releasenotesurlannotationtransformer"
       - run:
           name: Kustomize helm charts
           command: |

@@ -2,7 +2,7 @@ commonAnnotations:
   giantswarm.io/docs: https://docs.giantswarm.io/reference/cp-k8s-api/releases.release.giantswarm.io/
 
 transformers:
-  - releaseNoteGenerator.yaml
+  - releaseNotesTransformer.yaml
 
 resources:
   - v9.0.0

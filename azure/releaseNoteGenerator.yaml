@@ -1,6 +1,0 @@
-apiVersion: giantswarm.io/v1
-kind: releaseNoteURLAnnotationGenerator
-metadata:
-  name: awsReleaesNoteURLAnnotationGenerator
-# provider
-argsOneLiner: azure
