@@ -19,6 +19,7 @@ import (
 type kustomizationFile struct {
 	CommonAnnotations map[string]string `yaml:"commonAnnotations"`
 	Resources         []string          `yaml:"resources"`
+	Transformers      []string          `yaml:"transformers"`
 }
 
 func findReleases(provider string, archived bool) ([]v1alpha1.Release, error) {
