@@ -1,0 +1,59 @@
+*** kvm/v11.3.2/release.yaml	2020-07-06 16:00:12.000000000 -0400
+--- kvm/v12.0.1/release.yaml	2020-07-06 16:03:01.000000000 -0400
+***************
+*** 1,7 ****
+  apiVersion: release.giantswarm.io/v1alpha1
+  kind: Release
+  metadata:
+!   name: v11.3.2
+  spec:
+    apps:
+    - name: cert-exporter
+--- 1,8 ----
+  apiVersion: release.giantswarm.io/v1alpha1
+  kind: Release
+  metadata:
+!   creationTimestamp: null
+!   name: v12.0.1
+  spec:
+    apps:
+    - name: cert-exporter
+***************
+*** 31,48 ****
+    - name: cert-operator
+      version: 0.1.0
+    - name: cluster-operator
+!     version: 0.23.8
+    - name: flannel-operator
+      version: 0.2.0
+    - name: kvm-operator
+      version: 3.11.1
+    - name: kubernetes
+!     version: 1.16.9
+    - name: containerlinux
+!     version: 2345.3.1
+    - name: calico
+!     version: 3.10.1
+    - name: etcd
+!     version: 3.3.17
+!   date: 2020-06-11T15:00:00Z
+    state: active
+--- 32,49 ----
+    - name: cert-operator
+      version: 0.1.0
+    - name: cluster-operator
+!     version: 0.23.9
+    - name: flannel-operator
+      version: 0.2.0
+    - name: kvm-operator
+      version: 3.11.1
+    - name: kubernetes
+!     version: 1.17.8
+    - name: containerlinux
+!     version: 2512.2.1
+    - name: calico
+!     version: 3.14.1
+    - name: etcd
+!     version: 3.4.9
+!   date: "2020-06-11T15:00:00Z"
+    state: active
