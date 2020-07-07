@@ -40,6 +40,7 @@ Below, you can find more details on components that were changed with this relea
 - Add `ntp` collector.
 - Added 100.64.0.0/10 to the allowed egress subnets in NetworkPolicy.
 
-### nginx-ingress-controller v0.33.0 ([Giant Swarm app v1.7.0](https://github.com/giantswarm/nginx-ingress-controller-app/blob/master/CHANGELOG.md#v170-2020-06-29))
+### nginx-ingress-controller v0.33.0 ([Giant Swarm app v1.7.1](https://github.com/giantswarm/nginx-ingress-controller-app/blob/master/CHANGELOG.md#v171-2020-07-07))
 
 - Upgraded upstream ingress-nginx from v0.30.0 to v0.33.0 - [changelog](https://github.com/kubernetes/ingress-nginx/blob/master/Changelog.md#0330).
+- Improved observability, enabled monitoring Service by default for monitoring targets discovery and removed support for disabling it.
