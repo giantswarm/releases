@@ -6,9 +6,9 @@ metadata:
 spec:
   apps:
   - name: cert-exporter
-    version: 1.2.1
+    version: 1.2.3
   - name: chart-operator
-    version: 0.13.0
+    version: 0.12.4
   - componentVersion: 1.6.5
     name: coredns
     version: 1.1.8
@@ -19,13 +19,25 @@ spec:
     name: metrics-server
     version: 1.0.0
   - name: net-exporter
-    version: 1.7.0
+    version: 1.8.0
   - componentVersion: 0.30.0
     name: nginx-ingress-controller
     version: 1.6.12
   - componentVersion: 0.18.1
     name: node-exporter
     version: 1.2.0
+  - componentVersion: 0.9.0
+    name: cert-manager
+    version: 1.0.8
+  - componentVersion: 1.16.5
+    name: cluster-autoscaler
+    version: 1.16.0
+  - componentVersion: 0.5.18
+    name: external-dns
+    version: 1.2.1
+  - componentVersion: 3.5.0
+    name: kiam
+    version: 1.2.2
   components:
   - name: app-operator
     version: 1.0.0

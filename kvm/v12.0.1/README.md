@@ -86,3 +86,88 @@ Updates:
 - intel-microcode [20200609](https://github.com/intel/Intel-Linux-Processor-Microcode-Data-Files/releases/tag/microcode-20200609)
 
 
+### cert-exporter [1.2.3](https://github.com/giantswarm/cert-exporter/releases/tag/v1.2.3)
+
+#### Changed
+- Update prometheus/client_golang dependency
+- Migrate from dep to go modules
+- Move to App deployment
+
+
+
+### cert-manager [1.0.8](https://github.com/giantswarm/cert-manager-app/releases/tag/v1.0.8)
+
+#### Changed
+- Allowed resource requests and limits to be configured with `values.yaml`. ([#24](https://github.com/giantswarm/cert-manager-app/pull/24))
+
+
+
+### chart-operator [0.12.4](https://github.com/giantswarm/chart-operator/releases/tag/v0.12.4)
+
+#### Changed
+- Always set chart CR annotations so update state calculation is accurate.
+- Only update failed Helm releases if the chart values or version has changed.
+
+
+
+### cluster-autoscaler [1.16.0](https://github.com/giantswarm/cluster-autoscaler-app/releases/tag/v1.16.0)
+
+Note that with this release we start to align the versioning scheme to the upstream project, so our v1.16.x represents upstream v1.16.x.
+#### Changed
+- Use cluster-autoscaler version v1.16.5.
+  - This version introduces a new method to read AWS EC2 instance type details from an AWS API. Since this API is not reachable from the AWS China regions, the autoscaler is started with the `--aws-use-static-instance-list=true` flag.
+- Set `scan-interval` to 30 seconds (from 10 seconds) to save resources.
+- Set `scale-down-unneeded-time` to 5 minutes (from the default of 10 minutes) to release unneeded nodes earlier.
+- Lower `scaleDownUtilizationThreshold` to 0.5.
+
+
+
+### coredns [1.1.8](https://github.com/giantswarm/coredns-app/releases/tag/v1.1.8)
+
+#### Changed
+- Use cluster.kubernetes.clusterDomain instead of cluster.kubernetes.domain for custom DNS suffix.
+
+
+
+### external-dns [1.2.1](https://github.com/giantswarm/external-dns-app/releases/tag/v1.2.1)
+
+#### Changed
+- Prefer CNAMEs record sets for AWS SDK configuration with explicit credentials.
+
+
+
+### kiam [1.2.2](https://github.com/giantswarm/kiam-app/releases/tag/v1.2.2)
+
+#### Added
+- Add configurable agent whitelist of proxy routes.
+
+
+
+### kube-state-metrics [1.0.5](https://github.com/giantswarm/kube-state-metrics-app/releases/tag/v1.0.5)
+
+#### Changed
+- Upgraded to kube-state-metrics [new release 1.9.5](https://github.com/kubernetes/kube-state-metrics/releases/tag/v1.9.5)
+
+
+
+### metrics-server [1.0.0](https://github.com/giantswarm/metrics-server-app/releases/tag/v1.0.0)
+
+#### Changed
+- Updated manifests for Kubernetes 1.16.
+
+
+
+### net-exporter [1.8.0](https://github.com/giantswarm/net-exporter/releases/tag/v1.8.0)
+
+#### Changed
+- Deploy as a unique app in app collection.
+
+
+
+### node-exporter [1.2.0](https://github.com/giantswarm/node-exporter-app/releases/tag/v1.2.0)
+
+#### Changed
+- Change Priority Class to `system-node-critical`
+
+
+
