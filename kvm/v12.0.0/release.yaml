@@ -39,7 +39,7 @@ spec:
   - name: kvm-operator
     version: 3.11.2-dev
   - name: kubernetes
-    version: 1.17.6
+    version: 1.17.8
   - name: containerlinux
     version: 2345.3.1
   - name: calico
