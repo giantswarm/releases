@@ -11,7 +11,7 @@ import (
 	"github.com/giantswarm/microerror"
 	"github.com/giantswarm/versionbundle"
 	"k8s.io/apiextensions-apiserver/pkg/apis/apiextensions"
-	"k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1beta1"
+	v1 "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1"
 	"k8s.io/apiextensions-apiserver/pkg/apiserver/validation"
 	"sigs.k8s.io/yaml"
 )
@@ -97,10 +97,10 @@ func Test_Releases(t *testing.T) {
 			provider: "aws",
 			name:     "case 1: aws releases are valid",
 		},
-		// {
-		// 	provider: "azure",
-		// 	name:     "case 2: azure releases are valid",
-		// },
+		{
+			provider: "azure",
+			name:     "case 2: azure releases are valid",
+		},
 		{
 			provider: "kvm",
 			name:     "case 3: kvm releases are valid",
@@ -141,30 +141,33 @@ func Test_Releases(t *testing.T) {
 			}
 
 			crd := v1alpha1.NewReleaseCRD()
-			var v apiextensions.CustomResourceValidation
-			// Convert the CRD validation into the version-independent form.
-			err = v1beta1.Convert_v1beta1_CustomResourceValidation_To_apiextensions_CustomResourceValidation(crd.Spec.Validation, &v, nil)
-			if err != nil {
-				t.Fatal(microerror.Mask(err))
-			}
 
-			validator, _, err := validation.NewSchemaValidator(&v)
-			if err != nil {
-				t.Fatal(microerror.Mask(err))
-			}
-
-			// Ensure that releases satisfy OpenAPI validation.
-			for _, release := range releases {
-				// Check that the release is registered in the main provider kustomization.yaml resources.
-				if _, ok := providerResources[release.Name]; !ok {
-					t.Errorf("release %s not registered in %s/kustomization.yaml", release.Name, tc.provider)
+			for _, crdVersion := range crd.Spec.Versions {
+				var v apiextensions.CustomResourceValidation
+				// Convert the CRD validation into the version-independent form.
+				err := v1.Convert_v1_CustomResourceValidation_To_apiextensions_CustomResourceValidation(crdVersion.Schema, &v, nil)
+				if err != nil {
+					t.Fatal(microerror.Mask(err))
 				}
-				providerResources[release.Name] = true
-				result := validator.Validate(release)
-				if len(result.Errors) > 0 {
-					t.Errorf("invalid release: %#v", release)
-					for i, err := range result.Errors {
-						t.Errorf("validation error %d: %#v", i, err)
+
+				validator, _, err := validation.NewSchemaValidator(&v)
+				if err != nil {
+					t.Fatal(microerror.Mask(err))
+				}
+
+				// Ensure that releases satisfy OpenAPI validation.
+				for _, release := range releases {
+					// Check that the release is registered in the main provider kustomization.yaml resources.
+					if _, ok := providerResources[release.Name]; !ok {
+						t.Errorf("release %s not registered in %s/kustomization.yaml", release.Name, tc.provider)
+					}
+					providerResources[release.Name] = true
+					result := validator.Validate(release)
+					if len(result.Errors) > 0 {
+						t.Errorf("invalid release: %#v", release)
+						for i, err := range result.Errors {
+							t.Errorf("validation error %d: %#v", i, err)
+						}
 					}
 				}
 			}
