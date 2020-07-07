@@ -46,6 +46,7 @@ This is the first Giant Swarm release which includes Kubernetes v1.17. Component
 - Added `ntp` collector.
 - Added `100.64.0.0/10` to the allowed egress subnets in NetworkPolicy.
 
-### nginx-ingress-controller-app v1.7.0
+### nginx-ingress-controller-app v1.7.1
 
 - Upgraded ingress-nginx from 0.30.0 to 0.33.0 - [changelog](https://github.com/kubernetes/ingress-nginx/blob/master/Changelog.md#0330).
+- Improved observability, enabled monitoring Service by default for monitoring targets discovery and removed support for disabling it.
