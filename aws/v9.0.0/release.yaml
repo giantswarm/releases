@@ -1,29 +1,30 @@
 apiVersion: release.giantswarm.io/v1alpha1
 kind: Release
 metadata:
+  creationTimestamp: null
   name: v9.0.0
 spec:
-  state: deprecated
-  date: 2019-10-28T12:00:00Z
   apps: []
   components:
   - name: app-operator
     version: 1.0.0
   - name: aws-operator
     version: 5.5.0
+  - name: calico
+    version: 3.9.1
   - name: cert-operator
     version: 0.1.0
   - name: chart-operator
     version: 0.7.0
   - name: cluster-operator
     version: 0.21.0
-  - name: kubernetes
-    version: 1.15.5
   - name: containerlinux
     version: 2191.5.0
   - name: coredns
     version: 1.6.4
-  - name: calico
-    version: 3.9.1
   - name: etcd
     version: 3.3.15
+  - name: kubernetes
+    version: 1.15.5
+  date: "2019-10-28T12:00:00Z"
+  state: deprecated
