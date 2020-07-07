@@ -1,27 +1,28 @@
 apiVersion: release.giantswarm.io/v1alpha1
 kind: Release
 metadata:
+  creationTimestamp: null
   name: v8.2.0
 spec:
-  state: deprecated
-  date: 2019-03-30T10:00:00Z
   apps: []
   components:
   - name: azure-operator
     version: 2.4.0
+  - name: calico
+    version: 3.7.2
   - name: cert-operator
     version: 0.1.0
   - name: chart-operator
     version: 0.6.0
   - name: cluster-operator
     version: 0.17.0
-  - name: kubernetes
-    version: 1.14.3
   - name: containerlinux
     version: 2135.4.0
   - name: coredns
     version: 1.5.1
-  - name: calico
-    version: 3.7.2
   - name: etcd
     version: 3.3.13
+  - name: kubernetes
+    version: 1.14.3
+  date: "2019-03-30T10:00:00Z"
+  state: deprecated
