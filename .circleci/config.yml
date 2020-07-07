@@ -2,7 +2,7 @@
 version: 2.1
 
 orbs:
-  architect: giantswarm/architect@0.8.3
+  architect: giantswarm/architect@0.10.0
 
 jobs:
   build:
@@ -15,9 +15,18 @@ jobs:
           command: |
             CGO_ENABLED=0 go install sigs.k8s.io/kustomize/kustomize/v3
       - run:
+          name: Install releaseNotesURLTransformer kustomize plugin
+          command: |
+            CGO_ENABLED=0 go get github.com/giantswarm/kustomize-plugin-releasenotesurlannotationtransformer
+            mkdir -p "$PLUGIN_PATH"
+            cp /go/bin/kustomize-plugin-releasenotesurlannotationtransformer "$PLUGIN_PATH/releaseNotesURLAnnotationTransformer"
+          environment:
+            PLUGIN_PATH: "./kustomize/plugin/giantswarm.io/v1/releasenotesurlannotationtransformer"
+      - run:
           name: Kustomize helm charts
           command: |
-            for i in aws azure kvm; do mkdir -p helm/releases-$i/templates; kustomize build ./$i > helm/releases-$i/templates/releases.yaml; done
+            export XDG_CONFIG_HOME=$(pwd)
+            for i in aws azure kvm; do mkdir -p helm/releases-$i/templates; kustomize build --enable_alpha_plugins ./$i > helm/releases-$i/templates/releases.yaml; done
       - persist_to_workspace:
           root: .
           paths:
