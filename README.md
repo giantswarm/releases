@@ -65,6 +65,8 @@ Swarm control planes.
 ## Azure
 
 - v11
+  - v11.4
+    - [v11.4.0](https://github.com/giantswarm/releases/tree/master/azure/v11.4.0)
   - v11.3
     - [v11.3.3](https://github.com/giantswarm/releases/tree/master/azure/v11.3.3)
     - [v11.3.2](https://github.com/giantswarm/releases/tree/master/azure/v11.3.2)
@@ -84,7 +86,7 @@ Swarm control planes.
     - [v11.0.0](https://github.com/giantswarm/releases/tree/master/azure/archived/v11.0.0)
 - v9
   - v9.0
-    - [v9.0.0](https://github.com/giantswarm/releases/tree/master/azure/v9.0.0)
+    - [v9.0.0](https://github.com/giantswarm/releases/tree/master/azure/archived/v9.0.0)
 - v8
   - v8.4
     - [v8.4.1](https://github.com/giantswarm/releases/tree/master/azure/v8.4.1)
