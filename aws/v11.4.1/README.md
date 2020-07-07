@@ -12,7 +12,7 @@ Not found
 
 ### containerlinux [2512.2.1](https://www.flatcar-linux.org/releases/#release-2512.2.1)
 
-## Flatcar updates
+#### Flatcar updates
 
 Security fixes:
 - Fix the Intel Microcode vulnerabilities ([CVE-2020-0543](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2020-0543))
