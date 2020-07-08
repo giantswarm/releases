@@ -18,7 +18,7 @@ This is the first Giant Swarm release which includes Kubernetes v1.17. Component
 ### Calico v3.14.0
 
 - Updated from v3.10.1 - [changelog](https://docs.projectcalico.org/v3.14/release-notes/).
-- TODO
+- Fixes IPv6 rogue router advertisement vulnerability [CVE-2020-13597](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2020-13597).
 
 ### etcd v3.4.8
 
