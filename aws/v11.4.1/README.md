@@ -1,6 +1,6 @@
 # :zap: Giant Swarm Release v11.4.1 for AWS :zap:
 
-This release re-activates the recent AWS release of high-availability (HA) masters while fixing issues with certain OIDC configurations.
+This release re-activates the recent AWS [release of high-availability (HA) masters](https://github.com/giantswarm/releases/tree/master/aws/v11.4.0) while fixing issues with certain OIDC configurations.
 
 ## Change details
 
