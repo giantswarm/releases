@@ -5,14 +5,21 @@
 ## Change details
 
 
-### aws-operator [8.7.1-dev](https://github.com/giantswarm/aws-operator/releases/tag/v8.7.1-dev)
+### aws-operator [8.7.1](https://github.com/giantswarm/aws-operator/releases/tag/v8.7.1)
 
-Not found
+#### Added
+- Add mapping between similar instance types `m4.16xlarge` and `m5.16xlarge`.
+- Add `lifecycle` label to the `aws_operator_ec2_instance_status` metric to distinguish on-demand and spot.
+#### Changed
+- Use `k8s-apiserver` image which includes CAs to enable OIDC.
+- Fix failing go template rendering of KMS encryption content.
+- Use `0.1.1` tag for `k8s-api-heahtz` image.
+- Use `0.1.0` tag for `k8s-setup-network-env` image.
+- Use `0.1.0` tag for `aws-attach-etcd-dep` image.
+
 
 
 ### containerlinux [2512.2.1](https://www.flatcar-linux.org/releases/#release-2512.2.1)
-
-#### Flatcar updates
 
 Security fixes:
 - Fix the Intel Microcode vulnerabilities ([CVE-2020-0543](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2020-0543))

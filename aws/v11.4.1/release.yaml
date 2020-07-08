@@ -43,18 +43,18 @@ spec:
   - name: aws-cni
     version: 1.6.0
   - name: aws-operator
-    version: 8.7.1-dev
+    version: 8.7.1
+  - name: calico
+    version: 3.10.4
   - name: cert-operator
     version: 0.1.0
   - name: cluster-operator
     version: 2.3.0
-  - name: kubernetes
-    version: 1.16.9
   - name: containerlinux
     version: 2512.2.1
-  - name: calico
-    version: 3.10.4
   - name: etcd
     version: 3.4.9
+  - name: kubernetes
+    version: 1.16.9
   date: "2020-07-08T13:00:00Z"
   state: active
