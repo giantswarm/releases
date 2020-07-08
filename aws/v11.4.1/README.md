@@ -1,6 +1,8 @@
 # :zap: Giant Swarm Release v11.4.1 for AWS :zap:
 
 This release re-activates the recent AWS [release of high-availability (HA) masters](https://github.com/giantswarm/releases/tree/master/aws/v11.4.0), fixing OIDC configurations issues.
+
+
 **Note for Solution Engineers:** This release contains an external-dns fix introduced in
 [11.3.2](https://github.com/giantswarm/releases/blob/master/aws/v11.3.2/release-notes.md).
 It requires manual intervention for cluster upgrades in China to work. When upgrading a
@@ -8,6 +10,8 @@ cluster, existing ingress `A+TXT` record sets do not get replaced with `CNAME+TX
 even when external-dns is configured with CNAMEs as preferred. After upgrading, delete the
 ingress `A+TXT` record sets. external-dns will then automatically create `CNAME+TXT` record
 sets.
+
+
 ## Change details
 
 
