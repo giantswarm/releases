@@ -1,6 +1,6 @@
 # :zap: Giant Swarm Release v11.4.1 for AWS :zap:
 
-<< Add description here >>
+This release re-activates the recent AWS release of high-availability (HA) masters while fixing issues with certain OIDC configurations.
 
 ## Change details
 
@@ -76,6 +76,5 @@ Updates:
 
 #### Added
 - Add `ntp` collector.
-
 
 
