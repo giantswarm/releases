@@ -69,4 +69,5 @@ since [v1.16.8](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/C
 - Changed NGINX Service type from NodePort to LoadBalancer for Azure.
 - Made NGINX LoadBalancer Service external traffic policy configurable.
 - Use Local as NGINX LoadBalancer Service default external traffic policy.
+- Supported configuring (via `controller.service.public` configuration property) whether NGINX LoadBalancer Service should be public (default) or internal.
 - Upgraded to ingress-nginx [0.33.0](https://github.com/kubernetes/ingress-nginx/blob/master/Changelog.md#0330).
