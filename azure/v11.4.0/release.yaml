@@ -4,8 +4,6 @@ metadata:
   creationTimestamp: null
   name: v11.4.0
 spec:
-  state: deprecated
-  date: 2020-06-30T15:00:00Z
   apps:
   - name: cert-exporter
     version: 1.2.1
@@ -50,3 +48,5 @@ spec:
     version: 3.3.17
   - name: kubernetes
     version: 1.16.12
+  date: 2020-06-30T15:00:00Z
+  state: deprecated
