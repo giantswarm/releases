@@ -135,8 +135,8 @@ github.com/fsnotify/fsnotify v1.4.7/go.mod h1:jwhsz4b93w/PPRr/qN1Yymfu8t87LnFCMo
 github.com/ghodss/yaml v0.0.0-20150909031657-73d445a93680/go.mod h1:4dBDuWmgqj2HViK6kFavaiC9ZROes6MMH2rRYeMEF04=
 github.com/ghodss/yaml v1.0.0 h1:wQHKEahhL6wmXdzwWG11gIVCkOv05bNOh+Rxn0yngAk=
 github.com/ghodss/yaml v1.0.0/go.mod h1:4dBDuWmgqj2HViK6kFavaiC9ZROes6MMH2rRYeMEF04=
-github.com/giantswarm/apiextensions v0.3.8 h1:jTAcn9kyd3NjVTDhAtfbbXL6Cm5XyZMzJ2Req7ackyc=
-github.com/giantswarm/apiextensions v0.3.8/go.mod h1:l6m0M9R0oL1C57afMZXjWO1cZ1roIzmpA62nqJFYp40=
+github.com/giantswarm/apiextensions v0.4.9 h1:puD71tfY8aUrOEEWH6l/ZyP/qtqCbNbYwWziHlAza5k=
+github.com/giantswarm/apiextensions v0.4.9/go.mod h1:iMZLjyvqRIVPTAQGbjwTSqifwrGB41a4mW8MwC45mYI=
 github.com/giantswarm/microerror v0.2.0 h1:SaE7S34mp/wEiQkgtPiq8wQbNUTCj1gjiCWPjO3wgJo=
 github.com/giantswarm/microerror v0.2.0/go.mod h1:1YtJq/m7Vlq1Y6NP7B+SODOKCGlG7e5wctV2OoE9n34=
 github.com/giantswarm/micrologger v0.3.1 h1:HbYbQLobvfsLYzRiGTncaO61CCPd4BlT18xaaday+4o=
@@ -230,8 +230,6 @@ github.com/go-toolsmith/pkgload v0.0.0-20181119091011-e9e65178eee8/go.mod h1:WoM
 github.com/go-toolsmith/pkgload v1.0.0/go.mod h1:5eFArkbO80v7Z0kdngIxsRXRMTaX4Ilcwuh3clNrQJc=
 github.com/go-toolsmith/strparse v1.0.0/go.mod h1:YI2nUKP9YGZnL/L1/DLFBfixrcjslWct4wyljWhSRy8=
 github.com/go-toolsmith/typep v1.0.0/go.mod h1:JSQCQMUPdRlMZFswiq3TGpNp1GMktqkR2Ns5AIQkATU=
-github.com/gobuffalo/here v0.6.0 h1:hYrd0a6gDmWxBM4TnrGw8mQg24iSVoIkHEk7FodQcBI=
-github.com/gobuffalo/here v0.6.0/go.mod h1:wAG085dHOYqUpf+Ap+WOdrPTp5IYcDAs/x7PLa8Y5fM=
 github.com/gobwas/glob v0.2.3/go.mod h1:d3Ez4x06l9bZtSvzIay5+Yzi0fmZzPgnTbPcKjJAkT8=
 github.com/gofrs/flock v0.0.0-20190320160742-5135e617513b/go.mod h1:F1TvTiK9OcQqauNUHlbJvyl9Qa1QvF/gOUDKA14jxHU=
 github.com/gogo/googleapis v1.1.0/go.mod h1:gf4bu3Q80BeJ6H1S1vYPm8/ELATdvryBaNFGgqEef3s=
@@ -391,8 +389,6 @@ github.com/mailru/easyjson v0.0.0-20190626092158-b2ccc519800e h1:hB2xlXdHp/pmPZq
 github.com/mailru/easyjson v0.0.0-20190626092158-b2ccc519800e/go.mod h1:C1wdFJiN94OJF2b5HbByQZoLdCWB1Yqtg26g4irojpc=
 github.com/mailru/easyjson v0.7.0 h1:aizVhC/NAAcKWb+5QsU1iNOZb4Yws5UO2I+aIprQITM=
 github.com/mailru/easyjson v0.7.0/go.mod h1:KAzv3t3aY1NaHWoQz1+4F1ccyAH66Jk7yos7ldAVICs=
-github.com/markbates/pkger v0.15.1 h1:3MPelV53RnGSW07izx5xGxl4e/sdRD6zqseIk0rMASY=
-github.com/markbates/pkger v0.15.1/go.mod h1:0JoVlrol20BSywW79rN3kdFFsE5xYM+rSCQDXbLhiuI=
 github.com/matoous/godox v0.0.0-20190911065817-5d6d842e92eb/go.mod h1:1BELzlh859Sh1c6+90blK8lbYy0kwQf1bYlBhBysy1s=
 github.com/mattn/go-colorable v0.0.9/go.mod h1:9vuHe8Xs5qXnSaW/c/ABM9alt+Vo+STaOChaDxuIBZU=
 github.com/mattn/go-colorable v0.1.4/go.mod h1:U0ppj6V5qS13XJ6of8GYAs25YV2eR4EVcfRqFIhoBtE=
@@ -795,7 +791,6 @@ gopkg.in/yaml.v2 v2.0.0-20170812160011-eb3733d160e7/go.mod h1:JAlM8MvJe8wmxCU4Bl
 gopkg.in/yaml.v2 v2.2.1/go.mod h1:hI93XBmqTisBFMUTm0b8Fm+jr3Dg1NNxqwp+5A1VGuI=
 gopkg.in/yaml.v2 v2.2.2/go.mod h1:hI93XBmqTisBFMUTm0b8Fm+jr3Dg1NNxqwp+5A1VGuI=
 gopkg.in/yaml.v2 v2.2.4/go.mod h1:hI93XBmqTisBFMUTm0b8Fm+jr3Dg1NNxqwp+5A1VGuI=
-gopkg.in/yaml.v2 v2.2.7/go.mod h1:hI93XBmqTisBFMUTm0b8Fm+jr3Dg1NNxqwp+5A1VGuI=
 gopkg.in/yaml.v2 v2.2.8 h1:obN1ZagJSUGI0Ek/LBmuj4SNLPfIny3KsKFopxRdj10=
 gopkg.in/yaml.v2 v2.2.8/go.mod h1:hI93XBmqTisBFMUTm0b8Fm+jr3Dg1NNxqwp+5A1VGuI=
 gopkg.in/yaml.v3 v3.0.0-20191026110619-0b21df46bc1d h1:LCPbGQ34PMrwad11aMZ+dbz5SAsq/0ySjRwQ8I9Qwd8=
@@ -848,10 +843,10 @@ k8s.io/kubectl v0.0.0-20191219154910-1528d4eea6dd h1:nZX5+wEqTu/EBIYjrZlFOA63z4+
 k8s.io/kubectl v0.0.0-20191219154910-1528d4eea6dd/go.mod h1:9ehGcuUGjXVZh0qbYSB0vvofQw2JQe6c6cO0k4wu/Oo=
 k8s.io/metrics v0.0.0-20191214191643-6b1944c9f765/go.mod h1:5V7rewilItwK0cz4nomU0b3XCcees2Ka5EBYWS1HBeM=
 k8s.io/utils v0.0.0-20190801114015-581e00157fb1/go.mod h1:sZAwmy6armz5eXlNoLmJcl4F1QuKu7sr+mFQ0byX7Ew=
-k8s.io/utils v0.0.0-20190809000727-6c36bc71fc4a h1:uy5HAgt4Ha5rEMbhZA+aM1j2cq5LmR6LQ71EYC2sVH4=
-k8s.io/utils v0.0.0-20190809000727-6c36bc71fc4a/go.mod h1:sZAwmy6armz5eXlNoLmJcl4F1QuKu7sr+mFQ0byX7Ew=
 k8s.io/utils v0.0.0-20191114184206-e782cd3c129f h1:GiPwtSzdP43eI1hpPCbROQCCIgCuiMMNF8YUVLF3vJo=
 k8s.io/utils v0.0.0-20191114184206-e782cd3c129f/go.mod h1:sZAwmy6armz5eXlNoLmJcl4F1QuKu7sr+mFQ0byX7Ew=
+k8s.io/utils v0.0.0-20200324210504-a9aa75ae1b89 h1:d4vVOjXm687F1iLSP2q3lyPPuyvTUt3aVoBpi2DqRsU=
+k8s.io/utils v0.0.0-20200324210504-a9aa75ae1b89/go.mod h1:sZAwmy6armz5eXlNoLmJcl4F1QuKu7sr+mFQ0byX7Ew=
 modernc.org/cc v1.0.0/go.mod h1:1Sk4//wdnYJiUIxnW8ddKpaOJCF37yAdqYnkxUpaYxw=
 modernc.org/golex v1.0.0/go.mod h1:b/QX9oBD/LhixY6NDh+IdGv17hgB+51fET1i2kPSmvk=
 modernc.org/mathutil v1.0.0/go.mod h1:wU0vUrJsVWBZ4P6e7xtFJEhFSNsfRLJ8H458uRjg03k=

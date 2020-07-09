@@ -13,12 +13,12 @@ This is the first Giant Swarm release which includes Kubernetes v1.17. Component
 
 - Modified Calico deployment to use `-bird-live` as a liveness probe improving observability of failed mesh networking.
 - Updated node setup for 1.17 compatibility.
-- Removed limits from `calico-kube-controllers`.
+- Removed limits from `calico-kube-controllers` to prevent it from being OOM killed.
 
 ### Calico v3.14.1
 
 - Updated from v3.10.1 - [changelog](https://docs.projectcalico.org/v3.14/release-notes/).
-- TODO
+- Fixes IPv6 rogue router advertisement vulnerability [CVE-2020-13597](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2020-13597).
 
 ### etcd v3.4.9
 
