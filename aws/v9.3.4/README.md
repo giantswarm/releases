@@ -1,6 +1,9 @@
 # :zap: Giant Swarm Release v9.3.4 for AWS :zap:
 
-This release updates managed apps to the latest releases.
+This release updates managed apps to the latest releases and includes security fixes for 3 CVEs:
+- IPv6 rogue router advertisement vulnerability [CVE-2020-13597](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2020-13597)
+- Intel Microcode vulnerabilities [CVE-2020-0543](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2020-0543)
+- [CVE-2020-8558](https://github.com/kubernetes/kubernetes/issues/92315) which allows for neighboring hosts to bypass localhost boundary
 
 Below, you can find more details on components that were changed with this release.
 
@@ -8,7 +11,7 @@ Below, you can find more details on components that were changed with this relea
 
 - Fixes IPv6 rogue router advertisement vulnerability [CVE-2020-13597](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2020-13597).
 
-Complete details for changes since v3.10.1 please check the upstream release notes at https://docs.projectcalico.org/archive/v3.10/release-notes/
+For complete details for changes since v3.10.1 please check the upstream release notes at https://docs.projectcalico.org/archive/v3.10/release-notes/.
 
 ### cert-exporter [v1.2.3](https://github.com/giantswarm/cert-exporter/blob/master/CHANGELOG.md#v123-2020-05-15)
 
@@ -27,6 +30,18 @@ Complete details for changes since v3.10.1 please check the upstream release not
 
 - Align with NGINX IC App 1.7.0, move of LB Service management from azure-operator to the app itself.
 
+### containerlinux [2512.2.1](https://www.flatcar-linux.org/releases/#release-2512.2.1)
+
+Security fixes:
+- Mitigations for Intel Microcode vulnerabilities ([CVE-2020-0543](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2020-0543))
+
+Changes:
+- A source code and licensing overview is available under `/usr/share/licenses/INFO`
+
+Updates:
+- Linux [4.19.128](https://lwn.net/Articles/822841/)
+- intel-microcode [20200609](https://github.com/intel/Intel-Linux-Processor-Microcode-Data-Files/releases/tag/microcode-20200609)
+
 ### coredns v1.6.5 ([Giant Swarm app v1.1.10](https://github.com/giantswarm/coredns-app/blob/master/CHANGELOG.md#v1110-2020-06-29))
 
 - Make resource requests/limits configurable.
@@ -36,6 +51,12 @@ Complete details for changes since v3.10.1 please check the upstream release not
 
 - Added 100.64.0.0/10 to the allowed egress subnets in NetworkPolicy.
 - Fixed invalid cluster role binding for Helm 3 compatibility.
+
+### Kubernetes 1.16.11 
+- Updated from Kubernetes 1.16.9 - 
+changelog since [v1.16.10](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.16.md#changelog-since-v11610) and
+since [v1.16.9](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.16.md#changelog-since-v1169)
+- Includes a fix for CVE-2020-8558, which allows for neighboring hosts to bypass localhost boundary
 
 ### metrics-server v0.3.3 ([Giant Swarm app v1.1.0](https://github.com/giantswarm/metrics-server-app/blob/master/CHANGELOG.md#110---2020-06-17))
 
