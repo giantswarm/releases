@@ -2,7 +2,12 @@
 
 This is the first release to support kubernetes 1.17 on Azure.
 
-Apart from this important change, there have been a high number of changes under the hood, including a few important
+As of this release NGINX Ingress Controller App is optional and not pre-installed component on Azure.
+Upgrading existing clusters with pre-installed NGINX will leave NGINX unchanged.
+This allows NGINX App installations to be managed independently from the base platform lifecycle.
+It also enables use of other ingress controller alternatives without wasting resources where NGINX is not the preferred option.
+
+Apart from these important changes, there have been a high number of changes under the hood, including a few important
 security fixes coming from upstream projects we upgraded.
 
 This release also brings some technical changes that are needed to prepare the upcoming Cluster API release with
@@ -51,4 +56,6 @@ changelog since [v3.10.1](https://docs.projectcalico.org/archive/v3.10/release-n
 - Includes a fix for [CVE-2020-13597](https://cve.mitre.org/cgi-bin/cvename.cgi?name=2020-13597) that allows a Pod to be
 compromised and redirect full or partial network traffic from the Node to the compromised Pod.
 
+### cluster-operator 0.23.11
 
+- Support making NGINX IC App optional and not pre-installed.
