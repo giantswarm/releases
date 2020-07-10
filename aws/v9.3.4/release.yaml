@@ -39,7 +39,7 @@ spec:
   - name: cluster-operator
     version: 0.23.10
   - name: kubernetes
-    version: 1.16.9
+    version: 1.16.11
   - name: containerlinux
     version: 2512.2.1
   - name: calico
