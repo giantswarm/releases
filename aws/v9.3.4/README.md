@@ -49,6 +49,12 @@ Updates:
 - Added 100.64.0.0/10 to the allowed egress subnets in NetworkPolicy.
 - Fixed invalid cluster role binding for Helm 3 compatibility.
 
+### Kubernetes 1.16.11 
+- Updated from Kubernetes 1.16.9 - 
+changelog since [v1.16.10](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.16.md#changelog-since-v11610)and
+since [v1.16.9](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.16.md#changelog-since-v1169)
+- Includes a fix for CVE-2019-11253 related to json/yaml decoding where large or malformed documents could consume excessive server resources. Request bodies for normal API requests (create/delete/update/patch operations of regular resources) are now limited to 3MB.
+
 ### metrics-server v0.3.3 ([Giant Swarm app v1.1.0](https://github.com/giantswarm/metrics-server-app/blob/master/CHANGELOG.md#110---2020-06-17))
 
 - Added 100.64.0.0/10 to the allowed egress subnets in NetworkPolicy.
