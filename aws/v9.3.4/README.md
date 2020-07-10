@@ -33,7 +33,7 @@ Complete details for changes since v3.10.1 please check the upstream release not
 ### containerlinux [2512.2.1](https://www.flatcar-linux.org/releases/#release-2512.2.1)
 
 Security fixes:
-- Fix the Intel Microcode vulnerabilities ([CVE-2020-0543](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2020-0543))
+- Mitigations for Intel Microcode vulnerabilities ([CVE-2020-0543](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2020-0543))
 
 Changes:
 - A source code and licensing overview is available under `/usr/share/licenses/INFO`
