@@ -20,9 +20,9 @@ spec:                                                              spec:
     version: 1.0.0                                              |      version: 1.1.0
   - name: net-exporter                                               - name: net-exporter
     version: 1.7.0                                              |      version: 1.9.0
-  - componentVersion: 0.30.0                                         - componentVersion: 0.33.0
+  - componentVersion: 0.30.0                                    |    - componentVersion: 0.34.0
     name: nginx-ingress-controller                                     name: nginx-ingress-controller
-    version: 1.6.12                                             |      version: 1.7.1
+    version: 1.6.12                                             |      version: 1.7.2
   - componentVersion: 0.18.1                                         - componentVersion: 0.18.1
     name: node-exporter                                                name: node-exporter
     version: 1.2.0                                                     version: 1.2.0
@@ -34,7 +34,7 @@ spec:                                                              spec:
   - name: cert-operator                                              - name: cert-operator
     version: 0.1.0                                                     version: 0.1.0
   - name: cluster-operator                                           - name: cluster-operator
-    version: 0.23.8                                             |      version: 0.23.10
+    version: 0.23.8                                             |      version: 0.23.12
   - name: containerlinux                                             - name: containerlinux
     version: 2345.3.1                                           |      version: 2512.2.1
   - name: etcd                                                       - name: etcd
@@ -45,5 +45,5 @@ spec:                                                              spec:
     version: 1.16.9                                             |      version: 1.17.8
   - name: kvm-operator                                               - name: kvm-operator
     version: 3.11.1                                             |      version: 3.12.0
-  date: "2020-06-11T15:00:00Z"                                       date: "2020-06-11T15:00:00Z"
+  date: "2020-06-11T15:00:00Z"                                  |    date: "2020-07-13T15:00:00Z"
   state: active                                                      state: active

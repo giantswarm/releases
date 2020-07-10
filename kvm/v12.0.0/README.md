@@ -38,7 +38,7 @@ introduced as alpha in Kubernetes v1.14.
 - Removed limits from `calico-kube-controllers` to prevent it from being OOM killed.
 
 
-### cluster-operator [0.23.10](https://github.com/giantswarm/cluster-operator/releases/tag/v0.23.10)
+### cluster-operator [0.23.12](https://github.com/giantswarm/cluster-operator/releases/tag/v0.23.12)
 
 - Aligned with NGINX IC App 1.7.0 moving LB Service management from the operator to the app itself.
 
@@ -84,9 +84,9 @@ introduced as alpha in Kubernetes v1.14.
 
 
 
-### nginx-ingress-controller [1.7.1](https://github.com/giantswarm/nginx-ingress-controller-app/releases/tag/v1.7.1)
+### nginx-ingress-controller [1.7.2](https://github.com/giantswarm/nginx-ingress-controller-app/releases/tag/v1.7.2)
 
-- Upgraded upstream `ingress-nginx` from 0.30.0 to 0.33.0.
+- Upgraded upstream `ingress-nginx` from 0.30.0 to 0.34.0.
 - Improved observability, enabled monitoring Service by default for monitoring targets discovery and removed support for disabling it.
 - Added support for additional service for internal traffic. Existing service can still be configured to be either for public (default) or internal traffic.
 - Made monitoring headless Service non-optional.
