@@ -1,6 +1,9 @@
 # :zap: Giant Swarm Release v9.3.4 for AWS :zap:
 
-This release updates managed apps to the latest releases.
+This release updates managed apps to the latest releases and includes security fixes for 3 CVEs:
+- IPv6 rogue router advertisement vulnerability [CVE-2020-13597](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2020-13597)
+- Intel Microcode vulnerabilities [CVE-2020-0543](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2020-0543)
+- [CVE-2020-8558](https://github.com/kubernetes/kubernetes/issues/92315) which allows for neighboring hosts to bypass localhost boundary
 
 Below, you can find more details on components that were changed with this release.
 
@@ -53,7 +56,7 @@ Updates:
 - Updated from Kubernetes 1.16.9 - 
 changelog since [v1.16.10](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.16.md#changelog-since-v11610)and
 since [v1.16.9](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.16.md#changelog-since-v1169)
-- Includes a fix for CVE-2019-11253 related to json/yaml decoding where large or malformed documents could consume excessive server resources. Request bodies for normal API requests (create/delete/update/patch operations of regular resources) are now limited to 3MB.
+- Includes a fix for CVE-2020-8558, which allows for neighboring hosts to bypass localhost boundary
 
 ### metrics-server v0.3.3 ([Giant Swarm app v1.1.0](https://github.com/giantswarm/metrics-server-app/blob/master/CHANGELOG.md#110---2020-06-17))
 
