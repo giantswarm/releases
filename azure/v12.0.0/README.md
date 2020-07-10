@@ -56,6 +56,6 @@ changelog since [v3.10.1](https://docs.projectcalico.org/archive/v3.10/release-n
 - Includes a fix for [CVE-2020-13597](https://cve.mitre.org/cgi-bin/cvename.cgi?name=2020-13597) that allows a Pod to be
 compromised and redirect full or partial network traffic from the Node to the compromised Pod.
 
-### cluster-operator 0.23.11
+### cluster-operator 0.23.12
 
 - Support making NGINX IC App optional and not pre-installed.
