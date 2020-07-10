@@ -23,9 +23,9 @@ spec:
     version: 1.1.0
   - name: net-exporter
     version: 1.9.0
-  - componentVersion: 0.33.0
+  - componentVersion: 0.34.0
     name: nginx-ingress-controller
-    version: 1.7.1
+    version: 1.7.2
   - componentVersion: 0.18.1
     name: node-exporter
     version: 1.2.0
