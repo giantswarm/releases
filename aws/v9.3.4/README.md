@@ -11,7 +11,7 @@ Below, you can find more details on components that were changed with this relea
 
 - Fixes IPv6 rogue router advertisement vulnerability [CVE-2020-13597](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2020-13597).
 
-Complete details for changes since v3.10.1 please check the upstream release notes at https://docs.projectcalico.org/archive/v3.10/release-notes/
+For complete details for changes since v3.10.1 please check the upstream release notes at https://docs.projectcalico.org/archive/v3.10/release-notes/.
 
 ### cert-exporter [v1.2.3](https://github.com/giantswarm/cert-exporter/blob/master/CHANGELOG.md#v123-2020-05-15)
 
