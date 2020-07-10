@@ -54,7 +54,7 @@ Updates:
 
 ### Kubernetes 1.16.11 
 - Updated from Kubernetes 1.16.9 - 
-changelog since [v1.16.10](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.16.md#changelog-since-v11610)and
+changelog since [v1.16.10](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.16.md#changelog-since-v11610) and
 since [v1.16.9](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.16.md#changelog-since-v1169)
 - Includes a fix for CVE-2020-8558, which allows for neighboring hosts to bypass localhost boundary
 
