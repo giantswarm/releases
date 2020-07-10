@@ -26,7 +26,7 @@ For complete details for changes since v3.10.1 please check the upstream release
 - Set `scale-down-unneeded-time` to 5 minutes (from the default of 10 minutes) to release unneeded nodes earlier.
 - Lower `scaleDownUtilizationThreshold` to 0.5.
 
-### cluster-operator [v0.23.10](https://github.com/giantswarm/cluster-operator/releases/tag/v0.23.10)
+### cluster-operator [v0.23.12](https://github.com/giantswarm/cluster-operator/releases/tag/v0.23.12)
 
 - Align with NGINX IC App 1.7.0, move of LB Service management from azure-operator to the app itself.
 
