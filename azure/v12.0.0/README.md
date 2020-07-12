@@ -15,7 +15,7 @@ Node Pools support.
 
 ### Kubernetes v1.17.8
 
-- Updated from v1.16.12 - 
+- Updated from v1.16.12 -
 changelog since [v1.17.7](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.17.md#changelog-since-v1177),
 since [v1.17.6](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.17.md#changelog-since-v1176),
 since [v1.17.5](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.17.md#changelog-since-v1175),
@@ -33,7 +33,7 @@ since [v1.17.0](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/C
 
 ### Calico v3.14.1 ([Giant Swarm app v1.1.10](https://github.com/giantswarm/coredns-app/blob/master/CHANGELOG.md#v1110-2020-06-29))
 
-- Updated from 3.10.1 - 
+- Updated from 3.10.1 -
 changelog since [v3.14.0](https://docs.projectcalico.org/archive/v3.14/release-notes/#v3140),
 changelog since [v3.13.4](https://docs.projectcalico.org/archive/v3.13/release-notes/#v3134),
 changelog since [v3.13.3](https://docs.projectcalico.org/archive/v3.13/release-notes/#v3133),
@@ -59,3 +59,11 @@ compromised and redirect full or partial network traffic from the Node to the co
 ### cluster-operator 0.23.12
 
 - Support making NGINX IC App optional and not pre-installed.
+
+### external-dns v0.7.2 [Giant Swarm app 1.2.2](https://github.com/giantswarm/external-dns-app/releases/tag/v1.2.2)
+
+- Updated from v0.5.18 -
+changelog since [v0.7.1](https://github.com/kubernetes-sigs/external-dns/blob/master/CHANGELOG.md#v072---2020-06-03),
+changelog since [v0.7.0](https://github.com/kubernetes-sigs/external-dns/blob/master/CHANGELOG.md#v071---2020-04-01),
+changelog since [v0.6.0](https://github.com/kubernetes-sigs/external-dns/blob/master/CHANGELOG.md#v070---2020-03-10) and
+changelog since [v0.5.18](https://github.com/kubernetes-sigs/external-dns/blob/master/CHANGELOG.md#v060---2020-02-11).
