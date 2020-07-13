@@ -31,10 +31,12 @@ For complete details for changes since v3.10.1 please check the upstream release
 
 - Align with NGINX IC App 1.7.0, move of LB Service management from azure-operator to the app itself.
 
-### coredns v1.6.5 ([Giant Swarm app v1.1.10](https://github.com/giantswarm/coredns-app/blob/master/CHANGELOG.md#v1110-2020-06-29))
+### coredns v1.6.5 ([Giant Swarm app v1.2.0](https://github.com/giantswarm/coredns-app/blob/master/CHANGELOG.md#v120-2020-07-13))
 
 - Make resource requests/limits configurable.
 - Make forward options optional.
+- Apply a readiness probe.
+- Increase the liveness probe failure threshold from 5 failures to 7 failures.
 
 ### kube-state-metrics v1.9.5 ([Giant Swarm app v1.1.0](https://github.com/giantswarm/kube-state-metrics-app/blob/master/CHANGELOG.md#110---2020-06-17))
 
