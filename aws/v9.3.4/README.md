@@ -2,7 +2,6 @@
 
 This release makes security fixes for 2 CVEs:
 - IPv6 rogue router advertisement vulnerability [CVE-2020-13597](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2020-13597)
-- Intel Microcode vulnerabilities [CVE-2020-0543](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2020-0543)
 - [CVE-2020-8558](https://github.com/kubernetes/kubernetes/issues/92315) which allows for neighboring hosts to bypass localhost boundary
 
 It also updates managed apps to the latest releases.
