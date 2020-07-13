@@ -56,6 +56,11 @@ changelog since [v3.10.1](https://docs.projectcalico.org/archive/v3.10/release-n
 - Includes a fix for [CVE-2020-13597](https://cve.mitre.org/cgi-bin/cvename.cgi?name=2020-13597) that allows a Pod to be
 compromised and redirect full or partial network traffic from the Node to the compromised Pod.
 
+### CoreDNS v1.6.5 ([Giant Swarm app v1.2.0](https://github.com/giantswarm/coredns-app/blob/master/CHANGELOG.md#v120-2020-07-13))
+
+- Apply a readiness probe.
+- Increase the liveness probe failure threshold from 5 failures to 7 failures.
+
 ### cluster-operator 0.23.12
 
 - Support making NGINX IC App optional and not pre-installed.
