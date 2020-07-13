@@ -30,18 +30,6 @@ For complete details for changes since v3.10.1 please check the upstream release
 
 - Align with NGINX IC App 1.7.0, move of LB Service management from azure-operator to the app itself.
 
-### containerlinux [2512.2.1](https://www.flatcar-linux.org/releases/#release-2512.2.1)
-
-Security fixes:
-- Mitigations for Intel Microcode vulnerabilities ([CVE-2020-0543](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2020-0543))
-
-Changes:
-- A source code and licensing overview is available under `/usr/share/licenses/INFO`
-
-Updates:
-- Linux [4.19.128](https://lwn.net/Articles/822841/)
-- intel-microcode [20200609](https://github.com/intel/Intel-Linux-Processor-Microcode-Data-Files/releases/tag/microcode-20200609)
-
 ### coredns v1.6.5 ([Giant Swarm app v1.1.10](https://github.com/giantswarm/coredns-app/blob/master/CHANGELOG.md#v1110-2020-06-29))
 
 - Make resource requests/limits configurable.
