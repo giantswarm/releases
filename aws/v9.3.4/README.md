@@ -5,6 +5,8 @@ This release updates managed apps to the latest releases and includes security f
 - Intel Microcode vulnerabilities [CVE-2020-0543](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2020-0543)
 - [CVE-2020-8558](https://github.com/kubernetes/kubernetes/issues/92315) which allows for neighboring hosts to bypass localhost boundary
 
+It also updates managed apps to the latest releases.
+
 Below, you can find more details on components that were changed with this release.
 
 ### calico [v3.10.4](https://docs.projectcalico.org/archive/v3.10/release-notes/)
