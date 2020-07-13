@@ -46,5 +46,5 @@ spec:
     version: 3.10.4
   - name: etcd
     version: 3.3.17
-  date: 2020-07-10T15:00:00Z
+  date: 2020-07-13T15:00:00Z
   state: active
