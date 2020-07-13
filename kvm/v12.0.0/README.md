@@ -59,10 +59,12 @@ introduced as alpha in Kubernetes v1.14.
 
 
 
-### coredns [1.1.10](https://github.com/giantswarm/coredns-app/releases/tag/v1.1.10)
+### coredns [1.2.0](https://github.com/giantswarm/coredns-app/releases/tag/v1.2.0)
 
 - Made resource requests/limits configurable.
-
+- Make forward options optional.
+- Apply a readiness probe.
+- Increase the liveness probe failure threshold from 5 failures to 7 failures.
 
 
 ### kube-state-metrics [1.1.0](https://github.com/giantswarm/kube-state-metrics-app/releases/tag/v1.1.0)
