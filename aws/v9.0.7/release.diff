@@ -1,0 +1,50 @@
+apiVersion: release.giantswarm.io/v1alpha1                         apiVersion: release.giantswarm.io/v1alpha1
+kind: Release                                                      kind: Release
+metadata:                                                          metadata:
+  creationTimestamp: null                                            creationTimestamp: null
+  name: v9.0.6                                                  |    name: v9.0.7
+spec:                                                              spec:
+  apps:                                                              apps:
+  - name: cert-exporter                                              - name: cert-exporter
+    version: 1.2.2                                              |      version: 1.2.3
+  - name: chart-operator                                             - name: chart-operator
+    version: 0.13.0                                                    version: 0.13.0
+  - componentVersion: 1.16.2                                    |    - componentVersion: 1.16.5
+    name: cluster-autoscaler                                           name: cluster-autoscaler
+    version: 1.1.4                                              |      version: 1.16.0
+  - componentVersion: 1.6.5                                          - componentVersion: 1.6.5
+    name: coredns                                                      name: coredns
+    version: 1.1.8                                              |      version: 1.2.0
+  - componentVersion: 1.9.5                                          - componentVersion: 1.9.5
+    name: kube-state-metrics                                           name: kube-state-metrics
+    version: 1.0.5                                              |      version: 1.1.0
+  - componentVersion: 0.3.3                                          - componentVersion: 0.3.3
+    name: metrics-server                                               name: metrics-server
+    version: 1.0.0                                              |      version: 1.1.0
+  - name: net-exporter                                               - name: net-exporter
+    version: 1.7.1                                              |      version: 1.9.0
+  - componentVersion: 0.30.0                                    |    - componentVersion: 0.34.0
+    name: nginx-ingress-controller                                     name: nginx-ingress-controller
+    version: 1.6.12                                             |      version: 1.7.2
+  - componentVersion: 0.18.1                                         - componentVersion: 0.18.1
+    name: node-exporter                                                name: node-exporter
+    version: 1.2.0                                                     version: 1.2.0
+  components:                                                        components:
+  - name: app-operator                                               - name: app-operator
+    version: 1.0.0                                                     version: 1.0.0
+  - name: aws-operator                                               - name: aws-operator
+    version: 5.5.3                                                     version: 5.5.3
+  - name: calico                                                     - name: calico
+    version: 3.9.6                                                     version: 3.9.6
+  - name: cert-operator                                              - name: cert-operator
+    version: 0.1.0                                                     version: 0.1.0
+  - name: cluster-operator                                           - name: cluster-operator
+    version: 0.23.9                                             |      version: 0.23.12
+  - name: containerlinux                                             - name: containerlinux
+    version: 2512.2.0                                                  version: 2512.2.0
+  - name: etcd                                                       - name: etcd
+    version: 3.3.15                                                    version: 3.3.15
+  - name: kubernetes                                                 - name: kubernetes
+    version: 1.15.12                                                   version: 1.15.12
+  date: "2020-06-02T11:00:00Z"                                  |    date: "2020-07-14T11:00:00Z"
+  state: deprecated                                             |    state: active
