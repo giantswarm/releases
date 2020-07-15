@@ -39,6 +39,7 @@ spec:
   - name: cert-operator
     version: 0.1.0
   - name: cluster-operator
+    reference: 0.23.8-1
     version: 0.23.8
   - name: containerlinux
     version: 2345.3.1
