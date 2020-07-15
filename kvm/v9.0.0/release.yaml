@@ -27,7 +27,7 @@ spec:
   - name: kubernetes
     version: 1.15.5
   - name: kvm-operator
-    releaseOperatorDeploy: true
+    # thiccc branch operator!
     version: 3.9.0
   date: "2019-10-28T12:00:00Z"
   state: deprecated
