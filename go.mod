@@ -3,7 +3,7 @@ module github.com/giantswarm/releases
 go 1.13
 
 require (
-	github.com/giantswarm/apiextensions v0.4.9
+	github.com/giantswarm/apiextensions v0.4.14
 	github.com/giantswarm/microerror v0.2.0
 	github.com/giantswarm/versionbundle v0.2.0
 	github.com/googleapis/gnostic v0.3.1 // indirect
