@@ -4,6 +4,14 @@ This is the first Giant Swarm release which includes Kubernetes v1.17. Component
 
 ## Upgraded components
 
+### kubernetes [1.17.8](https://github.com/kubernetes/kubernetes/releases/tag/v1.17.8)
+
+- **Cloud Provider Labels reach General Availability**: Added as a beta feature way back in v1.2, v1.17 sees the general availability of cloud provider labels.
+- **Volume Snapshot Moves to Beta**: The Kubernetes Volume Snapshot feature is now beta in Kubernetes v1.17. It was introduced as alpha in Kubernetes v1.12, with a second alpha
+with breaking changes in Kubernetes v1.13.
+- **CSI Migration Beta**: The Kubernetes in-tree storage plugin to Container Storage Interface (CSI) migration infrastructure is now beta in Kubernetes v1.17. CSI migration was
+introduced as alpha in Kubernetes v1.14.
+
 
 ### calico [3.14.1](https://github.com/projectcalico/calico/releases/tag/v3.14.1)
 
@@ -18,20 +26,9 @@ This is the first Giant Swarm release which includes Kubernetes v1.17. Component
 - Compiled with [*Go 1.12.17*](https://golang.org/doc/devel/release.html#go1.12).
 
 
-
-### kubernetes [1.17.8](https://github.com/kubernetes/kubernetes/releases/tag/v1.17.8)
-
-- **Cloud Provider Labels reach General Availability**: Added as a beta feature way back in v1.2, v1.17 sees the general availability of cloud provider labels.
-- **Volume Snapshot Moves to Beta**: The Kubernetes Volume Snapshot feature is now beta in Kubernetes v1.17. It was introduced as alpha in Kubernetes v1.12, with a second alpha
-with breaking changes in Kubernetes v1.13.
-- **CSI Migration Beta**: The Kubernetes in-tree storage plugin to Container Storage Interface (CSI) migration infrastructure is now beta in Kubernetes v1.17. CSI migration was
-introduced as alpha in Kubernetes v1.14.
-
-
 ### kvm-operator [3.12.0](https://github.com/giantswarm/kvm-operator/releases/tag/v3.12.0)
 
-- Added compatibility for Kubernetes 1.17.
-- Improved upgrades from earlier KVM v11.X releases.
+- Improved upgrades from KVM v11 releases.
 - Fixed CR validation errors during cluster creation.
 - Upgraded node image to QEMU 4.2.0 and Fedora 32.
 - Modified Calico deployment to use `-bird-live` as a liveness probe improving observability of failed mesh networking.
@@ -46,17 +43,14 @@ introduced as alpha in Kubernetes v1.14.
 ### containerlinux [2512.2.1](https://www.flatcar-linux.org/releases/#release-2512.2.1)
 
 - Fixed Intel Microcode vulnerabilities ([CVE-2020-0543](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2020-0543)).
-
-#### Updates
-- Linux [4.19.128](https://lwn.net/Articles/822841/).
-- intel-microcode [20200609](https://github.com/intel/Intel-Linux-Processor-Microcode-Data-Files/releases/tag/microcode-20200609).
+- Updated to Linux [4.19.128](https://lwn.net/Articles/822841/).
+- Updated to intel-microcode [20200609](https://github.com/intel/Intel-Linux-Processor-Microcode-Data-Files/releases/tag/microcode-20200609).
 
 
 ### cert-exporter [1.2.3](https://github.com/giantswarm/cert-exporter/releases/tag/v1.2.3)
 
 - Updated prometheus/client_golang dependency.
 - Changed to App-based deployment.
-
 
 
 ### coredns [1.2.0](https://github.com/giantswarm/coredns-app/releases/tag/v1.2.0)
@@ -73,17 +67,14 @@ introduced as alpha in Kubernetes v1.14.
 - Fixed invalid cluster role binding for Helm 3 compatibility.
 
 
-
 ### metrics-server [1.1.0](https://github.com/giantswarm/metrics-server-app/releases/tag/v1.1.0)
 
 - Added 100.64.0.0/10 to the allowed egress subnets in NetworkPolicy.
 
 
-
 ### net-exporter [1.9.0](https://github.com/giantswarm/net-exporter/releases/tag/v1.9.0)
 
 - Added `ntp` collector.
-
 
 
 ### nginx-ingress-controller [1.7.2](https://github.com/giantswarm/nginx-ingress-controller-app/releases/tag/v1.7.2)
