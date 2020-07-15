@@ -41,7 +41,7 @@ spec:
   - name: cluster-operator
     version: 0.23.12
   - name: containerlinux
-    version: 2512.2.0
+    version: 2512.2.1
   - name: etcd
     version: 3.3.15
   - name: kubernetes
