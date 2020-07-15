@@ -1,10 +1,10 @@
 # :zap: Giant Swarm Release 12.0.0 for KVM :zap:
 
-This is the first Giant Swarm release which includes Kubernetes v1.17. Components have been updated for improved reliability and observability. Further details about changes to individual components can be found below.
+This is the first Giant Swarm release which includes Kubernetes v1.17. Many core components and default apps have been updated for improved reliability and observability. Further details about changes to individual components can be found below.
 
-## Upgraded components
+---
 
-### kubernetes [1.17.8](https://github.com/kubernetes/kubernetes/releases/tag/v1.17.8)
+### Kubernetes [1.17.8](https://github.com/kubernetes/kubernetes/releases/tag/v1.17.8)
 
 - **Cloud Provider Labels reach General Availability**: Added as a beta feature way back in v1.2, v1.17 sees the general availability of cloud provider labels.
 - **Volume Snapshot Moves to Beta**: The Kubernetes Volume Snapshot feature is now beta in Kubernetes v1.17. It was introduced as alpha in Kubernetes v1.12, with a second alpha
@@ -13,7 +13,7 @@ with breaking changes in Kubernetes v1.13.
 introduced as alpha in Kubernetes v1.14.
 
 
-### calico [3.14.1](https://github.com/projectcalico/calico/releases/tag/v3.14.1)
+### Calico [3.14.1](https://github.com/projectcalico/calico/releases/tag/v3.14.1)
 
 - Added port 6443 (Kubernetes API server) to failsafe ports for felix.
 - Fixed IPv6 rogue router advertisement vulnerability ([CVE-2020-13597](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2020-13597)).
@@ -40,7 +40,7 @@ introduced as alpha in Kubernetes v1.14.
 - Aligned with NGINX IC App 1.7.0 moving LB Service management from the operator to the app itself.
 
 
-### containerlinux [2512.2.1](https://www.flatcar-linux.org/releases/#release-2512.2.1)
+### Container Linux [2512.2.1](https://www.flatcar-linux.org/releases/#release-2512.2.1)
 
 - Fixed Intel Microcode vulnerabilities ([CVE-2020-0543](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2020-0543)).
 - Updated to Linux [4.19.128](https://lwn.net/Articles/822841/).
@@ -53,7 +53,7 @@ introduced as alpha in Kubernetes v1.14.
 - Changed to App-based deployment.
 
 
-### coredns [1.2.0](https://github.com/giantswarm/coredns-app/releases/tag/v1.2.0)
+### CoreDNS [1.2.0](https://github.com/giantswarm/coredns-app/releases/tag/v1.2.0)
 
 - Made resource requests/limits configurable.
 - Make forward options optional.
