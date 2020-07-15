@@ -14,7 +14,7 @@ spec:
     releaseOperatorDeploy: true
     version: 0.1.0
   - name: cluster-operator
-    releaseOperatorDeploy: true
+    # thiccc branch operator!
     version: 0.21.0
   - name: containerlinux
     version: 2191.5.0
