@@ -44,7 +44,6 @@ spec:
   - name: kubernetes
     version: 1.15.11
   - name: kvm-operator
-    reference: 3.9.1-2
     version: 3.9.1
   date: "2020-04-24T12:00:00Z"
   state: deprecated
