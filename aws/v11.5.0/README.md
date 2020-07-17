@@ -15,7 +15,7 @@ Note: Giant Swarm installations on AWS China (cn-north-1) do not yet provide any
 
 ### aws-operator [v8.7.3](https://github.com/giantswarm/aws-operator/blob/master/CHANGELOG.md#873---2020-07-15)
 
-- Added support for registry mirrors
+- Added support for registry mirrors.
 
 ### coreDNS v1.6.5 (Giant Swarm app [v1.2.0](https://github.com/giantswarm/coredns-app/blob/master/CHANGELOG.md#v120-2020-07-13))
 
