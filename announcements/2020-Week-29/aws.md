@@ -8,4 +8,4 @@
 
 ---
 
-Please let <!subteam^S0GSG846L> know if you have any feedback or questions by replying to this announcement in a thread.
+Please reply to this announcement in a thread if you have any feedback or questions.
