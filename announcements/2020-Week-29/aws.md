@@ -14,4 +14,4 @@
 
 ---
 
-Please let <!subteam^S0GSG846L> know if you have any feedback or questions by replying to this announcement in a thread.
+If you have any feedback or questions please start a new thread.
