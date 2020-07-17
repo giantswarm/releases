@@ -8,4 +8,4 @@
 
 ---
 
-Please reply to this announcement in a thread if you have any feedback or questions.
+If you have any feedback or questions please start a new thread.
