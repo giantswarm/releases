@@ -5,7 +5,7 @@
 **Optional Apps Releases**  
 (Can be installed from App Catalogs)
 
-1. [Istio Operator](https://github.com/giantswarm/istio-operator) is now available as a Playground Catalog app and can be used to test and play with an Istio Service Mesh.
+[Istio Operator](https://github.com/giantswarm/istio-operator) is now available as a Playground Catalog app and can be used to test and play with an Istio Service Mesh.
 2. [NGINX IC v1.7.3](https://github.com/giantswarm/nginx-ingress-controller-app/blob/master/CHANGELOG.md#173---2020-07-16) fixes a regression introduced in the previous version (Note: NGINX is Optional and not Pre-Installed in AWS 10+ clusters)
 
 ---
