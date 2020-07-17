@@ -1,6 +1,4 @@
-# :zap: This Week in KVM Releases (July 17, 2020):zap:
-
-[KVM v12.0.0](https://github.com/giantswarm/releases/blob/master/kvm/v12.0.0) is the first Giant Swarm release which includes **Kubernetes v1.17**. Many core components and default apps have been updated for improved reliability and observability.
+# :zap: This Week in Azure Releases (July 17, 2020):zap:
 
 **Optional Apps Releases**  
 (Can be installed from App Catalogs)
