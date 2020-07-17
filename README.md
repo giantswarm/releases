@@ -10,6 +10,8 @@ Swarm control planes.
 ## AWS
 
 - v11
+  - v11.5
+    - [v11.5.0](https://github.com/giantswarm/releases/tree/master/aws/v11.5.0)
   - v11.4
     - [v11.4.1](https://github.com/giantswarm/releases/tree/master/aws/v11.4.1)
     - [v11.4.0](https://github.com/giantswarm/releases/tree/master/aws/v11.4.0)
