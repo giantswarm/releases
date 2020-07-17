@@ -10,6 +10,8 @@ Swarm control planes.
 ## AWS
 
 - v11
+  - v11.5
+    - [v11.5.0](https://github.com/giantswarm/releases/tree/master/aws/v11.5.0)
   - v11.4
     - [v11.4.1](https://github.com/giantswarm/releases/tree/master/aws/v11.4.1)
     - [v11.4.0](https://github.com/giantswarm/releases/tree/master/aws/v11.4.0)
@@ -51,6 +53,7 @@ Swarm control planes.
   - v9.1
     - [v9.1.0](https://github.com/giantswarm/releases/tree/master/aws/archived/v9.1.0)
   - v9.0
+    - [v9.0.7](https://github.com/giantswarm/releases/tree/master/aws/v9.0.7)
     - [v9.0.6](https://github.com/giantswarm/releases/tree/master/aws/v9.0.6)
     - [v9.0.5](https://github.com/giantswarm/releases/tree/master/aws/v9.0.5)
     - [v9.0.4](https://github.com/giantswarm/releases/tree/master/aws/v9.0.4)
@@ -105,6 +108,9 @@ Swarm control planes.
 
 ## KVM
 
+- v12
+  - v12.0
+    - [v12.0.0](https://github.com/giantswarm/releases/tree/master/kvm/v12.0.0)
 - v11
   - v11.3
     - [v11.3.2](https://github.com/giantswarm/releases/tree/master/kvm/v11.3.2)
