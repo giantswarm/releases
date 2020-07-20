@@ -13,10 +13,11 @@ security fixes coming from upstream projects we upgraded.
 This release also brings some technical changes that are needed to prepare the upcoming Cluster API release with
 Node Pools support.
 
-### Kubernetes v1.17.8
+### Kubernetes v1.17.9
 
 - Updated from v1.16.12 -
-changelog since [v1.17.7](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.17.md#changelog-since-v1177),
+changelog since [v1.17.8](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.17.md#changelog-since-v1178),
+since [v1.17.7](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.17.md#changelog-since-v1177),
 since [v1.17.6](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.17.md#changelog-since-v1176),
 since [v1.17.5](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.17.md#changelog-since-v1175),
 since [v1.17.4](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.17.md#changelog-since-v1174),

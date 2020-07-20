@@ -36,7 +36,7 @@ spec:
   - name: cluster-operator
     version: 0.23.12
   - name: kubernetes
-    version: 1.17.8
+    version: 1.17.9
   - name: containerlinux
     version: 2512.2.1
   - name: coredns
