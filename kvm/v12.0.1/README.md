@@ -1,7 +1,7 @@
 # :zap: Giant Swarm Release 12.0.1 for KVM :zap:
 
 This release updates NGINX Ingress Controller to the latest upstream release.
-Most importantly update includes a fix for the regression introduced in the previous upstream release related to `use-regex` and `rewrite` annotations.
+Most importantly, it includes a fix for a regression introduced in the previous upstream release related to `use-regex` and `rewrite` annotations.
 
 Below, you can find more details on components that were changed with this release.
 
