@@ -3,7 +3,7 @@
 **If you are upgrading from 9.3.4, upgrading to this release will not roll your nodes. It will only update the apps.**
 
 This release updates NGINX Ingress Controller to the latest upstream release.
-Most importantly update includes a fix for the regression introduced in the previous upstream release related to `use-regex` and `rewrite` annotations.
+Most importantly, it includes a fix for a regression introduced in the previous upstream release related to `use-regex` and `rewrite` annotations.
 
 Below, you can find more details on components that were changed with this release.
 
