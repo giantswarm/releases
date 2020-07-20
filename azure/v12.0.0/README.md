@@ -26,6 +26,8 @@ since [v1.17.2](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/C
 since [v1.17.1](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.17.md#changelog-since-v1171) and
 since [v1.17.0](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.17.md#changes)
 
+- Includes a fix for CVE-2020-8559 that allowed a privilege escalation issue from a compromised node to the cluster.
+
 ### azure-operator [v4.2.0](https://github.com/giantswarm/azure-operator/blob/v4.2.0/CHANGELOG.md#420---2020-07-08)
 
 - Changed how the Azure authentication works when connecting to a different Subscription than the Control Plane's one.
