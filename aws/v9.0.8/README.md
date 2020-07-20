@@ -1,5 +1,7 @@
 ## :zap: Giant Swarm Release 9.0.8 for AWS :zap:
 
+**If you are upgrading from 9.0.7, upgrading to this release will not roll your nodes. It will only update the apps.**
+
 This release updates NGINX Ingress Controller to the latest upstream release.
 Most importantly update includes a fix for the regression introduced in the previous upstream release related to `use-regex` and `rewrite` annotations.
 
