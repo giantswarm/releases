@@ -1,4 +1,4 @@
-# :zap: This Week in KVM Releases (July 17, 2020):zap:
+# :zap: This Week in KVM Releases (July 24, 2020):zap:
 
 [KVM v12.0.1](https://github.com/giantswarm/releases/blob/master/kvm/v12.0.1) updates NGINX Ingress Controller to the latest release and fixes a regression introduced in the previous upstream version.
 
