@@ -1,6 +1,6 @@
 apiVersion: giantswarm.io/v1
 kind: releaseNotesURLAnnotationTransformer
 metadata:
-  name: awsReleaesNotesURLAnnotationTransformer
-# provider
-argsOneLiner: aws
+  name: awsReleaseNotesURLAnnotationTransformer
+# provider annotationKey
+argsOneLiner: aws giantswarm.io/release-notes
