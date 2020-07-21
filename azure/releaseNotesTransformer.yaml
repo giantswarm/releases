@@ -2,5 +2,5 @@ apiVersion: giantswarm.io/v1
 kind: releaseNotesURLAnnotationTransformer
 metadata:
   name: azureReleaseNotesURLAnnotationTransformer
-# provider
-argsOneLiner: azure
+# provider annotationKey
+argsOneLiner: azure giantswarm.io/release-notes
