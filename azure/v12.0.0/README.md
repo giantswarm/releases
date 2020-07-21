@@ -3,9 +3,9 @@
 This is the first release to support kubernetes 1.17 on Azure.
 
 As of this release NGINX Ingress Controller App is optional and not pre-installed component on Azure.
-Upgrading existing clusters with pre-installed NGINX will leave NGINX unchanged.
-This allows NGINX App installations to be managed independently from the base platform lifecycle.
-It also enables use of other ingress controller alternatives without wasting resources where NGINX is not the preferred option.
+This allows NGINX App installations to be managed independently from the base platform lifecycle. It is both benefit but also new responsibility to keep NGINX App installations up-to-date separately from rest of the cluster.
+Making NGINX optional enables use of other ingress controller alternatives without wasting resources where NGINX is not the preferred option.
+Upgrading existing tenant clusters with pre-installed NGINX will leave NGINX unchanged. Existing NGINX App custom resources will still have `giantswarm.io/managed-by: cluster-operator` label, but it will be ignored. The label will be cleaned up at a later point after all tenant clusters have been upgraded and Azure platform releases older than v12.0.0 archived.
 
 Apart from these important changes, there have been a high number of changes under the hood, including a few important
 security fixes coming from upstream projects we upgraded.
