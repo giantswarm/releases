@@ -2,5 +2,5 @@ apiVersion: giantswarm.io/v1
 kind: releaseNotesURLAnnotationTransformer
 metadata:
   name: kvmReleaseNotesURLAnnotationTransformer
-# provider
-argsOneLiner: kvm
+# provider annotationKey
+argsOneLiner: kvm giantswarm.io/release-notes
