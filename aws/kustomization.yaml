@@ -29,5 +29,6 @@ resources:
 - v11.4.0
 - v11.4.1
 - v11.5.0
+- v40.0.0
 transformers:
 - releaseNotesTransformer.yaml

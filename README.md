@@ -9,6 +9,9 @@ Swarm control planes.
 
 ## AWS
 
+- v40
+  - v40.0
+    - [v40.0.0](https://github.com/giantswarm/releases/tree/master/aws/v40.0.0)
 - v11
   - v11.5
     - [v11.5.0](https://github.com/giantswarm/releases/tree/master/aws/v11.5.0)
