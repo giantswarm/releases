@@ -1,8 +1,8 @@
 # :zap: This Week in AWS Releases (July 24, 2020):zap:
 
-[AWS v9.3.5](https://github.com/giantswarm/releases/tree/master/aws/v9.3.5) updates NGINX Ingress Controller to the latest release and fixes a regression introduced in the previous upstream version.
+[AWS v9.3.5](https://github.com/giantswarm/releases/tree/master/aws/v9.3.5) updates NGINX Ingress Controller to the latest release and fixes a regression introduced in the previous upstream version. Release also includes Kubernetes upgrade to 1.16.12, among other things, to address a kube-proxy crash looping issue.
 
-[AWS v9.0.8](https://github.com/giantswarm/releases/tree/master/aws/v9.0.7) updates NGINX Ingress Controller to the latest release and fixes a regression introduced in the previous upstream version.
+[AWS v9.0.8](https://github.com/giantswarm/releases/tree/master/aws/v9.0.8) updates NGINX Ingress Controller to the latest release and fixes a regression introduced in the previous upstream version.
 
 **Optional Apps Releases**  
 (Can be installed from App Catalogs)
