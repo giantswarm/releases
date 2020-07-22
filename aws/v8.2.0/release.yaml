@@ -7,14 +7,17 @@ spec:
   apps: []
   components:
   - name: aws-operator
+    # thiccc branch operator!
     version: 5.2.0
   - name: calico
     version: 3.7.2
   - name: cert-operator
+    releaseOperatorDeploy: true
     version: 0.1.0
   - name: chart-operator
     version: 0.6.0
   - name: cluster-operator
+    # thiccc branch operator!
     version: 0.17.0
   - name: containerlinux
     version: 2135.4.0
