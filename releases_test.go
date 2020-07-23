@@ -7,6 +7,7 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/Masterminds/semver"
 	"github.com/giantswarm/apiextensions/pkg/apis/release/v1alpha1"
 	"github.com/giantswarm/microerror"
 	"github.com/giantswarm/versionbundle"
@@ -20,6 +21,27 @@ type kustomizationFile struct {
 	CommonAnnotations map[string]string `yaml:"commonAnnotations"`
 	Resources         []string          `yaml:"resources"`
 	Transformers      []string          `yaml:"transformers"`
+}
+
+type requestException struct {
+	Version string `yaml:"version"`
+	Reason  string `yaml:"reason"`
+}
+
+type versionRequest struct {
+	Name       string             `yaml:"name"`
+	Version    string             `yaml:"version"`
+	Exceptions []requestException `yaml:"except,omitempty" json:"except,omitempty"`
+}
+
+type releaseRequest struct {
+	Name     string           `yaml:"name"`
+	Requests []versionRequest `yaml:"requests"`
+}
+
+type requestsFile struct {
+	Releases []releaseRequest `yaml:"releases"`
+	// Requests map[string][]versionRequest `yaml:"requests"`
 }
 
 func findReleases(provider string, archived bool) ([]v1alpha1.Release, error) {
@@ -52,6 +74,31 @@ func findReleases(provider string, archived bool) ([]v1alpha1.Release, error) {
 		releases = append(releases, release)
 	}
 	return releases, nil
+}
+
+func findMatchingRequests(release string, requests []releaseRequest) ([]releaseRequest, error) {
+	print(fmt.Sprintf("finding matches for %s", release))
+	for _, request := range requests {
+
+		c, err := semver.NewConstraint(request.Name)
+		if err != nil {
+			return nil, fmt.Errorf("release names for requests must be valid semver constraints: %s", err)
+		}
+
+		v, err := semver.NewVersion(release)
+		if err != nil {
+			return nil, fmt.Errorf("release names must be valid semver: %s", err)
+		}
+
+		if c.Check(v) {
+			// handle the requests
+			print(fmt.Sprintf("%s matches %s", release, request.Name))
+			// print(requests)
+			// check exclusions
+			// append to list
+		}
+	}
+	return nil, nil
 }
 
 // To reuse versionbundle.ValidateIndexReleases, the slice of Releases must first be
@@ -135,6 +182,28 @@ func Test_Releases(t *testing.T) {
 				}
 			}
 
+			// providerRequests := map[string][]versionRequest]{}
+			providerRequests := []releaseRequest{}
+			{
+				var providerRequestsFile requestsFile
+				providerRequestsData, err := ioutil.ReadFile(filepath.Join(tc.provider, "requests.yaml"))
+				if err != nil {
+					t.Fatal(err)
+				}
+				err = yaml.UnmarshalStrict(providerRequestsData, &providerRequestsFile)
+				if err != nil {
+					t.Fatal(err)
+				}
+				for _, release := range providerRequestsFile.Releases {
+					// providerRequests[release.Name] = release.Requests
+					providerRequests = append(providerRequests, release)
+				}
+			}
+
+			for k, r := range providerRequests {
+				print(fmt.Sprintf("%d %v#!", k, r))
+			}
+
 			releases, err := findReleases(tc.provider, false)
 			if err != nil {
 				t.Fatal(microerror.Mask(err))
@@ -202,6 +271,13 @@ func Test_Releases(t *testing.T) {
 				if !strings.Contains(readmeContent, fmt.Sprintf("https://github.com/giantswarm/releases/tree/master/%s/%s", tc.provider, release.Name)) {
 					t.Errorf("expected link in README.md to %s release %s", tc.provider, release.Name)
 				}
+
+				requests, err := findMatchingRequests(release.Name, providerRequests)
+				if err != nil {
+					t.Fatal(microerror.Mask(err))
+				}
+				print(requests)
+
 			}
 
 			archived, err := findReleases(tc.provider, true)
