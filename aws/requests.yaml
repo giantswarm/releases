@@ -1,5 +1,5 @@
 releases:
-    - name: 9.*
+    - name: 9.3.5
       requests:
         - name: calico
           version: 3.10.4
@@ -8,7 +8,9 @@ releases:
           except:
             - version: 9.3.4
               reason: too much aws-operator work needed
-    - name: 11.*
+            - version: 9.3.5
+              reason: too much aws-operator work needed
+    - name: 11.3.3
       requests:
         - name: calico
           version: 3.14.1

@@ -41,7 +41,6 @@ type releaseRequest struct {
 
 type requestsFile struct {
 	Releases []releaseRequest `yaml:"releases"`
-	// Requests map[string][]versionRequest `yaml:"requests"`
 }
 
 func findReleases(provider string, archived bool) ([]v1alpha1.Release, error) {
@@ -76,29 +75,78 @@ func findReleases(provider string, archived bool) ([]v1alpha1.Release, error) {
 	return releases, nil
 }
 
-func findMatchingRequests(release string, requests []releaseRequest) ([]releaseRequest, error) {
-	print(fmt.Sprintf("finding matches for %s", release))
-	for _, request := range requests {
+func componentListSatisfiesRequest(request versionRequest, componentList []v1alpha1.ReleaseSpecComponent) (bool, string, error) {
+	var unsatisfied string
+	for _, component := range componentList {
+		if component.Name == request.Name {
+			actualMatchesRequest, err := versionMatches(component.Version, request.Version)
+			if err != nil {
+				return false, "", microerror.Mask(err)
+			}
 
-		c, err := semver.NewConstraint(request.Name)
-		if err != nil {
-			return nil, fmt.Errorf("release names for requests must be valid semver constraints: %s", err)
-		}
+			if actualMatchesRequest {
+				return true, "", nil
+			}
 
-		v, err := semver.NewVersion(release)
-		if err != nil {
-			return nil, fmt.Errorf("release names must be valid semver: %s", err)
-		}
-
-		if c.Check(v) {
-			// handle the requests
-			print(fmt.Sprintf("%s matches %s", release, request.Name))
-			// print(requests)
-			// check exclusions
-			// append to list
+			unsatisfied = fmt.Sprintf("requested: %s:%s actual: %s", request.Name, request.Version, component.Version)
+			break // No need to keep searching for this component
 		}
 	}
-	return nil, nil
+	return false, unsatisfied, nil
+}
+
+// versionMatches compares the given version with the given semver
+// constraint pattern and returns whether it matches.
+func versionMatches(version string, pattern string) (bool, error) {
+	c, err := semver.NewConstraint(pattern)
+	if err != nil {
+		return false, fmt.Errorf("release names for requests must be valid semver constraints: %s", err)
+	}
+
+	v, err := semver.NewVersion(version)
+	if err != nil {
+		return false, fmt.Errorf("release names must be valid semver: %s", err)
+	}
+
+	// if c.Check(v) {
+	// 	//fmt.Printf("%s matches %s", version, pattern)
+	// 	return true, nil
+
+	// }
+	// return false, nil
+	return c.Check(v), nil
+}
+
+func findMatchingRequests(release string, requests []releaseRequest) ([]versionRequest, error) {
+	// fmt.Printf("finding matches for %s\n", release)
+	var requestList []versionRequest
+	for _, request := range requests {
+
+		match, err := versionMatches(request.Name, release)
+		if err != nil {
+			return nil, microerror.Mask(err)
+		}
+
+		if match {
+			for _, component := range request.Requests {
+				exception := false
+				if component.Exceptions != nil {
+					// Check the exclusions for this component to see if our release is there
+					for _, e := range component.Exceptions {
+						exception, err = versionMatches(request.Name, e.Version)
+						if err != nil {
+							return nil, microerror.Mask(err)
+						}
+					}
+				}
+
+				if !exception {
+					requestList = append(requestList, component)
+				}
+			}
+		}
+	}
+	return requestList, nil
 }
 
 // To reuse versionbundle.ValidateIndexReleases, the slice of Releases must first be
@@ -182,7 +230,6 @@ func Test_Releases(t *testing.T) {
 				}
 			}
 
-			// providerRequests := map[string][]versionRequest]{}
 			providerRequests := []releaseRequest{}
 			{
 				var providerRequestsFile requestsFile
@@ -195,14 +242,13 @@ func Test_Releases(t *testing.T) {
 					t.Fatal(err)
 				}
 				for _, release := range providerRequestsFile.Releases {
-					// providerRequests[release.Name] = release.Requests
 					providerRequests = append(providerRequests, release)
 				}
 			}
 
-			for k, r := range providerRequests {
-				print(fmt.Sprintf("%d %v#!", k, r))
-			}
+			// for k, r := range providerRequests {
+			// 	fmt.Printf("provider requests: k:%d r:%v#!", k, r)
+			// }
 
 			releases, err := findReleases(tc.provider, false)
 			if err != nil {
@@ -272,11 +318,31 @@ func Test_Releases(t *testing.T) {
 					t.Errorf("expected link in README.md to %s release %s", tc.provider, release.Name)
 				}
 
-				requests, err := findMatchingRequests(release.Name, providerRequests)
-				if err != nil {
-					t.Fatal(microerror.Mask(err))
+				// Check that this release contains all requested component versions
+				{
+					requests, err := findMatchingRequests(release.Name, providerRequests)
+					if err != nil {
+						t.Fatal(microerror.Mask(err))
+					}
+
+					unsatisfiedRequests := map[string][]string{}
+					for _, request := range requests {
+						satisfied, unsatisfied, err := componentListSatisfiesRequest(request, release.Spec.Components)
+						if err != nil {
+							t.Fatal(microerror.Mask(err))
+						}
+						if !satisfied {
+							// fmt.Printf("%#v\n", unsatisfied)
+							unsatisfiedRequests[release.Name] = append(unsatisfiedRequests[release.Name], unsatisfied)
+						}
+					}
+					if len(unsatisfiedRequests) > 0 {
+						// fmt.Printf("%#v\n", unsatisfiedRequests)
+						msg := fmt.Sprintf("Release %s does not meet the requested version requirements: %s", release.Name, strings.Join(unsatisfiedRequests[release.Name], ", "))
+						t.Errorf(msg)
+					}
+
 				}
-				print(requests)
 
 			}
 
