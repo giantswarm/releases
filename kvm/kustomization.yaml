@@ -9,5 +9,6 @@ resources:
 - v11.3.1
 - v11.3.2
 - v12.0.0
+- v12.0.1
 transformers:
 - releaseNotesTransformer.yaml
