@@ -360,11 +360,12 @@ func Test_Releases(t *testing.T) {
 						}
 
 						if !componentsSatisfied && !appsSatisfied {
-							// Either components or apps were not satisfied. Use the
+							// Either components or apps were not satisfied. Use the 'actual' version which isn't empty.
 							actual := actualComponentVersion
 							if actual == "" {
 								actual = actualAppVersion
 							}
+
 							unsatisfied := fmt.Sprintf("requested: %s: %s \tactual: %s", request.Name, request.Version, actual)
 							unsatisfiedRequests = append(unsatisfiedRequests, unsatisfied)
 						}
