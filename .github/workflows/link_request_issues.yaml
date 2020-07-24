@@ -13,7 +13,7 @@ jobs:
           id: find_issues
           run: |
             request_file_pattern="*/requests.yaml"
-            git diff --unified=0  ${{ github.base_ref }} HEAD request_file_pattern | grep 'issue:' | grep -Eo 'https?://[^ >]+' >> links.txt
+            git diff --unified=0  ${{ github.base_ref }} HEAD $request_file_pattern | grep 'issue:' | grep -Eo 'https?://[^ >]+' >> links.txt
             echo ::set-output name=issues::$(cat links.txt)
 
         - name: Add comment
