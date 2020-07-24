@@ -1,27 +1,27 @@
-on: push
-jobs:
-    createCommentWithIssueLinks:
-      runs-on: ubuntu-latest
-      steps:
-        - name: Checkout
-          uses: actions/checkout@v2
-          with:
-            fetch-depth: 0
+# on: push
+# jobs:
+#     createCommentWithIssueLinks:
+#       runs-on: ubuntu-latest
+#       steps:
+#         - name: Checkout
+#           uses: actions/checkout@v2
+#           with:
+#             fetch-depth: 0
 
-        - name: Find linked issues
-          id: find_issues
-          run: |
-            request_file_pattern="*/requests.yaml"
-            git diff --unified=0  HEAD^ HEAD $request_file_pattern | grep 'issue:' | grep -Eo 'https?://[^ >]+' >> links.txt
-            echo ::set-output name=issues::$(cat links.txt)
+#         - name: Find linked issues
+#           id: find_issues
+#           run: |
+#             request_file_pattern="*/requests.yaml"
+#             git diff --unified=0  HEAD^ HEAD $request_file_pattern | grep 'issue:' | grep -Eo 'https?://[^ >]+' >> links.txt
+#             echo ::set-output name=issues::$(cat links.txt)
 
-        - name: Add comment
-          uses: peter-evans/create-or-update-comment@v1
-          if: github.event_name == 'pull_request'
-          with:
-            issue-number: ${{ github.event.pull_request.number }}
-            body: |
-              ```
-              I found the following issues related to this PR:
-              ${{ steps.find_issues.outputs.links }}
-              ```
+#         - name: Add comment
+#           uses: peter-evans/create-or-update-comment@v1
+#           if: github.event_name == 'pull_request'
+#           with:
+#             issue-number: ${{ github.event.pull_request.number }}
+#             body: |
+#               ```
+#               I found the following issues related to this PR:
+#               ${{ steps.find_issues.outputs.links }}
+#               ```
