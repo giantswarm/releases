@@ -23,20 +23,21 @@ type kustomizationFile struct {
 	Transformers      []string          `yaml:"transformers"`
 }
 
-// requestException represents a single release exception to a request
+// requestException represents a single release exception to a request.
 type requestException struct {
 	Version string `yaml:"releaseVersion" json:"releaseVersion"`
 	Reason  string `yaml:"reason"`
 }
 
-// versionRequest represents a specific requested component name and version
+// versionRequest represents a specific requested component name and version.
 type versionRequest struct {
+	Issue      string             `yaml:"issue"`
 	Name       string             `yaml:"name"`
 	Version    string             `yaml:"version"`
 	Exceptions []requestException `yaml:"except,omitempty" json:"except,omitempty"`
 }
 
-// releaseRequest is one release pattern with associated requests
+// releaseRequest is one release pattern with associated requests.
 type releaseRequest struct {
 	Name     string           `yaml:"name"`
 	Requests []versionRequest `yaml:"requests"`
@@ -63,19 +64,19 @@ func componentListSatisfiesRequest(request versionRequest, componentList []v1alp
 				return true, actual, nil
 			}
 
-			break // No need to keep searching for this component
+			break // No need to keep searching for this component.
 		}
 	}
 	return false, actual, nil
 }
 
 // findMatchingRequests searches the given array of releaseRequests
-// for requests which apply to the given release version
+// for requests which apply to the given release version.
 func findMatchingRequests(release string, requests []releaseRequest) ([]versionRequest, error) {
 	var requestList []versionRequest
 	for _, request := range requests {
 
-		// See whether this request applies to the current release version
+		// See whether this request applies to the current release version.
 		match, err := versionMatches(release, request.Name)
 		if err != nil {
 			return nil, microerror.Mask(err)
@@ -85,7 +86,7 @@ func findMatchingRequests(release string, requests []releaseRequest) ([]versionR
 			for _, component := range request.Requests {
 				releaseIsExcluded := false
 				if component.Exceptions != nil {
-					// Check the excluded releases for this component to see if our release is there
+					// Check the excluded releases for this component to see if our release is there.
 					for _, e := range component.Exceptions {
 						releaseIsExcluded, err = versionMatches(e.Version, request.Name)
 						if err != nil {
@@ -316,7 +317,7 @@ func Test_Releases(t *testing.T) {
 					t.Errorf("expected link in README.md to %s release %s", tc.provider, release.Name)
 				}
 
-				// Check that all active releases contain all requested component versions
+				// Check that all active releases contain all requested component versions.
 				if release.Spec.State == "active" {
 					requests, err := findMatchingRequests(release.Name, providerRequests)
 					if err != nil {
