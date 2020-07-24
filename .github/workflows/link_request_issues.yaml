@@ -1,4 +1,5 @@
-on: pull_request
+# Make me pull request before merging
+on: push
 
   jobs:
     createCommentWithIssueLinks:
