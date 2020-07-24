@@ -23,17 +23,20 @@ type kustomizationFile struct {
 	Transformers      []string          `yaml:"transformers"`
 }
 
+// requestException represents a single release exception to a request
 type requestException struct {
-	Version string `yaml:"version"`
+	Version string `yaml:"releaseVersion" json:"releaseVersion"`
 	Reason  string `yaml:"reason"`
 }
 
+// versionRequest represents a specific requested component name and version
 type versionRequest struct {
 	Name       string             `yaml:"name"`
 	Version    string             `yaml:"version"`
 	Exceptions []requestException `yaml:"except,omitempty" json:"except,omitempty"`
 }
 
+// releaseRequest is one release pattern with associated requests
 type releaseRequest struct {
 	Name     string           `yaml:"name"`
 	Requests []versionRequest `yaml:"requests"`
@@ -41,6 +44,63 @@ type releaseRequest struct {
 
 type requestsFile struct {
 	Releases []releaseRequest `yaml:"releases"`
+}
+
+// componentListSatisfiesRequest determines whether the given request is satisfied in the given component list.
+// It returns a boolean value for whether the request is satisfied as well as
+// a string containing the actual component version which satisfies the request.
+func componentListSatisfiesRequest(request versionRequest, componentList []v1alpha1.ReleaseSpecComponent) (bool, string, error) {
+	var actual string
+	for _, component := range componentList {
+		if component.Name == request.Name {
+			actual = component.Version
+			actualMatchesRequested, err := versionMatches(actual, request.Version)
+			if err != nil {
+				return false, actual, microerror.Mask(err)
+			}
+
+			if actualMatchesRequested {
+				return true, actual, nil
+			}
+
+			break // No need to keep searching for this component
+		}
+	}
+	return false, actual, nil
+}
+
+// findMatchingRequests searches the given array of releaseRequests
+// for requests which apply to the given release version
+func findMatchingRequests(release string, requests []releaseRequest) ([]versionRequest, error) {
+	var requestList []versionRequest
+	for _, request := range requests {
+
+		// See whether this request applies to the current release version
+		match, err := versionMatches(release, request.Name)
+		if err != nil {
+			return nil, microerror.Mask(err)
+		}
+
+		if match {
+			for _, component := range request.Requests {
+				releaseIsExcluded := false
+				if component.Exceptions != nil {
+					// Check the excluded releases for this component to see if our release is there
+					for _, e := range component.Exceptions {
+						releaseIsExcluded, err = versionMatches(e.Version, request.Name)
+						if err != nil {
+							return nil, microerror.Mask(err)
+						}
+					}
+				}
+
+				if !releaseIsExcluded {
+					requestList = append(requestList, component)
+				}
+			}
+		}
+	}
+	return requestList, nil
 }
 
 func findReleases(provider string, archived bool) ([]v1alpha1.Release, error) {
@@ -75,80 +135,6 @@ func findReleases(provider string, archived bool) ([]v1alpha1.Release, error) {
 	return releases, nil
 }
 
-func componentListSatisfiesRequest(request versionRequest, componentList []v1alpha1.ReleaseSpecComponent) (bool, string, error) {
-	var unsatisfied string
-	for _, component := range componentList {
-		if component.Name == request.Name {
-			actualMatchesRequest, err := versionMatches(component.Version, request.Version)
-			if err != nil {
-				return false, "", microerror.Mask(err)
-			}
-
-			if actualMatchesRequest {
-				return true, "", nil
-			}
-
-			unsatisfied = fmt.Sprintf("requested: %s:%s actual: %s", request.Name, request.Version, component.Version)
-			break // No need to keep searching for this component
-		}
-	}
-	return false, unsatisfied, nil
-}
-
-// versionMatches compares the given version with the given semver
-// constraint pattern and returns whether it matches.
-func versionMatches(version string, pattern string) (bool, error) {
-	c, err := semver.NewConstraint(pattern)
-	if err != nil {
-		return false, fmt.Errorf("release names for requests must be valid semver constraints: %s", err)
-	}
-
-	v, err := semver.NewVersion(version)
-	if err != nil {
-		return false, fmt.Errorf("release names must be valid semver: %s", err)
-	}
-
-	// if c.Check(v) {
-	// 	//fmt.Printf("%s matches %s", version, pattern)
-	// 	return true, nil
-
-	// }
-	// return false, nil
-	return c.Check(v), nil
-}
-
-func findMatchingRequests(release string, requests []releaseRequest) ([]versionRequest, error) {
-	// fmt.Printf("finding matches for %s\n", release)
-	var requestList []versionRequest
-	for _, request := range requests {
-
-		match, err := versionMatches(request.Name, release)
-		if err != nil {
-			return nil, microerror.Mask(err)
-		}
-
-		if match {
-			for _, component := range request.Requests {
-				exception := false
-				if component.Exceptions != nil {
-					// Check the exclusions for this component to see if our release is there
-					for _, e := range component.Exceptions {
-						exception, err = versionMatches(request.Name, e.Version)
-						if err != nil {
-							return nil, microerror.Mask(err)
-						}
-					}
-				}
-
-				if !exception {
-					requestList = append(requestList, component)
-				}
-			}
-		}
-	}
-	return requestList, nil
-}
-
 // To reuse versionbundle.ValidateIndexReleases, the slice of Releases must first be
 // converted into a slice of versionbundle.IndexRelease.
 func releasesToIndex(releases []v1alpha1.Release) []versionbundle.IndexRelease {
@@ -181,6 +167,22 @@ func releasesToIndex(releases []v1alpha1.Release) []versionbundle.IndexRelease {
 		indexReleases = append(indexReleases, indexRelease)
 	}
 	return indexReleases
+}
+
+// versionMatches compares the given version with the given semver
+// constraint pattern and returns whether it matches.
+func versionMatches(version string, pattern string) (bool, error) {
+	c, err := semver.NewConstraint(pattern)
+	if err != nil {
+		return false, fmt.Errorf("release names for requests must be valid semver constraints: %s", err)
+	}
+
+	v, err := semver.NewVersion(version)
+	if err != nil {
+		return false, fmt.Errorf("release names must be valid semver: %s: %s", err, version)
+	}
+
+	return c.Check(v), nil
 }
 
 func Test_Releases(t *testing.T) {
@@ -245,10 +247,6 @@ func Test_Releases(t *testing.T) {
 					providerRequests = append(providerRequests, release)
 				}
 			}
-
-			// for k, r := range providerRequests {
-			// 	fmt.Printf("provider requests: k:%d r:%v#!", k, r)
-			// }
 
 			releases, err := findReleases(tc.provider, false)
 			if err != nil {
@@ -318,30 +316,30 @@ func Test_Releases(t *testing.T) {
 					t.Errorf("expected link in README.md to %s release %s", tc.provider, release.Name)
 				}
 
-				// Check that this release contains all requested component versions
-				{
+				// Check that all active releases contain all requested component versions
+				if release.Spec.State == "active" {
 					requests, err := findMatchingRequests(release.Name, providerRequests)
 					if err != nil {
 						t.Fatal(microerror.Mask(err))
 					}
 
-					unsatisfiedRequests := map[string][]string{}
+					unsatisfiedRequests := []string{}
 					for _, request := range requests {
-						satisfied, unsatisfied, err := componentListSatisfiesRequest(request, release.Spec.Components)
+						satisfied, actual, err := componentListSatisfiesRequest(request, release.Spec.Components)
 						if err != nil {
 							t.Fatal(microerror.Mask(err))
 						}
+
 						if !satisfied {
-							// fmt.Printf("%#v\n", unsatisfied)
-							unsatisfiedRequests[release.Name] = append(unsatisfiedRequests[release.Name], unsatisfied)
+							unsatisfied := fmt.Sprintf("requested: %s: %s \tactual: %s", request.Name, request.Version, actual)
+							unsatisfiedRequests = append(unsatisfiedRequests, unsatisfied)
 						}
 					}
+
 					if len(unsatisfiedRequests) > 0 {
-						// fmt.Printf("%#v\n", unsatisfiedRequests)
-						msg := fmt.Sprintf("Release %s does not meet the requested version requirements: %s", release.Name, strings.Join(unsatisfiedRequests[release.Name], ", "))
+						msg := fmt.Sprintf("Release %s does not meet the requested version requirements:\n%s", release.Name, strings.Join(unsatisfiedRequests, ",\n"))
 						t.Errorf(msg)
 					}
-
 				}
 
 			}
