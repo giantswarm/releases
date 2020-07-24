@@ -47,6 +47,29 @@ type requestsFile struct {
 	Releases []releaseRequest `yaml:"releases"`
 }
 
+// appListSatisfiesRequest determines whether the given request is satisfied in the given app list.
+// It returns a boolean value for whether the request is satisfied as well as
+// a string containing the actual app version which satisfies the request.
+func appListSatisfiesRequest(request versionRequest, appList []v1alpha1.ReleaseSpecApp) (bool, string, error) {
+	var actual string
+	for _, app := range appList {
+		if app.Name == request.Name {
+			actual = app.Version
+			actualMatchesRequested, err := versionMatches(actual, request.Version)
+			if err != nil {
+				return false, actual, microerror.Mask(err)
+			}
+
+			if actualMatchesRequested {
+				return true, actual, nil
+			}
+
+			break // No need to keep searching for this component.
+		}
+	}
+	return false, actual, nil
+}
+
 // componentListSatisfiesRequest determines whether the given request is satisfied in the given component list.
 // It returns a boolean value for whether the request is satisfied as well as
 // a string containing the actual component version which satisfies the request.
@@ -326,12 +349,22 @@ func Test_Releases(t *testing.T) {
 
 					unsatisfiedRequests := []string{}
 					for _, request := range requests {
-						satisfied, actual, err := componentListSatisfiesRequest(request, release.Spec.Components)
+						componentsSatisfied, actualComponentVersion, err := componentListSatisfiesRequest(request, release.Spec.Components)
 						if err != nil {
 							t.Fatal(microerror.Mask(err))
 						}
 
-						if !satisfied {
+						appsSatisfied, actualAppVersion, err := appListSatisfiesRequest(request, release.Spec.Apps)
+						if err != nil {
+							t.Fatal(microerror.Mask(err))
+						}
+
+						if !componentsSatisfied && !appsSatisfied {
+							// Either components or apps were not satisfied. Use the
+							actual := actualComponentVersion
+							if actual == "" {
+								actual = actualAppVersion
+							}
 							unsatisfied := fmt.Sprintf("requested: %s: %s \tactual: %s", request.Name, request.Version, actual)
 							unsatisfiedRequests = append(unsatisfiedRequests, unsatisfied)
 						}
