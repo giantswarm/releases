@@ -1,5 +1,5 @@
 # Make me pull request before merging
-on: push
+on: pull_request
 jobs:
     createCommentWithIssueLinks:
       runs-on: ubuntu-latest
