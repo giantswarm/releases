@@ -7,8 +7,7 @@ releases:
         - name: coredns
           version: 1.2.1
         - name: containerlinux
-          version: 2512.2.1
-          issue: https://github.com/giantswarm/giantswarm/issues/12367
+          version: 2512.2.1          
           except:
             - releaseVersion: 9.3.5
               reason: too much aws-operator work needed
