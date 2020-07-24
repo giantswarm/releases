@@ -1,8 +1,8 @@
 package main
 
 const (
-	releaseFilename       = "release.yaml"
-	readmeFilename        = "README.md"
 	kustomizationFilename = "kustomization.yaml"
+	readmeFilename        = "README.md"
+	releaseFilename       = "release.yaml"
 	requestsFilename      = "requests.yaml"
 )
