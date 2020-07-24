@@ -1,7 +1,6 @@
 # Make me pull request before merging
 on: push
-
-  jobs:
+jobs:
     createCommentWithIssueLinks:
       runs-on: ubuntu-latest
       steps:
@@ -19,9 +18,10 @@ on: push
 
         - name: Add comment
           uses: peter-evans/create-or-update-comment@v1
-          issue-number: ${{ github.event.pull_request.number }}
-          body: |
-            ```
-            I found the following issues related to this PR:
-            ${{ steps.find_issues.outputs.links }}
-            ```
+          with:
+            issue-number: ${{ github.event.pull_request.number }}
+            body: |
+              ```
+              I found the following issues related to this PR:
+              ${{ steps.find_issues.outputs.links }}
+              ```
