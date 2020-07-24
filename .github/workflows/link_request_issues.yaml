@@ -12,6 +12,7 @@ jobs:
         - name: Find linked issues
           id: find_issues
           run: |
+            set +e
             request_file_pattern="*/requests.yaml"
             git diff --unified=0  origin/${{ github.base_ref }} HEAD $request_file_pattern | grep 'issue:' | grep -Eo 'https?://[^ >]+' >> links.txt
             retVal=$?
