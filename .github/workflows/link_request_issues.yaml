@@ -14,7 +14,12 @@ jobs:
           run: |
             request_file_pattern="*/requests.yaml"
             git diff --unified=0  origin/${{ github.base_ref }} HEAD $request_file_pattern | grep 'issue:' | grep -Eo 'https?://[^ >]+' >> links.txt
-            echo ::set-output name=issues::$(cat links.txt)
+            retVal=$?
+            if [ $retVal -eq 0 ]; then
+                echo ::set-output name=issues::$(cat links.txt)
+                echo ::set-output name=ok::true
+            fi
+            exit 0
 
         - name: Add comment
           uses: peter-evans/create-or-update-comment@v1
@@ -23,5 +28,6 @@ jobs:
             body: |
               ```
               I found the following issues related to this PR:
+              ${{ steps.find_issues.outputs.ok }}
               ${{ steps.find_issues.outputs.links }}
               ```
