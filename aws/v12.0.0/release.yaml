@@ -29,9 +29,9 @@ spec:
   - componentVersion: 1.9.5
     name: kube-state-metrics
     version: 1.1.0
-  - componentVersion: 0.3.3
+  - componentVersion: 0.3.6
     name: metrics-server
-    version: 1.1.0
+    version: 1.1.1
   - name: net-exporter
     version: 1.9.0
   - componentVersion: 0.18.1
