@@ -10,6 +10,8 @@ spec:
     version: 1.0.0
   - name: aws-operator
     # 5.5.0.1 missing from aws-app-collection
+    reference: 5.5.0.1
+    releaseOperatorDeploy: true
     version: 5.5.0
   - name: calico
     version: 3.9.1
