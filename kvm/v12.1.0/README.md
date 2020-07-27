@@ -8,6 +8,12 @@ In this release:
   - Enable external traffic policy configurability, in a way consistent with other NGINX IC configuration options.
   - Lay the foundation for making NGINX IC App optional and not pre-installed in a future KVM platform release.
 
+**To change the ownership, `nginx-ingress-controller` NodePort Service in `kube-system` namespace needs to be manually deleted. It then gets to be recreated by triggering the cluster upgrade. To minimize the downtime, please delegate cluster upgrades to your SE.**
+
+**Note for future 12.1.x releases:**
+
+To prevent downtime, please persist this and the above note until all customers are on 12.1.0 and above.
+
 Below, you can find more details on components that were changed with this release.
 
 ### cluster-operator [0.23.13](https://github.com/giantswarm/cluster-operator/releases/tag/v0.23.13)
