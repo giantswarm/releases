@@ -17,12 +17,12 @@ Swarm control planes.
     - [v11.4.0](https://github.com/giantswarm/releases/tree/master/aws/v11.4.0)
   - v11.3
     - [v11.3.3](https://github.com/giantswarm/releases/tree/master/aws/v11.3.3)
-    - [v11.3.2](https://github.com/giantswarm/releases/tree/master/aws/v11.3.2)
+    - [v11.3.2](https://github.com/giantswarm/releases/tree/master/aws/archived/v11.3.2)
     - [v11.3.1](https://github.com/giantswarm/releases/tree/master/aws/v11.3.1)
-    - [v11.3.0](https://github.com/giantswarm/releases/tree/master/aws/v11.3.0)
+    - [v11.3.0](https://github.com/giantswarm/releases/tree/master/aws/archived/v11.3.0)
   - v11.2
     - [v11.2.1](https://github.com/giantswarm/releases/tree/master/aws/v11.2.1)
-    - [v11.2.0](https://github.com/giantswarm/releases/tree/master/aws/v11.2.0)
+    - [v11.2.0](https://github.com/giantswarm/releases/tree/master/aws/archived/v11.2.0)
   - v11.1
     - [v11.1.4](https://github.com/giantswarm/releases/tree/master/aws/v11.1.4)
     - [v11.1.3](https://github.com/giantswarm/releases/tree/master/aws/v11.1.3)
@@ -34,7 +34,7 @@ Swarm control planes.
   - v10.1
     - [v10.1.2](https://github.com/giantswarm/releases/tree/master/aws/archived/v10.1.2)
     - [v10.1.1](https://github.com/giantswarm/releases/tree/master/aws/archived/v10.1.1)
-    - [v10.1.0](https://github.com/giantswarm/releases/tree/master/aws/v10.1.0)
+    - [v10.1.0](https://github.com/giantswarm/releases/tree/master/aws/archived/v10.1.0)
 - v9
   - v9.3
     - [v9.3.5](https://github.com/giantswarm/releases/tree/master/aws/v9.3.5)
@@ -42,7 +42,7 @@ Swarm control planes.
     - [v9.3.3](https://github.com/giantswarm/releases/tree/master/aws/v9.3.3)
     - [v9.3.2](https://github.com/giantswarm/releases/tree/master/aws/v9.3.2)
     - [v9.3.1](https://github.com/giantswarm/releases/tree/master/aws/archived/v9.3.1)
-    - [v9.3.0](https://github.com/giantswarm/releases/tree/master/aws/v9.3.0)
+    - [v9.3.0](https://github.com/giantswarm/releases/tree/master/aws/archived/v9.3.0)
   - v9.2
     - [v9.2.6](https://github.com/giantswarm/releases/tree/master/aws/archived/v9.2.6)
     - [v9.2.5](https://github.com/giantswarm/releases/tree/master/aws/v9.2.5)
@@ -57,7 +57,7 @@ Swarm control planes.
     - [v9.0.8](https://github.com/giantswarm/releases/tree/master/aws/v9.0.8)
     - [v9.0.7](https://github.com/giantswarm/releases/tree/master/aws/v9.0.7)
     - [v9.0.6](https://github.com/giantswarm/releases/tree/master/aws/v9.0.6)
-    - [v9.0.5](https://github.com/giantswarm/releases/tree/master/aws/v9.0.5)
+    - [v9.0.5](https://github.com/giantswarm/releases/tree/master/aws/archived/v9.0.5)
     - [v9.0.4](https://github.com/giantswarm/releases/tree/master/aws/v9.0.4)
     - [v9.0.3](https://github.com/giantswarm/releases/tree/master/aws/v9.0.3)
     - [v9.0.2](https://github.com/giantswarm/releases/tree/master/aws/archived/v9.0.2)
