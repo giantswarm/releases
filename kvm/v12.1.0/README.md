@@ -12,15 +12,15 @@ Below, you can find more details on components that were changed with this relea
 
 ### cluster-operator [0.23.13](https://github.com/giantswarm/cluster-operator/releases/tag/v0.23.13)
 
-- Enabled NGINX App managed NodePort Service on KVM.
+- Enable NGINX App managed NodePort Service on KVM.
 
 ### kvm-operator [v3.12.1](https://github.com/giantswarm/kvm-operator/releases/tag/v3.12.1)
 
-- Stop provisioning NGINX ingress controller NodePort Service.
+- Stop provisioning NGINX IC NodePort Service.
 
 ### nginx-ingress-controller v0.34.1 ([Giant Swarm app v1.8.1](https://github.com/giantswarm/nginx-ingress-controller-app/blob/master/CHANGELOG.md#v181-2020-07-27))
 
 - Support multiple NGINX IC App installations per tenant cluster.
 - Made NGINX NodePort Service external traffic policy configurable.
 - Made NGINX NodePort Service node ports configurable.
-- Dropped support for deprecated configuration properties.
+- Drop support for deprecated configuration properties.
