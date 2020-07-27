@@ -13,7 +13,7 @@ spec:                                                              spec:
     name: cert-manager                                                 name: cert-manager
     version: 1.0.8                                                     version: 1.0.8
   - name: chart-operator                                             - name: chart-operator
-    version: 0.12.4                                                    version: 0.12.4
+    version: 0.12.4                                             |      version: 1.0.6
   - componentVersion: 1.16.5                                    |    - componentVersion: 1.17.2
     name: cluster-autoscaler                                           name: cluster-autoscaler
     version: 1.16.0                                             |      version: 1.17.2
