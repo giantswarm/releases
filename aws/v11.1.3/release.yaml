@@ -39,7 +39,7 @@ spec:
   - name: app-operator
     version: 1.0.0
   - name: aws-operator
-    # 8.2.3.2 mising from aws-app-collection
+    # 8.2.3.2 missing from aws-app-collection
     version: 8.2.3
   - name: calico
     version: 3.10.1
@@ -47,7 +47,7 @@ spec:
     releaseOperatorDeploy: true
     version: 0.1.0
   - name: cluster-operator
-    # 2.1.7-1 mising from aws-app-collection
+    # 2.1.7-1 missing from aws-app-collection
     version: 2.1.7
   - name: containerlinux
     version: 2191.5.0

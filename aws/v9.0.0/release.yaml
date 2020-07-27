@@ -9,7 +9,7 @@ spec:
   - name: app-operator
     version: 1.0.0
   - name: aws-operator
-    # 5.5.0.1 mising from aws-app-collection
+    # 5.5.0.1 missing from aws-app-collection
     version: 5.5.0
   - name: calico
     version: 3.9.1

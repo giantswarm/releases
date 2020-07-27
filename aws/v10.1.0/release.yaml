@@ -9,7 +9,7 @@ spec:
   - name: app-operator
     version: 1.0.0
   - name: aws-operator
-    # 8.0.2.2 mising from aws-app-collection
+    # 8.0.2.2 missing from aws-app-collection
     version: 8.0.2
   - name: calico
     version: 3.9.1
@@ -19,7 +19,7 @@ spec:
   - name: chart-operator
     version: 0.7.0
   - name: cluster-operator
-    # 2.0.0-1 mising from aws-app-collection
+    # 2.0.0-1 missing from aws-app-collection
     version: 2.0.0
   - name: containerlinux
     version: 2191.5.0
