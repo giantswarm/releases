@@ -26,4 +26,4 @@ spec:
     version: 1.14.3
   date: "2019-06-03T10:00:00Z"
   state: deprecated
-  endOfLifeDate: "2019-09-01T00:00:00Z"
+  endOfLifeDate: "2020-09-01T00:00:00Z"
