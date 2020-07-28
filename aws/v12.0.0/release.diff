@@ -13,7 +13,7 @@ spec:                                                              spec:
     name: cert-manager                                                 name: cert-manager
     version: 1.0.8                                                     version: 1.0.8
   - name: chart-operator                                             - name: chart-operator
-    version: 0.12.4                                             |      version: 1.0.6
+    version: 0.12.4                                             |      version: 0.13.0
   - componentVersion: 1.16.5                                    |    - componentVersion: 1.17.2
     name: cluster-autoscaler                                           name: cluster-autoscaler
     version: 1.16.0                                             |      version: 1.17.2
@@ -56,5 +56,5 @@ spec:                                                              spec:
     version: 3.4.9                                                     version: 3.4.10
   - name: kubernetes                                                 - name: kubernetes
     version: 1.16.13                                            |      version: 1.17.9
-  date: "2020-07-17T10:00:00Z"                                  |    date: "2020-07-21T13:09:19Z"
+  date: "2020-07-17T10:00:00Z"                                  |    date: "2020-07-23T13:09:19Z"
   state: active                                                      state: active
