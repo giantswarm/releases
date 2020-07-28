@@ -34,7 +34,7 @@ spec:                                                              spec:
   - name: cert-operator                                              - name: cert-operator
     version: 0.1.0                                                     version: 0.1.0
   - name: cluster-operator                                           - name: cluster-operator
-    version: 0.23.12                                            |      version: 0.23.13-dev
+    version: 0.23.12                                            |      version: 0.23.13
   - name: containerlinux                                             - name: containerlinux
     version: 2512.2.1                                                  version: 2512.2.1
   - name: etcd                                                       - name: etcd
@@ -44,6 +44,6 @@ spec:                                                              spec:
   - name: kubernetes                                                 - name: kubernetes
     version: 1.17.8                                                    version: 1.17.8
   - name: kvm-operator                                               - name: kvm-operator
-    version: 3.12.0                                             |      version: 3.12.1-dev
+    version: 3.12.0                                             |      version: 3.12.1
   date: "2020-07-21T15:00:00Z"                                  |    date: "2020-07-28T15:00:00Z"
   state: deprecated                                             |    state: active
