@@ -25,7 +25,7 @@ Below, you can find more details on components that were changed with this relea
 - Add registry mirrors support.
 - Stop provisioning NGINX IC NodePort Service.
 
-### nginx-ingress-controller v0.34.1 ([Giant Swarm app v1.8.1](https://github.com/giantswarm/nginx-ingress-controller-app/blob/master/CHANGELOG.md#v181-2020-07-27))
+### nginx-ingress-controller v0.34.1 ([Giant Swarm app v1.8.1](https://github.com/giantswarm/nginx-ingress-controller-app/blob/master/CHANGELOG.md#181---2020-07-28))
 
 - Support multiple NGINX IC App installations per tenant cluster.
 - Made NGINX NodePort Service external traffic policy configurable.
