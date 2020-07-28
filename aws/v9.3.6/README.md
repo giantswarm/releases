@@ -1,5 +1,7 @@
 # :zap: Giant Swarm Release v9.3.6 for AWS :zap:
 
+**If you are upgrading from 9.3.5, upgrading to this release will not roll your nodes. It will only update the apps.**
+
 This release updates managed apps to the latest releases.
 
 Below, you can find more details on components that were changed with this release.
