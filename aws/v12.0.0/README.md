@@ -33,11 +33,9 @@ _Nothing has changed._
 
 
 
-### calico [3.12.3](https://github.com/projectcalico/calico/releases/tag/v3.12.3)
+### calico [3.15.1](https://github.com/projectcalico/calico/releases/tag/v3.15.1)
+Release notes can be found at [docs.projectcalico.org/v3.15/release-notes](https://docs.projectcalico.org/v3.15/release-notes/)
 
-#### Other changes
-- Remove unnecessary packages from CNI plugin docker image [cni-plugin #902](https://github.com/projectcalico/cni-plugin/pull/902) (@gianlucam76)
-- Remove unnecessary packages from pod2daemon docker image [pod2daemon #38](https://github.com/projectcalico/pod2daemon/pull/38) (@gianlucam76)
-
-
+#### Bug fixes
+ - Fix issue with service IP advertisement breaking host service connectivity [confd #337](https://github.com/projectcalico/confd/pull/337) (@caseydavenport)
 
