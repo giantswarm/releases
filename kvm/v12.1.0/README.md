@@ -1,6 +1,6 @@
 ## :zap:  Giant Swarm Release 12.1.0 for KVM :zap:
 
-In this release:
+**This release includes two significant improvements to NGINX Ingress Controller. It also adds support for image registry mirrors, improving reliability.**
 
 - Multiple NGINX Ingress Controllers per tenant cluster are supported.
 - NGINX IC NodePort Service external traffic policy has been made configurable.
