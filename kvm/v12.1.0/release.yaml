@@ -45,5 +45,5 @@ spec:
     version: 1.17.8
   - name: kvm-operator
     version: 3.12.1
-  date: "2020-07-28T15:00:00Z"
+  date: "2020-07-29T15:00:00Z"
   state: active
