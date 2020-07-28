@@ -4,7 +4,6 @@ This release provides Kubernetes 1.17. It is based on new aws-operator and clust
 
 ## Change details
 
-
 ### kubernetes [1.17.9](https://github.com/kubernetes/kubernetes/releases/tag/v1.17.9)
 
 - CVE-2020-8557 (Medium): Node-local denial of service via container /etc/hosts file. See https://github.com/kubernetes/kubernetes/issues/93032 for more details.
@@ -16,9 +15,8 @@ This release provides Kubernetes 1.17. It is based on new aws-operator and clust
     Includes iproute2 to fix a regression in hyperkube images
     when using hyperkube as a kubelet ([#92625](https://github.com/kubernetes/kubernetes/pull/92625), [@justaugustus](https://github.com/justaugustus)) [SIG Cluster Lifecycle, Network and Release]
 
+### calico [3.15.1](https://github.com/projectcalico/calico/releases/tag/v3.15.1)
 
-### calico [3.12.3](https://github.com/projectcalico/calico/releases/tag/v3.12.3)
+- Fix issue with service IP advertisement breaking host service connectivity
 
-#### Other changes
-- Remove unnecessary packages from CNI plugin docker image [cni-plugin #902](https://github.com/projectcalico/cni-plugin/pull/902) (@gianlucam76)
-- Remove unnecessary packages from pod2daemon docker image [pod2daemon #38](https://github.com/projectcalico/pod2daemon/pull/38) (@gianlucam76)
+Complete release notes can be found at [docs.projectcalico.org/v3.15/release-notes](https://docs.projectcalico.org/v3.15/release-notes/)
