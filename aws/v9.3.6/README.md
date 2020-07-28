@@ -1,18 +1,25 @@
 # :zap: Giant Swarm Release v9.3.6 for AWS :zap:
 
-This release updates NGINX Ingress Controller to the latest upstream release.
-Most importantly, it includes a fix for a regression introduced in the previous upstream release related to `use-regex` and `rewrite` annotations.
-
-Release also includes Kubernetes upgrade to 1.16.12, among other things to address a kube-proxy crash looping issue.
+This release updates managed apps to the latest releases.
 
 Below, you can find more details on components that were changed with this release.
 
-### Kubernetes 1.16.12
+### cluster-operator [0.23.13](https://github.com/giantswarm/cluster-operator/releases/tag/v0.23.13)
 
-- Updated from Kubernetes 1.16.11 -
-changelog since [v1.16.11](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.16.md#changelog-since-v11611)
-- Added a wrapper script for iptables in the recently upgraded hyperkube image to avoid crash looping of kube-proxy.
+- Enable NGINX App managed NodePort Service on KVM.
 
-### nginx-ingress-controller v0.34.1 ([Giant Swarm app v1.7.3](https://github.com/giantswarm/nginx-ingress-controller-app/blob/master/CHANGELOG.md#v173-2020-07-16))
+### kube-state-metrics v1.9.7 ([Giant Swarm app v1.1.1](https://github.com/giantswarm/kube-state-metrics-app/blob/master/CHANGELOG.md#111---2020-07-22)
 
-- Upgraded upstream ingress-nginx from v0.34.0 to v0.34.1 - [changelog](https://github.com/kubernetes/ingress-nginx/blob/master/Changelog.md#0341).
+- Updated kube-state-metrics version from 1.9.5 to 1.9.7. Check the [upstream changelog](https://github.com/kubernetes/kube-state-metrics/blob/master/CHANGELOG.md#v197--2020-05-24) for details on all changes.
+
+### metrics-server v0.3.6 ([Giant Swarm app v1.1.1](https://github.com/giantswarm/metrics-server-app/blob/master/CHANGELOG.md#111---2020-07-23)
+
+- Updated metrics-server version from 0.3.3 to 0.3.6. Check the [upstream changelog](https://github.com/kubernetes-sigs/metrics-server/releases) for details on all changes.
+
+### nginx-ingress-controller v0.34.1 ([Giant Swarm app v1.8.1](https://github.com/giantswarm/nginx-ingress-controller-app/blob/master/CHANGELOG.md#181---2020-07-28))
+
+- Drop support for deprecated configuration properties.
+
+### node-exporter v1.0.1 ([Giant Swarm app v1.3.0](https://github.com/giantswarm/node-exporter-app/blob/master/CHANGELOG.md#130---2020-07-23)
+
+- Updated node-exporter version from 0.18.1 to 1.0.1. Check the [upstream changelog](https://github.com/prometheus/node_exporter/blob/master/CHANGELOG.md#101--2020-06-15) for details on all changes.
