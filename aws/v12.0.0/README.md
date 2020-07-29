@@ -4,6 +4,10 @@ This release provides Kubernetes 1.17. It is based on new aws-operator and clust
 
 ## Change details
 
+### aws-operator [v8.7.4](https://github.com/giantswarm/aws-operator/blob/master/CHANGELOG.md#874---2020-07-29)
+
+- Adjust MAX_PODS setting for master and worker nodes to max IP's per ENI when using aws-cni
+
 ### kubernetes [1.17.9](https://github.com/kubernetes/kubernetes/releases/tag/v1.17.9)
 
 - CVE-2020-8557 (Medium): Node-local denial of service via container /etc/hosts file. See https://github.com/kubernetes/kubernetes/issues/93032 for more details.
