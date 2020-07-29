@@ -1,6 +1,6 @@
 ## :zap:  Giant Swarm Release 12.0.0 for Azure :zap:
 
-This is the first release to support kubernetes 1.17 on Azure.
+This is the first release to support **Kubernetes 1.17** on Azure.
 
 **Important Warning** During master upgrade from 11.4.0 to 12.0.0, within the time frame of 30 second we had noticed a spike in requests failures. This most likely is caused by Azure CNI upgrade and despite a lot of effort we had not found a solution to maintain upgrade path and avoid this disturbance. Please keep this in mind when scheduling an upgrade window, and contact your SE if you have further questions.
 
@@ -9,9 +9,13 @@ This allows NGINX App installations to be managed independently from the base pl
 Making NGINX optional enables use of other ingress controller alternatives without wasting resources where NGINX is not the preferred option.
 Upgrading existing tenant clusters with pre-installed NGINX will leave NGINX unchanged. Existing NGINX App custom resources will still have `giantswarm.io/managed-by: cluster-operator` label, but it will be ignored. The label will be cleaned up at a later point after all tenant clusters have been upgraded and Azure platform releases older than v12.0.0 archived.
 
-Apart from that, this release contains many changes in other components, including important security fixes in Kubernetes and Calico.
+Apart from that, the release contains many changes in other components, including important security fixes in Kubernetes and Calico, and also brings technical changes that are needed to prepare the upcoming Cluster API release with Node Pools support.
 
-This release also brings technical changes that are needed to prepare the upcoming Cluster API release with Node Pools support.
+**Notes for future 12.x.x releases:**
+In order to proceed with upgrade, clusters must be using 11.4.0 or newer release version, otherwise the upgrade request will fail.
+Pay attention to the increased failure rate of requests during upgrade of the master node and include this information in release notes if the problem persists.
+
+Below, you can find more details on components that were changed with this release.
 
 ### Kubernetes v1.17.9
 
