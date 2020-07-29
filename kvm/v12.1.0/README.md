@@ -5,7 +5,7 @@ This release includes two **significant improvements to NGINX Ingress Controller
 **The two NGINX Ingress Controller improvements:**
 
 - First, multiple NGINX Ingress Controllers per tenant cluster are now supported, enabling separation of internal vs external traffic, dev vs prod, and so on.
-- Second, management of NGINX IC NodePort Service is moved from kvm-operator to NGINX IC App itself. This enables configurability of external traffic policy and lays the foundation for making NGINX IC App optional and not pre-installed in a future KVM platform release.
+- Management of NGINX IC NodePort Service is moved from kvm-operator to NGINX IC App itself. This enables configurability of external traffic policy and lays the foundation for making NGINX IC App optional and not pre-installed in a future KVM platform release.
 
 Along with kvm-operator, cluster-operator and NGINX IC, release includes several upstream component upgrades.
 
