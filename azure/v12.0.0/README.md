@@ -34,9 +34,12 @@ since [v1.17.0](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/C
 - Restricted storage account access to the local VNET only.
 - The Azure MSI extension for linux is not deployed anymore.
 
-### Calico v3.14.1 ([Giant Swarm app v1.1.10](https://github.com/giantswarm/coredns-app/blob/master/CHANGELOG.md#v1110-2020-06-29))
+### Calico v3.15.1
 
 - Updated from 3.10.1 -
+changelog since [v3.15.0](https://docs.projectcalico.org/archive/v3.15/release-notes/#v3150),
+changelog since [v3.14.2](https://docs.projectcalico.org/archive/v3.14/release-notes/#v3142),
+changelog since [v3.14.1](https://docs.projectcalico.org/archive/v3.14/release-notes/#v3141),
 changelog since [v3.14.0](https://docs.projectcalico.org/archive/v3.14/release-notes/#v3140),
 changelog since [v3.13.4](https://docs.projectcalico.org/archive/v3.13/release-notes/#v3134),
 changelog since [v3.13.3](https://docs.projectcalico.org/archive/v3.13/release-notes/#v3133),
