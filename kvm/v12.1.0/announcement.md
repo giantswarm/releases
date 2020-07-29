@@ -9,7 +9,7 @@ This release includes two **significant improvements to NGINX Ingress Controller
 
 Along with kvm-operator, cluster-operator, and NGINX IC, release includes other upstream component upgrades.
 
-You can find more details on components that were changed with this release: https://github.com/giantswarm/releases/tree/master/kvm/v12.1.0
+You can find more details on components that were changed in [the release notes](https://github.com/giantswarm/releases/tree/master/kvm/v12.1.0).
 
 ---
 Please let <!subteam^S0GSG846L|Product Owners> know if you have any feedback or questions by replying to this announcement in a thread.
