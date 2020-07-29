@@ -3,7 +3,7 @@
 This is the first release to support **Kubernetes 1.17** on Azure.
 
 **Important Warning** 
-During master upgrade from 11.4.0 to 12.0.0, within the time frame of 30 second we had noticed a spike in requests failures. This most likely is caused by Azure CNI upgrade and despite a lot of effort we had not found a solution to maintain upgrade path and avoid this disturbance. Please keep this in mind when scheduling an upgrade window, and contact your SE if you have further questions.
+During master upgrade from 11.4.0 to 12.0.0, within the time frame of 30 second we had noticed a spike in requests failures. This is most likely caused by Azure CNI upgrade and despite our great efforts, we had not found a solution to maintain upgrade path and avoid this disturbance. Please keep this in mind when scheduling an upgrade window, and contact your SE if you have further questions.
 
 As of this release **NGINX Ingress Controller App** is **optional and not pre-installed** component on Azure.
 This allows NGINX App installations to be managed independently from the base platform lifecycle. It is both benefit but also new responsibility to keep NGINX App installations up-to-date separately from rest of the cluster.
