@@ -33,7 +33,7 @@ spec:
   - name: app-operator
     version: 1.0.0
   - name: aws-operator
-    version: 5.5.3
+    version: 5.5.4
   - name: calico
     version: 3.9.6
   - name: cert-operator
@@ -41,7 +41,7 @@ spec:
   - name: cluster-operator
     version: 0.23.13
   - name: containerlinux
-    version: 2512.2.0
+    version: 2512.2.1
   - name: etcd
     version: 3.3.15
   - name: kubernetes
