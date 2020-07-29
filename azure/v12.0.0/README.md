@@ -10,6 +10,8 @@ This allows NGINX App installations to be managed independently from the base pl
 Making NGINX optional enables use of other ingress controller alternatives without wasting resources where NGINX is not the preferred option.
 Upgrading existing tenant clusters with pre-installed NGINX will leave NGINX unchanged. Existing NGINX App custom resources will still have `giantswarm.io/managed-by: cluster-operator` label, but it will be ignored. The label will be cleaned up at a later point after all tenant clusters have been upgraded and Azure platform releases older than v12.0.0 archived.
 
+This release also includes a fix for Quay being a single point of failure by using Docker mirroring feature. This ensures availability of all images needed for node bootstrap, thus the cluster creation/scaling doesn’t depend on Quay availability anymore.
+
 Apart from that, the release contains many changes in other components, including important security fixes in Kubernetes and Calico, and also brings technical changes that are needed to prepare the upcoming Cluster API release with Node Pools support.
 
 **Notes for future 12.x.x releases:**
