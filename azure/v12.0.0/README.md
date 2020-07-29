@@ -34,7 +34,7 @@ since [v1.17.0](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/C
 - Restricted storage account access to the local VNET only.
 - The Azure MSI extension for linux is not deployed anymore.
 
-### Calico v3.15.1
+### Calico [v3.15.1](https://docs.projectcalico.org/archive/v3.15/release-notes/#v3151)
 
 - Updated from 3.10.1 -
 changelog since [v3.15.0](https://docs.projectcalico.org/archive/v3.15/release-notes/#v3150),
