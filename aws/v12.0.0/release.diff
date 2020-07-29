@@ -16,7 +16,7 @@ spec:                                                              spec:
     version: 0.12.4                                             |      version: 0.13.0
   - componentVersion: 1.16.5                                    |    - componentVersion: 1.17.2
     name: cluster-autoscaler                                           name: cluster-autoscaler
-    version: 1.16.0                                             |      version: 1.17.2
+    version: 1.16.0                                             |      version: 1.17.3
   - componentVersion: 1.6.5                                          - componentVersion: 1.6.5
     name: coredns                                                      name: coredns
     version: 1.2.0                                                     version: 1.2.0

@@ -14,9 +14,9 @@ spec:
     version: 1.0.8
   - name: chart-operator
     version: 0.13.0
-  - componentVersion: 1.17.2
+  - componentVersion: 1.17.3
     name: cluster-autoscaler
-    version: 1.17.2
+    version: 1.17.3
   - componentVersion: 1.6.5
     name: coredns
     version: 1.2.0
