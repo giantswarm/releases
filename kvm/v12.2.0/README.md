@@ -8,10 +8,6 @@ Please ensure cluster is on KVM 12.1.x platform release first before upgrading t
 
 Below, you can find more details on components that were changed with this release.
 
-### Calico [3.15.1](https://github.com/projectcalico/calico/releases/tag/v3.15.1)
-
-- Updated calico version from 3.14.1 to 3.15.1. Check the [upstream release notes](https://docs.projectcalico.org/release-notes/#v3151) for details on all the changes.
-
 ### cluster-operator [0.23.14](https://github.com/giantswarm/cluster-operator/releases/tag/v0.23.14)
 
 - Support for making NGINX IC App optional and not pre-installed.
