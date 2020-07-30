@@ -4,7 +4,7 @@ This release provides Kubernetes 1.17. It is based on new aws-operator and clust
 
 ## Change details
 
-### kubernetes [v1.17.9](https://github.com/kubernetes/kubernetes/releases/tag/v1.17.9)
+### kubernetes [1.17.9](https://github.com/kubernetes/kubernetes/releases/tag/v1.17.9)
 
 - CVE-2020-8557 (Medium): Node-local denial of service via container /etc/hosts file. See https://github.com/kubernetes/kubernetes/issues/93032 for more details.
 - Extend kube-apiserver /readyz with new "informer-sync" check ensuring that internal informers are synced. ([#92644](https://github.com/kubernetes/kubernetes/pull/92644), [@wojtek-t](https://github.com/wojtek-t)) [SIG API Machinery and Testing]
@@ -15,7 +15,7 @@ This release provides Kubernetes 1.17. It is based on new aws-operator and clust
     Includes iproute2 to fix a regression in hyperkube images
     when using hyperkube as a kubelet ([#92625](https://github.com/kubernetes/kubernetes/pull/92625), [@justaugustus](https://github.com/justaugustus)) [SIG Cluster Lifecycle, Network and Release]
 
-### aws-operator [v8.7.4](https://github.com/giantswarm/aws-operator/blob/master/CHANGELOG.md#874---2020-07-29)
+### aws-operator [v8.7.5](https://github.com/giantswarm/aws-operator/blob/master/CHANGELOG.md#875---2020-07-30)
 
 - Adjust MAX_PODS setting for master and worker nodes to max IP's per ENI when using aws-cni
 
