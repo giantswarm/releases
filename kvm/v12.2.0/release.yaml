@@ -27,7 +27,7 @@ spec:
   - name: app-operator
     version: 1.0.0
   - name: calico
-    version: 3.14.1
+    version: 3.15.1
   - name: cert-operator
     version: 0.1.0
   - name: cluster-operator
