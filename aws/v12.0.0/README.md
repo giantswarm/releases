@@ -49,7 +49,30 @@ from 1.16.5 / Giant Swarm app v 1.16.0
 
 Check the [kiam changelog](https://github.com/uswitch/kiam/blob/master/CHANGELOG.md#v36) for details.
 
-### app-operator v1.1.9
+### kube-state-metrics v1.9.7 (Giant Swarm app [v1.1.1](https://github.com/giantswarm/kube-state-metrics-app/blob/master/CHANGELOG.md))
 
-from 1.0.0
+- Switch mutatingWebhookConfiguration to use v1 api
 
+Check the [kube-state-metrics changelog](https://github.com/kubernetes/kube-state-metrics/releases/tag/v1.9.7) for more details.
+
+### metrics-server v0.3.6 (Giant Swarm app [v1.1.1](https://github.com/giantswarm/metrics-server-app/blob/master/CHANGELOG.md))
+
+- Fix: Don't break metric storage when duplicate pod metrics encountered
+
+Check the [metrics-server changelog](https://github.com/kubernetes-sigs/metrics-server/releases) for more details.
+
+### node-exporter v1.0.1 (Giant Swarm app [v1.3.0](https://github.com/giantswarm/node-exporter-app/blob/master/CHANGELOG.md))
+
+From 0.18.1 (app v1.2.0)
+
+#### Breaking changes
+
+- The netdev collector CLI argument `--collector.netdev.ignored-devices` was renamed to `--collector.netdev.device-blacklist` in order to conform with the systemd collector.
+- The label named `state` on `node_systemd_service_restart_total` metrics was changed to `name` to better describe the metric.
+- Refactoring of the `mdadm` collector changes several metrics
+  - node_md_disks_active is removed
+  - node_md_disks now has a state label for "failed", "spare", "active" disks.
+  - node_md_is_active is replaced by node_md_state with a state set of "active", "inactive", "recovering", "resync".
+- Additional label `mountaddr` added to NFS device metrics to distinguish mounts from the same URL, but different IP addresses.
+- Metrics `node_cpu_scaling_frequency_min_hrts` and node_cpu_scaling_frequency_max_hrts of the cpufreq collector were renamed to `node_cpu_scaling_frequency_min_hertz` and `node_cpu_scaling_frequency_max_hertz`.
+- Collectors that are enabled, but are unable to find data to collect, now return 0 for `node_scrape_collector_success`.
