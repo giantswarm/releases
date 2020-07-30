@@ -31,7 +31,7 @@ spec:
   - name: cert-operator
     version: 0.1.0
   - name: cluster-operator
-    version: 0.23.14-dev
+    version: 0.23.14
   - name: containerlinux
     version: 2512.2.1
   - name: etcd
