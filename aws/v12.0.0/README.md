@@ -4,7 +4,7 @@ This release provides Kubernetes 1.17. It is based on new aws-operator and clust
 
 ## Change details
 
-### aws-operator [v8.7.4](https://github.com/giantswarm/aws-operator/blob/master/CHANGELOG.md#874---2020-07-29)
+### aws-operator [v8.7.5](https://github.com/giantswarm/aws-operator/blob/master/CHANGELOG.md#875---2020-07-30)
 
 - Adjust MAX_PODS setting for master and worker nodes to max IP's per ENI when using aws-cni
 
