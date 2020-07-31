@@ -33,7 +33,7 @@ spec:
   - name: app-operator
     version: 1.0.0
   - name: aws-operator
-    version: 5.5.4
+    version: 5.5.5
   - name: calico
     version: 3.13.4
   - name: cert-operator
