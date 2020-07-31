@@ -7,5 +7,8 @@
 
 1. 
 
+**Web Interface Releases**
+1. [Happa v0.10.35](https://github.com/giantswarm/happa/releases/tag/v0.10.35) enables support for optional ingress controllers on KVM v12.2.0+, always offers the latest version of the NGINX IC app, and adds multiple UI improvements and bug fixes
+
 ---
 Please let <!subteam^S0GSG846L|Product Owners> know if you have any feedback or questions by replying to this announcement in a thread.
