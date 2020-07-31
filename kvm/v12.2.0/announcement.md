@@ -4,6 +4,8 @@ As of this release, **NGINX Ingress Controller App** is now an **optional (and n
 
 This enables use of alternative ingress controllers without wasting resources where NGINX is not the preferred option.
 
+Now NGINX App installations can be managed and updated independent of the cluster, which is both a benefit and a new responsibility 😅
+
 **Before upgrading, please ensure cluster is on KVM v12.1.x first.**
 
 You can find more details on components that were changed in the [release notes](https://github.com/giantswarm/releases/tree/master/kvm/v12.2.0).
