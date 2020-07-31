@@ -49,12 +49,12 @@ spec:
   - name: cert-operator
     version: 0.1.0
   - name: cluster-operator
-    version: 2.3.1
+    version: 2.3.2
   - name: containerlinux
     version: 2512.2.1
   - name: etcd
     version: 3.4.10
   - name: kubernetes
     version: 1.17.9
-  date: "2020-07-23T13:09:19Z"
+  date: "2020-07-31T12:00:00Z"
   state: active
