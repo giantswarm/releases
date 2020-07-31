@@ -1,0 +1,11 @@
+releases:
+    - name: "> 11.4.0, < 12.0.0"
+      requests:
+        - name: calico
+          version: ">= 3.10.4"
+          issue: https://github.com/giantswarm/giantswarm/issues/11307
+    - name: "12.*"
+      requests:
+        - name: calico
+          version: ">= 3.15.1"
+          issue: https://github.com/giantswarm/giantswarm/issues/11307
