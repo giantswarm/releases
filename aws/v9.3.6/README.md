@@ -30,7 +30,7 @@ Below, you can find more details on components that were changed with this relea
 
 - Updated metrics-server version from 0.3.3 to 0.3.6. Check the [upstream changelog](https://github.com/kubernetes-sigs/metrics-server/releases) for details on all changes.
 
-### nginx-ingress-controller v0.34.1 ([Giant Swarm app v1.8.1](https://github.com/giantswarm/nginx-ingress-controller-app/blob/master/CHANGELOG.md#181---2020-07-28))
+### nginx-ingress-controller v0.34.1 ([Giant Swarm app v1.8.2](https://github.com/giantswarm/nginx-ingress-controller-app/blob/master/CHANGELOG.md#182---2020-07-31))
 
 - Drop support for deprecated configuration properties.
 
