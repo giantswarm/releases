@@ -8,7 +8,9 @@ merged to the `master` branch releases get automatically deployed to all Giant
 Swarm control planes.
 
 ## AWS
-
+- v12
+  - v12.0
+    - [v12.0.0](https://github.com/giantswarm/releases/tree/master/aws/v12.0.0)
 - v11
   - v11.5
     - [v11.5.0](https://github.com/giantswarm/releases/tree/master/aws/v11.5.0)
