@@ -5,7 +5,7 @@
 **Optional Apps Releases**  
 (Can be installed from App Catalogs)
 
-1. 
+1. [Prometheus Operator v0.3.4](https://github.com/giantswarm/prometheus-operator-app/blob/master/CHANGELOG.md#034---2020-07-22) is upgraded to the latest verision with minor bug fixes.
 
 **Web Interface Releases**
 1. [Happa v0.10.35](https://github.com/giantswarm/happa/releases/tag/v0.10.35) always offers the latest version of the NGINX IC app and adds multiple UI improvements and bug fixes.
