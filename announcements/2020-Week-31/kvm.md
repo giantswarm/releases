@@ -2,7 +2,7 @@
 
 [KVM v12.1.0](https://github.com/giantswarm/releases/blob/master/kvm/v12.1.0) supports multiple NGINX Ingress Controllers per tenant cluster, moves the management of NGINX IC NodePort Service from kvm-operator to NGINX IC app itself, and fixes Quay being a single point of failure.
 
-[KVM v12.2.0](https://github.com/giantswarm/releases/blob/master/kvm/v12.2.0) turns NGINX Ingress Controller App from a pre-installed to an optional component on KVM.
+[KVM v12.2.0](https://github.com/giantswarm/releases/blob/master/kvm/v12.2.0) turns NGINX Ingress Controller App from a pre-installed to an optional component on KVM. (As detailed in release notes, please ensure cluster is on KVM 12.1.x platform release first before upgrading to 12.2.0+)
 
 **Optional Apps Releases**  
 (Can be installed from App Catalogs)
