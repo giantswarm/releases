@@ -1,6 +1,6 @@
 # :zap: Giant Swarm Release v9.0.9 for AWS :zap:
 
-This release updates managed apps to the latest releases, updates Calico to version `3.13.4` and Container Linux to `2512.2.1`.
+This release updates managed apps to the latest releases, Calico to version `3.13.4`, and Flatcar Container Linux to `2512.2.1`.
 
 Below, you can find more details on components that were changed with this release.
 
