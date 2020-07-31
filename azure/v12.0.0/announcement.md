@@ -9,4 +9,4 @@ During master upgrade from 11.4.0 to 12.0.0, within the time frame of 30 seconds
 Many core components and default apps have been updated for improved reliability and observability. Further details about changes to individual components can be found in the [release notes](https://github.com/giantswarm/releases/blob/master/azure/v12.0.0).
 
 ---
-Please let <!subteam^S0GSG846L> know if you have any feedback or questions by replying to this announcement in a thread.
+Please let <!subteam^S0GSG846L|Product Owners> know if you have any feedback or questions by replying to this announcement in a thread.
