@@ -1,23 +1,26 @@
 # :zap: Giant Swarm Release v12.0.0 for AWS :zap:
 
-This release provides Kubernetes 1.17. It is based on new aws-operator and cluster-operator versions and picks up upgrades tomany components.
+This is the first release to support Kubernetes 1.17 on AWS.
+
+This release provides new aws-operator and cluster-operator versions with reliability improvements and picks up upgrades to many components.
 
 ## Change details
 
-### kubernetes [1.17.9](https://github.com/kubernetes/kubernetes/releases/tag/v1.17.9)
+### Kubernetes [v1.17.9](https://github.com/kubernetes/kubernetes/releases/tag/v1.17.9)
 
-- CVE-2020-8557 (Medium): Node-local denial of service via container /etc/hosts file. See https://github.com/kubernetes/kubernetes/issues/93032 for more details.
-- Extend kube-apiserver /readyz with new "informer-sync" check ensuring that internal informers are synced. ([#92644](https://github.com/kubernetes/kubernetes/pull/92644), [@wojtek-t](https://github.com/wojtek-t)) [SIG API Machinery and Testing]
-- Kubeadm: add the deprecated flag --port=0 to kube-controller-manager and kube-scheduler manifests to disable insecure serving. Without this flag the components by default serve (e.g. /metrics) insecurely on the default node interface (controlled by --address). Users that wish to override this behavior and enable insecure serving can pass a custom --port=X via kubeadm's "extraArgs" mechanic for these components. ([#92720](https://github.com/kubernetes/kubernetes/pull/92720), [@neolit123](https://github.com/neolit123)) [SIG Cluster Lifecycle]
-- Kubeadm: during "join", don't re-add an etcd member if it already exists in the cluster. ([#92118](https://github.com/kubernetes/kubernetes/pull/92118), [@neolit123](https://github.com/neolit123)) [SIG Cluster Lifecycle]
-- hyperkube: Use debian-hyperkube-base@v1.1.1 image
+#### Known issues
 
-    Includes iproute2 to fix a regression in hyperkube images
-    when using hyperkube as a kubelet ([#92625](https://github.com/kubernetes/kubernetes/pull/92625), [@justaugustus](https://github.com/justaugustus)) [SIG Cluster Lifecycle, Network and Release]
+- Former feature gate `AttachVolumeLimit`, which was disabled in Giant Swarm tenant clusters, is now always active. As a result, limits for Persistent Volumes will be set to a wrong value in tenant clusters. In cases where many Persistent Volumes are used in a cluster, this may lead to a situation where the scheduler falsely assigns a Pod to a node, assuming that a volume can be attached to this node, while in fact it cannot. [kubernetes#92799](https://github.com/kubernetes/kubernetes/issues/92799)
+
+#### Significant changes
+
+- CVE-2020-8557 (Medium): Node-local denial of service via container /etc/hosts file. See [kubernetes#93032](https://github.com/kubernetes/kubernetes/issues/93032) for more details.
+
+For a complete list of changes, known issues, removals and deprecations, please check the [Kubernetes 1.17 release notes](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.17.md).
 
 ### aws-operator [v8.7.5](https://github.com/giantswarm/aws-operator/blob/master/CHANGELOG.md#875---2020-07-30)
 
-- Adjusted MAX_PODS setting for master and worker nodes to max IP's per ENI when using aws-cni
+- Adjusted `MAX_PODS` setting for master and worker nodes to max IPs per Elastic Network Interface (ENI).
 
 ### calico [v3.15.1](https://github.com/projectcalico/calico/releases/tag/v3.15.1)
 
@@ -25,14 +28,12 @@ This release provides Kubernetes 1.17. It is based on new aws-operator and clust
 
 Complete release notes can be found at [docs.projectcalico.org/v3.15/release-notes](https://docs.projectcalico.org/v3.15/release-notes/)
 
-### chart-operator [v0.13.2](https://github.com/giantswarm/chart-operator/releases/tag/v0.13.2)
+### chart-operator [v0.13.2](https://github.com/giantswarm/chart-operator/blob/v0.13.2/CHANGELOG.md#v0132-2020-06-23)
 
 - Add metrics for Helm releases with a mismatched namespace.
 - Calculate md5sum from go struct.
 
-### cluster-autoscaler [v1.17.3]() (Giant Swarm app [v1.17.X]()) - TODO
-
-from 1.16.5 / Giant Swarm app v 1.16.0
+### cluster-autoscaler [v1.17.3](https://github.com/kubernetes/autoscaler/releases/tag/cluster-autoscaler-1.17.3) (Giant Swarm app [v1.17.3](https://github.com/giantswarm/cluster-autoscaler-app/blob/master/CHANGELOG.md#1173---2020-07-30))
 
 - Switch leader election mechanism to use lease objects, includes RBAC rule update
 - Nodes with small difference in available memory will now be considered similar for the purposes of balancing node pool sizes. This should increase the reliability of node pool balancing.
@@ -45,34 +46,28 @@ from 1.16.5 / Giant Swarm app v 1.16.0
 - Fix case when ASG size could be descresed twice
 - Allow arbitrary placeholder AWS instance names
 
-### kiam [v3.6]() (Giant Swarm app v1.3.1)
+### cluster-operator [v2.3.2](https://github.com/giantswarm/cluster-operator/blob/master/CHANGELOG.md#232---2020-07-31)
+
+- Fixes a problem where the handling of a "basedomain not found" error would prevent the proper removal of `G8sControlPlane` and `MachineDeployment` CRs when deleting a cluster.
+
+### kiam [v3.6](https://github.com/uswitch/kiam/blob/master/CHANGELOG.md#v36) (Giant Swarm app [v1.3.1](https://github.com/giantswarm/kiam-app/blob/master/CHANGELOG.md#131---2020-07-23))
 
 Check the [kiam changelog](https://github.com/uswitch/kiam/blob/master/CHANGELOG.md#v36) for details.
 
-### kube-state-metrics v1.9.7 (Giant Swarm app [v1.1.1](https://github.com/giantswarm/kube-state-metrics-app/blob/master/CHANGELOG.md))
+### kube-state-metrics [v1.9.7](https://github.com/kubernetes/kube-state-metrics/blob/master/CHANGELOG.md#v197--2020-05-24) (Giant Swarm app [v1.1.1](https://github.com/giantswarm/kube-state-metrics-app/blob/master/CHANGELOG.md#111---2020-07-22))
 
 - Switch mutatingWebhookConfiguration to use v1 api
 
 Check the [kube-state-metrics changelog](https://github.com/kubernetes/kube-state-metrics/releases/tag/v1.9.7) for more details.
 
-### metrics-server v0.3.6 (Giant Swarm app [v1.1.1](https://github.com/giantswarm/metrics-server-app/blob/master/CHANGELOG.md))
+### metrics-server [v0.3.6](https://github.com/kubernetes-sigs/metrics-server/releases/tag/v0.3.6) (Giant Swarm app [v1.1.1](https://github.com/giantswarm/metrics-server-app/blob/master/CHANGELOG.md#111---2020-07-23))
 
 - Fix: Don't break metric storage when duplicate pod metrics encountered
 
 Check the [metrics-server changelog](https://github.com/kubernetes-sigs/metrics-server/releases) for more details.
 
-### node-exporter v1.0.1 (Giant Swarm app [v1.3.0](https://github.com/giantswarm/node-exporter-app/blob/master/CHANGELOG.md))
+### node-exporter [v1.0.1](https://github.com/prometheus/node_exporter/blob/master/CHANGELOG.md#101--2020-06-15) (Giant Swarm app [v1.3.0](https://github.com/giantswarm/node-exporter-app/blob/master/CHANGELOG.md#130---2020-07-23))
 
-From 0.18.1 (app v1.2.0)
+- Several changes regarding metrics and labels.
 
-#### Breaking changes
-
-- The netdev collector CLI argument `--collector.netdev.ignored-devices` was renamed to `--collector.netdev.device-blacklist` in order to conform with the systemd collector.
-- The label named `state` on `node_systemd_service_restart_total` metrics was changed to `name` to better describe the metric.
-- Refactoring of the `mdadm` collector changes several metrics
-  - node_md_disks_active is removed
-  - node_md_disks now has a state label for "failed", "spare", "active" disks.
-  - node_md_is_active is replaced by node_md_state with a state set of "active", "inactive", "recovering", "resync".
-- Additional label `mountaddr` added to NFS device metrics to distinguish mounts from the same URL, but different IP addresses.
-- Metrics `node_cpu_scaling_frequency_min_hrts` and node_cpu_scaling_frequency_max_hrts of the cpufreq collector were renamed to `node_cpu_scaling_frequency_min_hertz` and `node_cpu_scaling_frequency_max_hertz`.
-- Collectors that are enabled, but are unable to find data to collect, now return 0 for `node_scrape_collector_success`.
+Check the [node-exporter changelog](https://github.com/prometheus/node_exporter/blob/master/CHANGELOG.md#101--2020-06-15) for detais.
