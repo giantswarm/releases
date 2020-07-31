@@ -11,8 +11,10 @@ spec:
   - name: calico
     version: 3.9.1
   - name: cert-operator
+    releaseOperatorDeploy: true
     version: 0.1.0
   - name: cluster-operator
+    # thiccc branch operator!
     version: 0.21.0
   - name: containerlinux
     version: 2191.5.0
@@ -25,6 +27,7 @@ spec:
   - name: kubernetes
     version: 1.15.5
   - name: kvm-operator
+    # thiccc branch operator!
     version: 3.9.0
   date: "2019-10-28T12:00:00Z"
   state: deprecated
