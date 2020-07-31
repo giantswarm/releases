@@ -4,7 +4,7 @@
 
 [AWS v9.3.6](https://github.com/giantswarm/releases/tree/master/aws/v9.3.6) updates managed apps to the latest releases.
 
-[AWS v9.0.9](https://github.com/giantswarm/releases/blob/master/aws/v9.0.9) updates managed apps to the latest releases.
+[AWS v9.0.9](https://github.com/giantswarm/releases/tree/master/aws/v9.0.9) updates managed apps to the latest releases.
 
 **Optional Apps Releases**  
 (Can be installed from App Catalogs)
