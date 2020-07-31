@@ -1,14 +1,26 @@
 # :zap: Giant Swarm Release v9.3.6 for AWS :zap:
 
-**If you are upgrading from 9.3.5, upgrading to this release will not roll your nodes. It will only update the apps.**
-
-This release updates managed apps to the latest releases.
+This release updates managed apps to the latest releases, updates Calico to version `3.13.4` and Container Linux to `2512.2.1`.
 
 Below, you can find more details on components that were changed with this release.
+
+### aws-operator [5.7.3](https://github.com/giantswarm/aws-operator/releases/tag/v5.7.3)
+
+- Changes required to run Container linux `2512.2.1` and calico `3.13.4`.
+
+### calico [3.14.3](https://docs.projectcalico.org/archive/v3.13/release-notes/)
+
+- Fix IPAM garbage collection in etcd mode on clusters where node name does not match Kubernetes node name. kube-controllers.
 
 ### cluster-operator [0.23.13](https://github.com/giantswarm/cluster-operator/releases/tag/v0.23.13)
 
 - Enable NGINX App managed NodePort Service on KVM.
+
+### Container Linux [2512.2.1](https://www.flatcar-linux.org/releases/#release-2512.2.1)
+
+- Fix the Intel Microcode vulnerabilities (CVE-2020-0543)
+- Updated Linux kernel to 4.19.128
+- Updated intel-microcode to 20200609.
 
 ### kube-state-metrics v1.9.7 ([Giant Swarm app v1.1.1](https://github.com/giantswarm/kube-state-metrics-app/blob/master/CHANGELOG.md#111---2020-07-22))
 
