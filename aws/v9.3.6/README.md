@@ -12,8 +12,9 @@ Below, you can find more details on components that were changed with this relea
 
 - Fix IPAM garbage collection in etcd mode on clusters where node name does not match Kubernetes node name. kube-controllers.
 
-### cluster-operator [0.23.13](https://github.com/giantswarm/cluster-operator/releases/tag/v0.23.13)
+### cluster-operator [0.23.14](https://github.com/giantswarm/cluster-operator/releases/tag/v0.23.14)
 
+- Make NGINX optional on KVM, by ignoring existing NGINX IC App CRs which were managed by cluster-operator.
 - Enable NGINX App managed NodePort Service on KVM.
 
 ### Container Linux [2512.2.1](https://www.flatcar-linux.org/releases/#release-2512.2.1)
