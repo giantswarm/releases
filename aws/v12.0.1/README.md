@@ -20,4 +20,4 @@ control plane.
 
 #### Changed
 
-- Upgrade cert-manager from 0.9.0 to 0.15.2. ([#31](https://github.com/giantswarm/cert-manager-app/pull/31)
+- Upgrade cert-manager from 0.9.0 to 0.15.2. ([#31](https://github.com/giantswarm/cert-manager-app/pull/31))
