@@ -4,7 +4,7 @@ metadata:
   annotations:
     giantswarm.io/docs: https://docs.giantswarm.io/reference/cp-k8s-api/releases.release.giantswarm.io/
   creationTimestamp: null
-  name: v12.0.1
+  name: v12.1.0
 spec:
   apps:
   - name: cert-exporter
@@ -56,5 +56,5 @@ spec:
     version: 3.4.10
   - name: kubernetes
     version: 1.17.9
-  date: "2020-08-03T12:00:00Z"
+  date: "2020-08-05T12:00:00Z"
   state: active
