@@ -13,7 +13,7 @@ is provided to assist with the process.
 
 **This is a breaking change.** Please ensure you have read the [upgrade notes](https://github.com/giantswarm/cert-manager-app#upgrading-from-v090-giant-swarm-app-v108-to-20x).
 
-**Note for SEs:** when upgrading AWS clusters after v10.0.0, ensure the App is also cordoned on the installation's
+**Note for SEs:** when upgrading clusters to this release, ensure the App is also cordoned on the installation's
 control plane.
 
 ### cert-manager [2.0.2](https://github.com/giantswarm/cert-manager-app/releases/tag/v2.0.2)
