@@ -33,12 +33,15 @@ spec:
   - name: app-operator
     version: 1.0.0
   - name: aws-operator
+    releaseOperatorDeploy: true
     version: 5.7.3
   - name: calico
     version: 3.13.4
   - name: cert-operator
+    releaseOperatorDeploy: true
     version: 0.1.0
   - name: cluster-operator
+    releaseOperatorDeploy: true
     version: 0.23.14
   - name: containerlinux
     version: 2512.2.1
