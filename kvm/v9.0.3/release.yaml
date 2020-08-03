@@ -32,8 +32,10 @@ spec:
   - name: calico
     version: 3.9.1
   - name: cert-operator
+    releaseOperatorDeploy: true
     version: 0.1.0
   - name: cluster-operator
+    releaseOperatorDeploy: true
     version: 0.23.9
   - name: containerlinux
     version: 2345.3.1
@@ -44,6 +46,8 @@ spec:
   - name: kubernetes
     version: 1.15.11
   - name: kvm-operator
+    reference: 3.9.2-1
+    releaseOperatorDeploy: true
     version: 3.9.2
   date: "2020-05-13T19:00:00Z"
   state: active
