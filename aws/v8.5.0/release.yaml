@@ -9,14 +9,17 @@ spec:
   - name: app-operator
     version: 1.0.0
   - name: aws-operator
+    # thiccc branch operator!
     version: 5.4.0
   - name: calico
     version: 3.8.2
   - name: cert-operator
+    releaseOperatorDeploy: true
     version: 0.1.0
   - name: chart-operator
     version: 0.7.0
   - name: cluster-operator
+    # thiccc branch operator!
     version: 0.20.0
   - name: containerlinux
     version: 2135.4.0
