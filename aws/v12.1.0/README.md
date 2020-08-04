@@ -2,10 +2,6 @@
 
 **If you are upgrading from 12.0.0, upgrading to this release will not roll your nodes. It will only update the apps.**
 
-## Change details
-
-#### Significant changes
-
 This release upgrades Cert Manager from upstream v0.9.0 to v0.15.2.
 
 It is part of a larger effort to maximize reliability of upgrades, by keeping 3rd party components within 30 days of upstream releases.
