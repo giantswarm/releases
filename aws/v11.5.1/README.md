@@ -18,3 +18,10 @@
 
 
 
+### calico [3.15.1](https://github.com/projectcalico/calico/releases/tag/v3.15.1)
+
+#### Bug fixes
+ - Fix issue with service IP advertisement breaking host service connectivity [confd #337](https://github.com/projectcalico/confd/pull/337) (@caseydavenport)
+
+
+
