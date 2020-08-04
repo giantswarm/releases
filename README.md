@@ -76,19 +76,19 @@ Deprecated and unused releases are removed from this list and stored in Archived
   - v12.1
     - [v12.1.0](https://github.com/giantswarm/releases/tree/master/kvm/v12.1.0)
   - v12.0
-    - [v12.0.1](https://github.com/giantswarm/releases/tree/master/kvm/v12.0.1)
-    - [v12.0.0](https://github.com/giantswarm/releases/tree/master/kvm/v12.0.0)
+    - [v12.0.1(deprecated)](https://github.com/giantswarm/releases/tree/master/kvm/v12.0.1)
+    - [v12.0.0(deprecated)](https://github.com/giantswarm/releases/tree/master/kvm/v12.0.0)
 - v11
   - v11.3
     - [v11.3.2](https://github.com/giantswarm/releases/tree/master/kvm/v11.3.2)
-    - [v11.3.1](https://github.com/giantswarm/releases/tree/master/kvm/v11.3.1)
-    - [v11.3.0](https://github.com/giantswarm/releases/tree/master/kvm/v11.3.0)
+    - [v11.3.1(deprecated)](https://github.com/giantswarm/releases/tree/master/kvm/v11.3.1)
+    - [v11.3.0(deprecated)](https://github.com/giantswarm/releases/tree/master/kvm/v11.3.0)
   - v11.2
-    - [v11.2.1](https://github.com/giantswarm/releases/tree/master/kvm/v11.2.1)
-    - [v11.2.0](https://github.com/giantswarm/releases/tree/master/kvm/v11.2.0)
+    - [v11.2.1(deprecated)](https://github.com/giantswarm/releases/tree/master/kvm/v11.2.1)
+    - [v11.2.0(deprecated)](https://github.com/giantswarm/releases/tree/master/kvm/v11.2.0)
 - v9
   - v9.0
     - [v9.0.3](https://github.com/giantswarm/releases/tree/master/kvm/v9.0.3)
-    - [v9.0.0](https://github.com/giantswarm/releases/tree/master/kvm/v9.0.0)
+    - [v9.0.0(deprecated)](https://github.com/giantswarm/releases/tree/master/kvm/v9.0.0)
 
 [Archived KVM releases](https://github.com/giantswarm/releases/tree/master/kvm/archived)
