@@ -4,7 +4,7 @@ This release upgrades Cert Manager from upstream v0.9.0 to v0.15.2.
 
 It is part of a larger effort to maximize reliability of upgrades, by keeping 3rd party components within 30 days of upstream releases. 
 
-**This change breaks Cert Manager** due to changes in its API. While the **negative impact to your workloads is low-to-none**, to minimize disruption, **we recommend getting your SE's assistance for this upgrade**.
+**This change breaks Cert Manager** due to changes in its API. While the **negative impact to your workloads is low-to-none**, to minimize disruption, **we recommend discussing this upgrade with our Solution Engineer first**.
 
 Further details about changes to individual components can be found in the [release notes](https://github.com/giantswarm/releases/blob/master/aws/v12.1.0).
 
