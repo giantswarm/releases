@@ -43,12 +43,15 @@ spec:                                                              spec:
   - name: aws-cni                                                    - name: aws-cni
     version: 1.6.3                                                     version: 1.6.3
   - name: aws-operator                                               - name: aws-operator
+    releaseOperatorDeploy: true                                        releaseOperatorDeploy: true
     version: 8.7.5                                                     version: 8.7.5
   - name: calico                                                     - name: calico
     version: 3.15.1                                                    version: 3.15.1
   - name: cert-operator                                              - name: cert-operator
+    releaseOperatorDeploy: true                                        releaseOperatorDeploy: true
     version: 0.1.0                                                     version: 0.1.0
   - name: cluster-operator                                           - name: cluster-operator
+    releaseOperatorDeploy: true                                        releaseOperatorDeploy: true
     version: 2.3.2                                                     version: 2.3.2
   - name: containerlinux                                             - name: containerlinux
     version: 2512.2.1                                                  version: 2512.2.1
