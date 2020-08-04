@@ -6,7 +6,9 @@
 
 #### Significant changes
 
-Cert Manager is upgraded from upstream version v0.9.0 to v0.15.2. Due to changes in Cert Manager's API,
+This release upgrades Cert Manager from upstream v0.9.0 to v0.15.2.
+
+It is part of a larger effort to maximize reliability of upgrades, by keeping 3rd party components within 30 days of upstream releases. 
 associated Ingresses and Secrets must also be updated to ensure they are reconciled by Cert Manager. An
 [upgrade script](https://github.com/giantswarm/cert-manager-app/blob/master/files/migrate-v090-to-v200.sh)
 is provided to assist with the process.
