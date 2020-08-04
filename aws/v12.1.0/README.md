@@ -4,9 +4,9 @@
 
 This release upgrades Cert Manager from upstream v0.9.0 to v0.15.2.
 
-It is part of a larger effort to maximize reliability of upgrades, by keeping 3rd party components within 30 days of upstream releases. 
+It is part of a larger effort to maximize reliability of upgrades, by keeping 3rd party components within 30 days of upstream releases.
 
-**This change breaks Cert Manager** due to changes in its API. While the **negative impact to your workloads is low-to-none**, to minimize disruption, **we recommend discussing this upgrade with your Solution Engineer first**.
+**This upgrade will stop Cert Manager from reconciling your existing resources** due to changes in its API - manual intervention is required to update affected resources. While the **negative impact to your workloads is low-to-none**, to minimize disruption, **we recommend discussing this upgrade with your Solution Engineer first**.
 
 **Note for Solution Engineers:**
 
