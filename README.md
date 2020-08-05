@@ -9,6 +9,8 @@ Swarm control planes.
 
 ## AWS
 - v12
+  - v12.1
+    - [v12.1.0](https://github.com/giantswarm/releases/tree/master/aws/v12.1.0)
   - v12.0
     - [v12.0.0](https://github.com/giantswarm/releases/tree/master/aws/v12.0.0)
 - v11
@@ -82,7 +84,7 @@ Swarm control planes.
     - [v11.4.0](https://github.com/giantswarm/releases/tree/master/azure/v11.4.0)
   - v11.3
     - [v11.3.3](https://github.com/giantswarm/releases/tree/master/azure/v11.3.3)
-    - [v11.3.2](https://github.com/giantswarm/releases/tree/master/azure/v11.3.2)
+    - [v11.3.2](https://github.com/giantswarm/releases/tree/master/azure/archived/v11.3.2)
     - [v11.3.1](https://github.com/giantswarm/releases/tree/master/azure/v11.3.1)
     - [v11.3.0](https://github.com/giantswarm/releases/tree/master/azure/v11.3.0)
   - v11.2
@@ -102,7 +104,7 @@ Swarm control planes.
     - [v9.0.0](https://github.com/giantswarm/releases/tree/master/azure/archived/v9.0.0)
 - v8
   - v8.4
-    - [v8.4.1](https://github.com/giantswarm/releases/tree/master/azure/v8.4.1)
+    - [v8.4.1](https://github.com/giantswarm/releases/tree/master/azure/archived/v8.4.1)
     - [v8.4.0](https://github.com/giantswarm/releases/tree/master/azure/archived/v8.4.0)
   - v8.3
     - [v8.3.0](https://github.com/giantswarm/releases/tree/master/azure/archived/v8.3.0)
