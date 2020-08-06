@@ -1,4 +1,4 @@
-# :zap: This Week in AWS Releases (July 31, 2020):zap:
+# :zap: This Week in AWS Releases (August 7, 2020):zap:
 
 [AWS v12.1.0](https://github.com/giantswarm/releases/tree/master/aws/v12.1.0) upgrades Cert Manager. (Discussion with SE prior to ugprade is recommended.)
 
