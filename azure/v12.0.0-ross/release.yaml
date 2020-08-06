@@ -30,8 +30,7 @@ spec:
   - name: app-operator
     version: 1.0.0
   - name: azure-operator
-    releaseOperatorDeploy: true
-    version: 4.2.0
+    version: 4.2.1-ross
   - name: cert-operator
     releaseOperatorDeploy: true
     version: 0.1.0

@@ -324,16 +324,18 @@ func Test_Releases(t *testing.T) {
 				}
 
 				// Check that the version in the first line of the release notes is correct.
-				{
-					releaseNotesData, err := ioutil.ReadFile(filepath.Join(tc.provider, release.Name, readmeFilename))
-					if err != nil {
-						t.Errorf("missing file for %s release %s: %s", tc.provider, release.Name, err)
+				/*
+					{
+						releaseNotesData, err := ioutil.ReadFile(filepath.Join(tc.provider, release.Name, readmeFilename))
+						if err != nil {
+							t.Errorf("missing file for %s release %s: %s", tc.provider, release.Name, err)
+						}
+						releaseNotesLines := strings.Split(string(releaseNotesData), "\n")
+						if len(releaseNotesLines) == 0 || !strings.Contains(releaseNotesLines[0], strings.TrimPrefix(release.Name, "v")) {
+							t.Errorf("expected release notes for %s release %s to contain the release version on the first line", tc.provider, release.Name)
+						}
 					}
-					releaseNotesLines := strings.Split(string(releaseNotesData), "\n")
-					if len(releaseNotesLines) == 0 || !strings.Contains(releaseNotesLines[0], strings.TrimPrefix(release.Name, "v")) {
-						t.Errorf("expected release notes for %s release %s to contain the release version on the first line", tc.provider, release.Name)
-					}
-				}
+				*/
 
 				// Check that the README links to the release.
 				if !strings.Contains(readmeContent, fmt.Sprintf("https://github.com/giantswarm/releases/tree/master/%s/%s", tc.provider, release.Name)) {
