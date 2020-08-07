@@ -25,6 +25,7 @@ resources:
 - v11.4.0
 - v11.4.1
 - v11.5.0
+- v11.5.1
 - v12.0.0
 - v12.1.0
 transformers:
