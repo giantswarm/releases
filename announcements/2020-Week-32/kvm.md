@@ -3,7 +3,7 @@
 **Optional Apps Releases**
 (Can be installed from App Catalogs)
 
-1. [NGINX IC v1.8.4](https://github.com/giantswarm/nginx-ingress-controller-app/blob/master/CHANGELOG.md#184---2020-08-06) fixes NetworkPolicy templating, to allow Pod ingress traffic (Prometheus scrape requests) on same port that the metrics/monitoring service advertises. (Note: NGINX is Optional and not Pre-Installed in AWS 10+ clusters)
+1. [NGINX IC v1.8.4](https://github.com/giantswarm/nginx-ingress-controller-app/blob/master/CHANGELOG.md#184---2020-08-06) fixes NetworkPolicy templating, to allow Pod ingress traffic (Prometheus scrape requests) on same port that the metrics/monitoring service advertises. (Note: NGINX is Optional and not Pre-Installed in KVM 12.2.x+ clusters)
 
 **Web Interface Releases**
 
