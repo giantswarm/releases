@@ -1,5 +1,7 @@
 # :zap: This Week in KVM Releases (August 7, 2020):zap:
 
+There are no KVM platform releases this week.
+
 **Optional Apps Releases**
 (Can be installed from App Catalogs)
 

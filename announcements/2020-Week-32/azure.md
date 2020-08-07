@@ -1,5 +1,7 @@
 # :zap: This Week in Azure Releases (August 7, 2020):zap:
 
+There are no Azure platform releases this week.
+
 **Optional Apps Releases**
 (Can be installed from App Catalogs)
 
