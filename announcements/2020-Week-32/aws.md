@@ -2,7 +2,7 @@
 
 [AWS v11.5.1](https://github.com/giantswarm/releases/tree/master/aws/v11.5.1) fixes a problem with the calculation of the maximum number of Pods per node and improves resource cleanup after cluster deletion.
 
-# Optional Apps Releases**
+**Optional Apps Releases**
 (Can be installed from App Catalogs)
 
 1. [NGINX IC v1.8.4](https://github.com/giantswarm/nginx-ingress-controller-app/blob/master/CHANGELOG.md#184---2020-08-06) fixes NetworkPolicy templating, to allow Pod ingress traffic (Prometheus scrape requests) on same port that the metrics/monitoring service advertises. (Note: NGINX is Optional and not Pre-Installed in AWS 10+ clusters)
