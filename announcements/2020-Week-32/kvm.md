@@ -1,6 +1,12 @@
 # :zap: This Week in KVM Releases (August 7, 2020):zap:
 
+**Optional Apps Releases**
+(Can be installed from App Catalogs)
+
+1. [NGINX IC v1.8.4](https://github.com/giantswarm/nginx-ingress-controller-app/blob/master/CHANGELOG.md#184---2020-08-06) fixes NetworkPolicy templating, to allow Pod ingress traffic (Prometheus scrape requests) on same port that the metrics/monitoring service advertises. (Note: NGINX is Optional and not Pre-Installed in AWS 10+ clusters)
+
 **Web Interface Releases**
+
 1. [Happa v0.10.36](https://github.com/giantswarm/happa/releases/tag/v0.10.35) makes cluster upgrades from within happa safer. It makes it no longer possible to trigger an upgrade for non-ready or already upgrading clusters. Additionally, the cluster release selection will no longer contain any empty rows.
 
 ---
