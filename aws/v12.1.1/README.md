@@ -2,7 +2,7 @@
 
 **If you are upgrading from 12.0.0, upgrading to this release will not roll your nodes. It will only update the apps.**
 
-This release upgrades Cert Manager from upstream v0.9.0 to v0.15.2.
+This release upgrades kiam App from v1.3.1 to v1.4.0, to align with Cert Manager v0.15.2 API changes.
 
 It is part of a larger effort to maximize reliability of upgrades, by keeping 3rd party components within 30 days of upstream releases.
 
