@@ -13,6 +13,7 @@ spec:
   - name: cert-operator
     releaseOperatorDeploy: true
     version: 0.1.0
+    reference: 0.1.0-1
   - name: cluster-operator
     # thiccc branch operator!
     version: 0.21.0
