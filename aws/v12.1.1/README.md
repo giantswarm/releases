@@ -2,7 +2,7 @@
 
 **If you are upgrading from 12.0.0, upgrading to this release will not roll your nodes. It will only update the apps.**
 
-This release upgrades kiam App from v1.3.1 to v1.4.0, to align with Cert Manager v0.15.2 API changes.
+This release provides new aws-operator version with reliability improvements and upgrades kiam app from v1.3.1 to v1.4.0, to align with Cert Manager v0.15.2 API changes.
 
 It is part of a larger effort to maximize reliability of upgrades, by keeping 3rd party components within 30 days of upstream releases.
 
@@ -16,8 +16,12 @@ Please use this [upgrade script](https://github.com/giantswarm/cert-manager-app/
 
 Please persist this note and the above, until all customers are on AWS v12.1.x and above.
 
-### kiam [1.4.0](https://github.com/giantswarm/kiam-app/releases/tag/v1.4.0)
+## Change details
 
-#### Changed
+### aws-operator [v8.7.6](https://github.com/giantswarm/aws-operator/blob/master/CHANGELOG.md#876---2020-08-11)
+
+- Fixes a certain case where a release upgrade would have left cluster in an in-between state
+
+### kiam [1.4.0](https://github.com/giantswarm/kiam-app/releases/tag/v1.4.0)
 
 - Updated cert-manager API groups. ([#36](https://github.com/giantswarm/kiam-app/pull/36))
