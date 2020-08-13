@@ -1,6 +1,6 @@
 # :zap: This Week in KVM Releases (August 14, 2020):zap:
 
-There are no KVM platform releases this week.
+There were no KVM platform releases this week.
 
 ---
 Please let <!subteam^S0GSG846L|Product Owners> know if you have any feedback or questions by replying to this announcement in a thread.
