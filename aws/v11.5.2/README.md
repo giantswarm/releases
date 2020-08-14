@@ -4,7 +4,6 @@ Giant Swarm release v11.5.2 is fixing an issue with NetworkPolicies and custom p
 
 ## Change details
 
-
 ### aws-operator [8.7.6](https://github.com/giantswarm/aws-operator/releases/tag/v8.7.6)
 - Add release version tag for ec2 instances.
 - Update Cloudformation Stack when components version differ.
