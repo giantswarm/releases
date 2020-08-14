@@ -16,6 +16,14 @@ Please use this [upgrade script](https://github.com/giantswarm/cert-manager-app/
 
 Please persist this note and the above, until all customers are on AWS v12.1.x and above.
 
+### aws-operator[8.8.0](https://github.com/giantswarm/aws-operator/releases/tag/v8.8.0)
+
+#### Changed
+- Add release version tag for ec2 instances.
+- Update Cloudformation Stack when components version differ.
+- Fix IAM policy on Tenant Clusters to manages IAM Role tags.
+- Fixed passing custom pod CIDR to k8scloudconfig.
+
 ### kiam [1.4.0](https://github.com/giantswarm/kiam-app/releases/tag/v1.4.0)
 
 #### Changed
