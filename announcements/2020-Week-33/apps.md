@@ -9,7 +9,7 @@
 
 (Note: NGINX is Optional and not Pre-Installed as of AWS 10+, Azure 12+, and KVM 12.2+ platform releases.)
 
-3. [Strimzi Kafka Operator](https://github.com/giantswarm/strimzi-kafka-operator-app) is now available as a Playground Catalog app and can be used to test and play with Apache Kafka clusters.
+3. [Strimzi Kafka Operator v0.0.1](https://github.com/giantswarm/strimzi-kafka-operator-app/blob/master/CHANGELOG.md#001---2020-07-25) is now available as a Playground Catalog app and can be used to test and play with Apache Kafka clusters.
 
 ---
 Please let <!subteam^S0GSG846L|Product Owners> know if you have any feedback or questions by replying to this announcement in a thread.
