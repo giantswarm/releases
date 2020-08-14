@@ -1,4 +1,4 @@
-# :zap: This Week in Non-Platform Releases (August 14, 2020):zap:
+# :zap: This Week in Provider-Independent Releases (August 14, 2020):zap:
 
 **Optional Apps Releases**
 (Can be installed from App Catalogs)
