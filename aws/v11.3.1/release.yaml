@@ -48,6 +48,7 @@ spec:
   - name: cert-operator
     releaseOperatorDeploy: true
     version: 0.1.0
+    reference: 0.1.0-2
   - name: cluster-operator
     releaseOperatorDeploy: true
     version: 2.2.0
