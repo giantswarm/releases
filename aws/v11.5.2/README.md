@@ -5,6 +5,7 @@ This release provides a new aws-operator which is fixing an issue with NetworkPo
 ## Change details
 
 ### aws-operator [8.7.6](https://github.com/giantswarm/aws-operator/releases/tag/v8.7.6)
+
 - Add release version tag for ec2 instances.
 - Update Cloudformation Stack when components version differ.
 - Fix IAM policy on Tenant Clusters to manages IAM Role tags.
