@@ -48,6 +48,7 @@ spec:
   - name: calico
     version: 3.15.1
   - name: cert-operator
+    reference: 0.1.0-2
     releaseOperatorDeploy: true
     version: 0.1.0
   - name: cluster-operator
