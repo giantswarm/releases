@@ -8,4 +8,4 @@ This release provides a new aws-operator which is fixing an issue with NetworkPo
 - Add release version tag for ec2 instances.
 - Update Cloudformation Stack when components version differ.
 - Fix IAM policy on Tenant Clusters to manages IAM Role tags.
-- Fixed passing custom pod CIDR to k8scloudconfig.
+- Fixed passing custom Pod CIDR to k8scloudconfig.
