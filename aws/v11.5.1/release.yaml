@@ -50,6 +50,7 @@ spec:
   - name: cert-operator
     releaseOperatorDeploy: true
     version: 0.1.0
+    reference: 0.1.0-2
   - name: cluster-operator
     releaseOperatorDeploy: true
     version: 2.3.2
@@ -60,4 +61,4 @@ spec:
   - name: kubernetes
     version: 1.16.13
   date: "2020-08-04T12:34:57Z"
-  state: active
+  state: deprecated
