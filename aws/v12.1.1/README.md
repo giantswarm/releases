@@ -20,6 +20,10 @@ Please persist this note and the above, until all customers are on AWS v12.1.x a
 - aws-operator now emits events on the `AWSCluster`, `AWSControlPlane`, and `AWSMachineDeployment` resources to facilitate following the process of cluster creation, upgrades etc., and debugging issues.
 - Fixed passing custom pod CIDR to k8scloudconfig.
 
+### external-dns [v1.3.0](https://github.com/giantswarm/external-dns-app/blob/master/CHANGELOG.md#130---2020-08-18)
+
+- Upgraded upstream external-dns from v0.7.2 to v0.7.3. Check the [upstream changelog](https://github.com/kubernetes-sigs/external-dns/releases/tag/v0.7.3) for details on all changes.
+
 ### kiam [v3.6](https://github.com/uswitch/kiam/blob/master/CHANGELOG.md#v36) (Giant Swarm app [v1.4.0](https://github.com/giantswarm/kiam-app/releases/tag/v1.4.0))
 
 - Updated cert-manager API groups. ([#36](https://github.com/giantswarm/kiam-app/pull/36))
