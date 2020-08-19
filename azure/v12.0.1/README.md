@@ -4,9 +4,6 @@
 
 This release upgrades external-dns app to v0.7.3.
 
-**Important Warning**
-During master upgrade from 11.4.0 to 12.0.x, within the time frame of 30 seconds we had noticed a spike in requests failures. This is most likely caused by Azure CNI upgrade and despite our great efforts, we had not found a solution to maintain upgrade path and avoid this disturbance. Please keep this in mind when scheduling an upgrade window, and contact your SE if you have further questions.
-
 **Notes for future 12.x.x releases:**
 In order to proceed with upgrade, clusters must be using 11.4.0 or newer release version, otherwise the upgrade request will fail.
 Pay attention to the increased failure rate of requests during upgrade of the master node and include this information in release notes if the problem persists.
