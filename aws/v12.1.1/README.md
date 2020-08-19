@@ -1,6 +1,6 @@
 # :zap: Giant Swarm Release v12.1.1 for AWS :zap:
 
-This release provides new aws-operator version with reliability improvements and upgrades kiam-app from v1.3.1 to v1.4.0, to align with Cert Manager v0.15.2 API changes.
+This release provides new aws-operator version with reliability improvements and upgrades kiam-app from v1.3.1 to v1.4.0, to align with Cert Manager v0.16.1 API changes.
 
 **This version of Cert Manager no longer reconciles your existing resources** due to changes in its API. Manual intervention is required to update affected resources. While the negative impact to your workloads is low-to-none, to minimize disruption, **we recommend discussing this upgrade with your Solution Engineer**.
 
