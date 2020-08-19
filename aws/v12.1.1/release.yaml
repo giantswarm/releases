@@ -9,9 +9,9 @@ spec:
   apps:
   - name: cert-exporter
     version: 1.2.3
-  - componentVersion: 0.15.2
+  - componentVersion: 0.16.1
     name: cert-manager
-    version: 2.0.2
+    version: 2.1.1
   - name: chart-operator
     version: 0.13.2
   - componentVersion: 1.17.3
