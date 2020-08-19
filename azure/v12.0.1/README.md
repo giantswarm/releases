@@ -2,7 +2,7 @@
 
 **If you are upgrading from 12.0.0, upgrading to this release will not roll your nodes. It will only update the apps.**
 
-This release upgrades external-dns app to v0.7.3.
+This release upgrades external-dns app to v1.3.0.
 
 **Notes for future 12.x.x releases:**
 In order to proceed with upgrade, clusters must be using 11.4.0 or newer release version, otherwise the upgrade request will fail.
