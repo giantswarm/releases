@@ -1,0 +1,1 @@
+**Giant Swarm release v12.1.2** for AWS is available. This release upgrades external-dns app to v1.3.0. Further details can be found in the [release notes](https://github.com/giantswarm/releases/tree/master/aws/v12.1.2).
