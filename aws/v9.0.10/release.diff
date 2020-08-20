@@ -50,5 +50,5 @@ spec:                                                              spec:
     version: 3.3.15                                                    version: 3.3.15
   - name: kubernetes                                                 - name: kubernetes
     version: 1.15.12                                                   version: 1.15.12
-  date: "2020-07-31T15:00:00Z"                                  |    date: "2020-08-19T15:34:28Z"
+  date: "2020-07-31T15:00:00Z"                                  |    date: "2020-08-20T10:34:28Z"
   state: active                                                      state: active
