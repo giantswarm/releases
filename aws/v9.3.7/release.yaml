@@ -2,7 +2,7 @@ apiVersion: release.giantswarm.io/v1alpha1
 kind: Release
 metadata:
   creationTimestamp: null
-  name: v9.3.6
+  name: v9.3.7
 spec:
   apps:
   - name: cert-exporter
@@ -34,13 +34,13 @@ spec:
     version: 1.0.0
   - name: aws-operator
     releaseOperatorDeploy: true
-    version: 5.7.3
+    version: 5.7.4
   - name: calico
     version: 3.13.4
   - name: cert-operator
+    reference: 0.1.0-2
     releaseOperatorDeploy: true
     version: 0.1.0
-    reference: 0.1.0-2
   - name: cluster-operator
     releaseOperatorDeploy: true
     version: 0.23.14
@@ -50,5 +50,7 @@ spec:
     version: 3.3.17
   - name: kubernetes
     version: 1.16.12
-  date: 2020-07-31T15:00:00Z
-  state: deprecated
+  date: "2020-08-20T10:39:57Z"
+  state: active
+status:
+  ready: false
