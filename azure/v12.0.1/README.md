@@ -4,10 +4,6 @@
 
 This release upgrades external-dns app to v1.3.0.
 
-**Notes for future 12.x.x releases:**
-In order to proceed with upgrade, clusters must be using 11.4.0 or newer release version, otherwise the upgrade request will fail.
-Pay attention to the increased failure rate of requests during upgrade of the master node and include this information in release notes if the problem persists.
-
 Below, you can find more details on components that were changed with this release.
 
 ### external-dns v0.7.3 [Giant Swarm app 1.3.0](https://github.com/giantswarm/external-dns-app/blob/master/CHANGELOG.md#130---2020-08-18)
