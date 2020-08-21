@@ -1,4 +1,4 @@
-# :zap: This Week in Azure Releases (August 14, 2020):zap:
+# :zap: This Week in Azure Releases (August 28, 2020):zap:
 
 There were no Azure platform releases this week.
 

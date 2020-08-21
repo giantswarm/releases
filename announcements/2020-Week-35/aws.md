@@ -1,4 +1,4 @@
-# :zap: This Week in AWS Releases (August 14, 2020):zap:
+# :zap: This Week in AWS Releases (August 28, 2020):zap:
 
 There were no AWS platform releases this week.
 
