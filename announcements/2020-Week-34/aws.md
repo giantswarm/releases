@@ -8,5 +8,6 @@
 
 [AWS v9.3.7](https://github.com/giantswarm/releases/tree/master/aws/v9.3.7) fixes an issue with overlapping networks when creating legacy clusters together with node pools clusters.
 
+[AWS v12.1.2](https://github.com/giantswarm/releases/tree/master/aws/v12.1.2) upgrades external-dns app to v1.3.0.
 ---
 Please let <!subteam^S0GSG846L|Product Owners> know if you have any feedback or questions by replying to this announcement in a thread.
