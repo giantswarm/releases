@@ -4,7 +4,7 @@ This release proides a new cluster-operator which fixes preventing release upgra
 
 ## Change details
 
-### cluster-operator [2.3.3](https://github.com/giantswarm/cluster-operator/releases/tag/v2.3.3)
+### cluster-operator [3.0.1](https://github.com/giantswarm/cluster-operator/releases/tag/v3.0.1)
 
 - Fixed condition where reference id does not match with G8sControlplane or MachineDeployment.
 
