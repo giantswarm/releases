@@ -62,5 +62,3 @@ spec:                                                              spec:
     version: 1.16.13                                                   version: 1.16.13
   date: "2020-08-17T12:00:00Z"                                  |    date: "2020-08-21T15:23:38Z"
   state: active                                                      state: active
-                                                                >  status:
-                                                                >    ready: false
