@@ -1,5 +1,5 @@
 // +build tools
 
-package main
+package tools
 
 import _ "sigs.k8s.io/kustomize/kustomize/v3"

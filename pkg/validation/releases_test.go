@@ -1,9 +1,9 @@
-package main
+package validation
 
 import (
 	"fmt"
-	"io/ioutil"
 	"path/filepath"
+	"runtime"
 	"strings"
 	"testing"
 
@@ -15,6 +15,9 @@ import (
 	v1 "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1"
 	"k8s.io/apiextensions-apiserver/pkg/apiserver/validation"
 	"sigs.k8s.io/yaml"
+
+	"github.com/giantswarm/releases/pkg/filesystem"
+	"github.com/giantswarm/releases/pkg/key"
 )
 
 type kustomizationFile struct {
@@ -127,38 +130,6 @@ func findMatchingRequests(release string, requests []releaseRequest) ([]versionR
 	return requestList, nil
 }
 
-func findReleases(provider string, archived bool) ([]v1alpha1.Release, error) {
-	path := provider
-	if archived {
-		path = filepath.Join(provider, "archived")
-	}
-	releaseDirectories, err := ioutil.ReadDir(path)
-	if err != nil {
-		return nil, microerror.Mask(err)
-	}
-	var releases []v1alpha1.Release
-	for _, releaseDirectory := range releaseDirectories {
-		if !releaseDirectory.IsDir() || releaseDirectory.Name() == "archived" {
-			continue
-		}
-		releaseFile := filepath.Join(path, releaseDirectory.Name(), releaseFilename)
-		data, err := ioutil.ReadFile(releaseFile)
-		if err != nil {
-			return nil, microerror.Mask(err)
-		}
-		var release v1alpha1.Release
-		err = yaml.Unmarshal(data, &release)
-		if err != nil {
-			return nil, microerror.Mask(err)
-		}
-		if releaseDirectory.Name() != release.Name {
-			return nil, fmt.Errorf("%s release %s is in directory %s which doesn't match its name", provider, release.Name, releaseDirectory)
-		}
-		releases = append(releases, release)
-	}
-	return releases, nil
-}
-
 // To reuse versionbundle.ValidateIndexReleases, the slice of Releases must first be
 // converted into a slice of versionbundle.IndexRelease.
 func releasesToIndex(releases []v1alpha1.Release) []versionbundle.IndexRelease {
@@ -228,10 +199,14 @@ func Test_Releases(t *testing.T) {
 		},
 	}
 
+	// Construct a Filesystem helper which loads files relative to the repo root directory
+	_, b, _, _ := runtime.Caller(0)
+	fs := filesystem.New(filepath.Join(filepath.Dir(b), "..", ".."))
+
 	// Load the README so we can check links for each release.
 	var readmeContent string
 	{
-		readmeContentBytes, err := ioutil.ReadFile(readmeFilename)
+		readmeContentBytes, err := fs.ReadFile(key.ReadmeFilename)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -243,7 +218,7 @@ func Test_Releases(t *testing.T) {
 			providerResources := map[string]bool{}
 			{
 				var providerKustomization kustomizationFile
-				providerKustomizationData, err := ioutil.ReadFile(filepath.Join(tc.provider, kustomizationFilename))
+				providerKustomizationData, err := fs.ReadFile(filepath.Join(tc.provider, key.KustomizationFilename))
 				if err != nil {
 					t.Fatal(err)
 				}
@@ -256,10 +231,10 @@ func Test_Releases(t *testing.T) {
 				}
 			}
 
-			providerRequests := []releaseRequest{}
+			var providerRequests []releaseRequest
 			{
 				var providerRequestsFile requestsFile
-				providerRequestsData, err := ioutil.ReadFile(filepath.Join(tc.provider, requestsFilename))
+				providerRequestsData, err := fs.ReadFile(filepath.Join(tc.provider, key.RequestsFilename))
 				if err != nil {
 					t.Fatal(err)
 				}
@@ -272,7 +247,7 @@ func Test_Releases(t *testing.T) {
 				}
 			}
 
-			releases, err := findReleases(tc.provider, false)
+			releases, err := fs.FindReleases(tc.provider, false)
 			if err != nil {
 				t.Fatal(microerror.Mask(err))
 			}
@@ -296,7 +271,7 @@ func Test_Releases(t *testing.T) {
 				for _, release := range releases {
 					// Check that the release is registered in the main provider kustomization.yaml resources.
 					if _, ok := providerResources[release.Name]; !ok {
-						t.Errorf("release %s not registered in %s/%s", release.Name, tc.provider, kustomizationFilename)
+						t.Errorf("release %s not registered in %s/%s", release.Name, tc.provider, key.KustomizationFilename)
 					}
 					providerResources[release.Name] = true
 					result := validator.Validate(release)
@@ -312,20 +287,20 @@ func Test_Releases(t *testing.T) {
 			for _, release := range releases {
 				// Check that the release-specific kustomization.yaml file points to the release manifest.
 				{
-					releaseKustomizationData, err := ioutil.ReadFile(filepath.Join(tc.provider, release.Name, kustomizationFilename))
+					releaseKustomizationData, err := fs.ReadFile(filepath.Join(tc.provider, release.Name, key.KustomizationFilename))
 					if err != nil {
 						t.Errorf("missing file for %s release %s: %s", tc.provider, release.Name, err)
 					}
 					var releaseKustomization kustomizationFile
 					err = yaml.UnmarshalStrict(releaseKustomizationData, &releaseKustomization)
-					if len(releaseKustomization.Resources) != 1 || releaseKustomization.Resources[0] != releaseFilename {
-						t.Errorf("%s for %s release %s should contain only one resource, \"%s\"", kustomizationFilename, tc.provider, release.Name, releaseFilename)
+					if len(releaseKustomization.Resources) != 1 || releaseKustomization.Resources[0] != key.ReleaseFilename {
+						t.Errorf("%s for %s release %s should contain only one resource, \"%s\"", key.KustomizationFilename, tc.provider, release.Name, key.ReleaseFilename)
 					}
 				}
 
 				// Check that the version in the first line of the release notes is correct.
 				{
-					releaseNotesData, err := ioutil.ReadFile(filepath.Join(tc.provider, release.Name, readmeFilename))
+					releaseNotesData, err := fs.ReadFile(filepath.Join(tc.provider, release.Name, key.ReadmeFilename))
 					if err != nil {
 						t.Errorf("missing file for %s release %s: %s", tc.provider, release.Name, err)
 					}
@@ -337,7 +312,7 @@ func Test_Releases(t *testing.T) {
 
 				// Check that the README links to the release.
 				if !strings.Contains(readmeContent, fmt.Sprintf("https://github.com/giantswarm/releases/tree/master/%s/%s", tc.provider, release.Name)) {
-					t.Errorf("expected link in %s to %s release %s", readmeFilename, tc.provider, release.Name)
+					t.Errorf("expected link in %s to %s release %s", key.ReadmeFilename, tc.provider, release.Name)
 				}
 
 				// Check that all active releases contain all requested component versions.
@@ -347,7 +322,7 @@ func Test_Releases(t *testing.T) {
 						t.Fatal(microerror.Mask(err))
 					}
 
-					unsatisfiedRequests := []string{}
+					var unsatisfiedRequests []string
 					for _, request := range requests {
 						componentsSatisfied, actualComponentVersion, err := componentListSatisfiesRequest(request, release.Spec.Components)
 						if err != nil {
@@ -376,10 +351,9 @@ func Test_Releases(t *testing.T) {
 						t.Errorf(msg)
 					}
 				}
-
 			}
 
-			archived, err := findReleases(tc.provider, true)
+			archived, err := fs.FindReleases(tc.provider, true)
 			if err != nil {
 				t.Fatal(microerror.Mask(err))
 			}
@@ -387,14 +361,14 @@ func Test_Releases(t *testing.T) {
 			for _, release := range archived {
 				// Check that the README links to the release.
 				if !strings.Contains(readmeContent, fmt.Sprintf("https://github.com/giantswarm/releases/tree/master/%s/archived/%s", tc.provider, release.Name)) {
-					t.Errorf("expected link in %s to archived %s release %s", readmeFilename, tc.provider, release.Name)
+					t.Errorf("expected link in %s to archived %s release %s", key.ReadmeFilename, tc.provider, release.Name)
 				}
 			}
 
 			// Check for extra resources in provider kustomization.yaml that don't have a corresponding release.
 			for release, processed := range providerResources {
 				if !processed {
-					t.Errorf("release %s registered in %s/%s resources but not found", release, tc.provider, kustomizationFilename)
+					t.Errorf("release %s registered in %s/%s resources but not found", release, tc.provider, key.KustomizationFilename)
 				}
 			}
 
