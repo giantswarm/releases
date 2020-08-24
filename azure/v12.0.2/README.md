@@ -2,7 +2,7 @@
 
 **If you are upgrading from 12.0.1, upgrading to this release will not roll your nodes. It will only update the apps.**
 
-This release upgrades external-dns app to v1.4.0.
+This release upgrades external-dns app to v1.4.0 to improve observability.
 
 Below, you can find more details on components that were changed with this release.
 
