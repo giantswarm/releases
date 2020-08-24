@@ -1,0 +1,1 @@
+**Giant Swarm release v12.0.2** for Azure is available. This release upgrades external-dns app to v1.4.0 to improve observability. Further details can be found in the [release notes](https://github.com/giantswarm/releases/tree/master/azure/v12.0.2).
