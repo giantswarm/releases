@@ -1,6 +1,6 @@
 # :zap: Giant Swarm Release v12.1.3 for AWS :zap:
 
-This release proides a new cluster-operator which fixes preventing release upgrade when reference id does not align with the G8sControlPlane id or MachineDeployment id.
+This release provides a new cluster-operator which fixes preventing release upgrade when reference id does not align with the G8sControlPlane id or MachineDeployment id.
 
 **If you are upgrading from 12.1.0 or older platform release, this release uses Cert Manager 0.16.1 and will no longer reconcile existing resources** due to changes in its API. Manual intervention is required to update affected resources. While the negative impact to your workloads is low-to-none, to minimize disruption, **we recommend discussing this upgrade with your Solution Engineer**.
 
