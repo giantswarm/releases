@@ -112,7 +112,6 @@ func Test_Patch_YAML(t *testing.T) {
 version: v1.0.1
 components:
 - name: test-component
-  change: M
   version: v1.2.4
 `,
 			expectedPrevious: v1alpha1.Release{
@@ -163,7 +162,7 @@ components:
 			t.Log(tc.name)
 
 			var patch ReleasePatch
-			err := yaml.Unmarshal([]byte(tc.patch), &patch)
+			err := yaml.UnmarshalStrict([]byte(tc.patch), &patch)
 			if err != nil {
 				t.Fatal(err)
 			}

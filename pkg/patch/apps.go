@@ -1,13 +1,11 @@
 package patch
 
 import (
-	"fmt"
-
 	"github.com/giantswarm/apiextensions/v2/pkg/apis/release/v1alpha1"
 )
 
 type AppPatch struct {
-	Change string `json:"change"`
+	Change Change `json:"change"`
 	Name   string `json:"name"`
 
 	ComponentVersion *string `json:"componentVersion,omitempty"`
@@ -31,7 +29,7 @@ func patchApps(base []v1alpha1.ReleaseSpecApp, patch []AppPatch) []v1alpha1.Rele
 	}
 
 	for _, app := range patch {
-		if app.Change == "A" || app.Change == "M" {
+		if app.Change.IsAddOrModify() {
 			exists := false
 			for j, existing := range result {
 				if existing.Name == app.Name {
@@ -45,24 +43,12 @@ func patchApps(base []v1alpha1.ReleaseSpecApp, patch []AppPatch) []v1alpha1.Rele
 				newAppFromPatch := patchApp(v1alpha1.ReleaseSpecApp{}, app)
 				result = append(result, newAppFromPatch)
 			}
-
-			if app.Change == "A" && exists {
-				fmt.Println("patch adds " + app.Name + " but app already exists in base, modified existing instead")
-			} else if app.Change == "M" && !exists {
-				fmt.Println("patch modifies " + app.Name + " but app not found in base, added app instead")
-			}
-		} else if app.Change == "D" {
-			deleted := false
+		} else if app.Change == ChangeDelete {
 			for j, existing := range result {
 				if existing.Name == app.Name {
 					result = append(result[:j], result[j+1:]...)
-					deleted = true
 					break
 				}
-			}
-
-			if !deleted {
-				fmt.Println("patch deletes " + app.Name + " but app not found in base, ignoring")
 			}
 		}
 	}
