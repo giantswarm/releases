@@ -59,7 +59,7 @@ spec:
   - name: etcd
     version: 3.4.10
   - name: kubernetes
-    version: 1.18.6
+    version: 1.17.9
   date: "2020-08-06T18:29:59Z"
   state: active
 status:
