@@ -3,7 +3,6 @@ commonAnnotations:
 resources:
 - v8.2.0
 - v9.0.0
-- v9.0.4
 - v9.0.6
 - v9.0.7
 - v9.0.8
@@ -22,9 +21,11 @@ resources:
 - v11.5.0
 - v11.5.1
 - v11.5.2
+- v11.5.3
 - v12.0.0
 - v12.1.0
 - v12.1.1
 - v12.1.2
+- v12.1.3
 transformers:
 - releaseNotesTransformer.yaml
