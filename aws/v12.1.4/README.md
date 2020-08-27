@@ -1,6 +1,6 @@
 # :zap: Giant Swarm Release v12.1.4 for AWS :zap:
 
-This release upgrades external-dns app to v1.4.0.
+This release upgrades external-dns app to v1.4.0 to improve observability.
 
 **If you are upgrading from 12.1.3, upgrading to this release will not roll your nodes. It will only update the apps.**
 
