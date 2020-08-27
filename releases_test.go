@@ -338,7 +338,7 @@ func Test_Releases(t *testing.T) {
 				// Check that the README links to the release.
 				expectedLinkText := release.Name
 				if release.Spec.State == "deprecated" {
-					expectedLinkText = expectedLinkText+"(deprecated)"
+					expectedLinkText = expectedLinkText + "(deprecated)"
 				}
 				expectedLine := fmt.Sprintf("[%s](https://github.com/giantswarm/releases/tree/master/%s/%s)", expectedLinkText, tc.provider, release.Name)
 				if !strings.Contains(readmeContent, expectedLine) {
@@ -380,6 +380,18 @@ func Test_Releases(t *testing.T) {
 						msg := fmt.Sprintf("Release %s does not meet the requested version requirements:\n%s", release.Name, strings.Join(unsatisfiedRequests, ",\n"))
 						t.Errorf(msg)
 					}
+				}
+			}
+
+			archived, err := findReleases(tc.provider, true)
+			if err != nil {
+				t.Fatal(microerror.Mask(err))
+			}
+
+			for _, release := range archived {
+				// Check that the README doesn't link to the archived release.
+				if strings.Contains(readmeContent, fmt.Sprintf("https://github.com/giantswarm/releases/tree/master/%s/archived/%s", tc.provider, release.Name)) {
+					t.Errorf("readme %s should not link to archived %s release %s", readmeFilename, tc.provider, release.Name)
 				}
 			}
 
