@@ -60,5 +60,5 @@ spec:
     version: 3.4.10
   - name: kubernetes
     version: 1.17.9
-  date: "2020-08-21T15:42:33Z"
+  date: "2020-08-27T13:00:00Z"
   state: active
