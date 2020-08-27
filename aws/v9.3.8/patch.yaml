@@ -1,0 +1,13 @@
+version: v9.3.8
+date: "2020-08-28T15:00:00Z"
+components:
+  - name: aws-operator
+    version: 5.7.5
+  - name: kubernetes
+    version: 1.16.14
+  - name: calico
+    version: 3.10.4
+  - name: etcd
+    version: 3.3.25
+  - name: containerlinux
+    version: 2512.3.0
