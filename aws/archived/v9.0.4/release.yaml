@@ -1,0 +1,55 @@
+apiVersion: release.giantswarm.io/v1alpha1
+kind: Release
+metadata:
+  creationTimestamp: null
+  name: v9.0.4
+spec:
+  apps:
+  - name: cert-exporter
+    version: 1.2.1
+  - name: chart-operator
+    version: 0.13.0
+  - componentVersion: 1.16.2
+    name: cluster-autoscaler
+    version: 1.1.4
+  - componentVersion: 1.6.5
+    name: coredns
+    version: 1.1.8
+  - componentVersion: 1.9.5
+    name: kube-state-metrics
+    version: 1.0.5
+  - componentVersion: 0.3.3
+    name: metrics-server
+    version: 1.0.0
+  - name: net-exporter
+    version: 1.7.0
+  - componentVersion: 0.30.0
+    name: nginx-ingress-controller
+    version: 1.6.9
+  - componentVersion: 0.18.1
+    name: node-exporter
+    version: 1.2.0
+  components:
+  - name: app-operator
+    version: 1.0.0
+  - name: aws-operator
+    releaseOperatorDeploy: true
+    version: 5.5.2
+  - name: calico
+    version: 3.9.1
+  - name: cert-operator
+    releaseOperatorDeploy: true
+    version: 0.1.0
+    reference: 0.1.0-2
+  - name: cluster-operator
+    releaseOperatorDeploy: true
+    reference: 0.23.8-1
+    version: 0.23.8
+  - name: containerlinux
+    version: 2191.5.0
+  - name: etcd
+    version: 3.3.15
+  - name: kubernetes
+    version: 1.15.11
+  date: "2020-05-06T13:00:00Z"
+  state: deprecated

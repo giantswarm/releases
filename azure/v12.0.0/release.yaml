@@ -35,6 +35,7 @@ spec:
   - name: cert-operator
     releaseOperatorDeploy: true
     version: 0.1.0
+    reference: 0.1.0-2
   - name: cluster-operator
     releaseOperatorDeploy: true
     version: 0.23.12
@@ -49,4 +50,4 @@ spec:
   - name: etcd
     version: 3.4.9
   date: 2020-07-28T15:00:00Z
-  state: active
+  state: deprecated
