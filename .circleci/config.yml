@@ -13,7 +13,7 @@ jobs:
       - run:
           name: Install kustomize
           command: |
-            CGO_ENABLED=0 go install sigs.k8s.io/kustomize/kustomize/v3
+            cd tools && CGO_ENABLED=0 go install sigs.k8s.io/kustomize/kustomize/v3
       - run:
           name: Install releaseNotesURLTransformer kustomize plugin
           command: |
