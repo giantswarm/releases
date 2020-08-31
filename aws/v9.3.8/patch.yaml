@@ -1,8 +1,8 @@
 version: v9.3.8
-date: "2020-08-28T15:00:00Z"
+date: "2020-08-31T15:00:00Z"
 components:
   - name: aws-operator
-    version: 5.7.5
+    version: 5.7.6
   - name: kubernetes
     version: 1.16.14
   - name: calico
