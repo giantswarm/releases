@@ -14,4 +14,7 @@ Below, you can find more details on components that were changed with this relea
 
 ### app-operator [v2.1.1](https://github.com/giantswarm/app-operator/blob/master/CHANGELOG.md#211---2020-08-26)
 ### chart-operator [v2.3.0](https://github.com/giantswarm/chart-operator/blob/master/CHANGELOG.md#230---2020-08-24)
-- Updated Helm to v3.3.0.
+- Updated Helm to [v3.3.0](https://github.com/helm/helm/releases/tag/v3.3.0).
+
+### cert-exporter [v1.2.4](https://github.com/giantswarm/cert-exporter/blob/master/CHANGELOG.md#124---2020-08-13)
+- Adjusted vault token format check for base62 tokens.
