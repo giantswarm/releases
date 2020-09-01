@@ -2,7 +2,7 @@
 
 **If you are upgrading from 12.0.2, upgrading to this release will not roll your nodes. It will only update the apps.**
 
-This release upgrades all helm releases to helm 3.
+This release upgrades all Helm releases managed by Giant Swarm to use Helm v3.3.0.
 
 Below, you can find more details on components that were changed with this release.
 
