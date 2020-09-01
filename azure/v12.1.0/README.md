@@ -4,6 +4,8 @@
 
 This release upgrades all Helm releases managed by Giant Swarm to use Helm v3.3.0.
 
+This lets us benefit from the improved security and keep up to date with the community. We also removed the Tiller deployment from tenant clusters, removing its gRPC endpoint, which reduces operational complexity. 
+
 Below, you can find more details on components that were changed with this release.
 
 ### app-operator [v2.1.1](https://github.com/giantswarm/app-operator/blob/master/CHANGELOG.md#211---2020-08-26)
