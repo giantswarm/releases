@@ -4,7 +4,9 @@
 
 This release upgrades all Helm releases managed by Giant Swarm to use Helm v3.3.0.
 
-This lets us benefit from the improved security and keep up to date with the community. We also removed the Tiller deployment from tenant clusters, removing its gRPC endpoint, which reduces operational complexity. 
+This lets us benefit from the improved security model and keep up to date with the community. We also remove the Tiller deployment from the giantswarm namespace, removing its gRPC endpoint, which reduces operational complexity.
+
+If you are still using Helm 2 then these Helm releases will not be affected. However we encourage you to upgrade to Helm 3. As Helm 2 support ends on November 13th 2020. https://helm.sh/blog/helm-v2-deprecation-timeline/
 
 Below, you can find more details on components that were changed with this release.
 
