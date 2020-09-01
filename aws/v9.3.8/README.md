@@ -1,16 +1,19 @@
 # :zap: Giant Swarm Release v9.3.8 for AWS :zap:
 
-<< Add description here >>
+This is a patch release to update core component versions and remove memory limits from calico-kube-controllers which caused some control plane instability in certain clusters.
 
 ## Change details
 
 
 ### aws-operator [5.7.6](https://github.com/giantswarm/aws-operator/releases/tag/v5.7.6)
 
-#### Changed
-- No notable changes.
+### Added
 
+- Updated AMI mapping to add Flatcar Container Linux 2512.3.0 AMIs.
 
+### Changed
+
+- Removed memory and CPU limits from calico-kube-controllers.
 
 ### kubernetes [1.16.14](https://github.com/kubernetes/kubernetes/releases/tag/v1.16.14)
 
@@ -34,15 +37,6 @@
     - Includes:
       - bazelbuild/bazel-toolchains@3.4.0
       - bazelbuild/rules_go@v0.22.8 ([#93235](https://github.com/kubernetes/kubernetes/pull/93235), [@justaugustus](https://github.com/justaugustus)) [SIG API Machinery, Release and Testing]
-#### Dependencies
-#### Added
-- github.com/jessevdk/go-flags: [v1.4.0](https://github.com/jessevdk/go-flags/tree/v1.4.0)
-#### Changed
-- github.com/evanphx/json-patch: [v4.2.0+incompatible → 162e562](https://github.com/evanphx/json-patch/compare/v4.2.0...162e562)
-#### Removed
-_Nothing has changed._
-
-
 
 ### calico [3.10.4](https://github.com/projectcalico/calico/releases/tag/v3.10.4)
 
@@ -82,5 +76,3 @@ Updates:
 * bind-tools [9.11.22](https://ftp.isc.org/isc/bind9/cur/9.11/RELEASE-NOTES-bind-9.11.22.txt)
 * etcd-wrapper [3.3.24](https://github.com/etcd-io/etcd/releases/tag/v3.3.24)
 * Git [2.26.2](https://raw.githubusercontent.com/git/git/v2.26.2/Documentation/RelNotes/2.26.2.txt)
-
-
