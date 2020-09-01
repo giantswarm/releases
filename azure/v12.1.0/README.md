@@ -1,6 +1,6 @@
 ## :zap:  Giant Swarm Release 12.1.0 for Azure :zap:
 
-***We recommended triggering this upgrade by our solution engineers to mitigate any unexpected results.***
+***The upgrade is automated but it includes a data migration from Helm 2 release configmaps to Helm 3 release secrets. So please contact your solution engineer when you want to upgrade.***
 
 **If you are upgrading from 12.0.2, upgrading to this release will not roll your nodes. It will only update the apps.**
 
