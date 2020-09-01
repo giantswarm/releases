@@ -1,8 +1,10 @@
 ## :zap:  Giant Swarm Release 12.1.0 for Azure :zap:
 
+***We recommended triggering this upgrade by our solution engineers to mitigate any unexpected results.***
+
 **If you are upgrading from 12.0.2, upgrading to this release will not roll your nodes. It will only update the apps.**
 
-This release upgrades all Helm releases managed by Giant Swarm to use Helm v3.3.0.
+This release upgrades all Helm releases managed by Giant Swarm to use [Helm v3.3.0](https://github.com/helm/helm/releases/tag/v3.3.0).
 
 This lets us benefit from the improved security model and keep up to date with the community. We also remove the Tiller deployment from the giantswarm namespace, removing its gRPC endpoint, which reduces operational complexity.
 
