@@ -9,7 +9,7 @@ When NGINX IC LoadBalancer Service gets recreated, cloud service provider (CSP) 
 It can take minute or so for ingress DNS records to be updated by external-dns and change propagated to clients.
 During that time there's ingress traffic downtime, since clients still resolve old no longer present CSP load balancer.
 
-Please take the potential downtime into consideration when planning the upgrade.
+** Please take the potential ingress downtime into consideration when planning the NGINX IC App upgrade from older to v1.8.0+. **
 
 To make sure the downtime is shortest possible, external-dns availability is important precondition.
 In recent platform releases (Azure v12.0.2, and AWS v12.1.4 and v11.5.4) we've improved external-dns monitoring and alerting.
