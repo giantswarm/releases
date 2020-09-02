@@ -1,6 +1,6 @@
 ### :zap: Dear Giant Swarm customer :zap:
 
-We'd like to inform you about a known issue when upgrading NGINX ingress controller (IC) optional app to v1.8.0+ on AWS and Azure clusters - NGINX IC LoadBalancer Service may get renamed/recreated with the app upgrade.
+We'd like to inform you about a known issue when upgrading NGINX ingress controller (IC) optional app to v1.8.0+ on **AWS** and **Azure** clusters - NGINX IC LoadBalancer Service may get renamed/recreated with the app upgrade.
 
 In older releases the Service name was hardcoded to `nginx-ingress-controller`. As of v1.8.0, to ensure its uniqueness for multiple NGINX ICs per cluster support, the LoadBalancer Service name was made to be dynamic, derived from Helm release i.e. App Custom Resource (CR) name.
 Therefore, NGINX IC LoadBalancer Service will be replaced by a new one for every NGINC IC App CR whose name is not `nginx-ingress-controller`.
