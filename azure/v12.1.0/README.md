@@ -11,7 +11,12 @@ If you are still using Helm 2 then these Helm releases will not be affected. How
 Below, you can find more details on components that were changed with this release.
 
 **Note before upgrade:**
+
 Please contact your Solution Engineer before upgrading. The upgrade is automated. However, it includes a data migration from Helm 2 release configmaps to Helm 3 release secrets, which we recommend to monitor to ensure safety.
+
+**Note for Solution Engineers:**
+
+Please use [Upgrading tenant clusters to Helm 3](https://intranet.giantswarm.io/docs/dev-and-releng/helm/helm3-tenant-cluster-upgrade/index.md) as a guide to an upgrade to Azure v12.1.0.
 
 ## Change details
 
