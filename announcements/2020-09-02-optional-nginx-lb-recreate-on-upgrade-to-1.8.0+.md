@@ -14,5 +14,5 @@ Please take the potential downtime into consideration when planning the upgrade.
 To make sure the downtime is shortest possible, external-dns availability is important precondition.
 In recent platform releases (Azure v12.0.2, and AWS v12.1.4 and v11.5.4) we've improved external-dns monitoring and alerting.
 
-**tl;dr: Therefore, before upgrading NGINX IC optional app to 1.8.0+, please make sure that your cluster has been upgraded to the latest release.**
+**tl;dr: Therefore, before upgrading NGINX IC optional app to 1.8.0+, please make sure that your cluster has been upgraded to the latest platform release.**
 If you have any further questions please do not hesitate to reach out for support.
