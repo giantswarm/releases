@@ -16,7 +16,7 @@ Please contact your Solution Engineer before upgrading. The upgrade is automated
 
 **Note for Solution Engineers:**
 
-Please use [Upgrading tenant clusters to Helm 3](https://intranet.giantswarm.io/docs/dev-and-releng/helm/helm3-tenant-cluster-upgrade/index.md) as a guide to an upgrade to Azure v12.1.0.
+Please use [Upgrading tenant clusters to Helm 3](https://intranet.giantswarm.io/docs/dev-and-releng/helm/helm3-tenant-cluster-upgrade/) as a guide to an upgrade to Azure v12.1.0.
 
 ## Change details
 
