@@ -1,4 +1,4 @@
-## Known Issue: Potential ingress downtime when upgrading to NGINX IC v1.8.0+
+# Known Issue: Potential ingress downtime when upgrading to NGINX IC v1.8.0+
 
 We'd like to inform you about a known issue when upgrading NGINX ingress controller (IC) optional app to v1.8.0+ on **AWS** and **Azure** clusters - NGINX IC LoadBalancer Service may get renamed/recreated with the app upgrade.
 
