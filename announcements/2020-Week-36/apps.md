@@ -6,5 +6,6 @@
 4. [Jaeger Operator app v0.2.0](https://github.com/giantswarm/jaeger-operator-app/blob/master/CHANGELOG.md#020---2020-09-01) Upgrades jaeger-operator version to v1.18.0. Please check the [upstream changelog](https://github.com/jaegertracing/jaeger-operator/blob/master/CHANGELOG.md#1180-2020-05-15) for details on all changes. (app can be installed from the Playground Catalog)
 5. [NGINX IC app v1.9.2](https://github.com/giantswarm/nginx-ingress-controller-app/blob/master/CHANGELOG.md#192---2020-09-02) Upgrades ingress-nginx from v0.34.1 to v0.35.0. Please check the [upstream changelog](https://github.com/kubernetes/ingress-nginx/blob/master/Changelog.md#0350) for details on all changes.
 6. [EFK Stack app v0.3.0](https://github.com/giantswarm/efk-stack-app/blob/master/CHANGELOG.md#030---2020-09-04) upgrades to Open Distro v1.9.0.
+
 ---
 Please let <!subteam^S0GSG846L|Product Owners> know if you have any feedback or questions by replying to this announcement in a thread.
