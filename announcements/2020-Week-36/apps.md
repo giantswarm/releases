@@ -1,4 +1,4 @@
-# :zap: This Week in Provider-Independent Releases (September 4, 2020):zap:
+# :zap: This Week in Provider-Independent Releases (September 11, 2020):zap:
 
 1. [Strimzi Kafka Operator app v0.1.0](https://github.com/giantswarm/strimzi-kafka-operator-app/blob/master/CHANGELOG.md#010---2020-08-14) upgrades to upstream from v0.18.0 to v0.19.0. (app can be installed from the Playground Catalog)
 2. [Kong app v0.9.0](https://github.com/giantswarm/kong-app/blob/master/CHANGELOG.md#090---2020-08-25) Update default Kong version to 2.1.3, update other dependencies, sync with upstream chart 1.8.0
