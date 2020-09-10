@@ -11,16 +11,16 @@ Swarm control planes.
 - v12
   - v12.1
     - [v12.1.4](https://github.com/giantswarm/releases/tree/master/aws/v12.1.4)
-    - [v12.1.3](https://github.com/giantswarm/releases/tree/master/aws/v12.1.3)
-    - [v12.1.2](https://github.com/giantswarm/releases/tree/master/aws/v12.1.2)
-    - [v12.1.1](https://github.com/giantswarm/releases/tree/master/aws/v12.1.1)
+    - [v12.1.3](https://github.com/giantswarm/releases/tree/master/aws/archived/v12.1.3)
+    - [v12.1.2](https://github.com/giantswarm/releases/tree/master/aws/archived/v12.1.2)
+    - [v12.1.1](https://github.com/giantswarm/releases/tree/master/aws/archived/v12.1.1)
     - [v12.1.0](https://github.com/giantswarm/releases/tree/master/aws/v12.1.0)
   - v12.0
     - [v12.0.0](https://github.com/giantswarm/releases/tree/master/aws/v12.0.0)
 - v11
   - v11.5
     - [v11.5.4](https://github.com/giantswarm/releases/tree/master/aws/v11.5.4)
-    - [v11.5.3](https://github.com/giantswarm/releases/tree/master/aws/v11.5.3)
+    - [v11.5.3](https://github.com/giantswarm/releases/tree/master/aws/archived/v11.5.3)
     - [v11.5.2](https://github.com/giantswarm/releases/tree/master/aws/v11.5.2)
     - [v11.5.1](https://github.com/giantswarm/releases/tree/master/aws/v11.5.1)
     - [v11.5.0](https://github.com/giantswarm/releases/tree/master/aws/v11.5.0)
