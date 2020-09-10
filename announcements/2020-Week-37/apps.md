@@ -1,4 +1,4 @@
-# :zap: This Week in Provider-Independent Releases (September 10, 2020):zap:
+# :zap: This Week in Provider-Independent Announcements (September 10, 2020):zap:
 
 **Security Announcements**
 
