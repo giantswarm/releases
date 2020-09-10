@@ -9,7 +9,7 @@
 
 **Playground Catalog (Playground Apps)**
 
-1. [Strimzi Kafka Operator app v0.1.0](https://github.com/giantswarm/strimzi-kafka-operator-app/blob/master/CHANGELOG.md#010---2020-08-14) upgrades to upstream from v0.18.0 to v0.19.0.
+1. [Strimzi Kafka Operator app v0.1.0](https://github.com/giantswarm/strimzi-kafka-operator-app/blob/master/CHANGELOG.md#010---2020-08-14) upgrades upstream strimzi-kafka-operator from v0.18.0 to v0.19.0. Please check the [upstream changelog](https://github.com/strimzi/strimzi-kafka-operator/releases/tag/0.19.0) for details on all changes.
 2. [Jaeger Operator app v0.2.0](https://github.com/giantswarm/jaeger-operator-app/blob/master/CHANGELOG.md#020---2020-09-01) upgrades jaeger-operator version to v1.18.0. Please check the [upstream changelog](https://github.com/jaegertracing/jaeger-operator/blob/master/CHANGELOG.md#1180-2020-05-15) for details on all changes.
 
 
