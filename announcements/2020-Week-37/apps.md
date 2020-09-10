@@ -1,5 +1,9 @@
 # :zap: This Week in Provider-Independent Releases (September 10, 2020):zap:
 
+**Security Announcements**
+
+1. [CVE-2020-14386](https://docs.google.com/document/d/1WJ_T9M9orEb0_bIQo4r827GNUm5GgK1Uz6Xbe9Ynaaw/edit?usp=sharing) affecting the Linux kernel is mitigated by the default Giant Swarm configuration. If you run privileged pods or pods with the `CAP_NET_RAW` capability enabled, please review this advisory.
+
 **Giant Swarm Catalog (Managed Apps)**
 
 1. [Kong app v0.9.0](https://github.com/giantswarm/kong-app/blob/master/CHANGELOG.md#090---2020-08-25) Update default Kong version to 2.1.3, update other dependencies, sync with upstream chart 1.8.0. Please check the [upstream changelog](https://github.com/Kong/kong/blob/master/CHANGELOG.md#213) for details on all changes.
