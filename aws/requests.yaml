@@ -4,3 +4,18 @@ releases:
         - name: calico
           version: ">= 3.15.1"
           issue: https://github.com/giantswarm/giantswarm/issues/11307
+    - name: "> 12.1.4, < 13.0.0"
+      requests:
+        - name: flatcar
+          version: ">= 2512.4.0"
+          issue: https://github.com/giantswarm/giantswarm/issues/13150
+    - name: "> 11.5.4, < 12.0.0"
+      requests:
+        - name: flatcar
+          version: ">= 2512.4.0"
+          issue: https://github.com/giantswarm/giantswarm/issues/13150
+    - name: "> 9.3.8, < 10.0.0"
+      requests:
+        - name: flatcar
+          version: ">= 2512.4.0"
+          issue: https://github.com/giantswarm/giantswarm/issues/13150
