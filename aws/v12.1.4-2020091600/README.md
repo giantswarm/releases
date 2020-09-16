@@ -1,4 +1,4 @@
-## :zap:  Giant Swarm Release 12.2.0 for AWS :zap:
+## :zap:  Giant Swarm Release 12.1.4-2020091600 for AWS :zap:
 
 **If you are upgrading from 12.1.4, upgrading to this release will not roll your nodes. It will only update the apps.**
 

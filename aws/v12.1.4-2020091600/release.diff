@@ -4,7 +4,7 @@ metadata:							metadata:
   annotations:							  annotations:
     giantswarm.io/docs: https://docs.giantswarm.io/reference/	    giantswarm.io/docs: https://docs.giantswarm.io/reference/
   creationTimestamp: null					  creationTimestamp: null
-  name: v12.1.4						      |	  name: v12.2.0
+  name: v12.1.4						      |	  name: v12.1.4-2020091600
 spec:								spec:
   apps:								  apps:
   - name: cert-exporter						  - name: cert-exporter
