@@ -11,16 +11,16 @@ releases:
           issue: https://github.com/giantswarm/giantswarm/issues/11307
     - name: "> 12.1.0, < 13.0.0"
       requests:
-        - name: flatcar
+        - name: containerlinux
           version: ">= 2512.4.0"
           issue: https://github.com/giantswarm/giantswarm/issues/13150
     - name: "> 12.0.2, < 12.1.0"
       requests:
-        - name: flatcar
+        - name: containerlinux
           version: ">= 2512.4.0"
           issue: https://github.com/giantswarm/giantswarm/issues/13150
     - name: "> 11.4.0, < 12.0.0"
       requests:
-        - name: flatcar
+        - name: containerlinux
           version: ">= 2512.4.0"
           issue: https://github.com/giantswarm/giantswarm/issues/13150
