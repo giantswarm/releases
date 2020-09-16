@@ -46,7 +46,7 @@ spec:                                                              spec:
     releaseOperatorDeploy: true                                        releaseOperatorDeploy: true
     version: 8.8.0                                              |      version: 9.0.0
   - name: calico                                                     - name: calico
-    version: 3.15.1                                             |      version: 3.16.1
+    version: 3.15.1                                             |      version: 3.15.3
   - name: cert-operator                                              - name: cert-operator
     reference: 0.1.0-2                                                 reference: 0.1.0-2
     releaseOperatorDeploy: true                                        releaseOperatorDeploy: true
