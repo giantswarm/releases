@@ -25,7 +25,7 @@ spec:
     version: 1.4.0
   - componentVersion: 3.6.0
     name: kiam
-    version: 1.4.2
+    version: 1.5.0
   - componentVersion: 1.9.7
     name: kube-state-metrics
     version: 1.1.1
@@ -41,25 +41,25 @@ spec:
   - name: app-operator
     version: 1.0.0
   - name: aws-cni
-    version: 1.6.3
+    version: 1.7.2
   - name: aws-operator
     releaseOperatorDeploy: true
-    version: 8.8.0
+    version: 9.0.0
   - name: calico
-    version: 3.15.1
+    version: 3.16.1
   - name: cert-operator
     reference: 0.1.0-2
     releaseOperatorDeploy: true
     version: 0.1.0
   - name: cluster-operator
     releaseOperatorDeploy: true
-    version: 3.1.1
+    version: 3.2.0
   - name: containerlinux
-    version: 2512.2.1
+    version: 2512.4.0
   - name: etcd
-    version: 3.4.10
+    version: 3.4.13
   - name: kubernetes
-    version: 1.17.9
+    version: 1.17.11
   date: "2020-09-15T15:00:00Z"
   state: active
 status:
