@@ -1,7 +1,47 @@
 # :zap: Giant Swarm Release v12.2.0 for AWS :zap:
 
-This release upgrades...
+This release includes a number of fixes, improvements, and picks up various component and app upgrades.
+
+**Security**
 
 ## Change details
 
+### aws-operator [v9.0.1](https://github.com/giantswarm/aws-operator/releases/tag/v9.0.1)
 
+### cluster-operator [v3.2.0](https://github.com/giantswarm/cluster-operator/releases/tag/v3.2.0)
+
+### calico v3.15.3
+
+### aws-cni v1.7.3
+
+### kiam 3.6.0 (Giant Swarm app [v1.5.0](https://github.com/giantswarm/kiam-app/blob/v1.5.0/CHANGELOG.md))
+
+### Etcd [3.4.13](https://github.com/etcd-io/etcd/blob/master/CHANGELOG-3.4.md)
+
+### Kubernetes [1.17.12](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.17.md#v11712)
+
+### containerlinux [2512.5.0](https://www.flatcar-linux.org/releases/#release-2512.5.0)
+
+Security fixes:
+
+* Linux kernel: Fix AF_PACKET overflow in tpacket_rcv [CVE-2020-14386](https://seclists.org/oss-sec/2020/q3/146)
+* Bind: fixes for [CVE-2020-8616](https://nvd.nist.gov/vuln/detail/CVE-2020-8616), [CVE-2020-8617](https://nvd.nist.gov/vuln/detail/CVE-2020-8617), [CVE-2020-8620](https://nvd.nist.gov/vuln/detail/CVE-2020-8620), [CVE-2020-8621](https://nvd.nist.gov/vuln/detail/CVE-2020-8621), [CVE-2020-8622](https://nvd.nist.gov/vuln/detail/CVE-2020-8622), [CVE-2020-8623](https://nvd.nist.gov/vuln/detail/CVE-2020-8623), [CVE-2020-8624](https://nvd.nist.gov/vuln/detail/CVE-2020-8624)
+
+Bug fixes:
+
+* The static IP address configuration in the initramfs works again in the format `ip=<ip>::<gateway>:<netmask>:<hostname>:<iface>:none[:<dns1>[:<dns2>]]` ([flatcar-linux/bootengine#15](https://github.com/flatcar-linux/bootengine/pull/15))
+* app-admin/{kubelet, etcd, flannel}-wrapper: don't overwrite the user supplied –insecure-options argument ([flatcar-linux/coreos-overlay#426](https://github.com/flatcar-linux/coreos-overlay/pull/426))
+* etcd-wrapper: Adjust data dir permissions ([flatcar-linux/coreos-overlay#536](https://github.com/flatcar-linux/coreos-overlay/pull/536))
+
+Changes:
+
+* Update public key to include a [new subkey](https://www.flatcar-linux.org/security/image-signing-key/)
+* Vultr support in Ignition ([flatcar-linux/ignition#13](https://github.com/flatcar-linux/ignition/pull/13))
+* VMware OVF settings default to ESXi 6.5 and Linux 3.x
+
+Updates:
+
+* Linux [4.19.145](https://lwn.net/Articles/831367/)
+* bind-tools [9.11.22](https://ftp.isc.org/isc/bind9/cur/9.11/RELEASE-NOTES-bind-9.11.22.txt)
+* etcd-wrapper [3.3.24](https://github.com/etcd-io/etcd/releases/tag/v3.3.24)
+* Git [2.26.2](https://raw.githubusercontent.com/git/git/v2.26.2/Documentation/RelNotes/2.26.2.txt)
