@@ -44,7 +44,7 @@ spec:                                                              spec:
     version: 1.6.3                                              |      version: 1.7.2
   - name: aws-operator                                               - name: aws-operator
     releaseOperatorDeploy: true                                        releaseOperatorDeploy: true
-    version: 8.8.0                                              |      version: 9.0.0
+    version: 8.8.0                                              |      version: 9.0.1
   - name: calico                                                     - name: calico
     version: 3.15.1                                             |      version: 3.15.3
   - name: cert-operator                                              - name: cert-operator
@@ -55,7 +55,7 @@ spec:                                                              spec:
     releaseOperatorDeploy: true                                        releaseOperatorDeploy: true
     version: 3.1.1                                              |      version: 3.2.0
   - name: containerlinux                                             - name: containerlinux
-    version: 2512.2.1                                           |      version: 2512.4.0
+    version: 2512.2.1                                           |      version: 2512.5.0
   - name: etcd                                                       - name: etcd
     version: 3.4.10                                             |      version: 3.4.13
   - name: kubernetes                                                 - name: kubernetes
