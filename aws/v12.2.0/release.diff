@@ -41,7 +41,7 @@ spec:                                                              spec:
   - name: app-operator                                               - name: app-operator
     version: 1.0.0                                                     version: 1.0.0
   - name: aws-cni                                                    - name: aws-cni
-    version: 1.6.3                                              |      version: 1.7.2
+    version: 1.6.3                                              |      version: 1.7.3
   - name: aws-operator                                               - name: aws-operator
     releaseOperatorDeploy: true                                        releaseOperatorDeploy: true
     version: 8.8.0                                              |      version: 9.0.1
