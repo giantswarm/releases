@@ -14,11 +14,19 @@ This release includes a number of fixes, improvements, and picks up various comp
 
 ### aws-cni v1.7.3
 
-### kiam 3.6.0 (Giant Swarm app [v1.5.0](https://github.com/giantswarm/kiam-app/blob/v1.5.0/CHANGELOG.md))
+### kiam v3.6.0 (Giant Swarm app [v1.5.0](https://github.com/giantswarm/kiam-app/blob/v1.5.0/CHANGELOG.md))
 
 ### Etcd [3.4.13](https://github.com/etcd-io/etcd/blob/master/CHANGELOG-3.4.md)
 
 ### Kubernetes [1.17.12](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.17.md#v11712)
+
+* Fix a concurrent map writes error in kubelet ([#93773](https://github.com/kubernetes/kubernetes/pull/93773))
+* Fixes a bug evicting pods after a taint with a limited tolerationSeconds toleration is removed from a node ([#93722](https://github.com/kubernetes/kubernetes/pull/93722))
+* Fixes an issue that can result in namespaced custom resources being orphaned when their namespace is deleted, if the CRD defining the custom resource is removed concurrently with namespaces being deleted, then recreated. ([#93790](https://github.com/kubernetes/kubernetes/pull/93790))
+* Kube-apiserver: fixed a bug returning inconsistent results from list requests which set a field or label selector and set a paging limit ([#94002](https://github.com/kubernetes/kubernetes/pull/94002))
+* Update CNI plugins to v0.8.7 ([#94367](https://github.com/kubernetes/kubernetes/pull/94367))
+
+Check the [upstream changelog](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.17.md#v11712) for details on all changes.
 
 ### containerlinux [2512.5.0](https://www.flatcar-linux.org/releases/#release-2512.5.0)
 
