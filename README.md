@@ -132,6 +132,10 @@ Swarm control planes.
 
 ## KVM
 
+- v13
+  - v13.0
+    - [v13.0.0](https://github.com/giantswarm/releases/tree/master/kvm/v13.0.0)
+
 - v12
   - v12.2
     - [v12.2.0](https://github.com/giantswarm/releases/tree/master/kvm/v12.2.0)
