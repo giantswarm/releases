@@ -41,10 +41,10 @@ spec:
   - name: app-operator
     version: 1.0.0
   - name: aws-cni
-    version: 1.6.0
+    version: 1.7.3
   - name: aws-operator
     releaseOperatorDeploy: true
-    version: 8.7.6
+    version: 8.7.7
   - name: calico
     version: 3.15.1
   - name: cert-operator
