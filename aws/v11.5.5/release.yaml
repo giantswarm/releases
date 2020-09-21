@@ -60,7 +60,7 @@ spec:
     version: 3.4.9
   - name: kubernetes
     version: 1.16.13
-  date: "2020-09-18T08:49:22Z"
+  date: "2020-09-22T10:00:00Z"
   state: active
 status:
   ready: false
