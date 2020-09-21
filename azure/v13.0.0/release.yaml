@@ -41,7 +41,7 @@ spec:
     releaseOperatorDeploy: true
     version: 0.23.16
   - name: kubernetes
-    version: 1.17.9
+    version: 1.17.11
   - name: containerlinux
     version: 2512.2.1
   - name: coredns
