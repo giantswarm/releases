@@ -13,7 +13,7 @@ spec:								spec:
     name: cert-manager						    name: cert-manager
     version: 2.1.1						    version: 2.1.1
   - name: chart-operator					  - name: chart-operator
-    version: 0.13.2					      |	    version: 2.3.0
+    version: 0.13.2					      |	    version: 2.3.2
   - componentVersion: 1.17.3					  - componentVersion: 1.17.3
     name: cluster-autoscaler					    name: cluster-autoscaler
     version: 1.17.3						    version: 1.17.3
@@ -40,7 +40,7 @@ spec:								spec:
   components:							  components:
   - name: app-operator						  - name: app-operator
     version: 1.0.0					      |	    releaseOperatorDeploy: true
-							      >	    version: 2.1.1
+							      >	    version: 2.3.1
   - name: aws-cni						  - name: aws-cni
     version: 1.6.3						    version: 1.6.3
   - name: aws-operator						  - name: aws-operator
