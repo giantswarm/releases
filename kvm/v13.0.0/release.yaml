@@ -27,7 +27,7 @@ spec:
   - name: app-operator
     version: 1.0.0
   - name: calico
-    version: 3.14.1
+    version: 3.16.1
   - name: cert-operator
     reference: 0.1.0-2
     releaseOperatorDeploy: true
