@@ -6,17 +6,36 @@ This release includes a number of fixes, improvements, and picks up various comp
 
 ## Change details
 
-### aws-operator [v9.0.1](https://github.com/giantswarm/aws-operator/releases/tag/v9.0.1)
+### aws-operator [9.1.0](https://github.com/giantswarm/aws-operator/blob/v9.1.0/CHANGELOG.md#v910)
+
+* Updated Flatcar Releases
+* Updated AWS CNI installation manifests
+* Updated k8scloudconfig to disable Calico installing the CNI binaries
+
+### aws-cni [v1.7.3](https://github.com/aws/amazon-vpc-cni-k8s/blob/v1.7.3/CHANGELOG.md#v173)
+
+* Bug - Avoid deleting ENIs being created by older CNI versions ([#1109](https://github.com/aws/amazon-vpc-cni-k8s/pull/1109))
+* Bug - Wait for ENI and secondary IPs ([#1174](https://github.com/aws/amazon-vpc-cni-k8s/pull/1174))
+* Improvement - Refresh subnet/CIDR information periodically ([#903](https://github.com/aws/amazon-vpc-cni-k8s/pull/903))
 
 ### cluster-operator [v3.2.0](https://github.com/giantswarm/cluster-operator/releases/tag/v3.2.0)
 
 ### calico v3.15.3
 
-### aws-cni v1.7.3
+* Fix import from libcalico-go
+* Fix import from libcalico-go
+* Update pins - pick up FelixConfiguration
+* Update pins - pick up FelixConfiguration
 
 ### kiam v3.6.0 (Giant Swarm app [v1.5.0](https://github.com/giantswarm/kiam-app/blob/v1.5.0/CHANGELOG.md))
 
+* Setting gRPC environment variables
+* Use deep liveness probe for kiam agent.
+* Align charts with upstream.
+
 ### Etcd [3.4.13](https://github.com/etcd-io/etcd/blob/master/CHANGELOG-3.4.md)
+
+* A log warning is added when etcd use any existing directory that has a permission different than 700 on Linux and 777 on Windows.
 
 ### Kubernetes [1.17.12](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.17.md#v11712)
 
