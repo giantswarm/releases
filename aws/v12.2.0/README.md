@@ -20,6 +20,9 @@ This release includes a number of fixes, improvements, and picks up various comp
 
 ### cluster-operator [v3.2.0](https://github.com/giantswarm/cluster-operator/releases/tag/v3.2.0)
 
+* Introducing Kubernetes events
+* Add monitoring labels.
+
 ### calico v3.15.3
 
 * Fix import from libcalico-go
