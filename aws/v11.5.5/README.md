@@ -6,6 +6,12 @@ This release upgrades:
 
 ## Change details
 
+### aws-operator [8.7.8](https://github.com/giantswarm/aws-operator/blob/v8.7.8/CHANGELOG.md#v878)
+
+* Updated Flatcar Releases
+* Updated AWS CNI installation manifests
+* Updated k8scloudconfig to disable Calico installing the CNI binaries
+
 ### aws-cni [v1.7.3](https://github.com/aws/amazon-vpc-cni-k8s/blob/v1.7.3/CHANGELOG.md#v173)
 
 * Bug - Avoid deleting ENIs being created by older CNI versions ([#1109](https://github.com/aws/amazon-vpc-cni-k8s/pull/1109))
