@@ -5,7 +5,7 @@ resources:
 - v11.3.3
 - v11.4.0
 - v12.0.0
-- v12.0.1
+- archived/v12.0.1
 - v12.0.2
 - v12.1.0
 transformers:
