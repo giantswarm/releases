@@ -20,6 +20,8 @@ Swarm control planes.
     - [v12.0.0](https://github.com/giantswarm/releases/tree/master/aws/v12.0.0)
 - v11
   - v11.5
+    - [v11.5.5](https://github.com/giantswarm/releases/tree/master/aws/v11.5.6)
+    - [v11.5.5](https://github.com/giantswarm/releases/tree/master/aws/v11.5.5)
     - [v11.5.4](https://github.com/giantswarm/releases/tree/master/aws/v11.5.4)
     - [v11.5.3](https://github.com/giantswarm/releases/tree/master/aws/archived/v11.5.3)
     - [v11.5.2](https://github.com/giantswarm/releases/tree/master/aws/v11.5.2)
@@ -85,7 +87,7 @@ Swarm control planes.
   - v8.5
     - [v8.5.0](https://github.com/giantswarm/releases/tree/master/aws/archived/v8.5.0)
   - v8.2
-    - [v8.2.0](https://github.com/giantswarm/releases/tree/master/aws/v8.2.0)
+    - [v8.2.0](https://github.com/giantswarm/releases/tree/master/aws/archived/v8.2.0)
 
 ## Azure
 
