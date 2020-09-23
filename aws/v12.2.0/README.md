@@ -6,7 +6,7 @@ This release includes a number of fixes, improvements, and picks up various comp
 
 ## Change details
 
-### aws-operator [9.1.0](https://github.com/giantswarm/aws-operator/blob/v9.1.0/CHANGELOG.md#v910)
+### aws-operator [9.1.1](https://github.com/giantswarm/aws-operator/blob/v9.1.1/CHANGELOG.md#v911)
 
 * Updated Flatcar Releases
 * Updated AWS CNI installation manifests
