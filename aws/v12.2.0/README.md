@@ -1,6 +1,6 @@
 # :zap: Giant Swarm Release v12.2.0 for AWS :zap:
 
-This release includes a number of fixes, improvements, and picks up various component and app upgrades.
+This release includes a number of stability and security fixes, improvements, and picks up various component and app upgrades.
 
 **If you are upgrading from 12.1.0 or older platform release, this release uses Cert Manager 0.16.1 and will no longer reconcile existing resources** due to changes in its API. Manual intervention is required to update affected resources. While the negative impact to your workloads is low-to-none, to minimize disruption, **we recommend discussing this upgrade with your Solution Engineer**.
 
@@ -14,7 +14,7 @@ Please persist this note and the above, until all customers are on AWS v12.1.x a
 
 ## Change details
 
-### aws-operator [9.1.1](https://github.com/giantswarm/aws-operator/blob/v9.1.1/CHANGELOG.md#v911)
+### aws-operator [v9.1.1](https://github.com/giantswarm/aws-operator/blob/v9.1.1/CHANGELOG.md#v911)
 
 * Updated Flatcar Releases
 * Updated AWS CNI installation manifests
@@ -31,11 +31,9 @@ Please persist this note and the above, until all customers are on AWS v12.1.x a
 * Introducing Kubernetes events
 * Add monitoring labels.
 
-### calico v3.15.3
+### calico [v3.15.3](https://github.com/projectcalico/calico/compare/v3.15.1...v3.15.3)
 
 * Fix import from libcalico-go
-* Fix import from libcalico-go
-* Update pins - pick up FelixConfiguration
 * Update pins - pick up FelixConfiguration
 
 ### kiam v3.6.0 (Giant Swarm app [v1.5.0](https://github.com/giantswarm/kiam-app/blob/v1.5.0/CHANGELOG.md))
