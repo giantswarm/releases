@@ -1,6 +1,8 @@
 apiVersion: release.giantswarm.io/v1alpha1			apiVersion: release.giantswarm.io/v1alpha1
 kind: Release							kind: Release
 metadata:							metadata:
+							      >	  annotations:
+							      >	    helm.sh/resource-policy: keep
   creationTimestamp: null					  creationTimestamp: null
   name: v12.2.0						      |	  name: v12.2.0-2020092800
 spec:								spec:
