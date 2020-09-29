@@ -2,7 +2,7 @@
 
 **If you are upgrading from 12.2.0, upgrading to this release will not roll your nodes. It will only update the apps.**
 
-This release upgrades all Helm releases managed by Giant Swarm to use [Helm v3.3.0](https://github.com/helm/helm/releases/tag/v3.3.0).
+This release upgrades all Helm releases managed by Giant Swarm to use [Helm v3.3.4](https://github.com/helm/helm/releases/tag/v3.3.4).
 
 This lets us benefit from the improved security model and keep up to date with the community. We also remove the Tiller deployment from the giantswarm namespace, removing its gRPC endpoint, which reduces operational complexity.
 
@@ -26,4 +26,4 @@ Please persist this note and the above, until all customers are on AWS v12.2.x a
 
 ### app-operator [v2.3.1](https://github.com/giantswarm/app-operator/blob/master/CHANGELOG.md#231---2020-09-22)
 ### chart-operator [v2.3.2](https://github.com/giantswarm/chart-operator/blob/master/CHANGELOG.md#232---2020-09-22)
-- Updated Helm to [v3.3.0](https://github.com/helm/helm/releases/tag/v3.3.0).
+- Updated Helm to [v3.3.0](https://github.com/helm/helm/releases/tag/v3.3.4).
