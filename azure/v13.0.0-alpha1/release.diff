@@ -2,53 +2,63 @@ apiVersion: release.giantswarm.io/v1alpha1			apiVersion: release.giantswarm.io/v
 kind: Release							kind: Release
 metadata:							metadata:
   creationTimestamp: null					  creationTimestamp: null
-  name: v12.0.2						      |	  name: v12.1.0
+  name: v12.1.0						      |	  name: v13.0.0-alpha1
 spec:								spec:
   apps:								  apps:
-  - name: cert-exporter						  - name: cert-exporter
-    version: 1.2.1					      |	    version: 1.2.4
-  - name: chart-operator					  - name: chart-operator
-    version: 0.13.0					      |	    version: 2.3.0
-  - componentVersion: 1.6.5					  - componentVersion: 1.6.5
-    name: coredns						    name: coredns
-    version: 1.2.0						    version: 1.2.0
-  - componentVersion: 0.7.3					  - componentVersion: 0.7.3
-    name: external-dns						    name: external-dns
-    version: 1.4.0						    version: 1.4.0
-  - componentVersion: 1.9.5					  - componentVersion: 1.9.5
-    name: kube-state-metrics					    name: kube-state-metrics
-    version: 1.1.0						    version: 1.1.0
-  - componentVersion: 0.3.3					  - componentVersion: 0.3.3
-    name: metrics-server					    name: metrics-server
-    version: 1.1.0						    version: 1.1.0
-  - name: net-exporter						  - name: net-exporter
-    version: 1.8.1						    version: 1.8.1
-  - componentVersion: 0.18.1					  - componentVersion: 0.18.1
-    name: node-exporter						    name: node-exporter
-    version: 1.2.0						    version: 1.2.0
+  - name: cert-exporter					      |	    - name: cert-exporter
+    version: 1.2.4					      |	      version: 1.2.4
+  - name: chart-operator				      |	    - name: chart-operator
+    version: 2.3.0					      |	      version: 2.3.0
+  - componentVersion: 1.6.5				      |	    - componentVersion: 1.6.5
+    name: coredns					      |	      name: coredns
+    version: 1.2.0					      |	      version: 1.2.0
+  - componentVersion: 0.7.3				      |	    - componentVersion: 0.7.3
+    name: external-dns					      |	      name: external-dns
+    version: 1.4.0					      |	      version: 1.4.0
+  - componentVersion: 1.9.5				      |	    - componentVersion: 1.9.5
+    name: kube-state-metrics				      |	      name: kube-state-metrics
+    version: 1.1.0					      |	      version: 1.1.0
+  - componentVersion: 0.3.3				      |	    - componentVersion: 0.3.3
+    name: metrics-server				      |	      name: metrics-server
+    version: 1.1.0					      |	      version: 1.1.0
+  - name: net-exporter					      |	    - name: net-exporter
+    version: 1.8.1					      |	      version: 1.8.1
+  - componentVersion: 0.18.1				      |	    - componentVersion: 0.18.1
+    name: node-exporter					      |	      name: node-exporter
+    version: 1.2.0					      |	      version: 1.2.0
   components:							  components:
-  - name: app-operator						  - name: app-operator
-    version: 1.0.0					      |	    releaseOperatorDeploy: true
-							      >	    version: 2.1.1
-  - name: azure-operator					  - name: azure-operator
-    releaseOperatorDeploy: true					    releaseOperatorDeploy: true
-    version: 4.2.0						    version: 4.2.0
-  - name: cert-operator						  - name: cert-operator
-    releaseOperatorDeploy: true					    releaseOperatorDeploy: true
-    version: 0.1.0						    version: 0.1.0
-    reference: 0.1.0-2						    reference: 0.1.0-2
-  - name: cluster-operator					  - name: cluster-operator
-    releaseOperatorDeploy: true					    releaseOperatorDeploy: true
-    version: 0.23.12					      |	    version: 0.23.16
-  - name: kubernetes						  - name: kubernetes
-    version: 1.17.9						    version: 1.17.9
-  - name: containerlinux					  - name: containerlinux
-    version: 2512.2.1						    version: 2512.2.1
-  - name: coredns						  - name: coredns
-    version: 1.6.5						    version: 1.6.5
-  - name: calico						  - name: calico
-    version: 3.15.1						    version: 3.15.1
-  - name: etcd							  - name: etcd
-    version: 3.4.9						    version: 3.4.9
-  date: 2020-08-24T15:00:00Z				      |	  date: 2020-08-31T15:00:00Z
+  - name: app-operator					      |	    - catalog: control-plane-catalog
+    releaseOperatorDeploy: true				      |	      name: app-operator
+    version: 2.1.1					      |	      releaseOperatorDeploy: true
+  - name: azure-operator				      |	      version: 2.1.1
+    releaseOperatorDeploy: true				      |	    - catalog: control-plane-test-catalog
+    version: 4.2.0					      |	      name: azure-operator
+  - name: cert-operator					      |	      reference: 4.2.0-4fcb01752535648a9d3de7528c688eaa6ed128
+    releaseOperatorDeploy: true				      |	      releaseOperatorDeploy: true
+    version: 0.1.0					      |	      version: 5.0.0-dev
+    reference: 0.1.0-2					      |	    - catalog: control-plane-catalog
+  - name: cluster-operator				      |	      name: cert-operator
+    releaseOperatorDeploy: true				      |	      reference: 0.1.0-2
+    version: 0.23.16					      |	      releaseOperatorDeploy: true
+  - name: kubernetes					      |	      version: 0.1.0
+    version: 1.17.9					      |	    - catalog: control-plane-catalog
+  - name: containerlinux				      |	      name: cluster-operator
+    version: 2512.2.1					      |	      releaseOperatorDeploy: true
+  - name: coredns					      |	      version: 0.23.16
+    version: 1.6.5					      |	    - catalog: control-plane-catalog
+  - name: calico					      |	      name: kubernetes
+    version: 3.15.1					      |	      version: 1.17.9
+  - name: etcd						      |	    - catalog: control-plane-catalog
+    version: 3.4.9					      |	      name: containerlinux
+  date: 2020-08-31T15:00:00Z				      |	      version: 2512.2.1
+							      >	    - catalog: control-plane-catalog
+							      >	      name: coredns
+							      >	      version: 1.6.5
+							      >	    - catalog: control-plane-catalog
+							      >	      name: calico
+							      >	      version: 3.15.1
+							      >	    - catalog: control-plane-catalog
+							      >	      name: etcd
+							      >	      version: 3.4.9
+							      >	  date: "2020-08-31T15:00:00Z"
   state: active							  state: active
