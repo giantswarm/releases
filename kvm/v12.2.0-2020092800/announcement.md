@@ -1,1 +1,0 @@
-**Giant Swarm release v12.2.0-2020092800 for AWS is available.** This release upgrades all Helm releases managed by Giant Swarm to use Helm 3. Further details can be found in the [release notes](https://github.com/giantswarm/releases/tree/master/aws/v12.2.0-2020092800).
