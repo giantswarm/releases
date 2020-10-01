@@ -13,14 +13,16 @@ resources:
 - v9.3.8
 - v11.3.1
 - v11.3.3
-- v11.4.0
 - v11.4.1
 - v11.5.0
 - v11.5.1
 - v11.5.2
 - v11.5.4
+- v11.5.5
+- v11.5.6
 - v12.0.0
 - v12.1.0
 - v12.1.4
+- v12.2.0
 transformers:
 - releaseNotesTransformer.yaml
