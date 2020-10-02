@@ -4,7 +4,7 @@ metadata:
   annotations:
     giantswarm.io/docs: https://docs.giantswarm.io/reference/cp-k8s-api/releases.release.giantswarm.io/
   creationTimestamp: null
-  name: v11.5.4
+  name: v11.5.6
 spec:
   apps:
   - name: cert-exporter
@@ -41,10 +41,10 @@ spec:
   - name: app-operator
     version: 1.0.0
   - name: aws-cni
-    version: 1.6.0
+    version: 1.7.3
   - name: aws-operator
     releaseOperatorDeploy: true
-    version: 8.7.6
+    version: 8.7.9
   - name: calico
     version: 3.15.1
   - name: cert-operator
@@ -55,10 +55,12 @@ spec:
     releaseOperatorDeploy: true
     version: 2.3.4
   - name: containerlinux
-    version: 2512.2.1
+    version: 2512.5.0
   - name: etcd
     version: 3.4.9
   - name: kubernetes
     version: 1.16.13
-  date: "2020-08-28T13:00:00Z"
+  date: "2020-09-23T07:24:29Z"
   state: deprecated
+status:
+  ready: false
