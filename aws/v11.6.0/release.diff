@@ -11,7 +11,7 @@ spec:                                                              spec:
     version: 1.2.3                                                     version: 1.2.3
   - componentVersion: 0.9.0                                          - componentVersion: 0.9.0
     name: cert-manager                                                 name: cert-manager
-    version: 1.0.8                                                     version: 1.1.0
+    version: 1.0.8                                              |      version: 1.1.0
   - name: chart-operator                                             - name: chart-operator
     version: 0.12.4                                                    version: 0.12.4
   - componentVersion: 1.16.5                                         - componentVersion: 1.16.5
@@ -44,7 +44,7 @@ spec:                                                              spec:
     version: 1.7.3                                                     version: 1.7.3
   - name: aws-operator                                               - name: aws-operator
     releaseOperatorDeploy: true                                        releaseOperatorDeploy: true
-    version: 8.7.9                                              |      version: 8.7.9
+    version: 8.7.9                                                     version: 8.7.9
   - name: calico                                                     - name: calico
     version: 3.15.1                                                    version: 3.15.1
   - name: cert-operator                                              - name: cert-operator
@@ -60,7 +60,7 @@ spec:                                                              spec:
     version: 3.4.9                                                     version: 3.4.9
   - name: kubernetes                                                 - name: kubernetes
     version: 1.16.13                                                   version: 1.16.13
-  date: "2020-09-22T10:00:00Z"                                  |    date: "2020-09-23T07:24:29Z"
-  state: active                                                      state: active
+  date: "2020-09-23T07:24:29Z"                                  |    date: "2020-10-01T09:22:19Z"
+  state: deprecated                                             |    state: active
 status:                                                            status:
   ready: false                                                       ready: false
