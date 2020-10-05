@@ -33,7 +33,7 @@ spec:
       version: 2.1.1
     - catalog: control-plane-test-catalog
       name: azure-operator
-      reference: 4.2.0-f02d2c1b53aaa929175768a8c4e118d56991ccf2
+      reference: 4.2.0-6d3c2318bf330365e3000349fde4366871ba496c
       releaseOperatorDeploy: true
       version: 5.0.0-dev
     - catalog: control-plane-catalog
