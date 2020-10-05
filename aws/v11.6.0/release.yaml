@@ -4,14 +4,14 @@ metadata:
   annotations:
     giantswarm.io/docs: https://docs.giantswarm.io/reference/cp-k8s-api/releases.release.giantswarm.io/
   creationTimestamp: null
-  name: v11.5.6
+  name: v11.6.0
 spec:
   apps:
   - name: cert-exporter
     version: 1.2.3
   - componentVersion: 0.9.0
     name: cert-manager
-    version: 1.0.8
+    version: 1.1.0
   - name: chart-operator
     version: 0.12.4
   - componentVersion: 1.16.5
@@ -60,7 +60,7 @@ spec:
     version: 3.4.9
   - name: kubernetes
     version: 1.16.13
-  date: "2020-09-23T07:24:29Z"
-  state: deprecated
+  date: "2020-10-01T09:22:19Z"
+  state: active
 status:
   ready: false
