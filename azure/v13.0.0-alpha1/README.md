@@ -5,7 +5,8 @@
 This release brings the Node Pools functionality to Azure Clusters. Please use this release to test the functionality and communicate any feedback to your SE for improvements.
 
 **Important notice**
-Version 13.0.0-alpha1 can only be used in new clusters. It is not upgradable from or to, and it is solely to test the new functionality in your setup. 
+
+Version 13.0.0-alpha1 can only be used in new clusters. Upgrading to or from this release is not supported, and it is solely to test the new functionality in your setup. 
 
 ## Change details
 
