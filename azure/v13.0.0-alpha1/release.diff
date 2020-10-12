@@ -31,27 +31,26 @@ spec:								spec:
     releaseOperatorDeploy: true				      |	      name: app-operator
     version: 2.1.1					      |	      releaseOperatorDeploy: true
   - name: azure-operator				      |	      version: 2.1.1
-    releaseOperatorDeploy: true				      |	    - catalog: control-plane-test-catalog
+    releaseOperatorDeploy: true				      |	    - catalog: control-plane-catalog
     version: 4.2.0					      |	      name: azure-operator
-  - name: cert-operator					      |	      reference: 4.2.0-4fcb01752535648a9d3de7528c688eaa6ed128
+  - name: cert-operator					      |	      releaseOperatorDeploy: true
+    releaseOperatorDeploy: true				      |	      version: 5.0.0
+    version: 0.1.0					      |	    - catalog: control-plane-catalog
+    reference: 0.1.0-2					      |	      name: cert-operator
+  - name: cluster-operator				      |	      reference: 0.1.0-2
     releaseOperatorDeploy: true				      |	      releaseOperatorDeploy: true
-    version: 0.1.0					      |	      version: 5.0.0-dev
-    reference: 0.1.0-2					      |	    - catalog: control-plane-catalog
-  - name: cluster-operator				      |	      name: cert-operator
-    releaseOperatorDeploy: true				      |	      reference: 0.1.0-2
-    version: 0.23.16					      |	      releaseOperatorDeploy: true
-  - name: kubernetes					      |	      version: 0.1.0
-    version: 1.17.9					      |	    - catalog: control-plane-catalog
-  - name: containerlinux				      |	      name: cluster-operator
-    version: 2512.2.1					      |	      releaseOperatorDeploy: true
-  - name: coredns					      |	      version: 0.23.16
-    version: 1.6.5					      |	    - catalog: control-plane-catalog
-  - name: calico					      |	      name: kubernetes
-    version: 3.15.1					      |	      version: 1.17.9
-  - name: etcd						      |	    - catalog: control-plane-catalog
-    version: 3.4.9					      |	      name: containerlinux
-  date: 2020-08-31T15:00:00Z				      |	      version: 2512.2.1
-							      >	    - catalog: control-plane-catalog
+    version: 0.23.16					      |	      version: 0.1.0
+  - name: kubernetes					      |	    - catalog: control-plane-catalog
+    version: 1.17.9					      |	      name: cluster-operator
+  - name: containerlinux				      |	      releaseOperatorDeploy: true
+    version: 2512.2.1					      |	      version: 0.23.16
+  - name: coredns					      |	    - catalog: control-plane-catalog
+    version: 1.6.5					      |	      name: kubernetes
+  - name: calico					      |	      version: 1.17.9
+    version: 3.15.1					      |	    - catalog: control-plane-catalog
+  - name: etcd						      |	      name: containerlinux
+    version: 3.4.9					      |	      version: 2512.2.1
+  date: 2020-08-31T15:00:00Z				      |	    - catalog: control-plane-catalog
 							      >	      name: coredns
 							      >	      version: 1.6.5
 							      >	    - catalog: control-plane-catalog

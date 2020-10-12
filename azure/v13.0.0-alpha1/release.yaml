@@ -31,7 +31,7 @@ spec:
       name: app-operator
       releaseOperatorDeploy: true
       version: 2.1.1
-    - catalog: control-plane-test-catalog
+    - catalog: control-plane-catalog
       name: azure-operator
       releaseOperatorDeploy: true
       version: 5.0.0
