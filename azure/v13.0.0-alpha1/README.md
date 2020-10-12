@@ -10,4 +10,4 @@ Version 13.0.0-alpha1 can only be used in new clusters. Upgrading to or from thi
 
 ## Change details
 
-### azure-operator [v5.0.0-dev](https://github.com/giantswarm/azure-operator/blob/master/CHANGELOG.md)
+### azure-operator [v5.0.0-alpha1](https://github.com/giantswarm/azure-operator/blob/v5.0.0-alpha1/CHANGELOG.md#500-alpha1---2020-10-12)
