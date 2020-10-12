@@ -34,7 +34,7 @@ spec:								spec:
     releaseOperatorDeploy: true				      |	    - catalog: control-plane-catalog
     version: 4.2.0					      |	      name: azure-operator
   - name: cert-operator					      |	      releaseOperatorDeploy: true
-    releaseOperatorDeploy: true				      |	      version: 5.0.0
+    releaseOperatorDeploy: true				      |	      version: 5.0.0-alpha1
     version: 0.1.0					      |	    - catalog: control-plane-catalog
     reference: 0.1.0-2					      |	      name: cert-operator
   - name: cluster-operator				      |	      reference: 0.1.0-2
