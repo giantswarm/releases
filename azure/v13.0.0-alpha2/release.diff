@@ -1,3 +1,5 @@
+                                                                >  # Generated with:
+                                                                >  # devctl release create --name 13.0.0-alpha2 --provider azure -
 apiVersion: release.giantswarm.io/v1alpha1                         apiVersion: release.giantswarm.io/v1alpha1
 kind: Release                                                      kind: Release
 metadata:                                                          metadata:
@@ -59,7 +61,7 @@ spec:                                                              spec:
     - catalog: control-plane-catalog                            |    - catalog: control-plane-catalog
       name: etcd                                                |      name: etcd
       version: 3.4.9                                            |      version: 3.4.9
-  date: "2020-08-31T15:00:00Z"                                  |    date: "2020-10-13T15:14:51Z"
+  date: "2020-08-31T15:00:00Z"                                  |    date: "2020-10-13T15:32:27Z"
   state: active                                                      state: active
                                                                 >  status:
                                                                 >    ready: false
