@@ -51,7 +51,7 @@ spec:
     version: 1.17.12
   - catalog: control-plane-catalog
     name: containerlinux
-    version: 2512.2.1
+    version: 2605.6.0
   - catalog: control-plane-catalog
     name: coredns
     version: 1.6.5
@@ -63,5 +63,3 @@ spec:
     version: 3.4.9
   date: "2020-10-13T15:32:27Z"
   state: active
-status:
-  ready: false
