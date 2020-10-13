@@ -4,14 +4,14 @@ metadata:
   annotations:
     giantswarm.io/docs: https://docs.giantswarm.io/reference/cp-k8s-api/releases.release.giantswarm.io/
   creationTimestamp: null
-  name: v12.3.0
+  name: v12.4.0
 spec:
   apps:
   - name: cert-exporter
     version: 1.2.3
-  - componentVersion: 0.16.1
+  - componentVersion: 1.0.2
     name: cert-manager
-    version: 2.1.1
+    version: 2.3.0
   - name: chart-operator
     version: 2.3.3
   - componentVersion: 1.17.3
@@ -20,9 +20,9 @@ spec:
   - componentVersion: 1.6.5
     name: coredns
     version: 1.2.0
-  - componentVersion: 0.7.3
+  - componentVersion: 0.7.4
     name: external-dns
-    version: 1.4.0
+    version: 1.5.0
   - componentVersion: 3.6.0
     name: kiam
     version: 1.5.0
@@ -61,7 +61,7 @@ spec:
     version: 3.4.13
   - name: kubernetes
     version: 1.17.12
-  date: "2020-09-30T18:00:00Z"
-  state: deprecated
+  date: "2020-10-13T18:00:00Z"
+  state: active
 status:
   ready: false
