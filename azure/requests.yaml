@@ -17,6 +17,12 @@ releases:
         - name: external-dns
           version: ">= 1.5.0"
           issue: https://github.com/giantswarm/giantswarm/issues/13671
+        - name: chart-operator
+          version: ">= 2.3.4"
+          issue: https://github.com/giantswarm/giantswarm/issues/13328
+        - name: app-operator
+          version: ">= 2.3.2"
+          issue: https://github.com/giantswarm/giantswarm/issues/13328   
     - name: "> 12.0.2, < 12.1.0"
       requests:
         - name: containerlinux
