@@ -1,3 +1,5 @@
+# Generated with:
+# devctl release create --name 12.5.0 --provider aws --base 12.4.0 --component aws-operator@9.1.2-dev --overwrite
 apiVersion: release.giantswarm.io/v1alpha1
 kind: Release
 metadata:
@@ -61,7 +63,7 @@ spec:
     version: 3.4.13
   - name: kubernetes
     version: 1.17.12
-  date: "2020-10-13T18:00:00Z"
+  date: "2020-10-14T08:55:15Z"
   state: active
 status:
   ready: false
