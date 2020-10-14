@@ -32,7 +32,16 @@ _Nothing has changed._
 #### Removed
 - github.com/jessevdk/go-flags: [v1.4.0](https://github.com/jessevdk/go-flags/tree/v1.4.0)
 
+### Flatcar v2605.6.0
+- Updated from v2512.2.1 -
 
+changelog since [v2605.5.0](https://www.flatcar-linux.org/releases/#release-2605.6.0),
+since [v2512.5.0](https://www.flatcar-linux.org/releases/#release-2605.5.0),
+since [v2512.4.0](https://www.flatcar-linux.org/releases/#release-2512.5.0),
+since [v2512.3.0](https://www.flatcar-linux.org/releases/#release-2512.4.0),
+and since [v2345.3.1](https://www.flatcar-linux.org/releases/#release-2512.3.0).
+
+Includes several security fixes, check changelogs linked above for details.
 
 ### azure-operator [5.0.0-alpha2](https://github.com/giantswarm/aws-operator/releases/tag/v5.0.0-alpha2)
 
