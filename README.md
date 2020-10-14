@@ -9,6 +9,8 @@ Swarm control planes.
 
 ## AWS
 - v12
+  - v12.4
+    - [v12.4.0](https://github.com/giantswarm/releases/tree/master/aws/v12.4.0)
   - v12.3
     - [v12.3.0](https://github.com/giantswarm/releases/tree/master/aws/v12.3.0)
   - v12.2
@@ -97,8 +99,8 @@ Swarm control planes.
 ## Azure
 
 - v13
-  - v13.0.0-alpha1
-    - [v13.0.0-alpha1](https://github.com/giantswarm/releases/tree/master/azure/v13.0.0-alpha1)
+  - v13.0
+    - [v13.0.0-alpha2](https://github.com/giantswarm/releases/tree/master/azure/v13.0.0-alpha2)
 
 - v12
   - v12.1
