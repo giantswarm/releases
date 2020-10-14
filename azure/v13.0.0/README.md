@@ -5,7 +5,7 @@
 ## Change details
 
 
-### azure-operator [5.0.0-alpha1](https://github.com/giantswarm/aws-operator/releases/tag/v5.0.0-alpha1)
+### azure-operator [5.0.0-alpha2](https://github.com/giantswarm/aws-operator/releases/tag/v5.0.0-alpha2)
 
 Not found
 
