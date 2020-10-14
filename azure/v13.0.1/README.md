@@ -10,14 +10,24 @@
 Not found
 
 
-### containerlinux [2512.5.0](https://www.flatcar-linux.org/releases/#release-2512.5.0)
+### containerlinux [2605.6.0](https://www.flatcar-linux.org/releases/#release-2605.6.0)
+
+Bug fixes:
+- Enabled missing systemd services ([#191](https://github.com/flatcar-linux/Flatcar/issues/191), [PR #612](https://github.com/flatcar-linux/coreos-overlay/pull/612))
+- Fixed Docker torcx image unpacking error on machines with less than ~600 MB total RAM ([#32](https://github.com/flatcar-linux/Flatcar/issues/32))
+- Solved adcli Kerberos Active Directory incompatibility ([#194](https://github.com/flatcar-linux/Flatcar/issues/194))
+- Fixed the makefile path when building kernel modules with the developer container ([#195](https://github.com/flatcar-linux/Flatcar/issues/195))
+- Removed the `/etc/portage/savedconfig/` folder that contained a dump of the firmware config [flatcar-linux/coreos-overlay#613](https://github.com/flatcar-linux/coreos-overlay/pull/613)
 
 Changes:
-- Update public key to include a [new subkey](https://www.flatcar-linux.org/security/image-signing-key/)
+
+- GCE: Improved oslogin support and added shell aliases to run a Python Docker image ([PR #592](https://github.com/flatcar-linux/coreos-overlay/pull/592))
 
 Updates:
-- Linux [4.19.145](https://lwn.net/Articles/831367/)
 
+- Linux [5.4.67](https://lwn.net/Articles/832306/)
+- adcli [0.9.0](https://cgit.freedesktop.org/realmd/adcli/tree/NEWS?h=0.9.0)
+- GCE: oslogin [20200910.00](https://github.com/GoogleCloudPlatform/guest-oslogin/releases/tag/20200910.00)
 
 
 ### kubernetes [1.18.9](https://github.com/kubernetes/kubernetes/releases/tag/v1.18.9)
