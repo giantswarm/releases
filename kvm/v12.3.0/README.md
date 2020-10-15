@@ -27,3 +27,19 @@ Please persist this note and the above, until all customers are on AWS v12.2.x a
 ### app-operator [v2.3.1](https://github.com/giantswarm/app-operator/blob/master/CHANGELOG.md#231---2020-09-22)
 ### chart-operator [v2.3.5](https://github.com/giantswarm/chart-operator/blob/master/CHANGELOG.md#233---2020-09-29)
 - Updated Helm to [v3.3.4](https://github.com/helm/helm/releases/tag/v3.3.4).
+
+
+### containerlinux [2512.5.0](https://www.flatcar-linux.org/releases/#release-2512.5.0)
+
+Security fixes:
+
+* Linux kernel: Fix AF_PACKET overflow in tpacket_rcv [CVE-2020-14386](https://seclists.org/oss-sec/2020/q3/146)
+* Bind: fixes for [CVE-2020-8616](https://nvd.nist.gov/vuln/detail/CVE-2020-8616), [CVE-2020-8617](https://nvd.nist.gov/vuln/detail/CVE-2020-8617), [CVE-2020-8620](https://nvd.nist.gov/vuln/detail/CVE-2020-8620), [CVE-2020-8621](https://nvd.nist.gov/vuln/detail/CVE-2020-8621), [CVE-2020-8622](https://nvd.nist.gov/vuln/detail/CVE-2020-8622), [CVE-2020-8623](https://nvd.nist.gov/vuln/detail/CVE-2020-8623), [CVE-2020-8624](https://nvd.nist.gov/vuln/detail/CVE-2020-8624)
+
+Changes:
+* Update public key to include a new subkey
+* Vultr support in Ignition ([flatcar-linux/ignition#13](https://github.com/flatcar-linux/ignition/pull/13))
+* VMware OVF settings default to ESXi 6.5 and Linux 3.x
+
+Updates:
+* Linux [4.19.145](https://lwn.net/Articles/831367/)
