@@ -1,6 +1,4 @@
-## :zap:  Giant Swarm Release 12.2.0-2020092800  for KVM :zap:
-
-**If you are upgrading from 12.2.0, upgrading to this release will not roll your nodes. It will only update the apps.**
+## :zap:  Giant Swarm Release v12.3.0 for KVM :zap:
 
 This release upgrades all Helm releases managed by Giant Swarm to use [Helm v3.3.4](https://github.com/helm/helm/releases/tag/v3.3.4).
 
