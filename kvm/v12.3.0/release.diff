@@ -37,7 +37,7 @@ spec:                                                              spec:
     version: 0.23.14                                            |        releaseOperatorDeploy: true
   - name: containerlinux                                        |        version: 0.23.16
     version: 2512.2.1                                           |      - name: containerlinux
-  - name: etcd                                                  |        version: 2512.2.1
+  - name: etcd                                                  |        version: 2512.5.0
     version: 3.4.9                                              |      - name: etcd
   - name: flannel-operator                                      |        version: 3.4.9
     version: 0.2.0                                              |      - name: flannel-operator
