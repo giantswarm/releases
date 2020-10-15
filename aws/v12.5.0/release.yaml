@@ -1,5 +1,5 @@
 # Generated with:
-# devctl release create --name 12.5.0 --provider aws --base 12.4.0 --component aws-operator@9.1.2-dev --overwrite
+# devctl release create --name 12.5.0 --provider aws --base 12.4.0 --component aws-operator@9.1.2 --component cluster-operator@3.3.1 --overwrite
 apiVersion: release.giantswarm.io/v1alpha1
 kind: Release
 metadata:
@@ -47,7 +47,7 @@ spec:
     version: 1.7.3
   - name: aws-operator
     releaseOperatorDeploy: true
-    version: 9.1.2-dev
+    version: 9.1.2
   - name: calico
     version: 3.15.3
   - name: cert-operator
@@ -56,14 +56,14 @@ spec:
     version: 0.1.0
   - name: cluster-operator
     releaseOperatorDeploy: true
-    version: 3.2.0
+    version: 3.3.1
   - name: containerlinux
     version: 2512.5.0
   - name: etcd
     version: 3.4.13
   - name: kubernetes
     version: 1.17.12
-  date: "2020-10-14T08:55:15Z"
+  date: "2020-10-15T13:28:47Z"
   state: active
 status:
   ready: false

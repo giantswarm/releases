@@ -5,7 +5,12 @@
 ## Change details
 
 
-### aws-operator [9.1.2-dev](https://github.com/giantswarm/aws-operator/releases/tag/v9.1.2-dev)
+### aws-operator [9.1.2](https://github.com/giantswarm/aws-operator/releases/tag/v9.1.2)
+
+Not found
+
+
+### cluster-operator [3.3.1](https://github.com/giantswarm/cluster-operator/releases/tag/v3.3.1)
 
 Not found
 
