@@ -22,7 +22,7 @@ Please persist this note and the above, until all customers are on AWS v12.2.x a
 
 ## Change details
 
-### app-operator [v2.3.1](https://github.com/giantswarm/app-operator/blob/master/CHANGELOG.md#231---2020-09-22)
+### app-operator [v2.3.3](https://github.com/giantswarm/app-operator/blob/master/CHANGELOG.md#233---2020-10-15)
 ### chart-operator [v2.3.5](https://github.com/giantswarm/chart-operator/blob/master/CHANGELOG.md#233---2020-09-29)
 - Updated Helm to [v3.3.4](https://github.com/helm/helm/releases/tag/v3.3.4).
 
