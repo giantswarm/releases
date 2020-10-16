@@ -23,7 +23,7 @@ releases:
           version: ">= 1.5.0"
           issue: https://github.com/giantswarm/giantswarm/issues/13671
         - name: kubernetes
-          version: ">= 1.17.12"
+          version: ">= 1.17.13"
         - name: app-operator
           version: ">=2.3.2"
         - name: chart-operator
