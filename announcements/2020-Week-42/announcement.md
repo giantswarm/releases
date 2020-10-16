@@ -9,6 +9,7 @@
 ## User Interface Releases
 
 1. [Happa](https://github.com/giantswarm/happa/releases) displays `EOL` (end of life) for Kubernetes releases that no longer receive updates upstream, makes it more clear when a cluster is being created or upgrading, and fixes a few minor glitches.
+2. [gsctl](https://github.com/giantswarm/gsctl/releases) also displays Kubernetes release end of life information, as mentioned above, in various commands.
 
 ---
 Please let <!subteam^S0GSG846L|Product Owners> know if you have any feedback or questions by replying to this announcement in a thread.
