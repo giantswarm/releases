@@ -15,7 +15,7 @@ releases:
           version: ">= 2512.4.0"
           issue: https://github.com/giantswarm/giantswarm/issues/13150
           except:
-            - version: "12.0.2, 12.1.0" 
+            - version: 12.0.2
     - name: ">= 13.0.0"
       requests:
         - name: containerlinux
