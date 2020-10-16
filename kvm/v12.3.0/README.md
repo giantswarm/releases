@@ -14,6 +14,8 @@ Please contact your Solution Engineer before upgrading. The upgrade is automated
 
 **Note for Solution Engineers:**
 
+Please ensure cluster is on [KVM 12.1.x](https://github.com/giantswarm/releases/tree/master/kvm/v12.1.0) platform release first before upgrading to 12.2.0+
+
 Please use [Upgrading tenant clusters to Helm 3](https://intranet.giantswarm.io/docs/dev-and-releng/helm/helm3-tenant-cluster-upgrade/) as a guide on the upgrade process for the checks and monitoring steps.
 
 **Note for future 12.x.x releases:**
