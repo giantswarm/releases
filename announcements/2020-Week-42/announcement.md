@@ -4,7 +4,7 @@
 
 1. [NGINX Ingress Controller app v1.10.0](https://github.com/giantswarm/nginx-ingress-controller-app/blob/master/CHANGELOG.md#1100---2020-10-07) upgrades ingress-nginx-controller from `v0.35.0` to `v0.40.2` improving performance and reliability.
 2. [Kong v1.0.0](https://github.com/giantswarm/kong-app/blob/master/CHANGELOG.md#100---2020-10-13) upgrades to upstream chart v1.11.0. It includes the first major release of kong-ingress-controller. (Note: Contains breaking changes from upstream. Solution Engineers are working with customers to prepare.)
-3. [Prometheus Operator v0.4.0](https://github.com/giantswarm/prometheus-operator-app/blob/master/CHANGELOG.md#040---2020-10-15) upgrades to upstream chart v10.1.0. It also makes required changes related to the upstream chart name change from `prometheus-operator` (EOL in Nov 2020) to `kube-prometheus`
+3. [Prometheus Operator v0.4.0](https://github.com/giantswarm/prometheus-operator-app/blob/master/CHANGELOG.md#040---2020-10-15) upgrades to upstream chart v10.1.0. It also adapts global templating variables to work with upstream chart location and name change from `prometheus-operator` (EOL in Nov 2020) to `kube-prometheus-stack`
 4. [Cert Manager v2.3.0](https://github.com/giantswarm/cert-manager-app/blob/master/CHANGELOG.md#230---2020-10-02) brings the first stable release from upstream, v1.0.2.
 
 ## User Interface Releases
