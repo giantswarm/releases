@@ -150,6 +150,8 @@ Swarm control planes.
 
 - v12
   - v12.2
+    - [v12.3.0](https://github.com/giantswarm/releases/tree/master/kvm/v12.3.0)
+  - v12.2
     - [v12.2.0](https://github.com/giantswarm/releases/tree/master/kvm/v12.2.0)
   - v12.1
     - [v12.1.0](https://github.com/giantswarm/releases/tree/master/kvm/v12.1.0)
