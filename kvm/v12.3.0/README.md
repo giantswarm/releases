@@ -26,6 +26,8 @@ Please persist this note and the above, until all customers are on AWS v12.2.x a
 ### chart-operator [v2.3.5](https://github.com/giantswarm/chart-operator/blob/master/CHANGELOG.md#233---2020-09-29)
 - Updated Helm to [v3.3.4](https://github.com/helm/helm/releases/tag/v3.3.4).
 
+### kvm-operator [v3.12.2](https://github.com/giantswarm/kvm-operator/blob/master/CHANGELOG.md#3122---2020-10-16)
+- Added monitoring labels into prometheus metrics
 
 ### containerlinux [2512.5.0](https://www.flatcar-linux.org/releases/#release-2512.5.0)
 
