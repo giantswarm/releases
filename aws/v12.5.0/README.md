@@ -26,3 +26,16 @@ Not found
 Not found
 
 
+### Kubernetes [1.17.13](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.17.md#changelog-since-v11712)
+
+* Prevent logging of docker config contents if file is malformed ([#95348](https://github.com/kubernetes/kubernetes/pull/95348))
+* Do not fail sorting empty elements. ([#94666](https://github.com/kubernetes/kubernetes/pull/94666))
+* Fix detach azure disk issue when vm not exist ([#95177](https://github.com/kubernetes/kubernetes/pull/95177))
+* Fix etcd_object_counts metric reported by kube-apiserver ([#94817](https://github.com/kubernetes/kubernetes/pull/94817))
+* Fix kubectl printer to correctly handle timestamps of events emitted using events.k8s.io API ([#90227](https://github.com/kubernetes/kubernetes/pull/90227))
+* Fix the cloudprovider_azure_api_request_duration_seconds metric buckets to correctly capture the latency metrics. Previously, the majority of the calls would fall in the "+Inf" bucket. ([#95376](https://github.com/kubernetes/kubernetes/pull/95376))
+* Fix: detach azure disk broken on Azure Stack ([#94885](https://github.com/kubernetes/kubernetes/pull/94885))
+* Fixed a bug where improper storage and comparison of endpoints led to excessive API traffic from the endpoints controller ([#94935](https://github.com/kubernetes/kubernetes/pull/94935))
+* Kubeadm: warn but do not error out on missing "ca.key" files for root CA, front-proxy CA and etcd CA, during "kubeadm join --control-plane" if the user has provided all certificates, keys and kubeconfig files which require signing with the given CA keys. ([#94988](https://github.com/kubernetes/kubernetes/pull/94988))
+
+Check the [upstream changelog](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.17.md#changelog-since-v11712) for details on all changes.
