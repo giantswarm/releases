@@ -6,6 +6,8 @@ This lets us benefit from the improved security model and keep up to date with t
 
 If you are still using Helm 2 then these Helm releases will not be affected. However we encourage you to upgrade to Helm 3. As Helm 2 support ends on November 13th 2020. https://helm.sh/blog/helm-v2-deprecation-timeline/
 
+The release also upgrades Container Linux to address security vulnerabilities.
+
 Below, you can find more details on components that were changed with this release.
 
 **Note before upgrade:**
