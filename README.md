@@ -102,7 +102,7 @@ Swarm control planes.
 
 - v13
   - v13.0
-    - [v13.0.0-alpha2](https://github.com/giantswarm/releases/tree/master/azure/v13.0.0-alpha2)
+    - [v13.0.0-alpha3](https://github.com/giantswarm/releases/tree/master/azure/v13.0.0-alpha3)
 
 - v12
   - v12.1
