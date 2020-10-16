@@ -46,6 +46,6 @@ spec:
       version: 1.17.8
     - name: kvm-operator
       releaseOperatorDeploy: true
-      version: 3.12.1
+      version: 3.12.2
   date: "2020-10-15T17:30:00Z"
   state: active
