@@ -28,3 +28,4 @@ releases:
           version: ">=2.3.2"
         - name: chart-operator
           version: ">=2.3.5"
+          
