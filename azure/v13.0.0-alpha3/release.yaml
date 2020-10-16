@@ -1,10 +1,10 @@
 # Generated with:
-# devctl release create --name 13.0.0-alpha2 --provider azure --base 13.0.0-alpha1 --component kubernetes@1.17.12 --component azure-operator@5.0.0-alpha2 --overwrite
+# devctl release create --name 13.0.0-alpha3 --provider azure --base 13.0.0-alpha2 --component kubernetes@1.17.13 --component azure-operator@5.0.0-alpha3 --overwrite
 apiVersion: release.giantswarm.io/v1alpha1
 kind: Release
 metadata:
   creationTimestamp: null
-  name: v13.0.0-alpha2
+  name: v13.0.0-alpha3
 spec:
   apps:
   - name: cert-exporter
@@ -36,7 +36,7 @@ spec:
   - catalog: control-plane-catalog
     name: azure-operator
     releaseOperatorDeploy: true
-    version: 5.0.0-alpha2
+    version: 5.0.0-alpha3
   - catalog: control-plane-catalog
     name: cert-operator
     reference: 0.1.0-2
@@ -48,7 +48,7 @@ spec:
     version: 0.23.16
   - catalog: control-plane-catalog
     name: kubernetes
-    version: 1.17.12
+    version: 1.17.13
   - catalog: control-plane-catalog
     name: containerlinux
     version: 2605.6.0

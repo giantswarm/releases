@@ -1,10 +1,10 @@
 							      >	# Generated with:
-							      >	# devctl release create --name 13.0.0-alpha2 --provider azure
+							      >	# devctl release create --name 13.0.0-alpha3 --provider azure
 apiVersion: release.giantswarm.io/v1alpha1			apiVersion: release.giantswarm.io/v1alpha1
 kind: Release							kind: Release
 metadata:							metadata:
   creationTimestamp: null					  creationTimestamp: null
-  name: v12.1.0						      |	  name: v13.0.0-alpha2
+  name: v12.1.0						      |	  name: v13.0.0-alpha3
 spec:								spec:
   apps:								  apps:
   - name: cert-exporter						  - name: cert-exporter
@@ -36,7 +36,7 @@ spec:								spec:
   - name: azure-operator				      |	  - catalog: control-plane-catalog
 							      >	    name: azure-operator
     releaseOperatorDeploy: true					    releaseOperatorDeploy: true
-    version: 4.2.0					      |	    version: 5.0.0-alpha2
+    version: 4.2.0					      |	    version: 5.0.0-alpha3
   - name: cert-operator					      |	  - catalog: control-plane-catalog
 							      >	    name: cert-operator
 							      >	    reference: 0.1.0-2
@@ -48,7 +48,7 @@ spec:								spec:
     version: 0.23.16						    version: 0.23.16
   - name: kubernetes					      |	  - catalog: control-plane-catalog
     version: 1.17.9					      |	    name: kubernetes
-  - name: containerlinux				      |	    version: 1.17.12
+  - name: containerlinux				      |	    version: 1.17.13
     version: 2512.2.1					      |	  - catalog: control-plane-catalog
   - name: coredns					      |	    name: containerlinux
 							      >	    version: 2605.6.0
@@ -61,5 +61,5 @@ spec:								spec:
   - name: etcd						      |	  - catalog: control-plane-catalog
 							      >	    name: etcd
     version: 3.4.9						    version: 3.4.9
-  date: 2020-08-31T15:00:00Z				      |	  date: "2020-10-13T15:32:27Z"
+  date: 2020-08-31T15:00:00Z				      |	  date: "2020-10-14T10:00:00Z"
   state: active							  state: active

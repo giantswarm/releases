@@ -1,11 +1,11 @@
-# :zap: Giant Swarm Release v13.0.0-alpha2 for Azure :zap:
+# :zap: Giant Swarm Release v13.0.0-alpha3 for Azure :zap:
 
 << Add description here >>
 
 ## Change details
 
 
-### kubernetes [1.17.12](https://github.com/kubernetes/kubernetes/releases/tag/v1.17.12)
+### kubernetes [1.17.13](https://github.com/kubernetes/kubernetes/releases/tag/v1.17.13)
 
 #### Bug or Regression
 - Azure: fix a bug that kube-controller-manager would panic if wrong Azure VMSS name is configured ([#94306](https://github.com/kubernetes/kubernetes/pull/94306), [@knight42](https://github.com/knight42)) [SIG Cloud Provider]
@@ -43,8 +43,7 @@ and since [v2345.3.1](https://www.flatcar-linux.org/releases/#release-2512.3.0).
 
 Includes several security fixes, check changelogs linked above for details.
 
-### azure-operator [5.0.0-alpha2](https://github.com/giantswarm/aws-operator/releases/tag/v5.0.0-alpha2)
+### azure-operator [5.0.0-alpha3](https://github.com/giantswarm/aws-operator/releases/tag/v5.0.0-alpha3)
 
-Not found
 
 
