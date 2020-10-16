@@ -1,6 +1,6 @@
 # :zap: Giant Swarm Release v12.5.0 for AWS :zap:
 
-<< Add description here >>
+Offers the possibility to add additional Network Pools to the Control Plane and flexibly choose the IP range for new Tenant Clusters from these pool.
 
 ## Change details
 
