@@ -33,6 +33,6 @@ releases:
         - name: kubernetes
           version: ">= 1.17.13"
         - name: app-operator
-          version: ">=2.3.2"
+          version: ">= 2.3.2"
         - name: chart-operator
-          version: ">=2.3.5"
+          version: ">= 2.3.5"
