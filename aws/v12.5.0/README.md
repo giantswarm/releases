@@ -4,11 +4,11 @@ Offers the possibility to add additional Network Pools to the Control Plane and 
 
 **Note for Solution Engineers:**
 
-- Helm3: 
+- Helm3:
   - Please use [Upgrading tenant clusters to Helm 3](https://intranet.giantswarm.io/docs/dev-and-releng/helm/helm3-tenant-cluster-upgrade/) as a guide on the upgrade process for the checks and monitoring steps.
   - **Note for future 12.x.x releases:**
     - Please persist this note and the above, until all customers are on AWS **v12.3.x** and above.
-- cert-manager-app: 
+- cert-manager-app:
   - Please use this [upgrade script](https://github.com/giantswarm/cert-manager-app/blob/master/files/migrate-v090-to-v200.sh) to assist with the process. Due to changes in Cert Manager's API, associated Ingresses and Secrets must also be updated to ensure they are reconciled by Cert Manager.
   - **Note for future 12.x.x releases:**
     - Please persist this note and the above, until all customers are on AWS **v12.1.x** and above.
@@ -18,13 +18,25 @@ Offers the possibility to add additional Network Pools to the Control Plane and 
 
 ### aws-operator [9.1.2](https://github.com/giantswarm/aws-operator/releases/tag/v9.1.2)
 
-Not found
+#### Added
+- Add etcd client certificates for Prometheus.
+- Add `--service.aws.hostaccesskey.role` flag.
+- Add `api.<cluster ID>.k8s.<base domain>` and `*.<cluster ID>.k8s.<base domain>` records into CP internal hosted zone.
+#### Fixes
+- Fix `vpc`/`route-table` lookups.
+#### Changed
+- Access Control Plane AWS account using role assumption. This is to prepare
+  running aws-operator inside a Tenant Cluster.
+- Changed AWS CNI parameters to be more conservative with preallocated IPs while not hitting the AWS API too hard.
+#### Changed
+- Update `k8scloudconfig` to `v8.0.3`.
+
 
 
 ### cluster-operator [3.3.1](https://github.com/giantswarm/cluster-operator/releases/tag/v3.3.1)
 
-Not found
-
+#### Fixed
+- Manage Tenant Cluster API errors gracefully.
 
 ### Kubernetes [1.17.13](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.17.md#changelog-since-v11712)
 
