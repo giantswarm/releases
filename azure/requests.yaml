@@ -33,4 +33,4 @@ releases:
           version: ">= 1.5.0"
           issue: https://github.com/giantswarm/giantswarm/issues/13671
         - name: kubernetes
-          version: ">= 1.17.13"
+          version: ">= 1.18.9"
