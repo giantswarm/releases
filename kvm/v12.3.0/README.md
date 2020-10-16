@@ -22,7 +22,7 @@ Please use [Upgrading tenant clusters to Helm 3](https://intranet.giantswarm.io/
 
 **Note for future 12.x.x releases:**
 
-Please persist this note and the above, until all customers are on AWS v12.2.x and above.
+Please ensure cluster is on [KVM 12.1.x](https://github.com/giantswarm/releases/tree/master/kvm/v12.1.0) platform release first before upgrading to 12.2.0+ Please persist this note until all customers are on KVM 12.1.x and above.
 
 ## Change details
 
