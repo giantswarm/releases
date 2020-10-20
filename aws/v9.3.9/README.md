@@ -2,7 +2,6 @@
 
 **If you are upgrading from 9.3.8, upgrading to this release will not roll your nodes.**
 
-
 This is a patch release to update cluster-operator mitigating the unexpected deletion of app CRs in clusters. 
 
 ## Change details
