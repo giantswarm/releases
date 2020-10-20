@@ -63,9 +63,7 @@ spec:                                                              spec:
     version: 3.4.13                                                    version: 3.4.13
   - name: kubernetes                                                 - name: kubernetes
     version: 1.17.13                                            |      version: 1.18.9
-  date: "2020-10-16T14:00:00Z"                                  |    - name: azure-operator
-                                                                >      version: 9.1.2
-                                                                >    date: "2020-10-20T10:11:31Z"
+  date: "2020-10-16T14:00:00Z"                                  |    date: "2020-10-20T10:14:26Z"
   state: active                                                      state: active
 status:                                                            status:
   ready: false                                                       ready: false

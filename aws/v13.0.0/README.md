@@ -5,9 +5,21 @@
 ## Change details
 
 
-### azure-operator [9.1.2](https://github.com/giantswarm/aws-operator/releases/tag/v9.1.2)
+### aws-operator [9.1.2](https://github.com/giantswarm/aws-operator/releases/tag/v9.1.2)
 
-Not found
+#### Added
+- Add etcd client certificates for Prometheus.
+- Add `--service.aws.hostaccesskey.role` flag.
+- Add `api.<cluster ID>.k8s.<base domain>` and `*.<cluster ID>.k8s.<base domain>` records into CP internal hosted zone.
+#### Fixes
+- Fix `vpc`/`route-table` lookups.
+#### Changed
+- Access Control Plane AWS account using role assumption. This is to prepare
+  running aws-operator inside a Tenant Cluster.
+- Changed AWS CNI parameters to be more conservative with preallocated IPs while not hitting the AWS API too hard.
+#### Changed
+- Update `k8scloudconfig` to `v8.0.3`.
+
 
 
 ### containerlinux [2605.6.0](https://www.flatcar-linux.org/releases/#release-2605.6.0)
