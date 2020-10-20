@@ -4,7 +4,7 @@
 
 This patch release fixes a problem causing the accidental deletion and reinstallation of Preinstalled Apps (such as CoreDNS) in 9.x.x tenant clusters.
 
-Please upgrade all older clusters to this version in order to prevent downtime. 
+Please upgrade all older clusters to this version in order to prevent possible downtime. 
 
 ## Change details
 
