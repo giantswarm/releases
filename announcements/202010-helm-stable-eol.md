@@ -1,3 +1,3 @@
 :information_source: On Nov 13, 2020, the upstream Helm `stable` repo will be obsolete. Consequently, so will the "Helm Stable" Catalog in our Web UI (Happa). (See: [Helm Deprecation Timeline](https://github.com/helm/charts/blob/master/README.md#deprecation-timeline))
 
-In case you are using apps installed from Helm Stable, we recommend to create your own App Catalog ([docs](https://docs.giantswarm.io/reference/kubectl-gs/template-appcatalog/)) and follow the apps' respective upstream chart.
+In case you are using apps installed from Helm Stable, we recommend to create your own App Catalog ([docs](https://docs.giantswarm.io/reference/kubectl-gs/template-appcatalog/)) and follow the apps' respective upstream chart. As always, feel free to reach out to your Solution Engineer for assistance.
