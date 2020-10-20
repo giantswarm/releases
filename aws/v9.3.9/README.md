@@ -14,7 +14,10 @@ Please upgrade all older clusters to this version in order to prevent downtime.
 ### Changed
 
 - Get app-operator version from releases CR. 
-- Delete all chartconfig migration logic.
+
+### Fixed
+
+- Remove all chartconfig migration logic that caused accidental deletion and is no longer needed.
 
 ### chart-operator [0.13.2](https://github.com/giantswarm/chart-operator/blob/helm2/CHANGELOG.md#v0132-2020-06-23)
 
