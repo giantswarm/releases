@@ -87,10 +87,17 @@ _Nothing has changed._
 
 
 
-### chart-operator [2.3.4](https://github.com/giantswarm/chart-operator/releases/tag/v2.3.4)
+### chart-operator [2.3.5](https://github.com/giantswarm/chart-operator/releases/tag/v2.3.5)
+
+#### Fixed
+- Stop repeating helm upgrade for the failed helm release.
+
+
+
+### app-operator [2.3.3](https://github.com/giantswarm/app-operator/releases/tag/v2.3.3)
 
 #### Added
-- Added release name as a label into the event count metrics.
+- Delete chart-operator helm release and chart CR so it can be re-installed.
 
 
 
