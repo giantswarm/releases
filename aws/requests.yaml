@@ -36,5 +36,5 @@ releases:
           version: ">= 2512.4.0"
           issue: https://github.com/giantswarm/giantswarm/issues/13150
           except:
-            - releaseVersion: 9.3.8
+            - releaseVersion: 9.3.9
               reason: only app changes are required
