@@ -1,11 +1,11 @@
-# :zap: Giant Swarm Release v13.0.1 for Azure :zap:
+# :zap: Giant Swarm Release v13.0.0 for Azure :zap:
 
 << Add description here >>
 
 ## Change details
 
 
-### azure-operator [5.0.0-alpha2](https://github.com/giantswarm/aws-operator/releases/tag/v5.0.0-alpha2)
+### azure-operator [5.0.0-alpha3](https://github.com/giantswarm/aws-operator/releases/tag/v5.0.0-alpha3)
 
 Not found
 
@@ -133,6 +133,13 @@ _Nothing has changed._
 
 #### Changed
 - Upgrade upstream external-dns from v0.7.3 to [v0.7.4](https://github.com/kubernetes-sigs/external-dns/releases/tag/v0.7.4).
+
+
+
+### cluster-autoscaler [1.18.2](https://github.com/giantswarm/cluster-autoscaler-app/releases/tag/v1.18.2)
+
+#### Changed
+- Updated cluster-autoscaler to version `1.18.2`.
 
 
 
