@@ -1,4 +1,12 @@
 releases:
+    - name: "> 12.5.0, < 13.0.0"
+      requests:
+        - name: app-operator
+          version: ">= 2.3.3"
+          issue: https://github.com/giantswarm/giantswarm/issues/13648
+        - name: chart-operator
+          version: ">= 2.3.5"
+          issue: https://github.com/giantswarm/giantswarm/issues/13677
     - name: "> 12.3.0, < 13.0.0"
       requests:
         - name: cert-manager
