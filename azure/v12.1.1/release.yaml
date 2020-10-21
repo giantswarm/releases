@@ -39,7 +39,7 @@ spec:
     reference: 0.1.0-2
   - name: cluster-operator
     releaseOperatorDeploy: true
-    version: 0.23.17
+    version: 0.23.18
   - name: kubernetes
     version: 1.17.9
   - name: containerlinux
