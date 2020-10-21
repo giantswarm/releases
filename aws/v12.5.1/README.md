@@ -5,8 +5,10 @@
 ## Change details
 
 
-### aws-operator [9.1.3-dev](https://github.com/giantswarm/aws-operator/releases/tag/v9.1.3-dev)
+### aws-operator [9.1.3](https://github.com/giantswarm/aws-operator/releases/tag/v9.1.3)
 
-Not found
+#### Fixed
+- Ignore error when missing APIServerPublicLoadBalancer CF Stack output to allow upgrade.
+
 
 
