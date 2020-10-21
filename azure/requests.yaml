@@ -17,6 +17,9 @@ releases:
         - name: containerlinux
           version: ">= 2512.4.0"
           issue: https://github.com/giantswarm/giantswarm/issues/13150
+          except:
+            - releaseVersion: 12.1.1
+              reason: only app changes are required
     - name: "> 12.0.2, < 12.1.0"
       requests:
         - name: containerlinux
