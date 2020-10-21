@@ -8,7 +8,6 @@ Please upgrade all older clusters to this version in order to prevent possible d
 
 ## Change details
 
-
 ### cluster-operator [0.23.17](https://github.com/giantswarm/cluster-operator/blob/legacy/CHANGELOG.md#02317---2020-10-19)
 
 ### Changed
