@@ -2,13 +2,13 @@ apiVersion: release.giantswarm.io/v1alpha1
 kind: Release
 metadata:
   creationTimestamp: null
-  name: v9.3.8
+  name: v9.3.9
 spec:
   apps:
   - name: cert-exporter
     version: 1.2.3
   - name: chart-operator
-    version: 0.13.0
+    version: 0.13.2
   - componentVersion: 1.16.5
     name: cluster-autoscaler
     version: 1.16.0
@@ -43,14 +43,14 @@ spec:
     version: 0.1.0
   - name: cluster-operator
     releaseOperatorDeploy: true
-    version: 0.23.14
+    version: 0.23.17
   - name: containerlinux
     version: 2512.3.0
   - name: etcd
     version: 3.3.25
   - name: kubernetes
     version: 1.16.14
-  date: "2020-08-31T15:00:00Z"
-  state: deprecated
+  date: "2020-10-20T10:00:00Z"
+  state: active
 status:
   ready: false
