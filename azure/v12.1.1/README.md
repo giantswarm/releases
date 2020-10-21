@@ -20,7 +20,7 @@ Please persist this note and the above, until all customers are on Azure v12.1.x
 
 ## Change details
 
-### cluster-operator [0.23.17](https://github.com/giantswarm/cluster-operator/blob/legacy/CHANGELOG.md#02317---2020-10-19)
+### cluster-operator [0.23.18](https://github.com/giantswarm/cluster-operator/blob/legacy/CHANGELOG.md#02318---2020-10-21)
 - Remove all chartconfig migration logic that caused accidental deletion and is no longer needed.
 
 ### app-operator [2.3.5](https://github.com/giantswarm/app-operator/blob/master/CHANGELOG.md#235---2020-10-20)
