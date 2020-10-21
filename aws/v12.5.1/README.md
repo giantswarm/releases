@@ -1,6 +1,6 @@
 # :zap: Giant Swarm Release v12.5.1 for AWS :zap:
 
-<< Add description here >>
+This release fixes an issue that prevented upgrades of the Control Planes.
 
 ## Change details
 
@@ -9,6 +9,3 @@
 
 #### Fixed
 - Ignore error when missing APIServerPublicLoadBalancer CF Stack output to allow upgrade.
-
-
-
