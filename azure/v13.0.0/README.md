@@ -7,6 +7,10 @@ A node pool is a sub set of the kubernetes nodes, and node pools differ from eac
 This is suitable for having different node pools with different configurations (like a different instance size) for different purposes.
 After cluster creation with 1 node pools, later on node pools can be freely added and removed from the cluster.
 
+If you have access to the Control Plane API you can manage your clusters directly from there.
+The clusters that you create are now represented by [Cluster API](https://cluster-api.sigs.k8s.io/) CRDs ([Custom Resource Definition](https://kubernetes.io/docs/tasks/extend-kubernetes/custom-resources/custom-resource-definitions/)).
+Using [our kubectl plugin](https://github.com/giantswarm/kubectl-gs/) you can easily create the Custom Resources required to create a cluster.
+
 ## Change details
 
 ### azure-operator [5.0.0](https://github.com/giantswarm/aws-operator/releases/tag/v5.0.0)
