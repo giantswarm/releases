@@ -1,9 +1,13 @@
 # :zap: Giant Swarm Release v13.0.0 for Azure :zap:
 
-<< Add description here >>
+This is the first release to support Kubernetes 1.18 on Azure.
+
+This release also includes support for Kubernetes node pools.
+A node pool is a sub set of the kubernetes nodes, and node pools differ from each other.
+This is suitable for having different node pools with different configurations (like a different instance size) for different purposes.
+After cluster creation with 1 node pools, later on node pools can be freely added and removed from the cluster.
 
 ## Change details
-
 
 ### azure-operator [5.0.0](https://github.com/giantswarm/aws-operator/releases/tag/v5.0.0)
 
