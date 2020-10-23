@@ -46,6 +46,7 @@ spec:
   - name: aws-cni
     version: 1.7.3
   - name: aws-operator
+    catalog: control-plane-test-catalog
     releaseOperatorDeploy: true
     reference: 2d167003e582d15d0a68b8cff82ae0ba088b5ce1
     version: 9.1.4-dev
