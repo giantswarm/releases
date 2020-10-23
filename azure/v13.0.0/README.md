@@ -5,14 +5,40 @@
 ## Change details
 
 
-### azure-operator [5.0.0-alpha3](https://github.com/giantswarm/aws-operator/releases/tag/v5.0.0-alpha3)
+### azure-operator [5.0.0](https://github.com/giantswarm/aws-operator/releases/tag/v5.0.0)
 
-Not found
+Bug fixes:
+
+- Fixed firewall rules to allow prometheus to scrape node-level exporters from all node pools.
+- Encryption secret is now taken from the CR namespace rather than the organization namespace.
+- Try to send only one request to VMSS Azure API from `nodepool` handler.
+
+Changes:
+
+- Decouple `Service` from controllers using an slice of controllers.
+- Retry failed ARM deployments regardless of the checksum check.
+- Master instances now use a dedicated NAT gateway for egress traffic.
+- Removed the ETCD Private Load Balancer, reusing the API public one for ETCD traffic (needed by HA masters).
+- Use `DataDisks` field to define VM disks when creating node pools.
+- Don't error if certificates are not present yet. Cancel reconciliation and wait until next loop instead.
+- Set cluster-autoscaler-enabled tag to false when min replicas and max replicas are the same for a node pool.
+- Removed instance watchdog to save on VMSS API calls.
+- Do not use public SSH keys coming from the CRs.
+- Get the storage account type to use for node pools' VMSS from the AzureMachinePool CR.
+- Add provider independent controllers to manage labeling and setting owner references in other provider dependent objects.
+- Enable persistent volume `expansion` support in the default `Storage Classes`.
+- Added to all VMSSes the tags needed by Cluster Autoscaler.
+
+Updates:
+
+- Updated backward incompatible Kubernetes dependencies to v1.18.5.
+- Updated CAPI to `v0.3.9` and CAPZ to `v0.4.7`, using GiantSwarm forks that contain k8s 1.18 changes.
 
 
 ### containerlinux [2605.6.0](https://www.flatcar-linux.org/releases/#release-2605.6.0)
 
 Bug fixes:
+
 - Enabled missing systemd services ([#191](https://github.com/flatcar-linux/Flatcar/issues/191), [PR #612](https://github.com/flatcar-linux/coreos-overlay/pull/612))
 - Fixed Docker torcx image unpacking error on machines with less than ~600 MB total RAM ([#32](https://github.com/flatcar-linux/Flatcar/issues/32))
 - Solved adcli Kerberos Active Directory incompatibility ([#194](https://github.com/flatcar-linux/Flatcar/issues/194))
