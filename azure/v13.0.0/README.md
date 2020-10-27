@@ -3,9 +3,8 @@
 This is the first release to support Kubernetes 1.18 on Azure.
 
 This release also includes support for Kubernetes node pools.
-A node pool is a sub set of the kubernetes nodes, and node pools differ from each other.
-This is suitable for having different node pools with different configurations (like a different instance size) for different purposes.
-After cluster creation with 1 node pools, later on node pools can be freely added and removed from the cluster.
+A node pool is a subset of the Kubernetes nodes. They enable having pools of nodes with different configurations (like a different instance size) within one cluster.
+After cluster creation with 1 node pools, additional node pools can be freely added and removed from the cluster.
 
 If you have access to the Control Plane API you can manage your clusters directly from there.
 The clusters that you create are now represented by [Cluster API](https://cluster-api.sigs.k8s.io/) CRDs ([Custom Resource Definition](https://kubernetes.io/docs/tasks/extend-kubernetes/custom-resources/custom-resource-definitions/)).
@@ -19,7 +18,7 @@ Bug fixes:
 
 - Fixed firewall rules to allow prometheus to scrape node-level exporters from all node pools.
 - Encryption secret is now taken from the CR namespace rather than the organization namespace.
-- Try to send only one request to VMSS Azure API from `nodepool` handler.
+- Try to send only one request to VMSS Azure API from `nodepool` handler which reduces the risk of reaching API rate limit and getting 429 errors.
 
 Changes:
 
@@ -174,5 +173,4 @@ _Nothing has changed._
 
 #### Changed
 - Upgrade upstream external-dns from v0.7.3 to [v0.7.4](https://github.com/kubernetes-sigs/external-dns/releases/tag/v0.7.4).
-
 
