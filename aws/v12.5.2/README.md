@@ -1,6 +1,6 @@
 # :zap: Giant Swarm Release v12.5.2 for AWS :zap:
 
-This release fixes an issue that crashing app-operator when handling cluster deletion.
+This release fixes an issue that causes app-operator to crash when handling cluster deletion.
 
 ## Change details
 
