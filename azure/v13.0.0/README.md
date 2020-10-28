@@ -17,7 +17,6 @@ Using [our kubectl plugin](https://github.com/giantswarm/kubectl-gs/) you can ea
 Bug fixes:
 
 - Fixed firewall rules to allow prometheus to scrape node-level exporters from all node pools.
-- Encryption secret is now taken from the CR namespace rather than the organization namespace.
 - Try to send only one request to VMSS Azure API from `nodepool` handler which reduces the risk of reaching API rate limit and getting 429 errors.
 
 Changes:
