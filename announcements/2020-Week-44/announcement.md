@@ -11,7 +11,7 @@
 
 ## Documentation
 
-
+1. We added [reference documentation for `kubectl gs`](https://docs.giantswarm.io/reference/kubectl-gs/), our kubectl plugin for the Control Plane Kubernetes API.
 
 ---
 Please let <!subteam^S0GSG846L|Product Owners> know if you have any feedback or questions by replying to this announcement in a thread.
