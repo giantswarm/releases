@@ -1,4 +1,4 @@
-# :zap: This Week in Provider-Independent Announcements (October 16, 2020):zap:
+# :zap: This Week in Provider-Independent Announcements (October 30, 2020):zap:
 
 ## Giant Swarm Catalog (Managed Apps)
 
