@@ -3,7 +3,7 @@
 ## Giant Swarm Catalog (Managed Apps)
 
 1. [Cert Manager v 2.3.1](https://github.com/giantswarm/cert-manager-app/blob/master/CHANGELOG.md#231---2020-10-29) removes deprecated APIs and upgrades to upstream v1.0.3.
-2. [Kong v0.9.2](https://github.com/giantswarm/kong-app/blob/release-v0.9.x/CHANGELOG.md#092---2020-10-28) adds minReadySeconds to deployment template as an optional parameter 
+2. [Kong v0.9.2](https://github.com/giantswarm/kong-app/blob/release-v0.9.x/CHANGELOG.md#092---2020-10-28) adds minReadySeconds (optional parameter) to the deployment template. This helps avoid downtime during rolling updates.
 
 
 ## User Interface Releases
