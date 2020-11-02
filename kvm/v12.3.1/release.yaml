@@ -48,4 +48,4 @@ spec:
     releaseOperatorDeploy: true
     version: 3.12.2
   date: "2020-10-21T16:30:00Z"
-  state: active
+  state: deprecated
