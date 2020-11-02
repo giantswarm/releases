@@ -2,7 +2,7 @@
 
 **Nodes will be rolled during upgrade to this version.**
 
-This patch release prevents an issue with QPS limits introduced by DockerHub.
+This patch release prevents an issue with QPS(Queries per Second) limits introduced by DockerHub.
 
 ## Change details
 
