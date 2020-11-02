@@ -1,10 +1,10 @@
 # Generated with:
-# devctl release create --name 13.0.0-firewall --base v13.0.0-alpha4 --releases . --provider azure --component azure-operator@master
+# devctl release create --name 13.0.0 --base v13.0.0-alpha4 --releases . --provider azure --component azure-operator@master
 apiVersion: release.giantswarm.io/v1alpha1
 kind: Release
 metadata:
   creationTimestamp: null
-  name: v13.0.0-firewall
+  name: v13.0.0
 spec:
   apps:
   - name: cert-exporter
