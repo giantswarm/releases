@@ -2,7 +2,7 @@ apiVersion: release.giantswarm.io/v1alpha1
 kind: Release
 metadata:
   creationTimestamp: null
-  name: v12.1.1
+  name: v12.1.2
 spec:
   apps:
   - name: cert-exporter
