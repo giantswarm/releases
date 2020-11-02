@@ -1,6 +1,6 @@
 # :zap: Giant Swarm Release v12.3.2 for KVM :zap:
 
-**If you are upgrading from 12.3.0, upgrading to this release will not roll your nodes.**
+**Nodes will be rolled during upgrade to this version.**
 
 This patch release prevents an issue with QPS limits introduced by DockerHub.
 
