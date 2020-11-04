@@ -64,6 +64,6 @@ spec:
   - name: kubernetes
     version: 1.17.13
   date: "2020-10-27T16:40:57Z"
-  state: active
+  state: deprecated
 status:
   ready: false
