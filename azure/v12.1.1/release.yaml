@@ -51,4 +51,4 @@ spec:
   - name: etcd
     version: 3.4.9
   date: 2020-10-21T13:00:00Z
-  state: active
+  state: deprecated
