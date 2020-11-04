@@ -1,5 +1,7 @@
 # :zap: Giant Swarm Release v11.6.1 for AWS :zap:
 
+**Nodes will be rolled during upgrade to this version.**
+
 This patch release prevents an issue with QPS (Queries per Second) limits introduced by Docker Hub.
 
 ## Change details
