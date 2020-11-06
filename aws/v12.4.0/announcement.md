@@ -1,0 +1,1 @@
+**Giant Swarm release v12.4.0 for AWS is available.** This release upgrades cert-manager-app to `v2.3.0` which brings new patch version `v1.0.2` of the upstream project. External-DNS is upgraded as well to version `v0.7.4`. Further details can be found in the [release notes](https://github.com/giantswarm/releases/tree/master/aws/v12.4.0).

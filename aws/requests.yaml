@@ -1,4 +1,20 @@
 releases:
+    - name: "> 12.5.0, < 13.0.0"
+      requests:
+        - name: app-operator
+          version: ">= 2.3.3"
+          issue: https://github.com/giantswarm/giantswarm/issues/13648
+        - name: chart-operator
+          version: ">= 2.3.5"
+          issue: https://github.com/giantswarm/giantswarm/issues/13677
+    - name: "> 12.3.0, < 13.0.0"
+      requests:
+        - name: cert-manager
+          version: ">= 2.3.0"
+          issue: https://github.com/giantswarm/giantswarm/issues/13626
+        - name: external-dns
+          version: ">= 1.5.0"
+          issue: https://github.com/giantswarm/giantswarm/issues/13671
     - name: "> 12.0.0, < 13.0.0"
       requests:
         - name: calico
@@ -19,3 +35,6 @@ releases:
         - name: containerlinux
           version: ">= 2512.4.0"
           issue: https://github.com/giantswarm/giantswarm/issues/13150
+          except:
+            - releaseVersion: 9.3.9
+              reason: only app changes are required
