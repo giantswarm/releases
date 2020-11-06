@@ -5,10 +5,20 @@
 ## Change details
 
 
-### aws-operator [9.1.3](https://github.com/giantswarm/aws-operator/releases/tag/v9.1.3)
+### aws-operator [9.2.0](https://github.com/giantswarm/aws-operator/releases/tag/v9.2.0)
 
+#### Added
+- Annotation `alpha.giantswarm.io/aws-metadata-v2` to enable AWS Metadata API v2
+- Annotation `alpha.aws.giantswarm.io/update-max-batch-size` to configure max batch size in ASG update policy on cluster or machine deployment CR.
+- Annotation `alpha.aws.giantswarm.io/update-pause-time` to configure pause between batches in ASG update on cluster or machine deployment CR.
+- Add `terminate-unhealthy-node` feature to automatically terminate bad and
+  unhealthy nodes in a Cluster.
+- Add `alpha.giantswarm.io/aws-metadata-v2` annotation to enable AWS Metadata
+  API v2.
 #### Fixed
-- Ignore error when missing APIServerPublicLoadBalancer CF Stack output to allow upgrade.
+- Fix dockerhub QPS by using paid user token for pulls.
+- Remove dependency on `var-lib-etcd.automount` to avoid dependency cycle on
+  new systemd.
 
 
 
