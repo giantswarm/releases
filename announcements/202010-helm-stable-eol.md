@@ -2,4 +2,4 @@
 
 The "Helm Stable" Catalog in our Web UI (Happa) will follow suit. We plan to remove it completely in six months, by end of June 2021.
 
-In case you are using apps installed from the Helm Stable Catalog, please move to following the apps' respective upstream charts or reach out to your Solution Engineer for alternatives.
+In case you are using apps installed from the Helm Stable Catalog, please reach out to your Solution Engineer and they can help you move to the respective app’s new upstream chart.
