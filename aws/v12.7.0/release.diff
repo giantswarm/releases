@@ -44,7 +44,7 @@ spec:                                                              spec:
     releaseOperatorDeploy: true                                        releaseOperatorDeploy: true
     version: 2.3.5                                                     version: 2.3.5
   - name: aws-cni                                                    - name: aws-cni
-    version: 1.7.3                                                     version: 1.7.3
+    version: 1.7.3                                              |      version: 1.7.5
   - name: aws-operator                                               - name: aws-operator
     releaseOperatorDeploy: true                                        releaseOperatorDeploy: true
     version: 9.2.0                                                     version: 9.2.0
