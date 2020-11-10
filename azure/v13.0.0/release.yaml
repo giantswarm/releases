@@ -39,6 +39,8 @@ spec:
     version: 2.1.1
   - name: azure-operator
     releaseOperatorDeploy: true
+    catalog: control-plane-test-catalog
+    reference: 5.0.0-alpha4-f8ea9127570cdd5f589bc6b6223e31b32eb47dbf
     version: 5.0.1-upgrade
   - name: cert-operator
     reference: 0.1.0-2
@@ -57,7 +59,7 @@ spec:
     version: 3.15.3
   - name: etcd
     version: 3.4.9
-  date: "2020-10-28T07:55:08Z"
+  date: "2020-11-10T13:00:00Z"
   state: active
 status:
   ready: false
