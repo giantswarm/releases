@@ -39,7 +39,7 @@ spec:
     version: 2.1.1
   - name: azure-operator
     releaseOperatorDeploy: true
-    version: 5.0.0-alpha3
+    version: 5.0.1-upgrade
   - name: cert-operator
     reference: 0.1.0-2
     releaseOperatorDeploy: true
