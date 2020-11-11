@@ -19,7 +19,7 @@ spec:                                                              spec:
     version: 1.5.0                                                     version: 1.5.0
   - componentVersion: 1.9.7                                          - componentVersion: 1.9.7
     name: kube-state-metrics                                           name: kube-state-metrics
-    version: 1.2.0                                                     version: 1.2.0
+    version: 1.2.0                                              |      version: 1.2.1
   - componentVersion: 0.3.3                                          - componentVersion: 0.3.3
     name: metrics-server                                               name: metrics-server
     version: 1.1.0                                                     version: 1.1.0
@@ -27,7 +27,7 @@ spec:                                                              spec:
     version: 1.9.2                                                     version: 1.9.2
   - componentVersion: 1.0.1                                          - componentVersion: 1.0.1
     name: node-exporter                                                name: node-exporter
-    version: 1.4.2                                                     version: 1.4.2
+    version: 1.4.2                                              |      version: 1.6.0
   components:                                                        components:
   - name: app-operator                                               - name: app-operator
     releaseOperatorDeploy: true                                        releaseOperatorDeploy: true
