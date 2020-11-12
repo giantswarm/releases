@@ -49,7 +49,7 @@ spec:
   - name: kvm-operator
     catalog: control-plane-test-catalog
     releaseOperatorDeploy: true
-    reference: 9.1.3-45a89ff906540ffc8213d55b76b91cfb088d7502
+    reference: 3.13.0-131ae10ae4e055650fb75840d5f3ea2597d4f25d
     version: 3.13.1-dev
   date: "2020-11-06T14:10:09Z"
   state: active
