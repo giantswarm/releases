@@ -16,7 +16,7 @@ Swarm control planes.
     - [v12.5.1](https://github.com/giantswarm/releases/tree/master/aws/v12.5.1)
     - [v12.5.0](https://github.com/giantswarm/releases/tree/master/aws/v12.5.0)
   - v12.4
-    - [v12.4.0](https://github.com/giantswarm/releases/tree/master/aws/v12.4.0)
+    - [v12.4.0](https://github.com/giantswarm/releases/tree/master/aws/archived/v12.4.0)
   - v12.3
     - [v12.3.0](https://github.com/giantswarm/releases/tree/master/aws/v12.3.0)
   - v12.2
