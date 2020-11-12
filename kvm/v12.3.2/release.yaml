@@ -49,3 +49,6 @@ spec:
     version: 3.13.0
   date: "2020-11-02T10:50:00Z"
   state: active
+status:
+  inUse: false
+  ready: false
