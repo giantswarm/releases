@@ -43,7 +43,7 @@ spec:                                                              spec:
     releaseOperatorDeploy: true                                        releaseOperatorDeploy: true
     version: 0.23.16                                            |      version: 0.23.18
   - name: kubernetes                                                 - name: kubernetes
-    version: 1.18.10                                                   version: 1.18.10
+    version: 1.18.10                                                   version: 1.18.12
   - name: containerlinux                                             - name: containerlinux
     version: 2605.6.0                                           |      version: 2605.7.0
   - name: coredns                                                    - name: coredns
@@ -54,7 +54,7 @@ spec:                                                              spec:
     version: 3.4.9                                              |      version: 3.4.13
   date: "2020-10-27T11:04:44Z"                                  |    - name: chart-operator
                                                                 >      version: 2.3.5
-                                                                >    date: "2020-11-10T14:16:36Z"
+                                                                >    date: "2020-11-13T08:00:00Z"
   state: active                                                      state: active
 status:                                                            status:
   ready: false                                                       ready: false
