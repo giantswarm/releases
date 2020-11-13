@@ -10,7 +10,7 @@ spec:
   - name: cert-exporter
     version: 1.3.0
   - name: chart-operator
-    version: 2.3.4
+    version: 2.5.0
   - componentVersion: 1.6.5
     name: coredns
     version: 1.2.0
@@ -19,7 +19,7 @@ spec:
     version: 1.5.0
   - componentVersion: 1.9.7
     name: kube-state-metrics
-    version: 1.2.0
+    version: 1.2.1
   - componentVersion: 0.3.3
     name: metrics-server
     version: 1.1.0
@@ -27,11 +27,11 @@ spec:
     version: 1.9.2
   - componentVersion: 1.0.1
     name: node-exporter
-    version: 1.4.2
+    version: 1.6.0
   components:
   - name: app-operator
     releaseOperatorDeploy: true
-    version: 2.3.3
+    version: 2.7.0
   - name: azure-operator
     releaseOperatorDeploy: true
     version: 5.0.0-beta1
@@ -43,7 +43,7 @@ spec:
     releaseOperatorDeploy: true
     version: 0.23.18
   - name: kubernetes
-    version: 1.18.10
+    version: 1.18.12
   - name: containerlinux
     version: 2605.7.0
   - name: coredns
@@ -54,7 +54,7 @@ spec:
     version: 3.4.13
   - name: chart-operator
     version: 2.3.5
-  date: "2020-11-10T14:16:36Z"
+  date: "2020-11-13T08:00:00Z"
   state: active
 status:
   ready: false
