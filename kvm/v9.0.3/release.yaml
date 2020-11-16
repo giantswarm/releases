@@ -52,3 +52,6 @@ spec:
     version: 3.9.2
   date: "2020-05-13T19:00:00Z"
   state: active
+status:
+  inUse: false
+  ready: false
