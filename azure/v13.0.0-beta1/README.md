@@ -14,7 +14,7 @@ Using [our kubectl plugin](https://github.com/giantswarm/kubectl-gs/) you can ea
 
 ### kubernetes [1.18.12](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.18.md#v11812)
 ### app-operator [2.7.0](https://github.com/giantswarm/app-operator/blob/master/CHANGELOG.md#270---2020-11-09)
-### azure-operator [5.0.0-beta2](https://github.com/giantswarm/azure-operator/blob/master/CHANGELOG.md#500-beta2---2020-11-16)
+### azure-operator [5.0.0-beta3](https://github.com/giantswarm/azure-operator/blob/master/CHANGELOG.md#500-beta3---2020-11-16)
 ### calico [3.15.3](https://github.com/projectcalico/calico/releases/tag/v3.15.3)
 ### cert-exporter [1.3.0](https://github.com/giantswarm/cert-exporter/blob/master/CHANGELOG.md#130---2020-09-17)
 ### chart-operator [2.5.0](https://github.com/giantswarm/chart-operator/blob/master/CHANGELOG.md#250---2020-11-09)
