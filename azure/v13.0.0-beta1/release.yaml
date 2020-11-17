@@ -1,5 +1,5 @@
 # Generated with:
-# devctl release create --name 13.0.0-beta1 --provider azure --base 13.0.0-alpha4 --component azure-operator@5.0.0-beta3 --component app-operator@2.3.3 --component chart-operator@2.3.5 --component kubernetes@1.18.10 --component cluster-operator@0.23.18 --component containerlinux@2605.7.0 --component etcd@3.4.13 --component calico@3.15.3
+# devctl release create --name 13.0.0-beta1 --provider azure --base 13.0.0-alpha4 --component azure-operator@5.0.0-beta4 --component app-operator@2.3.3 --component chart-operator@2.3.5 --component kubernetes@1.18.10 --component cluster-operator@0.23.18 --component containerlinux@2605.7.0 --component etcd@3.4.13 --component calico@3.15.3
 apiVersion: release.giantswarm.io/v1alpha1
 kind: Release
 metadata:
@@ -34,7 +34,7 @@ spec:
     version: 2.7.0
   - name: azure-operator
     releaseOperatorDeploy: true
-    version: 5.0.0-beta3
+    version: 5.0.0-beta4
   - name: cert-operator
     reference: 0.1.0-2
     releaseOperatorDeploy: true
