@@ -52,3 +52,6 @@ spec:
     version: 3.11.1
   date: "2020-05-04T12:00:00Z"
   state: deprecated
+status:
+  inUse: false
+  ready: false
