@@ -1,4 +1,4 @@
-## :zap:  Giant Swarm Release 11.3.0 for Azure :zap:
+## :zap:  Tenant Cluster Release 11.3.0 for Azure :zap:
 
 This release replaces CoreOS Container Linux that is going [end of life](https://coreos.com/os/eol/) on the 26th of May 2020 with [Flatcar Container Linux](https://www.flatcar-linux.org/). Flatcar is a compatible fork of CoreOS which receives ongoing support, including security updates and fixes. To learn more please read our recent blog post: [Time to Catch a New Train: Flatcar Linux](https://www.giantswarm.io/blog/time-to-catch-a-new-train-flatcar-linux)
 

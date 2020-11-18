@@ -1,4 +1,4 @@
-## ⚡️ Giant Swarm Release 11.2.4 for Azure ⚡️
+## ⚡️ Tenant Cluster Release 11.2.4 for Azure ⚡️
 
 **If you are upgrading from 11.2.3, upgrading to this release will not roll your nodes. It will only update the apps.**
 

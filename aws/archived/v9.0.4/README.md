@@ -1,4 +1,4 @@
-# :zap: Giant Swarm Release 9.0.4 for AWS :zap:
+# :zap: Tenant Cluster Release 9.0.4 for AWS :zap:
 
 **Note** If you are upgrading from 8.5.0 or 9.0.0:
 

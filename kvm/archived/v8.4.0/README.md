@@ -1,4 +1,4 @@
-## :zap:  Giant Swarm Release 8.4.0 for KVM :zap:
+## :zap:  Tenant Cluster Release 8.4.0 for KVM :zap:
 
 This release contains Kubernetes 1.14.6 and therefor fixes for CVE-2019-9512 and CVE-2019-9514.
 

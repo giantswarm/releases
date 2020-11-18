@@ -1,4 +1,4 @@
-## :zap: Giant Swarm Release 11.1.0 for Azure :zap:
+## :zap: Tenant Cluster Release 11.1.0 for Azure :zap:
 
 This is the first Giant Swarm release which includes Multiple Availability Zones for Azure. This release also introduces faster and less disruptive upgrade procedure that respects PDBs, as well as improved worker labeling.
 

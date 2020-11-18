@@ -1,4 +1,4 @@
-# :zap: Giant Swarm Release v9.2.6 for AWS :zap:
+# :zap: Tenant Cluster Release v9.2.6 for AWS :zap:
 
 This release fixes a problem in aws-operator communicating to the Control Plane Kubernetes API.
 

@@ -1,4 +1,4 @@
-## :zap:  Giant Swarm Release 11.2.6 for Azure :zap:
+## :zap:  Tenant Cluster Release 11.2.6 for Azure :zap:
 
 This release adds two instance types to the list of supported instance types and fixes an error that was interrupting cluster creation.
 
