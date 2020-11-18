@@ -1,4 +1,4 @@
-# :zap: Giant Swarm Release v12.0.0 for AWS :zap:
+# :zap: Tenant Cluster Release v12.0.0 for AWS :zap:
 
 This is the first release to support Kubernetes 1.17 on AWS.
 

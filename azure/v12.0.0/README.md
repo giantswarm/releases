@@ -1,4 +1,4 @@
-## :zap:  Giant Swarm Release 12.0.0 for Azure :zap:
+## :zap:  Tenant Cluster Release 12.0.0 for Azure :zap:
 
 This is the first release to support **Kubernetes 1.17** on Azure.
 

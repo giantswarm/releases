@@ -1,4 +1,4 @@
-# :zap: Giant Swarm Release v12.5.2 for AWS :zap:
+# :zap: Tenant Cluster Release v12.5.2 for AWS :zap:
 
 **If you are upgrading from 12.5.1, upgrading to this release will not roll your nodes. It will only update the apps.**
 

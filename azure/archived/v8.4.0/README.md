@@ -1,4 +1,4 @@
-## :zap:  Giant Swarm Release 8.4.0 for Azure :zap:
+## :zap:  Tenant Cluster Release 8.4.0 for Azure :zap:
 
 This release contains Kubernetes 1.14.6 and therefore fixes for CVE-2019-9512 and CVE-2019-9514.
 

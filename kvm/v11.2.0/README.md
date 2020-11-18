@@ -1,4 +1,4 @@
-## :zap: Giant Swarm Release 11.2.0 for KVM :zap:
+## :zap: Tenant Cluster Release 11.2.0 for KVM :zap:
 
 **If you are upgrading from 11.1.0, upgrading to this release merely updates the app. It will *not* roll your nodes.**
 

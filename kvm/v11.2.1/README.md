@@ -1,4 +1,4 @@
-## :zap: Giant Swarm Release 11.2.1 for KVM :zap:
+## :zap: Tenant Cluster Release 11.2.1 for KVM :zap:
 
 **With this release, horizontal pod autoscaling (HPA) is enabled by default for NGINX Ingress Controller (NGINX IC) on selected cluster profiles.**
 

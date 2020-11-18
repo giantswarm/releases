@@ -1,4 +1,4 @@
-## :zap:  Giant Swarm Release 11.3.1 for Azure :zap:
+## :zap:  Tenant Cluster Release 11.3.1 for Azure :zap:
 
 This release brings improvements to the upgrade process from clusters using CoreOS image to Flatcar image.
 The temporary firewall rule for workers was changed to be more focused in blocking traffic towards the API load balancer.

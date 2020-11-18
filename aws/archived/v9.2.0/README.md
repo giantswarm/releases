@@ -1,4 +1,4 @@
-# :zap: Giant Swarm Release 9.2.0 for AWS :zap:
+# :zap: Tenant Cluster Release 9.2.0 for AWS :zap:
 
 **If you are upgrading from 9.1.0, upgrading to this release merely updates the app. It will *not* roll your nodes.**
 
