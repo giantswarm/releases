@@ -107,7 +107,7 @@ Swarm control planes.
 ## Azure
 - v14
   - v14.0
-    - [v14.0.0-coredns](https://github.com/giantswarm/releases/tree/test-release-coredns/azure/v14.0.0-coredns)
+    - [v14.0.0-coredns](https://github.com/giantswarm/releases/tree/master/azure/v14.0.0-coredns)
 - v13
   - v13.0
     - [v13.0.0-alpha4](https://github.com/giantswarm/releases/tree/master/azure/v13.0.0-alpha4)
