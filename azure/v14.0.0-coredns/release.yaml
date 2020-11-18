@@ -1,0 +1,59 @@
+# Generated with:
+# devctl release create --name 14.0.0-coredns --base v12.1.2 --releases . --provider azure --overwrite true --app coredns@1.2.0-8119805cb4f6a8e06975570d6e19d1d8288d4ca3@1.8.0
+apiVersion: release.giantswarm.io/v1alpha1
+kind: Release
+metadata:
+  creationTimestamp: null
+  name: v14.0.0-coredns
+spec:
+  apps:
+  - name: cert-exporter
+    version: 1.2.4
+  - name: chart-operator
+    version: 2.3.5
+  - componentVersion: 1.8.0
+    name: coredns
+    version: 1.2.0-8119805cb4f6a8e06975570d6e19d1d8288d4ca3
+  - componentVersion: 0.7.3
+    name: external-dns
+    version: 1.4.0
+  - componentVersion: 1.9.5
+    name: kube-state-metrics
+    version: 1.1.0
+  - componentVersion: 0.3.3
+    name: metrics-server
+    version: 1.1.0
+  - name: net-exporter
+    version: 1.8.1
+  - componentVersion: 0.18.1
+    name: node-exporter
+    version: 1.2.0
+  components:
+  - name: app-operator
+    releaseOperatorDeploy: true
+    version: 2.3.5
+  - name: azure-operator
+    releaseOperatorDeploy: true
+    version: 4.3.0
+  - name: cert-operator
+    reference: 0.1.0-2
+    releaseOperatorDeploy: true
+    version: 0.1.0
+  - name: cluster-operator
+    releaseOperatorDeploy: true
+    version: 0.23.18
+  - name: kubernetes
+    version: 1.17.9
+  - name: containerlinux
+    version: 2512.2.1
+  - name: coredns
+    version: 1.6.5
+  - name: calico
+    version: 3.15.1
+  - name: etcd
+    version: 3.4.9
+  date: "2020-11-18T14:33:00Z"
+  state: active
+status:
+  inUse: false
+  ready: false

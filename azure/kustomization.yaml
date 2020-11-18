@@ -10,5 +10,6 @@ resources:
 - v12.1.1
 - v12.1.2
 - v13.0.0-alpha4
+- v14.0.0-coredns
 transformers:
 - releaseNotesTransformer.yaml
