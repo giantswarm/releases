@@ -8,7 +8,7 @@ This minor release adds an alpha feature that allows to configure values for AWS
 
 Bug - Match primary ENI IP correctly ([#1247](https://github.com/aws/amazon-vpc-cni-k8s/pull/1247) , @mogren)
 
-### aws-operator [9.3.1](https://github.com/giantswarm/aws-operator/releases/tag/v9.3.0)
+### aws-operator [9.3.1](https://github.com/giantswarm/aws-operator/releases/tag/v9.3.1)
 
 #### Changed
 - Update dependencies to next major versions.
@@ -21,3 +21,19 @@ Bug - Match primary ENI IP correctly ([#1247](https://github.com/aws/amazon-vpc-
 - Annotation `alpha.aws.giantswarm.io/aws-subnet-size` to customize subnet size of Control Plane and Node Pools
 - Annotation `alpha.aws.giantswarm.io/update-max-batch-size` to configure max batch size in ASG update policy on cluster or machine deployment CR.
 - Annotation `alpha.aws.giantswarm.io/update-pause-time` to configure pause between batches in ASG update on cluster or machine deployment CR.
+
+### cert-manager [2.3.2](https://github.com/giantswarm/cert-manager-app/releases/tag/v2.3.2)
+
+#### Added
+
+- Added values.schema.json for validation of default values. ([#90](https://github.com/giantswarm/cert-manager-app/pull/90))
+- Made cert-manager version configurable. ([#91](https://github.com/giantswarm/cert-manager-app/pull/91))
+
+#### Changed
+
+- Updated `cert-manager` to v1.0.4. ([#95](https://github.com/giantswarm/cert-manager-app/pull/95))
+- Update RBAC API versions. ([#84](https://github.com/giantswarm/cert-manager-app/pull/84))
+
+#### Fixed
+
+- Updated app version in Chart.yaml metadata to `v1.0.3`. ([#91](https://github.com/giantswarm/cert-manager-app/pull/91))
