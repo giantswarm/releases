@@ -105,11 +105,12 @@ Swarm control planes.
     - [v8.2.0](https://github.com/giantswarm/releases/tree/master/aws/archived/v8.2.0)
 
 ## Azure
-
+- v14
+  - v14.0
+    - [v14.0.0-coredns](https://github.com/giantswarm/releases/tree/test-release-coredns)
 - v13
   - v13.0
     - [v13.0.0-alpha4](https://github.com/giantswarm/releases/tree/master/azure/v13.0.0-alpha4)
-
 - v12
   - v12.1
     - [v12.1.2](https://github.com/giantswarm/releases/tree/master/azure/v12.1.2)
