@@ -11,7 +11,7 @@ spec:
     version: 1.2.3
   - componentVersion: 1.0.2
     name: cert-manager
-    version: 2.3.0
+    version: 2.3.2
   - name: chart-operator
     version: 2.3.5
   - componentVersion: 1.17.3
