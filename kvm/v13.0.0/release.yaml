@@ -1,5 +1,3 @@
-# Generated with:
-# devctl release create --name 13.0.0 --base v12.3.2 --releases . --provider kvm --component containerlinux@2512.5.0 --component kubernetes@1.18.10 --component calico@3.15.3 --app kube-state-metrics@1.2.0@1.9.7 --app cert-exporter@1.3.0 --app net-exporter@1.9.2 --app node-exporter@1.4.2@1.0.1 --overwrite true
 apiVersion: release.giantswarm.io/v1alpha1
 kind: Release
 metadata:
@@ -8,7 +6,7 @@ metadata:
 spec:
   apps:
   - name: cert-exporter
-    version: 1.3.0
+    version: 1.2.3
   - name: chart-operator
     version: 2.3.5
   - componentVersion: 1.6.5
@@ -16,25 +14,25 @@ spec:
     version: 1.2.0
   - componentVersion: 1.9.7
     name: kube-state-metrics
-    version: 1.2.0
+    version: 1.1.1
   - componentVersion: 0.3.6
     name: metrics-server
     version: 1.1.1
   - name: net-exporter
-    version: 1.9.2
+    version: 1.9.0
   - componentVersion: 1.0.1
     name: node-exporter
-    version: 1.4.2
+    version: 1.3.0
   components:
   - name: app-operator
-    releaseOperatorDeploy: true
     version: 2.3.5
+    releaseOperatorDeploy: true
   - name: calico
-    version: 3.15.3
+    version: 3.14.1
   - name: cert-operator
-    reference: 0.1.0-2
     releaseOperatorDeploy: true
     version: 0.1.0
+    reference: 0.1.0-2
   - name: cluster-operator
     releaseOperatorDeploy: true
     version: 0.23.18
@@ -45,13 +43,9 @@ spec:
   - name: flannel-operator
     version: 0.2.0
   - name: kubernetes
-    version: 1.18.10
+    version: 1.17.8
   - name: kvm-operator
-    catalog: control-plane-test-catalog
     releaseOperatorDeploy: true
-    reference: 3.13.0-131ae10ae4e055650fb75840d5f3ea2597d4f25d
-    version: 3.13.1-dev
-  date: "2020-11-06T14:10:09Z"
+    version: 3.13.0
+  date: "2020-11-02T10:50:00Z"
   state: active
-status:
-  ready: false
