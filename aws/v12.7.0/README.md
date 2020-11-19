@@ -1,6 +1,6 @@
 # :zap: Giant Swarm Release v12.7.0 for AWS :zap:
 
-This minor release adds an alpha feature that allows to configure values for AWS CF ASG UpdatePolicy values. Check guide [Fine-tuning upgrade disruption on AWS](https://docs.giantswarm.io/guides/fine-tuning-upgrade-disruption-on-aws/) for more information on this feature.
+This release offers the possibility to configure the subnet size of Network Pools, the size and wait time of batches during tenant cluster upgrades. More details about the upgrade improvments can be found in our [Fine-tuning upgrade disruption on AWS](https://docs.giantswarm.io/guides/fine-tuning-upgrade-disruption-on-aws/) guide.
 
 ## Change details
 
