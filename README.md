@@ -8,6 +8,9 @@ merged to the `master` branch releases get automatically deployed to all Giant
 Swarm control planes.
 
 ## AWS
+- v14
+  - v14.0
+    - [v14.0.0-coredns](https://github.com/giantswarm/releases/tree/master/aws/v14.0.0-coredns)
 - v12
   - v12.6
     - [v12.6.0](https://github.com/giantswarm/releases/tree/master/aws/v12.6.0)
