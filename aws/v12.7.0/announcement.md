@@ -1,0 +1,1 @@
+**Giant Swarm release v12.7.0 for AWS is available**. This release offers the possibility to configure the subnet size of Network Pools, the size and wait time of batches during tenant cluster upgrades. Further details can be found in the [release notes](https://github.com/giantswarm/releases/tree/master/aws/v12.7.0).
