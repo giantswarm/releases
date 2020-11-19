@@ -1,4 +1,4 @@
-# :zap: Giant Swarm Release v12.7.0 for AWS :zap:
+# :zap: Tenant Cluster Release v12.7.0 for AWS :zap:
 
 This release offers the possibility to configure the subnet size of Network Pools, the size and wait time of batches during tenant cluster upgrades. More details about the upgrade improvements can be found in our [Fine-tuning upgrade disruption on AWS](https://docs.giantswarm.io/guides/fine-tuning-upgrade-disruption-on-aws/) guide.
 
