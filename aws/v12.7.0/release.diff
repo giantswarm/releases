@@ -1,0 +1,70 @@
+# Generated with:                                               <
+# devctl release create --name 12.6.0 --provider aws --base 12. <
+apiVersion: release.giantswarm.io/v1alpha1                         apiVersion: release.giantswarm.io/v1alpha1
+kind: Release                                                      kind: Release
+metadata:                                                          metadata:
+  annotations:                                                       annotations:
+    giantswarm.io/docs: https://docs.giantswarm.io/reference/cp        giantswarm.io/docs: https://docs.giantswarm.io/reference/cp
+  creationTimestamp: null                                            creationTimestamp: null
+  name: v12.6.0                                                 |    name: v12.7.0
+spec:                                                              spec:
+  apps:                                                              apps:
+  - name: cert-exporter                                              - name: cert-exporter
+    version: 1.2.3                                                     version: 1.2.3
+  - componentVersion: 1.0.2                                          - componentVersion: 1.0.2
+    name: cert-manager                                                 name: cert-manager
+    version: 2.3.0                                              |      version: 2.3.2
+  - name: chart-operator                                             - name: chart-operator
+    version: 2.3.5                                                     version: 2.3.5
+  - componentVersion: 1.17.3                                         - componentVersion: 1.17.3
+    name: cluster-autoscaler                                           name: cluster-autoscaler
+    version: 1.17.3                                                    version: 1.17.3
+  - componentVersion: 1.6.5                                          - componentVersion: 1.6.5
+    name: coredns                                                      name: coredns
+    version: 1.2.0                                                     version: 1.2.0
+  - componentVersion: 0.7.4                                          - componentVersion: 0.7.4
+    name: external-dns                                                 name: external-dns
+    version: 1.5.0                                                     version: 1.5.0
+  - componentVersion: 3.6.0                                          - componentVersion: 3.6.0
+    name: kiam                                                         name: kiam
+    version: 1.5.0                                                     version: 1.5.0
+  - componentVersion: 1.9.7                                          - componentVersion: 1.9.7
+    name: kube-state-metrics                                           name: kube-state-metrics
+    version: 1.1.1                                                     version: 1.1.1
+  - componentVersion: 0.3.6                                          - componentVersion: 0.3.6
+    name: metrics-server                                               name: metrics-server
+    version: 1.1.1                                                     version: 1.1.1
+  - name: net-exporter                                               - name: net-exporter
+    version: 1.9.0                                                     version: 1.9.0
+  - componentVersion: 1.0.1                                          - componentVersion: 1.0.1
+    name: node-exporter                                                name: node-exporter
+    version: 1.3.0                                                     version: 1.3.0
+  components:                                                        components:
+  - name: app-operator                                               - name: app-operator
+    releaseOperatorDeploy: true                                        releaseOperatorDeploy: true
+    version: 2.3.5                                                     version: 2.3.5
+  - name: aws-cni                                                    - name: aws-cni
+    version: 1.7.3                                              |      version: 1.7.5
+  - name: aws-operator                                               - name: aws-operator
+    releaseOperatorDeploy: true                                        releaseOperatorDeploy: true
+    version: 9.2.0                                              |      version: 9.3.1
+  - name: calico                                                     - name: calico
+    version: 3.15.3                                                    version: 3.15.3
+  - name: cert-operator                                              - name: cert-operator
+    reference: 0.1.0-2                                                 reference: 0.1.0-2
+    releaseOperatorDeploy: true                                        releaseOperatorDeploy: true
+    version: 0.1.0                                                     version: 0.1.0
+  - name: cluster-operator                                           - name: cluster-operator
+    releaseOperatorDeploy: true                                        releaseOperatorDeploy: true
+    version: 3.3.1                                                     version: 3.3.1
+  - name: containerlinux                                             - name: containerlinux
+    version: 2512.5.0                                                  version: 2512.5.0
+  - name: etcd                                                       - name: etcd
+    version: 3.4.13                                                    version: 3.4.13
+  - name: kubernetes                                                 - name: kubernetes
+    version: 1.17.13                                                   version: 1.17.13
+  date: "2020-11-04T11:06:43Z"                                  |    date: "2020-11-19T08:00:00Z"
+  state: deprecated                                             |    state: active
+status:                                                            status:
+  inUse: false                                                  <
+  ready: false                                                       ready: false
