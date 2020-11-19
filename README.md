@@ -13,6 +13,8 @@ to all Giant Swarm installations.
 - v14
   - v14.0
     - [v14.0.0-coredns](https://github.com/giantswarm/releases/tree/master/aws/v14.0.0-coredns)
+    - [v14.0.1-coredns](https://github.com/giantswarm/releases/tree/master/aws/v14.0.1-coredns)
+
 - v12
   - v12.7
     - [v12.7.0](https://github.com/giantswarm/releases/tree/master/aws/v12.7.0)

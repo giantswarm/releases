@@ -27,5 +27,6 @@ resources:
 - v12.6.0
 - v12.7.0
 - v14.0.0-coredns
+- v14.0.1-coredns
 transformers:
 - releaseNotesTransformer.yaml

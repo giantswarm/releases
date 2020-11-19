@@ -1,12 +1,12 @@
 # Generated with:
-# devctl release create --name 14.0.0-coredns --base v12.7.0 --releases . --provider aws --overwrite true --app coredns@1.2.0-8119805cb4f6a8e06975570d6e19d1d8288d4ca3@1.8.0
+# devctl release create --name 14.0.1-coredns --base v12.7.0 --releases . --provider aws --overwrite true --app coredns@1.2.0-8119805cb4f6a8e06975570d6e19d1d8288d4ca3@1.8.0
 apiVersion: release.giantswarm.io/v1alpha1
 kind: Release
 metadata:
   annotations:
     giantswarm.io/docs: https://docs.giantswarm.io/reference/cp-k8s-api/releases.release.giantswarm.io/
   creationTimestamp: null
-  name: v14.0.0-coredns
+  name: v14.0.1-coredns
 spec:
   apps:
   - name: cert-exporter
@@ -63,7 +63,7 @@ spec:
     version: 3.4.13
   - name: kubernetes
     version: 1.17.13
-  date: "2020-11-19T16:23:42Z"
+  date: "2020-11-19T16:23:49Z"
   state: active
 status:
   inUse: false

@@ -1,4 +1,4 @@
-# :zap: Giant Swarm Release v14.0.0-coredns for AWS :zap:
+# :zap: Giant Swarm Release v14.0.1-coredns for AWS :zap:
 
 << Add description here >>
 
