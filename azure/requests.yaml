@@ -34,7 +34,7 @@ releases:
           version: ">= 1.5.0"
           issue: https://github.com/giantswarm/giantswarm/issues/13671
         - name: kubernetes
-          version: ">= 1.18.10"
+          version: ">= 1.18.12"
         - name: app-operator
           version: ">= 2.3.3"
           issue: https://github.com/giantswarm/giantswarm/issues/13648
