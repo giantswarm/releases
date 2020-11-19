@@ -1,17 +1,21 @@
 [![CircleCI](https://circleci.com/gh/giantswarm/releases.svg?style=shield)](https://circleci.com/gh/giantswarm/releases)
 
-# Giant Swarm Releases
+# Giant Swarm Tenant Cluster Releases
 
-This repository contains Giant Swarm releases and changelogs. Releases can be in
+This repository contains tenant cluster release notes and changelogs.
+
+Tenant cluster releases can be in
 different states, namely `active`, `deprecated` and `wip`. With pull requests
-merged to the `master` branch releases get automatically deployed to all Giant
-Swarm control planes.
+merged to the `master` branch, tenant cluster releases get automatically deployed
+to all Giant Swarm installations.
 
 ## AWS
 - v13
   - v13.0
     - [v13.0.0](https://github.com/giantswarm/releases/tree/master/aws/v13.0.0)
 - v12
+  - v12.7
+    - [v12.7.0](https://github.com/giantswarm/releases/tree/master/aws/v12.7.0)
   - v12.6
     - [v12.6.0](https://github.com/giantswarm/releases/tree/master/aws/v12.6.0)
   - v12.5

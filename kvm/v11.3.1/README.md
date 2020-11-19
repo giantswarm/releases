@@ -1,4 +1,4 @@
-## :zap: Giant Swarm Release 11.3.1 for KVM :zap:
+## :zap: Tenant Cluster Release 11.3.1 for KVM :zap:
 
 This release fixes a problem that prevented clusters with OIDC user and group prefix settings to work as expected in `11.3.0`.
 

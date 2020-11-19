@@ -1,4 +1,4 @@
-# :zap: Giant Swarm Release 12.0.0 for KVM :zap:
+# :zap: Tenant Cluster Release 12.0.0 for KVM :zap:
 
 This is the first Giant Swarm release which includes Kubernetes v1.17. Many core components and default apps have been updated for improved reliability and observability. Further details about changes to individual components can be found below.
 

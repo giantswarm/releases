@@ -1,4 +1,4 @@
-# :zap: Giant Swarm Release 9.0.1 for AWS :zap:
+# :zap: Tenant Cluster Release 9.0.1 for AWS :zap:
 
 This release includes Kubernetes v1.15.11 as well as some reliability and user experience improvements.
 We highly recommend you to upgrade to this release if you want to continue running on Kubernetes 1.15 for now.

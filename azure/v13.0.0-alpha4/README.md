@@ -1,4 +1,4 @@
-# :zap: Giant Swarm Release v13.0.0-alpha4 for Azure :zap:
+# :zap: Tenant Cluster Release v13.0.0-alpha4 for Azure :zap:
 
 ## Change details
 

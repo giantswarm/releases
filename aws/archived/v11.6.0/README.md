@@ -1,4 +1,4 @@
-# :zap: Giant Swarm Release v11.6.0 for AWS :zap:
+# :zap: Tenant Cluster Release v11.6.0 for AWS :zap:
 
 This release updates Cert-Manager to `1.1.0` to add support for Route53 using Kiam annotation.
 

@@ -1,4 +1,4 @@
-# :zap: Giant Swarm Release v11.6.1 for AWS :zap:
+# :zap: Tenant Cluster Release v11.6.1 for AWS :zap:
 
 **Nodes will be rolled during upgrade to this version.**
 

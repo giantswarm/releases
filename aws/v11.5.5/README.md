@@ -1,4 +1,4 @@
-# :zap: Giant Swarm Release v11.5.5 for AWS :zap:
+# :zap: Tenant Cluster Release v11.5.5 for AWS :zap:
 
 This release upgrades:
 * aws-cni to v1.7.3 to fix stability issues.

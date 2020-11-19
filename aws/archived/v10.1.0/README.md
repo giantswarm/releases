@@ -1,4 +1,4 @@
-# :zap: Giant Swarm Release 10.1.0 for AWS :zap:
+# :zap: Tenant Cluster Release 10.1.0 for AWS :zap:
 
 We are pleased to announce that the new release v10.1.0 contains the much anticipated Node Pools feature.
 

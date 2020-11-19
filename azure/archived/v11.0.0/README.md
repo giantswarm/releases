@@ -1,4 +1,4 @@
-## :zap: Giant Swarm Release 11.0.0 for Azure :zap:
+## :zap: Tenant Cluster Release 11.0.0 for Azure :zap:
 
 This is the first Giant Swarm release which includes Kubernetes v1.16. In addition, CPU limits have been removed from several supporting components and priority classes have been adjusted to ensure system reliability under heavy load. Further details about changes to individual components can be found below.
 

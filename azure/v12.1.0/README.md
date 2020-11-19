@@ -1,4 +1,4 @@
-## :zap:  Giant Swarm Release 12.1.0 for Azure :zap:
+## :zap:  Tenant Cluster Release 12.1.0 for Azure :zap:
 
 **If you are upgrading from 12.0.2, upgrading to this release will not roll your nodes. It will only update the apps.**
 

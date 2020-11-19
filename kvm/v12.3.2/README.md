@@ -1,4 +1,4 @@
-# :zap: Giant Swarm Release v12.3.2 for KVM :zap:
+# :zap: Tenant Cluster Release v12.3.2 for KVM :zap:
 
 **Nodes will be rolled during upgrade to this version.**
 

@@ -1,4 +1,4 @@
-## :zap:  Giant Swarm Release 12.1.0 for KVM :zap:
+## :zap:  Tenant Cluster Release 12.1.0 for KVM :zap:
 
 This release includes two **significant improvements to NGINX Ingress Controller**. It also includes a **fix for Quay being a single point of failure** by using Docker mirroring feature. This ensures availability of all images needed for node bootstrap, thus the cluster creation/scaling doesn’t depend on Quay availability anymore.
 

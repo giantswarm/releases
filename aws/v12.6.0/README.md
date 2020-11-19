@@ -1,4 +1,4 @@
-# :zap: Giant Swarm Release v12.6.0 for AWS :zap:
+# :zap: Tenant Cluster Release v12.6.0 for AWS :zap:
 
 This patch release prevents an issue with QPS (Queries per Second) limits introduced by Docker Hub. Also, it solves a corner case scenario during ETCD mouting time.
 

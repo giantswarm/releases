@@ -1,4 +1,4 @@
-## :zap: Giant Swarm Release 11.3.0 for KVM :zap:
+## :zap: Tenant Cluster Release 11.3.0 for KVM :zap:
 
 This release includes Kubernetes v1.16.9 as well as reliability and user experience improvements.
 

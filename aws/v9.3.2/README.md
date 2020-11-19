@@ -1,4 +1,4 @@
-# :zap: Giant Swarm Release v9.3.2 for AWS :zap:
+# :zap: Tenant Cluster Release v9.3.2 for AWS :zap:
 
 This release fixes an issue where upgrading from an earlier platform release to platform release v9.3.0 or v9.3.1 would result in the `nginx-ingress-controller` service having no endpoints, causing the NGINX IC app to not work.
 

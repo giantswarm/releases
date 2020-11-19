@@ -1,4 +1,4 @@
-# :zap: Giant Swarm Release v11.2.0 for AWS :zap:
+# :zap: Tenant Cluster Release v11.2.0 for AWS :zap:
 
 This release adds support for [EC2 Spot Instances](https://aws.amazon.com/ec2/spot/) in your node pools to allow reduction of your compute resource cost. Find details on how to use spot instances [in our node pools documentation](https://docs.giantswarm.io/basics/nodepools/#instance-distribution).
 
