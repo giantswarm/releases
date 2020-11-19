@@ -1,4 +1,4 @@
-# :zap: Giant Swarm Release 12.1.0 for AWS :zap:
+# :zap: Tenant Cluster Release 12.1.0 for AWS :zap:
 
 This release upgrades Cert Manager from upstream v0.9.0 to v0.15.2.
 

@@ -1,4 +1,4 @@
-## :zap:  Giant Swarm Release v12.3.0 for KVM :zap:
+## :zap:  Tenant Cluster Release v12.3.0 for KVM :zap:
 
 This release upgrades all Helm releases managed by Giant Swarm to use [Helm v3.3.4](https://github.com/helm/helm/releases/tag/v3.3.4).
 

@@ -1,4 +1,4 @@
-# :zap: Giant Swarm Release v12.1.2 for AWS :zap:
+# :zap: Tenant Cluster Release v12.1.2 for AWS :zap:
 
 This release upgrades external-dns app to v1.3.0.
 

@@ -1,4 +1,4 @@
-# :zap: Giant Swarm Release v12.2.0 for AWS :zap:
+# :zap: Tenant Cluster Release v12.2.0 for AWS :zap:
 
 This release includes a number of stability and security fixes, improvements, and picks up various component and app upgrades.
 

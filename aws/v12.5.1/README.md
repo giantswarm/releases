@@ -1,4 +1,4 @@
-# :zap: Giant Swarm Release v12.5.1 for AWS :zap:
+# :zap: Tenant Cluster Release v12.5.1 for AWS :zap:
 
 This release fixes an issue that prevented upgrades of the Control Planes.
 

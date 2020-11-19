@@ -1,4 +1,4 @@
-## :zap: Giant Swarm Release v11.3.1 for AWS :zap:
+## :zap: Tenant Cluster Release v11.3.1 for AWS :zap:
 
 This release provides fixes for a race condition seen in some upgrades to v11.2.x when allocating the IP address for the master node.
 
