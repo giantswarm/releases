@@ -1,4 +1,4 @@
-# :zap: Giant Swarm Release v9.3.6 for AWS :zap:
+# :zap: Tenant Cluster Release v9.3.6 for AWS :zap:
 
 This release updates managed apps to the latest releases, updates Calico to version `3.13.4`, and Flatcar Container Linux to `2512.2.1`.
 

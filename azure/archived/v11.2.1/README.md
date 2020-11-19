@@ -1,4 +1,4 @@
-## :zap: Giant Swarm Release 11.2.1 for Azure :zap:
+## :zap: Tenant Cluster Release 11.2.1 for Azure :zap:
 
 ### This release contains Kubernetes ```1.16.8``` and other changes that increase cluster resiliency against API Throttling (error 429). Additional improvements include:
 - **Failed provisioning of VMs does not cause 429 anymore.**  We have added an automation that will reimage the failed instance immediately, before it exhausts API rate limits.

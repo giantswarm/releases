@@ -1,4 +1,4 @@
-# :zap: Giant Swarm Release v9.3.8 for AWS :zap:
+# :zap: Tenant Cluster Release v9.3.8 for AWS :zap:
 
 This is a patch release to update core component versions and remove memory limits from calico-kube-controllers which caused some control plane instability in certain clusters.
 

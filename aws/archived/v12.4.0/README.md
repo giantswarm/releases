@@ -1,4 +1,4 @@
-## :zap:  Giant Swarm Release 12.4.0 for AWS :zap:
+## :zap:  Tenant Cluster Release 12.4.0 for AWS :zap:
 
 This release upgrades cert-manager-app to `v2.3.0` which brings new patch version `v1.0.2` of the upstream project. 
 

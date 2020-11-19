@@ -1,4 +1,4 @@
-## :zap: Giant Swarm Release 9.0.0 for Azure :zap:
+## :zap: Tenant Cluster Release 9.0.0 for Azure :zap:
 
 This release contains Kubernetes `1.15.5` as well as a change to the default worker size of new clusters to `Standard_D4s_v3`.
 

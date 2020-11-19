@@ -1,4 +1,4 @@
-# :zap:  Giant Swarm Release 8.5.0 for AWS :zap:
+# :zap:  Tenant Cluster Release 8.5.0 for AWS :zap:
 
 **IMPORTANT**: Due to cgroup restructure (change can be found [here](https://github.com/giantswarm/k8scloudconfig/pull/564)) and more resource reservation for core components, we are now switching to bigger master instance types (from m4.large to m4.xlarge). This adds some room for additional workload scheduling on master.
 This release also contains multiple fixes to the private/public hosted zones which were altered in the previous release. In-Cluster communication between services and the Kubernetes API should now stay inside the VPC without issues.

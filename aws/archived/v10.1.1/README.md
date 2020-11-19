@@ -1,4 +1,4 @@
-# :zap: Giant Swarm Release 10.1.1 for AWS :zap:
+# :zap: Tenant Cluster Release 10.1.1 for AWS :zap:
 
 This Node Pools release fixes a problem with CoreDNS in clusters using custom
 cluster IP ranges. Additionally, CPU limits have been removed from multiple

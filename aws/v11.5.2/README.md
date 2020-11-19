@@ -1,4 +1,4 @@
-# :zap: Giant Swarm Release v11.5.2 for AWS :zap:
+# :zap: Tenant Cluster Release v11.5.2 for AWS :zap:
 
 This release provides a new aws-operator which is fixing an issue with NetworkPolicies and custom Pod CIDRs.
 

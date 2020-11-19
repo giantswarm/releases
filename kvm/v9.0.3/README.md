@@ -1,4 +1,4 @@
-# :zap: Giant Swarm Release v9.0.3 for KVM :zap:
+# :zap: Tenant Cluster Release v9.0.3 for KVM :zap:
 
 This release fixes a rare bug that would prevent the NGINX IC from being installed on a new cluster.
 

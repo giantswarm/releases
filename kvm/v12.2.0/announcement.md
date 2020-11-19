@@ -1,4 +1,4 @@
-## :zap:  Giant Swarm Release 12.2.0 for KVM :zap:
+## :zap:  Tenant Cluster Release 12.2.0 for KVM :zap:
 
 As of this release, **NGINX Ingress Controller App** is now an **optional (and not pre-installed)** component on KVM.
 
