@@ -10,6 +10,8 @@ If you have access to the Control Plane API you can manage your clusters directl
 The clusters that you create are now represented by [Cluster API](https://cluster-api.sigs.k8s.io/) CRDs ([Custom Resource Definition](https://kubernetes.io/docs/tasks/extend-kubernetes/custom-resources/custom-resource-definitions/)).
 Using [our kubectl plugin](https://github.com/giantswarm/kubectl-gs/) you can easily create the Custom Resources required to create a cluster.
 
+This tenant cluster release is marked as beta, which means that it contains all the content of the future v13.0.0 stable release and secures upgrade paths from and to that release. Beta version is recommended to be used and tested in non-production clusters. The only difference between this beta version and the stable one will be bug fixes for issues found during your testing.
+
 ## Change details
 
 ### kubernetes [1.18.12](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.18.md#v11812)
