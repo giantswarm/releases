@@ -20,7 +20,7 @@ Don't hesitate to tell us how this works for you and what you'd like to see impr
 ## kubectl gs
 
 - The [`template cluster`](https://docs.giantswarm.io/reference/kubectl-gs/template-cluster/) and [`template nodepool`](https://docs.giantswarm.io/reference/kubectl-gs/template-nodepool/) commands for creating cluster and node pool manifests no longer provide the `--region` flag, as this value is now filled in automatically by the Control Plane Kubernetes API.
-
+- Additionally, the `--release` and `--release-branch` flags have been removed from the [`template nodepool`](https://docs.giantswarm.io/reference/kubectl-gs/template-nodepool/) command for improved simplicity, they are also now filled in automatically by the Control Plane Kubernetes API.
 ## Documentation
 
 - We updated the guide on [Preparing a Kubernetes cluster for the use of GPUs](https://docs.giantswarm.io/guides/kubernetes-gpu/) to make it easier to follow, especially on Azure.
