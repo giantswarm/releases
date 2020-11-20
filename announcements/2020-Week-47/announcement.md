@@ -4,6 +4,15 @@ First things first, we offer a new and powerful way to **follow releases, change
 
 Don't hesitate to tell us how this works for you and what you'd like to see improved.
 
+## Web UI
+
+- Node pools can now be configured to a minimum size of zero nodes, to allow scaling to zero and saving costly resources when there are no workloads scheduled.
+- When cluster creation or node pool creation fails, errors are now handled more gracefully and a retry is possible in some cases.
+- The "About upgrading" dialog you can open when a new tenant cluster release is available for your cluster has been improved in several details.
+- The dialog for installing apps has been fixed so that long version numbers don't break the layout.
+- We fixed several glitches related to upgrades from Azure tenant cluster releases below v13.x.x to v13.x.x.
+- Potential security vulnerabilities in two dependencies got fixed.
+
 ## kubectl gs
 
 - The [`template cluster`](https://docs.giantswarm.io/reference/kubectl-gs/template-cluster/) and [`template nodepool`](https://docs.giantswarm.io/reference/kubectl-gs/template-nodepool/) commands for creating cluster and node pool manifests no longer provide the `--region` flag, as this value is now filled in automatically by the Control Plane Kubernetes API.
