@@ -13,6 +13,10 @@ Don't hesitate to tell us how this works for you and what you'd like to see impr
 - We fixed several glitches related to upgrades from Azure tenant cluster releases below v13.x.x to v13.x.x.
 - Potential security vulnerabilities in two dependencies got fixed.
 
+## gsctl
+
+- With v0.26.0, the `gsctl upgrade cluster` command supports to set a specific target release to upgrade to via the `--release` flag. This allows top skip patch or minor releases, and also allows to upgrade to a beta release.
+
 ## kubectl gs
 
 - The [`template cluster`](https://docs.giantswarm.io/reference/kubectl-gs/template-cluster/) and [`template nodepool`](https://docs.giantswarm.io/reference/kubectl-gs/template-nodepool/) commands for creating cluster and node pool manifests no longer provide the `--region` flag, as this value is now filled in automatically by the Control Plane Kubernetes API.
