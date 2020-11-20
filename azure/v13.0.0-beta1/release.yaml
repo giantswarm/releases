@@ -33,8 +33,10 @@ spec:
     releaseOperatorDeploy: true
     version: 2.7.0
   - name: azure-operator
+    catalog: control-plane-test-catalog
     releaseOperatorDeploy: true
-    version: 5.0.0-beta5
+    version: 5.0.1-ipam
+    reference: 5.0.0-beta5-a2e13c7d2d3963d09d3dd03928d0d94341056648
   - name: cert-operator
     reference: 0.1.0-2
     releaseOperatorDeploy: true
