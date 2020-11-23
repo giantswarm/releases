@@ -48,6 +48,7 @@ spec:
   - name: aws-operator
     releaseOperatorDeploy: true
     version: 9.3.1
+    reference: afee7dd67248215fe0092c6ca2f5af3a14214201
   - name: calico
     version: 3.15.3
   - name: cert-operator
