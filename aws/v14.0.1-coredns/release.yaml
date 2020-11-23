@@ -19,7 +19,8 @@ spec:
   - componentVersion: 1.17.3
     name: cluster-autoscaler
     version: 1.17.3
-  - componentVersion: 1.8.0
+  - catalog: default-test
+    componentVersion: 1.8.0
     name: coredns
     version: 1.2.0-8119805cb4f6a8e06975570d6e19d1d8288d4ca3
   - componentVersion: 0.7.4
@@ -55,8 +56,10 @@ spec:
     releaseOperatorDeploy: true
     version: 0.1.0
   - name: cluster-operator
+    catalog: control-plane-test-catalog
     releaseOperatorDeploy: true
-    version: 3.3.1
+    reference: 3.3.1-62e213a349b2e087eba5e2a008f7b521fe4fd3ce
+    version: 3.3.2-dev
   - name: containerlinux
     version: 2512.5.0
   - name: etcd
