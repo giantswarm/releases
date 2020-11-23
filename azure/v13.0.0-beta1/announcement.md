@@ -1,0 +1,3 @@
+**Tenant cluster release v13.0.0-beta1 for Azure is available.**  This is the first release to support Kubernetes 1.18 and node pools on Azure.
+
+This tenant cluster release is marked as beta, which means that it contains all the content of the future v13.0.0 stable release and secures upgrade paths from and to that release. Beta version is recommended to be used and tested in non-production clusters. The only difference between this beta version and the stable one will be bug fixes for issues found during your testing. Further details can be found in the [release notes](https://docs.giantswarm.io/changes/tenant-cluster-releases-azure/releases/azure-v13.0.0-beta1/).
