@@ -50,9 +50,7 @@ spec:
     version: 3.15.3
   - name: etcd
     version: 3.4.13
-  - name: chart-operator
-    version: 2.3.5
-  date: "2020-11-17T12:19:04Z"
+  date: "2020-11-23T12:23:04Z"
   state: active
 status:
   inUse: false
