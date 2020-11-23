@@ -112,7 +112,7 @@ to all Giant Swarm installations.
 
 - v13
   - v13.0
-    - [v13.0.0-alpha4](https://github.com/giantswarm/releases/tree/master/azure/v13.0.0-alpha4)
+    - [v13.0.0-beta1](https://github.com/giantswarm/releases/tree/master/azure/v13.0.0-beta1)
 
 - v12
   - v12.1
