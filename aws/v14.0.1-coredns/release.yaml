@@ -22,16 +22,17 @@ spec:
   - catalog: default-test
     componentVersion: 1.8.0
     name: coredns
-    version: 1.2.0-8119805cb4f6a8e06975570d6e19d1d8288d4ca3
+    version: 1.2.0-e2ec7756500246bf2e8aa431ff80e8177473ec6c
   - componentVersion: 0.7.4
     name: external-dns
     version: 1.5.0
   - componentVersion: 3.6.0
     name: kiam
     version: 1.5.0
-  - componentVersion: 1.9.7
+  - catalog: default-test
+    componentVersion: 1.9.7
     name: kube-state-metrics
-    version: 1.1.1
+    version: 1.2.1-50ec3bf011ffeb94ece0763dabbb1a98108f4b74
   - componentVersion: 0.3.6
     name: metrics-server
     version: 1.1.1
@@ -58,7 +59,7 @@ spec:
   - name: cluster-operator
     catalog: control-plane-test-catalog
     releaseOperatorDeploy: true
-    reference: 3.3.1-62e213a349b2e087eba5e2a008f7b521fe4fd3ce
+    reference: 3.3.1-4f9e034b6d9029bef56c7f4e54768c40aad9c377
     version: 3.3.2-dev
   - name: containerlinux
     version: 2512.5.0
