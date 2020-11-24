@@ -33,8 +33,10 @@ spec:
     releaseOperatorDeploy: true
     version: 2.7.0
   - name: azure-operator
+    catalog: control-plane-test-catalog
     releaseOperatorDeploy: true
-    version: 5.0.0-beta5
+    version: 5.0.1-porcula
+    reference: 5.0.0-beta5-5e0ad723efcf6a3e6dd0f68abb39ab233be082ab
   - name: cert-operator
     reference: 0.1.0-2
     releaseOperatorDeploy: true
