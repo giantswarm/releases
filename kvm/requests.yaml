@@ -1,12 +1,4 @@
 releases:
-    - name: "> 12.3.2"
-      requests:
-        - name: app-operator
-          version: ">= 2.7.0"
-          issue: https://github.com/giantswarm/roadmap/issues/191
-        - name: chart-operator
-          version: ">= 2.5.0"
-          issue: https://github.com/giantswarm/roadmap/issues/191
     - name: "> 11.3.2, < 12.0.0"
       requests:
         - name: calico
