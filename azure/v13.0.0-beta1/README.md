@@ -1,5 +1,7 @@
 # :zap: Tenant Cluster Release v13.0.0-beta1 for Azure :zap:
 
+ANY CHANGE WILL DO I GUESS.
+
 This is the first tenant cluster release to support Kubernetes 1.18 and node pools on Azure.
 
 A node pool is a subset of the Kubernetes nodes. They enable having pools of nodes with different configurations (like a different instance size) within one cluster.
