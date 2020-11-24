@@ -1,8 +1,7 @@
-# :zap: Giant Swarm Release v13.0.0-beta1 for Azure :zap:
+# :zap: Tenant Cluster Release v13.0.0-beta1 for Azure :zap:
 
-This is the first release to support Kubernetes 1.18 on Azure.
+This is the first tenant cluster release to support Kubernetes 1.18 and node pools on Azure.
 
-This release also includes support for Kubernetes node pools.
 A node pool is a subset of the Kubernetes nodes. They enable having pools of nodes with different configurations (like a different instance size) within one cluster.
 After cluster creation with 1 node pools, additional node pools can be freely added and removed from the cluster.
 
