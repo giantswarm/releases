@@ -1,6 +1,6 @@
-# :zap: Giant Swarm Release v11.4.1 for AWS :zap:
+# :zap: Tenant Cluster Release v11.4.1 for AWS :zap:
 
-This release re-activates the recent AWS [release of high-availability (HA) masters](https://github.com/giantswarm/releases/tree/master/aws/v11.4.0), fixing OIDC configurations issues.
+This release re-activates the recent AWS [release of high-availability (HA) masters](https://docs.giantswarm.io/changes/tenant-cluster-releases-aws/releases/aws-v11.4.0/), fixing OIDC configurations issues.
 
 
 **Note for Solution Engineers:** This release contains an external-dns fix introduced in

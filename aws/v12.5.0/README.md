@@ -1,4 +1,4 @@
-# :zap: Giant Swarm Release v12.5.0 for AWS :zap:
+# :zap: Tenant Cluster Release v12.5.0 for AWS :zap:
 
 This release offers the possibility to add additional Network Pools to the Control Plane and flexibly choose the IP range for new Tenant Clusters from these pools. It also upgrades Kubernetes to v1.17.13.
 

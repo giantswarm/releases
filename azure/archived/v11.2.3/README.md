@@ -1,4 +1,4 @@
-## ⚡️ Giant Swarm Release 11.2.3 for Azure ⚡️
+## ⚡️ Tenant Cluster Release 11.2.3 for Azure ⚡️
 
 This release improves the way upgrades handle Azure VMSS Instances to make them more reliable in the Germany West Central location. This does not affect any existing functionality.
 

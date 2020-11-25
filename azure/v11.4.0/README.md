@@ -1,4 +1,4 @@
-## :zap:  Giant Swarm Release 11.4.0 for Azure :zap:
+## :zap:  Tenant Cluster Release 11.4.0 for Azure :zap:
 
 **In this release, NGINX Ingress Controller LoadBalancer Service external traffic policy has been made configurable, and the policy default has been changed from `Cluster` to `Local`.**
 

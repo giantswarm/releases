@@ -1,4 +1,4 @@
-# :zap: Giant Swarm Release v11.1.2 for AWS :zap:
+# :zap: Tenant Cluster Release v11.1.2 for AWS :zap:
 
 __Note:__ Upgrading to this release from any release prior 11.1.1 will cause a network downtime due to the network-related changes coming with the switch from Calico CNI to AWS CNI.
 

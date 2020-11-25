@@ -1,4 +1,4 @@
-# :zap: Giant Swarm Release v9.3.5 for AWS :zap:
+# :zap: Tenant Cluster Release v9.3.5 for AWS :zap:
 
 This release updates NGINX Ingress Controller to the latest upstream release.
 Most importantly, it includes a fix for a regression introduced in the previous upstream release related to `use-regex` and `rewrite` annotations.

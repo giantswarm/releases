@@ -1,4 +1,4 @@
-# :zap: Giant Swarm Release v11.1.4 for AWS :zap:
+# :zap: Tenant Cluster Release v11.1.4 for AWS :zap:
 
 This release makes the pod CIDR of a tenant cluster configurable via the control plane Kubernetes API. When using this option to avoid IP address overlap, this enables VPC peering between tenant clusters of the same installation.
 

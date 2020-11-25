@@ -1,14 +1,18 @@
 [![CircleCI](https://circleci.com/gh/giantswarm/releases.svg?style=shield)](https://circleci.com/gh/giantswarm/releases)
 
-# Giant Swarm Releases
+# Giant Swarm Tenant Cluster Releases
 
-This repository contains Giant Swarm releases and changelogs. Releases can be in
+This repository contains tenant cluster release notes and changelogs.
+
+Tenant cluster releases can be in
 different states, namely `active`, `deprecated` and `wip`. With pull requests
-merged to the `master` branch releases get automatically deployed to all Giant
-Swarm control planes.
+merged to the `master` branch, tenant cluster releases get automatically deployed
+to all Giant Swarm installations.
 
 ## AWS
 - v12
+  - v12.7
+    - [v12.7.0](https://github.com/giantswarm/releases/tree/master/aws/v12.7.0)
   - v12.6
     - [v12.6.0](https://github.com/giantswarm/releases/tree/master/aws/v12.6.0)
   - v12.5
@@ -16,7 +20,7 @@ Swarm control planes.
     - [v12.5.1](https://github.com/giantswarm/releases/tree/master/aws/v12.5.1)
     - [v12.5.0](https://github.com/giantswarm/releases/tree/master/aws/v12.5.0)
   - v12.4
-    - [v12.4.0](https://github.com/giantswarm/releases/tree/master/aws/v12.4.0)
+    - [v12.4.0](https://github.com/giantswarm/releases/tree/master/aws/archived/v12.4.0)
   - v12.3
     - [v12.3.0](https://github.com/giantswarm/releases/tree/master/aws/v12.3.0)
   - v12.2
@@ -45,7 +49,7 @@ Swarm control planes.
     - [v11.4.1](https://github.com/giantswarm/releases/tree/master/aws/archived/v11.4.1)
     - [v11.4.0](https://github.com/giantswarm/releases/tree/master/aws/archived/v11.4.0)
   - v11.3
-    - [v11.3.3](https://github.com/giantswarm/releases/tree/master/aws/v11.3.3)
+    - [v11.3.3](https://github.com/giantswarm/releases/tree/master/aws/archived/v11.3.3)
     - [v11.3.2](https://github.com/giantswarm/releases/tree/master/aws/archived/v11.3.2)
     - [v11.3.1](https://github.com/giantswarm/releases/tree/master/aws/v11.3.1)
     - [v11.3.0](https://github.com/giantswarm/releases/tree/master/aws/archived/v11.3.0)
@@ -108,8 +112,7 @@ Swarm control planes.
 
 - v13
   - v13.0
-    - [v13.0.0-alpha3](https://github.com/giantswarm/releases/tree/master/azure/v13.0.0-alpha3)
-    - [v13.0.0-alpha4](https://github.com/giantswarm/releases/tree/master/azure/v13.0.0-alpha4)
+    - [v13.0.0-beta1](https://github.com/giantswarm/releases/tree/master/azure/v13.0.0-beta1)
 
 - v12
   - v12.1

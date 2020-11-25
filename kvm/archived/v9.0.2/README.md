@@ -1,4 +1,4 @@
-## :zap: Giant Swarm Release 9.0.2 for KVM :zap:
+## :zap: Tenant Cluster Release 9.0.2 for KVM :zap:
 
 **Note** If you are upgrading from 8.4.0 or 9.0.0:
 
