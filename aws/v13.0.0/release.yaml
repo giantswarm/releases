@@ -1,5 +1,5 @@
 # Generated with:
-# devctl release create --name 13.0.0 --base v12.7.0 --releases . --provider aws --component aws-operator@9.3.1 --component containerlinux@2512.5.0 --component kubernetes@1.18.10 --component calico@3.15.3 --app kube-state-metrics@1.2.0@1.9.7 --app cert-exporter@1.3.0 --app net-exporter@1.9.2 --app node-exporter@1.4.2@1.0.1 --app external-dns@1.5.0@0.7.4 --app cluster-autoscaler@1.18.2@1.18.2 --overwrite true
+# devctl release create --name 13.0.0 --base v12.7.0 --releases . --provider aws --component aws-operator@9.3.1 --component containerlinux@2512.5.0 --component kubernetes@1.18.10 --component calico@3.15.3 --app kube-state-metrics@1.2.0@1.9.7 --app cert-exporter@1.3.0 --app net-exporter@1.9.2 --app node-exporter@1.4.2@1.0.1 --app external-dns@1.5.0@0.7.4 --app cluster-autoscaler@1.18.3 --overwrite true
 apiVersion: release.giantswarm.io/v1alpha1
 kind: Release
 metadata:
@@ -13,12 +13,11 @@ spec:
     version: 1.3.0
   - componentVersion: 1.0.2
     name: cert-manager
-    version: 2.3.3
+    version: 2.3.2
   - name: chart-operator
     version: 2.3.5
-  - componentVersion: 1.18.2
-    name: cluster-autoscaler
-    version: 1.18.2
+  - name: cluster-autoscaler
+    version: 1.18.3
   - componentVersion: 1.6.5
     name: coredns
     version: 1.2.0
@@ -48,7 +47,6 @@ spec:
   - name: aws-operator
     releaseOperatorDeploy: true
     version: 9.3.1
-    reference: afee7dd67248215fe0092c6ca2f5af3a14214201
   - name: calico
     version: 3.15.3
   - name: cert-operator
@@ -64,7 +62,7 @@ spec:
     version: 3.4.13
   - name: kubernetes
     version: 1.18.10
-  date: "2020-11-19T13:43:16Z"
+  date: "2020-11-25T11:13:11Z"
   state: active
 status:
   inUse: false

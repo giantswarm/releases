@@ -104,10 +104,10 @@ _Nothing has changed._
 
 
 
-### cluster-autoscaler [1.18.2](https://github.com/giantswarm/cluster-autoscaler-app/releases/tag/v1.18.2)
+### cluster-autoscaler [1.18.3](https://github.com/giantswarm/cluster-autoscaler-app/releases/tag/v1.18.3)
 
 #### Changed
-- Updated cluster-autoscaler to version `1.18.2`.
 
+- Updated cluster-autoscaler to version `1.18.3`.
 
 
