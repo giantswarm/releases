@@ -62,10 +62,10 @@ _Nothing has changed._
 
 
 
-### kube-state-metrics [1.2.1](https://github.com/giantswarm/kube-state-metrics-app/releases/tag/v1.2.1)
+### kube-state-metrics [1.3.0](https://github.com/giantswarm/kube-state-metrics-app/releases/tag/v1.3.0)
 
-#### Fixed
-- Support deployment of `kube-state-metrics-app` on chinese installations.
+#### Changed
+- Change the Kubernetes Deployment name to include the app version.
 
 
 
