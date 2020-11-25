@@ -62,12 +62,10 @@ _Nothing has changed._
 
 
 
-### kube-state-metrics [1.2.0](https://github.com/giantswarm/kube-state-metrics-app/releases/tag/v1.2.0)
+### kube-state-metrics [1.2.1](https://github.com/giantswarm/kube-state-metrics-app/releases/tag/v1.2.1)
 
-#### Added
-- Added monitoring annotations and common labels.
-#### Changed
-- Deploy `kube-state-metrics-app` on installations as part of app collection.
+#### Fixed
+- Support deployment of `kube-state-metrics-app` on chinese installations.
 
 
 
@@ -106,8 +104,6 @@ _Nothing has changed._
 
 ### cluster-autoscaler [1.18.3](https://github.com/giantswarm/cluster-autoscaler-app/releases/tag/v1.18.3)
 
-#### Changed
-
-- Updated cluster-autoscaler to version `1.18.3`.
+Not found
 
 
