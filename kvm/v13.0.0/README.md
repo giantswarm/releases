@@ -1,64 +1,171 @@
-# :zap: Giant Swarm Release v13.0.0 for KVM :zap:
+# :zap: Tenant Cluster Release v13.0.0 for KVM :zap:
 
-<< Add description here >>
+This release upgrades Kubernetes to 1.18 and Calico to 3.15. It also includes other minor component updates summarized below.
 
 ## Change details
 
 
-### containerlinux [2512.5.0](https://www.flatcar-linux.org/releases/#release-2512.5.0)
+### kubernetes [1.18.12](https://github.com/kubernetes/kubernetes/releases/tag/v1.18.12)
 
-Changes:
-- Update public key to include a [new subkey](https://www.flatcar-linux.org/security/image-signing-key/)
+Kubernetes 1.18 includes a large number of features, deprecations, and bug fixes. We have attempted to summarize the changes relevant to Giant Swarm customers in the following section. The full list of changes can be viewed [here](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.18.md).
 
-Updates:
-- Linux [4.19.145](https://lwn.net/Articles/831367/)
+Please discuss with your Giant Swarm solution engineer if you are unsure about a cluster's Kubernetes 1.18 upgrade readiness.
 
+#### kube-apiserver
+- The following features are unconditionally enabled and the corresponding `--feature-gates` flags have been removed: `PodPriority`, `TaintNodesByCondition`, `ResourceQuotaScopeSelectors` and `ScheduleDaemonSetPods`.
+- the following deprecated APIs can no longer be served:
+  - All resources under `apps/v1beta1` and `apps/v1beta2` - use `apps/v1` instead
+  - `daemonsets`, `deployments`, `replicasets` resources under `extensions/v1beta1` - use `apps/v1` instead
+  - `networkpolicies` resources under `extensions/v1beta1` - use `networking.k8s.io/v1` instead
+  - `podsecuritypolicies` resources under `extensions/v1beta1` - use `policy/v1beta1` instead
 
+#### kube-scheduler
+- The `scheduling_duration_seconds` summary metric is deprecated.
+- The `scheduling_algorithm_predicate_evaluation_seconds` and
+  `scheduling_algorithm_priority_evaluation_seconds` metrics are deprecated, replaced by `framework_extension_point_duration_seconds[extension_point="Filter"]` and `framework_extension_point_duration_seconds[extension_point="Score"]`.
+- `AlwaysCheckAllPredicates` is deprecated in scheduler Policy API.
 
-### kubernetes [1.18.10](https://github.com/kubernetes/kubernetes/releases/tag/v1.18.10)
-
-#### Design
-- Prevent logging of docker config contents if file is malformed ([#95347](https://github.com/kubernetes/kubernetes/pull/95347), [@sfowl](https://github.com/sfowl)) [SIG Auth and Node]
-#### Bug or Regression
-- Do not fail sorting empty elements. ([#94666](https://github.com/kubernetes/kubernetes/pull/94666), [@soltysh](https://github.com/soltysh)) [SIG CLI]
-- Ensure getPrimaryInterfaceID not panic when network interfaces for Azure VMSS are null ([#94801](https://github.com/kubernetes/kubernetes/pull/94801), [@nilo19](https://github.com/nilo19)) [SIG Cloud Provider]
-- Fix bug where loadbalancer deletion gets stuck because of missing resource group &#35;75198 ([#93962](https://github.com/kubernetes/kubernetes/pull/93962), [@phiphi282](https://github.com/phiphi282)) [SIG Cloud Provider]
-- Fix detach azure disk issue when vm not exist ([#95177](https://github.com/kubernetes/kubernetes/pull/95177), [@andyzhangx](https://github.com/andyzhangx)) [SIG Cloud Provider]
-- Fix etcd_object_counts metric reported by kube-apiserver ([#94818](https://github.com/kubernetes/kubernetes/pull/94818), [@tkashem](https://github.com/tkashem)) [SIG API Machinery]
-- Fix network_programming_latency metric reporting for Endpoints/EndpointSlice deletions, where we don't have correct timestamp ([#95363](https://github.com/kubernetes/kubernetes/pull/95363), [@wojtek-t](https://github.com/wojtek-t)) [SIG Network and Scalability]
-- Fix scheduler cache snapshot when a Node is deleted before its Pods ([#95154](https://github.com/kubernetes/kubernetes/pull/95154), [@alculquicondor](https://github.com/alculquicondor)) [SIG Scheduling]
-- Fix the `cloudprovider_azure_api_request_duration_seconds` metric buckets to correctly capture the latency metrics. Previously, the majority of the calls would fall in the "+Inf" bucket. ([#95375](https://github.com/kubernetes/kubernetes/pull/95375), [@marwanad](https://github.com/marwanad)) [SIG Cloud Provider and Instrumentation]
-- Fix: azure disk resize error if source does not exist ([#93011](https://github.com/kubernetes/kubernetes/pull/93011), [@andyzhangx](https://github.com/andyzhangx)) [SIG Cloud Provider]
-- Fix: detach azure disk broken on Azure Stack ([#94885](https://github.com/kubernetes/kubernetes/pull/94885), [@andyzhangx](https://github.com/andyzhangx)) [SIG Cloud Provider]
-- Fixed a bug where improper storage and comparison of endpoints led to excessive API traffic from the endpoints controller ([#94934](https://github.com/kubernetes/kubernetes/pull/94934), [@damemi](https://github.com/damemi)) [SIG Apps, Network and Testing]
-- Gracefully delete nodes when their parent scale set went missing ([#95289](https://github.com/kubernetes/kubernetes/pull/95289), [@bpineau](https://github.com/bpineau)) [SIG Cloud Provider]
-- Kubeadm: warn but do not error out on missing "ca.key" files for root CA, front-proxy CA and etcd CA, during "kubeadm join --control-plane" if the user has provided all certificates, keys and kubeconfig files which require signing with the given CA keys. ([#94988](https://github.com/kubernetes/kubernetes/pull/94988), [@neolit123](https://github.com/neolit123)) [SIG Cluster Lifecycle]
-#### Other (Cleanup or Flake)
-- Masks ceph RBD adminSecrets in logs when logLevel >= 4 ([#95245](https://github.com/kubernetes/kubernetes/pull/95245), [@sfowl](https://github.com/sfowl)) [SIG Storage]
-#### Dependencies
-#### Added
-_Nothing has changed._
-#### Changed
-_Nothing has changed._
-#### Removed
-_Nothing has changed._
-
-
+#### kubelet
+- `--enable-cadvisor-json-endpoints` is now disabled by default. If you need access to the cAdvisor v1 Json API please enable it explicitly in the kubelet command line. Please note that this flag was deprecated in 1.15 and will be removed in 1.19.
+- The StreamingProxyRedirects feature and `--redirect-container-streaming` flag are deprecated, and will be removed in a future release. The default behavior (proxy streaming requests through the kubelet) will be the only supported option. If you are setting `--redirect-container-streaming=true`, then you must migrate off this configuration. The flag will no longer be able to be enabled starting in v1.20. If you are not setting the flag, no action is necessary.
+- resource metrics endpoint `/metrics/resource/v1alpha1` as well as all metrics under this endpoint have been deprecated. Please convert to the following metrics emitted by endpoint `/metrics/resource`:
+  - scrape_error --> scrape_error
+  - node_cpu_usage_seconds_total --> node_cpu_usage_seconds
+  - node_memory_working_set_bytes --> node_memory_working_set_bytes
+  - container_cpu_usage_seconds_total --> container_cpu_usage_seconds
+  - container_memory_working_set_bytes --> container_memory_working_set_bytes
+  - scrape_error --> scrape_error
+- In a future release, kubelet will no longer create the CSI NodePublishVolume target directory, in accordance with the CSI specification. CSI drivers may need to be updated accordingly to properly create and process the target path.
 
 ### calico [3.15.3](https://github.com/projectcalico/calico/releases/tag/v3.15.3)
 
+#### Changes
+ - Add FelixConfiguration parameters to explicitly allow encapsulated packets from workloads.
+ - Respect explicit configuration for drop rules for encapsulated packets originating from workloads.
+
+#### Bug fixes
+- Added monitor-addresses option to calico-node to continually monitor IP addresses.
+- Fix issue with service IP advertisement breaking host service connectivity.
+- Felix FV tests now run with Go’s race detector enabled and a couple of low-impact data races have been fixed.
+- Fix config inheritance so that the BPF kernel version check takes precedence over environment variables.
+- In BPF mode, fix spurious “Failed to run bpftool” logs.
+- Fixed capitalization of WireGuard interfaceIPv4Address (was interfaceIpv4Address).
+- Fix race condition during block affinity deletion.
+
 #### Other changes
- - Add FelixConfiguration parameters to explicitly allow encapsulated packets from workloads. [libcalico-go #1302](https://github.com/projectcalico/libcalico-go/pull/1302) (@doublek)
- - Respect explicit configuration for drop rules for encapsulated packets originating from workloads. [felix #2487](https://github.com/projectcalico/felix/pull/2487) (@doublek)
+- Handle panics in the CNI plugin more gracefully cni-plugin.
+- Remove unnecessary packages from docker image to address CVEs.
+- By default, exclude cni.* from node IP auto detection.
+- Added conditional check for FELIX_HEALTHHOST env variable node.
+- The Typha port is now included in the failsafe port lists by default.
+- Felix can now run in active/passive modes.
+- For NetworkPolicy and GlobalNetworkPolicy, the use of floating point values for the spec.Order field is now deprecated, and will be removed entirely in a future release. Please update your policies to use integer values for ordering.
+- Update included CustomResourceDefinitions to use the apiextensions/v1 API group and version, and include schemas for basic validation.
+- Improve scaling characteristics when using host-local IPAM - perform fewer List API calls.
+- Network policy now has the global() namespace selector which selects host endpoints or global network sets.
+- Program blackhole routes for full rejectcidrs to avoid route loops.
+- install-cni.sh now also fails if calico -v doesn’t work after copying the calico binary cni-plugin.
+- Upstream CNI plugins updated to v0.8.6.
 
 
 
-### kube-state-metrics [1.2.0](https://github.com/giantswarm/kube-state-metrics-app/releases/tag/v1.2.0)
+### kvm-operator [3.14.0](https://github.com/giantswarm/kvm-operator/releases/tag/v3.14.0)
+
+### Added
+
+- Roll nodes when versions of `calico`, `containerlinux`, `etcd`, `kubernetes` change in release and `kvm-operator` version is unchanged.
+
+### Changed
+
+- Update Kubernetes libraries to 1.18 along with all other client-go-dependent libraries.
+- Use InternalIP from TC node's status instead of label for dead endpoints detection.
+- Shorten `calico-node` wait timeout in `k8s-addons` and add retry for faster cluster initialization.
+- Remove unused Kubernetes scheduler configuration fields preventing strict YAML unmarshalling.
+
+
+
+### etcd [3.4.13](https://github.com/etcd-io/etcd/releases/tag/v3.4.13)
+
+#### Security
+
+- A [log warning](https://github.com/etcd-io/etcd/pull/12242) is added when etcd use any existing directory that has a permission different than 700 on Linux and 777 on Windows.
+
+#### Package `clientv3`
+
+- Remove [excessive watch cancel logging messages](https://github.com/etcd-io/etcd/pull/12187).
+  - See [kubernetes/kubernetes#93450](https://github.com/kubernetes/kubernetes/issues/93450).
+
+#### Package `runtime`
+
+- Optimize [`runtime.FDUsage` by removing unnecessary sorting](https://github.com/etcd-io/etcd/pull/12214).
+
+#### Metrics, Monitoring
+
+- Add [`os_fd_used` and `os_fd_limit` to monitor current OS file descriptors](https://github.com/etcd-io/etcd/pull/12214).
+
+#### Package `etcd server`
+
+- Fix [server panic in slow writes warnings](https://github.com/etcd-io/etcd/issues/12197).
+  - Fixed via [PR#12238](https://github.com/etcd-io/etcd/pull/12238).
+- Improve [`runtime.FDUsage` call pattern to reduce objects malloc of Memory Usage and CPU Usage](https://github.com/etcd-io/etcd/pull/11986).
+- Add [`etcd --experimental-watch-progress-notify-interval`](https://github.com/etcd-io/etcd/pull/12216) flag to make watch progress notify interval configurable.
+- Add [`--unsafe-no-fsync`](https://github.com/etcd-io/etcd/pull/11946) flag.
+  - Setting the flag disables all uses of fsync, which is unsafe and will cause data loss. This flag makes it possible to run an etcd node for testing and development without placing lots of load on the file system.
+- Add [etcd --auth-token-ttl](https://github.com/etcd-io/etcd/pull/11980) flag to customize `simpleTokenTTL` settings.
+- Improve [runtime.FDUsage objects malloc of Memory Usage and CPU Usage](https://github.com/etcd-io/etcd/pull/11986).
+- Improve [mvcc.watchResponse channel Memory Usage](https://github.com/etcd-io/etcd/pull/11987).
+- Fix [`int64` convert panic in raft logger](https://github.com/etcd-io/etcd/pull/12106).
+  - Fix [kubernetes/kubernetes#91937](https://github.com/kubernetes/kubernetes/issues/91937).
+
+#### Breaking Changes
+
+- Changed behavior on [existing dir permission](https://github.com/etcd-io/etcd/pull/11798). Previously, the permission was not checked on existing data directory and the directory used for automatically generating self-signed certificates for TLS connections with clients. Now a check is added to make sure those directories, if already exist, has a desired permission of 700 on Linux and 777 on Windows.
+
+
+
+### kube-state-metrics [1.3.0](https://github.com/giantswarm/kube-state-metrics-app/releases/tag/v1.3.0)
 
 #### Added
 - Added monitoring annotations and common labels.
+
 #### Changed
 - Deploy `kube-state-metrics-app` on installations as part of app collection.
+
+
+
+### app-operator [2.7.0](https://github.com/giantswarm/app-operator/releases/tag/v2.7.0)
+
+### Changed
+
+- Update apiextensions to v3 and replace CAPI with Giant Swarm fork.
+
+### Fixed
+
+- Use resourceVersion of configmap for comparison instead of listing option.
+
+### Added
+
+- Secure the webhook with token value from control plane catalog.
+- Adding webhook URL as annotation into chart CRs.
+- Added Status update endpoint.
+- Watch secrets referenced in app CRs to reduce latency when applying config
+changes.
+- Create appcatalogentry CRs for public app catalogs.
+- Watch configmaps referenced in app CRs to reduce latency when applying config
+changes.
+
+
+
+### chart-operator [2.5.0](https://github.com/giantswarm/chart-operator/releases/tag/v2.5.0)
+
+### Added
+
+- Validate the cache in helmclient to avoid state requests when pulling tarballs.
+- Call status webhook with token values.
+
+### Fixed
+
+- Update apiextensions to v3 and replace CAPI with Giant Swarm fork.
 
 
 
@@ -80,11 +187,8 @@ _Nothing has changed._
 
 
 
-### node-exporter [1.4.2](https://github.com/giantswarm/node-exporter-app/releases/tag/v1.4.2)
+### node-exporter [1.6.0](https://github.com/giantswarm/node-exporter-app/releases/tag/v1.6.0)
 
 #### Changed
 - Disable `btrfs`,`softnet`,`rapl` and `thermal_zone` to reduce memory usage.
 - Increase memory limit to `75Mi`.
-
-
-
