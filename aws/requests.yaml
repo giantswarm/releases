@@ -4,6 +4,14 @@ releases:
         - name: cert-manager
           version: ">= 2.3.3"
           issue: https://github.com/giantswarm/giantswarm/issues/14281
+    - name: "> 12.7.0"
+      requests:
+        - name: app-operator
+          version: ">= 2.7.0"
+          issue: https://github.com/giantswarm/roadmap/issues/191
+        - name: chart-operator
+          version: ">= 2.5.0"
+          issue: https://github.com/giantswarm/roadmap/issues/191
     - name: "> 12.6.0, < 13.0.0"
       requests:
         - name: cert-manager
