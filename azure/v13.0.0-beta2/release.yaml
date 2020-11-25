@@ -1,5 +1,5 @@
 # Generated with:
-# devctl release create --name 13.0.0-beta2 --provider azure --base 13.0.0-beta1 --component azure-operator@5.0.0-beta2
+# devctl release create --name 13.0.0-beta2 --provider azure --base 13.0.0-beta1 --component azure-operator@5.0.0-beta6
 apiVersion: release.giantswarm.io/v1alpha1
 kind: Release
 metadata:
