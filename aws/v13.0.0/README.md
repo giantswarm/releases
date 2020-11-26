@@ -5,12 +5,11 @@
 ## Change details
 
 
-### aws-operator [9.3.1](https://github.com/giantswarm/aws-operator/releases/tag/v9.3.1)
+### aws-operator [9.3.2](https://github.com/giantswarm/aws-operator/releases/tag/v9.3.2)
 
 #### Changed
-- Update dependencies to next major versions.
-#### Fixed
-- During a deletion of a cluster, ignore volumes that are mounted to an instance in a different cluster.
+- Make it mandatory to configure alike instances via e.g. the installations repo.
+- Fix naming and logs for `terminate-unhealthy-node` feature.
 
 
 
@@ -59,6 +58,23 @@ _Nothing has changed._
 #### Other changes
  - Add FelixConfiguration parameters to explicitly allow encapsulated packets from workloads. [libcalico-go #1302](https://github.com/projectcalico/libcalico-go/pull/1302) (@doublek)
  - Respect explicit configuration for drop rules for encapsulated packets originating from workloads. [felix #2487](https://github.com/projectcalico/felix/pull/2487) (@doublek)
+
+
+
+### app-operator [2.7.0](https://github.com/giantswarm/app-operator/releases/tag/v2.7.0)
+
+#### Added
+- Secure the webhook with token value from control plane catalog.
+
+
+
+### chart-operator [2.5.0](https://github.com/giantswarm/chart-operator/releases/tag/v2.5.0)
+
+#### Added
+- Validate the cache in helmclient to avoid state requests when pulling tarballs.
+- Call status webhook with token values.
+#### Fixed
+- Update apiextensions to v3 and replace CAPI with Giant Swarm fork.
 
 
 
