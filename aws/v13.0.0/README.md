@@ -103,11 +103,10 @@ _Nothing has changed._
 
 
 
-### node-exporter [1.4.2](https://github.com/giantswarm/node-exporter-app/releases/tag/v1.4.2)
+### node-exporter [1.7.0](https://github.com/giantswarm/node-exporter-app/releases/tag/v1.7.0)
 
 #### Changed
-- Disable `btrfs`,`softnet`,`rapl` and `thermal_zone` to reduce memory usage.
-- Increase memory limit to `75Mi`.
+- Change the Kubernetes Daemonset name to include the app version.
 
 
 
