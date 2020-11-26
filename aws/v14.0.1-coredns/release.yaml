@@ -29,10 +29,9 @@ spec:
   - componentVersion: 3.6.0
     name: kiam
     version: 1.5.0
-  - catalog: default-test
-    componentVersion: 1.9.7
+  - componentVersion: 1.9.7
     name: kube-state-metrics
-    version: 1.2.1-d4069b5bb0a56ae241e27e97d22db09128320a3b
+    version: 1.3.0
   - componentVersion: 0.3.6
     name: metrics-server
     version: 1.1.1
