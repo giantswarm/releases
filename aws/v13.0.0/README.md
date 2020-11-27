@@ -122,3 +122,10 @@ _Nothing has changed._
 Not found
 
 
+### cert-manager [2.3.3](https://github.com/giantswarm/cert-manager-app/releases/tag/v2.3.3)
+
+#### Changed
+- Schedule hook Jobs on master nodes. ([#106](https://github.com/giantswarm/cert-manager-app/pull/106))
+
+
+
