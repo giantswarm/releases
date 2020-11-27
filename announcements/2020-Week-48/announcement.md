@@ -14,7 +14,7 @@ In [Happa](https://docs.giantswarm.io/changes/web-ui/), deleting an organization
 ## Documentation
 
 - The article on the [operational layers](https://docs.giantswarm.io/basics/giant-swarm-operational-layers/) got an overhaul.
-- We added explanation for the use of deprecated tenant cluster releases where it matters.
+- In [Cluster Upgrades with Giant Swarm](https://docs.giantswarm.io/reference/cluster-upgrades/), we added an explanation for the use of deprecated tenant cluster releases where it matters.
 
 ---
 Please let <!subteam^S0GSG846L|Product Owners> know if you have any feedback or questions by replying to this announcement in a thread.
