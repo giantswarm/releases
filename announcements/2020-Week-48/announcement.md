@@ -10,7 +10,6 @@ For a comprehensive and always-updated view of all new features and changes for 
 
 ## Web UI
 
-[Happa v1.1.2](https://github.com/giantswarm/happa/releases/tag/untagged-76e708b4d31d651bb3db) adds support for selecting no availabilty zones for Azure masters.
 
 Prior, [Happa v1.1.1](https://github.com/giantswarm/happa/releases/tag/v1.1.1) simplified deleting an organization and [Happa v1.1.0](https://github.com/giantswarm/happa/releases/tag/v1.1.0) added support for upgrading to beta versions.
 
