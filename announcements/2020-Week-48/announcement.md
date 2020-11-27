@@ -15,7 +15,6 @@ For a comprehensive and always-updated view of all new features and changes for 
 
 - The article on the [operational layers](https://docs.giantswarm.io/basics/giant-swarm-operational-layers/) got an overhaul.
 - We added explanation for the use of deprecated tenant cluster releases where it matters.
-- The guide on [adding labels to tenant clusters](https://docs.giantswarm.io/guides/tenant-cluster-labelling/) has been updated to inform you that this is possible on Azure.
 
 ---
 Please let <!subteam^S0GSG846L|Product Owners> know if you have any feedback or questions by replying to this announcement in a thread.
