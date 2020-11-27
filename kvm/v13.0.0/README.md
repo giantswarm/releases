@@ -187,7 +187,7 @@ changes.
 
 
 
-### node-exporter [1.6.0](https://github.com/giantswarm/node-exporter-app/releases/tag/v1.6.0)
+### node-exporter [1.7.0](https://github.com/giantswarm/node-exporter-app/releases/tag/v1.7.0)
 
 #### Changed
 - Disable `btrfs`,`softnet`,`rapl` and `thermal_zone` to reduce memory usage.
