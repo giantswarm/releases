@@ -9,7 +9,7 @@ For a comprehensive and always-updated view of all new features and changes for 
 
 ## Web UI
 
-[Happa v1.1.1](https://github.com/giantswarm/happa/releases/tag/v1.1.1) simplifies deleting an organization and [Happa v1.1.0](https://github.com/giantswarm/happa/releases/tag/v1.1.0) adds support for upgrading to beta versions.
+In [Happa](https://docs.giantswarm.io/changes/web-ui/), deleting an organization is now simpler and upgrading to beta versions is now possible.
 
 ## Documentation
 
