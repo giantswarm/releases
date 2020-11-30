@@ -23,7 +23,7 @@ Updates:
 
 
 
-### kubernetes [1.18.10](https://github.com/kubernetes/kubernetes/releases/tag/v1.18.10)
+### kubernetes [1.18.12](https://github.com/kubernetes/kubernetes/releases/tag/v1.18.12)
 
 #### Design
 - Prevent logging of docker config contents if file is malformed ([#95347](https://github.com/kubernetes/kubernetes/pull/95347), [@sfowl](https://github.com/sfowl)) [SIG Auth and Node]
