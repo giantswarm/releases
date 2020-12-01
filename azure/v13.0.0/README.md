@@ -11,8 +11,6 @@ Using [our kubectl plugin](https://github.com/giantswarm/kubectl-gs/) you can ea
 
 ## Change details
 
-## Change details
-
 ### kubernetes [1.18.12](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.18.md#v11812)
 ### app-operator [2.7.0](https://github.com/giantswarm/app-operator/blob/master/CHANGELOG.md#270---2020-11-09)
 ### azure-operator [5.0.0](https://github.com/giantswarm/azure-operator/blob/master/CHANGELOG.md#500---2020-12-01)
