@@ -39,7 +39,7 @@ Changed:
 - Upgrade upstream external-dns from v0.7.3 to v0.7.4.
 ### kube-state-metrics [1.3.0](https://github.com/giantswarm/kube-state-metrics-app/blob/master/CHANGELOG.md#130---2020-11-25)
 ### node-exporter [1.7.0](https://github.com/giantswarm/node-exporter-app/blob/master/CHANGELOG.md#170---2020-11-26)
-Changed
+Changed:
 - Change the Kubernetes Daemonset name to include the app version.
 ### net-exporter [1.9.2](https://github.com/giantswarm/net-exporter/blob/master/CHANGELOG.md#192---2020-08-21)
 Changed:
