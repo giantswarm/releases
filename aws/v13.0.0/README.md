@@ -8,8 +8,10 @@
 ### aws-operator [9.3.3](https://github.com/giantswarm/aws-operator/releases/tag/v9.3.3)
 
 #### Changed
+
 - Make it mandatory to configure alike instances via e.g. the installations repo.
 - Fix naming and logs for `terminate-unhealthy-node` feature.
+- Update `k8scloudconfig` version to `v9.2.0` to include change for kubelet pull QPS.
 
 ### aws-cni [1.7.6](https://github.com/aws/amazon-vpc-cni-k8s/releases/tag/v1.7.6)
 
@@ -70,7 +72,16 @@ _Nothing has changed._
  - Add FelixConfiguration parameters to explicitly allow encapsulated packets from workloads. [libcalico-go #1302](https://github.com/projectcalico/libcalico-go/pull/1302) (@doublek)
  - Respect explicit configuration for drop rules for encapsulated packets originating from workloads. [felix #2487](https://github.com/projectcalico/felix/pull/2487) (@doublek)
 
+### cluster-operator [3.4.0](https://github.com/giantswarm/cluster-operator/releases/tag/v3.4.0)
 
+#### Added
+
+- Add functionality to template `catalog` into `apps` depending on `release` CR.
+
+#### Changed
+
+- Update `apiextensions`, `k8sclient`, and `operatorkit` dependencies.
+- Update github workflows.
 
 ### app-operator [2.7.0](https://github.com/giantswarm/app-operator/releases/tag/v2.7.0)
 

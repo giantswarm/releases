@@ -56,14 +56,14 @@ spec:                                                              spec:
     version: 0.1.0                                                     version: 0.1.0
   - name: cluster-operator                                           - name: cluster-operator
     releaseOperatorDeploy: true                                        releaseOperatorDeploy: true
-    version: 3.3.1                                                     version: 3.3.1
+    version: 3.3.1                                              |      version: 3.4.0
   - name: containerlinux                                             - name: containerlinux
     version: 2512.5.0                                                  version: 2512.5.0
   - name: etcd                                                       - name: etcd
     version: 3.4.13                                                    version: 3.4.13
   - name: kubernetes                                                 - name: kubernetes
     version: 1.17.13                                            |      version: 1.18.12
-  date: "2020-11-19T08:00:00Z"                                  |    date: "2020-12-02T13:13:26Z"
+  date: "2020-11-19T08:00:00Z"                                  |    date: "2020-12-02T14:11:49Z"
   state: active                                                      state: active
 status:                                                            status:
                                                                 >    inUse: false
