@@ -6,7 +6,7 @@ A node pool is a subset of the Kubernetes nodes. They enable having pools of nod
 After cluster creation with 1 node pools, additional node pools can be freely added and removed from the cluster.
 
 If you have access to the Control Plane API you can manage your clusters directly from there.
-The clusters that you create are now represented by [Cluster API](https://cluster-api.sigs.k8s.io/) CRDs ([Custom Resource Definition](https://kubernetes.io/docs/tasks/extend-kubernetes/custom-resources/custom-resource-definitions/)).
+The clusters that you create are now based on [Cluster API](https://cluster-api.sigs.k8s.io/) CRDs ([Custom Resource Definition](https://kubernetes.io/docs/tasks/extend-kubernetes/custom-resources/custom-resource-definitions/)) being reconciled  by Giant Swarm Controllers implementation.
 Using [our kubectl plugin](https://github.com/giantswarm/kubectl-gs/) you can easily create the Custom Resources required to create a cluster.
 Follow our [guide](https://docs.giantswarm.io/guides/creating-clusters-via-crs-on-azure/) for cluster creation and deletion to have a peak at the cluster management via the Control Plane API.
 
