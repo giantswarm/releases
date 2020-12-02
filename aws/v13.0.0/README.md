@@ -5,12 +5,23 @@
 ## Change details
 
 
-### aws-operator [9.3.2](https://github.com/giantswarm/aws-operator/releases/tag/v9.3.2)
+### aws-operator [9.3.3](https://github.com/giantswarm/aws-operator/releases/tag/v9.3.3)
 
 #### Changed
 - Make it mandatory to configure alike instances via e.g. the installations repo.
 - Fix naming and logs for `terminate-unhealthy-node` feature.
 
+### aws-cni [1.7.6](https://github.com/aws/amazon-vpc-cni-k8s/releases/tag/v1.7.6)
+
+-  Improvement - Avoid detaching EFA ENIs
+-  Improvement - Add t4g instance type
+-  Improvement - Add p4d.24xlarge instance type
+-  Improvement - Update calico to v3.16.2
+-  Improvement - Update readme on stdout support for plugin log file
+-  Bug - Make p3dn.24xlarge examples more realistic
+-  Bug - Make sure we have space for a trunk ENI
+-  Bug - Update README for DISABLE_TCP_EARLY_DEMUX
+-  Bug - Update p4 instance limits
 
 
 ### containerlinux [2512.5.0](https://www.flatcar-linux.org/releases/#release-2512.5.0)
