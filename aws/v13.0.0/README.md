@@ -119,7 +119,8 @@ _Nothing has changed._
 
 ### cluster-autoscaler [1.18.3](https://github.com/giantswarm/cluster-autoscaler-app/releases/tag/v1.18.3)
 
-Not found
+#### Changed
+- Updated cluster-autoscaler to version `1.18.3`.
 
 
 ### cert-manager [2.3.3](https://github.com/giantswarm/cert-manager-app/releases/tag/v2.3.3)
