@@ -1,5 +1,5 @@
 # Generated with:
-# devctl release create --name 13.0.1 --provider azure --base 13.0.0 --app chart-operator@2.5.1 --overwrite
+# devctl release create --name 13.0.1 --provider azure --base 13.0.0 --app chart-operator@2.5.1 --component cluster-operator@0.23.19 --overwrite
 apiVersion: release.giantswarm.io/v1alpha1
 kind: Release
 metadata:
@@ -41,7 +41,7 @@ spec:
     version: 0.1.0
   - name: cluster-operator
     releaseOperatorDeploy: true
-    version: 0.23.18
+    version: 0.23.19
   - name: kubernetes
     version: 1.18.12
   - name: containerlinux
@@ -52,7 +52,7 @@ spec:
     version: 3.15.3
   - name: etcd
     version: 3.4.13
-  date: "2020-12-03T12:12:52Z"
+  date: "2020-12-03T13:19:55Z"
   state: active
 status:
   inUse: false

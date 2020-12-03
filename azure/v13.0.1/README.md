@@ -22,6 +22,8 @@ Please analyse the release notes of all components upgrades below:
 - Check changelog starting from [2.4.0](https://github.com/giantswarm/app-operator/blob/master/CHANGELOG.md#240---2020-10-23)
 ### azure-operator [5.0.0](https://github.com/giantswarm/azure-operator/blob/master/CHANGELOG.md#500---2020-12-01)
 - Check changelog starting from [5.0.0-alpha1](https://github.com/giantswarm/azure-operator/blob/master/CHANGELOG.md#500---2020-12-01)
+### cluster-operator [0.23.19](https://github.com/giantswarm/cluster-operator/blob/legacy/CHANGELOG.md#02319---2020-12-03)
+- Check changelog starting from [0.23.18](https://github.com/giantswarm/cluster-operator/blob/legacy/CHANGELOG.md#02318---2020-10-21)
 ### calico 3.15.1 -> [3.15.3](https://github.com/projectcalico/calico/releases/tag/v3.15.3)
 - Check changelog starting from [3.15.2](https://github.com/projectcalico/calico/releases/tag/v3.15.2)
 ### cert-exporter [1.3.0](https://github.com/giantswarm/cert-exporter/blob/master/CHANGELOG.md#130---2020-09-17)
@@ -37,4 +39,3 @@ Please analyse the release notes of all components upgrades below:
 - Check changelog starting from [1.3.0](https://github.com/giantswarm/node-exporter-app/blob/master/CHANGELOG.md#170---2020-11-26)
 ### net-exporter [1.9.2](https://github.com/giantswarm/net-exporter/blob/master/CHANGELOG.md#192---2020-08-21)
 - Check changelog starting from [1.9.0](https://github.com/giantswarm/net-exporter/blob/master/CHANGELOG.md#192---2020-08-21)
-
