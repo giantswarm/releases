@@ -4,7 +4,8 @@ For a comprehensive and always-updated view of all new features and changes for 
 
 ## Managed Apps
 
-1. [Kong v1.1.0](https://github.com/giantswarm/kong-app/compare/v1.0.0...v1.1.0) provides kong version 2.2.
+1. [Kong v1.1.0](https://github.com/giantswarm/kong-app/blob/master/CHANGELOG.md#110---2020-12-02) provides kong version 2.2.
+1. [cert-exporter v1.4.0](https://github.com/giantswarm/cert-exporter/blob/master/CHANGELOG.md#140---2020-12-02) adds a new metric which tracks expiry of certificates in Kubernetes secrets.
 
 ---
 Please let <!subteam^S0GSG846L|Product Owners> know if you have any feedback or questions by replying to this announcement in a thread.
