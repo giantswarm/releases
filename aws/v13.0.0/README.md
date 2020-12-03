@@ -72,7 +72,7 @@ _Nothing has changed._
  - Add FelixConfiguration parameters to explicitly allow encapsulated packets from workloads. [libcalico-go #1302](https://github.com/projectcalico/libcalico-go/pull/1302) (@doublek)
  - Respect explicit configuration for drop rules for encapsulated packets originating from workloads. [felix #2487](https://github.com/projectcalico/felix/pull/2487) (@doublek)
 
-### cluster-operator [3.4.0](https://github.com/giantswarm/cluster-operator/releases/tag/v3.4.0)
+### cluster-operator [3.4.1](https://github.com/giantswarm/cluster-operator/releases/tag/v3.4.1)
 
 #### Added
 
@@ -83,6 +83,10 @@ _Nothing has changed._
 - Update `apiextensions`, `k8sclient`, and `operatorkit` dependencies.
 - Update github workflows.
 
+### Fixed
+
+-  Allow annotations from current app CR to remain.
+
 ### app-operator [2.7.0](https://github.com/giantswarm/app-operator/releases/tag/v2.7.0)
 
 #### Added
@@ -90,13 +94,15 @@ _Nothing has changed._
 
 
 
-### chart-operator [2.5.0](https://github.com/giantswarm/chart-operator/releases/tag/v2.5.0)
+### chart-operator [2.5.1](https://github.com/giantswarm/chart-operator/releases/tag/v2.5.0)
 
 #### Added
 - Validate the cache in helmclient to avoid state requests when pulling tarballs.
 - Call status webhook with token values.
 #### Fixed
 - Update apiextensions to v3 and replace CAPI with Giant Swarm fork.
+- Fix comparison of last deployed and revision optional fields in status resource.
+- Set memory limit and reduce requests.
 
 
 
