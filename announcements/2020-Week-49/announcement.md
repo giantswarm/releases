@@ -4,8 +4,9 @@ For a comprehensive and always-updated view of all new features and changes for 
 
 ## Managed Apps
 
-1. [Kong v1.1.0](https://github.com/giantswarm/kong-app/blob/master/CHANGELOG.md#110---2020-12-02) provides kong version 2.2.
-1. [cert-exporter v1.4.0](https://github.com/giantswarm/cert-exporter/blob/master/CHANGELOG.md#140---2020-12-02) adds a new metric which tracks expiry of certificates in Kubernetes secrets.
+1. [Kong v1.1.0](https://docs.giantswarm.io/changes/managed-apps/kong-app/v1.1.0/) provides kong version 2.2.
+2. [Vertical Pod Autoscaler](https://github.com/giantswarm/vertical-pod-autoscaler-app/blob/master/CHANGELOG.md#100---2020-11-27), which automatically adjusts the amount of CPU and memory requested by pods running in the Kubernetes Cluster, is now available as a Playground Catalog app.
+
 
 ## Web UI
 
