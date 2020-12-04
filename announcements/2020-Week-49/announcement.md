@@ -5,7 +5,7 @@ For a comprehensive and always-updated view of all new features and changes for 
 ## Managed Apps
 
 - [Kong v1.1.0](https://docs.giantswarm.io/changes/managed-apps/kong-app/v1.1.0/) upgrades to Kong app v2.2.
-- [Vertical Pod Autoscaler](https://github.com/giantswarm/vertical-pod-autoscaler-app/blob/master/CHANGELOG.md#100---2020-11-27) is now available as a Playground Catalog app. It automatically adjusts the amount of CPU and memory requested by pods running in the Kubernetes Cluster. 
+- Vertical Pod Autoscaler is now available as a Playground Catalog app. It automatically adjusts the amount of CPU and memory requested by pods running in the Kubernetes Cluster. 
 
 ## Web UI
 
