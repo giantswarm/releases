@@ -47,7 +47,7 @@ spec:                                                              spec:
     version: 1.7.5                                              |      version: 1.7.6
   - name: aws-operator                                               - name: aws-operator
     releaseOperatorDeploy: true                                        releaseOperatorDeploy: true
-    version: 9.3.1                                              |      version: 9.3.3
+    version: 9.3.1                                              |      version: 9.3.4
   - name: calico                                                     - name: calico
     version: 3.15.3                                                    version: 3.15.3
   - name: cert-operator                                              - name: cert-operator
@@ -63,7 +63,7 @@ spec:                                                              spec:
     version: 3.4.13                                                    version: 3.4.13
   - name: kubernetes                                                 - name: kubernetes
     version: 1.17.13                                            |      version: 1.18.12
-  date: "2020-11-19T08:00:00Z"                                  |    date: "2020-12-03T13:26:16Z"
+  date: "2020-11-19T08:00:00Z"                                  |    date: "2020-12-07T11:06:30Z"
   state: active                                                      state: active
 status:                                                            status:
                                                                 >    inUse: false

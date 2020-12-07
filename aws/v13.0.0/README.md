@@ -5,13 +5,14 @@
 ## Change details
 
 
-### aws-operator [9.3.3](https://github.com/giantswarm/aws-operator/releases/tag/v9.3.3)
+### aws-operator [9.3.4](https://github.com/giantswarm/aws-operator/releases/tag/v9.3.4)
 
 #### Changed
 
 - Make it mandatory to configure alike instances via e.g. the installations repo.
 - Fix naming and logs for `terminate-unhealthy-node` feature.
-- Update `k8scloudconfig` version to `v9.2.0` to include change for kubelet pull QPS.
+- Update `k8scloudconfig` version to `v9.3.0` to include change for kubelet pull QPS and kubelet cgroup.
+- Add vertical pod autoscaler support.
 
 ### aws-cni [1.7.6](https://github.com/aws/amazon-vpc-cni-k8s/releases/tag/v1.7.6)
 
