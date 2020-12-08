@@ -49,7 +49,7 @@ spec:                                                              spec:
   - name: kvm-operator                                               - name: kvm-operator
     releaseOperatorDeploy: true                                        releaseOperatorDeploy: true
     version: 3.13.0                                             |      version: 3.14.0
-  date: "2020-11-02T10:50:00Z"                                  |    date: "2020-11-26T12:00:00Z"
+  date: "2020-11-02T10:50:00Z"                                  |    date: "2020-12-09T00:00:00Z"
   state: active                                                      state: active
 status:                                                            status:
   inUse: false                                                       inUse: false
