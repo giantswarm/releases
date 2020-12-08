@@ -10,7 +10,7 @@ spec:                                                              spec:
   - name: cert-exporter                                              - name: cert-exporter
     version: 1.2.3                                              |      version: 1.3.0
   - name: chart-operator                                             - name: chart-operator
-    version: 2.3.5                                              |      version: 2.5.0
+    version: 2.3.5                                              |      version: 2.5.1
   - componentVersion: 1.6.5                                          - componentVersion: 1.6.5
     name: coredns                                                      name: coredns
     version: 1.2.0                                                     version: 1.2.0
@@ -37,7 +37,7 @@ spec:                                                              spec:
     reference: 0.1.0-2                                                 reference: 0.1.0-2
   - name: cluster-operator                                           - name: cluster-operator
     releaseOperatorDeploy: true                                        releaseOperatorDeploy: true
-    version: 0.23.18                                                   version: 0.23.18
+    version: 0.23.18                                            |      version: 0.23.19
   - name: containerlinux                                             - name: containerlinux
     version: 2512.5.0                                                  version: 2512.5.0
   - name: etcd                                                       - name: etcd
