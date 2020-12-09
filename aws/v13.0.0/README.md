@@ -96,7 +96,6 @@ _Nothing has changed._
 - Set memory limit and reduce requests.
 
 
-
 ### kube-state-metrics [1.3.0](https://github.com/giantswarm/kube-state-metrics-app/releases/tag/v1.3.0)
 
 #### Changed
