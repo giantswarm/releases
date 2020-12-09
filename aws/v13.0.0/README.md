@@ -58,7 +58,6 @@ _Nothing has changed._
 _Nothing has changed._
 
 
-
 ### calico [3.15.3](https://github.com/projectcalico/calico/releases/tag/v3.15.3)
 
 #### Other changes
@@ -148,6 +147,5 @@ _Nothing has changed._
 
 #### Changed
 - Schedule hook Jobs on master nodes. ([#106](https://github.com/giantswarm/cert-manager-app/pull/106))
-
 
 
