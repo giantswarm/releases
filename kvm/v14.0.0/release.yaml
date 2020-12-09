@@ -46,7 +46,9 @@ spec:
     version: 1.19.4
   - name: kvm-operator
     releaseOperatorDeploy: true
-    version: 3.14.0
+    reference: 3.14.0-3edad17b3f96c54447ed1d92e35d270e149eba9a
+    version: 3.14.1-dev
+    catalog: control-plane-test-catalog
   date: "2020-12-09T00:00:00Z"
   state: active
 status:
