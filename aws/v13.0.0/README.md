@@ -13,6 +13,8 @@
 - Fix naming and logs for `terminate-unhealthy-node` feature.
 - Update `k8scloudconfig` version to `v9.3.0` to include change for kubelet pull QPS and kubelet cgroup.
 - Add vertical pod autoscaler support.
+- Do not return NAT gateways in state `deleting` and `deleted` to avoid problems with recreating clusters with same ID. 
+
 
 ### aws-cni [1.7.6](https://github.com/aws/amazon-vpc-cni-k8s/releases/tag/v1.7.6)
 
