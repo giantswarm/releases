@@ -1,6 +1,6 @@
 # :zap: Giant Swarm Release v13.0.0 for AWS :zap:
 
-<< Add description here >>
+This release provides support for Kubernetes 1.18 on AWS.
 
 ## Change details
 
@@ -25,16 +25,6 @@
 -  Bug - Make sure we have space for a trunk ENI
 -  Bug - Update README for DISABLE_TCP_EARLY_DEMUX
 -  Bug - Update p4 instance limits
-
-
-### containerlinux [2512.5.0](https://www.flatcar-linux.org/releases/#release-2512.5.0)
-
-Changes:
-- Update public key to include a [new subkey](https://www.flatcar-linux.org/security/image-signing-key/)
-
-Updates:
-- Linux [4.19.145](https://lwn.net/Articles/831367/)
-
 
 
 ### kubernetes [1.18.12](https://github.com/kubernetes/kubernetes/releases/tag/v1.18.12)
