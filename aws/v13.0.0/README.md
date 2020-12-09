@@ -85,7 +85,6 @@ _Nothing has changed._
 - Secure the webhook with token value from control plane catalog.
 
 
-
 ### chart-operator [2.5.1](https://github.com/giantswarm/chart-operator/releases/tag/v2.5.0)
 
 #### Added
@@ -147,5 +146,4 @@ _Nothing has changed._
 
 #### Changed
 - Schedule hook Jobs on master nodes. ([#106](https://github.com/giantswarm/cert-manager-app/pull/106))
-
 
