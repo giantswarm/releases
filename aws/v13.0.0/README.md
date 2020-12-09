@@ -103,7 +103,6 @@ _Nothing has changed._
 - Change the Kubernetes Deployment name to include the app version.
 
 
-
 ### cert-exporter [1.3.0](https://github.com/giantswarm/cert-exporter/releases/tag/v1.3.0)
 
 #### Added
@@ -146,4 +145,3 @@ _Nothing has changed._
 
 #### Changed
 - Schedule hook Jobs on master nodes. ([#106](https://github.com/giantswarm/cert-manager-app/pull/106))
-
