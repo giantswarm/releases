@@ -124,7 +124,6 @@ _Nothing has changed._
 - Change the Kubernetes Daemonset name to include the app version.
 
 
-
 ### external-dns [1.5.0](https://github.com/giantswarm/external-dns-app/releases/tag/v1.5.0)
 
 #### Changed
