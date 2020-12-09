@@ -1,1 +1,1 @@
-**Tenant cluster release v13.0.0 for AWS is available**. This release provides support for Kubernetes 1.18. Further details can be found in the [release notes](https://docs.giantswarm.io/changes/tenant-cluster-releases-aws/releases/aws-v13.0.0/).
+**Tenant cluster release v13.0.0 for AWS is available**. It provides support for Kubernetes 1.18. Further details can be found in the [release notes](https://docs.giantswarm.io/changes/tenant-cluster-releases-aws/releases/aws-v13.0.0/).
