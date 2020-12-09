@@ -118,7 +118,6 @@ _Nothing has changed._
 - Fixed indentation problem with the daemonset template.
 
 
-
 ### node-exporter [1.7.0](https://github.com/giantswarm/node-exporter-app/releases/tag/v1.7.0)
 
 #### Changed
