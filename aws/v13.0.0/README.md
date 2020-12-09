@@ -110,7 +110,6 @@ _Nothing has changed._
 - Remove `hostNetwork` and `hostPID` capabilities.
 
 
-
 ### net-exporter [1.9.2](https://github.com/giantswarm/net-exporter/releases/tag/v1.9.2)
 
 #### Changed
