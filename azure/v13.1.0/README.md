@@ -2,6 +2,9 @@
 
 << Add description here >>
 
+
+Rember to talk about the terminate-unhealth-node feature, docs here: https://docs.giantswarm.io/basics/automatic-termination-of-bad-nodes/
+
 ## Change details
 
 
