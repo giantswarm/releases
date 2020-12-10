@@ -7,8 +7,7 @@
 
 ### azure-operator [5.1.0](https://github.com/giantswarm/aws-operator/releases/tag/v5.1.0)
 
-Not found
-
+- Add `terminate-unhealthy-node` feature.
 
 ### containerlinux [2605.9.0](https://www.flatcar-linux.org/releases/#release-2605.9.0)
 
@@ -121,35 +120,19 @@ Updates:
 - Fixed kubelet creating extra sandbox for pods with RestartPolicyOnFailure after all containers succeeded ([#92614](https://github.com/kubernetes/kubernetes/pull/92614), [@tnqn](https://github.com/tnqn)) [SIG Node and Testing]
 - Metric names for CSI and flexvolume drivers will include the driver name as well as the CSI plugin name. ([#96474](https://github.com/kubernetes/kubernetes/pull/96474), [@mattcary](https://github.com/mattcary)) [SIG Instrumentation and Storage]
 - New Azure instance types do now have correct max data disk count information. ([#94340](https://github.com/kubernetes/kubernetes/pull/94340), [@ialidzhikov](https://github.com/ialidzhikov)) [SIG Cloud Provider and Storage]
-#### Dependencies
-#### Added
-_Nothing has changed._
-#### Changed
-_Nothing has changed._
-#### Removed
-_Nothing has changed._
-
-
 
 ### cert-exporter [1.4.0](https://github.com/giantswarm/cert-exporter/releases/tag/v1.4.0)
 
 #### Added
 - Add new metric (`cert_exporter_secret_not_after`) which tracks expiry of TLS certificates stored in Kubernetes secrets. ([#92](https://github.com/giantswarm/cert-exporter/pull/92))
 
-
-
 ### chart-operator [2.5.2](https://github.com/giantswarm/chart-operator/releases/tag/v2.5.2)
 
 #### Added
 - Add Vertical Pod Autoscaler support.
-
-
 
 ### metrics-server [1.1.1](https://github.com/giantswarm/metrics-server-app/releases/tag/v1.1.1)
 
 #### Changed
 - Updated metrics-server version to 0.3.6.
 - Updated architect-orb to 0.10.0.
-
-
-
