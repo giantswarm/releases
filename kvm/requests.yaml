@@ -1,4 +1,23 @@
 releases:
+    - name: ">= 13.0.0"
+      requests:
+        - name: node-exporter
+          version: ">= 1.7.0"
+          issue: https://github.com/giantswarm/giantswarm/issues/14579
+        - name: kube-state-metrics
+          version: ">= 1.3.0"
+          issue: https://github.com/giantswarm/giantswarm/issues/14579
+    - name: "> 12.3.2"
+      requests:
+        - name: app-operator
+          version: ">= 2.7.0"
+          issue: https://github.com/giantswarm/roadmap/issues/191
+        - name: chart-operator
+          version: ">= 2.5.1"
+          issue: https://github.com/giantswarm/giantswarm/issues/14642
+        - name: cluster-operator
+          version: ">= 0.23.19"
+          issue: https://github.com/giantswarm/giantswarm/issues/14677
     - name: "> 11.3.2, < 12.0.0"
       requests:
         - name: calico

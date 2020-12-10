@@ -1,6 +1,12 @@
 releases:
-    - name: "> 13.0.0, < 14.0.0"
+    - name: ">= 13.0.0, < 14.0.0"
       requests:
+        - name: node-exporter
+          version: ">= 1.7.0"
+          issue: https://github.com/giantswarm/giantswarm/issues/14579
+        - name: kube-state-metrics
+          version: ">= 1.3.0"
+          issue: https://github.com/giantswarm/giantswarm/issues/14579
         - name: cert-manager
           version: ">= 2.3.3"
           issue: https://github.com/giantswarm/giantswarm/issues/14281
@@ -10,8 +16,11 @@ releases:
           version: ">= 2.7.0"
           issue: https://github.com/giantswarm/roadmap/issues/191
         - name: chart-operator
-          version: ">= 2.5.0"
-          issue: https://github.com/giantswarm/roadmap/issues/191
+          version: ">= 2.5.1"
+          issue: https://github.com/giantswarm/giantswarm/issues/14642
+        - name: cluster-operator
+          version: ">= 3.4.1"
+          issue: https://github.com/giantswarm/giantswarm/issues/14677
     - name: "> 12.6.0, < 13.0.0"
       requests:
         - name: cert-manager

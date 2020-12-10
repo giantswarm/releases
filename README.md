@@ -10,6 +10,9 @@ merged to the `master` branch, tenant cluster releases get automatically deploye
 to all Giant Swarm installations.
 
 ## AWS
+- v13
+  - v13.0
+    - [v13.0.0](https://github.com/giantswarm/releases/tree/master/aws/v13.0.0)
 - v12
   - v12.7
     - [v12.7.0](https://github.com/giantswarm/releases/tree/master/aws/v12.7.0)
@@ -112,7 +115,9 @@ to all Giant Swarm installations.
 
 - v13
   - v13.0
-    - [v13.0.0-beta1](https://github.com/giantswarm/releases/tree/master/azure/v13.0.0-beta1)
+    - [v13.0.1](https://github.com/giantswarm/releases/tree/master/azure/v13.0.1)
+    - [v13.0.0](https://github.com/giantswarm/releases/tree/master/azure/v13.0.0)
+    - [v13.0.0-beta2](https://github.com/giantswarm/releases/tree/master/azure/v13.0.0-beta2)
 
 - v12
   - v12.1
@@ -159,6 +164,10 @@ to all Giant Swarm installations.
     - [v8.0.0](https://github.com/giantswarm/releases/tree/master/azure/archived/v8.0.0)
 
 ## KVM
+
+- v13
+  - v13.0
+    - [v13.0.0](https://github.com/giantswarm/releases/tree/master/kvm/v13.0.0)
 
 - v12
   - v12.3
