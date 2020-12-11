@@ -4,7 +4,7 @@ For a comprehensive and always-updated view of all new features and changes for 
 
 ## Managed Apps
 
-- [NGINX IC v1.12.0](https://docs.giantswarm.io/changes/managed-apps/nginx-ingress-controller-app/v1.12.0/) adds options to disable updating of ingress loadbalancer status and set podAntiAffinity scheduling method via the values file.
+- [NGINX IC v1.12.0](https://docs.giantswarm.io/changes/managed-apps/nginx-ingress-controller-app/v1.12.0/) adds options to disable updating of ingress loadbalancer status, as well as to set podAntiAffinity scheduling method via the values file.
 
 ## Web UI
 
