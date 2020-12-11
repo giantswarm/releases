@@ -8,15 +8,11 @@ For a comprehensive and always-updated view of all new features and changes for 
 
 ## Web UI
 
-
-
-## gsctl
-
-
+We fixed a problem with the user account drop-down menu.
 
 ## Documentation
 
-
+The search function will now make spelling suggestions, plus we updated and improved the content.
 
 ---
 Please let <!subteam^S0GSG846L|Product Owners> know if you have any feedback or questions by replying to this announcement in a thread.
