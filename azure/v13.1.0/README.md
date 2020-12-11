@@ -1,9 +1,12 @@
 # :zap: Giant Swarm Release v13.1.0 for Azure :zap:
+This is next minor tenant cluster release for Node Pools Clusters.
 
-<< Add description here >>
+Release brings two new features that can be enabled by customers:
 
+- Auto Terminate Unhealth Nodes feature enables customers to discard unhealthy kubernetes nodes in favour of new ones added to the cluster. Follow [the guide](https://docs.giantswarm.io/basics/automatic-termination-of-bad-nodes/) to learn how to enable and disable this feature via annotations on Cluster CR.
 
-Rember to talk about the terminate-unhealth-node feature, docs here: https://docs.giantswarm.io/basics/automatic-termination-of-bad-nodes/
+- [Node Pools Auto Scaling](https://docs.giantswarm.io/basics/nodepools/#autoscaling) feature allows customers to set up minimum and maximum number of nodes per node pool used by autoscaler app installed by default.
+
 
 ## Change details
 
