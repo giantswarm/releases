@@ -75,7 +75,7 @@ to all Giant Swarm installations.
   - v9.3
     - [v9.3.9](https://github.com/giantswarm/releases/tree/master/aws/v9.3.9)
     - [v9.3.8](https://github.com/giantswarm/releases/tree/master/aws/v9.3.8)
-    - [v9.3.7](https://github.com/giantswarm/releases/tree/master/aws/v9.3.7)
+    - [v9.3.7](https://github.com/giantswarm/releases/tree/master/aws/archived/v9.3.7)
     - [v9.3.6](https://github.com/giantswarm/releases/tree/master/aws/archived/v9.3.6)
     - [v9.3.5](https://github.com/giantswarm/releases/tree/master/aws/archived/v9.3.5)
     - [v9.3.4](https://github.com/giantswarm/releases/tree/master/aws/archived/v9.3.4)
