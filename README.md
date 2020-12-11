@@ -25,7 +25,7 @@ to all Giant Swarm installations.
   - v12.4
     - [v12.4.0](https://github.com/giantswarm/releases/tree/master/aws/archived/v12.4.0)
   - v12.3
-    - [v12.3.0](https://github.com/giantswarm/releases/tree/master/aws/v12.3.0)
+    - [v12.3.0](https://github.com/giantswarm/releases/tree/master/aws/archived/v12.3.0)
   - v12.2
     - [v12.2.0](https://github.com/giantswarm/releases/tree/master/aws/archived/v12.2.0)
   - v12.1
@@ -75,7 +75,7 @@ to all Giant Swarm installations.
   - v9.3
     - [v9.3.9](https://github.com/giantswarm/releases/tree/master/aws/v9.3.9)
     - [v9.3.8](https://github.com/giantswarm/releases/tree/master/aws/v9.3.8)
-    - [v9.3.7](https://github.com/giantswarm/releases/tree/master/aws/v9.3.7)
+    - [v9.3.7](https://github.com/giantswarm/releases/tree/master/aws/archived/v9.3.7)
     - [v9.3.6](https://github.com/giantswarm/releases/tree/master/aws/archived/v9.3.6)
     - [v9.3.5](https://github.com/giantswarm/releases/tree/master/aws/archived/v9.3.5)
     - [v9.3.4](https://github.com/giantswarm/releases/tree/master/aws/archived/v9.3.4)
