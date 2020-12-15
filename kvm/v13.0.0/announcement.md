@@ -1,4 +1,4 @@
-:zap: **Giant Swarm release v13.0.0 for KVM is available** :zap:   
+:zap: **Giant Swarm tenant cluster release v13.0.0 for KVM is available** :zap:   
 **Nodes will be rolled during upgrade to this version.**  
 This is the first Giant Swarm release for KVM which includes Kubernetes v1.18.
 It also includes  Calico to 3.15 and other minor component upgrades.  
