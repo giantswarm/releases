@@ -32,8 +32,10 @@ spec:
     releaseOperatorDeploy: true
     version: 2.7.0
   - name: azure-operator
+    catalog: control-plane-test-catalog
     releaseOperatorDeploy: true
-    version: 5.0.1
+    version: 5.0.1-azoverride
+    reference: 5.0.0-070178a413960b75aa32e697c530c4332469a242
   - name: cert-operator
     reference: 0.1.0-2
     releaseOperatorDeploy: true
