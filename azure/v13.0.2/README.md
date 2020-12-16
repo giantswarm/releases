@@ -1,14 +1,12 @@
 # :zap: Giant Swarm Release v13.0.2 for Azure :zap:
 
-<< Add description here >>
+This is a patch release that resolves a problem during the upgrade of multi-AZ clusters from 12.x release to 13.x release.
 
-## Change details
-
+It also brings security-related updates for Container Linux and some managed apps.
 
 ### azure-operator [5.0.1](https://github.com/giantswarm/aws-operator/releases/tag/v5.0.1)
 
-Not found
-
+*  Fix upgrade path from 12.x releases for multi-AZ clusters.
 
 ### containerlinux [2605.9.0](https://www.flatcar-linux.org/releases/#release-2605.9.0)
 
@@ -103,53 +101,18 @@ Updates:
 *   re2c ([2.0.3](https://re2c.org/releases/release_notes.html#release-2-0-3)) (only in SDK)
 *   VMware: open-vm-tools (11.2.0)
 
-
-### kubernetes [1.18.13](https://github.com/kubernetes/kubernetes/releases/tag/v1.18.13)
-
-#### Feature
-- Add a new flag to set priority for the kubelet on Windows nodes so that workloads cannot overwhelm the node there by disrupting kubelet process. ([#96158](https://github.com/kubernetes/kubernetes/pull/96158), [@ravisantoshgudimetla](https://github.com/ravisantoshgudimetla)) [SIG Node]
-#### Bug or Regression
-- Avoid GCE API calls when initializing GCE CloudProvider for Kubelets.
-  Avoid unnecessary GCE API calls when adding IP alises or reflecting them in Node object in GCE cloud provider. ([#96863](https://github.com/kubernetes/kubernetes/pull/96863), [@tosi3k](https://github.com/tosi3k)) [SIG Apps, Cloud Provider and Network]
-- Bump node-problem-detector version to v0.8.5 to fix OOM detection in with Linux kernels 5.1+ ([#96716](https://github.com/kubernetes/kubernetes/pull/96716), [@tosi3k](https://github.com/tosi3k)) [SIG Cloud Provider, Scalability and Testing]
-- Exposes and sets a default timeout for the SubjectAccessReview client for DelegatingAuthorizationOptions ([#96152](https://github.com/kubernetes/kubernetes/pull/96152), [@p0lyn0mial](https://github.com/p0lyn0mial)) [SIG API Machinery and Cloud Provider]
-- Fix memory leak in kube-apiserver when underlying time goes forth and back. ([#96266](https://github.com/kubernetes/kubernetes/pull/96266), [@chenyw1990](https://github.com/chenyw1990)) [SIG API Machinery]
-- Fix pull image error from multiple ACRs using azure managed identity ([#96355](https://github.com/kubernetes/kubernetes/pull/96355), [@andyzhangx](https://github.com/andyzhangx)) [SIG Cloud Provider]
-- Fix: resize Azure disk issue when it's in attached state ([#96705](https://github.com/kubernetes/kubernetes/pull/96705), [@andyzhangx](https://github.com/andyzhangx)) [SIG Cloud Provider]
-- Fixed a bug that prevents kubectl to validate CRDs with schema using x-kubernetes-preserve-unknown-fields on object fields.
-  Fix kubectl SchemaError on CRDs with schema using x-kubernetes-preserve-unknown-fields on array types. ([#96563](https://github.com/kubernetes/kubernetes/pull/96563), [@gautierdelorme](https://github.com/gautierdelorme)) [SIG API Machinery and Testing]
-- Fixed kubelet creating extra sandbox for pods with RestartPolicyOnFailure after all containers succeeded ([#92614](https://github.com/kubernetes/kubernetes/pull/92614), [@tnqn](https://github.com/tnqn)) [SIG Node and Testing]
-- Metric names for CSI and flexvolume drivers will include the driver name as well as the CSI plugin name. ([#96474](https://github.com/kubernetes/kubernetes/pull/96474), [@mattcary](https://github.com/mattcary)) [SIG Instrumentation and Storage]
-- New Azure instance types do now have correct max data disk count information. ([#94340](https://github.com/kubernetes/kubernetes/pull/94340), [@ialidzhikov](https://github.com/ialidzhikov)) [SIG Cloud Provider and Storage]
-#### Dependencies
-#### Added
-_Nothing has changed._
-#### Changed
-_Nothing has changed._
-#### Removed
-_Nothing has changed._
-
-
-
 ### cert-exporter [1.4.0](https://github.com/giantswarm/cert-exporter/releases/tag/v1.4.0)
 
 #### Added
 - Add new metric (`cert_exporter_secret_not_after`) which tracks expiry of TLS certificates stored in Kubernetes secrets. ([#92](https://github.com/giantswarm/cert-exporter/pull/92))
-
-
 
 ### chart-operator [2.5.2](https://github.com/giantswarm/chart-operator/releases/tag/v2.5.2)
 
 #### Added
 - Add Vertical Pod Autoscaler support.
 
-
-
 ### metrics-server [1.1.1](https://github.com/giantswarm/metrics-server-app/releases/tag/v1.1.1)
 
 #### Changed
 - Updated metrics-server version to 0.3.6.
 - Updated architect-orb to 0.10.0.
-
-
-

@@ -1,5 +1,5 @@
 # Generated with:
-# devctl release create --name 13.0.2 --provider azure --base 13.0.1 --component azure-operator@5.0.1 --component containerlinux@2605.9.0 --app cert-exporter@1.4.0 --app chart-operator@2.5.2 --app metrics-server@1.1.1 --component kubernetes@1.18.13
+# devctl release create --name 13.0.2 --provider azure --base 13.0.1 --component azure-operator@5.0.1 --component containerlinux@2605.9.0 --app cert-exporter@1.4.0 --app chart-operator@2.5.2 --app metrics-server@1.1.1
 apiVersion: release.giantswarm.io/v1alpha1
 kind: Release
 metadata:
@@ -42,7 +42,7 @@ spec:
     releaseOperatorDeploy: true
     version: 0.23.19
   - name: kubernetes
-    version: 1.18.13
+    version: 1.18.12
   - name: containerlinux
     version: 2605.9.0
   - name: coredns
