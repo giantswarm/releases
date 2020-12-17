@@ -1,5 +1,5 @@
 # Generated with:
-# devctl release create --name 13.1.0 --provider azure --base 13.0.2 --component azure-operator@5.1.0 --component kubernetes@1.18.13 --app cluster-autoscaler@1.18.2
+# devctl release create --name 13.1.0 --provider azure --base 13.0.2 --component azure-operator@5.1.0 --component kubernetes@1.18.13 --app cluster-autoscaler@1.18.2 --component containerlinux@2605.10.0
 apiVersion: release.giantswarm.io/v1alpha1
 kind: Release
 metadata:
@@ -46,14 +46,14 @@ spec:
   - name: kubernetes
     version: 1.18.13
   - name: containerlinux
-    version: 2605.9.0
+    version: 2605.10.0
   - name: coredns
     version: 1.6.5
   - name: calico
     version: 3.15.3
   - name: etcd
     version: 3.4.13
-  date: "2020-12-17T08:05:15Z"
+  date: "2020-12-17T08:12:22Z"
   state: active
 status:
   ready: false

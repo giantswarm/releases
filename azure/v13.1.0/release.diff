@@ -46,14 +46,14 @@ spec:                                                              spec:
   - name: kubernetes                                                 - name: kubernetes
     version: 1.18.12                                            |      version: 1.18.13
   - name: containerlinux                                             - name: containerlinux
-    version: 2605.9.0                                                  version: 2605.9.0
+    version: 2605.9.0                                           |      version: 2605.10.0
   - name: coredns                                                    - name: coredns
     version: 1.6.5                                                     version: 1.6.5
   - name: calico                                                     - name: calico
     version: 3.15.3                                                    version: 3.15.3
   - name: etcd                                                       - name: etcd
     version: 3.4.13                                                    version: 3.4.13
-  date: "2020-12-16T08:16:50Z"                                  |    date: "2020-12-17T08:05:15Z"
+  date: "2020-12-16T08:16:50Z"                                  |    date: "2020-12-17T08:12:22Z"
   state: active                                                      state: active
 status:                                                            status:
   ready: false                                                       ready: false
