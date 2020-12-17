@@ -117,26 +117,26 @@ to all Giant Swarm installations.
   - v13.0
     - [v13.0.2](https://github.com/giantswarm/releases/tree/master/azure/v13.0.2)
     - [v13.0.1](https://github.com/giantswarm/releases/tree/master/azure/v13.0.1)
-    - [v13.0.0](https://github.com/giantswarm/releases/tree/master/azure/v13.0.0)
+    - [v13.0.0](https://github.com/giantswarm/releases/tree/master/azure/archived/v13.0.0)
     - [v13.0.0-beta2](https://github.com/giantswarm/releases/tree/master/azure/v13.0.0-beta2)
 
 - v12
   - v12.1
     - [v12.1.2](https://github.com/giantswarm/releases/tree/master/azure/v12.1.2)
     - [v12.1.1](https://github.com/giantswarm/releases/tree/master/azure/v12.1.1)
-    - [v12.1.0](https://github.com/giantswarm/releases/tree/master/azure/v12.1.0)
+    - [v12.1.0](https://github.com/giantswarm/releases/tree/master/azure/archived/v12.1.0)
   - v12.0
     - [v12.0.2](https://github.com/giantswarm/releases/tree/master/azure/v12.0.2)
     - [v12.0.1](https://github.com/giantswarm/releases/tree/master/azure/archived/v12.0.1)
     - [v12.0.0](https://github.com/giantswarm/releases/tree/master/azure/v12.0.0)
 - v11
   - v11.4
-    - [v11.4.0](https://github.com/giantswarm/releases/tree/master/azure/v11.4.0)
+    - [v11.4.0](https://github.com/giantswarm/releases/tree/master/azure/archived/v11.4.0)
   - v11.3
     - [v11.3.3](https://github.com/giantswarm/releases/tree/master/azure/v11.3.3)
     - [v11.3.2](https://github.com/giantswarm/releases/tree/master/azure/archived/v11.3.2)
     - [v11.3.1](https://github.com/giantswarm/releases/tree/master/azure/archived/v11.3.1)
-    - [v11.3.0](https://github.com/giantswarm/releases/tree/master/azure/v11.3.0)
+    - [v11.3.0](https://github.com/giantswarm/releases/tree/master/azure/archived/v11.3.0)
   - v11.2
     - [v11.2.6](https://github.com/giantswarm/releases/tree/master/azure/archived/v11.2.6)
     - [v11.2.5](https://github.com/giantswarm/releases/tree/master/azure/archived/v11.2.5)
