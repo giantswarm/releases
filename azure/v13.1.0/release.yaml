@@ -1,5 +1,5 @@
 # Generated with:
-# devctl release create --name 13.1.0 --provider azure --base 13.0.1 --component azure-operator@5.1.0 --component containerlinux@2605.9.0 --app cert-exporter@1.4.0 --app chart-operator@2.5.2 --app metrics-server@1.1.1 --component kubernetes@1.18.13
+# devctl release create --name 13.1.0 --provider azure --base 13.0.2 --component azure-operator@5.1.0 --component kubernetes@1.18.13 --app cluster-autoscaler@1.18.2
 apiVersion: release.giantswarm.io/v1alpha1
 kind: Release
 metadata:
@@ -27,6 +27,8 @@ spec:
   - componentVersion: 1.0.1
     name: node-exporter
     version: 1.7.0
+  - name: cluster-autoscaler
+    version: 1.18.2
   components:
   - name: app-operator
     releaseOperatorDeploy: true
@@ -45,11 +47,13 @@ spec:
     version: 1.18.13
   - name: containerlinux
     version: 2605.9.0
+  - name: coredns
+    version: 1.6.5
   - name: calico
     version: 3.15.3
   - name: etcd
     version: 3.4.13
-  date: "2020-12-10T10:41:22Z"
+  date: "2020-12-17T08:05:15Z"
   state: active
 status:
   ready: false
