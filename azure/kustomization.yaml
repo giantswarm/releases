@@ -1,16 +1,16 @@
 commonAnnotations:
   giantswarm.io/docs: https://docs.giantswarm.io/reference/cp-k8s-api/releases.release.giantswarm.io/
 resources:
-- v11.3.0
+- archived/v11.3.0
 - v11.3.3
-- v11.4.0
+- archived/v11.4.0
 - v12.0.0
 - v12.0.2
-- v12.1.0
+- archived/v12.1.0
 - v12.1.1
 - v12.1.2
 - v13.0.0-beta2
-- v13.0.0
+- archived/v13.0.0
 - v13.0.1
 - v13.0.2
 transformers:
