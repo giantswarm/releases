@@ -198,7 +198,7 @@ to all Giant Swarm installations.
     - [v11.0.0](https://github.com/giantswarm/releases/tree/master/kvm/archived/v11.0.0)
 - v9
   - v9.0
-    - [v9.0.3](https://github.com/giantswarm/releases/tree/master/kvm/archived/v9.0.3)
+    - [v9.0.3](https://github.com/giantswarm/releases/tree/master/kvm/v9.0.3)
     - [v9.0.2](https://github.com/giantswarm/releases/tree/master/kvm/archived/v9.0.2)
     - [v9.0.1](https://github.com/giantswarm/releases/tree/master/kvm/archived/v9.0.1)
     - [v9.0.0](https://github.com/giantswarm/releases/tree/master/kvm/archived/v9.0.0)
