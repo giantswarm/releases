@@ -15,7 +15,7 @@ spec:                                                              spec:
     name: cert-manager                                                 name: cert-manager
     version: 2.3.2                                                     version: 2.3.2
   - name: chart-operator                                             - name: chart-operator
-    version: 2.3.5                                                     version: 2.3.5
+    version: 2.3.5                                              |      version: 2.5.1
   - componentVersion: 1.17.3                                         - componentVersion: 1.17.3
     name: cluster-autoscaler                                           name: cluster-autoscaler
     version: 1.17.3                                                    version: 1.17.3
@@ -42,12 +42,12 @@ spec:                                                              spec:
   components:                                                        components:
   - name: app-operator                                               - name: app-operator
     releaseOperatorDeploy: true                                        releaseOperatorDeploy: true
-    version: 2.3.5                                                     version: 2.3.5
+    version: 2.3.5                                              |      version: 2.7.0
   - name: aws-cni                                                    - name: aws-cni
     version: 1.7.5                                                     version: 1.7.5
   - name: aws-operator                                               - name: aws-operator
     releaseOperatorDeploy: true                                        releaseOperatorDeploy: true
-    version: 9.3.1                                                     version: 9.3.1-fix
+    version: 9.3.1                                              |      version: 9.3.1-fix
   - name: calico                                                     - name: calico
     version: 3.15.3                                                    version: 3.15.3
   - name: cert-operator                                              - name: cert-operator
@@ -56,7 +56,7 @@ spec:                                                              spec:
     version: 0.1.0                                                     version: 0.1.0
   - name: cluster-operator                                           - name: cluster-operator
     releaseOperatorDeploy: true                                        releaseOperatorDeploy: true
-    version: 3.3.1                                                     version: 3.3.1
+    version: 3.3.1                                              |      version: 3.4.1
   - name: containerlinux                                             - name: containerlinux
     version: 2512.5.0                                                  version: 2512.5.0
   - name: etcd                                                       - name: etcd
