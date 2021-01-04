@@ -37,17 +37,17 @@ spec:
     releaseOperatorDeploy: true
     version: 0.23.19
   - name: containerlinux
-    version: 2605.9.0
+    version: 2605.10.0
   - name: etcd
     version: 3.4.13
   - name: flannel-operator
     version: 0.2.0
   - name: kubernetes
-    version: 1.18.12
+    version: 1.18.14
   - name: kvm-operator
     releaseOperatorDeploy: true
     version: 3.14.0
-  date: "2020-12-09T00:00:00Z"
+  date: "2021-01-04T00:00:00Z"
   state: active
 status:
   inUse: false
