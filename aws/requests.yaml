@@ -1,5 +1,5 @@
 releases:
-    - name: ">= 13.0.0, < 14.0.0"
+    - name: "> 13.0.0, < 14.0.0"
       requests:
         - name: app-operator
           version: ">= 3.0.0"
