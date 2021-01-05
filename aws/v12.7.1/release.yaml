@@ -1,10 +1,12 @@
+# Generated with:
+# devctl release create --name 12.7.1 --provider aws --base 12.7.0
 apiVersion: release.giantswarm.io/v1alpha1
 kind: Release
 metadata:
   annotations:
     giantswarm.io/docs: https://docs.giantswarm.io/reference/cp-k8s-api/releases.release.giantswarm.io/
   creationTimestamp: null
-  name: v12.7.0
+  name: v12.7.1
 spec:
   apps:
   - name: cert-exporter
@@ -13,7 +15,7 @@ spec:
     name: cert-manager
     version: 2.3.2
   - name: chart-operator
-    version: 2.3.5
+    version: 2.5.1
   - componentVersion: 1.17.3
     name: cluster-autoscaler
     version: 1.17.3
@@ -40,12 +42,12 @@ spec:
   components:
   - name: app-operator
     releaseOperatorDeploy: true
-    version: 2.3.5
+    version: 2.7.0
   - name: aws-cni
     version: 1.7.5
   - name: aws-operator
     releaseOperatorDeploy: true
-    version: 9.3.1
+    version: 9.3.1-fix
   - name: calico
     version: 3.15.3
   - name: cert-operator
@@ -54,14 +56,15 @@ spec:
     version: 0.1.0
   - name: cluster-operator
     releaseOperatorDeploy: true
-    version: 3.3.1
+    version: 3.4.1
   - name: containerlinux
     version: 2512.5.0
   - name: etcd
     version: 3.4.13
   - name: kubernetes
     version: 1.17.13
-  date: "2020-11-19T08:00:00Z"
-  state: deprecated
+  date: "2020-12-24T10:20:34Z"
+  state: active
 status:
+  inUse: false
   ready: false
