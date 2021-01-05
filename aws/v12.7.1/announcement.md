@@ -1,5 +1,5 @@
 :zap: **Giant Swarm tenant cluster release v12.7.1 for AWS is available** :zap:
-**Nodes will be rolled during upgrade to this version.**
-This release fixes an issue that causes ImagePullback errors when new nodes are coming ready.
+Nodes will be rolled during upgrade the upgrade.
+This release fixes an issue that causes ImagePullbackOff errors when new nodes are coming ready.
 Further details can be found in the [release notes](https://docs.giantswarm.io/changes/tenant-cluster-releases-aws/releases/aws-v12.7.1/).
 
