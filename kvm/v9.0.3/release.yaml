@@ -51,7 +51,7 @@ spec:
     releaseOperatorDeploy: true
     version: 3.9.2
   date: "2020-05-13T19:00:00Z"
-  state: active
+  state: deprecated
 status:
   inUse: false
   ready: false
