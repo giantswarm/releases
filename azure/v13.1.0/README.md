@@ -27,7 +27,6 @@ Release brings two new features that can be enabled by customers:
 - AzureMachine `Ready`, `SubnetReady` and `VMSSReady` conditions.
 - MachinePool `Creating` condition.
 
-
 ### kubernetes [1.18.13](https://github.com/kubernetes/kubernetes/releases/tag/v1.18.13)
 
 #### Feature
@@ -69,8 +68,11 @@ Updates:
 *   Linux ([5.4.83](https://lwn.net/Articles/839875/))
 
 
-### cluster-autoscaler [1.18.2](https://github.com/giantswarm/cluster-autoscaler-app/releases/tag/v1.18.2)
+Please analyse the release notes of all other updated components below:
 
-#### Changed
-- Updated cluster-autoscaler to version `1.18.2`.
-
+### app-operator [3.0.0](https://github.com/giantswarm/app-operator/blob/master/CHANGELOG.md#300---2021-01-05)
+### cert-exporter [1.5.0](https://github.com/giantswarm/cert-exporter/blob/master/CHANGELOG.md#150---2021-01-05)
+### chart-operator [2.6.0](https://github.com/giantswarm/chart-operator/blob/master/CHANGELOG.md#260---2020-12-21)
+### cluster-autoscaler [1.18.3](https://github.com/giantswarm/cluster-autoscaler-app/blob/release-v1.18.x/CHANGELOG.md#1183---2020-11-03)
+### metrics-server [1.2.1](https://github.com/giantswarm/metrics-server-app/blob/master/CHANGELOG.md#121---2020-12-10)
+### node-exporter [1.7.1](https://github.com/giantswarm/node-exporter-app/blob/master/CHANGELOG.md#171---2020-12-11)
