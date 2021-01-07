@@ -36,7 +36,7 @@ spec:
     releaseOperatorDeploy: true
     version: 3.0.0
   - name: azure-operator
-    releaseOperatorDeploy: false
+    releaseOperatorDeploy: true
     version: 5.1.1-dev
     reference: 5.1.0-cd3731271ef6c2dc42cf5e6fe26a5675bec32c3c
     catalog: control-plane-test-catalog
