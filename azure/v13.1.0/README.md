@@ -1,6 +1,6 @@
 # :zap: Giant Swarm Release v13.1.0 for Azure :zap:
 
-This is next minor tenant cluster release for Node Pools Clusters.
+This is the next minor workload cluster release for Node Pools Clusters.
 
 Release brings two new features that can be enabled by customers:
 
