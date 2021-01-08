@@ -3,6 +3,8 @@
 apiVersion: release.giantswarm.io/v1alpha1
 kind: Release
 metadata:
+  annotations:
+    "release.giantswarm.io/ignore": "true"
   creationTimestamp: null
   name: v13.0.2
 spec:
