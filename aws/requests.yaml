@@ -1,6 +1,15 @@
 releases:
-    - name: ">= 13.0.0, < 14.0.0"
+    - name: "> 13.0.0, < 14.0.0"
       requests:
+        - name: app-operator
+          version: ">= 3.0.0"
+          issue: https://github.com/giantswarm/roadmap/issues/187
+        - name: chart-operator
+          version: ">= 2.6.0"
+          issue: https://github.com/giantswarm/giantswarm/issues/14599
+        - name: cluster-operator
+          version: ">= 3.5.0"
+          issue: https://github.com/giantswarm/roadmap/issues/187
         - name: node-exporter
           version: ">= 1.7.0"
           issue: https://github.com/giantswarm/giantswarm/issues/14579
