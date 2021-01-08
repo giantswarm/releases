@@ -1,6 +1,6 @@
 # :zap: Giant Swarm Release v12.7.1 for AWS :zap:
 
-This release fixes an issue that causes ImagePullback errors when new nodes are coming ready.
+This release fixes an issue that causes `ImagePullBackOff` errors when new nodes are becoming ready.
 
 ## Change details
 
