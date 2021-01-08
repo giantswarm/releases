@@ -4,7 +4,7 @@ This is the next minor workload cluster release for Node Pools Clusters.
 
 Release brings two new features that can be enabled by customers:
 
-- Auto Terminate Unhealth Nodes feature enables customers to discard unhealthy kubernetes nodes in favour of new ones added to the cluster. Follow [the guide](https://docs.giantswarm.io/basics/automatic-termination-of-bad-nodes/) to learn how to enable and disable this feature via annotations on Cluster CR.
+- Automatic Termination Unhealthy Nodes feature enables customers to discard unhealthy kubernetes nodes in favor of new ones added to the cluster. Follow [this guide](https://docs.giantswarm.io/basics/automatic-termination-of-bad-nodes/) to learn how to enable and disable this feature via annotations on Cluster CR.
 
 - [Node Pools Auto Scaling](https://docs.giantswarm.io/basics/nodepools/#autoscaling) feature allows customers to set up minimum and maximum number of nodes per node pool used by autoscaler app installed by default.
 
