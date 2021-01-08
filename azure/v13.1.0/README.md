@@ -22,7 +22,7 @@ Release brings two new features that can be enabled by customers:
 - Fix incorrect (too early) `Upgrading` condition transition from `True` to `False`.
 #### Added
 - Tenant cluster k8s client lookup is cached.
-- Add `terminate-unhealthy-node` feature to automaticaly terminate bad and unhealthy nodes in a Cluster.
+- Add `terminate-unhealthy-node` feature to automatically terminate bad and unhealthy nodes in a Cluster, disabled by default.
 - Cluster `ControlPlaneReady` condition.
 - AzureMachine `Ready`, `SubnetReady` and `VMSSReady` conditions.
 - MachinePool `Creating` condition.
