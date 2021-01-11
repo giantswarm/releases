@@ -15,19 +15,17 @@ Release brings two new features that can be enabled by customers:
 ### azure-operator [5.1.0](https://github.com/giantswarm/aws-operator/releases/tag/v5.1.0)
 
 #### Changed
-- Only submit Subnet ARM deployment when Subnet name or Subnet CIDR change.
-- Use controller-runtime instead of typed clients.
-- Move provider-independent conditions implementation to external `giantswarm/conditions` and `giantswarm/conditions-handlers` modules.
 - Replaced Cluster `ProviderInfrastructureReady` with upstream `InfrastructureReady` condition.
+#### Fixed
 - Fix incorrect (too early) `Upgrading` condition transition from `True` to `False`.
 #### Added
-- Tenant cluster k8s client lookup is cached.
+- Add Cluster autoscaler-related tags to Node Pools VMSS.
 - Add `terminate-unhealthy-node` feature to automatically terminate bad and unhealthy nodes in a Cluster, disabled by default.
-- Cluster `ControlPlaneReady` condition.
-- AzureMachine `Ready`, `SubnetReady` and `VMSSReady` conditions.
-- MachinePool `Creating` condition.
+- Add Cluster `ControlPlaneReady` condition to comply with upstream Cluster API implementation.
+- Add AzureMachine `Ready`, `SubnetReady` and `VMSSReady` conditions to comply with upstream Cluster API implementation.
+- Add MachinePool `Creating` condition to comply with upstream Cluster API implementation.
 
-### kubernetes [1.18.13](https://github.com/kubernetes/kubernetes/releases/tag/v1.18.13)
+### kubernetes [1.18.14](https://github.com/kubernetes/kubernetes/releases/tag/v1.18.14)
 
 #### Feature
 - Add a new flag to set priority for the kubelet on Windows nodes so that workloads cannot overwhelm the node there by disrupting kubelet process. ([#96158](https://github.com/kubernetes/kubernetes/pull/96158), [@ravisantoshgudimetla](https://github.com/ravisantoshgudimetla)) [SIG Node]
