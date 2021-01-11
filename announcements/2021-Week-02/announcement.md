@@ -4,8 +4,6 @@ For a comprehensive and always-updated view of all new features and changes for 
 
 ## Managed Apps
 
-- [NGINX IC v1.12.0](https://docs.giantswarm.io/changes/managed-apps/nginx-ingress-controller-app/v1.12.0/) adds options to disable updating of ingress loadbalancer status, as well as to set podAntiAffinity scheduling method via the values file.
-
 [Prometheus Operator v0.5.0](https://docs.giantswarm.io/changes/managed-apps/prometheus-operator-app/v0.5.0/) upgrades to the chart with Prometheus v2.22.1.
 
 ## Web UI
