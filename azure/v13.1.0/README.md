@@ -27,21 +27,10 @@ Release brings two new features that can be enabled by customers:
 
 ### kubernetes [1.18.14](https://github.com/kubernetes/kubernetes/releases/tag/v1.18.14)
 
-#### Feature
-- Add a new flag to set priority for the kubelet on Windows nodes so that workloads cannot overwhelm the node there by disrupting kubelet process. ([#96158](https://github.com/kubernetes/kubernetes/pull/96158), [@ravisantoshgudimetla](https://github.com/ravisantoshgudimetla)) [SIG Node]
-#### Bug or Regression
-- Avoid GCE API calls when initializing GCE CloudProvider for Kubelets.
-  Avoid unnecessary GCE API calls when adding IP alises or reflecting them in Node object in GCE cloud provider. ([#96863](https://github.com/kubernetes/kubernetes/pull/96863), [@tosi3k](https://github.com/tosi3k)) [SIG Apps, Cloud Provider and Network]
-- Bump node-problem-detector version to v0.8.5 to fix OOM detection in with Linux kernels 5.1+ ([#96716](https://github.com/kubernetes/kubernetes/pull/96716), [@tosi3k](https://github.com/tosi3k)) [SIG Cloud Provider, Scalability and Testing]
-- Exposes and sets a default timeout for the SubjectAccessReview client for DelegatingAuthorizationOptions ([#96152](https://github.com/kubernetes/kubernetes/pull/96152), [@p0lyn0mial](https://github.com/p0lyn0mial)) [SIG API Machinery and Cloud Provider]
-- Fix memory leak in kube-apiserver when underlying time goes forth and back. ([#96266](https://github.com/kubernetes/kubernetes/pull/96266), [@chenyw1990](https://github.com/chenyw1990)) [SIG API Machinery]
-- Fix pull image error from multiple ACRs using azure managed identity ([#96355](https://github.com/kubernetes/kubernetes/pull/96355), [@andyzhangx](https://github.com/andyzhangx)) [SIG Cloud Provider]
-- Fix: resize Azure disk issue when it's in attached state ([#96705](https://github.com/kubernetes/kubernetes/pull/96705), [@andyzhangx](https://github.com/andyzhangx)) [SIG Cloud Provider]
-- Fixed a bug that prevents kubectl to validate CRDs with schema using x-kubernetes-preserve-unknown-fields on object fields.
-  Fix kubectl SchemaError on CRDs with schema using x-kubernetes-preserve-unknown-fields on array types. ([#96563](https://github.com/kubernetes/kubernetes/pull/96563), [@gautierdelorme](https://github.com/gautierdelorme)) [SIG API Machinery and Testing]
-- Fixed kubelet creating extra sandbox for pods with RestartPolicyOnFailure after all containers succeeded ([#92614](https://github.com/kubernetes/kubernetes/pull/92614), [@tnqn](https://github.com/tnqn)) [SIG Node and Testing]
-- Metric names for CSI and flexvolume drivers will include the driver name as well as the CSI plugin name. ([#96474](https://github.com/kubernetes/kubernetes/pull/96474), [@mattcary](https://github.com/mattcary)) [SIG Instrumentation and Storage]
-- New Azure instance types do now have correct max data disk count information. ([#94340](https://github.com/kubernetes/kubernetes/pull/94340), [@ialidzhikov](https://github.com/ialidzhikov)) [SIG Cloud Provider and Storage]
+Upgraded from `1.18.12`, please refer to the upstream changelog for a list of changes:
+
+- Changelog since `1.18.13`: [link](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.18.md#changelog-since-v11813) 
+- Changelog since `1.18.12`: [link](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.18.md#changelog-since-v11812)
 
 
 ### containerlinux [2605.10.0](https://www.flatcar-linux.org/releases/#release-2605.10.0)
