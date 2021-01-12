@@ -29,8 +29,6 @@ spec:
     version: 1.7.1
   - name: cluster-autoscaler
     version: 1.18.3
-  - name: azure-scheduledevents-manager
-    version: 20.11.0
   components:
   - name: app-operator
     releaseOperatorDeploy: true

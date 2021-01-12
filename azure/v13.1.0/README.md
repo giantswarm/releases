@@ -19,7 +19,6 @@ Release brings two new features that can be enabled by customers:
 #### Fixed
 - Fix incorrect (too early) `Upgrading` condition transition from `True` to `False`.
 #### Added
-- Add Cluster autoscaler-related tags to Node Pools VMSS.
 - Add `terminate-unhealthy-node` feature to automatically terminate bad and unhealthy nodes in a Cluster, disabled by default.
 - Add Cluster `ControlPlaneReady` condition to comply with upstream Cluster API implementation.
 - Add AzureMachine `Ready`, `SubnetReady` and `VMSSReady` conditions to comply with upstream Cluster API implementation.
