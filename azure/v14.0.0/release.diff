@@ -30,7 +30,7 @@ spec:                                                              spec:
   components:                                                        components:
   - name: app-operator                                               - name: app-operator
     releaseOperatorDeploy: true                                        releaseOperatorDeploy: true
-    version: 2.7.0                                                     version: 2.7.0
+    version: 2.7.0                                              |      version: 3.0.0
   - name: azure-operator                                             - name: azure-operator
     releaseOperatorDeploy: true                                        releaseOperatorDeploy: true
     version: 5.0.1                                                     version: 5.0.1
@@ -40,7 +40,7 @@ spec:                                                              spec:
     version: 0.1.0                                                     version: 0.1.0
   - name: cluster-operator                                           - name: cluster-operator
     releaseOperatorDeploy: true                                        releaseOperatorDeploy: true
-    version: 0.23.19                                                   version: 0.23.19
+    version: 0.23.19                                            |      version: 0.23.20
   - name: kubernetes                                                 - name: kubernetes
     version: 1.18.12                                            |      version: 1.19.4
   - name: containerlinux                                             - name: containerlinux
@@ -51,7 +51,9 @@ spec:                                                              spec:
     version: 3.15.3                                                    version: 3.15.3
   - name: etcd                                                       - name: etcd
     version: 3.4.13                                                    version: 3.4.13
-  date: "2020-12-16T08:16:50Z"                                  |    date: "2021-01-13T12:43:05Z"
+  date: "2020-12-16T08:16:50Z"                                  |    - name: chart-operator
+                                                                >      version: 2.6.0
+                                                                >    date: "2021-01-13T12:48:34Z"
   state: active                                                      state: active
 status:                                                            status:
   ready: false                                                       ready: false

@@ -33,3 +33,30 @@ _Nothing has changed._
 
 
 
+### app-operator [3.0.0](https://github.com/giantswarm/app-operator/releases/tag/v3.0.0)
+
+#### Changed
+- Enable mutating and validating webhooks in app-admission-controller for
+tenant app CRs.
+#### Added
+- Make resync period configurable for use in integration tests.
+- Pause App CR reconciliation when it has
+  `app-operator.giantswarm.io/paused=true` annotation.
+- Print difference between the current chart and desired chart.
+
+
+
+### chart-operator [2.6.0](https://github.com/giantswarm/chart-operator/releases/tag/v2.6.0)
+
+#### Added
+- Print difference between current release and desired release.
+#### Changed
+- Updated Helm to v3.4.2.
+
+
+
+### cluster-operator [0.23.20](https://github.com/giantswarm/cluster-operator/releases/tag/v0.23.20)
+
+Not found
+
+
