@@ -60,3 +60,8 @@ tenant app CRs.
 Not found
 
 
+### azure-operator [update-k8scc-v10](https://github.com/giantswarm/aws-operator/releases/tag/vupdate-k8scc-v10)
+
+Not found
+
+

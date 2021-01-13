@@ -33,7 +33,7 @@ spec:                                                              spec:
     version: 2.7.0                                              |      version: 3.0.0
   - name: azure-operator                                             - name: azure-operator
     releaseOperatorDeploy: true                                        releaseOperatorDeploy: true
-    version: 5.0.1                                                     version: 5.0.1
+    version: 5.0.1                                              |      version: update-k8scc-v10
   - name: cert-operator                                              - name: cert-operator
     reference: 0.1.0-2                                                 reference: 0.1.0-2
     releaseOperatorDeploy: true                                        releaseOperatorDeploy: true
@@ -53,7 +53,7 @@ spec:                                                              spec:
     version: 3.4.13                                                    version: 3.4.13
   date: "2020-12-16T08:16:50Z"                                  |    - name: chart-operator
                                                                 >      version: 2.6.0
-                                                                >    date: "2021-01-13T12:48:34Z"
+                                                                >    date: "2021-01-13T14:29:00Z"
   state: active                                                      state: active
 status:                                                            status:
   ready: false                                                       ready: false
