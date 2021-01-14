@@ -3,8 +3,6 @@
 apiVersion: release.giantswarm.io/v1alpha1
 kind: Release
 metadata:
-  annotations:
-    "release.giantswarm.io/ignore": "true"
   creationTimestamp: null
   name: v13.0.2
 spec:
@@ -54,6 +52,6 @@ spec:
   - name: etcd
     version: 3.4.13
   date: "2020-12-16T08:16:50Z"
-  state: active
+  state: deprecated
 status:
   ready: false
