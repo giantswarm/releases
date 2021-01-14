@@ -24,10 +24,11 @@ Release brings two new features that can be enabled by customers:
 - Add AzureMachine `Ready`, `SubnetReady` and `VMSSReady` conditions to comply with upstream Cluster API implementation.
 - Add MachinePool `Creating` condition to comply with upstream Cluster API implementation.
 
-### kubernetes [1.18.14](https://github.com/kubernetes/kubernetes/releases/tag/v1.18.14)
+### kubernetes [1.18.15](https://github.com/kubernetes/kubernetes/releases/tag/v1.18.15)
 
 Upgraded from `1.18.12`, please refer to the upstream changelog for a list of changes:
 
+- Changelog since `1.18.14`: [link](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.18.md#changelog-since-v11814)
 - Changelog since `1.18.13`: [link](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.18.md#changelog-since-v11813) 
 - Changelog since `1.18.12`: [link](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.18.md#changelog-since-v11812)
 
