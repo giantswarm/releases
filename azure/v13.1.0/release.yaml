@@ -36,7 +36,7 @@ spec:
   - name: azure-operator
     releaseOperatorDeploy: true
     version: 5.1.1-dev
-    reference: 5.1.0-afa71c77c550366805fe9ab47baadc7b78f041d4
+    reference: 5.1.0-a3d50e0fb318d4b374974d51aaf591ce3ef1fb25
     catalog: control-plane-test-catalog
   - name: cert-operator
     reference: 0.1.0-2
