@@ -12,17 +12,21 @@ Release brings two new features that can be enabled by customers:
 ## Change details
 
 
-### azure-operator [5.1.0](https://github.com/giantswarm/aws-operator/releases/tag/v5.1.0)
+### azure-operator [5.2.0](https://github.com/giantswarm/azure-operator/releases/tag/v5.2.0)
 
-#### Changed
-- Replaced Cluster `ProviderInfrastructureReady` with upstream `InfrastructureReady` condition.
+Main changes since previous release:
+
 #### Fixed
-- Fix incorrect (too early) `Upgrading` condition transition from `True` to `False`.
+- Ensure that availability zones are kept unchanged during migration from 12.x to 13.x.
+
 #### Added
 - Add `terminate-unhealthy-node` feature to automatically terminate bad and unhealthy nodes in a Cluster, disabled by default.
+- Ensure autoscaler annotations during migration from 12.x to 13.x.
 - Add Cluster `ControlPlaneReady` condition to comply with upstream Cluster API implementation.
 - Add AzureMachine `Ready`, `SubnetReady` and `VMSSReady` conditions to comply with upstream Cluster API implementation.
 - Add MachinePool `Creating` condition to comply with upstream Cluster API implementation.
+
+For a detailed list of all changes, please refer to the [changelog](https://github.com/giantswarm/azure-operator/blob/master/CHANGELOG.md).
 
 ### kubernetes [1.18.15](https://github.com/kubernetes/kubernetes/releases/tag/v1.18.15)
 
