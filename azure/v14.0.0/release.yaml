@@ -35,7 +35,7 @@ spec:
       catalog: control-plane-test-catalog
       releaseOperatorDeploy: true
       version: 5.1.1-marcel
-      reference: 5.1.0-59f95b19ad695d54645cc3a87ac178c4a7c9c065
+      reference: 5.2.0-934df4b55e66ddc478076e16a62b807a9fcb4db2
     - name: cert-operator
       reference: 0.1.0-2
       releaseOperatorDeploy: true
