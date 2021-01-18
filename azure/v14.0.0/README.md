@@ -84,14 +84,6 @@ Not found
 
 
 
-### calico [3.16.6](https://github.com/projectcalico/calico/releases/tag/v3.16.6)
-
-#### Changes
- - All components that use Typha now use the same logic to discover Typha's address.  They lookup the endpoints of the service directly and connect to one at random.  This avoids a dependency on kube-proxy. [typha #465](https://github.com/projectcalico/typha/pull/465) (@fasaxc)
- - Rebuild with updated base images to pull in security fixes.
-
-
-
 ### etcd [3.4.14](https://github.com/etcd-io/etcd/releases/tag/v3.4.14)
 
 Not found
