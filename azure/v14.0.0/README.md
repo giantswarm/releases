@@ -60,8 +60,47 @@ tenant app CRs.
 Not found
 
 
-### azure-operator [update-k8scc-v10](https://github.com/giantswarm/aws-operator/releases/tag/vupdate-k8scc-v10)
+### azure-operator [5.2.1-dev](https://github.com/giantswarm/aws-operator/releases/tag/v5.2.1-dev)
 
 Not found
+
+
+### containerlinux [2605.11.0](https://www.flatcar-linux.org/releases/#release-2605.11.0)
+
+**Security fixes**
+
+ * Linux
+   - [CVE-2020-27815](https://www.openwall.com/lists/oss-security/2020/11/30/5)
+   - [CVE-2020-29568](https://nvd.nist.gov/vuln/detail/CVE-2020-29568)
+   - [CVE-2020-29569](https://nvd.nist.gov/vuln/detail/CVE-2020-29569)
+
+**Bug fixes**
+
+*   networkd: avoid managing MAC addresses for veth devices ([kinvolk/init#33](https://github.com/kinvolk/init/pull/33))
+
+**Updates**
+
+*   Linux ([5.4.87](https://lwn.net/Articles/841900/))
+
+
+
+### calico [3.16.6](https://github.com/projectcalico/calico/releases/tag/v3.16.6)
+
+#### Changes
+ - All components that use Typha now use the same logic to discover Typha's address.  They lookup the endpoints of the service directly and connect to one at random.  This avoids a dependency on kube-proxy. [typha #465](https://github.com/projectcalico/typha/pull/465) (@fasaxc)
+ - Rebuild with updated base images to pull in security fixes.
+
+
+
+### etcd [3.4.14](https://github.com/etcd-io/etcd/releases/tag/v3.4.14)
+
+Not found
+
+
+### cluster-autoscaler [1.19.1](https://github.com/giantswarm/cluster-autoscaler-app/releases/tag/v1.19.1)
+
+#### Changed
+- Updated cluster-autoscaler to version `1.19.1`.
+
 
 
