@@ -8,5 +8,6 @@ resources:
 - v13.0.1
 - v13.0.2
 - v13.1.0
+- v13.1.1
 transformers:
 - releaseNotesTransformer.yaml
