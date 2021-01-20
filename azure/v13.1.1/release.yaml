@@ -1,10 +1,10 @@
 # Generated with:
-# devctl release create --name 13.1.0 --provider azure --base 13.0.2 --component azure-operator@5.2.0  --component app-operator@3.0.0 --component kubernetes@1.18.15 --app cert-exporter@1.5.0 --app node-exporter@1.7.1 --app metrics-server@1.2.1 --app cluster-autoscaler@1.18.3 --component containerlinux@2605.10.0
+# devctl release create --name 13.1.1 --provider azure --base 13.1.0 --component azure-operator@5.2.1
 apiVersion: release.giantswarm.io/v1alpha1
 kind: Release
 metadata:
   creationTimestamp: null
-  name: v13.1.0
+  name: v13.1.1
 spec:
   apps:
   - name: cert-exporter
@@ -35,7 +35,7 @@ spec:
     version: 3.0.0
   - name: azure-operator
     releaseOperatorDeploy: true
-    version: 5.2.0
+    version: 5.2.1
   - name: cert-operator
     reference: 0.1.0-2
     releaseOperatorDeploy: true
@@ -53,7 +53,8 @@ spec:
     version: 3.15.3
   - name: etcd
     version: 3.4.13
-  date: "2021-01-07T11:54:22Z"
-  state: deprecated
+  date: "2021-01-20T10:29:29Z"
+  state: active
 status:
+  inUse: false
   ready: false
