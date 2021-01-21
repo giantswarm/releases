@@ -60,25 +60,6 @@ tenant app CRs.
 Not found
 
 
-### containerlinux [2605.11.0](https://www.flatcar-linux.org/releases/#release-2605.11.0)
-
-**Security fixes**
-
- * Linux
-   - [CVE-2020-27815](https://www.openwall.com/lists/oss-security/2020/11/30/5)
-   - [CVE-2020-29568](https://nvd.nist.gov/vuln/detail/CVE-2020-29568)
-   - [CVE-2020-29569](https://nvd.nist.gov/vuln/detail/CVE-2020-29569)
-
-**Bug fixes**
-
-*   networkd: avoid managing MAC addresses for veth devices ([kinvolk/init#33](https://github.com/kinvolk/init/pull/33))
-
-**Updates**
-
-*   Linux ([5.4.87](https://lwn.net/Articles/841900/))
-
-
-
 ### etcd [3.4.14](https://github.com/etcd-io/etcd/releases/tag/v3.4.14)
 
 Not found

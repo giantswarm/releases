@@ -1,5 +1,5 @@
 # Generated with:
-# devctl release create --name 14.0.0 --base v13.0.0 --releases . --provider aws --overwrite true --component kubernetes@1.19.4 --component app-operator@3.0.0 --component chart-operator@2.6.0 --component aws-operator@9.3.6-dev --component containerlinux@2605.11.0 --component etcd@3.4.14 --app cluster-autoscaler@1.19.1
+# devctl release create --name 14.0.0 --base v13.0.0 --releases . --provider aws --overwrite true --component kubernetes@1.19.4 --component app-operator@3.0.0 --component chart-operator@2.6.0 --component aws-operator@9.3.6-dev --component etcd@3.4.14 --app cluster-autoscaler@1.19.1
 apiVersion: release.giantswarm.io/v1alpha1
 kind: Release
 metadata:
@@ -59,14 +59,14 @@ spec:
       releaseOperatorDeploy: true
       version: 3.4.1
     - name: containerlinux
-      version: 2605.11.0
+      version: 2512.5.0
     - name: etcd
       version: 3.4.14
     - name: kubernetes
       version: 1.19.4
     - name: chart-operator
       version: 2.6.0
-  date: "2021-01-21T10:20:37Z"
+  date: "2021-01-21T12:35:03Z"
   state: active
 status:
   ready: false

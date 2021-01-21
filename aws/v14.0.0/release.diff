@@ -58,14 +58,14 @@ spec:                                                              spec:
     releaseOperatorDeploy: true                                        releaseOperatorDeploy: true
     version: 3.4.1                                                     version: 3.4.1
   - name: containerlinux                                             - name: containerlinux
-    version: 2512.5.0                                           |      version: 2605.11.0
+    version: 2512.5.0                                                  version: 2512.5.0
   - name: etcd                                                       - name: etcd
     version: 3.4.13                                             |      version: 3.4.14
   - name: kubernetes                                                 - name: kubernetes
     version: 1.18.12                                            |      version: 1.19.4
   date: "2020-12-09T08:23:09Z"                                  |    - name: chart-operator
                                                                 >      version: 2.6.0
-                                                                >    date: "2021-01-21T10:20:37Z"
+                                                                >    date: "2021-01-21T12:35:03Z"
   state: active                                                      state: active
 status:                                                            status:
   inUse: false                                                  <
