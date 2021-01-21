@@ -60,3 +60,15 @@ releases:
           issue: https://github.com/giantswarm/giantswarm/issues/13648
         - name: chart-operator
           version: ">= 2.3.5"
+    - name: ">= 14.0.0"
+      requests:
+      - name: cluster-autoscaler
+        version: ">= 1.19.1"
+      - name: azure-operator
+        version: "5.2.0"
+      - name: kubernetes
+        version: ">= 1.19.4"
+      - name: containerlinux
+        version: ">= 2605.10.0"
+      - name: etcd
+        version: ">= 3.4.14"
