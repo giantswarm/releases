@@ -24,15 +24,9 @@ For a comprehensive and always-updated view of all new features and changes for 
 
 [Jaeger Operator v0.2.2](https://docs.giantswarm.io/changes/playground-apps/jaeger-operator-app/v0.2.2/) upgrades to the upstream chart v1.21.2 and jaeger-all-in-one to v1.21.0.
 
-## Web UI
-
 ## kubectl gs
 
 - Added support for getting nodepools and removed mention of the unexistent ‘create cluster’ command.
-
-## Documentation
-
-
 
 ---
 Please let <!subteam^S0GSG846L|Product Owners> know if you have any feedback or questions by replying to this announcement in a thread.
