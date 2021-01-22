@@ -14,7 +14,9 @@ For a comprehensive and always-updated view of all new features and changes for 
 
 ## Web UI
 
+## kubectl gs
 
+- Added support for getting nodepools and removed mention of the unexistent ‘create cluster’ command.
 
 ## Documentation
 
