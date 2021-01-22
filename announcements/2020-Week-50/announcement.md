@@ -1,4 +1,4 @@
-# :zap: This Week in Provider-Independent Announcements (December 11, 2020):zap:
+# :zap: This Week in Provider-Independent Announcements (January 22, 2021):zap:
 
 Please note that we are aligning some key terms in our product communication with the Kubernetes project's terminology:
 
