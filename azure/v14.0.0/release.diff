@@ -1,10 +1,10 @@
 # Generated with:                                                  # Generated with:
-# devctl release create --name 13.1.0 --provider azure --base 1 |  # devctl release create --name 14.0.0 --base v13.1.0 --releases
+# devctl release create --name 13.1.1 --provider azure --base 1 |  # devctl release create --name 14.0.0 --base v13.1.1 --releases
 apiVersion: release.giantswarm.io/v1alpha1                         apiVersion: release.giantswarm.io/v1alpha1
 kind: Release                                                      kind: Release
 metadata:                                                          metadata:
   creationTimestamp: null                                            creationTimestamp: null
-  name: v13.1.0                                                 |    name: v14.0.0
+  name: v13.1.1                                                 |    name: v14.0.0
 spec:                                                              spec:
   apps:                                                              apps:
   - name: cert-exporter                                              - name: cert-exporter
@@ -35,7 +35,7 @@ spec:                                                              spec:
     version: 3.0.0                                                     version: 3.0.0
   - name: azure-operator                                             - name: azure-operator
     releaseOperatorDeploy: true                                        releaseOperatorDeploy: true
-    version: 5.2.0                                              |      version: 5.2.1-dev
+    version: 5.2.1                                              |      version: 5.2.1-dev
   - name: cert-operator                                              - name: cert-operator
     reference: 0.1.0-2                                                 reference: 0.1.0-2
     releaseOperatorDeploy: true                                        releaseOperatorDeploy: true
@@ -46,16 +46,15 @@ spec:                                                              spec:
   - name: kubernetes                                                 - name: kubernetes
     version: 1.18.15                                            |      version: 1.19.4
   - name: containerlinux                                             - name: containerlinux
-    version: 2605.10.0                                          |      version: 2605.11.0
+    version: 2605.10.0                                                 version: 2605.10.0
   - name: coredns                                                    - name: coredns
     version: 1.6.5                                                     version: 1.6.5
   - name: calico                                                     - name: calico
     version: 3.15.3                                                    version: 3.15.3
   - name: etcd                                                       - name: etcd
     version: 3.4.13                                             |      version: 3.4.14
-  date: "2021-01-07T11:54:22Z"                                  |    - name: chart-operator
-                                                                >      version: 2.6.0
-                                                                >    date: "2021-01-18T15:27:18Z"
+  date: "2021-01-20T10:29:29Z"                                  |    date: "2021-01-22T09:27:36Z"
   state: active                                                      state: active
 status:                                                            status:
+  inUse: false                                                  <
   ready: false                                                       ready: false
