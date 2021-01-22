@@ -10,7 +10,17 @@ For a comprehensive and always-updated view of all new features and changes for 
 
 ## Managed Apps
 
-[Prometheus Operator v0.5.0](https://docs.giantswarm.io/changes/managed-apps/prometheus-operator-app/v0.5.0/) upgrades to the chart with Prometheus v2.22.1.
+[Prometheus Operator v0.5.2](https://docs.giantswarm.io/changes/managed-apps/prometheus-operator-app/v0.5.2/) introduces a new AlertmanagerConfig CRD and upgrades to Prometheus v2.22.1.
+
+[EFK Stack v0.4.1](https://docs.giantswarm.io/changes/managed-apps/efk-stack-app/v0.4.1/) fixes an issue in v0.4.1, which upgrades to Elasticsearch and Kibana v7.9.1.
+
+[Cert Manager v2.4.1](https://docs.giantswarm.io/changes/managed-apps/cert-manager-app/v2.4.1/) fixes an issue causing Cert Manager to fail (makes backoffLimit for clusterissuer job configurable).
+
+[Aqua v5.3.0](https://docs.giantswarm.io/changes/managed-apps/aqua-app/v5.3.0/) upgrades all charts to upstream 5.3 and introduces schema for validation of user values.
+
+## Playground Apps
+
+[Jaeger Operator v0.2.2](https://docs.giantswarm.io/changes/playground-apps/jaeger-operator-app/v0.2.2/) upgrades to the upstream chart v1.21.2 and jaeger-all-in-one to v1.21.0.
 
 ## Web UI
 
