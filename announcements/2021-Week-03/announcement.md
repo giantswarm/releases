@@ -10,7 +10,7 @@ For a comprehensive and always-updated view of all new features and changes for 
 
 ## Managed Apps
 
-[Prometheus Operator v0.5.0](https://docs.giantswarm.io/changes/managed-apps/prometheus-operator-app/v0.5.0/) upgrades to the chart with Prometheus v2.22.1.
+[Prometheus Operator v0.5.2](https://docs.giantswarm.io/changes/managed-apps/prometheus-operator-app/v0.5.2/) fixes CRD installation on initial chart install.
 
 ## Web UI
 
