@@ -1,0 +1,1 @@
+**Workload Cluster Release v13.1.1 for Azure** is now available. It contains a fix for CIDR selection at workload cluster creation. Further details can be found in the [release notes](https://docs.giantswarm.io/changes/workload-cluster-releases-azure/releases/azure-v13.1.1/).
