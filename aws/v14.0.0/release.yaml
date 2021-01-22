@@ -48,7 +48,7 @@ spec:
       catalog: control-plane-test-catalog
       releaseOperatorDeploy: true
       version: 9.3.6-dev
-      reference: 9.3.5-d81624227750228f5154fe1e9823bc053946eef8
+      reference: 9.3.5-dff5c71a353369449be146350ec90e8abd6bd115
     - name: calico
       version: 3.15.3
     - name: cert-operator
@@ -59,7 +59,7 @@ spec:
       releaseOperatorDeploy: true
       version: 3.4.1
     - name: containerlinux
-      version: 2512.5.0
+      version: 2605.11.0
     - name: etcd
       version: 3.4.14
     - name: kubernetes
