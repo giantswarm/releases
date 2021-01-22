@@ -1,5 +1,10 @@
 releases:
-    - name: "> 13.0.0, < 14.0.0"
+  - name: "> 13.1.0, < 14.0.0"
+      requests:
+        - name: cert-manager
+          version: ">= 2.4.1"
+          issue: https://github.com/giantswarm/giantswarm/issues/14706
+  - name: "> 13.0.0, < 14.0.0"
       requests:
         - name: app-operator
           version: ">= 3.0.0"
