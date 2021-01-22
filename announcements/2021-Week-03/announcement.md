@@ -10,6 +10,8 @@ For a comprehensive and always-updated view of all new features and changes for 
 
 ## Managed Apps
 
+[Loki v0.1.0-alpha](https://github.com/giantswarm/loki-app/blob/master/CHANGELOG.md#010-alpha---2021-01-21), our preferred app for log management is now available. For more info, see [blog post](https://www.giantswarm.io/blog/how-the-cloud-native-stack-helps-writing-minimal-microservices/).
+
 [Prometheus Operator v0.5.2](https://docs.giantswarm.io/changes/managed-apps/prometheus-operator-app/v0.5.2/) introduces a new AlertmanagerConfig CRD and upgrades to Prometheus v2.22.1.
 
 [EFK Stack v0.4.1](https://docs.giantswarm.io/changes/managed-apps/efk-stack-app/v0.4.1/) fixes an issue in v0.4.1, which upgrades to Elasticsearch and Kibana v7.9.1.
