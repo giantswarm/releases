@@ -14,7 +14,7 @@ For a comprehensive and always-updated view of all new features and changes for 
 
 [Prometheus Operator v0.5.2](https://docs.giantswarm.io/changes/managed-apps/prometheus-operator-app/v0.5.2/) introduces a new AlertmanagerConfig CRD and upgrades to Prometheus v2.22.1.
 
-[EFK Stack v0.4.1](https://docs.giantswarm.io/changes/managed-apps/efk-stack-app/v0.4.1/) fixes an issue in v0.4.1, which upgrades to Elasticsearch and Kibana v7.9.1.
+[EFK Stack v0.4.1](https://docs.giantswarm.io/changes/managed-apps/efk-stack-app/v0.4.1/) came quickly after v0.4.0 to fix a small oversight. With v0.4.x Elasticsearch and Kibana are running in version v7.10.0.
 
 [Cert Manager v2.4.1](https://docs.giantswarm.io/changes/managed-apps/cert-manager-app/v2.4.1/) fixes an issue causing Cert Manager to fail (makes backoffLimit for clusterissuer job configurable).
 
