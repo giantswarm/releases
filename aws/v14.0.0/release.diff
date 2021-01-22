@@ -15,7 +15,7 @@ spec:                                                              spec:
     name: cert-manager                                                 name: cert-manager
     version: 2.3.3                                                     version: 2.3.3
   - name: chart-operator                                             - name: chart-operator
-    version: 2.5.1                                                     version: 2.5.1
+    version: 2.5.1                                              |      version: 2.6.0
   - componentVersion: 1.18.1                                    |    - name: cluster-autoscaler
     name: cluster-autoscaler                                    |      version: 1.19.1
     version: 1.18.3                                             <
@@ -47,7 +47,7 @@ spec:                                                              spec:
     version: 1.7.6                                                     version: 1.7.6
   - name: aws-operator                                               - name: aws-operator
     releaseOperatorDeploy: true                                        releaseOperatorDeploy: true
-    version: 9.3.5                                              |      version: 9.3.6-dev
+    version: 9.3.5                                              |      version: 10.0.0
   - name: calico                                                     - name: calico
     version: 3.15.3                                                    version: 3.15.3
   - name: cert-operator                                              - name: cert-operator
@@ -63,10 +63,8 @@ spec:                                                              spec:
     version: 3.4.13                                             |      version: 3.4.14
   - name: kubernetes                                                 - name: kubernetes
     version: 1.18.12                                            |      version: 1.19.4
-  date: "2020-12-09T08:23:09Z"                                  |    - name: chart-operator
-                                                                >      version: 2.6.0
-                                                                >    date: "2021-01-21T12:35:03Z"
+  date: "2020-12-09T08:23:09Z"                                  |    date: "2021-01-22T13:47:12Z"
   state: active                                                      state: active
 status:                                                            status:
-  inUse: false                                                  <
+  inUse: false                                                       inUse: false
   ready: false                                                       ready: false

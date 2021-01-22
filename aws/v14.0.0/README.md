@@ -46,6 +46,26 @@ tenant app CRs.
 
 
 
+### aws-operator [10.0.0](https://github.com/giantswarm/aws-operator/releases/tag/v10.0.0)
+
+#### Added
+- Add `cleanupiamroles` resource for detaching third party policies from our IAM
+  roles.
+- Update `k8scloudconfig` version to `v10.0.0` to include change for Kubernetes 1.19.
+- Allow configuration of `MINIMUM_IP_TARGET` and `WARM_IP_TARGET` for AWS CNI via annotations on `AWSCluster`
+#### Changed
+- Include Account ID in the s3bucket for access logs. It is a breaking change, that will put access logs to a new s3 bucket.
+- Change AWS CNI and AWS CNI k8s plugin log verbosity to `INFO`.
+- Change AWS CNI log file to `stdout`.
+- Add retry logic for decrypt units to avoid flapping.
+
+
+
+### etcd [3.4.14](https://github.com/etcd-io/etcd/releases/tag/v3.4.14)
+
+Not found
+
+
 ### chart-operator [2.6.0](https://github.com/giantswarm/chart-operator/releases/tag/v2.6.0)
 
 #### Added
@@ -53,16 +73,6 @@ tenant app CRs.
 #### Changed
 - Updated Helm to v3.4.2.
 
-
-
-### aws-operator [9.3.6-dev](https://github.com/giantswarm/aws-operator/releases/tag/v9.3.6-dev)
-
-Not found
-
-
-### etcd [3.4.14](https://github.com/etcd-io/etcd/releases/tag/v3.4.14)
-
-Not found
 
 
 ### cluster-autoscaler [1.19.1](https://github.com/giantswarm/cluster-autoscaler-app/releases/tag/v1.19.1)
