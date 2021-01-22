@@ -7,54 +7,56 @@ metadata:
   name: v14.0.0
 spec:
   apps:
-  - name: cert-exporter
-    version: 1.5.0
-  - name: chart-operator
-    version: 2.6.0
-  - componentVersion: 1.6.5
-    name: coredns
-    version: 1.2.0
-  - componentVersion: 0.7.4
-    name: external-dns
-    version: 1.5.0
-  - componentVersion: 1.9.7
-    name: kube-state-metrics
-    version: 1.3.0
-  - name: metrics-server
-    version: 1.2.1
-  - name: net-exporter
-    version: 1.9.2
-  - componentVersion: 1.0.1
-    name: node-exporter
-    version: 1.7.1
-  - name: cluster-autoscaler
-    version: 1.19.1
+    - name: cert-exporter
+      version: 1.5.0
+    - name: chart-operator
+      version: 2.6.0
+    - componentVersion: 1.6.5
+      name: coredns
+      version: 1.2.0
+    - componentVersion: 0.7.4
+      name: external-dns
+      version: 1.5.0
+    - componentVersion: 1.9.7
+      name: kube-state-metrics
+      version: 1.3.0
+    - name: metrics-server
+      version: 1.2.1
+    - name: net-exporter
+      version: 1.9.2
+    - componentVersion: 1.0.1
+      name: node-exporter
+      version: 1.7.1
+    - name: cluster-autoscaler
+      version: 1.19.1
   components:
-  - name: app-operator
-    releaseOperatorDeploy: true
-    version: 3.0.0
-  - name: azure-operator
-    releaseOperatorDeploy: true
-    version: 5.2.1-dev
-  - name: cert-operator
-    reference: 0.1.0-2
-    releaseOperatorDeploy: true
-    version: 0.1.0
-  - name: cluster-operator
-    releaseOperatorDeploy: true
-    version: 0.23.20
-  - name: kubernetes
-    version: 1.19.4
-  - name: containerlinux
-    version: 2605.11.0
-  - name: coredns
-    version: 1.6.5
-  - name: calico
-    version: 3.15.3
-  - name: etcd
-    version: 3.4.14
-  - name: chart-operator
-    version: 2.6.0
+    - name: app-operator
+      releaseOperatorDeploy: true
+      version: 3.0.0
+    - name: azure-operator
+      catalog: control-plane-test-catalog
+      releaseOperatorDeploy: true
+      version: 5.2.1-dev
+      reference: d90fc7080bf1422d31f630c796f85e4ffdea2990
+    - name: cert-operator
+      reference: 0.1.0-2
+      releaseOperatorDeploy: true
+      version: 0.1.0
+    - name: cluster-operator
+      releaseOperatorDeploy: true
+      version: 0.23.20
+    - name: kubernetes
+      version: 1.19.4
+    - name: containerlinux
+      version: 2605.10.0
+    - name: coredns
+      version: 1.6.5
+    - name: calico
+      version: 3.15.3
+    - name: etcd
+      version: 3.4.14
+    - name: chart-operator
+      version: 2.6.0
   date: "2021-01-18T15:27:18Z"
   state: active
 status:
