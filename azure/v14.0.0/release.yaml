@@ -1,5 +1,5 @@
 # Generated with:
-# devctl release create --name 14.0.0 --base v13.1.1 --releases . --provider azure --overwrite true --component kubernetes@1.19.4 --component app-operator@3.0.0 --component cluster-operator@0.23.20 --component azure-operator@5.2.1-dev --component containerlinux@2605.10.0 --component etcd@3.4.14 --app cluster-autoscaler@1.19.1
+# devctl release create --name 14.0.0 --base v13.1.1 --releases . --provider azure --overwrite true --component kubernetes@1.19.4 --component app-operator@3.0.0 --component cluster-operator@0.23.20 --component azure-operator@5.2.1-dev --component containerlinux@2605.10.0 --component etcd@3.4.14 --app cluster-autoscaler@1.19.1  --app azure-scheduled-events@0.1.0
 apiVersion: release.giantswarm.io/v1alpha1
 kind: Release
 metadata:
@@ -29,6 +29,8 @@ spec:
       version: 1.7.1
     - name: cluster-autoscaler
       version: 1.19.1
+    - name: azure-scheduled-events
+      version: 0.1.0
   components:
     - name: app-operator
       releaseOperatorDeploy: true
