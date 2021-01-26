@@ -37,7 +37,7 @@ spec:
     releaseOperatorDeploy: true
     catalog: control-plane-test-catalog
     version: 5.2.2-pkgedrefresh
-    reference: d2f7ea339e52ea7c308ef69b1b911e52d8788fe5
+    reference: 5.2.0-d2f7ea339e52ea7c308ef69b1b911e52d8788fe5
   - name: cert-operator
     reference: 0.1.0-2
     releaseOperatorDeploy: true
