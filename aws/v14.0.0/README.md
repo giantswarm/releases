@@ -45,7 +45,6 @@ tenant app CRs.
 - Print difference between the current chart and desired chart.
 
 
-
 ### aws-operator [10.0.0](https://github.com/giantswarm/aws-operator/releases/tag/v10.0.0)
 
 #### Added
