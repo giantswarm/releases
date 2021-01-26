@@ -7,7 +7,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/Masterminds/semver/v3"
+	"github.com/blang/semver"
 	"github.com/giantswarm/apiextensions/pkg/apis/release/v1alpha1"
 	"github.com/giantswarm/microerror"
 	"github.com/giantswarm/versionbundle"
@@ -196,17 +196,19 @@ func releasesToIndex(releases []v1alpha1.Release) []versionbundle.IndexRelease {
 // versionMatches compares the given version with the given semver
 // constraint pattern and returns whether it matches.
 func versionMatches(version string, pattern string) (bool, error) {
-	c, err := semver.NewConstraint(pattern)
+	validator, err := semver.ParseRange(pattern)
 	if err != nil {
 		return false, fmt.Errorf("release names for requests must be valid semver constraints: %s", err)
 	}
 
-	v, err := semver.NewVersion(version)
+	version = strings.TrimPrefix(version, "v")
+
+	v, err := semver.Parse(version)
 	if err != nil {
 		return false, fmt.Errorf("release names must be valid semver: %s: %s", err, version)
 	}
 
-	return c.Check(v), nil
+	return validator(v), nil
 }
 
 func Test_Releases(t *testing.T) {
