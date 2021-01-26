@@ -1,16 +1,16 @@
 # Generated with:
-# devctl release create --name 13.0.2 --provider azure --base 13.0.1 --component azure-operator@5.0.1 --component containerlinux@2605.9.0 --app cert-exporter@1.4.0 --app chart-operator@2.5.2 --app metrics-server@1.1.1
+# devctl release create --name 13.1.0 --provider azure --base 13.0.2 --component azure-operator@5.2.0  --component app-operator@3.0.0 --component kubernetes@1.18.15 --app cert-exporter@1.5.0 --app node-exporter@1.7.1 --app metrics-server@1.2.1 --app cluster-autoscaler@1.18.3 --component containerlinux@2605.10.0
 apiVersion: release.giantswarm.io/v1alpha1
 kind: Release
 metadata:
   creationTimestamp: null
-  name: v13.0.2
+  name: v13.1.0
 spec:
   apps:
   - name: cert-exporter
-    version: 1.4.0
+    version: 1.5.0
   - name: chart-operator
-    version: 2.5.2
+    version: 2.6.0
   - componentVersion: 1.6.5
     name: coredns
     version: 1.2.0
@@ -21,37 +21,39 @@ spec:
     name: kube-state-metrics
     version: 1.3.0
   - name: metrics-server
-    version: 1.1.1
+    version: 1.2.1
   - name: net-exporter
     version: 1.9.2
   - componentVersion: 1.0.1
     name: node-exporter
-    version: 1.7.0
+    version: 1.7.1
+  - name: cluster-autoscaler
+    version: 1.18.3
   components:
   - name: app-operator
     releaseOperatorDeploy: true
-    version: 2.7.0
+    version: 3.0.0
   - name: azure-operator
     releaseOperatorDeploy: true
-    version: 5.0.1
+    version: 5.2.0
   - name: cert-operator
     reference: 0.1.0-2
     releaseOperatorDeploy: true
     version: 0.1.0
   - name: cluster-operator
     releaseOperatorDeploy: true
-    version: 0.23.19
+    version: 0.23.20
   - name: kubernetes
-    version: 1.18.12
+    version: 1.18.15
   - name: containerlinux
-    version: 2605.9.0
+    version: 2605.10.0
   - name: coredns
     version: 1.6.5
   - name: calico
     version: 3.15.3
   - name: etcd
     version: 3.4.13
-  date: "2020-12-16T08:16:50Z"
+  date: "2021-01-07T11:54:22Z"
   state: deprecated
 status:
   ready: false
