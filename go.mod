@@ -3,7 +3,7 @@ module github.com/giantswarm/releases
 go 1.13
 
 require (
-	github.com/blang/semver v3.5.0+incompatible
+	github.com/blang/semver/v4 v4.0.0
 	github.com/giantswarm/apiextensions v0.4.14
 	github.com/giantswarm/microerror v0.2.0
 	github.com/giantswarm/versionbundle v0.2.0
