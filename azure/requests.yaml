@@ -16,7 +16,7 @@ releases:
         - name: cluster-operator
           version: ">= 0.23.20"
           issue: https://github.com/giantswarm/roadmap/issues/187
-    - name: "> 11.4.0, < 12.0.0"
+    - name: "> 11.4.0 < 12.0.0"
       requests:
         - name: calico
           version: ">= 3.10.4"
@@ -24,12 +24,12 @@ releases:
         - name: containerlinux
           version: ">= 2512.4.0"
           issue: https://github.com/giantswarm/giantswarm/issues/13150
-    - name: "12.*"
+    - name: ">= 12.0.0 < 13.0.0"
       requests:
         - name: calico
           version: ">= 3.15.1"
           issue: https://github.com/giantswarm/giantswarm/issues/11307
-    - name: "> 12.1.2, < 13.0.0"
+    - name: "> 12.1.2 < 13.0.0"
       requests:
         - name: containerlinux
           version: ">= 2512.4.0"
@@ -40,7 +40,7 @@ releases:
           except:
             - releaseVersion: 12.1.1
               reason: only app changes are required
-    - name: "> 12.0.2, < 12.1.0"
+    - name: "> 12.0.2 < 12.1.0"
       requests:
         - name: containerlinux
           version: ">= 2512.4.0"
