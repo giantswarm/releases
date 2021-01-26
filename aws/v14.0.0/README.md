@@ -33,7 +33,7 @@ _Nothing has changed._
 
 
 
-### app-operator [3.0.0](https://github.com/giantswarm/app-operator/releases/tag/v3.0.0)
+### app-operator [3.1.0](https://github.com/giantswarm/app-operator/releases/tag/v3.1.0)
 
 #### Changed
 - Enable mutating and validating webhooks in app-admission-controller for
@@ -66,6 +66,31 @@ tenant app CRs.
 Not found
 
 
+### aws-cni [1.7.8](https://github.com/aws/amazon-vpc-cni-k8s/releases/tag/v1.7.8)
+
+* Improvement - [Replace DescribeNetworkInterfaces with paginated version](https://github.com/aws/amazon-vpc-cni-k8s/pull/1333) (#1333, @haouc)
+
+
+
+### containerlinux [2605.11.0](https://www.flatcar-linux.org/releases/#release-2605.11.0)
+
+**Security fixes**
+
+ * Linux
+   - [CVE-2020-27815](https://www.openwall.com/lists/oss-security/2020/11/30/5)
+   - [CVE-2020-29568](https://nvd.nist.gov/vuln/detail/CVE-2020-29568)
+   - [CVE-2020-29569](https://nvd.nist.gov/vuln/detail/CVE-2020-29569)
+
+**Bug fixes**
+
+*   networkd: avoid managing MAC addresses for veth devices ([kinvolk/init#33](https://github.com/kinvolk/init/pull/33))
+
+**Updates**
+
+*   Linux ([5.4.87](https://lwn.net/Articles/841900/))
+
+
+
 ### chart-operator [2.6.0](https://github.com/giantswarm/chart-operator/releases/tag/v2.6.0)
 
 #### Added
@@ -79,6 +104,47 @@ Not found
 
 #### Changed
 - Updated cluster-autoscaler to version `1.19.1`.
+
+
+
+### cert-manager [2.4.1](https://github.com/giantswarm/cert-manager-app/releases/tag/v2.4.1)
+
+#### Changed
+- Made backoffLimit for clusterissuer job configurable. ([#125](https://github.com/giantswarm/cert-manager-app/pull/125))
+- Updated clusterissuer subchart API groups to `cert-manager.io/v1`. ([#124](https://github.com/giantswarm/cert-manager-app/pull/124))
+
+
+
+### cert-exporter [1.5.0](https://github.com/giantswarm/cert-exporter/releases/tag/v1.5.0)
+
+#### Changed
+- Check ca.crt expiries in TLS secrets. ([#109](https://github.com/giantswarm/cert-exporter/pull/109))
+
+
+
+### chart-operator [2.7.1](https://github.com/giantswarm/chart-operator/releases/tag/v2.7.1)
+
+#### Fixed
+- Only create VPA if autoscaling API group is present.
+
+
+
+### kiam [1.7.0](https://github.com/giantswarm/kiam-app/releases/tag/v1.7.0)
+
+- Add taint tolerations for kiam agent and kiam server.
+
+
+
+### metrics-server [1.2.1](https://github.com/giantswarm/metrics-server-app/releases/tag/v1.2.1)
+
+- Push app to control plane catalogs
+
+
+
+### node-exporter [1.7.1](https://github.com/giantswarm/node-exporter-app/releases/tag/v1.7.1)
+
+#### Changed
+- Use the domain registry from installation values if it is present.
 
 
 
