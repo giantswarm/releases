@@ -41,8 +41,9 @@ tenant app CRs.
 #### Added
 - Make resync period configurable for use in integration tests.
 - Pause App CR reconciliation when it has
-  `app-operator.giantswarm.io/paused=true` annotation.
+-  `app-operator.giantswarm.io/paused=true` annotation.
 - Print difference between the current chart and desired chart.
+
 
 
 ### aws-operator [10.0.0](https://github.com/giantswarm/aws-operator/releases/tag/v10.0.0)
@@ -144,6 +145,13 @@ Not found
 
 #### Changed
 - Use the domain registry from installation values if it is present.
+
+
+
+### external-dns [1.6.0](https://github.com/giantswarm/external-dns-app/releases/tag/v1.6.0)
+
+#### Changed
+- Upgrade upstream external-dns from v0.7.4 to [v0.7.6](https://github.com/kubernetes-sigs/external-dns/releases/tag/v0.7.6).
 
 
 
