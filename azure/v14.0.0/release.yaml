@@ -51,8 +51,6 @@ spec:
       version: 1.19.7
     - name: containerlinux
       version: 2605.11.0
-    - name: coredns
-      version: 1.6.5
     - name: calico
       version: 3.15.3
     - name: etcd
