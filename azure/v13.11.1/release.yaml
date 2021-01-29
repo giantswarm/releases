@@ -37,7 +37,7 @@ spec:
     releaseOperatorDeploy: true
     catalog: control-plane-test-catalog
     version: 5.2.2-storageclass
-    reference: 5.2.0-2830084429b5ecd6aef2f43e7173004deed9fbff
+    reference: 5.2.0-ab4e49ef6219be88bb31756e43a14cf8167e3dba
   - name: cert-operator
     reference: 0.1.0-2
     releaseOperatorDeploy: true
