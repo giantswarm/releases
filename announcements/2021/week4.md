@@ -6,3 +6,7 @@
 
 [Prometheus Operator v0.6.0](https://github.com/giantswarm/prometheus-operator-app/blob/master/CHANGELOG.md#060---2021-01-25) fixes an out-of-memory that could occur on startup.
 
+## Documentation
+
+We added an article about more flexible IP address management using [network pools](https://docs.giantswarm.io/basics/networkpools/), which was introduced on AWS with release v12.7.0.
+
