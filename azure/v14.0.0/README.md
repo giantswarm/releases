@@ -9,7 +9,7 @@ region as well.
 Starting from this release, Azure workload clusters include by default a new application named `azure-scheduled-events`
 that leverages the [Azure scheduled events](https://docs.microsoft.com/en-us/azure/virtual-machines/linux/scheduled-events)
 feature to automatically drain a `Kubernetes` node when the underlying virtual instance is about to be terminated.
-This makes the cluster behaviour better when the `cluster autoscaler` scales down a node pool.
+This ensures the workload running on the node is handled gracefully when the `cluster autoscaler` scales down a node pool.
 
 Please note that with version `1.19` there a few breaking changes in the `Kubernetes` APIs.
 Please refer to the [upstream documentation](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.19.md#urgent-upgrade-notes)
