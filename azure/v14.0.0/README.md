@@ -2,7 +2,7 @@
 
 This is the first workload cluster release to support Kubernetes 1.19 on Azure.
 
-Thanks to the [added support by `Azure`](https://azure.microsoft.com/en-us/updates/germany-west-central-availability-zones-now-generally-available/),
+With recent [added support by `Azure`](https://azure.microsoft.com/en-us/updates/germany-west-central-availability-zones-now-generally-available/),
 with this release `Availability Zones` are supported for all workload clusters running in the `Germany West Central`
 region as well.
 
