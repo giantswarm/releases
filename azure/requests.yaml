@@ -70,7 +70,7 @@ releases:
       - name: cluster-autoscaler
         version: ">= 1.19.1"
       - name: azure-operator
-        version: "5.2.0"
+        version: ">=5.2.0"
       - name: kubernetes
         version: ">= 1.19.4"
       - name: containerlinux
