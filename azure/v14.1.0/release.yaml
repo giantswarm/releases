@@ -39,7 +39,7 @@ spec:
     name: azure-operator
     releaseOperatorDeploy: true
     version: 5.3.1-dev
-    reference: 5.3.0-f01e4f4273344be76ddb5d995273254fe459b537
+    reference: 5.3.0-4082d38688a2d55be91e31940f539569a393807f
   - name: cert-operator
     reference: 0.1.0-2
     releaseOperatorDeploy: true
