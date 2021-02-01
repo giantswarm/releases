@@ -6,7 +6,7 @@ Thanks to the [added support by `Azure`](https://azure.microsoft.com/en-us/updat
 with this release `Availability Zones` are supported for all workload clusters running in the `Germany West Central`
 region as well.
 
-Starting from this release, Azure `Workload Clusters` include by default a new application named `azure-scheduled-events`
+Starting from this release, Azure workload clusters include by default a new application named `azure-scheduled-events`
 that leverages the [Azure scheduled events](https://docs.microsoft.com/en-us/azure/virtual-machines/linux/scheduled-events)
 feature to automatically drain a `Kubernetes` node when the underlying virtual instance is about to be terminated.
 This makes the cluster behaviour better when the `cluster autoscaler` scales down a node pool.
