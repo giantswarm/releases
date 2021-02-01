@@ -1,6 +1,6 @@
 # :zap: Giant Swarm Release v14.0.0 for Azure :zap:
 
-This is the first tenant cluster release to support Kubernetes 1.19 on Azure.
+This is the first workload cluster release to support Kubernetes 1.19 on Azure.
 
 Thanks for the [added support by `Azure`](https://azure.microsoft.com/en-us/updates/germany-west-central-availability-zones-now-generally-available/),
 with this release `Availability Zones` are supported for all `Workload Clusters` running in the `Germany West Central`
