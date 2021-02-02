@@ -6,10 +6,11 @@ This release upgrades Flatcar to latest stable release and also fixes the issue 
 ## Change details
 
 
-### aws-operator [9.3.6](https://github.com/giantswarm/aws-operator/releases/tag/v9.3.6)
+### aws-operator [9.3.7](https://github.com/giantswarm/aws-operator/releases/tag/v9.3.7)
 
-## [9.3.6] - 2021-02-02
+## [9.3.7] - 2021-02-02
 
 ### Fixed
 
 - Added CNI CIDR to internal ELB Security Group.
+- Added new Flatcar AMI identifiers.
