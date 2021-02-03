@@ -2,6 +2,8 @@
 
 << Add description here >>
 
+Warning:  with new version of `external-dns` you need to upgrade nginx app to `v1.14.0+`
+
 ## Change details
 
 
@@ -43,14 +45,13 @@ tenant app CRs.
 - Pause App CR reconciliation when it has
 -  `app-operator.giantswarm.io/paused=true` annotation.
 - Print difference between the current chart and desired chart.
- 
+
 
 ### aws-operator [10.1.0](https://github.com/giantswarm/aws-operator/releases/tag/v10.1.0)
 
 #### Added
 - Add support for tagging AWS resources, managed by the operator, based on the custom resource labels.
-- Add `cleanupiamroles` resource for detaching third party policies from our IAM
-  roles.
+- Add `cleanupiamroles` resource for detaching third party policies from our IAM roles.
 - Update `k8scloudconfig` version to `v10.0.0` to include change for Kubernetes 1.19.
 - Allow configuration of `MINIMUM_IP_TARGET` and `WARM_IP_TARGET` for AWS CNI via annotations on `AWSCluster`
 
@@ -67,8 +68,7 @@ tenant app CRs.
 
 ### etcd [3.4.14](https://github.com/etcd-io/etcd/releases/tag/v3.4.14)
 
-Not found
-
+- Fix server panic when force-new-cluster flag is enabled in a cluster which had learner node.
 
 ### aws-cni [1.7.8](https://github.com/aws/amazon-vpc-cni-k8s/releases/tag/v1.7.8)
 
@@ -79,7 +79,7 @@ Not found
 ### containerlinux [2605.12.0](https://www.flatcar-linux.org/releases/#release-2605.12.0)
 
 **Security fixes**
- * Linux
+* Linux
    - [CVE-2020-27815](https://www.openwall.com/lists/oss-security/2020/11/30/5)
    - [CVE-2020-29568](https://nvd.nist.gov/vuln/detail/CVE-2020-29568)
    - [CVE-2020-29569](https://nvd.nist.gov/vuln/detail/CVE-2020-29569)
@@ -166,10 +166,26 @@ Not found
 
 
 
-### external-dns [1.6.0](https://github.com/giantswarm/external-dns-app/releases/tag/v1.6.0)
+### external-dns [2.0.0](https://github.com/giantswarm/external-dns-app/releases/tag/v2.0.0)
 
 #### Changed
-- Upgrade upstream external-dns from v0.7.4 to [v0.7.6](https://github.com/kubernetes-sigs/external-dns/releases/tag/v0.7.6).
+- Reworked the App to prepare it for customer use. ([#49](https://github.com/giantswarm/external-dns-app/pull/49))
+  - General:
+    - Pushes the app to the giantswarm app catalog.
+    - Uses Helm release namespace.
+    - Uses the release name for resource naming to avoid conflicts.
+    - Added a values schema to catch incorrect values.
+    - Generally makes the chart easier to use (fully documented values file).
+  - external-dns options:
+    - Allows customisation of the txt registry prefix.
+    - Allows configuration of synchronisation interval.
+    - Filter resources to reconcile via annotations.
+  - AWS-specifc:
+    - Allows the user to provide an IAM role to use.
+    - Allows the user to provide the list of domains for external-dns to manage.
+    - Allows configuration of batch size.
+    - Allows configuration of CNAME instead of ALIAS records.
+    - Allows configuration of the AWS zone type to update.
 
 
 
