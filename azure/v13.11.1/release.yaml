@@ -37,14 +37,14 @@ spec:
     releaseOperatorDeploy: true
     catalog: control-plane-test-catalog
     version: 5.3.1-dev
-    reference: 5.3.0-d559fbfcdb85a8a370a7c3494a38ad016ba88ee9
+    reference: 5.3.0-bbfd6625130b32a4b0729c3ef14fc4bc3106f54f
   - name: cert-operator
     reference: 0.1.0-2
     releaseOperatorDeploy: true
     version: 0.1.0
   - name: cluster-operator
     releaseOperatorDeploy: true
-    version: 0.23.20
+    version: 0.23.22
   - name: kubernetes
     version: 1.19.7
   - name: containerlinux
