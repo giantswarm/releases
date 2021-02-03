@@ -4,7 +4,7 @@ For a comprehensive and always-updated view of all new features and changes for 
 
 ## Managed apps
 
-[External DNS v2.0.0](waiting for link) allows customers to install and use External DNS for their own purpose, separate from the preinstalled app in AWS and Azure clusters. :warning: [Requires NGINX IC v1.14.0+](https://github.com/giantswarm/external-dns-app#limitations).
+[External DNS v2.0.1](waiting for link) allows customers to install and use External DNS for their own purpose, separate from the preinstalled app in AWS and Azure clusters. :warning: [Requires NGINX IC v1.14.0+](https://github.com/giantswarm/external-dns-app#limitations).
 
 [Cert Manager v2.4.2](waiting for link) enables automated deletion of secrets when the parent Certificate is deleted, reducing unnecessary alerts.
 
