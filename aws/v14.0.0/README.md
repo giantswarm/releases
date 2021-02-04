@@ -166,7 +166,7 @@ tenant app CRs.
 
 
 
-### external-dns [2.0.0](https://github.com/giantswarm/external-dns-app/releases/tag/v2.0.0)
+### external-dns [2.0.1](https://github.com/giantswarm/external-dns-app/releases/tag/v2.0.1)
 
 #### Changed
 - Reworked the App to prepare it for customer use. ([#49](https://github.com/giantswarm/external-dns-app/pull/49))
