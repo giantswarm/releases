@@ -1,6 +1,10 @@
 # :zap: Giant Swarm Release v14.0.0 for AWS :zap:
 
-<< Add description here >>
+This release provides support for Kubernetes 1.19 on AWS.
+
+Please note that with version `1.19` there a few breaking changes in the `Kubernetes` APIs.
+Please refer to the [upstream documentation](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.19.md#urgent-upgrade-notes)
+and feel free to get in touch with your solutions engineer for any concern you might have.
 
 Warning:  with new version of `external-dns` you need to upgrade nginx app to `v1.14.0+`
 
