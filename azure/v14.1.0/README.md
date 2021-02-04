@@ -11,7 +11,7 @@ With this release the `volumeBindingMode` for the following `storageClasses` wil
 We made this change to allow kubernetes making better decisions about which availability zone to create new
 `AzureDisks` into, according to scheduling of pods.
 
-This will not affect any `PersistentVolume` already existing, but will affect future provisioning.
+This will not affect any `PersistentVolume` already existing, but will affect future provisioning. In case of old behavior being preferable, creation of additional storageclass will be required.
 Refer to the [official documentation](https://kubernetes.io/docs/concepts/storage/storage-classes/#volume-binding-mode)
 for more details and get in touch your solution engineer for any doubts.
 
