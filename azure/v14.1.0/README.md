@@ -2,7 +2,7 @@
 
 This is the first workload cluster release to support [spot VMs](https://azure.microsoft.com/en-us/pricing/spot/) on Azure.
 
-With this release, the `volumeBindingMode` for the following `storageClasses` will be changed to `WaitForFirstConsumer`:
+With this release the `volumeBindingMode` for the following `storageClasses` will be changed to `WaitForFirstConsumer`:
 
 - default
 - managed-premium
