@@ -17,10 +17,16 @@ for more details and get in touch your solution engineer for any doubts.
 
 ## Change details
 
-### azure-operator [5.3.0-dev](https://github.com/giantswarm/azure-operator/releases/tag/v5.3.0-dev)
+### azure-operator [5.4.0](https://github.com/giantswarm/azure-operator/releases/tag/v5.4.0)
 
-Not found
+#### Changed
 
+- Changed StorageClasses volumeBindingMode to WaitForFirstConsumer.
+- Simplified the upgrade process by leveraging automated draining of nodes.
+
+#### Added
+
+- Added spot instances support for node pools.
 
 ### containerlinux [2605.12.0](https://www.flatcar-linux.org/releases/#release-2605.12.0)
 
