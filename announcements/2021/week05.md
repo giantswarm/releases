@@ -4,7 +4,7 @@ For a comprehensive and always-updated view of all new features and changes for 
 
 ## Managed apps
 
-[External DNS v2.0.0](https://docs.giantswarm.io/changes/managed-apps/external-dns-app/v2.0.0/) allows customers to install and use External DNS for their own purpose, separate from the preinstalled app in AWS and Azure clusters. [External DNS v2.1.0](waiting for link) adds guardrails (dry-run mode, etc.) to help prevent misconfigurations. :warning: [Requires NGINX IC v1.14.0+](https://github.com/giantswarm/external-dns-app#limitations).
+[External DNS v2.1.0](https://github.com/giantswarm/external-dns-app/blob/master/CHANGELOG.md#210---2021-02-05) adds guardrails (dry-run mode, etc.) to help prevent misconfigurations to the recently released v2.0.0. External DNS v2.0.0 allows customers to install and use External DNS for their own purpose, separate from the preinstalled app in AWS and Azure clusters. :warning: [Requires NGINX IC v1.14.0+](https://github.com/giantswarm/external-dns-app#limitations).
 
 [NGINX IC v1.14.0](https://docs.giantswarm.io/changes/managed-apps/nginx-ingress-controller-app/v1.14.0/) is released to work with customer's separate External DNS (see above).
 
