@@ -12,6 +12,7 @@ to all Giant Swarm installations.
 ## AWS
 - v13
   - v13.0
+    - [v13.0.0-zach-coredns-169](https://github.com/giantswarm/releases/tree/master/aws/v13.0.0-zach-coredns-169)
     - [v13.0.0](https://github.com/giantswarm/releases/tree/master/aws/v13.0.0)
 - v12
   - v12.7
