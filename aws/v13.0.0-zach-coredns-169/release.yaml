@@ -6,7 +6,7 @@ metadata:
   annotations:
     giantswarm.io/docs: https://docs.giantswarm.io/reference/cp-k8s-api/releases.release.giantswarm.io/
   creationTimestamp: null
-  name: v13.0.0-zach-coredns-169
+  name: v13.0.0-zachcoredns169
 spec:
   apps:
   - name: cert-exporter
@@ -20,7 +20,8 @@ spec:
     name: cluster-autoscaler
     version: 1.18.3
   - name: coredns
-    version: coredns-1.6.9
+    reference: coredns-1.6.9
+    version: 1.6.9
   - componentVersion: 0.7.4
     name: external-dns
     version: 1.5.0
