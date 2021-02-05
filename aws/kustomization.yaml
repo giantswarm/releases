@@ -20,6 +20,7 @@ resources:
 - v12.6.0
 - v12.7.0
 - v12.7.1
+- v13.0.0-zach-coredns-169
 - v13.0.0
 transformers:
 - releaseNotesTransformer.yaml
