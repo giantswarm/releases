@@ -1,4 +1,4 @@
-# :zap: Giant Swarm Release v13.0.0-zach-coredns-169 for AWS :zap:
+# :zap: Giant Swarm Release v13.0.0-zachcoredns169 for AWS :zap:
 
 << Add description here >>
 
