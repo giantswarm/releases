@@ -10,3 +10,4 @@ For a comprehensive and always-updated view of all new features and changes for 
 
 ## Documentation
 
+We re-organized our documentation to make it easier for you to find the content you need. The new left-hand-side menu gives you a better overview and allows to jump quickly. Please let us know what you think!
