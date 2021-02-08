@@ -170,7 +170,13 @@ tenant app CRs.
 
 
 
-### external-dns [2.0.2](https://github.com/giantswarm/external-dns-app/releases/tag/v2.0.2)
+### external-dns [2.1.0](https://github.com/giantswarm/external-dns-app/releases/tag/v2.1.0)
+
+#### Added
+- Allow the sync policy to be configured. 
+- Supports customisation of the txt-owner-id (whilst still defaulting for default apps).
+- Supports dry-run mode and warns the user if enabled.
+
 
 #### Changed
 - Reworked the App to prepare it for customer use. ([#49](https://github.com/giantswarm/external-dns-app/pull/49))
