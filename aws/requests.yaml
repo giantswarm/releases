@@ -7,6 +7,9 @@ releases:
         - name: cluster-operator
           version: ">= 3.5.0"
           issue: https://github.com/giantswarm/giantswarm/issues/15434
+        - name: external-dns
+          version: ">= 2.1.0"
+          issue: https://github.com/giantswarm/giantswarm/issues/15573
     - name: "> 13.0.0 < 14.0.0"
       requests:
         - name: app-operator
