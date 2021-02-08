@@ -171,7 +171,7 @@ tenant app CRs.
 
 
 
-### external-dns [2.1.0](https://github.com/giantswarm/external-dns-app/releases/tag/v2.1.0)
+### external-dns [2.1.1](https://github.com/giantswarm/external-dns-app/releases/tag/v2.1.1)
 
 #### Added
 - Allow the sync policy to be configured. 
