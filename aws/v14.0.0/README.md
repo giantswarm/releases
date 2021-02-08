@@ -51,9 +51,10 @@ tenant app CRs.
 - Print difference between the current chart and desired chart.
 
 
-### aws-operator [10.1.0](https://github.com/giantswarm/aws-operator/releases/tag/v10.1.0)
+### aws-operator [10.2.0](https://github.com/giantswarm/aws-operator/releases/tag/v10.2.0)
 
 #### Added
+- Allow incoming NFS traffic on node pools for Elastic File System.
 - Add support for tagging AWS resources, managed by the operator, based on the custom resource labels.
 - Add `cleanupiamroles` resource for detaching third party policies from our IAM roles.
 - Update `k8scloudconfig` version to `v10.0.0` to include change for Kubernetes 1.19.
