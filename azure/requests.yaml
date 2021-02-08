@@ -1,4 +1,9 @@
 releases:
+    - name: "> 14.1.0"
+      requests:
+        - name: external-dns
+          version: ">= 2.1.0"
+          issue: https://github.com/giantswarm/giantswarm/issues/15573
     - name: "> 13.0.3 > 13.1.2"
       requests:
         - name: cluster-operator
