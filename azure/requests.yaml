@@ -1,5 +1,5 @@
 releases:
-    - name: "> 14.0.0"
+    - name: "> 14.1.0"
       requests:
         - name: external-dns
           version: ">= 2.1.0"
