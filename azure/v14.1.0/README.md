@@ -1,6 +1,6 @@
 # :zap: Giant Swarm Release v14.1.0 for Azure :zap:
 
-This is the first workload cluster release to support [spot VMs](https://azure.microsoft.com/en-us/pricing/spot/) on Azure.
+This is the first workload cluster release to support [spot VMs](https://azure.microsoft.com/en-us/pricing/spot/) on Azure. Please refer to [Giant Swarm Azure Spot docs](https://docs.giantswarm.io/advanced/spot-instances/azure/) for more information.
 
 With this release the `volumeBindingMode` for the following `storageClasses` will be changed to `WaitForFirstConsumer`:
 
