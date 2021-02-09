@@ -29,15 +29,6 @@ Warning:  with new version of `external-dns` you need to upgrade nginx app to `v
 - If we set SelectPolicy MinPolicySelect on scaleUp behavior or scaleDown behavior,Horizontal Pod Autoscaler doesn't automatically scale the number of pods correctly ([#95647](https://github.com/kubernetes/kubernetes/pull/95647), [@JoshuaAndrew](https://github.com/JoshuaAndrew)) [SIG Apps and Autoscaling]
 - Kube-proxy now trims extra spaces found in loadBalancerSourceRanges to match Service validation. ([#94107](https://github.com/kubernetes/kubernetes/pull/94107), [@robscott](https://github.com/robscott)) [SIG Network]
 - Kubeadm: add missing "--experimental-patches" flag to "kubeadm init phase control-plane" ([#95786](https://github.com/kubernetes/kubernetes/pull/95786), [@Sh4d1](https://github.com/Sh4d1)) [SIG Cluster Lifecycle]
-#### Dependencies
-#### Added
-_Nothing has changed._
-#### Changed
-_Nothing has changed._
-#### Removed
-_Nothing has changed._
-
-
 
 ### app-operator [3.1.0](https://github.com/giantswarm/app-operator/releases/tag/v3.1.0)
 
