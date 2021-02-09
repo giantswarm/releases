@@ -1,0 +1,1 @@
+**Tenant cluster release v14.0.0 for AWS is available**. It provides support for Kubernetes 1.19. Further details can be found in the [release notes](https://docs.giantswarm.io/changes/tenant-cluster-releases-aws/releases/aws-v14.0.0/).
