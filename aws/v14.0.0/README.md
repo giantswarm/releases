@@ -35,6 +35,7 @@ Warning:  with new version of `external-dns` you need to upgrade nginx app to `v
 #### Changed
 - Enable mutating and validating webhooks in app-admission-controller for
 tenant app CRs.
+
 #### Added
 - Make resync period configurable for use in integration tests.
 - Pause App CR reconciliation when it has
@@ -61,7 +62,6 @@ tenant app CRs.
 - Start updating `tcnp` CF stack only when `tccpn` CF stack is already updated. This ensure that master nodes are updated before worker nodes.
 
 
-
 ### etcd [3.4.14](https://github.com/etcd-io/etcd/releases/tag/v3.4.14)
 
 - Fix server panic when force-new-cluster flag is enabled in a cluster which had learner node.
@@ -69,7 +69,6 @@ tenant app CRs.
 ### aws-cni [1.7.8](https://github.com/aws/amazon-vpc-cni-k8s/releases/tag/v1.7.8)
 
 * Improvement - [Replace DescribeNetworkInterfaces with paginated version](https://github.com/aws/amazon-vpc-cni-k8s/pull/1333) (#1333, @haouc)
-
 
 
 ### containerlinux [2605.12.0](https://www.flatcar-linux.org/releases/#release-2605.12.0)
@@ -109,16 +108,15 @@ tenant app CRs.
 
 #### Added
 - Print difference between current release and desired release.
+
 #### Changed
 - Updated Helm to v3.4.2.
-
 
 
 ### cluster-autoscaler [1.19.1](https://github.com/giantswarm/cluster-autoscaler-app/releases/tag/v1.19.1)
 
 #### Changed
 - Updated cluster-autoscaler to version `1.19.1`.
-
 
 
 ### cert-manager [2.4.1](https://github.com/giantswarm/cert-manager-app/releases/tag/v2.4.1)
@@ -128,12 +126,10 @@ tenant app CRs.
 - Updated clusterissuer subchart API groups to `cert-manager.io/v1`. ([#124](https://github.com/giantswarm/cert-manager-app/pull/124))
 
 
-
 ### cert-exporter [1.5.0](https://github.com/giantswarm/cert-exporter/releases/tag/v1.5.0)
 
 #### Changed
 - Check ca.crt expiries in TLS secrets. ([#109](https://github.com/giantswarm/cert-exporter/pull/109))
-
 
 
 ### chart-operator [2.7.1](https://github.com/giantswarm/chart-operator/releases/tag/v2.7.1)
@@ -142,17 +138,14 @@ tenant app CRs.
 - Only create VPA if autoscaling API group is present.
 
 
-
 ### kiam [1.7.0](https://github.com/giantswarm/kiam-app/releases/tag/v1.7.0)
 
 - Add taint tolerations for kiam agent and kiam server.
 
 
-
 ### metrics-server [1.2.1](https://github.com/giantswarm/metrics-server-app/releases/tag/v1.2.1)
 
 - Push app to control plane catalogs
-
 
 
 ### node-exporter [1.7.1](https://github.com/giantswarm/node-exporter-app/releases/tag/v1.7.1)
@@ -161,14 +154,12 @@ tenant app CRs.
 - Use the domain registry from installation values if it is present.
 
 
-
 ### external-dns [2.1.1](https://github.com/giantswarm/external-dns-app/releases/tag/v2.1.1)
 
 #### Added
 - Allow the sync policy to be configured. 
 - Supports customisation of the txt-owner-id (whilst still defaulting for default apps).
 - Supports dry-run mode and warns the user if enabled.
-
 
 #### Changed
 - Reworked the App to prepare it for customer use. ([#49](https://github.com/giantswarm/external-dns-app/pull/49))
@@ -188,6 +179,3 @@ tenant app CRs.
     - Allows configuration of batch size.
     - Allows configuration of CNAME instead of ALIAS records.
     - Allows configuration of the AWS zone type to update.
-
-
-
