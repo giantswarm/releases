@@ -13,8 +13,8 @@ releases:
     - name: "> 13.0.0 < 14.0.0"
       requests:
         - name: app-operator
-          version: ">= 3.0.0"
-          issue: https://github.com/giantswarm/roadmap/issues/187
+          version: ">= 3.2.0"
+          issue: https://github.com/giantswarm/giantswarm/issues/15392
         - name: chart-operator
           version: ">= 2.6.0"
           issue: https://github.com/giantswarm/giantswarm/issues/14599
