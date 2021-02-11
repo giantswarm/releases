@@ -48,7 +48,7 @@ spec:
     releaseOperatorDeploy: true
     version: 3.13.1-dev
     catalog: control-plane-test-catalog
-    reference: 3.13.0-35a80c56f1fb1d48a9bd61fa342362b28f633c41
+    reference: 3.13.0-92c9b58782a85688901c49103048fc022efe2f23
   date: "2021-02-11T22:00:00Z"
   state: active
 status:
