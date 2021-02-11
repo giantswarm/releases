@@ -46,9 +46,7 @@ spec:
     version: 1.17.8
   - name: kvm-operator
     releaseOperatorDeploy: true
-    version: 3.13.1-dev
-    catalog: control-plane-test-catalog
-    reference: 3.13.0-f5fe4de5db65601fc87290193687f43745c21940
+    version: 3.13.1
   date: "2021-02-11T22:00:00Z"
   state: active
 status:
