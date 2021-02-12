@@ -1,5 +1,5 @@
 # Generated with:
-# devctl release create --name 13.1.0 --provider aws --base 13.0.0 --component aws-operator@9.3.6 --overwrite
+# devctl release create --name 13.1.0 --provider aws --base 13.0.0 --component aws-operator@9.3.8 --app cert-manager@2.4.1 --app external-dns@2.1.1 --component cluster-operator@3.4.1 --app cert-exporter@1.5.0 --app chart-operator@2.6.0 --app kiam@1.7.0 --app metrics-server@1.2.1 --component app-operator@3.1.0 --component aws-cni@1.7.8 --component containerlinux@2605.12.0 --component etcd@3.4.14 --component kubernetes@1.18.15 --app node-exporter@1.7.1 --overwrite
 apiVersion: release.giantswarm.io/v1alpha1
 kind: Release
 metadata:
@@ -11,8 +11,7 @@ spec:
   apps:
   - name: cert-exporter
     version: 1.5.0
-  - componentVersion: 1.0.2
-    name: cert-manager
+  - name: cert-manager
     version: 2.4.1
   - name: chart-operator
     version: 2.6.0
@@ -22,22 +21,18 @@ spec:
   - componentVersion: 1.6.5
     name: coredns
     version: 1.2.0
-  - componentVersion: 0.7.6
-    name: external-dns
-    version: 1.6.0
-  - componentVersion: 3.6.0
-    name: kiam
+  - name: external-dns
+    version: 2.1.1
+  - name: kiam
     version: 1.7.0
   - componentVersion: 1.9.7
     name: kube-state-metrics
     version: 1.3.0
-  - componentVersion: 0.4.1
-    name: metrics-server
+  - name: metrics-server
     version: 1.2.1
   - name: net-exporter
     version: 1.9.2
-  - componentVersion: 1.0.1
-    name: node-exporter
+  - name: node-exporter
     version: 1.7.1
   components:
   - name: app-operator
@@ -47,7 +42,7 @@ spec:
     version: 1.7.8
   - name: aws-operator
     releaseOperatorDeploy: true
-    version: 9.3.7
+    version: 9.3.8
   - name: calico
     version: 3.15.3
   - name: cert-operator
@@ -56,14 +51,14 @@ spec:
     version: 0.1.0
   - name: cluster-operator
     releaseOperatorDeploy: true
-    version: 3.5.1
+    version: 3.4.1
   - name: containerlinux
     version: 2605.12.0
   - name: etcd
     version: 3.4.14
   - name: kubernetes
     version: 1.18.15
-  date: "2021-02-02T11:34:39Z"
+  date: "2021-02-12T10:13:34Z"
   state: active
 status:
   ready: false
