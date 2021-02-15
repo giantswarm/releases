@@ -6,9 +6,6 @@ releases:
           issue: https://github.com/giantswarm/giantswarm/issues/13771
     - name: "> 14.1.0"
       requests:
-        - name: app-operator
-          version: ">= 3.2.0"
-          issue: https://github.com/giantswarm/giantswarm/issues/15392
         - name: external-dns
           version: ">= 2.1.0"
           issue: https://github.com/giantswarm/giantswarm/issues/15573
@@ -26,8 +23,8 @@ releases:
           version: ">= 1.3.0"
           issue: https://github.com/giantswarm/giantswarm/issues/14579
         - name: app-operator
-          version: ">= 3.0.0"
-          issue: https://github.com/giantswarm/roadmap/issues/187
+          version: ">= 3.2.0"
+          issue: https://github.com/giantswarm/giantswarm/issues/15392
         - name: chart-operator
           version: ">= 2.6.0"
           issue: https://github.com/giantswarm/giantswarm/issues/14599
