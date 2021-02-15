@@ -10,15 +10,25 @@
 Not found
 
 
-### cluster-operator [3.4.1](https://github.com/giantswarm/cluster-operator/releases/tag/v3.4.1)
+### cluster-operator [3.5.1](https://github.com/giantswarm/cluster-operator/releases/tag/v3.5.1)
 
+#### Added
+- Check existence of chart tarball for `release` CR `apps` in catalog.
+
+
+
+### app-operator [3.2.0](https://github.com/giantswarm/app-operator/releases/tag/v3.2.0)
+
+#### Added
+- Include `apiVersion`, `restrictions.compatibleProviders` in appcatalogentry CRs.
+  
+#### Changed
+  
+- Limit the number of AppCatalogEntry per app.
+- Delete legacy finalizers on app CRs. 
+- Reconciling appCatalog CRs only if pod is unique.
 #### Fixed
--  Allow annotations from current app CR to remain.
-
-
-
-### app-operator [3.1.0](https://github.com/giantswarm/app-operator/releases/tag/v3.1.0)
-
+- Updating status as cordoned if app CR has cordoned annotation.
 
 
 
