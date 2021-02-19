@@ -4,7 +4,9 @@ For a comprehensive and always-updated view of all new features and changes for 
 
 ## Managed apps
 
-- We are adding an app for [KEDA](https://github.com/giantswarm/keda-app) (Kubernetes Event-Driven Autoscaling) to our playground catalog.
+- [KEDA](https://github.com/giantswarm/keda-app) (Kubernetes Event-Driven Autoscaling) is now available as an app in the Playground Catalog. Some customers report significant resource optimizations and cost savings from using KEDA.
+
+- [Fluent log shipping v0.5.5](https://docs.giantswarm.io/changes/playground-apps/fluent-logshipping-app/v0.5.5/) was fixed to run using AWS Cloudwatch and S3. We also added the ability to use KIAM for Cloudwatch and updated the fluentd image.
 
 ## Web interface
 
