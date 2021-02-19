@@ -4,6 +4,12 @@ For a comprehensive and always-updated view of all new features and changes for 
 
 ## Managed apps
 
+- We are adding an app for [KEDA](https://github.com/giantswarm/keda-app) (Kubernetes Event-Driven Autoscaling) to our playground catalog.
+
+## Web interface
+
+- The Apps section has been re-designed completely to provide access to all apps quicker, independent of the catalog they belong to.
+
 ## Documentation
 
 - We added documentation for [spot VMs on Azure](https://docs.giantswarm.io/advanced/spot-instances/azure/), which is supported as of Azure release v14.1.0.
