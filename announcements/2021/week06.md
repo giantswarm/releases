@@ -10,13 +10,11 @@ For a comprehensive and always-updated view of all new features and changes for 
 
 ## Web interface
 
-- The Apps section has been re-designed completely to provide access to all apps quicker, independent of the catalog they belong to.
+- The Apps section has been re-designed completely to provide faster access to all apps, independent of the catalog they belong to.
 
 ## Documentation
 
-- We added documentation for [spot VMs on Azure](https://docs.giantswarm.io/advanced/spot-instances/azure/), which is supported as of Azure release v14.1.0.
-
-- Also new is a general documentation page about [management clusters](https://docs.giantswarm.io/general/management-clusters/) which also details the update cycles.
+- We added documentation for [spot VMs on Azure](https://docs.giantswarm.io/advanced/spot-instances/azure/) and [management clusters](https://docs.giantswarm.io/general/management-clusters/).
 
 - Our Management API CRD docs now includes annotations. See [AWSMachineDeployment](https://docs.giantswarm.io/ui-api/management-api/crd/awsmachinedeployments.infrastructure.giantswarm.io/#annotation-details-v1alpha2) for an example.
 
