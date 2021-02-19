@@ -1,4 +1,4 @@
-# :zap: This week in provider-independent announcements (February 12, 2021) :zap:
+# :zap: This week in provider-independent announcements (February 19, 2021) :zap:
 
 For a comprehensive and always-updated view of all new features and changes for apps, workload clusters, UI, and documentation, please check out [changes and releases](https://docs.giantswarm.io/changes/). Below are the highlights.
 
@@ -15,6 +15,8 @@ For a comprehensive and always-updated view of all new features and changes for 
 ## Documentation
 
 - We added documentation for [spot VMs on Azure](https://docs.giantswarm.io/advanced/spot-instances/azure/), which is supported as of Azure release v14.1.0.
+
+- Also new is a general documentation page about [management clusters](https://docs.giantswarm.io/general/management-clusters/) which also details the update cycles.
 
 - Our Management API CRD docs now includes annotations. See [AWSMachineDeployment](https://docs.giantswarm.io/ui-api/management-api/crd/awsmachinedeployments.infrastructure.giantswarm.io/#annotation-details-v1alpha2) for an example.
 
