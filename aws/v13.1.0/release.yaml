@@ -1,5 +1,5 @@
 # Generated with:
-# devctl release create --name 13.1.0 --provider aws --base 13.0.0 --component aws-operator@9.3.8 --app cert-manager@2.4.1 --app external-dns@2.1.1 --component cluster-operator@3.5.1 --app cert-exporter@1.5.0 --app chart-operator@2.6.0 --app kiam@1.7.0 --app metrics-server@1.2.1 --component app-operator@3.2.0 --component aws-cni@1.7.8 --component containerlinux@2605.12.0 --component etcd@3.4.14 --component kubernetes@1.18.15 --app node-exporter@1.7.1 --overwrite
+# devctl release create --name 13.1.0 --provider aws --base 13.0.0 --component aws-operator@9.3.8 --app cert-manager@2.4.1 --app external-dns@2.1.1 --component cluster-operator@3.6.0 --app cert-exporter@1.5.0 --app chart-operator@2.6.0 --app kiam@1.7.0 --app metrics-server@1.2.1 --component app-operator@3.2.0 --component aws-cni@1.7.8 --component containerlinux@2605.12.0 --component etcd@3.4.14 --component kubernetes@1.18.15 --app node-exporter@1.7.1 --overwrite
 apiVersion: release.giantswarm.io/v1alpha1
 kind: Release
 metadata:
@@ -51,14 +51,14 @@ spec:
     version: 0.1.0
   - name: cluster-operator
     releaseOperatorDeploy: true
-    version: 3.5.1
+    version: 3.6.0
   - name: containerlinux
     version: 2605.12.0
   - name: etcd
     version: 3.4.14
   - name: kubernetes
     version: 1.18.15
-  date: "2021-02-15T14:33:26Z"
+  date: "2021-02-19T11:30:07Z"
   state: active
 status:
   ready: false
