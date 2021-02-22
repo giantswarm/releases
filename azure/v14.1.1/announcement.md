@@ -1,0 +1,1 @@
+**Workload cluster release v14.1.1 for Azure** is now available. This release brings fixes for cluster-autoscaler behaviour. Further details can be found in the [release notes](https://docs.giantswarm.io/changes/workload-cluster-releases-azure/releases/azure-v14.1.1/).
