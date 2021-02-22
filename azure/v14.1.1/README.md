@@ -1,14 +1,22 @@
 # :zap: Giant Swarm Release v14.1.1 for Azure :zap:
 
-<< Add description here >>
+This is a bugfix release to resolve a few bugs related to the cluster autoscaler.
+We strongly suggest upgrading any 14.x workload cluster to this release to ensure the cluster autoscaler feature works properly.
 
 ## Change details
+### azure-operator [5.5.0](https://github.com/giantswarm/azure-operator/releases/tag/v5.5.0)
 
+### Added
 
-### azure-operator [5.4.1-dev](https://github.com/giantswarm/azure-operator/releases/tag/v5.4.1-dev)
+- Add new handler that creates `AzureClusterIdentity` CRs and the related `Secrets` out of Giant Swarm's credential secrets.
+- Ensure `AzureCluster` CR has the `SubscriptionID` field set.
+- Reference `Spark` CR as bootstrap reference from the `MachinePool` CR.
+- Ensure node pools min size is applied immediately when changed.
 
-Not found
+### Fixed
 
+- Avoid blocking the whole `AzureConfig` handler on cluster creation because we can't update the `StorageClasses`.
+- Avoid overriding the NP size when the scaling is changed by autoscaler.
 
 ### kubernetes [1.19.8](https://github.com/kubernetes/kubernetes/releases/tag/v1.19.8)
 
@@ -72,3 +80,10 @@ _Nothing has changed._
 
 
 
+### azure-scheduled-events [0.2.0](https://github.com/giantswarm/azure-scheduled-events/releases/tag/v0.2.0)
+
+### Added
+- Remove the `Node` from Kubernetes API server right before approving the termination event.
+
+### Fixed
+- Keep looping on events if one loop errors out.
