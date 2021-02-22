@@ -182,6 +182,7 @@ to all Giant Swarm installations.
 
 - v13
   - v13.0
+    - [v13.0.1](https://github.com/giantswarm/releases/tree/master/kvm/v13.0.1)
     - [v13.0.0](https://github.com/giantswarm/releases/tree/master/kvm/v13.0.0)
 
 - v12
