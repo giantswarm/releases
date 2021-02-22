@@ -1,4 +1,4 @@
-# :zap: Tenant Cluster Release v12.3.3 for KVM :zap:
+# :zap: Workload Cluster Release v12.3.3 for KVM :zap:
 
 **Nodes will be rolled when upgrading to this version.**
 
