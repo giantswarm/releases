@@ -1,5 +1,5 @@
 # Generated with:
-# devctl release create --name 14.1.1 --provider azure --base 14.1.0 --component azure-operator@5.4.1-dev --component kubernetes@1.19.8 --app app-operator@3.2.0 --app external-dns@2.1.0
+# devctl release create --name 14.1.1 --provider azure --base 14.1.0 --component azure-operator@5.5.0 --component kubernetes@1.19.8 --component app-operator@3.2.0 --app external-dns@2.1.0 --app azure-scheduled-events@0.2.0
 apiVersion: release.giantswarm.io/v1alpha1
 kind: Release
 metadata:
@@ -37,9 +37,7 @@ spec:
     version: 3.2.0
   - name: azure-operator
     releaseOperatorDeploy: true
-    version: 5.4.1-dev
-    catalog: control-plane-test-catalog
-    reference: 5.4.0-7281deda07824aa8bb204269c95e1bb2e95679c5
+    version: 5.5.0
   - name: cert-operator
     reference: 0.1.0-2
     releaseOperatorDeploy: true

@@ -34,10 +34,10 @@ spec:                                                              spec:
   components:                                                        components:
   - name: app-operator                                               - name: app-operator
     releaseOperatorDeploy: true                                        releaseOperatorDeploy: true
-    version: 3.0.0                                                     version: 3.0.0
+    version: 3.0.0                                              |      version: 3.2.0
   - name: azure-operator                                             - name: azure-operator
     releaseOperatorDeploy: true                                        releaseOperatorDeploy: true
-    version: 5.4.0                                              |      version: 5.4.1-dev
+    version: 5.4.0                                              |      version: 5.5.0
   - name: cert-operator                                              - name: cert-operator
     reference: 0.1.0-2                                                 reference: 0.1.0-2
     releaseOperatorDeploy: true                                        releaseOperatorDeploy: true
