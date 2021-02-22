@@ -30,7 +30,7 @@ spec:
   - name: cluster-autoscaler
     version: 1.19.1
   - name: azure-scheduled-events
-    version: 0.1.1
+    version: 0.2.0
   components:
   - name: app-operator
     releaseOperatorDeploy: true
@@ -55,7 +55,7 @@ spec:
     version: 3.15.3
   - name: etcd
     version: 3.4.14
-  date: "2021-02-21T12:00:53Z"
+  date: "2021-02-22T07:35:53Z"
   state: active
 status:
   inUse: false
