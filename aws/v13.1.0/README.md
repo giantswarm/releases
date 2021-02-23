@@ -5,7 +5,7 @@
 ## Change details
 
 
-### aws-operator [9.3.8](https://github.com/giantswarm/aws-operator/releases/tag/v9.3.8)
+### aws-operator [9.3.9](https://github.com/giantswarm/aws-operator/releases/tag/v9.3.9)
 
 Not found
 
