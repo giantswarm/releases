@@ -1,40 +1,26 @@
 # :zap: Giant Swarm Release v14.1.2 for Azure :zap:
 
-<< Add description here >>
+This is a bugfix release to resolve a few bugs related to the cluster autoscaler.
+We strongly suggest upgrading any 14.x workload cluster to this release to ensure the cluster autoscaler feature works properly.
+
+Warning: to avoid downtimes in the ingress-based workloads, before upgrading to this release it is important to ensure your cluster has a recent version (1.14.0 or newer)
+of the `Nginx Ingress Controller APP` running. Please get in touch with your Solution Engineer before upgrading if you have any concern.
 
 ## Change details
 
+### azure-operator [5.5.1](https://github.com/giantswarm/azure-operator/releases/tag/v5.5.1)
 
-### cluster-operator [0.24.0](https://github.com/giantswarm/cluster-operator/releases/tag/v0.24.0)
+### Fixed
 
-#### Changed
-- Remove `VersionBundle` version from `CertConfigs` and add the `cert-operator.giantswarm.io/version` label. **This change requires using `cert-operator` 1.0.0 or later**.
+- Fix a race condition when upgrading node pools with 0 replicas.
+- Fix Upgrading condition for node pools with autoscaler enabled.
 
+### Added
 
-
-### cert-operator [1.0.0](https://github.com/giantswarm/cert-operator/releases/tag/v1.0.0)
-
-#### Changed
-- Update Kubernetes dependencies to 1.18 versions.
-- Reconcile `CertConfig`s based on their `cert-operator.giantswarm.io/version` label.
-#### Removed
-- Stop using the `VersionBundle` version.
-#### Added
-- Add network policy resource.
-- Added lookup for nodepool clusters in other namespaces than `default`.
-#### [0.1.0-2] - 2020-08-11
-#### Fixed
-- Skip validation of reference versions like `0.1.0-1`.
-- Continue to export vault token expiration time as 0 when lookup fails.
-#### Changed
-- Update `apiextensions` to `0.4.1` version.
-- Set version `0.1.0` in `project.go`.
-- Use `architect` `2.1.2` in github actions.
-#### [0.1.0-1] - 2020-08-07
-#### Added
-- Add `k8s-jwt-to-vault-token` init container to ensure *vault* token secret exists.
-- Add Github automation workflows.
-
+- Add new handler that creates `AzureClusterIdentity` CRs and the related `Secrets` out of Giant Swarm's credential secrets.
+- Ensure `AzureCluster` CR has the `SubscriptionID` field set.
+- Reference `Spark` CR as bootstrap reference from the `MachinePool` CR.
+- Ensure node pools min size is applied immediately when changed.
 
 
 ### azure-scheduled-events [0.2.2](https://github.com/giantswarm/azure-scheduled-events/releases/tag/v0.2.2)
