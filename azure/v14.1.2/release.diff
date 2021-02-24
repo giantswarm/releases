@@ -41,10 +41,10 @@ spec:                                                              spec:
   - name: cert-operator                                              - name: cert-operator
     reference: 0.1.0-2                                                 reference: 0.1.0-2
     releaseOperatorDeploy: true                                        releaseOperatorDeploy: true
-    version: 0.1.0                                              |      version: 1.0.0
+    version: 0.1.0                                                     version: 0.1.0
   - name: cluster-operator                                           - name: cluster-operator
     releaseOperatorDeploy: true                                        releaseOperatorDeploy: true
-    version: 0.23.22                                            |      version: 0.24.0
+    version: 0.23.22                                                   version: 0.23.22
   - name: kubernetes                                                 - name: kubernetes
     version: 1.19.8                                                    version: 1.19.8
   - name: containerlinux                                             - name: containerlinux
