@@ -15,7 +15,7 @@ releases:
         - name: cluster-operator
           version: ">= 0.23.22"
           issue: https://github.com/giantswarm/giantswarm/issues/15434
-    - name: "> 13.0.0"
+    - name: "> 13.0.1"
       requests:
         - name: node-exporter
           version: ">= 1.7.0"
@@ -32,7 +32,7 @@ releases:
         - name: cluster-operator
           version: ">= 0.23.20"
           issue: https://github.com/giantswarm/roadmap/issues/187
-    - name: "> 12.3.2"
+    - name: "> 12.3.3"
       requests:
         - name: app-operator
           version: ">= 2.7.0"
