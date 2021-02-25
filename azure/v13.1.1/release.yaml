@@ -1,0 +1,60 @@
+# Generated with:
+# devctl release create --name 13.1.1 --provider azure --base 13.1.0 --component azure-operator@5.2.1
+apiVersion: release.giantswarm.io/v1alpha1
+kind: Release
+metadata:
+  creationTimestamp: null
+  name: v13.1.1
+spec:
+  apps:
+  - name: cert-exporter
+    version: 1.5.0
+  - name: chart-operator
+    version: 2.6.0
+  - componentVersion: 1.6.5
+    name: coredns
+    version: 1.2.0
+  - componentVersion: 0.7.4
+    name: external-dns
+    version: 1.5.0
+  - componentVersion: 1.9.7
+    name: kube-state-metrics
+    version: 1.3.0
+  - name: metrics-server
+    version: 1.2.1
+  - name: net-exporter
+    version: 1.9.2
+  - componentVersion: 1.0.1
+    name: node-exporter
+    version: 1.7.1
+  - name: cluster-autoscaler
+    version: 1.18.3
+  components:
+  - name: app-operator
+    releaseOperatorDeploy: true
+    version: 3.0.0
+  - name: azure-operator
+    releaseOperatorDeploy: true
+    version: 5.2.1
+  - name: cert-operator
+    reference: 0.1.0-2
+    releaseOperatorDeploy: true
+    version: 0.1.0
+  - name: cluster-operator
+    releaseOperatorDeploy: true
+    version: 0.23.20
+  - name: kubernetes
+    version: 1.18.15
+  - name: containerlinux
+    version: 2605.10.0
+  - name: coredns
+    version: 1.6.5
+  - name: calico
+    version: 3.15.3
+  - name: etcd
+    version: 3.4.13
+  date: "2021-01-20T10:29:29Z"
+  state: active
+status:
+  inUse: false
+  ready: false
