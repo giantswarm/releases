@@ -10,12 +10,12 @@ releases:
         - name: coredns
           version: ">= 1.4.0"
           issue: https://github.com/giantswarm/giantswarm/issues/13771
-    - name: "> 13.0.1"
+    - name: "> 13.1.0"
       requests:
         - name: cluster-operator
           version: ">= 0.23.22"
           issue: https://github.com/giantswarm/giantswarm/issues/15434
-    - name: "> 13.0.1"
+    - name: "> 13.1.0"
       requests:
         - name: node-exporter
           version: ">= 1.7.0"
