@@ -187,6 +187,8 @@ to all Giant Swarm installations.
     - [v13.0.0](https://github.com/giantswarm/releases/tree/master/kvm/v13.0.0)
 
 - v12
+  - v12.4
+    - [v12.4.0](https://github.com/giantswarm/releases/tree/master/kvm/v12.4.0)
   - v12.3
     - [v12.3.3](https://github.com/giantswarm/releases/tree/master/kvm/v12.3.3)
     - [v12.3.2](https://github.com/giantswarm/releases/tree/master/kvm/v12.3.2)
