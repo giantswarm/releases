@@ -8,13 +8,13 @@ For a comprehensive and always-updated view of all new features and changes for 
 
 [Fluent Logshipping v0.6.0](https://docs.giantswarm.io/changes/playground-apps/fluent-logshipping-app/v0.6.0/) drops fluentd to reduce memory usage as fluent-bit now supports AWS outputs. It adds toleration to run on any node with taints.
 
-## Web interface
+## kubectl gs
 
-
+- The `template nodepool` command now supports scaling to zero, as it is possible on Azure.
 
 ## Documentation
 
-
+- We added information on how to use [cloud provider resource tagging](https://docs.giantswarm.io/ui-api/management-api/creating-workload-clusters/aws/#cluster-provider-resource-tagging) on AWS with the Management API.
 
 ---
 Please let <!subteam^S0GSG846L|Product Owners> know if you have any feedback or questions by replying to this announcement in a thread.
