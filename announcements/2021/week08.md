@@ -4,7 +4,7 @@ For a comprehensive and always-updated view of all new features and changes for 
 
 ## Managed apps
 
-[Prometheus Operator v0.7.0](https://docs.giantswarm.io/changes/managed-apps/prometheus-operator-app/v0.7.0/) upgrades to upstream chart v13.10.0, which contains Prometheus v2.24.0. (:warning: This is a breaking change and requires Helm 3 to install.)
+[Prometheus Operator v0.7.0](https://docs.giantswarm.io/changes/managed-apps/prometheus-operator-app/v0.7.0/) upgrades to upstream chart v13.10.0, which contains Prometheus v2.24.0.
 
 [Fluent Logshipping v0.6.0](https://docs.giantswarm.io/changes/playground-apps/fluent-logshipping-app/v0.6.0/) drops fluentd to reduce memory usage as fluent-bit now supports AWS outputs. It adds toleration to run on any node with taints.
 
