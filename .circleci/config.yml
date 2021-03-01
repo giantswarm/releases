@@ -61,7 +61,6 @@ workflows:
           app_catalog: releases
           app_name: releases-kvm
           app_collection_repo: kvm-app-collection
-          unique: "true"
           requires:
             - push-releases-kvm-to-releases-catalog
           filters:
@@ -85,7 +84,6 @@ workflows:
           app_catalog: releases
           app_name: releases-aws
           app_collection_repo: aws-app-collection
-          unique: "true"
           requires:
             - push-releases-aws-to-releases-catalog
             - push-releases-to-kvm-app-collection
@@ -110,7 +108,6 @@ workflows:
           app_catalog: releases
           app_name: releases-azure
           app_collection_repo: azure-app-collection
-          unique: "true"
           requires:
             - push-releases-azure-to-releases-catalog
             - push-releases-to-aws-app-collection
