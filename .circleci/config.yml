@@ -52,6 +52,7 @@ workflows:
           app_catalog_test: releases-test-catalog
           attach_workspace: true
           chart: releases-kvm
+          explicit_allow_chart_name_mismatch: true
           on_tag: false
           requires:
             - build
@@ -74,6 +75,7 @@ workflows:
           app_catalog_test: releases-test-catalog
           attach_workspace: true
           chart: releases-aws
+          explicit_allow_chart_name_mismatch: true
           on_tag: false
           requires:
             - build
@@ -98,6 +100,7 @@ workflows:
           app_catalog_test: releases-test-catalog
           attach_workspace: true
           chart: releases-azure
+          explicit_allow_chart_name_mismatch: true
           on_tag: false
           requires:
             - build
