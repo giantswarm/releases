@@ -35,7 +35,7 @@ spec:
     version: 3.2.0
   - name: cluster-api-core
     catalog: control-plane-test-catalog
-    reference: 0.0.0-6468ca9c6e68d7dc990e03c819da5ec1d39b451b
+    reference: 0.0.0-6693bdb8847856b3b8e5bd8934a3538a4ad8833a
     releaseOperatorDeploy: true
     version: 0.0.0
   - name: kubernetes
