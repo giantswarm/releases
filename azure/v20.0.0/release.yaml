@@ -34,6 +34,7 @@ spec:
     releaseOperatorDeploy: true
     version: 3.2.0
   - name: cluster-api-core
+    catalog: control-plane-test-catalog
     reference: 0.0.0-f0832337308301552fa370cfc6dde0a616c25b4d
     releaseOperatorDeploy: true
     version: 0.0.0-f0832337308301552fa370cfc6dde0a616c25b4d
