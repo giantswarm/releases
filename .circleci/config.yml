@@ -2,7 +2,7 @@
 version: 2.1
 
 orbs:
-  architect: giantswarm/architect@dev:allow-chart-name-mismatch
+  architect: giantswarm/architect@dev:update-app-build-suite-executor
 
 jobs:
   build:
