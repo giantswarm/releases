@@ -37,7 +37,7 @@ spec:
     catalog: control-plane-test-catalog
     reference: 0.0.0-f0832337308301552fa370cfc6dde0a616c25b4d
     releaseOperatorDeploy: true
-    version: 0.0.0-f0832337308301552fa370cfc6dde0a616c25b4d
+    version: 0.0.0
   - name: kubernetes
     version: 1.19.8
   - name: containerlinux
