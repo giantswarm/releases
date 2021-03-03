@@ -5,7 +5,7 @@ releases:
           version: ">= 1.0.1"
           issue: https://github.com/giantswarm/giantswarm/issues/14205
         - name: cluster-operator
-          version: ">= 0.24.1"
+          version: ">= 0.24.2"
           issue: https://github.com/giantswarm/giantswarm/issues/14205
         - name: coredns
           version: ">= 1.4.0"
