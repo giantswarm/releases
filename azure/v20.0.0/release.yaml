@@ -33,16 +33,16 @@ spec:
   - name: app-operator
     releaseOperatorDeploy: true
     version: 3.2.0
-  - name: cluster-api
+  #- name: cluster-api
+  #  catalog: control-plane-test-catalog
+  #  reference: 0.0.0-7ce4edea14f86ce4f16c6e2ba99b046922ba135b
+  #  releaseOperatorDeploy: true
+  #  version: 0.0.0
+  - name: cluster-api-core
     catalog: control-plane-test-catalog
     reference: 0.0.0-7ce4edea14f86ce4f16c6e2ba99b046922ba135b
     releaseOperatorDeploy: true
     version: 0.0.0
-#  - name: cluster-api-core
-#    catalog: control-plane-test-catalog
-#    reference: 0.0.0-6693bdb8847856b3b8e5bd8934a3538a4ad8833a
-#    releaseOperatorDeploy: true
-#    version: 0.0.0
   - name: kubernetes
     version: 1.19.8
   - name: containerlinux
