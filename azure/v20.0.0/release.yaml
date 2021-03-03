@@ -35,7 +35,7 @@ spec:
     version: 3.2.0
   - name: cluster-api-bootstrap-provider-kubeadm
     catalog: control-plane-test-catalog
-    reference: 0.0.0-3a5f4f89c44679ed73c258e22cdb7ea40b68cff9
+    reference: 0.0.0-60c991fb1e848cedd7c7fc4ed9904d2613506bc7
     releaseOperatorDeploy: true
     version: 0.0.0
   - name: cluster-api-control-plane
