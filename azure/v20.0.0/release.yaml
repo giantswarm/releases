@@ -33,11 +33,11 @@ spec:
   - name: app-operator
     releaseOperatorDeploy: true
     version: 3.2.0
-  #- name: cluster-api
-  #  catalog: control-plane-test-catalog
-  #  reference: 0.0.0-7ce4edea14f86ce4f16c6e2ba99b046922ba135b
-  #  releaseOperatorDeploy: true
-  #  version: 0.0.0
+  - name: cluster-api-control-plane
+    catalog: control-plane-test-catalog
+    reference: 0.0.0-a70f54932e761e55a122417903441c2c5e992b4a
+    releaseOperatorDeploy: true
+    version: 0.0.0
   - name: cluster-api-core
     catalog: control-plane-test-catalog
     reference: 0.0.0-7ce4edea14f86ce4f16c6e2ba99b046922ba135b
