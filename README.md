@@ -10,6 +10,9 @@ merged to the `master` branch, tenant cluster releases get automatically deploye
 to all Giant Swarm installations.
 
 ## AWS
+- v20
+  - v20.0
+    - [v20.0.0-v1alpha3](https://github.com/giantswarm/releases/tree/master/aws/v20.0.0-v1alpha3)
 - v14
   - v14.0
     - [v14.0.0](https://github.com/giantswarm/releases/tree/master/aws/v14.0.0)
@@ -122,7 +125,7 @@ to all Giant Swarm installations.
     - [v14.1.2](https://github.com/giantswarm/releases/tree/master/azure/v14.1.2)
     - [v14.1.1](https://github.com/giantswarm/releases/tree/master/azure/v14.1.1)
     - [v14.1.0](https://github.com/giantswarm/releases/tree/master/azure/v14.1.0)
-    
+
   - v14.0
     - [v14.0.0](https://github.com/giantswarm/releases/tree/master/azure/v14.0.0)
 

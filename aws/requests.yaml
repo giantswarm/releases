@@ -1,4 +1,5 @@
 releases:
+    - name: ">= 20.0.0"
     - name: ">= 15.0.0"
       requests:
         - name: cert-operator
