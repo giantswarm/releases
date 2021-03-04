@@ -52,6 +52,10 @@ spec:
     catalog: control-plane-test-catalog
     releaseOperatorDeploy: true
     version: 0.0.1
+  - name: cluster-api-provider-aws
+    catalog: control-plane-test-catalog
+    releaseOperatorDeploy: true
+    version: 0.0.0-93e627e516ff328879cb3f36e7055dd7458706f6
   - name: kubernetes
     version: 1.19.8
   - name: containerlinux
