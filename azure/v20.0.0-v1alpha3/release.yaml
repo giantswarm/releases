@@ -49,8 +49,9 @@ spec:
     version: 0.0.1
   - name: cluster-api-provider-azure
     catalog: control-plane-test-catalog
+    reference: 0.0.0-8c3682339cf0746ae086818a726f0ea042d46e2d
     releaseOperatorDeploy: true
-    version: 0.0.0-8c3682339cf0746ae086818a726f0ea042d46e2d
+    version: 0.0.0
   - name: kubernetes
     version: 1.19.8
   - name: containerlinux
