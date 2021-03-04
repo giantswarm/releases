@@ -17,9 +17,6 @@ spec:
   - componentVersion: 1.6.5
     name: coredns
     version: 1.2.0
-  - componentVersion: 0.7.6
-    name: external-dns
-    version: 2.1.1
   - componentVersion: 1.9.7
     name: kube-state-metrics
     version: 1.3.0
@@ -33,37 +30,40 @@ spec:
     version: 1.7.1
   components:
   - name: app-operator
+    catalog: control-plane-test-catalog
+    reference: 4.0.2-57186cc1edb4e4ff74434e306827d3e741c292d1
     releaseOperatorDeploy: true
-    version: 3.2.0
+    version: 4.0.2
+  - name: app-operator
+    catalog: control-plane-test-catalog
+    reference: 4.0.2-57186cc1edb4e4ff74434e306827d3e741c292d1
+    releaseOperatorDeploy: true
+    version: 4.0.2
   - name: cluster-api-bootstrap-provider-kubeadm
     catalog: control-plane-test-catalog
-    reference: 0.0.0-60c991fb1e848cedd7c7fc4ed9904d2613506bc7
+    reference: 0.0.0-07f2d6f9192f70727df069bbc90b0213881f402e # https://github.com/giantswarm/cluster-api-bootstrap-provider-kubeadm-app/pull/5
     releaseOperatorDeploy: true
     version: 0.0.0
   - name: cluster-api-control-plane
     catalog: control-plane-test-catalog
-    reference: 0.0.0-1a7f1da472e501b2dd4e9d2fbd6b11f8ed486cdc
+    reference: 0.0.0-6179841b26762b88b919ce8a1d34f4d7e35d0c7c # https://github.com/giantswarm/cluster-api-control-plane-app/pull/4
     releaseOperatorDeploy: true
     version: 0.0.0
   - name: cluster-api-core
     catalog: control-plane-test-catalog
+    reference: 0.0.1-45d0ecdbb166fa1470bddd10e8f806bcb1d57349 # https://github.com/giantswarm/cluster-api-core-app/pull/10
     releaseOperatorDeploy: true
     version: 0.0.1
   - name: cluster-api-provider-vsphere
     catalog: control-plane-test-catalog
-    reference: # TODO Get reference
+    reference: 0.0.0-8bc78db2e07123e153ea134e54c48810c7922919
     releaseOperatorDeploy: true
     version: 0.0.0
-  - name: cloud-provider-vsphere
+  - name: cluster-operator
     catalog: control-plane-test-catalog
-    reference: # TODO Get reference
+    reference: 3.6.1-ba5c20fc2173994af21d27846afca6500b37642e
     releaseOperatorDeploy: true
-    version: 0.0.0
-  - name: vsphere-csi
-    catalog: control-plane-test-catalog
-    reference: # TODO Get reference
-    releaseOperatorDeploy: true
-    version: 0.0.0
+    version: 3.6.1
   - name: kubernetes
     version: 1.19.8
   - name: containerlinux
