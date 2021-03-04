@@ -231,3 +231,9 @@ to all Giant Swarm installations.
     - [v8.1.0](https://github.com/giantswarm/releases/tree/master/kvm/archived/v8.1.0)
   - v8.0
     - [v8.0.0](https://github.com/giantswarm/releases/tree/master/kvm/archived/v8.0.0)
+
+## VMWare
+
+- v20
+  - v20.0
+    - [v20.0.0-v1alpha3](https://github.com/giantswarm/releases/tree/master/vmware/v20.0.0-v1alpha3)
