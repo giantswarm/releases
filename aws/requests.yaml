@@ -1,4 +1,4 @@
 releases:
   - name: "> 14.0.0"
-        requests:
-        - name: containerlinux
+    requests:
+      - name: containerlinux
