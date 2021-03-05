@@ -14,7 +14,7 @@ For a comprehensive and always-updated view of all new features and changes for 
 
 [Jaeger Operator v0.2.3](https://docs.giantswarm.io/changes/playground-apps/jaeger-operator-app/v0.2.3/) upgrades to upstream v0.2.3.
 
-[Fluent Logshipping v0.6.1](https://docs.giantswarm.io/changes/playground-apps/fluent-logshipping-app/v0.6.1/) fixes the output config format for AWS outputs, as well as mounts journald path and sets in fluent-big config.
+[Fluent Logshipping v0.6.1](https://docs.giantswarm.io/changes/playground-apps/fluent-logshipping-app/v0.6.1/) fixes the output config format for AWS outputs, as well as mounts journald path and sets it correctly in fluent-bit config.
 
 [Strimzi Kafka Operator v0.2.0](https://docs.giantswarm.io/changes/playground-apps/strimzi-kafka-operator-app/v0.2.0/) upgrades to upstream v0.21.1.
 
