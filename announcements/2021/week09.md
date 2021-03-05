@@ -4,7 +4,7 @@ For a comprehensive and always-updated view of all new features and changes for 
 
 ## Managed apps
 
-[NGINX IC v1.15.0](https://docs.giantswarm.io/changes/managed-apps/nginx-ingress-controller-app/v1.15.0/) upgrades the container images (controller container to v0.44.0 and kube-webhook-certgen to v1.5.1). It also removes conflicting admission webhook api versions...
+[NGINX IC v1.15.0](https://docs.giantswarm.io/changes/managed-apps/nginx-ingress-controller-app/v1.15.0/) upgrades the container images (controller container to v0.44.0 and kube-webhook-certgen to v1.5.1). It also removes conflicting admission webhook api versions, ensuring the the tree of apiversions will be valid according to the webhook.
 
 [Kong v1.2.0](https://docs.giantswarm.io/changes/managed-apps/kong-app/v1.2.0/) upgrades Kong to v2.3...
 
