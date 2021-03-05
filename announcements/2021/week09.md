@@ -6,7 +6,7 @@ For a comprehensive and always-updated view of all new features and changes for 
 
 [NGINX IC v1.15.0](https://docs.giantswarm.io/changes/managed-apps/nginx-ingress-controller-app/v1.15.0/) upgrades the container images (controller container to v0.44.0 and kube-webhook-certgen to v1.5.1). It also removes conflicting admission webhook api versions, ensuring the the tree of apiversions will be valid according to the webhook.
 
-[Kong v1.2.0](https://docs.giantswarm.io/changes/managed-apps/kong-app/v1.2.0/) upgrades Kong to v2.3...
+[Kong v1.2.0](https://docs.giantswarm.io/changes/managed-apps/kong-app/v1.2.0/) upgrades to upstream chart v1.15.0 and Kong to v2.3. Upstream chart v1.15.0 is an interim release before the planned v2.0.0 release. Please review the [upstream changelog](https://github.com/giantswarm/kong-app/blob/master/helm/kong-app/CHANGELOG.md) for all changes between v1.12.0 and v1.15.0.
 
 [Loki v0.1.1-alpha](https://docs.giantswarm.io/changes/managed-apps/loki-app/v0.1.1-alpha/) adds annotation to route alerts to the apps team, in preparation for offering Loki as a managed app in production.
 
