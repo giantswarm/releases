@@ -54,7 +54,7 @@ spec:
     version: 0.0.1
   - name: cluster-api-provider-aws
     catalog: control-plane-test-catalog
-    reference: 0.0.0-4ee349b00d6406221176703c8c7f020da7cac4e4
+    reference: 0.0.0-c75fcf07f77d05451065e70ebc05a8735affa2c9
     releaseOperatorDeploy: true
     version: 0.0.0
   - name: kubernetes
