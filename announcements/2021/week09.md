@@ -12,7 +12,7 @@ For a comprehensive and always-updated view of all new features and changes for 
 
 ## Apps supported with best-effort
 
-[Jaeger Operator v0.2.3](https://docs.giantswarm.io/changes/playground-apps/jaeger-operator-app/v0.2.3/) upgrades to upstream v0.2.3.
+[Jaeger Operator v0.2.3](https://docs.giantswarm.io/changes/playground-apps/jaeger-operator-app/v0.2.3/) upgrades to upstream chart v2.19.1.
 
 [Fluent Logshipping v0.6.1](https://docs.giantswarm.io/changes/playground-apps/fluent-logshipping-app/v0.6.1/) fixes the output config format for AWS outputs, as well as mounts journald path and sets it correctly in fluent-bit config.
 
