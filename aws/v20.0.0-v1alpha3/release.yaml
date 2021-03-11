@@ -58,6 +58,11 @@ spec:
     reference: 0.0.0-00b750581958b01c5729253d8f43e020857f2589
     releaseOperatorDeploy: true
     version: 0.0.0
+  - name: cluster-operator
+    catalog: control-plane-test-catalog
+    reference: 3.6.1-51f78c1dcc4a393f0812701063da8a41099cdbf2
+    releaseOperatorDeploy: true
+    version: 3.6.1
   - name: kubernetes
     version: 1.19.8
   - name: containerlinux
