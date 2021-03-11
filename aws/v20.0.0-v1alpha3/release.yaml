@@ -36,8 +36,10 @@ spec:
     version: 1.7.1
   components:
   - name: app-operator
+    catalog: control-plane-test-catalog
+    reference: 4.0.2-2bb6ec73f96680bf96408572626000cb1c307bed
     releaseOperatorDeploy: true
-    version: 3.2.0
+    version: 4.0.2
   - name: cluster-api-bootstrap-provider-kubeadm
     catalog: control-plane-test-catalog
     reference: 0.0.0-2eff23a3d914c128d3d9293ba7f1da8ce4c899e7
