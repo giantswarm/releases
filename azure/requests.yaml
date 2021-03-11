@@ -89,7 +89,7 @@ releases:
         version: ">= 2605.10.0"
       - name: etcd
         version: ">= 3.4.14"
-    - name: "> 14.0.0"
+    - name: "> 14.0.1"
       requests:
       - name: containerlinux
         version: ">= 2605.12.0"
