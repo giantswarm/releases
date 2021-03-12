@@ -1,4 +1,4 @@
-# :zap: This week in provider-independent announcements (March 5, 2021) :zap:
+# :zap: This week in provider-independent announcements (March 12, 2021) :zap:
 
 For a comprehensive and always-updated view of all new features and changes for apps, workload clusters, UI, and documentation, please check out [changes and releases](https://docs.giantswarm.io/changes/). Below are the highlights.
 
