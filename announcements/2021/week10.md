@@ -12,11 +12,5 @@ For a comprehensive and always-updated view of all new features and changes for 
 
 [Azure Ad Pod Identity v0.5.0](https://docs.giantswarm.io/changes/playground-apps/azure-ad-pod-identity-app/v0.5.0/) and prior releases from v0.3.0 to v0.4.2 upgrade the chart to v3.0.3. They also fix PSP capabilities to allow it to work on management clusters, as well as allow more configuration options to work by default with CAPZ (Cluster API Provider Azure)
 
-## gsctl
-
-
-## Documentation
-
-
 ---
 Please let <!subteam^S0GSG846L|Product Owners> know if you have any feedback or questions by replying to this announcement in a thread.
