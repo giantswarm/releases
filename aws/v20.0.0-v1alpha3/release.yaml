@@ -62,7 +62,7 @@ spec:
     version: 0.0.0
   - name: cluster-operator
     catalog: control-plane-test-catalog
-    reference: 3.6.1-51f78c1dcc4a393f0812701063da8a41099cdbf2
+    reference: 3.6.1-cd485378e19496cdb182602082f8f69af848e62c
     releaseOperatorDeploy: true
     version: 3.6.1
   - name: kubernetes
