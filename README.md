@@ -1,12 +1,12 @@
 [![CircleCI](https://circleci.com/gh/giantswarm/releases.svg?style=shield)](https://circleci.com/gh/giantswarm/releases)
 
-# Giant Swarm Tenant Cluster Releases
+# Giant Swarm Workload Cluster Releases
 
 This repository contains tenant cluster release notes and changelogs.
 
-Tenant cluster releases can be in
+Workload cluster releases can be in
 different states, namely `active`, `deprecated` and `wip`. With pull requests
-merged to the `master` branch, tenant cluster releases get automatically deployed
+merged to the `master` branch, workload cluster releases get automatically deployed
 to all Giant Swarm installations.
 
 ## AWS
