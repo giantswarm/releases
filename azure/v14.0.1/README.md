@@ -1,6 +1,6 @@
 # :zap: Giant Swarm Release v14.0.1 for Azure :zap:
 
-This releases increases the Azure Events Termination timeout from 5 to 15 minutes for better upgrade experience while workloads are moved to new nodes
+This releases increases the Azure Events Termination timeout from 5 to 15 minutes for better upgrade experience while workloads are moved to new nodes.
 
 ## Change details
 
