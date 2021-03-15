@@ -42,17 +42,17 @@ spec:
     version: 4.0.2
   - name: cluster-api-bootstrap-provider-kubeadm
     catalog: control-plane-test-catalog
-    reference: 0.0.0-fb5c795391d74acc8407070433b2c34c802faf13
+    reference: 0.0.0-07f2d6f9192f70727df069bbc90b0213881f402e # https://github.com/giantswarm/cluster-api-bootstrap-provider-kubeadm-app/pull/5
     releaseOperatorDeploy: true
     version: 0.0.0
   - name: cluster-api-control-plane
     catalog: control-plane-test-catalog
-    reference: 0.0.0-644646bb4b6cd866246274cf6004db83fb93d888
+    reference: 0.0.0-6179841b26762b88b919ce8a1d34f4d7e35d0c7c # https://github.com/giantswarm/cluster-api-control-plane-app/pull/4
     releaseOperatorDeploy: true
     version: 0.0.0
   - name: cluster-api-core
     catalog: control-plane-test-catalog
-    reference: 0.0.1-e1328a06a2f5f54e330d50d174898276818feff8
+    reference: 0.0.1-e1328a06a2f5f54e330d50d174898276818feff8 # https://github.com/giantswarm/cluster-api-core-app/pull/10
     releaseOperatorDeploy: true
     version: 0.0.1
   - name: cluster-api-provider-aws
