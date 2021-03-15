@@ -1,7 +1,7 @@
 releases:
     - name: ">= 14.0.0"
       requests:
-       - name: app-operator
+        - name: app-operator
           version: ">= 4.0.2"
           issue: https://github.com/giantswarm/roadmap/issues/254
         - name: cert-operator
