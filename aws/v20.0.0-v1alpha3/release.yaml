@@ -52,7 +52,7 @@ spec:
     version: 0.0.0
   - name: cluster-api-core
     catalog: control-plane-test-catalog
-    reference: 0.0.1-0490e839519ca9f3f1f76a5416d7c32792c46e56
+    reference: 0.0.1-160dc0d30ecb21700dbb20eb8c2c81353d5f96b4
     releaseOperatorDeploy: true
     version: 0.0.1
   - name: cluster-api-provider-aws
