@@ -34,11 +34,6 @@ spec:
     reference: 4.0.2-57186cc1edb4e4ff74434e306827d3e741c292d1
     releaseOperatorDeploy: true
     version: 4.0.2
-  - name: app-operator
-    catalog: control-plane-test-catalog
-    reference: 4.0.2-57186cc1edb4e4ff74434e306827d3e741c292d1
-    releaseOperatorDeploy: true
-    version: 4.0.2
   - name: cluster-api-bootstrap-provider-kubeadm
     catalog: control-plane-test-catalog
     reference: 0.0.0-07f2d6f9192f70727df069bbc90b0213881f402e # https://github.com/giantswarm/cluster-api-bootstrap-provider-kubeadm-app/pull/5
@@ -51,12 +46,12 @@ spec:
     version: 0.0.0
   - name: cluster-api-core
     catalog: control-plane-test-catalog
-    reference: 0.0.1-45d0ecdbb166fa1470bddd10e8f806bcb1d57349 # https://github.com/giantswarm/cluster-api-core-app/pull/10
+    reference: 0.0.1-16f738deb604820ee7e189577c6d373a3bddfeca # https://github.com/giantswarm/cluster-api-core-app/pull/10
     releaseOperatorDeploy: true
     version: 0.0.1
   - name: cluster-api-provider-vsphere
     catalog: control-plane-test-catalog
-    reference: 0.0.0-8bc78db2e07123e153ea134e54c48810c7922919
+    reference: 0.0.0-4af760202d251975c6046670d436ccbe8d5e1b98 # https://github.com/giantswarm/cluster-api-core-app/pull/2
     releaseOperatorDeploy: true
     version: 0.0.0
   - name: cluster-operator
