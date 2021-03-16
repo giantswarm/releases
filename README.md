@@ -2,7 +2,7 @@
 
 # Giant Swarm Workload Cluster Releases
 
-This repository contains tenant cluster release notes and changelogs.
+This repository contains workload cluster release notes and changelogs.
 
 Workload cluster releases can be in
 different states, namely `active`, `deprecated` and `wip`. With pull requests
