@@ -35,22 +35,22 @@ spec:
     version: 3.2.0
   - name: cluster-api-bootstrap-provider-kubeadm
     catalog: control-plane-test-catalog
-    reference: 0.0.0-701d862aa0ca0d0ea7ce7507b1992482c42482d1
+    reference: 0.0.0-9c6fd2450ee1113238c30c4e639a0c488e3ebb62
     releaseOperatorDeploy: true
     version: 0.0.0
   - name: cluster-api-control-plane
     catalog: control-plane-test-catalog
-    reference: 0.0.0-644646bb4b6cd866246274cf6004db83fb93d888
+    reference: 0.0.0-c822112e865c77d600581fe9afd2c83777b9d73d
     releaseOperatorDeploy: true
     version: 0.0.0
   - name: cluster-api-core
     catalog: control-plane-test-catalog
-    reference: 0.0.1-27a04ee435f533c2ede1d30a09c87921b043f331
+    reference: 0.0.1-e977b2c5bc8c7e8f80b244bac48874657fbb60ee
     releaseOperatorDeploy: true
     version: 0.0.1
   - name: cluster-api-provider-azure
     catalog: control-plane-test-catalog
-    reference: 0.0.0-28dab15257a1155588e8f50877ebb60093637bf1
+    reference: 0.0.0-6af9ab2b97a99d0b2ab108aa7e0ccb47f1568155
     releaseOperatorDeploy: true
     version: 0.0.0
   - name: kubernetes
