@@ -1,0 +1,80 @@
+apiVersion: release.giantswarm.io/v1alpha1
+kind: Release
+metadata:
+  creationTimestamp: null
+  name: v20.0.0-v1alpha3
+spec:
+  apps:
+  - name: cert-exporter
+    version: 1.6.0
+  - componentVersion: 1.1.0
+    name: cert-manager
+    version: 2.4.1
+  - name: chart-operator
+    version: 2.9.0
+  - name: cluster-autoscaler
+    version: 1.19.1
+  - componentVersion: 1.6.5
+    name: coredns
+    version: 1.2.0
+  - componentVersion: 0.7.6
+    name: external-dns
+    version: 2.1.1
+  - componentVersion: 3.6.0
+    name: kiam
+    version: 1.7.0
+  - componentVersion: 1.9.7
+    name: kube-state-metrics
+    version: 1.3.0
+  - componentVersion: 0.4.1
+    name: metrics-server
+    version: 1.2.1
+  - name: net-exporter
+    version: 1.9.2
+  - componentVersion: 1.0.1
+    name: node-exporter
+    version: 1.7.1
+  components:
+  - name: app-operator
+    catalog: control-plane-catalog
+    reference: 4.1.0
+    releaseOperatorDeploy: true
+    version: 4.1.0
+  - name: cluster-api-bootstrap-provider-kubeadm
+    catalog: control-plane-test-catalog
+    reference: 0.0.0-ef2e1d8ebbb4617b5f7767a1b9282cfcab5e8567 # https://github.com/giantswarm/cluster-api-bootstrap-provider-kubeadm-app/pull/8
+    releaseOperatorDeploy: true
+    version: 0.0.0
+  - name: cluster-api-control-plane
+    catalog: control-plane-test-catalog
+    reference: 0.0.0-0eea72a78667b8a69985497f1ae58b6982c8ba3c # https://github.com/giantswarm/cluster-api-control-plane-app/pull/7
+    releaseOperatorDeploy: true
+    version: 0.0.0
+  - name: cluster-api-core
+    catalog: control-plane-test-catalog
+    reference: 0.0.1-da059cddfe5f8c4fe34d1b756b7d1eaa70dc934e # https://github.com/giantswarm/cluster-api-core-app/pull/15
+    releaseOperatorDeploy: true
+    version: 0.0.1
+  - name: cluster-api-provider-aws
+    catalog: control-plane-test-catalog
+    reference: 0.0.0-c7dacb11abd9a196d414ddf539beaf674e8b333a # https://github.com/giantswarm/cluster-api-provider-aws-app/pull/16
+    releaseOperatorDeploy: true
+    version: 0.0.0
+  - name: cluster-operator
+    catalog: control-plane-test-catalog
+    reference: 3.6.1-ba5c20fc2173994af21d27846afca6500b37642e
+    releaseOperatorDeploy: true
+    version: 3.6.1
+  - name: kubernetes
+    version: 1.19.8
+  - name: containerlinux
+    version: 2605.12.0
+  - name: calico
+    version: 3.15.3
+  - name: etcd
+    version: 3.4.14
+  date: "2021-03-02T14:50:41Z"
+  state: active
+status:
+  inUse: false
+  ready: false
