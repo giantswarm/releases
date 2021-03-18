@@ -1,12 +1,12 @@
 [![CircleCI](https://circleci.com/gh/giantswarm/releases.svg?style=shield)](https://circleci.com/gh/giantswarm/releases)
 
-# Giant Swarm Tenant Cluster Releases
+# Giant Swarm Workload Cluster Releases
 
-This repository contains tenant cluster release notes and changelogs.
+This repository contains workload cluster release notes and changelogs.
 
-Tenant cluster releases can be in
+Workload cluster releases can be in
 different states, namely `active`, `deprecated` and `wip`. With pull requests
-merged to the `master` branch, tenant cluster releases get automatically deployed
+merged to the `master` branch, workload cluster releases get automatically deployed
 to all Giant Swarm installations.
 
 ## AWS
@@ -124,6 +124,7 @@ to all Giant Swarm installations.
     - [v14.1.0](https://github.com/giantswarm/releases/tree/master/azure/v14.1.0)
     
   - v14.0
+    - [v14.0.1](https://github.com/giantswarm/releases/tree/master/azure/v14.0.1)
     - [v14.0.0](https://github.com/giantswarm/releases/tree/master/azure/v14.0.0)
 
 - v13
