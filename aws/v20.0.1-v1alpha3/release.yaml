@@ -47,7 +47,7 @@ spec:
     version: 0.0.1
   - name: cluster-api-control-plane
     catalog: control-plane-test-catalog
-    reference: 0.0.1-f4935ee494089d9c5d2b306cd49a299c74bf26e8 # https://github.com/giantswarm/cluster-api-control-plane-app/pull/7
+    reference: 0.0.1-43c65c37fdfca03f298e40950bb1509e096d21c8 # https://github.com/giantswarm/cluster-api-control-plane-app/pull/7
     releaseOperatorDeploy: true
     version: 0.0.1
   - name: cluster-api-core
