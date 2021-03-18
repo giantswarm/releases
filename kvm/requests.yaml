@@ -2,13 +2,13 @@ releases:
     - name: ">= 14.0.0"
       requests:
         - name: app-operator
-          version: ">= 4.0.2"
+          version: ">= 4.1.0"
           issue: https://github.com/giantswarm/roadmap/issues/254
         - name: cert-operator
           version: ">= 1.0.1"
           issue: https://github.com/giantswarm/giantswarm/issues/14205
         - name: cluster-operator
-          version: ">= 0.25.0"
+          version: ">= 0.25.1"
           issue: https://github.com/giantswarm/roadmap/issues/254
         - name: coredns
           version: ">= 1.4.0"
