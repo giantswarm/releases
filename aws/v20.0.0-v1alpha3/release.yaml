@@ -36,10 +36,10 @@ spec:
     version: 1.7.1
   components:
   - name: app-operator
-    catalog: control-plane-test-catalog
-    reference: 4.0.2-57186cc1edb4e4ff74434e306827d3e741c292d1
+    catalog: control-plane-catalog
+    reference: 4.1.0
     releaseOperatorDeploy: true
-    version: 4.0.2
+    version: 4.1.0
   - name: cluster-api-bootstrap-provider-kubeadm
     catalog: control-plane-test-catalog
     reference: 0.0.0-f938a18658fec0e1422636b65bb5b4ef9e74a0ef # https://github.com/giantswarm/cluster-api-bootstrap-provider-kubeadm-app/pull/7
