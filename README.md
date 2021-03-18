@@ -2,7 +2,7 @@
 
 # Giant Swarm Workload Cluster Releases
 
-This repository contains tenant cluster release notes and changelogs.
+This repository contains workload cluster release notes and changelogs.
 
 Workload cluster releases can be in
 different states, namely `active`, `deprecated` and `wip`. With pull requests
@@ -124,6 +124,7 @@ to all Giant Swarm installations.
     - [v14.1.0](https://github.com/giantswarm/releases/tree/master/azure/v14.1.0)
     
   - v14.0
+    - [v14.0.1](https://github.com/giantswarm/releases/tree/master/azure/v14.0.1)
     - [v14.0.0](https://github.com/giantswarm/releases/tree/master/azure/v14.0.0)
 
 - v13
