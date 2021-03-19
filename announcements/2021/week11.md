@@ -8,7 +8,7 @@ For a comprehensive and always-updated view of all new features and changes for 
 
 [Grafana v0.2.0](https://docs.giantswarm.io/changes/managed-apps/grafana-app/v0.2.0/) upgrades to upstream Grafana image v7.4.3.
 
-[Fluent Logshipping v0.6.4](https://docs.giantswarm.io/changes/playground-apps/fluent-logshipping-app/v0.6.4/) greaks up the stream names for Cloudwatch Output, to help prevent from hitting API limits.
+[Fluent Logshipping v0.6.4](https://docs.giantswarm.io/changes/playground-apps/fluent-logshipping-app/v0.6.4/) breaks up the stream names for Cloudwatch Output, to help prevent from hitting API limits.
 
 ## Apps supported with best effort
 
