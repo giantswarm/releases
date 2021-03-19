@@ -12,7 +12,7 @@ For a comprehensive and always-updated view of all new features and changes for 
 
 ## Apps supported with best effort
 
-[Goldilocks v0.1.0]() is now available as an app supported with best effort. Some customers report significant cost savings from automatically setting requests and limits for clusters.
+[Goldilocks v0.1.0]() is now available. Some customers report significant cost savings from automatically setting requests and limits for clusters.
 
 [Cloudflared v0.0.5]() is now available as an app supported with best effort. This app allows you to launch Cloudflare Argo Tunnels and then route to services inside your cluster. Best for customers whose ingress options are constained and / or clusters run on-premises.
 
