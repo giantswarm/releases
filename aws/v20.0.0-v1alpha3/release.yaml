@@ -14,7 +14,7 @@ spec:
     name: cert-manager
     version: 2.4.1
   - name: chart-operator
-    version: 2.9.0
+    version: 2.11.0
   - name: cluster-autoscaler
     version: 1.19.1
   - componentVersion: 1.6.5
