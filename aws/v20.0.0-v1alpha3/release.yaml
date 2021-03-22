@@ -5,6 +5,9 @@ metadata:
   name: v20.0.0-v1alpha3
 spec:
   apps:
+  - componentVersion: 3.18.0
+    name: calico
+    version: 0.2.0
   - name: cert-exporter
     version: 1.6.0
   - componentVersion: 1.1.0
@@ -37,9 +40,9 @@ spec:
   components:
   - name: app-operator
     catalog: control-plane-catalog
-    reference: 4.1.0
+    reference: 4.2.0
     releaseOperatorDeploy: true
-    version: 4.1.0
+    version: 4.2.0
   - name: cluster-api-bootstrap-provider-kubeadm
     catalog: control-plane-test-catalog
     reference: 0.0.0-f938a18658fec0e1422636b65bb5b4ef9e74a0ef # https://github.com/giantswarm/cluster-api-bootstrap-provider-kubeadm-app/pull/7
