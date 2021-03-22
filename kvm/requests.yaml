@@ -5,15 +5,18 @@ releases:
           version: ">= 1.0.1"
           issue: https://github.com/giantswarm/giantswarm/issues/14205
         - name: cluster-operator
-          version: ">= 0.24.2"
+          version: ">= 0.24.2 < 0.25.0"
           issue: https://github.com/giantswarm/giantswarm/issues/14205
         - name: coredns
           version: ">= 1.4.0"
           issue: https://github.com/giantswarm/giantswarm/issues/13771
     - name: "> 13.1.0"
       requests:
+        - name: app-operator
+          version: ">= 3.2.1 < 4.0.0"
+          issue: https://github.com/giantswarm/giantswarm/issues/15920
         - name: cluster-operator
-          version: ">= 0.23.22"
+          version: ">= 0.23.22 < 0.24.0"
           issue: https://github.com/giantswarm/giantswarm/issues/15434
     - name: "> 13.1.0"
       requests:
