@@ -3,20 +3,15 @@ kind: Release
 metadata:
   creationTimestamp: null
   name: v20.0.0-v1alpha3
-  annotations:
-    "helm.sh/resource-policy": keep # TODO: Remove when this release is merged to master.
 spec:
   apps:
-  - componentVersion: 3.18.0
-    name: calico
-    version: 0.2.0
   - name: cert-exporter
     version: 1.6.0
   - componentVersion: 1.1.0
     name: cert-manager
     version: 2.4.1
   - name: chart-operator
-    version: 2.11.0
+    version: 2.9.0
   - name: cluster-autoscaler
     version: 1.19.1
   - componentVersion: 1.6.5
@@ -42,29 +37,29 @@ spec:
   components:
   - name: app-operator
     catalog: control-plane-catalog
-    reference: 4.2.0
+    reference: 4.1.0
     releaseOperatorDeploy: true
-    version: 4.2.0
+    version: 4.1.0
   - name: cluster-api-bootstrap-provider-kubeadm
     catalog: control-plane-test-catalog
-    reference: 0.0.0-f938a18658fec0e1422636b65bb5b4ef9e74a0ef # https://github.com/giantswarm/cluster-api-bootstrap-provider-kubeadm-app/pull/7
-    releaseOperatorDeploy: true
-    version: 0.0.0
-  - name: cluster-api-control-plane
-    catalog: control-plane-test-catalog
-    reference: 0.0.0-85775c7a88a4ffa6c813e6a2ff4e112ae7526701 # https://github.com/giantswarm/cluster-api-control-plane-app/pull/6
-    releaseOperatorDeploy: true
-    version: 0.0.0
-  - name: cluster-api-core
-    catalog: control-plane-test-catalog
-    reference: 0.0.1-a3f30abb9281519f886eaf154f3d22d3eb85c13b # https://github.com/giantswarm/cluster-api-core-app/pull/13
+    reference: 0.0.1-67a0501138a3b9ea7a0c7544382e1df4b9e5fc23 # https://github.com/giantswarm/cluster-api-bootstrap-provider-kubeadm-app/pull/11
     releaseOperatorDeploy: true
     version: 0.0.1
+  - name: cluster-api-control-plane
+    catalog: control-plane-test-catalog
+    reference: 0.0.1-0cc0dbaec0bfe65d5f6fffc076a7ad38797825df
+    releaseOperatorDeploy: true
+    version: 0.0.1
+  - name: cluster-api-core
+    catalog: control-plane-test-catalog
+    reference: 0.0.2-e82b31841262243b4a269d3f8e0d039caf6ce462 # https://github.com/giantswarm/cluster-api-core-app/pull/18
+    releaseOperatorDeploy: true
+    version: 0.0.2
   - name: cluster-api-provider-aws
     catalog: control-plane-test-catalog
-    reference: 0.0.0-042295b756125f570c09c8c16a5528cf6fe94dab # https://github.com/giantswarm/cluster-api-provider-aws-app/pull/15
+    reference: 0.0.1-60e917ce670df3dc84653334681e88bed547f3aa # https://github.com/giantswarm/cluster-api-provider-aws-app/pull/20
     releaseOperatorDeploy: true
-    version: 0.0.0
+    version: 0.0.1
   - name: cluster-operator
     catalog: control-plane-test-catalog
     reference: 3.6.1-ba5c20fc2173994af21d27846afca6500b37642e
@@ -78,7 +73,7 @@ spec:
     version: 3.15.3
   - name: etcd
     version: 3.4.14
-  date: "2021-03-02T14:50:41Z"
+  date: "2021-03-22T14:50:41Z"
   state: active
 status:
   inUse: false
