@@ -22,5 +22,6 @@ resources:
 - v13.0.0
 - v14.0.0
 - v20.0.0-v1alpha3
+- v20.0.1-v1alpha3
 transformers:
 - releaseNotesTransformer.yaml
