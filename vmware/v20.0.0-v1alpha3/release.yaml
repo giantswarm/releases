@@ -5,13 +5,17 @@ metadata:
   name: v20.0.0-v1alpha3
 spec:
   apps:
+  - name: calico
+    version: 0.2.0
+    componentVersion: 3.18.0
   - name: cert-exporter
     version: 1.6.0
   - componentVersion: 1.1.0
     name: cert-manager
     version: 2.4.1
   - name: chart-operator
-    version: 2.9.0
+    catalog: default-test
+    version: 2.11.0-a332e330b9a1e5a12e8484038f9120f243c578fe # https://github.com/giantswarm/chart-operator/pull/721
   - name: cluster-autoscaler
     version: 1.19.1
   - componentVersion: 1.6.5
@@ -31,9 +35,9 @@ spec:
   components:
   - name: app-operator
     catalog: control-plane-test-catalog
-    reference: 4.0.2-57186cc1edb4e4ff74434e306827d3e741c292d1
+    reference: 4.2.0
     releaseOperatorDeploy: true
-    version: 4.0.2
+    version: 4.2.0
   - name: cluster-api-bootstrap-provider-kubeadm
     catalog: control-plane-test-catalog
     reference: 0.0.0-07f2d6f9192f70727df069bbc90b0213881f402e # https://github.com/giantswarm/cluster-api-bootstrap-provider-kubeadm-app/pull/5
@@ -56,9 +60,9 @@ spec:
     version: 0.0.0
   - name: cluster-operator
     catalog: control-plane-test-catalog
-    reference: 3.6.1-ba5c20fc2173994af21d27846afca6500b37642e
+    reference: 3.6.1-5c303d6c9b708bda6404ae2974ce4a3b3f5269b3 # https://github.com/giantswarm/cluster-operator/pull/1375
     releaseOperatorDeploy: true
-    version: 3.6.1
+    version: 3.6.2-dev
   - name: kubernetes
     version: 1.19.8
   - name: containerlinux
