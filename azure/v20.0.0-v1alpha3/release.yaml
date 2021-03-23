@@ -61,7 +61,7 @@ spec:
     catalog: control-plane-test-catalog
     reference: 3.6.1-5c303d6c9b708bda6404ae2974ce4a3b3f5269b3 # https://github.com/giantswarm/cluster-operator/pull/1375
     releaseOperatorDeploy: true
-    version: 3.6.1
+    version: 3.6.2-dev
   - name: kubernetes
     version: 1.19.8
   - name: containerlinux
