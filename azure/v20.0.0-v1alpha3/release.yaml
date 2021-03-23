@@ -11,7 +11,8 @@ spec:
   - name: cert-exporter
     version: 1.6.0
   - name: chart-operator
-    version: 2.11.0
+    version: 2.11.0-a332e330b9a1e5a12e8484038f9120f243c578fe # https://github.com/giantswarm/chart-operator/pull/721
+    catalog: default-test
   - componentVersion: 1.6.5
     name: coredns
     version: 1.2.0
@@ -58,7 +59,7 @@ spec:
     version: 0.0.0
   - name: cluster-operator
     catalog: control-plane-test-catalog
-    reference: 3.6.1-ba5c20fc2173994af21d27846afca6500b37642e
+    reference: 3.6.1-5c303d6c9b708bda6404ae2974ce4a3b3f5269b3 # https://github.com/giantswarm/cluster-operator/pull/1375
     releaseOperatorDeploy: true
     version: 3.6.1
   - name: kubernetes
