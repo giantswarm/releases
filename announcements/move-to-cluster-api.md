@@ -20,7 +20,7 @@ Giant Swarm has been closely watching the development of the upstream Cluster AP
 - Adding new providers will become easier and Giant Swarm will be in a better position to expand their offering beyond AWS, Azure, and current On-Premises solutions.
 - The possibility to have workload clusters from different providers managed by one management cluster to enable multi-cloud use cases.
 
-### How will the move look like?
+### What will the move look like?
 
 Giant Swarm is putting enormous amount of the effort to make it process safe and convenient to you. From your perspective it will look like a regular update to major version, no migration will be required. On Giant Swarm side, a combination of automated and manual steps will be performed to replace Giant Swarm's parts with upstream Cluster API. Giant Swarm has performed similar process for Azure customers while replacing CoreOS with Flatcar OS, the only inconvinience for the users was the need to schedule the upgrade ahead of time to make sure there's an engineer available to perform the manual parts of the transition.
 
