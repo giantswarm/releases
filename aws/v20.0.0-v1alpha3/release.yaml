@@ -7,6 +7,9 @@ metadata:
   name: v20.0.0-v1alpha3
 spec:
   apps:
+  - name: calico
+    version: 0.2.0
+    componentVersion: 3.18.0
   - name: cert-exporter
     version: 1.6.0
   - componentVersion: 1.1.0
@@ -67,7 +70,7 @@ spec:
     catalog: control-plane-test-catalog
     reference: 3.6.1-5c303d6c9b708bda6404ae2974ce4a3b3f5269b3 # https://github.com/giantswarm/cluster-operator/pull/1375
     releaseOperatorDeploy: true
-    version: 3.6.1
+    version: 3.6.2-dev
   - name: kubernetes
     version: 1.19.8
   - name: containerlinux
