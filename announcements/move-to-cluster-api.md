@@ -30,3 +30,4 @@ These are the steps Giant Swarm plans to make:
 
 ### What are the risks?
 
+### What will change?
