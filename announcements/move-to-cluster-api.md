@@ -22,7 +22,7 @@ Giant Swarm has been closely watching the development of the upstream Cluster AP
 
 ### What will the move look like?
 
-Giant Swarm is putting enormous amount of the effort to make it process safe and convenient to you. From your perspective it will look like a regular update to major version, no migration will be required. On Giant Swarm side, a combination of automated and manual steps will be performed to replace Giant Swarm's parts with upstream Cluster API. Giant Swarm has performed similar process for Azure customers while replacing CoreOS with Flatcar OS, the only inconvinience for the users was the need to schedule the upgrade ahead of time to make sure there's an engineer available to perform the manual parts of the transition.
+Giant Swarm is investing an enormous amount of effort to make the process safe and convenient for you. From your perspective, it will look like a regular update to a new major version -- no migration will be required. On the Giant Swarm side, a combination of automated and manual steps will be performed to replace Giant Swarm's components with upstream Cluster API. During a similar process for undertaken for Azure customers replacing CoreOS with Flatcar, the only inconvenience for the users was the need to schedule the upgrade ahead of time to make sure there's an engineer available to perform the manual parts of the transition.
 
 These are the steps Giant Swarm plans to make:
 1. ...
