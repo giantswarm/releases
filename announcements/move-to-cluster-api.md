@@ -16,7 +16,7 @@ Giant Swarm has been closely watching the development of the upstream Cluster AP
 - Significantly more flexibility and configurability over your infrastructure. Things like deploying into existing networks or ... will now be possible.
 - Future proof API that protects you from vendor lock-ins, developed by dynamicaly growing community which will increase the speed of adding new functionalities over time.
 - Possibility to use all the tooling compatible with the Cluster API not only one created by Giant Swarm.
-- Workload Cluster could be managed by management clusters from other providers if they are compatible with Cluster API like EKS or AKS.
+- Workload clusters can be managed by management clusters from other providers if they are compatible with Cluster API, like EKS or AKS.
 - Adding new providers will become easier and Giant Swarm will be in a better position to expand their offer beyond AWS, Azure, and On-Premises.
 - It will be possible to have workload clusters from different providers managed by one management cluster to enable Multi-cloud use cases.
 
