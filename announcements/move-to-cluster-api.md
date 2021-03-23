@@ -15,7 +15,7 @@ In 2017, due to lack of better alternatives, Giant Swarm decided to build their 
 Giant Swarm has been closely watching the development of the upstream Cluster API project and since it achieved a satisfying level of maturity, decided to adopt it in order to address all of the downsides mentioned above and bring more value to you:
 - Significantly more flexibility and configurability over your infrastructure. Things like deploying into existing networks or ... will now be possible.
 - A future-proof API that protects you from vendor lock-ins, developed by a dynamically growing community which will increase the speed of adding new functionalities over time.
-- Possibility to use all the tooling compatible with the Cluster API not only one created by Giant Swarm.
+- The possibility to use all tooling compatible with the Cluster API -- not only that created by Giant Swarm.
 - Workload clusters can be managed by management clusters from other providers if they are compatible with Cluster API, like EKS or AKS.
 - Adding new providers will become easier and Giant Swarm will be in a better position to expand their offering beyond AWS, Azure, and current On-Premises solutions.
 - The possibility to have workload clusters from different providers managed by one management cluster to enable multi-cloud use cases.
