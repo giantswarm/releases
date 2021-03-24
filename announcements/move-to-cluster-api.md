@@ -2,7 +2,7 @@
 
 Cluster API is a Kubernetes sub-project focused on providing declarative APIs and tooling to simplify provisioning, upgrading, and operating multiple Kubernetes clusters.
 
-Started by the Kubernetes Special Interest Group (SIG) Cluster Lifecycle, the Cluster API project uses Kubernetes-style APIs and patterns to automate cluster lifecycle management for platform operators. The supporting infrastructure, like virtual machines, networks, load balancers, and VPCs, as well as the Kubernetes cluster configuration are all defined in the same way that application developers operate deploying and managing their workloads. This enables consistent and repeatable cluster deployments across a wide variety of infrastructure environments.
+Started by the Kubernetes Special Interest Group (SIG) Cluster Lifecycle, the Cluster API project uses Kubernetes-style APIs and patterns to automate cluster lifecycle management for platform operators. The supporting infrastructure, like virtual machines, networks, load balancers, and VPCs, as well as the Kubernetes cluster configuration are all defined in the same way that application developers operate deploying and managing their workloads. This enables consistent and repeatable cluster deployments across a wide variety of infrastructure environments. The project was started over 2 years ago, and is growing and improving rapidly. You can find more details [here](https://cluster-api.sigs.k8s.io/).
 
 ### Why is Giant Swarm moving to Cluster API?
 
@@ -22,11 +22,7 @@ Giant Swarm has been closely watching the development of the upstream Cluster AP
 
 ### What will the move look like?
 
-Giant Swarm is investing an enormous amount of effort to make the process safe and convenient for you. From your perspective, it will look like a regular update to a new major version -- no migration will be required. On the Giant Swarm side, a combination of automated and manual steps will be performed to replace Giant Swarm's components with upstream Cluster API. During a similar process for undertaken for Azure customers replacing CoreOS with Flatcar, the only inconvenience for the users was the need to schedule the upgrade ahead of time to make sure there's an engineer available to perform the manual parts of the transition.
-
-These are the steps Giant Swarm plans to make:
-1. ...
-
+Giant Swarm is investing an enormous amount of effort to make the process safe and convenient for you. From your perspective, it will look like a regular update to a new major version -- no migration will be required. On the Giant Swarm side, a series of well-tested, automated actions will be performed to transform your current clusters into the Cluster API ones.
 
 ### What are the risks?
 
