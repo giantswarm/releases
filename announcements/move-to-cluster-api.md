@@ -6,7 +6,7 @@ Started by the Kubernetes Special Interest Group (SIG) Cluster Lifecycle, the Cl
 
 ### Why is Giant Swarm moving to Cluster API?
 
-In 2017, due to lack of better alternatives, Giant Swarm decided to build their product based on their own implementation of automation, tools, and operators. This allowed Giant Swarm to provide a stable and easy-to-use product which you are currently using to manager your Kubernetes clusters. Although this solution was ideal for a long time it has it's downsides:
+In 2017, due to a lack of better alternatives, Giant Swarm decided to build their product based on their own implementation of automation, tools, and operators. This allowed Giant Swarm to provide a stable and easy-to-use product that you are currently using to manage your Kubernetes clusters. Although this solution was ideal for a long time it has its downsides:
 - You have limited control over configuration of individual parts of the infrastructure. The product is not flexible enough and sometimes doesn't support all of your use cases.
 - Adding new functionalities is time-consuming and as hyperscalers (Amazon, Microsoft) expand their offering it becomes increasingly difficult to keep up and make it all available to you in a timely manner.
 - Your cluster management is limited to what Giant Swarm tooling enables and there are no available alternatives.
