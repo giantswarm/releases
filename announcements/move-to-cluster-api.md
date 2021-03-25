@@ -22,8 +22,21 @@ Giant Swarm has been closely watching the development of the upstream Cluster AP
 
 ### What will the move look like?
 
-Giant Swarm is investing an enormous amount of effort to make the process safe and convenient for you. From your perspective, it will look like a regular update to a new major version -- no migration will be required. On the Giant Swarm side, a series of well-tested, automated actions will be performed to transform your current clusters into the Cluster API ones.
+Giant Swarm is investing an enormous amount of effort to make the process safe and convenient for you. From your perspective, it will look like a regular update to a new major version -- no migration will be required. On the Giant Swarm side, a series of well-tested, automated actions will be performed to transform your current clusters into the Cluster API ones. Giant Swarm wants to provide a transition path for the clusters in all versions and transform them into Cluster API clusters with little to no downtime in the Kubernetes control plane and no downtime in your workloads. Giant Swarm will perform an in-place upgrade to preserve your current IP addresses.
+
+
+In the first phase, starting the transition will be enabled for Giant Swarm personnel only, but eventually, you will be able to perform it on your workload clusters autonomously.
 
 ### What are the risks?
 
+The infrastructure behind Giant Swarm clusters differs in many ways from the one backing a Cluster API cluster. Giant Swarm engineers worked hard to find an automated, reliable, and reproducible transition path between the two, but there is always the risk that something goes wrong. Giant Swarm will ensure a well-defined, thoroughly tested transition plan to mitigate the risks and have a recovery plan in place if something unexpected happens. The transition will also be done in phases, leaving your mission-critical cluster to the end to adapt the process to all possible custom configurations and make it bullet-proof.
+
+
 ### What will change?
+
+There will be very little to no differences between the Giant Swarm and the Cluster API clusters from the functional point of view. After the transition, you will be able to use the upstream Cluster API tools to manage the clusters.
+
+The most noticeable change will be the deprecation of the 'gsctl' tool that will no longer work against Cluster API clusters. You will be able to continue using Giant Swarm Web UI 'Happa' but only through your company's Single Sign On. 
+
+The concept of organizations as a means to isolate different teams, business units, or projects within one installation will remain. Organizations will become more flexible, allowing you to assign users or groups from your identity provider with granular permissions known from [Kubernetes role-based access control (RBAC)](https://kubernetes.io/docs/reference/access-authn-authz/rbac/).
+
