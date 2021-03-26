@@ -55,7 +55,7 @@ spec:
     version: 0.0.1
   - name: cluster-api-provider-vsphere
     catalog: control-plane-test-catalog
-    reference: 0.0.0-4af760202d251975c6046670d436ccbe8d5e1b98 # https://github.com/giantswarm/cluster-api-core-app/pull/2
+    reference: 0.0.0-ec8a0cc4b732127af42ce17c9a300a1b160d5e47 # https://github.com/giantswarm/cluster-api-provider-vsphere-app/pull/6
     releaseOperatorDeploy: true
     version: 0.0.0
   - name: cluster-operator
