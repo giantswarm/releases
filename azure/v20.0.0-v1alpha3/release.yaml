@@ -5,6 +5,8 @@ metadata:
     "helm.sh/resource-policy": keep # TODO: Remove when this release is merged to master.
   creationTimestamp: null
   name: v20.0.0-v1alpha3
+  annotations:
+    "helm.sh/resource-policy": keep # TODO: Remove when this release is merged to master.
 spec:
   apps:
   - componentVersion: 3.18.0
