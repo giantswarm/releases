@@ -384,6 +384,36 @@ _Nothing has changed._
 
 #### Changed
 - Set docker.io as the default registry
+- Rework the way the txt prefix is generated (whilst still defaulting for default apps). ([#60](https://github.com/giantswarm/external-dns-app/pull/60))
+- Rework how the annotation filter value is generated (whilst still defaulting for default app). ([#60](https://github.com/giantswarm/external-dns-app/pull/60))
+- Only template Secret if both required values are present in `values.yaml`. ([#53](https://github.com/giantswarm/external-dns-app/pull/53))
+- Reworked the App to prepare it for customer use. ([#49](https://github.com/giantswarm/external-dns-app/pull/49))
+  - General:
+    - Pushes the app to the giantswarm app catalog.
+    - Uses Helm release namespace.
+    - Uses the release name for resource naming to avoid conflicts.
+    - Added a values schema to catch incorrect values.
+    - Generally makes the chart easier to use (fully documented values file).
+  - external-dns options:
+    - Allows customisation of the txt registry prefix.
+    - Allows configuration of synchronisation interval.
+    - Filter resources to reconcile via annotations.
+  - AWS-specifc:
+    - Allows the user to provide an IAM role to use.
+    - Allows the user to provide the list of domains for external-dns to manage.
+    - Allows configuration of batch size.
+    - Allows configuration of CNAME instead of ALIAS records.
+    - Allows configuration of the AWS zone type to update.
+- Upgrade upstream external-dns from v0.7.4 to [v0.7.6](https://github.com/kubernetes-sigs/external-dns/releases/tag/v0.7.6).
+### Fixed
+- Adds additional options required for vmware installations. ([#74](https://github.com/giantswarm/external-dns-app/pull/74))
+- Ensure CNAMEs are always used when AWS access is external. ([#62](https://github.com/giantswarm/external-dns-app/pull/62))
+- Revert location of AWS API credentials in `values.yaml`. ([#57](https://github.com/giantswarm/external-dns-app/pull/57))
+### Added
+- Add crd source if the provider is vmware. ([#72](https://github.com/giantswarm/external-dns-app/pull/72))
+- Allow the sync policy to be configured. ([#60](https://github.com/giantswarm/external-dns-app/pull/60))
+- Supports customisation of the txt-owner-id (whilst still defaulting for default apps). ([#60](https://github.com/giantswarm/external-dns-app/pull/60))
+- Supports dry-run mode and warns the user if enabled. ([#60](https://github.com/giantswarm/external-dns-app/pull/60))
 
 
 
