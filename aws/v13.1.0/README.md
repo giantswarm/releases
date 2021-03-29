@@ -23,11 +23,9 @@ Not found
 
 #### Added
 - Include `apiVersion`, `restrictions.compatibleProviders` in appcatalogentry CRs.
-  
 #### Changed
-  
 - Limit the number of AppCatalogEntry per app.
-- Delete legacy finalizers on app CRs. 
+- Delete legacy finalizers on app CRs.
 - Reconciling appCatalog CRs only if pod is unique.
 #### Fixed
 - Updating status as cordoned if app CR has cordoned annotation.
@@ -36,7 +34,7 @@ Not found
 
 ### aws-cni [1.7.8](https://github.com/aws/amazon-vpc-cni-k8s/releases/tag/v1.7.8)
 
-* Improvement - [Replace DescribeNetworkInterfaces with paginated version](https://github.com/aws/amazon-vpc-cni-k8s/pull/1333) (#1333, @haouc)
+* Improvement - [Replace DescribeNetworkInterfaces with paginated version](https://github.com/aws/amazon-vpc-cni-k8s/pull/1333) (#1333, [@haouc](https://github.com/haouc))
 
 
 
@@ -71,18 +69,34 @@ Not found
 
 ### etcd [3.4.14](https://github.com/etcd-io/etcd/releases/tag/v3.4.14)
 
-Not found
+See [code changes](https://github.com/etcd-io/etcd/compare/v3.4.13...v3.4.14) and [v3.4 upgrade guide](https://etcd.io/docs/latest/upgrades/upgrade_3_4/) for any breaking changes.
+#### Package `clientv3`
+- Fix [auth token invalid after watch reconnects](https://github.com/etcd-io/etcd/pull/12264). Get AuthToken automatically when clientConn is ready.
+#### etcd server
+- [Fix server panic](https://github.com/etcd-io/etcd/pull/12288) when force-new-cluster flag is enabled in a cluster which had learner node.
+#### Package `netutil`
+- Remove [`netutil.DropPort/RecoverPort/SetLatency/RemoveLatency`](https://github.com/etcd-io/etcd/pull/12491).
+  - These are not used anymore. They were only used for older versions of functional testing.
+  - Removed to adhere to best security practices, minimize arbitrary shell invocation.
+#### `tools/etcd-dump-metrics`
+- Implement [input validation to prevent arbitrary shell invocation](https://github.com/etcd-io/etcd/pull/12491).
+#### Go
+- Compile with [*Go 1.12.17*](https://golang.org/doc/devel/release.html#go1.12).
+<hr>
 
 
-### kubernetes [1.18.15](https://github.com/kubernetes/kubernetes/releases/tag/v1.18.15)
 
+### kubernetes [1.18.17](https://github.com/kubernetes/kubernetes/releases/tag/v1.18.17)
+
+#### Failing Test
+- Fix handing special characters in the volume path on Windows ([#99138](https://github.com/kubernetes/kubernetes/pull/99138), [@yujuhong](https://github.com/yujuhong)) [SIG Storage]
 #### Bug or Regression
-- Fix Azure file share not deleted issue when the namespace is deleted ([#97417](https://github.com/kubernetes/kubernetes/pull/97417), [@andyzhangx](https://github.com/andyzhangx)) [SIG Cloud Provider and Storage]
-- Fix counting error in service/nodeport/loadbalancer quota check ([#97829](https://github.com/kubernetes/kubernetes/pull/97829), [@pacoxu](https://github.com/pacoxu)) [SIG API Machinery and Network]
-- Fix: azure file latency issue for metadata-heavy workloads ([#97082](https://github.com/kubernetes/kubernetes/pull/97082), [@andyzhangx](https://github.com/andyzhangx)) [SIG Cloud Provider and Storage]
-- Fixed bug in CPUManager with race on container map access ([#97427](https://github.com/kubernetes/kubernetes/pull/97427), [@klueska](https://github.com/klueska)) [SIG Node]
-- GCE Internal LoadBalancer sync loop will now release the ILB IP address upon sync failure. An error in ILB forwarding rule creation will no longer leak IP addresses. ([#97740](https://github.com/kubernetes/kubernetes/pull/97740), [@prameshj](https://github.com/prameshj)) [SIG Cloud Provider and Network]
-- Kubeadm: avoid detection of the container runtime for commands that do not need it ([#97849](https://github.com/kubernetes/kubernetes/pull/97849), [@pacoxu](https://github.com/pacoxu)) [SIG Cluster Lifecycle]
+- Count pod overhead against an entity's ResourceQuota ([#99600](https://github.com/kubernetes/kubernetes/pull/99600), [@gjkim42](https://github.com/gjkim42)) [SIG API Machinery and Node]
+- EndpointSlice controller is now less likely to emit FailedToUpdateEndpointSlices events. ([#100146](https://github.com/kubernetes/kubernetes/pull/100146), [@robscott](https://github.com/robscott)) [SIG Apps and Network]
+- Fixing a bug where a failed node may not have the NoExecute taint set correctly ([#98943](https://github.com/kubernetes/kubernetes/pull/98943), [@CKchen0726](https://github.com/CKchen0726)) [SIG Apps and Node]
+- Kubelet now cleans up orphaned volume directories automatically ([#95301](https://github.com/kubernetes/kubernetes/pull/95301), [@lorenz](https://github.com/lorenz)) [SIG Node and Storage]
+- Resolves spurious `Failed to list *v1.Secret` or `Failed to list *v1.ConfigMap` messages in kubelet logs. ([#99538](https://github.com/kubernetes/kubernetes/pull/99538), [@liggitt](https://github.com/liggitt)) [SIG Auth and Node]
+- We will no longer automatically delete all data when a failure is detected during creation of the volume data file on a CSI volume. Now we will only remove the data file and volume path. ([#96021](https://github.com/kubernetes/kubernetes/pull/96021), [@huffmanca](https://github.com/huffmanca)) [SIG Storage]
 #### Dependencies
 #### Added
 _Nothing has changed._
@@ -93,53 +107,54 @@ _Nothing has changed._
 
 
 
-### cert-manager [2.4.1](https://github.com/giantswarm/cert-manager-app/releases/tag/v2.4.1)
+### cert-manager [2.4.3](https://github.com/giantswarm/cert-manager-app/releases/tag/v2.4.3)
 
 #### Changed
-- Made backoffLimit for clusterissuer job configurable. ([#125](https://github.com/giantswarm/cert-manager-app/pull/125))
-- Updated clusterissuer subchart API groups to `cert-manager.io/v1`. ([#124](https://github.com/giantswarm/cert-manager-app/pull/124))
+- Set docker.io as the default registry
 
 
 
-### external-dns [2.1.1](https://github.com/giantswarm/external-dns-app/releases/tag/v2.1.1)
-
-#### Fixed
-- Ensure CNAMEs are always used when AWS access is external. ([#62](https://github.com/giantswarm/external-dns-app/pull/62))
-
-
-
-### cert-exporter [1.5.0](https://github.com/giantswarm/cert-exporter/releases/tag/v1.5.0)
+### external-dns [2.2.2](https://github.com/giantswarm/external-dns-app/releases/tag/v2.2.2)
 
 #### Changed
-- Check ca.crt expiries in TLS secrets. ([#109](https://github.com/giantswarm/cert-exporter/pull/109))
+- Set docker.io as the default registry
 
 
 
-### chart-operator [2.6.0](https://github.com/giantswarm/chart-operator/releases/tag/v2.6.0)
-
-#### Added
-- Print difference between current release and desired release.
-#### Changed
-- Updated Helm to v3.4.2.
-
-
-
-### kiam [1.7.0](https://github.com/giantswarm/kiam-app/releases/tag/v1.7.0)
-
-- Add taint tolerations for kiam agent and kiam server.
-
-
-
-### metrics-server [1.2.1](https://github.com/giantswarm/metrics-server-app/releases/tag/v1.2.1)
-
-- Push app to control plane catalogs
-
-
-
-### node-exporter [1.7.1](https://github.com/giantswarm/node-exporter-app/releases/tag/v1.7.1)
+### cert-exporter [1.6.1](https://github.com/giantswarm/cert-exporter/releases/tag/v1.6.1)
 
 #### Changed
-- Use the domain registry from installation values if it is present.
+- Set docker.io as the default registry
+
+
+
+### chart-operator [2.12.0](https://github.com/giantswarm/chart-operator/releases/tag/v2.12.0)
+
+#### Changed
+- Set docker.io as the default registry
+- Pass RESTMapper to helmclient to reduce the number of REST API calls.
+- Updated Helm to v3.5.3.
+
+
+
+### kiam [1.7.1](https://github.com/giantswarm/kiam-app/releases/tag/v1.7.1)
+
+#### Changed
+- Set docker.io as the default registry
+
+
+
+### metrics-server [1.2.2](https://github.com/giantswarm/metrics-server-app/releases/tag/v1.2.2)
+
+#### Changed
+- Set docker.io as the default registry
+
+
+
+### node-exporter [1.7.2](https://github.com/giantswarm/node-exporter-app/releases/tag/v1.7.2)
+
+#### Changed
+- Set docker.io as the default registry
 
 
 
