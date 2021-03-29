@@ -462,6 +462,8 @@ _Nothing has changed._
 
 #### Changed
 - Set docker.io as the default registry
+- Push app to control plane catalogs
+- Updated metrics-server version to 0.4.1
 
 
 
