@@ -471,6 +471,4 @@ _Nothing has changed._
 
 #### Changed
 - Set docker.io as the default registry
-
-
-
+- Use the domain registry from installation values if it is present.
