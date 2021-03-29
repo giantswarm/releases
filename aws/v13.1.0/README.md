@@ -7,8 +7,10 @@
 
 ### aws-operator [9.3.9](https://github.com/giantswarm/aws-operator/releases/tag/v9.3.9)
 
-Not found
-
+#### Fixed
+- Added CNI CIDR to internal ELB Security Group
+- Added new Flatcar AMI identifiers
+- Added China Flatcar AMI identifiers
 
 ### cluster-operator [3.6.0](https://github.com/giantswarm/cluster-operator/releases/tag/v3.6.0)
 
