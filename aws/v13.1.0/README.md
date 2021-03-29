@@ -17,6 +17,9 @@
 #### Fixed
 - Fix cluster status computation to correctly display rollbacks, version changes and multiple updates.
 #### Added
+- Add vertical pod autoscaler support
+- Add `appversionlabel` resource to update version labels for optional app CRs
+- Check existence of chart tarball for `release` CR `apps` in catalog
 - Add unit tests for cluster status computation
 
 
