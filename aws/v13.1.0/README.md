@@ -453,6 +453,8 @@ _Nothing has changed._
 
 #### Changed
 - Set docker.io as the default registry
+#### Added
+- Add taint tolerations for kiam agent and kiam server.
 
 
 
