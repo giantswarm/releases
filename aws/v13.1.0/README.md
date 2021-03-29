@@ -385,6 +385,10 @@ _Nothing has changed._
 
 #### Changed
 - Set docker.io as the default registry
+- Check ca.crt expiries in TLS secrets. ([#109](https://github.com/giantswarm/cert-exporter/pull/109))
+### Added
+- Add exceptions in NetworkPolicies to allow DNS to work correctly through port 53.
+- Add new metric (`cert_exporter_secret_not_after`) which tracks expiry of TLS certificates stored in Kubernetes secrets. ([#92](https://github.com/giantswarm/cert-exporter/pull/92))
 
 
 
