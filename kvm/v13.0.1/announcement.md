@@ -1,0 +1,1 @@
+**Workload cluster release v13.0.1 for KVM** is now available. This patch release mitigates a DNS issue affecting cluster creation and scaling. Nodes will be rolled when upgrading to this version. Further details can be found in the [release notes](https://docs.giantswarm.io/changes/workload-cluster-releases-kvm/releases/kvm-v13.0.1/).

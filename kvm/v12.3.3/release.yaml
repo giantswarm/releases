@@ -2,7 +2,7 @@ apiVersion: release.giantswarm.io/v1alpha1
 kind: Release
 metadata:
   creationTimestamp: null
-  name: v12.3.2
+  name: v12.3.3
 spec:
   apps:
   - name: cert-exporter
@@ -46,9 +46,9 @@ spec:
     version: 1.17.8
   - name: kvm-operator
     releaseOperatorDeploy: true
-    version: 3.13.0
-  date: "2020-11-02T10:50:00Z"
-  state: deprecated
+    version: 3.13.1
+  date: "2021-02-23T12:00:00Z"
+  state: active
 status:
   inUse: false
   ready: false
