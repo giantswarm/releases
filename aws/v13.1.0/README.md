@@ -27,12 +27,20 @@
 ### app-operator [3.2.0](https://github.com/giantswarm/app-operator/releases/tag/v3.2.0)
 
 #### Added
+- Add printer columns for Version, Last Deployed and Status to chart CRD in
+tenant clusters.
+- Use validation logic from the app library.
+- Include restrictions data from app metadata files in appcatalogentry CRs.
 - Include `apiVersion`, `restrictions.compatibleProviders` in appcatalogentry CRs.
 #### Changed
+- Using values service from the app library.
+- Updated Helm to v3.4.2.
+- Enable mutating and validating webhooks in app-admission-controller for tenant app CRs.
 - Limit the number of AppCatalogEntry per app.
 - Delete legacy finalizers on app CRs.
 - Reconciling appCatalog CRs only if pod is unique.
 #### Fixed
+- Reuse clients in clients resource when app CR uses inCluster.
 - Updating status as cordoned if app CR has cordoned annotation.
 
 
