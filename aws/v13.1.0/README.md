@@ -434,6 +434,18 @@ _Nothing has changed._
 - Set docker.io as the default registry
 - Pass RESTMapper to helmclient to reduce the number of REST API calls.
 - Updated Helm to v3.5.3.
+- Deploy `giantswarm-critical` PriorityClass when it's not found.
+### Added
+- Updating namespace metadata using namespaceConfig in `Chart` CRs.
+- Pause Chart CR reconciliation when it has chart-operator.giantswarm.io/paused=true annotation.
+- Use diff key when logging differences between the current and desired release.
+- Add support for skip CRD flag when installing Helm releases.
+- Added last reconciled timestamp as metrics.
+- Print difference between current release and desired release.
+- Add Vertical Pod Autoscaler support.
+### Fixed
+- Stop updating Helm release if it has failed the previous 5 attempts.
+- Only create VPA if autoscaling API group is present.
 
 
 
