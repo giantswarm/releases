@@ -34,7 +34,7 @@ The infrastructure behind Giant Swarm clusters differs in many ways from the one
 
 ### What will change?
 
-There will be very little to no differences between the Giant Swarm and the Cluster API clusters from the functional point of view. After the transition, you will be able to use the upstream Cluster API tools to manage the clusters.
+There will be very little to no differences between the Giant Swarm and the Cluster API clusters from the functional point of view.
 
 The most noticeable change will be the deprecation of the 'gsctl' tool that will no longer work against Cluster API clusters. You will be able to continue using Giant Swarm Web UI 'Happa' and 'kubectl gs' plugin but only through your company's Single Sign On. 
 
