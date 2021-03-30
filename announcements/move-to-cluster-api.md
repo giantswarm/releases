@@ -22,7 +22,7 @@ Giant Swarm has been closely watching the development of the upstream Cluster AP
 
 ### What will the move look like?
 
-Giant Swarm is investing an enormous amount of effort to make the process safe and convenient for you. From your perspective, it will look like a regular update to a new major version -- no migration will be required. On the Giant Swarm side, a series of well-tested, automated actions will be performed to transform your current clusters into the Cluster API ones. Giant Swarm wants to provide a transition path for the clusters in all versions and transform them into Cluster API clusters with little to no downtime in the Kubernetes control plane and no downtime in your workloads. Giant Swarm will perform an in-place upgrade to preserve your current IP addresses.
+Giant Swarm is investing an enormous amount of effort to make the process safe and convenient for you. From your perspective, it will look like a regular update to a new major version -- no workload migration will be required. On the Giant Swarm side, a series of well-tested, automated actions will be performed to transform your current clusters into the Cluster API ones. Giant Swarm wants to provide a transition path for the clusters in all versions and transform them into Cluster API clusters with little to no downtime in the Kubernetes control plane and no downtime in your workloads. Giant Swarm will perform an in-place upgrade to preserve your current IP addresses.
 
 
 In the first phase, starting the transition will be enabled for Giant Swarm personnel only, but eventually, you will be able to perform it on your workload clusters autonomously.
