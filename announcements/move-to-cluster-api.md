@@ -38,5 +38,4 @@ There will be very little to no differences between the Giant Swarm and the Clus
 
 The most noticeable change will be the deprecation of the 'gsctl' tool that will no longer work against Cluster API clusters. You will be able to continue using Giant Swarm Web UI 'Happa' and 'kubectl gs' plugin but only through your company's Single Sign On. 
 
-The concept of organizations as a means to isolate different teams, business units, or projects within one installation will remain. Organizations will become more flexible, allowing you to assign users or groups from your identity provider with granular permissions known from [Kubernetes role-based access control (RBAC)](https://kubernetes.io/docs/reference/access-authn-authz/rbac/).
-
+The concept of organizations as a means to isolate different teams, business units, or projects within one installation will remain. Organizations will become more flexible and be mapped to native Kubernetes namespaces and isolation concepts, allowing you to assign users or groups from your identity provider with granular permissions known from [Kubernetes role-based access control (RBAC)](https://kubernetes.io/docs/reference/access-authn-authz/rbac/).
