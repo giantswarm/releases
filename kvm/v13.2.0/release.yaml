@@ -42,11 +42,11 @@ spec:
   - name: flannel-operator
     version: 0.2.0
   - name: kubernetes
-    version: 1.18.12
+    version: 1.19.4
   - name: kvm-operator
     releaseOperatorDeploy: true
     version: 3.15.0
-  date: "2021-03-31T10:08:40Z"
+  date: "2021-03-31T16:53:01Z"
   state: active
 status:
   ready: false
