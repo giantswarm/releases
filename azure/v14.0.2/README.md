@@ -1,6 +1,7 @@
 # :zap: Giant Swarm Release v14.0.2 for Azure :zap:
 
 This release improves draining of the nodes with fixes on azure-scheduled-events app.
+Upgrade from 14.0.1 to 14.0.2 will only roll the apps.
 
 ## Change details
 
