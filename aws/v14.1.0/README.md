@@ -128,13 +128,9 @@ _Nothing has changed._
 
 
 
-### chart-operator [2.12.0](https://github.com/giantswarm/chart-operator/releases/tag/v2.12.0)
+### chart-operator [2.13.0](https://github.com/giantswarm/chart-operator/releases/tag/v2.13.0)
 
-#### Changed
-- Set docker.io as the default registry
-- Pass RESTMapper to helmclient to reduce the number of REST API calls.
-- Updated Helm to v3.5.3.
-
+Not found
 
 
 ### kiam [1.7.1](https://github.com/giantswarm/kiam-app/releases/tag/v1.7.1)
