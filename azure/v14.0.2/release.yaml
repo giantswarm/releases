@@ -1,10 +1,10 @@
 # Generated with:
-# /Users/tobiaszkukawka/go/bin/devctl release create --name 14.0.1 --provider azure --base 14.0.0 --component azure-operator@5.3.1 --overwrite
+# /Users/tobiaszkukawka/go/bin/devctl release create --name 14.0.2 --provider azure --base 14.0.1 --app azure-scheduled-events@0.3.0 --overwrite
 apiVersion: release.giantswarm.io/v1alpha1
 kind: Release
 metadata:
   creationTimestamp: null
-  name: v14.0.1
+  name: v14.0.2
 spec:
   apps:
   - name: cert-exporter
@@ -30,7 +30,7 @@ spec:
   - name: cluster-autoscaler
     version: 1.19.1
   - name: azure-scheduled-events
-    version: 0.2.2
+    version: 0.3.0
   components:
   - name: app-operator
     releaseOperatorDeploy: true
@@ -53,8 +53,8 @@ spec:
     version: 3.15.3
   - name: etcd
     version: 3.4.14
-  date: "2021-03-11T11:40:35Z"
-  state: deprecated
+  date: "2021-03-31T07:53:08Z"
+  state: active
 status:
   inUse: false
   ready: false
