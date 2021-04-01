@@ -191,7 +191,11 @@ _Nothing has changed._
 
 #### Changed
 - Set docker.io as the default registry
-
+- Update `coredns` to upstream version [1.8.0](https://coredns.io/2020/10/22/coredns-1.8.0-release/).
+- Update `coredns` to upstream version [1.7.1](https://coredns.io/2020/09/21/coredns-1.7.1-release/) (including changes introduced in version [1.7.0](https://coredns.io/2020/06/15/coredns-1.7.0-release/)).
+- Update `coredns` to upstream version [1.6.9](https://coredns.io/2020/03/24/coredns-1.6.9-release/).
+### Added
+- Added monitoring annotations and common labels.
 
 
 ### kube-state-metrics [1.3.1](https://github.com/giantswarm/kube-state-metrics-app/releases/tag/v1.3.1)
