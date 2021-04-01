@@ -1,6 +1,6 @@
 # :zap: Giant Swarm Release v14.1.0 for AWS :zap:
 
-<< Add description here >>
+This release provides security and bug fixes for various components.
 
 ## Change details
 
