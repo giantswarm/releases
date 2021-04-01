@@ -1,12 +1,12 @@
 [![CircleCI](https://circleci.com/gh/giantswarm/releases.svg?style=shield)](https://circleci.com/gh/giantswarm/releases)
 
-# Giant Swarm Tenant Cluster Releases
+# Giant Swarm Workload Cluster Releases
 
-This repository contains tenant cluster release notes and changelogs.
+This repository contains workload cluster release notes and changelogs.
 
-Tenant cluster releases can be in
+Workload cluster releases can be in
 different states, namely `active`, `deprecated` and `wip`. With pull requests
-merged to the `master` branch, tenant cluster releases get automatically deployed
+merged to the `master` branch, workload cluster releases get automatically deployed
 to all Giant Swarm installations.
 
 ## AWS
@@ -15,6 +15,8 @@ to all Giant Swarm installations.
     - [v14.1.0](https://github.com/giantswarm/releases/tree/master/aws/v14.1.0)
     - [v14.0.0](https://github.com/giantswarm/releases/tree/master/aws/v14.0.0)
 - v13
+  - v13.1
+    - [v13.1.0](https://github.com/giantswarm/releases/tree/master/aws/v13.1.0)
   - v13.0
     - [v13.0.0](https://github.com/giantswarm/releases/tree/master/aws/v13.0.0)
 - v12
@@ -120,11 +122,14 @@ to all Giant Swarm installations.
 
 - v14
   - v14.1
+    - [v14.1.3](https://github.com/giantswarm/releases/tree/master/azure/v14.1.3)
     - [v14.1.2](https://github.com/giantswarm/releases/tree/master/azure/v14.1.2)
-    - [v14.1.1](https://github.com/giantswarm/releases/tree/master/azure/v14.1.1)
+    - [v14.1.1](https://github.com/giantswarm/releases/tree/master/azure/archived/v14.1.1)
     - [v14.1.0](https://github.com/giantswarm/releases/tree/master/azure/v14.1.0)
 
   - v14.0
+    - [v14.0.2](https://github.com/giantswarm/releases/tree/master/azure/v14.0.2)
+    - [v14.0.1](https://github.com/giantswarm/releases/tree/master/azure/v14.0.1)
     - [v14.0.0](https://github.com/giantswarm/releases/tree/master/azure/v14.0.0)
 
 - v13
@@ -183,6 +188,8 @@ to all Giant Swarm installations.
 ## KVM
 
 - v13
+  - v13.1
+    - [v13.1.0](https://github.com/giantswarm/releases/tree/master/kvm/v13.1.0)
   - v13.0
     - [v13.0.1](https://github.com/giantswarm/releases/tree/master/kvm/v13.0.1)
     - [v13.0.0](https://github.com/giantswarm/releases/tree/master/kvm/v13.0.0)

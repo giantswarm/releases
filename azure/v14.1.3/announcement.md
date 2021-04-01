@@ -1,0 +1,2 @@
+**Workload cluster release v14.1.3 for Azure** is now available. This releases increases the Azure Events Termination timeout from 5 to 15 minutes for better upgrade experience while workloads are moved to new nodes. The draining process of the nodes has been improved as well. Further details can be found in the [release notes](https://docs.giantswarm.io/changes/workload-cluster-releases-azure/releases/azure-v14.1.3/).
+
