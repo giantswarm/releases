@@ -2,6 +2,8 @@
 
 This release provides security and bug fixes for various components.
 
+> **_Warning:_** The nginx app needs to be updated to `v1.14.0+` because a new version of `external-dns` is included in this release.
+
 ## Change details
 
 
