@@ -148,7 +148,22 @@ _Nothing has changed._
 
 ### chart-operator [2.13.0](https://github.com/giantswarm/chart-operator/releases/tag/v2.13.0)
 
-Not found
+### Changed
+- `giantswarm-critical` PriorityClass only managed when E2E.
+- Set docker.io as the default registry
+- Pass RESTMapper to helmclient to reduce the number of REST API calls.
+- Updated Helm to v3.5.3.
+- Deploy `giantswarm-critical` PriorityClass when it's not found.
+### Added
+- Updating namespace metadata using namespaceConfig in `Chart` CRs.
+- Pause Chart CR reconciliation when it has chart-operator.giantswarm.io/paused=true annotation.
+- Use diff key when logging differences between the current and desired release.
+- Add support for skip CRD flag when installing Helm releases.
+- Added last reconciled timestamp as metrics.
+### Fixed
+- Stop updating Helm release if it has failed the previous 5 attempts.
+- Only create VPA if autoscaling API group is present.
+
 
 
 ### kiam [1.7.1](https://github.com/giantswarm/kiam-app/releases/tag/v1.7.1)
