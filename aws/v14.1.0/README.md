@@ -30,25 +30,6 @@ This release provides security and bug fixes for various components.
 
 
 
-### etcd [3.4.14](https://github.com/etcd-io/etcd/releases/tag/v3.4.14)
-
-See [code changes](https://github.com/etcd-io/etcd/compare/v3.4.13...v3.4.14) and [v3.4 upgrade guide](https://etcd.io/docs/latest/upgrades/upgrade_3_4/) for any breaking changes.
-#### Package `clientv3`
-- Fix [auth token invalid after watch reconnects](https://github.com/etcd-io/etcd/pull/12264). Get AuthToken automatically when clientConn is ready.
-#### etcd server
-- [Fix server panic](https://github.com/etcd-io/etcd/pull/12288) when force-new-cluster flag is enabled in a cluster which had learner node.
-#### Package `netutil`
-- Remove [`netutil.DropPort/RecoverPort/SetLatency/RemoveLatency`](https://github.com/etcd-io/etcd/pull/12491).
-  - These are not used anymore. They were only used for older versions of functional testing.
-  - Removed to adhere to best security practices, minimize arbitrary shell invocation.
-#### `tools/etcd-dump-metrics`
-- Implement [input validation to prevent arbitrary shell invocation](https://github.com/etcd-io/etcd/pull/12491).
-#### Go
-- Compile with [*Go 1.12.17*](https://golang.org/doc/devel/release.html#go1.12).
-<hr>
-
-
-
 ### kubernetes [1.19.9](https://github.com/kubernetes/kubernetes/releases/tag/v1.19.9)
 
 #### Failing Test
