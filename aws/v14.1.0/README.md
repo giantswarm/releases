@@ -141,6 +141,8 @@ _Nothing has changed._
 
 #### Changed
 - Set docker.io as the default registry
+### Added
+- Add exceptions in NetworkPolicies to allow DNS to work correctly through port 53.
 
 
 
