@@ -1,4 +1,4 @@
-# :zap: This week in provider-independent announcements (April 2, 2021) :zap:
+# :zap: This week in provider-independent announcements (April 9, 2021) :zap:
 
 Highlights only. For a complete update, check the  [changes and releases](https://docs.giantswarm.io/changes/) section in our documentation.
 
