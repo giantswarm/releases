@@ -30,12 +30,6 @@ This release provides security and bug fixes for various components.
 
 
 
-### aws-cni [1.7.8](https://github.com/aws/amazon-vpc-cni-k8s/releases/tag/v1.7.8)
-
-* Improvement - [Replace DescribeNetworkInterfaces with paginated version](https://github.com/aws/amazon-vpc-cni-k8s/pull/1333) (#1333, [@haouc](https://github.com/haouc))
-
-
-
 ### containerlinux [2605.12.0](https://www.flatcar-linux.org/releases/#release-2605.12.0)
 
 **Security fixes**
