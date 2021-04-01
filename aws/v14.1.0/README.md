@@ -120,6 +120,9 @@ _Nothing has changed._
 
 #### Changed
 - Set docker.io as the default registry
+- Made CRD install Job backoffLimit configurable (and increased the default value). ([#129](https://github.com/giantswarm/cert-manager-app/pull/129))
+### Added
+- Enabled configuration of certificate Secret deletion when the parent Certificate is deleted. ([#127](https://github.com/giantswarm/cert-manager-app/pull/127))
 
 
 
