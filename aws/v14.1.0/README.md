@@ -130,6 +130,10 @@ _Nothing has changed._
 
 #### Changed
 - Set docker.io as the default registry
+### Fixed
+- Adds additional options required for vmware installations. ([#74](https://github.com/giantswarm/external-dns-app/pull/74))
+### Added
+- Add crd source if the provider is vmware. ([#72](https://github.com/giantswarm/external-dns-app/pull/72))
 
 
 
