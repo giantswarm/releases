@@ -11,6 +11,9 @@ This release provides security and bug fixes for various components.
 - Fix cluster status computation to correctly display rollbacks, version changes and multiple updates.
 #### Added
 - Add unit tests for cluster status computation
+- Check existence of chart tarball for `release` CR `apps` in catalog.
+- Add vertical pod autoscaler support.
+- Add `appversionlabel` resource to update version labels for optional app CRs.
 
 
 
