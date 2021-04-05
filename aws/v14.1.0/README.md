@@ -19,17 +19,28 @@ This release provides security and bug fixes for various components.
 
 
 
-### app-operator [3.2.0](https://github.com/giantswarm/app-operator/releases/tag/v3.2.0)
+### app-operator [4.3.1](https://github.com/giantswarm/app-operator/releases/tag/v4.3.1)
 
 #### Added
 - Include `apiVersion`, `restrictions.compatibleProviders` in appcatalogentry CRs.
+- Cache k8sclient, helmclient for later use.
+- Apply the namespaceConfig to the desired chart.
+- Install apps in CAPI Workload Clusters.
+- Apply compatibleProvider,namespace metadata validation based on the relevant AppCatalogEntry CR.
+- Add annotations from Helm charts to AppCatalogEntry CRs.
+- Enable Vertical Pod Autoscaler.
 #### Changed
 - Limit the number of AppCatalogEntry per app.
 - Delete legacy finalizers on app CRs.
 - Reconciling appCatalog CRs only if pod is unique.
+- Updated Helm to v3.5.3.
+- Replace status webhook with chart CR status watcher.
+- Sort AppCatalogEntry CRs by version and created timestamp.
+- Watch cluster namespace for per workload cluster instances of app-operator.
 #### Fixed
 - Updating status as cordoned if app CR has cordoned annotation.
-
+- Restore chart-operator when it had been deleted.
+- Use backoff in chart CR watcher to wait until kubeconfig secret exists.
 
 
 ### kubernetes [1.19.9](https://github.com/kubernetes/kubernetes/releases/tag/v1.19.9)
@@ -217,6 +228,3 @@ Not found
 #### Changed
 - Set docker.io as the default registry
 - Update kubectl image to v1.18.8.
-
-
-
