@@ -12,6 +12,7 @@ to all Giant Swarm installations.
 ## AWS
 - v14
   - v14.0
+    - [v14.1.0](https://github.com/giantswarm/releases/tree/master/aws/v14.1.0)
     - [v14.0.0](https://github.com/giantswarm/releases/tree/master/aws/v14.0.0)
 - v13
   - v13.1
@@ -125,7 +126,7 @@ to all Giant Swarm installations.
     - [v14.1.2](https://github.com/giantswarm/releases/tree/master/azure/v14.1.2)
     - [v14.1.1](https://github.com/giantswarm/releases/tree/master/azure/archived/v14.1.1)
     - [v14.1.0](https://github.com/giantswarm/releases/tree/master/azure/v14.1.0)
-    
+
   - v14.0
     - [v14.0.2](https://github.com/giantswarm/releases/tree/master/azure/v14.0.2)
     - [v14.0.1](https://github.com/giantswarm/releases/tree/master/azure/v14.0.1)
