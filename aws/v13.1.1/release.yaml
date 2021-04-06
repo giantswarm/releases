@@ -1,13 +1,12 @@
 # Generated with:
-#devctl release create --name 13.1.0 --provider aws --base 13.0.0 --component aws-operator@9.3.9 --app cert-manager@2.4.1 --app external-dns@2.1.1 --component cluster-operator@3.6.0 --app cert-exporter@1.5.0 --app chart-operator@2.6.0 --app kiam@1.7.0 --app metrics-server@1.2.1 --component app-operator@3.2.0 --component aws-cni@1.7.8 --component containerlinux@2605.12.0 --component etcd@3.4.14 --component kubernetes@1.18.15 --app node-exporter@1.7.1 --overwrite
-# devctl release create --name 13.1.0 --provider aws --base 13.0.0 --component aws-operator@9.3.9 --app cert-manager@2.4.3 --app external-dns@2.2.2 --component cluster-operator@3.6.0 --app cert-exporter@1.6.1 --app chart-operator@2.12.0 --app kiam@1.7.1 --app metrics-server@1.2.2 --component app-operator@3.2.0 --component aws-cni@1.7.8 --component containerlinux@2605.12.0 --component etcd@3.4.14 --component kubernetes@1.18.17 --app node-exporter@1.7.2 --overwrite
+# devctl release create --name 13.1.1 --provider aws --base 13.1.0 --app external-dns@2.3.0 --overwrite
 apiVersion: release.giantswarm.io/v1alpha1
 kind: Release
 metadata:
   annotations:
     giantswarm.io/docs: https://docs.giantswarm.io/reference/cp-k8s-api/releases.release.giantswarm.io/
   creationTimestamp: null
-  name: v13.1.0
+  name: v13.1.1
 spec:
   apps:
   - name: cert-exporter
@@ -25,7 +24,7 @@ spec:
     version: 1.2.0
   - componentVersion: 0.7.6
     name: external-dns
-    version: 2.2.2
+    version: 2.3.0
   - componentVersion: 3.6.0
     name: kiam
     version: 1.7.1
@@ -64,7 +63,7 @@ spec:
     version: 3.4.14
   - name: kubernetes
     version: 1.18.17
-  date: "2021-03-29T06:34:36Z"
-  state: deprecated
+  date: "2021-04-06T09:45:50Z"
+  state: active
 status:
   ready: false
