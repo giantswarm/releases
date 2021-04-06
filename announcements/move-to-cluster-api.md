@@ -29,7 +29,7 @@ In the first phase, starting the transition will be enabled for Giant Swarm pers
 
 ### What are the risks?
 
-The infrastructure behind Giant Swarm clusters differs in many ways from the one backing a Cluster API cluster. Giant Swarm engineers worked hard to find an automated, reliable, and reproducible transition path between the two, but there is always the risk that something goes wrong. Giant Swarm will ensure a well-defined, thoroughly tested transition plan to mitigate the risks and have a recovery plan in place if something unexpected happens. The transition will also be done in phases, leaving your mission-critical cluster to the end to adapt the process to all possible custom configurations and make it bullet-proof.
+The infrastructure behind Giant Swarm clusters differs in many ways from the one backing a Cluster API cluster. Giant Swarm engineers worked hard to find an automated, reliable, and reproducible transition path between the two, but there is always the risk that something goes wrong. Giant Swarm will ensure a well-defined, thoroughly tested transition plan to mitigate the risks and have a recovery plan in place if something unexpected happens. The transition will also be done in phases, leaving your mission-critical cluster(s) to the end to adapt the process to all possible custom configurations and make it bullet-proof.
 
 
 ### What will change?
