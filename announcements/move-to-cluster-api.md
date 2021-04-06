@@ -36,6 +36,6 @@ The infrastructure behind Giant Swarm clusters differs in many ways from the one
 
 There will be very little to no differences between the Giant Swarm and the Cluster API clusters from the functional point of view.
 
-The most noticeable change will be the deprecation of the 'gsctl' tool that will no longer work for creating or managing Cluster API clusters. You will be able to continue using Giant Swarm Web UI 'Happa' and 'kubectl gs', which support login directly through your company's Single Sign-On with all of its security features provided including multi-factor authentication.
+The most noticeable change will be the deprecation of the 'gsctl' tool that will no longer work for creating or managing Cluster API clusters. You will be able to continue using Giant Swarm Web UI and 'kubectl gs', which support login directly through your company's Single Sign-On with all of its security features provided including multi-factor authentication.
 
 The concept of organizations as a means to isolate different teams, business units, or projects within one installation will remain. Organizations will become more flexible and be mapped to native Kubernetes namespaces and isolation concepts, allowing you to assign users or groups from your identity provider with granular permissions known from [Kubernetes role-based access control (RBAC)](https://kubernetes.io/docs/reference/access-authn-authz/rbac/).
