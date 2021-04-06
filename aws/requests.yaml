@@ -13,6 +13,10 @@ releases:
         - name: coredns
           version: ">= 1.4.0"
           issue: https://github.com/giantswarm/giantswarm/issues/13771
+    - name: "> 13.1.0 > 14.0.0 > 14.1.0"
+      requests:
+        - name: external-dns
+          version: ">= 2.3.0"
     - name: "> 14.0.0"
       requests:
         - name: app-operator
