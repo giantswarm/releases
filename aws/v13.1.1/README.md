@@ -1,6 +1,8 @@
 # :zap: Giant Swarm Release v13.1.1 for AWS :zap:
 
-<< Add description here >>
+This release provides a bug fix for the external-dns-app.
+
+> **_Warning:_** The nginx app needs to be updated to `v1.14.0+` because a new version of `external-dns` is included in this release.
 
 ## Change details
 
