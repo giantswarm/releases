@@ -60,7 +60,7 @@ spec:
     version: 0.0.2
   - name: cluster-api-provider-aws
     catalog: control-plane-test-catalog
-    reference: 0.0.1-7a3bb448e61504f963e399c2e1f4a2579e8f0883 # https://github.com/giantswarm/cluster-api-provider-aws-app/pull/21
+    reference: 0.0.1-d025597bf3b3da6a02e68d9fd08a4a361389b01b # https://github.com/giantswarm/cluster-api-provider-aws-app/pull/21
     releaseOperatorDeploy: true
     version: 0.0.1
   - name: cluster-operator
