@@ -4,11 +4,7 @@ For a comprehensive and always-updated view of all new features and changes for 
 
 ## Managed apps
 
-[Cert Manager v2.4.4](https://docs.giantswarm.io/changes/managed-apps/cert-manager-app/v2.4.4/) renames the clusterissuer subchart and makes pods of deployments use read-only file systems, in order to...
-
-[External DNS v.2.3.0](https://docs.giantswarm.io/changes/managed-apps/external-dns-app/v2.3.0/) now periodically validates IAM credentials for AWS, self-killing and recovering from authentication errors.
-
-[NGINX IC v1.15.1](https://docs.giantswarm.io/changes/managed-apps/nginx-ingress-controller-app/v1.15.1/) adds options for `failurePolicy` and `timeoutSeconds` to the validating webhook, in order to...
+[NGINX IC v1.15.1](https://docs.giantswarm.io/changes/managed-apps/nginx-ingress-controller-app/v1.15.1/) adds options to configure `failurePolicy` and `timeoutSeconds` to relax the validating webhook.
 
 ## Documentation
 
