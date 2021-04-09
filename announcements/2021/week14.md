@@ -4,7 +4,7 @@ For a comprehensive and always-updated view of all new features and changes for 
 
 ## Managed apps
 
-[NGINX IC v1.15.1](https://docs.giantswarm.io/changes/managed-apps/nginx-ingress-controller-app/v1.15.1/) adds options to configure `failurePolicy` and `timeoutSeconds` to relax the validating webhook.
+[NGINX IC v1.15.1](https://docs.giantswarm.io/changes/managed-apps/nginx-ingress-controller-app/v1.15.1/) adds options to configure `failurePolicy` and `timeoutSeconds` to allow relaxing the validating webhook.
 
 ## Documentation
 
