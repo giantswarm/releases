@@ -39,3 +39,8 @@ There will be very little to no differences between the Giant Swarm and the Clus
 The most noticeable change will be the deprecation of the 'gsctl' tool that will no longer work for creating or managing Cluster API clusters. You will be able to continue using Giant Swarm Web UI and 'kubectl gs', which support login directly through your company's Single Sign-On with all of its security features provided including multi-factor authentication.
 
 The concept of organizations as a means to isolate different teams, business units, or projects within one installation will remain. Organizations will become more flexible and be mapped to native Kubernetes namespaces and isolation concepts, allowing you to assign users or groups from your identity provider with granular permissions known from [Kubernetes role-based access control (RBAC)](https://kubernetes.io/docs/reference/access-authn-authz/rbac/).
+
+
+### What is the ETA?
+
+We have made a big step forward by having 6 of 8 engineering teams within Giant Swarm form a spearhead towards CAPI for the whole month of March 2021. We made good progress, but there's still a lot to do to bring you a production-ready setup on par with the features you already enjoy today. Our next goal is to provide you with an early test version in the coming months and then work in parallel on getting that version ready for production and enable you with a non-breaking upgrade path to it. We will keep you updated as things progress. In the meantime feel free to reach out to us with questions, concerns, or general comments.
