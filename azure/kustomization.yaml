@@ -8,5 +8,6 @@ resources:
 - v14.0.1
 - v14.0.2
 - v14.1.4
+- v20.0.0-v1alpha3
 transformers:
 - releaseNotesTransformer.yaml

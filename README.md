@@ -123,6 +123,10 @@ to all Giant Swarm installations.
 
 ## Azure
 
+- v20
+  - v20.0
+    - [v20.0.0-v1alpha3](https://github.com/giantswarm/releases/tree/master/azure/v20.0.0-v1alpha3)
+
 - v14
   - v14.1
     - [v14.1.4](https://github.com/giantswarm/releases/tree/master/azure/v14.1.4)
