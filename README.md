@@ -124,6 +124,9 @@ to all Giant Swarm installations.
 ## Azure
 
 - v14
+  - v14.2
+    - [v14.2.0](https://github.com/giantswarm/releases/tree/master/azure/v14.2.0)
+    
   - v14.1
     - [v14.1.4](https://github.com/giantswarm/releases/tree/master/azure/v14.1.4)
     - [v14.1.3](https://github.com/giantswarm/releases/tree/master/azure/archived/v14.1.3)
