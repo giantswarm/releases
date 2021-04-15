@@ -4,7 +4,7 @@ For a comprehensive and always-updated view of all new features and changes for 
 
 ## General
 
-We informed you via our user interfaces that Kubernetes v1.18 would run out of support (EOL) by April 8. This was a mistake. The **actual EOL date for v1.18 is April 30**. Apologies for the discomfort we may have caused!
+Our user interfaces previously indicated that Kubernetes v1.18 would run out of support (EOL) by April 8. This was a mistake. The **actual EOL date for v1.18 is April 30**. Apologies for the discomfort we may have caused!
 
 ## Managed apps
 
