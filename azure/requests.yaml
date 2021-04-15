@@ -94,3 +94,8 @@ releases:
       requests:
       - name: containerlinux
         version: ">= 2605.12.0"
+    - name: "> 14.1.4"
+      requests:
+        - name: azure-scheduled-events
+          version: ">= 0.4.0"
+          issue: https://github.com/giantswarm/giantswarm/issues/16642
