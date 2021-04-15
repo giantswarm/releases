@@ -5,7 +5,7 @@ This release upgrades Kubernetes to 1.19. It also includes other minor component
 ## Change details
 
 
-### kvm-operator [master](https://github.com/giantswarm/kvm-operator/releases/tag/vmaster)
+### kvm-operator [3.15.1](https://github.com/giantswarm/kvm-operator/releases/tag/v3.15.1)
 
 Not found
 
