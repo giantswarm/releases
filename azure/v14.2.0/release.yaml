@@ -37,7 +37,7 @@ spec:
     version: 3.2.1
   - name: azure-operator
     catalog: control-plane-test-catalog
-    reference: 5.5.2-3f809e0b65c72adcfef14a19308b73e08e4b2b3c
+    reference: 5.5.2-b47a4dd0033e7742fad637efc87000ca1eb01f45
     releaseOperatorDeploy: true
     version: 5.6.0-dev
   - name: cert-operator
@@ -55,7 +55,7 @@ spec:
   - name: etcd
     version: 3.4.14
   date: "2021-04-14T10:06:25Z"
-  state: wip
+  state: active
 status:
   inUse: false
   ready: false
