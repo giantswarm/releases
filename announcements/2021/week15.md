@@ -4,7 +4,9 @@ For a comprehensive and always-updated view of all new features and changes for 
 
 ## General
 
-We made a mistake, and we’re here to apologize. In our user interfaces, we previously indicated that Kubernetes v1.18 would run out of support (reach end of life, EOL) by April 8. This was a mistake. The **EOL date for v1.18 is April 14** (two days ago) after the Kubernetes project meanwhile had set it to April 30. Sorry for the confusion this may have caused!
+We made a mistake, and we’re here to apologize. In our user interfaces, we previously indicated that Kubernetes v1.18 would run out of support (reach end of life, EOL) by April 8. This was a mistake. The **EOL date for v1.18 is April 14** (two days ago). Sorry for the confusion this may have caused!
+
+Our KVM team is working hard to provide a release with Kubernetes v1.19 soon.
 
 ## Managed apps
 
