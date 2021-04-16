@@ -10,5 +10,7 @@ Our KVM team is working hard to provide a release with Kubernetes v1.19 soon.
 
 ## Managed apps
 
+[NGINX IC v1.16.0](https://docs.giantswarm.io/changes/managed-apps/nginx-ingress-controller-app/v1.16.0/) fixes the validation of CPU requests and limits. It also updates the controller container image to v0.45.0, addressing OpenSSL CVEs.
+
 ---
 Please let <!subteam^S0GSG846L|Product Owners> know if you have any feedback or questions by replying to this announcement in a thread.
