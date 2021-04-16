@@ -14,8 +14,7 @@ Our KVM team is working hard to provide a release with Kubernetes v1.19 soon.
 
 ## User interfaces
 
-- `kubectl gs template nodepool`: We removed the `--num-availability-zones` flag which had no effect recently. We are working on bringing back the flag and its functionality in a future release.
-- The `kubectl gs` plug-in bianary is now available for Apple M1.
+`kubectl gs template nodepool`: We removed the `--num-availability-zones` flag which had no effect recently. We are working on bringing back the flag and its functionality in a future release.
 
 ---
 Please let <!subteam^S0GSG846L|Product Owners> know if you have any feedback or questions by replying to this announcement in a thread.
