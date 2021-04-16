@@ -8,7 +8,7 @@ We made a mistake, and we’re here to apologize. In our user interfaces, we pre
 
 ## Managed apps
 
-[NGINX IC v1.16.0]() fixes the validation of CPU requests and limits. It also updates the controller container image to v0.45.0, addressing OpenSSL CVEs.
+[NGINX IC v1.16.0](https://docs.giantswarm.io/changes/managed-apps/nginx-ingress-controller-app/v1.16.0/) fixes the validation of CPU requests and limits. It also updates the controller container image to v0.45.0, addressing OpenSSL CVEs.
 
 ---
 Please let <!subteam^S0GSG846L|Product Owners> know if you have any feedback or questions by replying to this announcement in a thread.
