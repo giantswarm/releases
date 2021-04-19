@@ -1,10 +1,10 @@
 # Generated with:                                                  # Generated with:
-# devctl release create --name 14.1.4 --provider azure --base 1 |  # devctl release create --name 14.2.0 --provider azure --base 1
+# devctl release create --name 14.1.4 --provider azure --base 1 |  # devctl release create --name 14.2.0-beta1 --provider azure --base 1
 apiVersion: release.giantswarm.io/v1alpha1                         apiVersion: release.giantswarm.io/v1alpha1
 kind: Release                                                      kind: Release
 metadata:                                                          metadata:
   creationTimestamp: null                                            creationTimestamp: null
-  name: v14.1.4                                                 |    name: v14.2.0
+  name: v14.1.4                                                 |    name: v14.2.0-beta1
 spec:                                                              spec:
   apps:                                                              apps:
   - name: cert-exporter                                              - name: cert-exporter
