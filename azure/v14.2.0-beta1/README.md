@@ -1,4 +1,4 @@
-# :zap: Giant Swarm Release v14.2.0 for Azure :zap:
+# :zap: Giant Swarm Release v14.2.0-beta1 for Azure :zap:
 
 << Add description here >>
 

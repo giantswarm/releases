@@ -1,10 +1,10 @@
 # Generated with:
-# devctl release create --name 14.2.0 --provider azure --base 14.1.4 --app azure-scheduled-events@0.4.0
+# devctl release create --name 14.2.0-beta1 --provider azure --base 14.1.4 --app azure-scheduled-events@0.4.0
 apiVersion: release.giantswarm.io/v1alpha1
 kind: Release
 metadata:
   creationTimestamp: null
-  name: v14.2.0
+  name: v14.2.0-beta1
 spec:
   apps:
   - name: cert-exporter
@@ -37,7 +37,7 @@ spec:
     version: 3.2.1
   - name: azure-operator
     catalog: control-plane-test-catalog
-    reference: 5.5.2-b47a4dd0033e7742fad637efc87000ca1eb01f45
+    reference: 5.5.2-f762e037d64b16e0a6d8ec0f7fbeaaf7ccd65735
     releaseOperatorDeploy: true
     version: 5.6.0-dev
   - name: cert-operator
