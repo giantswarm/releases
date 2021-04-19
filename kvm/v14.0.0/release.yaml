@@ -47,7 +47,7 @@ spec:
     version: 1.19.9
   - name: kvm-operator
     catalog: control-plane-test-catalog
-    reference: 3.15.0-04db84f65e90b9253159bd8b05ab18ad860039bb
+    reference: 3.15.0-f5750027054c17156d0e585c3edce28abe618960
     releaseOperatorDeploy: true
     version: 3.15.1-dev
   date: "2021-04-08T13:17:48Z"
