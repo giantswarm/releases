@@ -1,4 +1,9 @@
 releases:
+    - name: ">= 14.1.1"
+      requests:
+        - name: net-exporter
+          version: ">= 1.10.0"
+          issue: https://github.com/giantswarm/giantswarm/issues/16574
     - name: ">= 15.0.0"
       requests:
         - name: app-operator
@@ -25,9 +30,6 @@ releases:
         - name: chart-operator
           version: ">= 2.12.0"
           issue: https://github.com/giantswarm/giantswarm/issues/15213
-        - name: net-exporter
-          version: ">= 1.10.0"
-          issue: https://github.com/giantswarm/giantswarm/issues/16574
     - name: "> 13.1.0 < 14.0.0"
       requests:
         - name: cert-manager
