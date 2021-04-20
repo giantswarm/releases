@@ -90,6 +90,9 @@ releases:
         version: ">= 2605.10.0"
       - name: etcd
         version: ">= 3.4.14"
+      - name: net-exporter
+        version: ">= 1.10.0"
+        issue: https://github.com/giantswarm/giantswarm/issues/16574
     - name: "> 14.0.2"
       requests:
       - name: containerlinux

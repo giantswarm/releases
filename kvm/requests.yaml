@@ -10,6 +10,9 @@ releases:
         - name: coredns
           version: ">= 1.4.0"
           issue: https://github.com/giantswarm/giantswarm/issues/13771
+        - name: net-exporter
+          version: ">= 1.10.0"
+          issue: https://github.com/giantswarm/giantswarm/issues/16574
     - name: "> 13.1.0"
       requests:
         - name: app-operator
