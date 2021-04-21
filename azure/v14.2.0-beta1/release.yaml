@@ -1,5 +1,5 @@
 # Generated with:
-# devctl release create --name 14.2.0-beta1 --provider azure --base 14.1.4 --app azure-scheduled-events@0.4.0
+# devctl release create --name 14.2.0-beta1 --provider azure --base 14.1.4 --app azure-scheduled-events@0.4.0 --app cluster-autoscaler@1.19.2 --component cluster-operator@0.27.0 --component azure-operator@5.6.0-beta1
 apiVersion: release.giantswarm.io/v1alpha1
 kind: Release
 metadata:
@@ -37,7 +37,7 @@ spec:
     version: 3.2.1
   - name: azure-operator
     catalog: control-plane-test-catalog
-    reference: 5.5.2-5a4ddbc10a75d39d6ee77888a630ccb847e8e506
+    reference: 5.5.2-516fd8b964566b5eb89290f0dc0f710bed9249ae
     releaseOperatorDeploy: true
     version: 5.6.0-dev
   - name: cert-operator
@@ -45,7 +45,7 @@ spec:
     version: 1.0.1
   - name: cluster-operator
     releaseOperatorDeploy: true
-    version: 0.26.0
+    version: 0.27.0
   - name: kubernetes
     version: 1.19.9
   - name: containerlinux
