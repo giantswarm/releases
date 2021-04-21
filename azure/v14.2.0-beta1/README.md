@@ -1,7 +1,7 @@
 # :zap: Giant Swarm Release v14.2.0-beta1 for Azure :zap:
 
 This is a beta release for Azure that replaces the previously used `VPN gateway` with `VNet peering`, cutting cluster deployment time
-by several minutes.
+by several minutes. Most workload clusters should be up and running in about 10 minutes from this release on.
 
 Being a `beta` release, you are free to deploy new clusters as well as update existing ones, but please keep in mind that it is discouraged
 to use it for production workload clusters.
