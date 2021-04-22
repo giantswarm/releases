@@ -17,7 +17,7 @@ spec:
     version: 2.4.1
   - name: chart-operator
     catalog: default-test
-    version: 2.11.0-a332e330b9a1e5a12e8484038f9120f243c578fe # https://github.com/giantswarm/chart-operator/pull/721
+    version: 2.11.0-b3a391136adb51c5f2290a4ff2b30620c715d274 # https://github.com/giantswarm/chart-operator/pull/721
   - name: cluster-autoscaler
     version: 1.19.1
   - componentVersion: 0.7.6
