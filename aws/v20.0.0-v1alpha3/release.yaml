@@ -65,7 +65,7 @@ spec:
     version: 0.0.1
   - name: cluster-operator
     catalog: control-plane-test-catalog
-    reference: 3.6.1-5c303d6c9b708bda6404ae2974ce4a3b3f5269b3 # https://github.com/giantswarm/cluster-operator/pull/1375
+    reference: 3.6.1-cd63f05a4f00db5824fb82f07a210547a22325aa # https://github.com/giantswarm/cluster-operator/pull/1379
     releaseOperatorDeploy: true
     version: 3.6.2-dev
   - name: kubernetes
