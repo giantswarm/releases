@@ -30,7 +30,7 @@ spec:
   - name: cluster-autoscaler
     version: 1.19.1
   - name: azure-scheduled-events
-    version: 0.3.0
+    version: 0.4.0
   components:
   - name: app-operator
     releaseOperatorDeploy: true
