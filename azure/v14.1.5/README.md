@@ -1,6 +1,8 @@
 # :zap: Giant Swarm Release v14.1.5 for Azure :zap:
 
-<< Add description here >>
+This Workload Cluster release contains fixes for azure-operator handling multi-tenant service principal secrets as a prerequisite for migration from VPN Gateway to VNET peering. Moreover we have extended azure-scheduled-events app with additional Azure VMSS events handling. 
+
+Please contact your Solution Architect in order to validate if this release is necessary for your use-case.
 
 ## Change details
 
