@@ -1,5 +1,5 @@
 # Generated with:
-# devctl release create --name 14.1.5 --provider azure --base 14.1.4 --component azure-operator@5.5.3-dev --overwrite
+# devctl release create --name 14.1.5 --provider azure --base 14.1.4 --component azure-operator@5.5.3-dev --app azure-scheduled-events@0.4.0 --component containerlinux@2765.2.2 --overwrite
 apiVersion: release.giantswarm.io/v1alpha1
 kind: Release
 metadata:
@@ -30,15 +30,13 @@ spec:
   - name: cluster-autoscaler
     version: 1.19.1
   - name: azure-scheduled-events
-    version: 0.3.0
+    version: 0.4.0
   components:
   - name: app-operator
     releaseOperatorDeploy: true
     version: 3.2.1
   - name: azure-operator
     releaseOperatorDeploy: true
-    catalog: control-plane-test
-    reference: 5.5.2-c4cf0232e509b15790d7550e18b31292adb5362b
     version: 5.5.3-dev
   - name: cert-operator
     reference: 0.1.0-2
@@ -50,12 +48,12 @@ spec:
   - name: kubernetes
     version: 1.19.8
   - name: containerlinux
-    version: 2605.12.0
+    version: 2765.2.2
   - name: calico
     version: 3.15.3
   - name: etcd
     version: 3.4.14
-  date: "2021-04-23T13:57:11Z"
+  date: "2021-04-23T14:00:35Z"
   state: active
 status:
   inUse: false
