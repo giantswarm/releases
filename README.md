@@ -24,6 +24,7 @@ to all Giant Swarm installations.
     - [v13.0.0](https://github.com/giantswarm/releases/tree/master/aws/v13.0.0)
 - v12
   - v12.7
+    - [v12.7.2](https://github.com/giantswarm/releases/tree/master/aws/v12.7.2)
     - [v12.7.1](https://github.com/giantswarm/releases/tree/master/aws/v12.7.1)
     - [v12.7.0](https://github.com/giantswarm/releases/tree/master/aws/v12.7.0)
   - v12.6
