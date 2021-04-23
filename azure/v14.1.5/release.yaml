@@ -1,5 +1,5 @@
 # Generated with:
-# devctl release create --name 14.1.5 --provider azure --base 14.1.4 --component azure-operator@5.5.3-dev --app azure-scheduled-events@0.4.0 --component containerlinux@2765.2.2 --overwrite
+# devctl release create --name 14.1.5 --provider azure --base 14.1.4 --component azure-operator@5.5.3-dev --app azure-scheduled-events@0.4.0
 apiVersion: release.giantswarm.io/v1alpha1
 kind: Release
 metadata:
@@ -46,14 +46,14 @@ spec:
     releaseOperatorDeploy: true
     version: 0.23.22
   - name: kubernetes
-    version: 1.19.8
+    version: 1.19.10
   - name: containerlinux
     version: 2765.2.2
   - name: calico
     version: 3.15.3
   - name: etcd
     version: 3.4.14
-  date: "2021-04-23T14:00:35Z"
+  date: "2021-04-23T14:03:42Z"
   state: active
 status:
   inUse: false
