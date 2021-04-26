@@ -1,12 +1,12 @@
 # Generated with:
-# devctl release create --name 15.0.0-eric-k8scloudconfig --base v14.1.1 --releases . --provider aws --overwrite true --component aws-operator@10.2.0-5b060a33da6db02f95e733b989fdc0d3ac788ed3
+# devctl release create --name 15.0.0-erick8scloudconfig --base v14.1.1 --releases . --provider aws --overwrite true --component aws-operator@10.2.0-5b060a33da6db02f95e733b989fdc0d3ac788ed3
 apiVersion: release.giantswarm.io/v1alpha1
 kind: Release
 metadata:
   annotations:
     giantswarm.io/docs: https://docs.giantswarm.io/reference/cp-k8s-api/releases.release.giantswarm.io/
   creationTimestamp: null
-  name: v15.0.0-eric-k8scloudconfig
+  name: v15.0.0-erick8scloudconfig
 spec:
   apps:
   - name: cert-exporter

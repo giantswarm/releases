@@ -1,4 +1,4 @@
-# :zap: Giant Swarm Release v15.0.0-eric-k8scloudconfig for AWS :zap:
+# :zap: Giant Swarm Release v15.0.0-erick8scloudconfig for AWS :zap:
 
 << Add description here >>
 

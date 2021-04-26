@@ -6,7 +6,7 @@ metadata:                                                          metadata:
   annotations:                                                       annotations:
     giantswarm.io/docs: https://docs.giantswarm.io/reference/cp        giantswarm.io/docs: https://docs.giantswarm.io/reference/cp
   creationTimestamp: null                                            creationTimestamp: null
-  name: v14.1.1                                                 |    name: v15.0.0-eric-k8scloudconfig
+  name: v14.1.1                                                 |    name: v15.0.0-erick8scloudconfig
 spec:                                                              spec:
   apps:                                                              apps:
   - name: cert-exporter                                              - name: cert-exporter
