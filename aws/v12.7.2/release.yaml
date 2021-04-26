@@ -1,12 +1,12 @@
 # Generated with:
-# devctl release create --name 12.7.1 --provider aws --base 12.7.0
+# devctl release create --name 12.7.2 --provider aws --base 12.7.1 --component aws-operator@9.3.1-ipam --overwrite
 apiVersion: release.giantswarm.io/v1alpha1
 kind: Release
 metadata:
   annotations:
     giantswarm.io/docs: https://docs.giantswarm.io/reference/cp-k8s-api/releases.release.giantswarm.io/
   creationTimestamp: null
-  name: v12.7.1
+  name: v12.7.2
 spec:
   apps:
   - name: cert-exporter
@@ -47,7 +47,7 @@ spec:
     version: 1.7.5
   - name: aws-operator
     releaseOperatorDeploy: true
-    version: 9.3.1-fix
+    version: 9.3.1-ipam
   - name: calico
     version: 3.15.3
   - name: cert-operator
@@ -63,8 +63,7 @@ spec:
     version: 3.4.13
   - name: kubernetes
     version: 1.17.13
-  date: "2020-12-24T10:20:34Z"
-  state: deprecated
+  date: "2021-04-26T13:51:04Z"
+  state: active
 status:
-  inUse: false
   ready: false
