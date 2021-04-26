@@ -7,6 +7,4 @@ This release fixes an issue that can cause an IP conflict to occur in certain si
 
 ### aws-operator [9.3.1-ipam](https://github.com/giantswarm/aws-operator/releases/tag/v9.3.1-ipam)
 
-Not found
-
-
+- Fix IPAM conflicts when creating a node pool
