@@ -1,5 +1,5 @@
 # Generated with:                                                  # Generated with:
-# devctl release create --name 14.1.4 --provider azure --base 1 |  # devctl release create --name 14.1.5 --provider azure --base 1
+# devctl release create --name 14.1.4 --provider azure --base 1 |  # /home/whites/workspace/devctl/devctl release create --name 14
 apiVersion: release.giantswarm.io/v1alpha1                         apiVersion: release.giantswarm.io/v1alpha1
 kind: Release                                                      kind: Release
 metadata:                                                          metadata:
@@ -37,7 +37,7 @@ spec:                                                              spec:
     version: 3.2.1                                                     version: 3.2.1
   - name: azure-operator                                             - name: azure-operator
     releaseOperatorDeploy: true                                        releaseOperatorDeploy: true
-    version: 5.5.2                                              |      version: 5.5.3-dev
+    version: 5.5.2                                              |      version: 5.5.3
   - name: cert-operator                                              - name: cert-operator
     reference: 0.1.0-2                                                 reference: 0.1.0-2
     releaseOperatorDeploy: true                                        releaseOperatorDeploy: true
@@ -53,7 +53,7 @@ spec:                                                              spec:
     version: 3.15.3                                                    version: 3.15.3
   - name: etcd                                                       - name: etcd
     version: 3.4.14                                                    version: 3.4.14
-  date: "2021-04-06T08:44:15Z"                                  |    date: "2021-04-23T14:03:42Z"
+  date: "2021-04-06T08:44:15Z"                                  |    date: "2021-04-26T08:51:07Z"
   state: deprecated                                             |    state: active
 status:                                                            status:
   inUse: false                                                       inUse: false
