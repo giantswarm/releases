@@ -1,6 +1,6 @@
 # :zap: Giant Swarm Release v12.7.2 for AWS :zap:
 
-<< Add description here >>
+This release fixes an issue that can cause an IP conflict to occur in certain situations when a node pool is created.
 
 ## Change details
 
