@@ -12,7 +12,7 @@ to all Giant Swarm installations.
 ## AWS
 - v15
   - v15.0
-    - [v15.0.0-eric-k8scloudconfig](https://github.com/giantswarm/releases/tree/master/aws/v14.1.1)
+    - [v15.0.0-eric-k8scloudconfig](https://github.com/giantswarm/releases/tree/master/aws/v15.0.0-eric-k8scloudconfig)
 - v14
   - v14.1
     - [v14.1.1](https://github.com/giantswarm/releases/tree/master/aws/v14.1.1)
