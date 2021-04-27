@@ -48,7 +48,7 @@ spec:
     releaseOperatorDeploy: true
     reference: 10.2.0-5b060a33da6db02f95e733b989fdc0d3ac788ed3
     catalog: control-plane-test-catalog
-    version: 10.2.0-eric
+    version: 10.2.1-dev
   - name: calico
     version: 3.15.3
   - name: cert-operator
