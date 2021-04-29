@@ -24,6 +24,7 @@ to all Giant Swarm installations.
     - [v13.0.0](https://github.com/giantswarm/releases/tree/master/aws/v13.0.0)
 - v12
   - v12.7
+    - [v12.7.2](https://github.com/giantswarm/releases/tree/master/aws/v12.7.2)
     - [v12.7.1](https://github.com/giantswarm/releases/tree/master/aws/v12.7.1)
     - [v12.7.0](https://github.com/giantswarm/releases/tree/master/aws/v12.7.0)
   - v12.6
@@ -125,6 +126,7 @@ to all Giant Swarm installations.
 
 - v14
   - v14.1
+    - [v14.1.5](https://github.com/giantswarm/releases/tree/master/azure/v14.1.5)
     - [v14.1.4](https://github.com/giantswarm/releases/tree/master/azure/v14.1.4)
     - [v14.1.3](https://github.com/giantswarm/releases/tree/master/azure/archived/v14.1.3)
     - [v14.1.2](https://github.com/giantswarm/releases/tree/master/azure/archived/v14.1.2)
@@ -134,7 +136,7 @@ to all Giant Swarm installations.
   - v14.0
     - [v14.0.2](https://github.com/giantswarm/releases/tree/master/azure/v14.0.2)
     - [v14.0.1](https://github.com/giantswarm/releases/tree/master/azure/v14.0.1)
-    - [v14.0.0](https://github.com/giantswarm/releases/tree/master/azure/v14.0.0)
+    - [v14.0.0](https://github.com/giantswarm/releases/tree/master/azure/archived/v14.0.0)
 
 - v13
   - v13.1
@@ -142,12 +144,12 @@ to all Giant Swarm installations.
     - [v13.1.0](https://github.com/giantswarm/releases/tree/master/azure/archived/v13.1.0)
   - v13.0
     - [v13.0.2](https://github.com/giantswarm/releases/tree/master/azure/archived/v13.0.2)
-    - [v13.0.1](https://github.com/giantswarm/releases/tree/master/azure/v13.0.1)
+    - [v13.0.1](https://github.com/giantswarm/releases/tree/master/azure/archived/v13.0.1)
     - [v13.0.0](https://github.com/giantswarm/releases/tree/master/azure/archived/v13.0.0)
 
 - v12
   - v12.1
-    - [v12.1.2](https://github.com/giantswarm/releases/tree/master/azure/v12.1.2)
+    - [v12.1.2](https://github.com/giantswarm/releases/tree/master/azure/archived/v12.1.2)
     - [v12.1.1](https://github.com/giantswarm/releases/tree/master/azure/archived/v12.1.1)
     - [v12.1.0](https://github.com/giantswarm/releases/tree/master/azure/archived/v12.1.0)
   - v12.0
