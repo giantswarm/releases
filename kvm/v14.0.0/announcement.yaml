@@ -1,0 +1,1 @@
+**Workload cluster release v14.0.0 for KVM** is now available. This is the first KVM release including Kubernetes 1.19. It also includes a number of component upgrades and improvements to cluster management. Further details can be found in the [release notes](https://docs.giantswarm.io/changes/workload-cluster-releases-kvm/releases/kvm-v14.0.0/).

@@ -1,5 +1,5 @@
-# Generated with:                                                  # Generated with:
-# devctl release create --name 13.1.0 --provider kvm --base 13. |  # devctl release create --name 14.0.0 --provider kvm --base 13.
+# Generated with:                                               <
+# devctl release create --name 13.1.0 --provider kvm --base 13. <
 apiVersion: release.giantswarm.io/v1alpha1                         apiVersion: release.giantswarm.io/v1alpha1
 kind: Release                                                      kind: Release
 metadata:                                                          metadata:
@@ -21,7 +21,7 @@ spec:                                                              spec:
     name: metrics-server                                               name: metrics-server
     version: 1.1.1                                                     version: 1.1.1
   - name: net-exporter                                               - name: net-exporter
-    version: 1.9.2                                                     version: 1.9.2
+    version: 1.9.2                                              |      version: 1.10.1
   - componentVersion: 1.0.1                                          - componentVersion: 1.0.1
     name: node-exporter                                                name: node-exporter
     version: 1.7.0                                                     version: 1.7.0
@@ -47,8 +47,8 @@ spec:                                                              spec:
     version: 1.18.12                                            |      version: 1.19.9
   - name: kvm-operator                                               - name: kvm-operator
     releaseOperatorDeploy: true                                        releaseOperatorDeploy: true
-    version: 3.14.2                                             |      version: master
-  date: "2021-03-10T14:26:09Z"                                  |    date: "2021-04-08T13:17:48Z"
+    version: 3.14.2                                             |      version: 3.16.0
+  date: "2021-03-10T14:26:09Z"                                  |    date: "2021-04-29T12:00:00Z"
   state: active                                                      state: active
 status:                                                            status:
   inUse: false                                                       inUse: false
