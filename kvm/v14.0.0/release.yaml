@@ -46,11 +46,9 @@ spec:
   - name: kubernetes
     version: 1.19.9
   - name: kvm-operator
-    catalog: control-plane-test-catalog
-    reference: 3.15.0-f5750027054c17156d0e585c3edce28abe618960
     releaseOperatorDeploy: true
-    version: 3.15.1-dev
-  date: "2021-04-08T13:17:48Z"
+    version: 3.16.0
+  date: "2021-04-29T12:00:00Z"
   state: active
 status:
   inUse: false

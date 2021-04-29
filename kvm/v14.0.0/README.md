@@ -5,9 +5,11 @@ This release upgrades Kubernetes to 1.19. It also includes other minor component
 ## Change details
 
 
-### kvm-operator [3.15.1](https://github.com/giantswarm/kvm-operator/releases/tag/v3.15.1)
+### kvm-operator [3.16.0](https://github.com/giantswarm/kvm-operator/releases/tag/v3.16.0)
 
-Not found
+#### Changed
+
+- Update k8scloudconfig to use calico-crd-installer.
 
 
 ### app-operator [3.2.1](https://github.com/giantswarm/app-operator/releases/tag/v3.2.1)
@@ -57,5 +59,8 @@ _Nothing has changed._
 #### Changed
 - Set docker.io as the default registry
 
+### net-exporter [1.10.0](https://github.com/giantswarm/net-exporter/releases/tag/v1.10.0)
 
+#### Changed
 
+- Add label selector for pods to help lower memory usage.
