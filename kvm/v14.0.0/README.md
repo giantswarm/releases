@@ -91,7 +91,7 @@ As of Kubernetes 1.19, bugfix support via patch releases for a Kubernetes minor 
 
 ### coredns [1.4.1](https://github.com/giantswarm/coredns-app/releases/tag/v1.4.1)
 
-### Changed
+#### Changed
 
 - Set docker.io as the default registry
 - Update `coredns` to upstream version [1.8.0](https://coredns.io/2020/10/22/coredns-1.8.0-release/).
