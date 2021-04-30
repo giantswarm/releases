@@ -8,7 +8,7 @@ For a comprehensive and always-updated view of all new features and changes for 
 
 [EFK v0.5.1]() upgrades to Open Distro for Elasticsearch v1.13.2.
 
-[NGINX IC v1.16.1](https://github.com/giantswarm/nginx-ingress-controller-app/blob/master/CHANGELOG.md#1161---2021-04-20) adds pass through annotation and labels to the controller service...?
+[NGINX IC v1.16.1](https://github.com/giantswarm/nginx-ingress-controller-app/blob/master/CHANGELOG.md#1161---2021-04-20) is now more flexible, allowing you to change any annotation you want, for example, the AWS LoadBalancer Type.
 
 [Prometheus Operator v0.8.0](https://github.com/giantswarm/prometheus-operator-app/blob/master/CHANGELOG.md#080---2021-04-26) upgrades to kube-prometheus-stack v15.2.0, which includes Prometheus v2.26.0.
 
