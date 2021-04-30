@@ -16,7 +16,11 @@ For a comprehensive and always-updated view of all new features and changes for 
 
 ## User interfaces
 
+## Docs
 
+The [search engine in docs](https://docs.giantswarm.io/) now searches the blog, making it quicker for you to find what you are looking for. Please try it and let us know what you think!
+
+We updated these docs to reflect recent improvements: [Advanced ingress configuration](https://docs.giantswarm.io/advanced/ingress/configuration/), [The Giant Swarm App Platform](https://docs.giantswarm.io/app-platform/overview/), and [Prepare an Azure subscription to run Giant Swarm workload clusters](https://docs.giantswarm.io/getting-started/cloud-provider-accounts/azure/).
 
 ---
 Please let <!subteam^S0GSG846L|Product Owners> know if you have any feedback or questions by replying to this announcement in a thread.
