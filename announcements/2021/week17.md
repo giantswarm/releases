@@ -6,13 +6,13 @@ For a comprehensive and always-updated view of all new features and changes for 
 
 [EFK v0.5.1](https://docs.giantswarm.io/changes/managed-apps/efk-stack-app/v0.5.1/) upgrades to Open Distro for Elasticsearch v1.13.2.
 
-[Prometheus Operator v0.8.0](https://github.com/giantswarm/prometheus-operator-app/blob/master/CHANGELOG.md#080---2021-04-26) upgrades to kube-prometheus-stack v15.2.0, which includes Prometheus v2.26.0.
+[Prometheus Operator v0.8.0](https://docs.giantswarm.io/changes/managed-apps/prometheus-operator-app/v0.8.0/) upgrades to kube-prometheus-stack v15.2.0, which includes Prometheus v2.26.0.
 
-[NGINX IC v1.16.1](https://github.com/giantswarm/nginx-ingress-controller-app/blob/master/CHANGELOG.md#1161---2021-04-20) is now more flexible, allowing you to change any annotation you want, for example, the AWS LoadBalancer Type.
+[NGINX IC v1.16.1](https://docs.giantswarm.io/changes/managed-apps/nginx-ingress-controller-app/v1.16.1/) is now more flexible, allowing you to change any annotation you want, for example, the AWS LoadBalancer Type.
 
-[Cert Manager v2.6.0](https://github.com/giantswarm/cert-manager-app/blob/master/CHANGELOG.md#260---2021-04-30) adds support for DNS01 challenge, allowing gigantic.io certificates to work behind a firewall. It simplifies creation of installations on-premises. Prior, [Cert Manager v2.5.0](https://github.com/giantswarm/cert-manager-app/blob/master/CHANGELOG.md#250---2021-04-19) upgrades to upstream v1.2.0.
+[Cert Manager v2.6.0](https://docs.giantswarm.io/changes/managed-apps/cert-manager-app/v2.6.0/) adds support for DNS01 challenge, allowing gigantic.io certificates to work behind a firewall. It simplifies creation of installations on-premises. Prior, [Cert Manager v2.5.0](https://docs.giantswarm.io/changes/managed-apps/cert-manager-app/v2.5.0/) upgrades to upstream v1.2.0.
 
-[Aqua v5.3.4](https://github.com/giantswarm/aqua-app/blob/master/CHANGELOG.md#534---2021-04-28) upgrades to container image v5.3.21112.
+[Aqua v5.3.4](https://docs.giantswarm.io/changes/managed-apps/aqua-app/v5.3.4/) upgrades to container image v5.3.21112.
 
 ## Docs
 
