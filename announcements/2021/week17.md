@@ -14,8 +14,6 @@ For a comprehensive and always-updated view of all new features and changes for 
 
 [Aqua v5.3.4](https://github.com/giantswarm/aqua-app/blob/master/CHANGELOG.md#534---2021-04-28) upgrades to container image v5.3.21112.
 
-## User interfaces
-
 ## Docs
 
 The [search engine in docs](https://docs.giantswarm.io/) now searches the blog, making it quicker for you to find what you are looking for. Please try it and let us know what you think!
