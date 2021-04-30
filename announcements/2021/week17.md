@@ -6,6 +6,8 @@ For a comprehensive and always-updated view of all new features and changes for 
 
 [Cert Manager v2.6.0](https://github.com/giantswarm/cert-manager-app/blob/master/CHANGELOG.md#260---2021-04-30) adds support for DNS01 challenge, allowing gigantic.io certificates to work behind a firewall. It simplifies creation of installations on-premises. Prior, [Cert Manager v2.5.0](https://github.com/giantswarm/cert-manager-app/blob/master/CHANGELOG.md#250---2021-04-19) upgrades to upstream v1.2.0.
 
+[EFK v0.5.1]() upgrades to Open Distro for Elasticsearch v1.13.2.
+
 [NGINX IC v1.16.1](https://github.com/giantswarm/nginx-ingress-controller-app/blob/master/CHANGELOG.md#1161---2021-04-20) adds pass through annotation and labels to the controller service...?
 
 [Prometheus Operator v0.8.0](https://github.com/giantswarm/prometheus-operator-app/blob/master/CHANGELOG.md#080---2021-04-26) upgrades to kube-prometheus-stack v15.2.0, which includes Prometheus v2.26.0.
