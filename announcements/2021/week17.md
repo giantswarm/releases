@@ -2,6 +2,10 @@
 
 For a comprehensive and always-updated view of all new features and changes for apps, workload clusters, UI, and documentation, please check out [changes and releases](https://docs.giantswarm.io/changes/). Below are the highlights.
 
+## General
+
+Upstream recently announced another change to the end of life (EOL) date of Kubernetes 1.18. The last patch for v1.18 will be published May 12th 2021. Our interfaces have been updated to reflect that.
+
 ## Managed apps
 
 [EFK v0.5.1](https://docs.giantswarm.io/changes/managed-apps/efk-stack-app/v0.5.1/) upgrades to Open Distro for Elasticsearch v1.13.2.
