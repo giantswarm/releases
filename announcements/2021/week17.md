@@ -16,7 +16,7 @@ Upstream recently announced another change to the end of life (EOL) date of Kube
 
 [Cert Manager v2.6.0](https://docs.giantswarm.io/changes/managed-apps/cert-manager-app/v2.6.0/) adds support for DNS01 challenge, allowing gigantic.io certificates to work behind a firewall. It simplifies creation of installations on-premises. Prior, [Cert Manager v2.5.0](https://docs.giantswarm.io/changes/managed-apps/cert-manager-app/v2.5.0/) upgrades to upstream v1.2.0.
 
-[Aqua v5.3.4](https://docs.giantswarm.io/changes/managed-apps/aqua-app/v5.3.4/) upgrades to container image v5.3.21112.
+[Aqua v5.3.5](https://github.com/giantswarm/aqua-app/blob/master/CHANGELOG.md#535---2021-04-30) upgrades to container image v5.3.21119.
 
 ## Docs
 
