@@ -40,7 +40,6 @@ spec:
     version: 1.7.2
   components:
   - name: app-operator
-    releaseOperatorDeploy: true
     version: 4.4.0
   - name: aws-cni
     version: 1.7.8
