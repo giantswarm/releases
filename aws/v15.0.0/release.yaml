@@ -45,7 +45,7 @@ spec:
     version: 1.7.8
   - name: aws-operator
     releaseOperatorDeploy: true
-    reference: 10.2.0-15277a2a51d6c7344c85670bd711fe048510192e
+    reference: 10.2.0-8bcbca1c3edd23caec296a93bb3a878b910038ed
     version: 10.2.1-dev
   - name: calico
     version: 3.15.3
