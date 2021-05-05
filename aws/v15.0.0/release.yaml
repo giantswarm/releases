@@ -15,7 +15,7 @@ spec:
     name: cert-manager
     version: 2.4.3
   - name: chart-operator
-    version: 2.13.0
+    version: 2.13.1
   - name: cluster-autoscaler
     version: 1.19.2
   - componentVersion: 1.6.5
@@ -46,7 +46,7 @@ spec:
   - name: aws-operator
     releaseOperatorDeploy: true
     catalog: control-plane-test-catalog
-    reference: 10.2.0-8bcbca1c3edd23caec296a93bb3a878b910038ed
+    reference: 10.2.0-3882687b14f513cbb5540c861eab42d7046381c1
     version: 10.2.1-dev
   - name: calico
     version: 3.15.3
