@@ -46,7 +46,7 @@ spec:
   - name: aws-operator
     releaseOperatorDeploy: true
     catalog: control-plane-test-catalog
-    reference: 10.2.0-3882687b14f513cbb5540c861eab42d7046381c1
+    reference: 10.2.0-38ae95d8b7bb1d981b12be9eb383a21a590ccfc0
     version: 10.2.1-dev
   - name: calico
     version: 3.15.3
