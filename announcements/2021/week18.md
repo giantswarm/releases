@@ -10,7 +10,7 @@ For a comprehensive and always-updated view of all new features and changes for 
 
 ## User interfaces
 
-[kubectl gs](https://docs.giantswarm.io/ui-api/kubectl-gs/), our plug-in for the Giant Swarm Management API, is now available as binary for the ARM achitecture, both for Linux and macOS.
+[kubectl gs](https://docs.giantswarm.io/ui-api/kubectl-gs/), our plug-in for the Giant Swarm Management API, is now available as binary for the ARM achitecture (e. g. Apple M1), both for Linux and macOS.
 
 ## Documentation
 
