@@ -30,7 +30,7 @@ releases:
       requests:
         - name: external-dns
           version: ">= 2.3.0"
-    - name: "> 14.0.0"
+    - name: "> 14.0.0 < 15.0.0"
       requests:
         - name: app-operator
           version: ">= 3.2.1 < 4.0.0"
