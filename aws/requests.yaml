@@ -16,6 +16,11 @@ releases:
         - name: coredns
           version: ">= 1.4.0"
           issue: https://github.com/giantswarm/giantswarm/issues/13771
+    - name: "> 13.1.1 > 14.1.1"
+      requests:
+        - name: cert-manager
+          version: ">= 2.7.0"
+          issue: https://github.com/giantswarm/giantswarm/issues/17029
     - name: "> 14.1.1"
       requests:
         - name: containerlinux
@@ -25,7 +30,7 @@ releases:
       requests:
         - name: external-dns
           version: ">= 2.3.0"
-    - name: "> 14.0.0"
+    - name: "> 14.0.0 < 15.0.0"
       requests:
         - name: app-operator
           version: ">= 3.2.1"
