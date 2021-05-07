@@ -4,6 +4,10 @@ For a comprehensive and always-updated view of all new features and changes for 
 
 ## Managed apps
 
+[Cert Manager v2.7.0](https://docs.giantswarm.io/changes/managed-apps/cert-manager-app/v2.7.0/) upgrades to upstream v1.3.1, which fixes an issue preventing app upgrades.
+
+[Kong v2.0.0](https://docs.giantswarm.io/changes/managed-apps/kong-app/v2.0.0/) upgrades to upstream stable v2.0.0. Make sure to review the [upstream changelog](https://github.com/Kong/charts/blob/main/charts/kong/CHANGELOG.md#200) and the [upgrade documentation](https://github.com/giantswarm/kong-app/blob/master/helm/kong-app/UPGRADE.md), as support for Helm 2 as well as other 1.x features are dropped.
+
 ## User interfaces
 
 [kubectl gs](https://docs.giantswarm.io/ui-api/kubectl-gs/), our plug-in for the Giant Swarm Management API, is now available as binary for the ARM achitecture, both for Linux and macOS.
