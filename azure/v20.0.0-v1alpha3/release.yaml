@@ -5,8 +5,6 @@ metadata:
     "helm.sh/resource-policy": keep # TODO: Remove when this release is merged to master.
   creationTimestamp: null
   name: v20.0.0-v1alpha3
-  annotations:
-    "helm.sh/resource-policy": keep # TODO: Remove when this release is merged to master.
 spec:
   apps:
   - componentVersion: 3.18.0
@@ -59,6 +57,11 @@ spec:
   - name: cluster-api-provider-azure
     catalog: control-plane-test-catalog
     reference: 0.0.0-b6c2e7b32c31216a230b5ec39eddf474e97035d8 # https://github.com/giantswarm/cluster-api-provider-azure-app/pull/10
+    releaseOperatorDeploy: true
+    version: 0.0.0
+  - name: capi-migration
+    catalog: control-plane-test-catalog
+    reference: 0.0.0-ed5a1ec2eabb528c515e623edecdfac64e78e4b0
     releaseOperatorDeploy: true
     version: 0.0.0
   - name: cluster-operator
