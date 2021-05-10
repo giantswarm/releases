@@ -1,10 +1,10 @@
 # Generated with:
-# devctl release create --name 15.0.0-beta1 --provider azure --base 14.1.5 --app chart-operator@2.13.1 --app cluster-autoscaler@1.20.2 --component app-operator@4.4.0 --component azure-operator@5.6.1-k8s-1-20 --component cert-operator@1.0.1 --component cluster-operator@0.27.1 --component kubernetes@1.20.6
+# devctl release create --name 15.0.0 --provider azure --base 14.1.5 --app chart-operator@2.13.1 --app cluster-autoscaler@1.20.2 --component app-operator@4.4.0 --component azure-operator@5.6.1-k8s-1-20 --component cert-operator@1.0.1 --component cluster-operator@0.27.1 --component kubernetes@1.20.6
 apiVersion: release.giantswarm.io/v1alpha1
 kind: Release
 metadata:
   creationTimestamp: null
-  name: v15.0.0-beta1
+  name: v15.0.0
 spec:
   apps:
   - name: cert-exporter
@@ -50,7 +50,7 @@ spec:
   - name: kubernetes
     version: 1.20.6
   - name: containerlinux
-    version: 2765.2.2
+    version: 2765.2.3
   - name: calico
     version: 3.15.3
   - name: etcd
