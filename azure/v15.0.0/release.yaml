@@ -1,5 +1,5 @@
 # Generated with:
-# devctl release create --name 15.0.0 --provider azure --base 14.1.5 --app chart-operator@2.13.1 --app cluster-autoscaler@1.20.2 --component app-operator@4.4.0 --component azure-operator@5.6.1-k8s-1-20 --component cert-operator@1.0.1 --component cluster-operator@0.27.1 --component kubernetes@1.20.6
+# devctl release create --name 15.0.0 --provider azure --base 14.1.5 --app chart-operator@2.14.0 --app net-exporter@1.10.1 --app coredns@1.4.1 --app cluster-autoscaler@1.20.2 --component app-operator@4.4.0 --component azure-operator@5.6.1-k8s-1-20 --component cert-operator@1.0.1 --component cluster-operator@0.27.1 --component kubernetes@1.20.6
 apiVersion: release.giantswarm.io/v1alpha1
 kind: Release
 metadata:
@@ -10,10 +10,10 @@ spec:
   - name: cert-exporter
     version: 1.6.0
   - name: chart-operator
-    version: 2.13.1
+    version: 2.14.0
   - componentVersion: 1.6.5
     name: coredns
-    version: 1.2.0
+    version: 1.4.1
   - componentVersion: 0.7.6
     name: external-dns
     version: 2.3.0
@@ -23,7 +23,7 @@ spec:
   - name: metrics-server
     version: 1.2.1
   - name: net-exporter
-    version: 1.9.2
+    version: 1.10.1
   - componentVersion: 1.0.1
     name: node-exporter
     version: 1.7.1
