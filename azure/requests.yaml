@@ -28,12 +28,12 @@ releases:
           issue: https://github.com/giantswarm/giantswarm/issues/15920
         - name: external-dns
           version: ">= 2.3.0"
-    - name: "> 14.1.2"
+    - name: "> 14.1.2 < 15.0.0"
       requests:
         - name: app-operator
           version: ">= 3.2.1 < 4.0.0"
           issue: https://github.com/giantswarm/giantswarm/issues/15920
-    - name: "> 14.1.0"
+    - name: "> 14.1.0 < 15.0.0"
       requests:
         - name: app-operator
           version: ">= 3.2.0 < 4.0.0"
