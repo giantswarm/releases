@@ -1,6 +1,13 @@
 # :zap: Giant Swarm Release v15.0.0-beta1 for Azure :zap:
 
-<< Add description here >>
+This is the first Giant Swarm Azure release featuring Kubernetes 1.20.
+
+This release includes many improvements to make the upgrade process even more reliable, with many improvements
+specifically related to Spot Instances.
+
+This release also uses Vnet peering in place of VPN Gateway to connect the Workload Clusters with the Management Cluster.
+There should be no impact in terms of connectivity from the workload point of view, but if you are using vnet peering
+in your tenant clusters please get in touch with your solution engineer.
 
 ## Change details
 
