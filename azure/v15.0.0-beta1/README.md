@@ -42,6 +42,7 @@ Highlight of changes:
 - Update OperatorKit to v4.3.1 to drop usage of self-link which is not supported in k8s 1.20 anymore. 
 - Avoid creating too many worker nodes at the same time when upgrading node pools.
 - Don't wait for new workers to be up during spot instances node pools upgrades.
+- Bumped `k8scloudconfig` to `10.5.0` to support kubernetes 1.20.
 
 #### Fixed
 

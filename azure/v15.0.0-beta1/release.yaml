@@ -37,7 +37,9 @@ spec:
     version: 4.4.0
   - name: azure-operator
     releaseOperatorDeploy: true
-    version: 5.6.1-k8s-1-20
+    version: 5.6.1-dev
+    catalog: control-plane-test-catalog
+    reference: 5.6.0-b583dab84bd3448893fc25f0f6f0e77164c5e1a6
   - name: cert-operator
     releaseOperatorDeploy: true
     version: 1.0.1
