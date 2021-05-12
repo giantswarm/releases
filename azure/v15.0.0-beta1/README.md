@@ -1,4 +1,4 @@
-# :zap: Giant Swarm Release v15.0.0 for Azure :zap:
+# :zap: Giant Swarm Release v15.0.0-beta1 for Azure :zap:
 
 << Add description here >>
 
@@ -42,7 +42,7 @@ Not found
 - Kubernetes is now built using go1.15.10 ([#100375](https://github.com/kubernetes/kubernetes/pull/100375), [@cpanato](https://github.com/cpanato)) [SIG Cloud Provider, Instrumentation, Release and Testing]
 #### Bug or Regression
 - ## Changelog
-
+  
   ### General
   - Fix priority expander falling back to a random choice even though there is a higher priority option to choose
   - Clone `kubernetes/kubernetes` in `update-vendor.sh` shallowly, instead of fetching all revisions
@@ -61,17 +61,17 @@ Not found
   - Fix `update-vendor.sh` to work on OSX and zsh
   - Add best-effort eviction for DaemonSet pods while scaling down non-empty nodes
   - Add build support for ARM64
-
+  
   ### AliCloud
   - Add missing daemonsets and replicasets to ALI example cluster role
-
+  
   ### Apache CloudStack
   - Add support for Apache CloudStack
-
+  
   ### AWS
   - Regenerate list of EC2 instances
   - Fix pricing endpoint in AWS China Region
-
+  
   ### Azure
   - Add optional jitter on initial VMSS VM cache refresh, keep the refreshes spread over time
   - Serve from cache for the whole period of ongoing throttling
@@ -81,17 +81,17 @@ Not found
   - Support allocatable resources overrides via VMSS tags
   - Add missing stable labels in template nodes
   - Proactively set instance status to deleting on node deletions
-
+  
   ### Cluster API
   - Migrate interaction with the API from using internal types to using Unstructured
   - Improve tests to work better with constrained resources
   - Add support for node auto-discovery
   - Add support for `--cloud-config`
   - Update group identifier to use for Cluster API annotations
-
+  
   ### Exoscale
   - Add support for Exoscale
-
+  
   ### GCE
   - Decrease the number of GCE Read Requests made while deleting nodes
   - Base pricing of custom instances on their instance family type
@@ -99,7 +99,7 @@ Not found
   - Add pricing information for different GPU types
   - Ignore the new `topology.gke.io/zone` label when comparing groups
   - Add missing stable labels to template nodes
-
+  
   ### HuaweiCloud
   - Add auto scaling group support
   - Implement node group by AS
@@ -107,21 +107,21 @@ Not found
   - Implement increasing node group size
   - Implement TemplateNodeInfo
   - Implement caching instances
-
+  
   ### IONOS
   - Add support for IONOS
-
+  
   ### Kubemark
   - Skip non-kubemark nodes while computing node information for node groups.
-
+  
   ### Magnum
   - Add Magnum support in the Cluster Autoscaler helm chart
-
+  
   ### Packet
   - Allow empty nodepools
   - Add support for multiple nodepools
   - Add pricing support
-
+  
   ## Image
   Image: `k8s.gcr.io/autoscaling/cluster-autoscaler:v1.20.0` ([#97012](https://github.com/kubernetes/kubernetes/pull/97012), [@towca](https://github.com/towca)) [SIG Cloud Provider]
 - Fixed a bug where a high churn of events was causing master instability by reducing the maximum number of objects (events) attached to a single etcd lease. ([#100084](https://github.com/kubernetes/kubernetes/pull/100084), [@mborsz](https://github.com/mborsz)) [SIG API Machinery, Instrumentation and Scalability]
@@ -129,7 +129,7 @@ Not found
 - Fixes a data race issue in the priority and fairness API server filter ([#100667](https://github.com/kubernetes/kubernetes/pull/100667), [@tkashem](https://github.com/tkashem)) [SIG API Machinery]
 - Kubectl: Fixed panic when describing an ingress backend without an API Group ([#100541](https://github.com/kubernetes/kubernetes/pull/100541), [@eddiezane](https://github.com/eddiezane)) [SIG CLI]
 - Reverts breaking change to inline AzureFile volumes in v1.20.2-v1.20.5; referenced secrets are now correctly searched for in the same namespace as the pod as in previous releases. ([#100399](https://github.com/kubernetes/kubernetes/pull/100399), [@andyzhangx](https://github.com/andyzhangx)) [SIG Cloud Provider and Storage]
-- The endpointslice mirroring controller mirrors endpoints annotations and labels to the generated endpoint slices, it also ensures that updates on any of these fields on the endpoints are mirrored.
+- The endpointslice mirroring controller mirrors endpoints annotations and labels to the generated endpoint slices, it also ensures that updates on any of these fields on the endpoints are mirrored. 
   The well-known annotation endpoints.kubernetes.io/last-change-trigger-time is skipped and not mirrored. ([#100443](https://github.com/kubernetes/kubernetes/pull/100443), [@aojea](https://github.com/aojea)) [SIG Apps, Network and Testing]
 - The maximum number of ports allowed in EndpointSlices has been increased from 100 to 20,000 ([#99795](https://github.com/kubernetes/kubernetes/pull/99795), [@robscott](https://github.com/robscott)) [SIG Network]
 #### Uncategorized
@@ -149,10 +149,73 @@ _Nothing has changed._
 
 
 
-### chart-operator [2.13.1](https://github.com/giantswarm/chart-operator/releases/tag/v2.13.1)
+### containerlinux [2765.2.3](https://www.flatcar-linux.org/releases/#release-2765.2.3)
 
-#### Fixed
-- Updated OperatorKit to v4.3.1 for Kubernetes 1.20 support.
+
+**Security fixes**
+
+
+
+*   Linux ([CVE-2021-28964](https://nvd.nist.gov/vuln/detail/CVE-2021-28964), [CVE-2021-28972](https://nvd.nist.gov/vuln/detail/CVE-2021-28972), [CVE-2021-28971](https://nvd.nist.gov/vuln/detail/CVE-2021-28971), [CVE-2021-28951](https://nvd.nist.gov/vuln/detail/CVE-2021-28951), [CVE-2021-28952](https://nvd.nist.gov/vuln/detail/CVE-2021-28952), [CVE-2021-29266](https://nvd.nist.gov/vuln/detail/CVE-2021-29266), [CVE-2021-28688](https://nvd.nist.gov/vuln/detail/CVE-2021-28688), [CVE-2021-29264](https://nvd.nist.gov/vuln/detail/CVE-2021-29264), [CVE-2021-29649](https://nvd.nist.gov/vuln/detail/CVE-2021-29649), [CVE-2021-29650](https://nvd.nist.gov/vuln/detail/CVE-2021-29650), [CVE-2021-29646](https://nvd.nist.gov/vuln/detail/CVE-2021-29646), [CVE-2021-29647](https://nvd.nist.gov/vuln/detail/CVE-2021-29647), [CVE-2021-29154](https://nvd.nist.gov/vuln/detail/CVE-2021-29154), [CVE-2021-29155](https://nvd.nist.gov/vuln/detail/CVE-2021-29155), [CVE-2021-23133](https://nvd.nist.gov/vuln/detail/CVE-2021-23133))
+
+**Bug fixes**
+
+
+
+*   Fix the patch to update DefaultTasksMax in systemd ([coreos-overlay#971](https://github.com/kinvolk/coreos-overlay/pull/971))
+
+**Updates**
+
+
+
+*   Linux ([5.10.32](https://lwn.net/Articles/853762/))
+
+
+### cert-exporter [1.6.1](https://github.com/giantswarm/cert-exporter/releases/tag/v1.6.1)
+
+#### Changed
+- Set docker.io as the default registry
+
+
+
+### chart-operator [2.14.0](https://github.com/giantswarm/chart-operator/releases/tag/v2.14.0)
+
+#### Changed
+- Cancel the release resource when the manifest object already exists.
+- Cancel the release resource when helm returns an unknown error.
+
+
+
+### kube-state-metrics [1.3.1](https://github.com/giantswarm/kube-state-metrics-app/releases/tag/v1.3.1)
+
+#### Changed
+- Set docker.io as the default registry
+
+
+
+### metrics-server [1.3.0](https://github.com/giantswarm/metrics-server-app/releases/tag/v1.3.0)
+
+#### Added
+- Added new configuration value `extraArgs`.
+
+
+
+### net-exporter [1.10.1](https://github.com/giantswarm/net-exporter/releases/tag/v1.10.1)
+
+
+
+
+### node-exporter [1.7.2](https://github.com/giantswarm/node-exporter-app/releases/tag/v1.7.2)
+
+#### Changed
+- Set docker.io as the default registry
+
+
+
+### coredns [1.4.1](https://github.com/giantswarm/coredns-app/releases/tag/v1.4.1)
+
+#### Changed
+- Set docker.io as the default registry
 
 
 
