@@ -48,7 +48,7 @@ spec:                                                              spec:
   - name: kubernetes                                                 - name: kubernetes
     version: 1.19.10                                            |      version: 1.20.6
   - name: containerlinux                                             - name: containerlinux
-    version: 2765.2.2                                           |      version: 2765.2.3
+    version: 2765.2.2                                                  version: 2765.2.2
   - name: calico                                                     - name: calico
     version: 3.15.3                                                    version: 3.15.3
   - name: etcd                                                       - name: etcd
