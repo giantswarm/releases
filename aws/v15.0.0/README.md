@@ -183,6 +183,26 @@ _Nothing has changed._
 
 
 
+### aws-cni [1.7.10](https://github.com/aws/amazon-vpc-cni-k8s/releases/tag/v1.7.10)
+
+* Improvement - Multi card support - Prevent route override for primary ENI across multi-cards ENAs (#1396 , [@jayanthvn](https://github.com/Jayanthvn))
+
+
+
+### metrics-server [1.3.0](https://github.com/giantswarm/metrics-server-app/releases/tag/v1.3.0)
+
+#### Added
+- Added new configuration value `extraArgs`.
+
+
+
+### cluster-autoscaler [1.20.2](https://github.com/giantswarm/cluster-autoscaler-app/releases/tag/v1.20.2)
+
+#### Changed
+- Set docker.io as the default registry
+
+
+
 ### net-exporter [1.10.1](https://github.com/giantswarm/net-exporter/releases/tag/v1.10.1)
 
 
@@ -194,10 +214,11 @@ _Nothing has changed._
 
 
 
-### chart-operator [2.13.1](https://github.com/giantswarm/chart-operator/releases/tag/v2.13.1)
+### chart-operator [2.14.0](https://github.com/giantswarm/chart-operator/releases/tag/v2.14.0)
 
-#### Fixed
-- Updated OperatorKit to v4.3.1 for Kubernetes 1.20 support.
+#### Changed
+- Cancel the release resource when the manifest object already exists.
+- Cancel the release resource when helm returns an unknown error.
 
 
 
