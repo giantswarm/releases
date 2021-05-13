@@ -30,7 +30,7 @@ Highlight of changes:
 
 - Enable Vertical Pod Autoscaler.
 
-### azure-operator [5.6.1-k8s-1-20](https://github.com/giantswarm/azure-operator/releases/tag/v5.6.1-k8s-1-20)
+### azure-operator [5.7.0](https://github.com/giantswarm/azure-operator/releases/tag/v5.7.0)
 
 Updated from version 5.5.3.
 
