@@ -38,7 +38,7 @@ spec:
     releaseOperatorDeploy: true
     version: 5.6.1-dev
     catalog: control-plane-test-catalog
-    reference: 5.6.0-b583dab84bd3448893fc25f0f6f0e77164c5e1a6
+    reference: 5.6.0-47d5f66b129a3606aca3388a8f8a8ee68c348e26
   - name: cert-operator
     releaseOperatorDeploy: true
     version: 1.0.1
