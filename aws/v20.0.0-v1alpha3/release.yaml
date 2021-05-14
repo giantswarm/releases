@@ -62,7 +62,7 @@ spec:
   - name: cluster-operator
     catalog: control-plane-catalog
     releaseOperatorDeploy: true
-    version: 3.7.2-capi-1
+    version: 3.7.2-capi-2
   - name: kubernetes
     version: 1.19.8
   - name: containerlinux
