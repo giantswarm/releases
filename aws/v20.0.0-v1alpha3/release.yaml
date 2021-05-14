@@ -48,7 +48,7 @@ spec:
     releaseOperatorDeploy: true
     version: 0.3.14-gs1
   - name: cluster-api-control-plane
-    catalog: control-plane-catalog
+    catalog: control-plane-test-catalog
     releaseOperatorDeploy: true
     version: 0.3.14-gs1
   - name: cluster-api-core
@@ -56,13 +56,13 @@ spec:
     releaseOperatorDeploy: true
     version: 0.3.14-gs1
   - name: cluster-api-provider-aws
-    catalog: control-plane-catalog
+    catalog: control-plane-test-catalog
     releaseOperatorDeploy: true
     version: 0.6.5-gs1
   - name: cluster-operator
     catalog: control-plane-catalog
     releaseOperatorDeploy: true
-    version: 3.7.2-capi
+    version: 3.7.2-capi-1
   - name: kubernetes
     version: 1.19.8
   - name: containerlinux
