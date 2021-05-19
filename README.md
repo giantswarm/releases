@@ -20,6 +20,8 @@ to all Giant Swarm installations.
   - v14.0
     - [v14.0.0](https://github.com/giantswarm/releases/tree/master/aws/v14.0.0)
 - v13
+  - v13.2
+    - [v13.2.0](https://github.com/giantswarm/releases/tree/master/aws/v13.2.0)
   - v13.1
     - [v13.1.0](https://github.com/giantswarm/releases/tree/master/aws/v13.1.0)
     - [v13.1.1](https://github.com/giantswarm/releases/tree/master/aws/v13.1.1)
@@ -127,8 +129,14 @@ to all Giant Swarm installations.
 
 ## Azure
 
+- v15
+  - v15.0
+    - [v15.0.0-beta2](https://github.com/giantswarm/releases/tree/master/azure/v15.0.0-beta2)
+    - [v15.0.0-beta1](https://github.com/giantswarm/releases/tree/master/azure/archived/v15.0.0-beta1)
+
 - v14
   - v14.1
+    - [v14.1.6](https://github.com/giantswarm/releases/tree/master/azure/v14.1.6)
     - [v14.1.5](https://github.com/giantswarm/releases/tree/master/azure/v14.1.5)
     - [v14.1.4](https://github.com/giantswarm/releases/tree/master/azure/archived/v14.1.4)
     - [v14.1.3](https://github.com/giantswarm/releases/tree/master/azure/archived/v14.1.3)
