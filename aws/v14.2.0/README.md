@@ -22,14 +22,88 @@
 
 
 
-### cert-manager [2.7.0](https://github.com/giantswarm/cert-manager-app/releases/tag/v2.7.0)
+### cert-operator [1.0.1](https://github.com/giantswarm/cert-operator/releases/tag/v1.0.1)
 
-- Update to upstream `v1.3.1` ([#155](https://github.com/giantswarm/cert-manager-app/pull/155)). This mitigates failed cert-manager-app installations due to CRD conversion issues.
+#### Fixed
+- Add `list` permission for `cluster.x-k8s.io`.
+
+
+
+### cluster-operator [3.7.1](https://github.com/giantswarm/cluster-operator/releases/tag/v3.7.1)
+
+#### Fixed
+- Add `AllowedLabels` to clusterconfigmap resource to prevent unnecessary updates.
+
+
+
+### app-operator [4.4.0](https://github.com/giantswarm/app-operator/releases/tag/v4.4.0)
+
+#### Added
+- Add support for skip CRD flag when installing Helm releases.
+- Emit events when config maps and secrets referenced in App CRs are updated.
+
+
+
+### containerlinux [2765.2.3](https://www.flatcar-linux.org/releases/#release-2765.2.3)
+
+
+**Security fixes**
+
+
+
+*   Linux ([CVE-2021-28964](https://nvd.nist.gov/vuln/detail/CVE-2021-28964), [CVE-2021-28972](https://nvd.nist.gov/vuln/detail/CVE-2021-28972), [CVE-2021-28971](https://nvd.nist.gov/vuln/detail/CVE-2021-28971), [CVE-2021-28951](https://nvd.nist.gov/vuln/detail/CVE-2021-28951), [CVE-2021-28952](https://nvd.nist.gov/vuln/detail/CVE-2021-28952), [CVE-2021-29266](https://nvd.nist.gov/vuln/detail/CVE-2021-29266), [CVE-2021-28688](https://nvd.nist.gov/vuln/detail/CVE-2021-28688), [CVE-2021-29264](https://nvd.nist.gov/vuln/detail/CVE-2021-29264), [CVE-2021-29649](https://nvd.nist.gov/vuln/detail/CVE-2021-29649), [CVE-2021-29650](https://nvd.nist.gov/vuln/detail/CVE-2021-29650), [CVE-2021-29646](https://nvd.nist.gov/vuln/detail/CVE-2021-29646), [CVE-2021-29647](https://nvd.nist.gov/vuln/detail/CVE-2021-29647), [CVE-2021-29154](https://nvd.nist.gov/vuln/detail/CVE-2021-29154), [CVE-2021-29155](https://nvd.nist.gov/vuln/detail/CVE-2021-29155), [CVE-2021-23133](https://nvd.nist.gov/vuln/detail/CVE-2021-23133))
+
+**Bug fixes**
+
+
+
+*   Fix the patch to update DefaultTasksMax in systemd ([coreos-overlay#971](https://github.com/kinvolk/coreos-overlay/pull/971))
+
+**Updates**
+
+
+
+*   Linux ([5.10.32](https://lwn.net/Articles/853762/))
+
+
+### cert-manager [2.7.1](https://github.com/giantswarm/cert-manager-app/releases/tag/v2.7.1)
+
+#### Changed
+- Set authoritative nameserver to `coredns` when using `dns01` ACME solver. ([#162](https://github.com/giantswarm/cert-manager-app/pull/162))
 
 
 
 ### cluster-autoscaler [1.19.3](https://github.com/giantswarm/cluster-autoscaler-app/releases/tag/v1.19.3)
 
-Not found
+#### Added
+- Allow users to set container resources
+
+
+
+### chart-operator [2.14.0](https://github.com/giantswarm/chart-operator/releases/tag/v2.14.0)
+
+#### Changed
+- Cancel the release resource when the manifest object already exists.
+- Cancel the release resource when helm returns an unknown error.
+
+
+
+### external-dns [2.3.1](https://github.com/giantswarm/external-dns-app/releases/tag/v2.3.1)
+
+#### Changed
+- Increase memory limit to 100Mi since we ran into out of memory problems. This will make the app more stable.
+
+
+
+### metrics-server [1.3.0](https://github.com/giantswarm/metrics-server-app/releases/tag/v1.3.0)
+
+#### Added
+- Added new configuration value `extraArgs`.
+
+
+
+### net-exporter [1.10.1](https://github.com/giantswarm/net-exporter/releases/tag/v1.10.1)
+
+
 
 
