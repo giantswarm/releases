@@ -33,7 +33,7 @@ releases:
     - name: "> 14.0.0 < 15.0.0"
       requests:
         - name: app-operator
-          version: ">= 3.2.1 < 4.0.0"
+          version: ">= 3.2.1"
           issue: https://github.com/giantswarm/giantswarm/issues/15392
         - name: chart-operator
           version: ">= 2.12.0"
