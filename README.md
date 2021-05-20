@@ -202,6 +202,8 @@ to all Giant Swarm installations.
 ## KVM
 
 - v14
+  - v14.1
+    - [v14.1.0-beta](https://github.com/giantswarm/releases/tree/master/kvm/v14.1.0-beta)
   - v14.0
     - [v14.0.0](https://github.com/giantswarm/releases/tree/master/kvm/v14.0.0)
 
