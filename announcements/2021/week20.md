@@ -14,10 +14,13 @@ For a comprehensive and always-updated view of all new features and changes for 
 
 ## User interfaces
 
+[kubectl gs v1.28.0](https://docs.giantswarm.io/changes/kubectl-gs/kubectl-gs/v1.28.0/) adds `get appcatalogs` and `get apps` commands. It also now allows templating for China clusters.
 
+We recently made many fixes and changes to [The Web UI](https://docs.giantswarm.io/changes/web-ui/) from v1.7.2 to 1.9.0 to improve the user experience, as well as prepare for new features. [CAPI? Management API?]
 
 ## Documentation
 
+Many docs are updated and made more accurate including: [Advanced CoreDNS Configuration](https://docs.giantswarm.io/advanced/coredns/), [App CR's target namespace configuration](https://docs.giantswarm.io/app-platform/namespace-configuration/), and [Usage data recording in our web interface](https://docs.giantswarm.io/ui-api/web/usage-data/)
 
 ---
 Please let <!subteam^S0GSG846L|Product Owners> know if you have any feedback or questions by replying to this announcement in a thread.
