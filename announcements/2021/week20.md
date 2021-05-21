@@ -20,7 +20,7 @@ For a comprehensive and always-updated view of all new features and changes for 
 
 [kubectl gs v1.28.0](https://docs.giantswarm.io/changes/kubectl-gs/kubectl-gs/v1.28.0/) adds `get appcatalogs` and `get apps` commands. It also now allows templating for China clusters.
 
-We recently made many fixes and changes to [The Web UI](https://docs.giantswarm.io/changes/web-ui/) from v1.7.2 to 1.9.0 to improve the user experience, as well as prepare for new features. [CAPI? Management API?]
+We recently made many fixes and changes to [The Web UI](https://docs.giantswarm.io/changes/web-ui/) from v1.7.2 to v1.9.0 to improve the user experience, as well as prepare for new features related to providing access to the Management API.
 
 ## Documentation
 
