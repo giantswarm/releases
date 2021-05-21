@@ -10,7 +10,11 @@ For a comprehensive and always-updated view of all new features and changes for 
 
 [EFK v0.5.2](https://docs.giantswarm.io/changes/managed-apps/efk-stack-app/v0.5.2/) reverts upstream changes of deployment labels that caused upgrade conflicts.
 
-[Cert Manager v2.7.1](https://docs.giantswarm.io/changes/managed-apps/cert-manager-app/v2.7.1/) sets authoritative nameservers to `coredns` when using `dns01` ACME solver, in order to support DNS01 challenge introduced in [v2.6.0](https://docs.giantswarm.io/changes/managed-apps/cert-manager-app/v2.6.0/).
+[Cert Manager v2.7.1](https://docs.giantswarm.io/changes/managed-apps/cert-manager-app/v2.7.1/  ) sets authoritative nameservers to `coredns` when using `dns01` ACME solver, in order to support DNS01 challenge introduced in [v2.6.0](https://docs.giantswarm.io/changes/managed-apps/cert-manager-app/v2.6.0/).
+
+## Apps supported with best effort
+
+[Spark Operator](https://github.com/giantswarm/spark-operator), an operator that makes specifying and running Spark applications as easy as running other workloads on Kubernetes, is now available in the playground catalog.
 
 ## User interfaces
 
