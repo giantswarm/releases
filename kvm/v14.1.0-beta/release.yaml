@@ -26,7 +26,7 @@ spec:
   components:
   - name: app-operator
     releaseOperatorDeploy: true
-    version: 4.4.0
+    version: 3.2.1
   - name: calico
     version: 3.15.3
   - name: cert-operator
@@ -34,21 +34,21 @@ spec:
     version: 1.0.1
   - name: cluster-operator
     releaseOperatorDeploy: true
-    version: 0.27.1
+    version: 0.24.2
   - name: containerlinux
     version: 2765.2.4
   - name: etcd
     version: 3.4.16
   - name: flannel-operator
-    version: 1.2.0
+    version: 0.2.0
   - name: kubernetes
     version: 1.19.11
   - name: kvm-operator
     catalog: control-plane-test-catalog
     releaseOperatorDeploy: true
     version: 3.16.1-dev
-    reference: 3.16.1-be5d19eddf8cae39b11976c35b79185d6d645e6d
-  date: "2021-05-20T12:00:00Z"
+    reference: 3.16.1-edaf662b97c3c1984a875bb1c19f65eb58e28f53
+  date: "2021-05-21T12:00:00Z"
   state: active
 status:
   inUse: false
