@@ -4,7 +4,7 @@ For a comprehensive and always-updated view of all new features and changes for 
 
 ## Managed apps
 
-
+[Prometheus Operator v0.8.2](https://docs.giantswarm.io/changes/managed-apps/prometheus-operator-app/v0.8.2/) upgrades prometheus to [v2.26.1](https://github.com/prometheus/prometheus/releases/tag/v2.26.1) which contains a fix for [CVE-2021-29622](https://github.com/prometheus/prometheus/security/advisories/GHSA-vx57-7f4q-fpc7). The vulnerability allowed attackers to redirect to arbitray URLs through a specially crafted address (e.g.: http://127.0.0.1:9090/new/new<url>).
 
 ## User interfaces
 
