@@ -24,7 +24,7 @@ We recently made many fixes and changes to [the Web UI](https://docs.giantswarm.
 
 ## Documentation
 
-Many docs are updated and made more accurate including: [Advanced CoreDNS Configuration](https://docs.giantswarm.io/advanced/coredns/), [App CR's target namespace configuration](https://docs.giantswarm.io/app-platform/namespace-configuration/), and [Usage data recording in our web interface](https://docs.giantswarm.io/ui-api/web/usage-data/)
+Many docs are updated and made more accurate including: [Advanced CoreDNS Configuration](https://docs.giantswarm.io/advanced/coredns/), [App CR's target namespace configuration](https://docs.giantswarm.io/app-platform/namespace-configuration/), and [Usage data recording in our web interface](https://docs.giantswarm.io/ui-api/web/usage-data/).
 
 ---
 Please let <!subteam^S0GSG846L|Product Owners> know if you have any feedback or questions by replying to this announcement in a thread.
