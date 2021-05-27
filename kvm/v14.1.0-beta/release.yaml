@@ -34,7 +34,7 @@ spec:
     version: 1.0.1
   - name: cluster-operator
     releaseOperatorDeploy: true
-    version: 0.24.2
+    version: 0.27.1
   - name: containerlinux
     version: 2765.2.4
   - name: etcd
@@ -44,11 +44,9 @@ spec:
   - name: kubernetes
     version: 1.19.11
   - name: kvm-operator
-    catalog: control-plane-test-catalog
     releaseOperatorDeploy: true
-    version: 3.16.1-dev
-    reference: 3.16.1-edaf662b97c3c1984a875bb1c19f65eb58e28f53
-  date: "2021-05-21T12:00:00Z"
+    version: 3.17.0
+  date: "2021-05-27T12:00:00Z"
   state: active
 status:
   inUse: false
