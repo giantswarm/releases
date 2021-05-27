@@ -45,6 +45,12 @@
 #### Fixed
 - Add `AllowedLabels` to clusterconfigmap resource to prevent unnecessary updates.
 
+### Added
+- Create app CR for per cluster app-operator instance.
+
+### Removed
+- Do not add `VersionBundle` to new `CertConfig` specs (`CertConfig`s are now versioned using a label). **This change requires using `cert-operator`
+
 
 
 ### app-operator [4.4.0](https://github.com/giantswarm/app-operator/releases/tag/v4.4.0)
