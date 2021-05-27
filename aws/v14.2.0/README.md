@@ -27,14 +27,14 @@
 #### Fixed
 - Add `list` permission for `cluster.x-k8s.io`.
 
-### Changed
+#### Changed
 - Update Kubernetes dependencies to 1.18 versions.
 - Reconcile `CertConfig`s based on their `cert-operator.giantswarm.io/version` label.
 
-### Removed
+#### Removed
 - Stop using the `VersionBundle` version.
 
-### Added
+#### Added
 - Add network policy resource.
 - Added lookup for nodepool clusters in other namespaces than `default`.
 
@@ -45,10 +45,10 @@
 #### Fixed
 - Add `AllowedLabels` to clusterconfigmap resource to prevent unnecessary updates.
 
-### Added
+#### Added
 - Create app CR for per cluster app-operator instance.
 
-### Removed
+#### Removed
 - Do not add `VersionBundle` to new `CertConfig` specs (`CertConfig`s are now versioned using a label). **This change requires using `cert-operator`
 
 
@@ -65,12 +65,12 @@
 - Add annotations from Helm charts to AppCatalogEntry CRs.
 - Enable Vertical Pod Autoscaler.
 
-### Fixed
+#### Fixed
 - Updated OperatorKit to v4.3.1 for Kubernetes 1.20 support.
 - Restore chart-operator when it had been deleted.
 - Use backoff in chart CR watcher to wait until kubeconfig secret exists.
 
-### Changed
+#### Changed
 - Updated Helm to v3.5.3.
 - Replace status webhook with chart CR status watcher.
 - Sort AppCatalogEntry CRs by version and created timestamp.
@@ -82,21 +82,12 @@
 
 
 **Security fixes**
-
-
-
 *   Linux ([CVE-2021-28964](https://nvd.nist.gov/vuln/detail/CVE-2021-28964), [CVE-2021-28972](https://nvd.nist.gov/vuln/detail/CVE-2021-28972), [CVE-2021-28971](https://nvd.nist.gov/vuln/detail/CVE-2021-28971), [CVE-2021-28951](https://nvd.nist.gov/vuln/detail/CVE-2021-28951), [CVE-2021-28952](https://nvd.nist.gov/vuln/detail/CVE-2021-28952), [CVE-2021-29266](https://nvd.nist.gov/vuln/detail/CVE-2021-29266), [CVE-2021-28688](https://nvd.nist.gov/vuln/detail/CVE-2021-28688), [CVE-2021-29264](https://nvd.nist.gov/vuln/detail/CVE-2021-29264), [CVE-2021-29649](https://nvd.nist.gov/vuln/detail/CVE-2021-29649), [CVE-2021-29650](https://nvd.nist.gov/vuln/detail/CVE-2021-29650), [CVE-2021-29646](https://nvd.nist.gov/vuln/detail/CVE-2021-29646), [CVE-2021-29647](https://nvd.nist.gov/vuln/detail/CVE-2021-29647), [CVE-2021-29154](https://nvd.nist.gov/vuln/detail/CVE-2021-29154), [CVE-2021-29155](https://nvd.nist.gov/vuln/detail/CVE-2021-29155), [CVE-2021-23133](https://nvd.nist.gov/vuln/detail/CVE-2021-23133))
 
 **Bug fixes**
-
-
-
 *   Fix the patch to update DefaultTasksMax in systemd ([coreos-overlay#971](https://github.com/kinvolk/coreos-overlay/pull/971))
 
 **Updates**
-
-
-
 *   Linux ([5.10.32](https://lwn.net/Articles/853762/))
 
 
