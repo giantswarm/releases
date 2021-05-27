@@ -27,6 +27,17 @@
 #### Fixed
 - Add `list` permission for `cluster.x-k8s.io`.
 
+### Changed
+- Update Kubernetes dependencies to 1.18 versions.
+- Reconcile `CertConfig`s based on their `cert-operator.giantswarm.io/version` label.
+
+### Removed
+- Stop using the `VersionBundle` version.
+
+### Added
+- Add network policy resource.
+- Added lookup for nodepool clusters in other namespaces than `default`.
+
 
 
 ### cluster-operator [3.7.1](https://github.com/giantswarm/cluster-operator/releases/tag/v3.7.1)
