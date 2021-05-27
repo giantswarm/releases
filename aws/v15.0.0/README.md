@@ -27,7 +27,7 @@
 
 
 
-### aws-operator [10.3.0](https://github.com/giantswarm/aws-operator/releases/tag/v10.3.0)
+### aws-operator [10.4.0](https://github.com/giantswarm/aws-operator/releases/tag/v10.4.0)
 
 #### Fixed
 - Updated OperatorKit to v4.3.1 for Kubernetes 1.20 support.
@@ -41,6 +41,11 @@
 - Fix issues with etcd initial cluster resolving into ELB and causing errors.
 - Update `k8scloudconfig` to version `v10.5.0` to support kubernetes `v1.20`.
 - Use `networkctl reload` for managing networking to avoid bug in `systemd`.
+- Avoid TCCPN stack failure by checking if a control-plane tag exists before adding it.
+- Look up cloud tags in all namespaces
+- Find certs in all namespaces
+- Enable terminate unhealthy node feature by default.
+- Add node termination counter per cluster metric.
 
 
 
@@ -196,11 +201,11 @@ _Nothing has changed._
 
 
 
-### cluster-autoscaler [1.20.2](https://github.com/giantswarm/cluster-autoscaler-app/releases/tag/v1.20.2)
+### cluster-autoscaler [1.20.3](https://github.com/giantswarm/cluster-autoscaler-app/releases/tag/v1.20.3)
 
 #### Changed
 - Set docker.io as the default registry
-
+- Allow users to set container resources
 
 
 ### net-exporter [1.10.1](https://github.com/giantswarm/net-exporter/releases/tag/v1.10.1)
