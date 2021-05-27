@@ -81,14 +81,69 @@
 ### containerlinux [2765.2.3](https://www.flatcar-linux.org/releases/#release-2765.2.3)
 
 
-**Security fixes**
-*   Linux ([CVE-2021-28964](https://nvd.nist.gov/vuln/detail/CVE-2021-28964), [CVE-2021-28972](https://nvd.nist.gov/vuln/detail/CVE-2021-28972), [CVE-2021-28971](https://nvd.nist.gov/vuln/detail/CVE-2021-28971), [CVE-2021-28951](https://nvd.nist.gov/vuln/detail/CVE-2021-28951), [CVE-2021-28952](https://nvd.nist.gov/vuln/detail/CVE-2021-28952), [CVE-2021-29266](https://nvd.nist.gov/vuln/detail/CVE-2021-29266), [CVE-2021-28688](https://nvd.nist.gov/vuln/detail/CVE-2021-28688), [CVE-2021-29264](https://nvd.nist.gov/vuln/detail/CVE-2021-29264), [CVE-2021-29649](https://nvd.nist.gov/vuln/detail/CVE-2021-29649), [CVE-2021-29650](https://nvd.nist.gov/vuln/detail/CVE-2021-29650), [CVE-2021-29646](https://nvd.nist.gov/vuln/detail/CVE-2021-29646), [CVE-2021-29647](https://nvd.nist.gov/vuln/detail/CVE-2021-29647), [CVE-2021-29154](https://nvd.nist.gov/vuln/detail/CVE-2021-29154), [CVE-2021-29155](https://nvd.nist.gov/vuln/detail/CVE-2021-29155), [CVE-2021-23133](https://nvd.nist.gov/vuln/detail/CVE-2021-23133))
+#### Security fixes
+* Linux
+    - [CVE-2021-28964](https://nvd.nist.gov/vuln/detail/CVE-2021-28964)
+    - [CVE-2021-28972](https://nvd.nist.gov/vuln/detail/CVE-2021-28972)
+    - [CVE-2021-28971](https://nvd.nist.gov/vuln/detail/CVE-2021-28971)
+    - [CVE-2021-28951](https://nvd.nist.gov/vuln/detail/CVE-2021-28951)
+    - [CVE-2021-28952](https://nvd.nist.gov/vuln/detail/CVE-2021-28952)
+    - [CVE-2021-29266](https://nvd.nist.gov/vuln/detail/CVE-2021-29266)
+    - [CVE-2021-28688](https://nvd.nist.gov/vuln/detail/CVE-2021-28688)
+    - [CVE-2021-29264](https://nvd.nist.gov/vuln/detail/CVE-2021-29264)
+    - [CVE-2021-29649](https://nvd.nist.gov/vuln/detail/CVE-2021-29649)
+    - [CVE-2021-29650](https://nvd.nist.gov/vuln/detail/CVE-2021-29650)
+    - [CVE-2021-29646](https://nvd.nist.gov/vuln/detail/CVE-2021-29646)
+    - [CVE-2021-29647](https://nvd.nist.gov/vuln/detail/CVE-2021-29647)
+    - [CVE-2021-29154](https://nvd.nist.gov/vuln/detail/CVE-2021-29154)
+    - [CVE-2021-29155](https://nvd.nist.gov/vuln/detail/CVE-2021-29155)
+    - [CVE-2021-23133](https://nvd.nist.gov/vuln/detail/CVE-2021-23133)
+    - [CVE-2021-27365](https://nvd.nist.gov/vuln/detail/CVE-2021-27365)
+    - [CVE-2021-27364](https://nvd.nist.gov/vuln/detail/CVE-2021-27364)
+    - [CVE-2021-27363](https://nvd.nist.gov/vuln/detail/CVE-2021-27363)
+    - [CVE-2021-28038](https://nvd.nist.gov/vuln/detail/CVE-2021-28038)
+    - [CVE-2021-28039](https://nvd.nist.gov/vuln/detail/CVE-2021-28039)
+    - [CVE-2021-28375](https://nvd.nist.gov/vuln/detail/CVE-2021-28375)
+    - [CVE-2021-28660](https://nvd.nist.gov/vuln/detail/CVE-2021-28660)
+    - [CVE-2021-27218](https://nvd.nist.gov/vuln/detail/CVE-2021-27218)
+    - [CVE-2021-27219](https://nvd.nist.gov/vuln/detail/CVE-2021-27219)
+    - [CVE-2020-25639](https://nvd.nist.gov/vuln/detail/CVE-2020-25639)
+    - [CVE-2021-27365](https://nvd.nist.gov/vuln/detail/CVE-2021-27365)
+    - [CVE-2021-27364](https://nvd.nist.gov/vuln/detail/CVE-2021-27364)
+    - [CVE-2021-27363](https://nvd.nist.gov/vuln/detail/CVE-2021-27363)
+    - [CVE-2021-28038](https://nvd.nist.gov/vuln/detail/CVE-2021-28038)
+    - [CVE-2021-28039](https://nvd.nist.gov/vuln/detail/CVE-2021-28039)
+    - [CVE-2021-26931](https://nvd.nist.gov/vuln/detail/CVE-2021-26931)
+    - [CVE-2021-26930](https://nvd.nist.gov/vuln/detail/CVE-2021-26930)
+    - [CVE-2021-26932](https://nvd.nist.gov/vuln/detail/CVE-2021-26932)
+* Openssl
+    - [CVE-2021-23840](https://nvd.nist.gov/vuln/detail/CVE-2021-23840)
+    - [CVE-2021-23841](https://nvd.nist.gov/vuln/detail/CVE-2021-23841)
+    - [CVE-2020-1971](https://nvd.nist.gov/vuln/detail/CVE-2020-1971)
+    - [CVE-2021-23840](https://nvd.nist.gov/vuln/detail/CVE-2021-23840)
+    - [CVE-2021-23841](https://nvd.nist.gov/vuln/detail/CVE-2021-23841)
+    - [CVE-2021-3449](https://nvd.nist.gov/vuln/detail/CVE-2021-3449)
+    - [CVE-2021-3450](https://nvd.nist.gov/vuln/detail/CVE-2021-3450)
+* containerd
+    - [GHSA-6g2q-w5j3-fwh4](https://github.com/containerd/containerd/security/advisories/GHSA-6g2q-w5j3-fwh4)
 
-**Bug fixes**
-*   Fix the patch to update DefaultTasksMax in systemd ([coreos-overlay#971](https://github.com/kinvolk/coreos-overlay/pull/971))
 
-**Updates**
-*   Linux ([5.10.32](https://lwn.net/Articles/853762/))
+
+#### Bug fixes
+- Fix the patch to update DefaultTasksMax in systemd ([coreos-overlay#971](https://github.com/kinvolk/coreos-overlay/pull/971))
+- GCE: The old interface name ens4v1 which was replaced by eth0 due to a broken udev rule was restored, but now as alternative interface name, and eth0 will stay the primary name for consistency across cloud environments. ([init#38](https://github.com/kinvolk/init/pull/38))
+- Include firmware files for all modules shipped in our image ([Issue #359](https://github.com/kinvolk/Flatcar/issues/359), [PR #887](https://github.com/kinvolk/coreos-overlay/pull/887))
+- Add explicit path to the binary call in the coreos-metadata unit file ([Issue #360](https://github.com/kinvolk/Flatcar/issues/360))
+
+
+#### Changes
+- The virtio network interfaces got predictable interface names as alternative interface names, and thus these names can also be used to match for a specific interface in case there is more than one and the eth0 and eth1 name assignment is not stable. ([init#38](https://github.com/kinvolk/init/pull/38))
+
+#### Updates
+- Linux ([5.10.32](https://lwn.net/Articles/853762/))
+- openssl ([1.1.1k](https://mta.openssl.org/pipermail/openssl-announce/2021-March/000197.html))
+- open-iscsi ([2.1.4](https://github.com/open-iscsi/open-iscsi/releases/tag/2.1.4))
+- Containerd ([1.4.4](https://github.com/containerd/containerd/releases/tag/v1.4.4))
 
 
 ### cert-manager [2.7.1](https://github.com/giantswarm/cert-manager-app/releases/tag/v2.7.1)
