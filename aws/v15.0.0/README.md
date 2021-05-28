@@ -198,6 +198,14 @@ _Nothing has changed._
 
 
 
+### aws-csi-driver [2.0.0](https://github.com/giantswarm/aws-ebs-csi-driver-app/releases/tag/v2.0.0)
+
+#### Changed
+
+- Update aws-ebs-csi-driver to v1.0.0.
+
+
+
 ### aws-cni [1.7.10](https://github.com/aws/amazon-vpc-cni-k8s/releases/tag/v1.7.10)
 
 * Improvement - Multi card support - Prevent route override for primary ENI across multi-cards ENAs (#1396 , [@jayanthvn](https://github.com/Jayanthvn))
