@@ -27,13 +27,22 @@
 
 
 
-### aws-operator [10.4.0](https://github.com/giantswarm/aws-operator/releases/tag/v10.4.0)
+### external-dns [2.3.1](https://github.com/giantswarm/external-dns-app/releases/tag/v2.3.1)
+
+#### Changed
+
+- Increase memory limit to 100Mi since we ran into out of memory problems. This will make the app more stable.
+
+
+
+### aws-operator [10.5.0](https://github.com/giantswarm/aws-operator/releases/tag/v10.5.0)
 
 #### Fixed
 - Updated OperatorKit to v4.3.1 for Kubernetes 1.20 support.
 - Cancel update loop if source or target release is not found.
 - Updated IPAM library to avoid IP conflicts.
 #### Added
+- Enabled EBS CSI migration.
 - Clean up VPC peerings from a cluster VPC when is cluster deleted.
 - Clean up Application and Network loadbalancers created by Kubernetes when cluster is deleted.
 - Add new flatcar AMIs.
@@ -46,7 +55,8 @@
 - Find certs in all namespaces
 - Enable terminate unhealthy node feature by default.
 - Add node termination counter per cluster metric.
-
+#### Removed
+- Removed default storage-class annotation, EBS CSI driver is taking over.
 
 
 ### containerlinux [2765.2.3](https://www.flatcar-linux.org/releases/#release-2765.2.3)
