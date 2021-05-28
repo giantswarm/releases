@@ -53,7 +53,7 @@ spec:                                                              spec:
   - name: calico                                                     - name: calico
     version: 3.15.3                                                    version: 3.15.3
   - name: cert-operator                                              - name: cert-operator
-    reference: 0.1.0-2                                                 reference: 0.1.0-2
+    reference: 0.1.0-2                                          <
     releaseOperatorDeploy: true                                        releaseOperatorDeploy: true
     version: 0.1.0                                              |      version: 1.0.1
   - name: cluster-operator                                           - name: cluster-operator
