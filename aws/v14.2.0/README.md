@@ -1,6 +1,8 @@
 # :zap: Giant Swarm Release v14.2.0 for AWS :zap:
 
-<< Add description here >>
+This release provides security and bug fixes for various components. It also fixes an issue that can cause an IP conflict to occur in certain situations when a node pool is created.
+
+> **_Warning:_** The nginx app needs to be updated to `v1.14.0+` because a new version of `external-dns` is included in this release.
 
 ## Change details
 
