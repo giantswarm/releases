@@ -16,6 +16,7 @@ resources:
 - v13.2.0
 - v14.0.0
 - v14.1.1
+- v14.2.0
 - v15.0.0
 transformers:
 - releaseNotesTransformer.yaml
