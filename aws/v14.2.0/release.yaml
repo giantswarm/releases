@@ -30,7 +30,8 @@ spec:
   - componentVersion: 1.9.7
     name: kube-state-metrics
     version: 1.3.1
-  - name: metrics-server
+  - componentVersion: 0.4.1
+    name: metrics-server
     version: 1.3.0
   - name: net-exporter
     version: 1.10.1
@@ -61,7 +62,7 @@ spec:
     version: 3.4.14
   - name: kubernetes
     version: 1.19.9
-  date: "2021-05-20T11:53:40Z"
+  date: "2021-05-28T08:00:00Z"
   state: active
 status:
   ready: false
