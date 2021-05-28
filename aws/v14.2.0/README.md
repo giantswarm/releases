@@ -178,6 +178,9 @@
 - Cancel the release resource when the manifest object already exists.
 - Cancel the release resource when helm returns an unknown error.
 
+#### Fixed
+- Updated OperatorKit to v4.3.1 for Kubernetes 1.20 support.
+
 
 
 ### external-dns [2.3.1](https://github.com/giantswarm/external-dns-app/releases/tag/v2.3.1)
