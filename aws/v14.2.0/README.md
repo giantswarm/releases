@@ -199,6 +199,5 @@
 
 ### net-exporter [1.10.1](https://github.com/giantswarm/net-exporter/releases/tag/v1.10.1)
 
-
-
-
+#### Changed
+- Add label selector for pods to help lower memory usage
