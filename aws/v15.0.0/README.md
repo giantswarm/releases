@@ -198,7 +198,7 @@ _Nothing has changed._
 
 
 
-### aws-csi-driver [2.0.0](https://github.com/giantswarm/aws-ebs-csi-driver-app/releases/tag/v2.0.0)
+### aws-ebs-csi-driver [2.0.0](https://github.com/giantswarm/aws-ebs-csi-driver-app/releases/tag/v2.0.0)
 
 #### Changed
 
