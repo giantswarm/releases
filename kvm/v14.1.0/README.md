@@ -20,8 +20,10 @@ This release introduces a new feature that allows KVM clusters to run behind a p
 
 
 
-### kvm-operator [master](https://github.com/giantswarm/kvm-operator/releases/tag/vmaster)
+### kvm-operator [3.17.1](https://github.com/giantswarm/kvm-operator/releases/tag/v3.17.1)
 
-Not found
+#### Changed
+- Reconcile only deployments that are managed by kvm-operator
+
 
 

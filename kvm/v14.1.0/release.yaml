@@ -1,5 +1,5 @@
 # Generated with:
-# devctl release create --name v14.1.0 --provider kvm --base 14.0.0 --component cluster-operator@0.27.1 --component app-operator@4.4.0
+# devctl release create --name v14.1.0 --provider kvm --base 14.0.0 --component cluster-operator@0.27.1 --component app-operator@4.4.0 --component kvm-operator@3.17.1
 apiVersion: release.giantswarm.io/v1alpha1
 kind: Release
 metadata:
@@ -45,12 +45,10 @@ spec:
     version: 0.2.0
   - name: kubernetes
     version: 1.19.9
-  - catalog: control-plane-test-catalog
-    name: kvm-operator
+  - name: kvm-operator
     releaseOperatorDeploy: true
-    reference: 3.17.0-5c4ff71eb6c631a885cd58ebc41eb2de401c944c
-    version: 3.17.1-dev
-  date: "2021-06-01T00:57:58Z"
+    version: 3.17.1
+  date: "2021-06-01T06:07:17Z"
   state: active
 status:
   inUse: false
