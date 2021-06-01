@@ -1,6 +1,6 @@
 # :zap: Giant Swarm Release v14.1.0 for KVM :zap:
 
-<< Add description here >>
+This release introduces a new feature that allows KVM clusters to run behind a proxy. It also adds support for host volumes.
 
 ## Change details
 
