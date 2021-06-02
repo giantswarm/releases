@@ -59,10 +59,25 @@ spec:
     name: cluster-api-provider-aws
     releaseOperatorDeploy: true
     version: 0.6.5-gs3
+  - catalog: control-plane-test-catalog
+    name: kyverno
+    releaseOperatorDeploy: true
+    version: 0.0.4
+  - catalog: control-plane-test-catalog
+    name: policies-common
+    releaseOperatorDeploy: true
+    version: 0.0.1
+  - catalog: control-plane-test-catalog
+    name: policies-aws
+    releaseOperatorDeploy: true
+    version: 0.0.1
   - catalog: control-plane-catalog
     name: cluster-operator
     releaseOperatorDeploy: true
     version: 3.7.2-capi-2
+  - catalog: control-plane-catalog
+    name: kubernetes
+    version: 1.19.8
   - catalog: control-plane-catalog
     name: kubernetes
     version: 1.19.8
