@@ -7,3 +7,4 @@ This release fixes the issue which prevented clusters being created on some mana
 ## Change details
 
 - Upgraded cert-operator to v1.0.1
+- Upgraded aws-operator to v10.3.1
