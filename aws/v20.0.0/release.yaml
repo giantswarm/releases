@@ -60,7 +60,7 @@ spec:
   - catalog: control-plane-test-catalog
     name: kyverno
     releaseOperatorDeploy: true
-    version: 0.0.4
+    version: 0.0.5
   - catalog: control-plane-test-catalog
     name: policies-common
     releaseOperatorDeploy: true
