@@ -91,5 +91,9 @@ spec:
   date: "2021-05-31T14:50:41Z"
   state: deprecated
 status:
+  {{- if .Values.Installation.V1.Infra.TestingEnvironment }}
+  inUse: true
+  {{- else }}
   inUse: false
+  {{- end }}
   ready: false
