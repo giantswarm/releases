@@ -164,9 +164,6 @@ func findReleases(provider string, archived bool) ([]v1alpha1.Release, error) {
 func releasesToIndex(releases []v1alpha1.Release) []versionbundle.IndexRelease {
 	var indexReleases []versionbundle.IndexRelease
 	for _, release := range releases {
-		if release.Spec.State != "active" {
-			continue
-		}
 		var apps []versionbundle.App
 		for _, app := range release.Spec.Apps {
 			indexApp := versionbundle.App{
