@@ -20,11 +20,19 @@ This release introduces a new feature that allows KVM clusters to run behind a p
 
 
 
-### kvm-operator [3.17.1](https://github.com/giantswarm/kvm-operator/releases/tag/v3.17.1)
+### kvm-operator [3.17.2](https://github.com/giantswarm/kvm-operator/releases/tag/v3.17.2)
+
+#### Fixed
+
+- Remove reference from worker PVs on cluster deletion so they can be resued.
+
+### Added
+
+- Add flags for proxy settings and propagate them to ignition.
 
 #### Changed
-- Reconcile only deployments that are managed by kvm-operator
 
+- Reconcile only deployments that are managed by kvm-operator.
 
 
 ### containerlinux [2765.2.4](https://kinvolk.io/flatcar-container-linux/releases/#release-2765.2.4)
@@ -43,7 +51,10 @@ This release introduces a new feature that allows KVM clusters to run behind a p
 
 ### etcd [3.4.16](https://github.com/etcd-io/etcd/releases/tag/v3.4.16)
 
-Not found
+- Add [`--experimental-warning-apply-duration`](https://github.com/etcd-io/etcd/pull/12448) flag which allows apply duration threshold to be configurable.
+- Fix [`--unsafe-no-fsync`](https://github.com/etcd-io/etcd/pull/12751) to still write-out data avoiding corruption (most of the time).
+- Reduce [around 30% memory allocation by logging range response size without marshal](https://github.com/etcd-io/etcd/pull/12871).
+- Add [exclude alarms from health check conditionally](https://github.com/etcd-io/etcd/pull/12880).
 
 
 ### kubernetes [1.19.11](https://github.com/kubernetes/kubernetes/releases/tag/v1.19.11)
