@@ -134,7 +134,8 @@ to all Giant Swarm installations.
 
 - v15
   - v15.0
-    - [v15.0.0-beta2](https://github.com/giantswarm/releases/tree/master/azure/v15.0.0-beta2)
+    - [v15.0.0](https://github.com/giantswarm/releases/tree/master/azure/v15.0.0)
+    - [v15.0.0-beta2](https://github.com/giantswarm/releases/tree/master/azure/archived/v15.0.0-beta2)
     - [v15.0.0-beta1](https://github.com/giantswarm/releases/tree/master/azure/archived/v15.0.0-beta1)
 
 - v14
