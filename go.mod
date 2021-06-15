@@ -5,11 +5,11 @@ go 1.13
 require (
 	github.com/blang/semver/v4 v4.0.0
 	github.com/giantswarm/apiextensions v0.4.14
-	github.com/giantswarm/devctl v1.0.0 // indirect
-	github.com/giantswarm/microerror v0.2.1
+	github.com/giantswarm/microerror v0.2.0
 	github.com/giantswarm/versionbundle v0.2.0
 	github.com/googleapis/gnostic v0.3.1 // indirect
-	k8s.io/apiextensions-apiserver v0.18.5
+	golang.org/x/net v0.0.0-20200226121028-0de0cce0169b // indirect
+	k8s.io/apiextensions-apiserver v0.16.6
 	sigs.k8s.io/kustomize/kustomize/v3 v3.5.4
 	sigs.k8s.io/yaml v1.2.0
 )
