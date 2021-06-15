@@ -1,0 +1,1 @@
+**Workload cluster release v14.2.2 for AWS is available**. It fixes the issue which caused the machines to loose network connectivity in certain situations by reverting Flatcar Container Linux to an older version. Further details can be found in the [release notes](https://docs.giantswarm.io/changes/workload-cluster-releases-aws/releases/aws-v14.2.2/).
