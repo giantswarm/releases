@@ -1,6 +1,6 @@
 # :zap: Giant Swarm Release v14.2.2 for AWS :zap:
 
-This release fixes the issue which caused the machines to loose network connectivity in certain situations by reverting Flatcar Container Linux to an older version.
+This release fixes the issue which caused Kubernetes nodes to loose network connectivity in certain situations by reverting Flatcar Container Linux to an older version.
 
 > **_Warning:_** The nginx app needs to be updated to `v1.14.0+` because a new version of `external-dns` is included in this release.
 
