@@ -2,7 +2,6 @@ commonAnnotations:
   giantswarm.io/docs: https://docs.giantswarm.io/reference/cp-k8s-api/releases.release.giantswarm.io/
 resources:
 - v13.1.1
-- v14.0.1
 - v14.0.2
 - v14.1.5
 - v14.1.6

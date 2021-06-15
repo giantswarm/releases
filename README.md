@@ -150,7 +150,7 @@ to all Giant Swarm installations.
 
   - v14.0
     - [v14.0.2](https://github.com/giantswarm/releases/tree/master/azure/v14.0.2)
-    - [v14.0.1](https://github.com/giantswarm/releases/tree/master/azure/v14.0.1)
+    - [v14.0.1](https://github.com/giantswarm/releases/tree/master/azure/archived/v14.0.1)
     - [v14.0.0](https://github.com/giantswarm/releases/tree/master/azure/archived/v14.0.0)
 
 - v13
