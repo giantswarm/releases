@@ -9,9 +9,9 @@ metadata:
   name: v15.0.0
 spec:
   apps:
-  - componentVersion: 1.0.0
+  - componentVersion: 1.1.0
     name: aws-ebs-csi-driver
-    version: 2.0.0
+    version: 2.1.0
   - name: cert-exporter
     version: 1.6.1
   - componentVersion: 1.3.1
@@ -45,7 +45,7 @@ spec:
     releaseOperatorDeploy: false
     version: 4.4.0
   - name: aws-cni
-    version: 1.7.10
+    version: 1.8.0
   - name: aws-operator
     releaseOperatorDeploy: true
     version: 10.5.0
@@ -58,11 +58,11 @@ spec:
     releaseOperatorDeploy: true
     version: 3.7.1
   - name: containerlinux
-    version: 2765.2.3
+    version: 2605.12.0
   - name: etcd
     version: 3.4.14
   - name: kubernetes
-    version: 1.20.6
+    version: 1.20.7
   date: "2021-05-13T09:05:19Z"
   state: active
 status:

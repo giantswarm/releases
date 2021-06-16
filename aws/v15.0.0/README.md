@@ -198,15 +198,64 @@ _Nothing has changed._
 
 
 
-### aws-ebs-csi-driver [2.0.0](https://github.com/giantswarm/aws-ebs-csi-driver-app/releases/tag/v2.0.0)
+### aws-ebs-csi-driver [2.1.0](https://github.com/giantswarm/aws-ebs-csi-driver-app/releases/tag/v2.1.0)
 
 #### Changed
 
-- Update aws-ebs-csi-driver to v1.0.0.
+- Update aws-ebs-csi-driver to v1.1.0.
 
 
 
-### aws-cni [1.7.10](https://github.com/aws/amazon-vpc-cni-k8s/releases/tag/v1.7.10)
+### aws-cni [1.8.0](https://github.com/aws/amazon-vpc-cni-k8s/releases/tag/v1.8.0)
+
+Changes since v1.7.10:
+
+* Bug - Use symmetric return path for non-VPC traffic - alternate solution (#1475, @kishorj)
+* Bug - Gracefully handle failed ENI SG update (#1341, @jayanthvn)
+* Bug - Fix CNI crashing when there is no available IP addresses (#1499, @M00nF1sh)
+* Bug - Use primary ENI SGs if SG is null for Custom networking (#1259, @jayanthvn)
+* Bug - Don't cache dynamic VPC IPv4 CIDR info (#1113, @anguslees)
+* Improvement - Address Excessive API Server calls from CNI Pods (#1419, @achevuru)
+* Improvement - refine ENI tagging logic (#1482, @M00nF1sh)
+* Improvement - Change tryAssignIPs to assign up to configured WARM_IP_TARGET (#1279, @jacksontj)
+* Improvement - Use regional STS endpoint (#1332, @nithu0115)
+* Improvement - Update containernetworking dependencies (#1200, @mogren)
+* Improvement - Split Calico manifest into two (#1410, @caseydavenport)
+* Improvement - Update Calico manifest to support ARM & AMD (#1282, @jayanthvn)
+* Improvement - Auto gen of AWS CNI, metrics helper and calico artifacts through helm (#1271, @jayanthvn)
+* Improvement - Refactor EC2 Metadata IMDS code (#1225, @anguslees)
+* Improvement - Unnecessary logging for each CNI invocation (#1469, @jayanthvn)
+* Improvement - New instance types (#1463, @jayanthvn)
+* Improvement - Use 'exec' ENTRYPOINTs (#1432, @anguslees)
+* Improvement - Fix logging texts for ENI cleanup (#1209, @mogren)
+* Improvement - Remove Duplicated vlan IPTable rules (#1208, @mogren)
+* Improvement - Minor code cleanup (#1198, @mogren)
+* HelmChart - Adding flags to support overriding container runtime endpoint. (#1443, @haouc)
+* HelmChart - Add podLabels to amazon-vpc-cni chart (#1440, @haouc)
+* HelmChart - Add workflow to sync aws-vpc-cni helm chart to eks-charts (#1430, @fawadkhaliq)
+* Testing - Remove validation of VPC CIDRs from ip rules (#1476, @kishorj)
+* Testing - Updated agent version (#1474, @cgchinmay)
+* Testing - Fix for CI failure (#1470, @achevuru)
+* Testing - Binary for mtu and veth prefix check (#1458, @cgchinmay)
+* Testing - add test to verify cni-metrics-helper puts metrics to CW (#1461, @abhipth)
+* Testing - add e2e test for security group for pods (#1459, @abhipth)
+* Testing - Added Test cases for EnvVars check on CNI daemonset (#1431, @cgchinmay)
+* Testing - add test to verify host networking setup & cleanup (#1457, @abhipth)
+* Testing - Runners failing because of docker permissions (#1456, @jayanthvn)
+* Testing - decouple test helper input struct from netlink library (#1455, @abhipth)
+* Testing - add custom networking e2e test suite (#1445, @abhipth)
+* Testing - add integration test for ipamd env variables (#1453, @abhipth)
+* Testing - add agent for testing pod networking (#1448, @abhipth)
+* Testing - fix format of commited code to fix unit test step (#1449, @abhipth)
+* Testing - Unblocks Github Action Integration Tests (#1435, @couralex6)
+* Testing - add warm ENI/IP target integration tests (#1438, @abhipth)
+* Testing - add service connectivity test (#1436, @abhipth)
+* Testing - add network connectivity test (#1424, @abhipth)
+* Testing - add ginkgo automation framework (#1416, @abhipth)
+* Testing - Add some test coverage to allocating ENIs (#1234, @mogren)
+* Testing - Add some minimal tests to metrics (#1228, @mogren)
+
+Changes since v1.7.9:
 
 * Improvement - Multi card support - Prevent route override for primary ENI across multi-cards ENAs (#1396 , [@jayanthvn](https://github.com/Jayanthvn))
 
