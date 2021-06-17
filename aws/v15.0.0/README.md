@@ -13,10 +13,16 @@
 
 
 
-### cluster-operator [3.7.1](https://github.com/giantswarm/cluster-operator/releases/tag/v3.7.1)
+### cluster-operator [3.8.0](https://github.com/giantswarm/cluster-operator/releases/tag/v3.8.0)
 
-#### Fixed
-- Add `AllowedLabels` to clusterconfigmap resource to prevent unnecessary updates.
+### Changed
+- Adjust helm chart to be used with config-controller.
+
+### Fixed
+
+- Updated OperatorKit to v4.3.1 for Kubernetes 1.20 support.
+- Fix clusterIPRange value in configmap.
+- Fix kubeconfig resource to search secrets in all namespaces.
 
 
 
@@ -81,121 +87,47 @@
 *   Linux ([5.10.32](https://lwn.net/Articles/853762/))
 
 
-### kubernetes [1.20.6](https://github.com/kubernetes/kubernetes/releases/tag/v1.20.6)
+### kubernetes [1.20.7](https://github.com/kubernetes/kubernetes/releases/tag/v1.20.7)
 
-#### API Change
-- Fixes using server-side apply with APIService resources ([#100714](https://github.com/kubernetes/kubernetes/pull/100714), [@kevindelgado](https://github.com/kevindelgado)) [SIG API Machinery, Apps and Testing]
-- Regenerate protobuf code to fix CVE-2021-3121 ([#100501](https://github.com/kubernetes/kubernetes/pull/100501), [@joelsmith](https://github.com/joelsmith)) [SIG API Machinery, Apps, Auth, CLI, Cloud Provider, Cluster Lifecycle, Instrumentation, Node and Storage]
-#### Feature
-- AWS cloudprovider supports auto-discovering subnets without any kubernetes.io/cluster/<clusterName> tags. It also supports additional service annotation service.beta.kubernetes.io/aws-load-balancer-subnets to manually configure the subnets. ([#97431](https://github.com/kubernetes/kubernetes/pull/97431), [@kishorj](https://github.com/kishorj)) [SIG Cloud Provider]
-- Kubernetes is now built using go1.15.10 ([#100375](https://github.com/kubernetes/kubernetes/pull/100375), [@cpanato](https://github.com/cpanato)) [SIG Cloud Provider, Instrumentation, Release and Testing]
-#### Bug or Regression
-- ## Changelog
-  
-  ### General
-  - Fix priority expander falling back to a random choice even though there is a higher priority option to choose
-  - Clone `kubernetes/kubernetes` in `update-vendor.sh` shallowly, instead of fetching all revisions
-  - Speed up binpacking by reducing the number of PreFilter calls (call once per pod instead of #pods*#nodes times)
-  - Speed up finding unneeded nodes by 5x+ in very large clusters by reducing the number of PreFilter calls
-  - Expose `--max-nodes-total` as a metric
-  - Errors in `IncreaseSize` changed from type `apiError` to `cloudProviderError`
-  - Make `build-in-docker` and `test-in-docker` work on Linux systems with SELinux enabled
-  - Fix an error where existing nodes were not considered as destinations while finding place for pods in scale-down simulations
-  - Remove redundant log lines and reduce severity around parsing kubeEnv
-  - Don't treat nodes created by virtual kubelet as nodes from non-autoscaled node groups
-  - Remove redundant logging around calculating node utilization
-  - Add configurable `--network` and `--rm` flags for docker in `Makefile`
-  - Subtract DaemonSet pods' requests from node allocatable in the denominator while computing node utilization
-  - Include taints by condition when determining if a node is unready/still starting
-  - Fix `update-vendor.sh` to work on OSX and zsh
-  - Add best-effort eviction for DaemonSet pods while scaling down non-empty nodes
-  - Add build support for ARM64
-  
-  ### AliCloud
-  - Add missing daemonsets and replicasets to ALI example cluster role
-  
-  ### Apache CloudStack
-  - Add support for Apache CloudStack
-  
-  ### AWS
-  - Regenerate list of EC2 instances
-  - Fix pricing endpoint in AWS China Region
-  
-  ### Azure
-  - Add optional jitter on initial VMSS VM cache refresh, keep the refreshes spread over time
-  - Serve from cache for the whole period of ongoing throttling
-  - Fix unwanted VMSS VMs cache invalidation
-  - Enforce setting the number of retries if cloud provider backoff is enabled
-  - Don't update capacity if VMSS provisioning state is updating
-  - Support allocatable resources overrides via VMSS tags
-  - Add missing stable labels in template nodes
-  - Proactively set instance status to deleting on node deletions
-  
-  ### Cluster API
-  - Migrate interaction with the API from using internal types to using Unstructured
-  - Improve tests to work better with constrained resources
-  - Add support for node auto-discovery
-  - Add support for `--cloud-config`
-  - Update group identifier to use for Cluster API annotations
-  
-  ### Exoscale
-  - Add support for Exoscale
-  
-  ### GCE
-  - Decrease the number of GCE Read Requests made while deleting nodes
-  - Base pricing of custom instances on their instance family type
-  - Add pricing information for missing machine types
-  - Add pricing information for different GPU types
-  - Ignore the new `topology.gke.io/zone` label when comparing groups
-  - Add missing stable labels to template nodes
-  
-  ### HuaweiCloud
-  - Add auto scaling group support
-  - Implement node group by AS
-  - Implement getting desired instance number of node group
-  - Implement increasing node group size
-  - Implement TemplateNodeInfo
-  - Implement caching instances
-  
-  ### IONOS
-  - Add support for IONOS
-  
-  ### Kubemark
-  - Skip non-kubemark nodes while computing node information for node groups.
-  
-  ### Magnum
-  - Add Magnum support in the Cluster Autoscaler helm chart
-  
-  ### Packet
-  - Allow empty nodepools
-  - Add support for multiple nodepools
-  - Add pricing support
-  
-  ## Image
-  Image: `k8s.gcr.io/autoscaling/cluster-autoscaler:v1.20.0` ([#97012](https://github.com/kubernetes/kubernetes/pull/97012), [@towca](https://github.com/towca)) [SIG Cloud Provider]
-- Fixed a bug where a high churn of events was causing master instability by reducing the maximum number of objects (events) attached to a single etcd lease. ([#100084](https://github.com/kubernetes/kubernetes/pull/100084), [@mborsz](https://github.com/mborsz)) [SIG API Machinery, Instrumentation and Scalability]
-- Fixed a race condition on API server startup ensuring previously created webhook configurations are effective before the first write request is admitted. ([#95783](https://github.com/kubernetes/kubernetes/pull/95783), [@roycaihw](https://github.com/roycaihw)) [SIG API Machinery]
-- Fixes a data race issue in the priority and fairness API server filter ([#100667](https://github.com/kubernetes/kubernetes/pull/100667), [@tkashem](https://github.com/tkashem)) [SIG API Machinery]
-- Kubectl: Fixed panic when describing an ingress backend without an API Group ([#100541](https://github.com/kubernetes/kubernetes/pull/100541), [@eddiezane](https://github.com/eddiezane)) [SIG CLI]
-- Reverts breaking change to inline AzureFile volumes in v1.20.2-v1.20.5; referenced secrets are now correctly searched for in the same namespace as the pod as in previous releases. ([#100399](https://github.com/kubernetes/kubernetes/pull/100399), [@andyzhangx](https://github.com/andyzhangx)) [SIG Cloud Provider and Storage]
-- The endpointslice mirroring controller mirrors endpoints annotations and labels to the generated endpoint slices, it also ensures that updates on any of these fields on the endpoints are mirrored. 
-  The well-known annotation endpoints.kubernetes.io/last-change-trigger-time is skipped and not mirrored. ([#100443](https://github.com/kubernetes/kubernetes/pull/100443), [@aojea](https://github.com/aojea)) [SIG Apps, Network and Testing]
-- The maximum number of ports allowed in EndpointSlices has been increased from 100 to 20,000 ([#99795](https://github.com/kubernetes/kubernetes/pull/99795), [@robscott](https://github.com/robscott)) [SIG Network]
-#### Uncategorized
-- GCE L4 Loadbalancers now handle > 5 ports in service spec correctly. ([#99595](https://github.com/kubernetes/kubernetes/pull/99595), [@prameshj](https://github.com/prameshj)) [SIG Cloud Provider]
-#### Dependencies
-#### Added
-_Nothing has changed._
-#### Changed
-- github.com/gogo/protobuf: [v1.3.1 → v1.3.2](https://github.com/gogo/protobuf/compare/v1.3.1...v1.3.2)
-- github.com/kisielk/errcheck: [v1.2.0 → v1.5.0](https://github.com/kisielk/errcheck/compare/v1.2.0...v1.5.0)
-- github.com/yuin/goldmark: [v1.1.27 → v1.2.1](https://github.com/yuin/goldmark/compare/v1.1.27...v1.2.1)
-- golang.org/x/sync: cd5d95a → 67f06af
-- golang.org/x/tools: c1934b7 → 113979e
-- sigs.k8s.io/structured-merge-diff/v4: v4.0.2 → v4.0.3
-#### Removed
+### API Change
+
+- We have added a new Priority & Fairness rule that exempts all probes (/readyz, /healthz, /livez) to prevent 
+  restarting of "healthy" kube-apiserver instance(s) by kubelet. ([#101112](https://github.com/kubernetes/kubernetes/pull/101112), [@tkashem](https://github.com/tkashem)) [SIG API Machinery]
+
+### Feature
+
+- Kubernetes is now built using go1.15.11 ([#101192](https://github.com/kubernetes/kubernetes/pull/101192), [@cpanato](https://github.com/cpanato)) [SIG Cloud Provider, Instrumentation, Release and Testing]
+- Kubernetes is now built using go1.15.12 ([#101845](https://github.com/kubernetes/kubernetes/pull/101845), [@cpanato](https://github.com/cpanato)) [SIG Cloud Provider, Instrumentation, Release and Testing]
+
+### Bug or Regression
+
+- Azurefile: Normalize share name to not include capital letters ([#100731](https://github.com/kubernetes/kubernetes/pull/100731), [@kassarl](https://github.com/kassarl)) [SIG Cloud Provider and Storage]
+- EndpointSlice IP validation now matches Endpoints IP validation. ([#101084](https://github.com/kubernetes/kubernetes/pull/101084), [@robscott](https://github.com/robscott)) [SIG Apps and Network]
+- EndpointSlice controllers are less likely to create duplicate EndpointSlices. ([#101763](https://github.com/kubernetes/kubernetes/pull/101763), [@aojea](https://github.com/aojea)) [SIG Apps and Network]
+- Ensure service deleted when the Azure resource group has been deleted ([#100944](https://github.com/kubernetes/kubernetes/pull/100944), [@feiskyer](https://github.com/feiskyer)) [SIG Cloud Provider]
+- Fix panic in JSON logging format caused by missing Duration encoder ([#101158](https://github.com/kubernetes/kubernetes/pull/101158), [@serathius](https://github.com/serathius)) [SIG API Machinery, Cluster Lifecycle and Instrumentation]
+- Fix smb mount PermissionDenied issue on Windows ([#99550](https://github.com/kubernetes/kubernetes/pull/99550), [@andyzhangx](https://github.com/andyzhangx)) [SIG Cloud Provider, Storage and Windows]
+- Fix: azure file inline volume namespace issue in csi migration translation ([#101235](https://github.com/kubernetes/kubernetes/pull/101235), [@andyzhangx](https://github.com/andyzhangx)) [SIG Apps, Cloud Provider, Node and Storage]
+- Fix: not tagging static public IP ([#101752](https://github.com/kubernetes/kubernetes/pull/101752), [@nilo19](https://github.com/nilo19)) [SIG Cloud Provider]
+- Fix: set "host is down" as corrupted mount ([#101398](https://github.com/kubernetes/kubernetes/pull/101398), [@andyzhangx](https://github.com/andyzhangx)) [SIG Cloud Provider and Storage]
+- Fixed a bug where startupProbe stopped working after a container's first restart ([#101093](https://github.com/kubernetes/kubernetes/pull/101093), [@wzshiming](https://github.com/wzshiming)) [SIG Node]
+- Fixed port-forward memory leak for long-running and heavily used connections. ([#99839](https://github.com/kubernetes/kubernetes/pull/99839), [@saschagrunert](https://github.com/saschagrunert)) [SIG API Machinery and Node]
+- Kubectl create service now respects namespace flag ([#101005](https://github.com/kubernetes/kubernetes/pull/101005), [@zxh326](https://github.com/zxh326)) [SIG CLI]
+- Kubelet: improve the performance when waiting for a synchronization of the node list with the kube-apiserver ([#99336](https://github.com/kubernetes/kubernetes/pull/99336), [@neolit123](https://github.com/neolit123)) [SIG Node]
+- No support endpointslice in linux userpace mode ([#101503](https://github.com/kubernetes/kubernetes/pull/101503), [@JornShen](https://github.com/JornShen)) [SIG Network]
+- Renames the timeout field for the DelegatingAuthenticationOptions to TokenRequestTimeout and set the timeout only for the token review client. Previously the timeout was also applied to watches making them reconnecting every 10 seconds. ([#101103](https://github.com/kubernetes/kubernetes/pull/101103), [@p0lyn0mial](https://github.com/p0lyn0mial)) [SIG API Machinery, Auth and Cloud Provider]
+- Respect ExecProbeTimeout=false for dockershim ([#101126](https://github.com/kubernetes/kubernetes/pull/101126), [@jackfrancis](https://github.com/jackfrancis)) [SIG Node and Testing]
+
+## Dependencies
+
+### Added
 _Nothing has changed._
 
+### Changed
+_Nothing has changed._
+
+### Removed
+_Nothing has changed._
 
 
 ### aws-ebs-csi-driver [2.1.0](https://github.com/giantswarm/aws-ebs-csi-driver-app/releases/tag/v2.1.0)
