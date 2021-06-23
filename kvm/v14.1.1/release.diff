@@ -1,5 +1,5 @@
 # Generated with:                                                  # Generated with:
-# devctl release create --name v14.1.0 --provider kvm --base 14    # devctl release create --name v14.1.0 --provider kvm --base 14
+# devctl release create --name v14.1.0 --provider kvm --base 14    # devctl release create --name v14.1.1 --provider kvm --base 14
 apiVersion: release.giantswarm.io/v1alpha1                         apiVersion: release.giantswarm.io/v1alpha1
 kind: Release                                                      kind: Release
 metadata:                                                          metadata:
@@ -48,7 +48,7 @@ spec:                                                              spec:
   - name: kvm-operator                                               - name: kvm-operator
     releaseOperatorDeploy: true                                        releaseOperatorDeploy: true
     version: 3.17.2                                             |      version: 3.17.3
-  date: "2021-06-08T17:54:06Z"                                  |    date: "2021-06-18T12:00:00Z"
+  date: "2021-06-08T17:54:06Z"                                  |    date: "2021-06-23T05:24:59Z"
   state: deprecated                                             |    state: active
 status:                                                            status:
   inUse: false                                                       inUse: false
