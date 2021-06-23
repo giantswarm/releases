@@ -1,4 +1,9 @@
 releases:
+    - name: "> 15.0.0"
+      requests:
+        - name: external-dns
+          version: ">= 2.4.0"
+          issue: https://github.com/giantswarm/giantswarm/issues/17718
     - name: ">= 15.0.0-beta1"
       requests:
         - name: net-exporter
@@ -87,4 +92,3 @@ releases:
       requests:
       - name: containerlinux
         version: ">= 2605.12.0"
-
