@@ -1,0 +1,1 @@
+**Workload cluster release v14.1.1 for KVM** is now available. This release fixes a rare bug encountered when deleting clusters using host volumes. See [release notes](https://docs.giantswarm.io/changes/workload-cluster-releases-kvm/releases/kvm-v14.1.1/) for more details.
