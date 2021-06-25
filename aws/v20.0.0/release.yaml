@@ -60,7 +60,7 @@ spec:
   - catalog: control-plane-test-catalog
     name: kyverno
     releaseOperatorDeploy: true
-    version: 0.0.5
+    version: 0.2.0
   - catalog: control-plane-test-catalog
     name: policies-common
     releaseOperatorDeploy: true
@@ -73,9 +73,6 @@ spec:
     name: cluster-operator
     releaseOperatorDeploy: true
     version: 3.7.2-capi-2
-  - catalog: control-plane-catalog
-    name: kubernetes
-    version: 1.19.8
   - catalog: control-plane-catalog
     name: kubernetes
     version: 1.19.8
