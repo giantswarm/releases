@@ -36,8 +36,7 @@ spec:
     name: node-exporter
     version: 1.7.2
   components:
-  - catalog: control-plane-catalog
-    name: app-operator
+  - name: app-operator
     reference: 4.4.0
   - catalog: control-plane-catalog
     name: cluster-api-bootstrap-provider-kubeadm
