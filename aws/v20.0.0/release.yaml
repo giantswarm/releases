@@ -9,32 +9,32 @@ spec:
     version: 0.2.0
     componentVersion: 3.18.0
   - name: cert-exporter
-    version: 1.6.0
-  - componentVersion: 1.1.0
+    version: 1.6.1
+  - componentVersion: 1.3.1
     name: cert-manager
-    version: 2.4.1
+    version: 2.7.1
   - catalog: default
     name: chart-operator
     version: 2.11.0-capi-1
   - name: cluster-autoscaler
-    version: 1.19.1
+    version: 1.19.3
   - componentVersion: 0.7.6
     name: external-dns
-    version: 2.1.1
+    version: 2.3.1
   - componentVersion: 3.6.0
     name: kiam
-    version: 1.7.0
+    version: 1.7.1
   - componentVersion: 1.9.7
     name: kube-state-metrics
-    version: 1.3.0
+    version: 1.3.1
   - componentVersion: 0.4.1
     name: metrics-server
-    version: 1.2.1
+    version: 1.3.0
   - name: net-exporter
-    version: 1.9.2
+    version: 1.10.1
   - componentVersion: 1.0.1
     name: node-exporter
-    version: 1.7.1
+    version: 1.7.2
   components:
   - catalog: control-plane-catalog
     name: app-operator
@@ -44,19 +44,19 @@ spec:
   - catalog: control-plane-catalog
     name: cluster-api-bootstrap-provider-kubeadm
     releaseOperatorDeploy: true
-    version: 0.3.14-gs2
+    version: 0.3.19-gs1
   - catalog: control-plane-test-catalog
     name: cluster-api-control-plane
     releaseOperatorDeploy: true
-    version: 0.3.14-gs2
+    version: 0.3.19-gs1
   - catalog: control-plane-catalog
     name: cluster-api-core
     releaseOperatorDeploy: true
-    version: 0.3.14-gs2
+    version: 0.3.19-gs1
   - catalog: control-plane-test-catalog
     name: cluster-api-provider-aws
     releaseOperatorDeploy: true
-    version: 0.6.5-gs3
+    version: 0.6.6-gs1
   - catalog: control-plane-test-catalog
     name: kyverno
     releaseOperatorDeploy: true
@@ -70,12 +70,12 @@ spec:
     releaseOperatorDeploy: true
     version: 0.0.1
   - catalog: control-plane-catalog
-    name: cluster-operator
+    name: cluster-apps-operator
     releaseOperatorDeploy: true
-    version: 3.7.2-capi-2
+    version: 0.1.0
   - catalog: control-plane-catalog
     name: kubernetes
-    version: 1.19.8
+    version: 1.19.9
   - catalog: control-plane-catalog
     name: containerlinux
     version: 2605.12.0
