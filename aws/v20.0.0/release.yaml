@@ -69,6 +69,7 @@ spec:
     name: policies-aws
     releaseOperatorDeploy: true
     version: 0.0.1
+    reference: 0.0.1-b6ef47152262f0ee9083ff2e2c74f05f147cc3cb
   - catalog: control-plane-catalog
     name: cluster-apps-operator
     releaseOperatorDeploy: true
