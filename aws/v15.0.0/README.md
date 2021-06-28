@@ -65,26 +65,21 @@
 - Removed default storage-class annotation, EBS CSI driver is taking over.
 
 
-### containerlinux [2765.2.3](https://www.flatcar-linux.org/releases/#release-2765.2.3)
+### containerlinux [2765.2.6](https://www.flatcar-linux.org/releases/#release-2765.2.6)
 
 
 **Security fixes**
 
-
-
-*   Linux ([CVE-2021-28964](https://nvd.nist.gov/vuln/detail/CVE-2021-28964), [CVE-2021-28972](https://nvd.nist.gov/vuln/detail/CVE-2021-28972), [CVE-2021-28971](https://nvd.nist.gov/vuln/detail/CVE-2021-28971), [CVE-2021-28951](https://nvd.nist.gov/vuln/detail/CVE-2021-28951), [CVE-2021-28952](https://nvd.nist.gov/vuln/detail/CVE-2021-28952), [CVE-2021-29266](https://nvd.nist.gov/vuln/detail/CVE-2021-29266), [CVE-2021-28688](https://nvd.nist.gov/vuln/detail/CVE-2021-28688), [CVE-2021-29264](https://nvd.nist.gov/vuln/detail/CVE-2021-29264), [CVE-2021-29649](https://nvd.nist.gov/vuln/detail/CVE-2021-29649), [CVE-2021-29650](https://nvd.nist.gov/vuln/detail/CVE-2021-29650), [CVE-2021-29646](https://nvd.nist.gov/vuln/detail/CVE-2021-29646), [CVE-2021-29647](https://nvd.nist.gov/vuln/detail/CVE-2021-29647), [CVE-2021-29154](https://nvd.nist.gov/vuln/detail/CVE-2021-29154), [CVE-2021-29155](https://nvd.nist.gov/vuln/detail/CVE-2021-29155), [CVE-2021-23133](https://nvd.nist.gov/vuln/detail/CVE-2021-23133))
+* Linux ([CVE-2020-26558](https://nvd.nist.gov/vuln/detail/CVE-2020-26558), [CVE-2021-0129](https://nvd.nist.gov/vuln/detail/CVE-2021-0129), [CVE-2020-24587](https://nvd.nist.gov/vuln/detail/CVE-2020-24587), [CVE-2020-24586](https://nvd.nist.gov/vuln/detail/CVE-2020-24586), [CVE-2020-24588](https://nvd.nist.gov/vuln/detail/CVE-2020-24588), [CVE-2020-26139](https://nvd.nist.gov/vuln/detail/CVE-2020-26139), [CVE-2020-26145](https://nvd.nist.gov/vuln/detail/CVE-2020-26145), [CVE-2020-26147](https://nvd.nist.gov/vuln/detail/CVE-2020-26147), [CVE-2020-26141](https://nvd.nist.gov/vuln/detail/CVE-2020-26141), [CVE-2021-3564](https://nvd.nist.gov/vuln/detail/CVE-2021-3564), [CVE-2021-28691](https://nvd.nist.gov/vuln/detail/CVE-2021-28691), [CVE-2021-3587](https://nvd.nist.gov/vuln/detail/CVE-2021-3587), [CVE-2021-3573](https://nvd.nist.gov/vuln/detail/CVE-2021-3573))
 
 **Bug fixes**
 
-
-
-*   Fix the patch to update DefaultTasksMax in systemd ([coreos-overlay#971](https://github.com/kinvolk/coreos-overlay/pull/971))
+* Update-engine sent empty requests when restarted before a pending reboot ([Flatcar#388](https://github.com/kinvolk/Flatcar/issues/388))
+motd login prompt list of failed services: The output of “systemctl list-units –state=failed –no-legend” contains a bullet point which is not expected and ended up being taken as the unit name of failed units which was previously on the start of the line. Filtered the bullet point out to stay compatible with the old behavior in case upstream would remove the bullet point again. ([coreos-overlay#1042](https://github.com/kinvolk/coreos-overlay/pull/1042))
 
 **Updates**
 
-
-
-*   Linux ([5.10.32](https://lwn.net/Articles/853762/))
+* Linux ([5.10.43](https://lwn.net/Articles/859022/))
 
 
 ### kubernetes [1.20.8](https://github.com/kubernetes/kubernetes/releases/tag/v1.20.8)
