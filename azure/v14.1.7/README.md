@@ -7,7 +7,7 @@
 
 ### azure-operator [5.5.4](https://github.com/giantswarm/azure-operator/releases/tag/v5.5.4)
 
-Not found
+Meta release for guaranteed node rolling. No changes in functionality.
 
 
 ### kubernetes [1.19.12](https://github.com/kubernetes/kubernetes/releases/tag/v1.19.12)
@@ -40,6 +40,5 @@ _Nothing has changed._
 _Nothing has changed._
 #### Removed
 _Nothing has changed._
-
 
 
