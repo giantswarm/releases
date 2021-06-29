@@ -41,29 +41,15 @@
 
 
 
-### aws-operator [10.5.0](https://github.com/giantswarm/aws-operator/releases/tag/v10.5.0)
+### aws-operator [10.6.0](https://github.com/giantswarm/aws-operator/releases/tag/v10.6.0)
 
-#### Fixed
-- Updated OperatorKit to v4.3.1 for Kubernetes 1.20 support.
-- Cancel update loop if source or target release is not found.
-- Updated IPAM library to avoid IP conflicts.
-#### Added
-- Enabled EBS CSI migration.
-- Clean up VPC peerings from a cluster VPC when is cluster deleted.
-- Clean up Application and Network loadbalancers created by Kubernetes when cluster is deleted.
-- Add new flatcar AMIs.
-#### Changed
-- Fix issues with etcd initial cluster resolving into ELB and causing errors.
-- Update `k8scloudconfig` to version `v10.5.0` to support kubernetes `v1.20`.
-- Use `networkctl reload` for managing networking to avoid bug in `systemd`.
-- Avoid TCCPN stack failure by checking if a control-plane tag exists before adding it.
-- Look up cloud tags in all namespaces
-- Find certs in all namespaces
-- Enable terminate unhealthy node feature by default.
-- Add node termination counter per cluster metric.
-#### Removed
-- Removed default storage-class annotation, EBS CSI driver is taking over.
+### Added
 
+- S3 vpc endpoint to AWS CNI subnet.
+
+### Changed
+
+- Update Flatcar AMI's to the latest stable releases.
 
 ### containerlinux [2765.2.6](https://www.flatcar-linux.org/releases/#release-2765.2.6)
 
