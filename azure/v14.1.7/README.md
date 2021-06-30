@@ -1,6 +1,6 @@
 # :zap: Giant Swarm Release v14.1.7 for Azure :zap:
 
-<< Add description here >>
+This release upgrades Kubernetes to [v1.19.12](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.19.md#v11912).
 
 ## Change details
 
@@ -40,5 +40,4 @@ _Nothing has changed._
 _Nothing has changed._
 #### Removed
 _Nothing has changed._
-
 
