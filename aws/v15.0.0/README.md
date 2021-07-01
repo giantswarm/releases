@@ -41,7 +41,7 @@
 
 
 
-### aws-operator [10.6.0](https://github.com/giantswarm/aws-operator/releases/tag/v10.6.0)
+### aws-operator [10.6.1](https://github.com/giantswarm/aws-operator/releases/tag/v10.6.1)
 
 ### Added
 
