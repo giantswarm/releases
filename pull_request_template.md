@@ -6,3 +6,7 @@ If this is a PR with details for new release please review [Workload Cluster Rel
 
 Ping @sig-product for review of release notes.
 --->
+
+# Prechecks
+
+- [ ] Verify there is no `Reference:` tags for components. If there is, it will override other components with the same version in other releases.
