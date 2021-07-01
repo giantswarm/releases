@@ -3,7 +3,6 @@ commonAnnotations:
 resources:
 - v9.3.9
 - v11.6.1
-- v12.7.0
 - v12.7.1
 - v12.7.2
 - v13.0.0
