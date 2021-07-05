@@ -9,4 +9,4 @@ Ping @sig-product for review of release notes.
 
 # Prechecks
 
-- [ ] Verify there is no `Reference:` tags for components. If there is, it will override other components with the same version in other releases.
+- [ ] Verify there is no `Reference:` tags for components. References should only be used during testing.
