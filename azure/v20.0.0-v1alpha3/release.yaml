@@ -56,7 +56,7 @@ spec:
     version: 0.4.0-beta.1
   - name: cluster-api-provider-azure
     catalog: control-plane-test-catalog
-    reference: 0.0.0-8330d43a482005abd5d4a9cf666e9cdf8a773216 # https://github.com/giantswarm/cluster-api-provider-azure-app/pull/10
+    reference: 0.0.0-f8ec46f595b833dbacb95810c93e48cc72c495af # https://github.com/giantswarm/cluster-api-provider-azure-app/pull/10
     releaseOperatorDeploy: true
     version: 0.0.0
   - name: capi-migration
