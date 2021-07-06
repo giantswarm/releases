@@ -277,7 +277,7 @@ Changes since v1.7.9:
 - Make pods of deployments use read-only file systems. ([#140](https://github.com/giantswarm/cert-manager-app/pull/140));
 - Make pre-install/pre-upgrade hooks use server side apply. Possibly fixes upgrade timeouts. ([#140](https://github.com/giantswarm/cert-manager-app/pull/140)).
 
-### Fixed
+#### Fixed
 - Allow strings and integers in values schema for resources requests and limits. ([#150](https://github.com/giantswarm/cert-manager-app/pull/150)).
 
 
@@ -288,5 +288,6 @@ Changes since v1.7.9:
 - Cancel the release resource when the manifest object already exists.
 - Cancel the release resource when helm returns an unknown error.
 
-
+#### Fixed
+- Updated OperatorKit to v4.3.1 for Kubernetes 1.20 support.
 
