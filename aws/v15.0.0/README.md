@@ -8,8 +8,25 @@
 ### app-operator [4.4.0](https://github.com/giantswarm/app-operator/releases/tag/v4.4.0)
 
 #### Added
-- Add support for skip CRD flag when installing Helm releases.
-- Emit events when config maps and secrets referenced in App CRs are updated.
+- Add support for skip CRD flag when installing Helm releases;
+- Emit events when config maps and secrets referenced in App CRs are updated;
+- Cache k8sclient, helmclient for later use;
+- Apply the namespaceConfig to the desired chart;
+- Install apps in CAPI Workload Clusters;
+- Apply `compatibleProvider`, `namespace` metadata validation based on the relevant `AppCatalogEntry` CR;
+- Add annotations from Helm charts to AppCatalogEntry CRs;
+- Enable Vertical Pod Autoscaler.
+
+#### Fixed
+- Updated OperatorKit to v4.3.1 for Kubernetes 1.20 support;
+- Restore chart-operator when it had been deleted;
+- Use backoff in chart CR watcher to wait until kubeconfig secret exists;
+
+#### Changed
+- Updated Helm to v3.5.3;
+- Replace status webhook with chart CR status watcher;
+- Sort AppCatalogEntry CRs by version and created timestamp;
+- Watch cluster namespace for per workload cluster instances of app-operator.
 
 
 
