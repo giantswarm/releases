@@ -50,31 +50,6 @@
 
 
 
-### cert-operator [1.0.1](https://github.com/giantswarm/cert-operator/releases/tag/v1.0.1)
-
-#### Fixed
-- Add `list` permission for `cluster.x-k8s.io`.
-
-#### Changed
-- Update Kubernetes dependencies to 1.18 versions.
-- Reconcile `CertConfig`s based on their `cert-operator.giantswarm.io/version` label.
-
-#### Removed
-- Stop using the `VersionBundle` version.
-
-#### Added
-- Add network policy resource;
-- Added lookup for nodepool clusters in other namespaces than `default`.
-
-
-
-### external-dns [2.3.1](https://github.com/giantswarm/external-dns-app/releases/tag/v2.3.1)
-
-#### Changed
-- Increase memory limit to 100Mi since we ran into out of memory problems. This will make the app more stable.
-
-
-
 ### aws-operator [10.6.1](https://github.com/giantswarm/aws-operator/releases/tag/v10.6.1)
 
 #### Added
@@ -234,13 +209,6 @@ Changes since v1.7.9:
 
 
 
-### metrics-server [1.3.0](https://github.com/giantswarm/metrics-server-app/releases/tag/v1.3.0)
-
-#### Added
-- Added new configuration value `extraArgs`.
-
-
-
 ### cluster-autoscaler [1.20.3](https://github.com/giantswarm/cluster-autoscaler-app/releases/tag/v1.20.3)
 
 #### Changed
@@ -255,12 +223,6 @@ Changes since v1.7.9:
 
 #### Fixed
 - Remove priority class used in integration tests that is no longer required.
-
-
-### net-exporter [1.10.1](https://github.com/giantswarm/net-exporter/releases/tag/v1.10.1)
-
-#### Changed
-- Add label selector for pods to help lower memory usage.
 
 
 
