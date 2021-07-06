@@ -244,8 +244,17 @@ Changes since v1.7.9:
 ### cluster-autoscaler [1.20.3](https://github.com/giantswarm/cluster-autoscaler-app/releases/tag/v1.20.3)
 
 #### Changed
-- Set docker.io as the default registry
-- Allow users to set container resources
+- Set docker.io as the default registry;
+- Allow users to set container resources;
+- Update cluster-autoscaler to version `1.20.0`;
+- Update templates to run app in Control-Plane cluster.
+
+#### Added
+- Push app to the control plane app catalog;
+- Push app to the aws/azure app-collections.
+
+#### Fixed
+- Remove priority class used in integration tests that is no longer required.
 
 
 ### net-exporter [1.10.1](https://github.com/giantswarm/net-exporter/releases/tag/v1.10.1)
