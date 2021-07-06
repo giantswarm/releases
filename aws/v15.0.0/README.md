@@ -54,30 +54,21 @@
 
 #### Added
 - S3 vpc endpoint to AWS CNI subnet;
-- Clean up VPC peerings from a cluster VPC when is cluster deleted;
-- Clean up Application and Network loadbalancers created by Kubernetes when cluster is deleted;
-- Add new flatcar AMIs.
+- Enabled EBS CSI migration.
 
 #### Changed
 - Upgrade `k8scloudconfig` to v10.8.1 which includes a change to better determine if memory eviction thresholds are crossed;
 - Update Flatcar AMI's to the latest stable releases;
+
 - Enabled EBS CSI migration;
 - Avoid TCCPN stack failure by checking if a control-plane tag exists before adding it;
 - Look up cloud tags in all namespaces;
 - Find certs in all namespaces;
 - Enable `terminate unhealthy node` feature by default;
 - Add node termination counter per cluster metric;
-- Fix issues with etcd initial cluster resolving into ELB and causing errors;
-- Update `k8scloudconfig` to version `v10.5.0` to support kubernetes `v1.20`;
-- Use `networkctl reload` for managing networking to avoid bug in `systemd`.
 
 #### Removed
 - Removed default storage-class annotation, EBS CSI driver is taking over.
-
-#### Fixed
-- Updated OperatorKit to v4.3.1 for Kubernetes 1.20 support;
-- Cancel update loop if source or target release is not found;
-- Updated IPAM library to avoid IP conflicts.
 
 
 
