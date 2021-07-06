@@ -71,7 +71,6 @@
 ### external-dns [2.3.1](https://github.com/giantswarm/external-dns-app/releases/tag/v2.3.1)
 
 #### Changed
-
 - Increase memory limit to 100Mi since we ran into out of memory problems. This will make the app more stable.
 
 
