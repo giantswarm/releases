@@ -223,15 +223,3 @@ Changes since v1.7.9:
 
 #### Fixed
 - Remove priority class used in integration tests that is no longer required.
-
-
-
-### chart-operator [2.14.0](https://github.com/giantswarm/chart-operator/releases/tag/v2.14.0)
-
-#### Changed
-- Cancel the release resource when the manifest object already exists.
-- Cancel the release resource when helm returns an unknown error.
-
-#### Fixed
-- Updated OperatorKit to v4.3.1 for Kubernetes 1.20 support.
-
