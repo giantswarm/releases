@@ -55,6 +55,17 @@
 #### Fixed
 - Add `list` permission for `cluster.x-k8s.io`.
 
+#### Changed
+- Update Kubernetes dependencies to 1.18 versions.
+- Reconcile `CertConfig`s based on their `cert-operator.giantswarm.io/version` label.
+
+#### Removed
+- Stop using the `VersionBundle` version.
+
+#### Added
+- Add network policy resource;
+- Added lookup for nodepool clusters in other namespaces than `default`.
+
 
 
 ### external-dns [2.3.1](https://github.com/giantswarm/external-dns-app/releases/tag/v2.3.1)
