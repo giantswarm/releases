@@ -32,14 +32,21 @@
 
 ### cluster-operator [3.8.0](https://github.com/giantswarm/cluster-operator/releases/tag/v3.8.0)
 
-### Changed
+#### Changed
 - Adjust helm chart to be used with config-controller.
 
-### Fixed
+#### Fixed
+- Updated OperatorKit to v4.3.1 for Kubernetes 1.20 support;
+- Fix clusterIPRange value in configmap;
+- Fix kubeconfig resource to search secrets in all namespaces;
+- Add `AllowedLabels` to clusterconfigmap resource to prevent unnecessary updates.
 
-- Updated OperatorKit to v4.3.1 for Kubernetes 1.20 support.
-- Fix clusterIPRange value in configmap.
-- Fix kubeconfig resource to search secrets in all namespaces.
+#### Added
+- Create app CR for per cluster app-operator instance;
+- Add `appfinalizer` resource to remove finalizers from workload cluster app CRs.
+
+#### Removed
+- Do not add `VersionBundle` to new `CertConfig` specs (`CertConfig`s are now versioned using a label). **This change requires using `cert-operator` 1.0.0 or later.**
 
 
 
