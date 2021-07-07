@@ -15,6 +15,7 @@ to all Giant Swarm installations.
     - [v20.0.0](https://github.com/giantswarm/releases/tree/master/aws/v20.0.0)
 - v14
   - v14.2
+    - [v14.2.99](https://github.com/giantswarm/releases/tree/master/aws/v14.2.99)
     - [v14.2.2](https://github.com/giantswarm/releases/tree/master/aws/v14.2.2)
     - [v14.2.1](https://github.com/giantswarm/releases/tree/master/aws/v14.2.1)
     - [v14.2.0](https://github.com/giantswarm/releases/tree/master/aws/archived/v14.2.0)
