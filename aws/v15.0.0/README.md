@@ -68,16 +68,94 @@
 
 **Security fixes**
 
-* Linux ([CVE-2020-26558](https://nvd.nist.gov/vuln/detail/CVE-2020-26558), [CVE-2021-0129](https://nvd.nist.gov/vuln/detail/CVE-2021-0129), [CVE-2020-24587](https://nvd.nist.gov/vuln/detail/CVE-2020-24587), [CVE-2020-24586](https://nvd.nist.gov/vuln/detail/CVE-2020-24586), [CVE-2020-24588](https://nvd.nist.gov/vuln/detail/CVE-2020-24588), [CVE-2020-26139](https://nvd.nist.gov/vuln/detail/CVE-2020-26139), [CVE-2020-26145](https://nvd.nist.gov/vuln/detail/CVE-2020-26145), [CVE-2020-26147](https://nvd.nist.gov/vuln/detail/CVE-2020-26147), [CVE-2020-26141](https://nvd.nist.gov/vuln/detail/CVE-2020-26141), [CVE-2021-3564](https://nvd.nist.gov/vuln/detail/CVE-2021-3564), [CVE-2021-28691](https://nvd.nist.gov/vuln/detail/CVE-2021-28691), [CVE-2021-3587](https://nvd.nist.gov/vuln/detail/CVE-2021-3587), [CVE-2021-3573](https://nvd.nist.gov/vuln/detail/CVE-2021-3573))
+* Linux
+    - [CVE-2020-26558](https://nvd.nist.gov/vuln/detail/CVE-2020-26558)
+    - [CVE-2021-0129](https://nvd.nist.gov/vuln/detail/CVE-2021-0129)
+    - [CVE-2020-24587](https://nvd.nist.gov/vuln/detail/CVE-2020-24587)
+    - [CVE-2020-24586](https://nvd.nist.gov/vuln/detail/CVE-2020-24586)
+    - [CVE-2020-24588](https://nvd.nist.gov/vuln/detail/CVE-2020-24588)
+    - [CVE-2020-26139](https://nvd.nist.gov/vuln/detail/CVE-2020-26139)
+    - [CVE-2020-26145](https://nvd.nist.gov/vuln/detail/CVE-2020-26145)
+    - [CVE-2020-26147](https://nvd.nist.gov/vuln/detail/CVE-2020-26147)
+    - [CVE-2020-26141](https://nvd.nist.gov/vuln/detail/CVE-2020-26141)
+    - [CVE-2021-3564](https://nvd.nist.gov/vuln/detail/CVE-2021-3564)
+    - [CVE-2021-28691](https://nvd.nist.gov/vuln/detail/CVE-2021-28691)
+    - [CVE-2021-3587](https://nvd.nist.gov/vuln/detail/CVE-2021-3587)
+    - [CVE-2021-3573](https://nvd.nist.gov/vuln/detail/CVE-2021-3573)
+    - [CVE-2021-3491](https://nvd.nist.gov/vuln/detail/CVE-2021-3491)
+    - [CVE-2021-31440](https://nvd.nist.gov/vuln/detail/CVE-2021-31440)
+    - [CVE-2021-31829](https://nvd.nist.gov/vuln/detail/CVE-2021-31829)
+    - [CVE-2021-28964](https://nvd.nist.gov/vuln/detail/CVE-2021-28964)
+    - [CVE-2021-28972](https://nvd.nist.gov/vuln/detail/CVE-2021-28972)
+    - [CVE-2021-28971](https://nvd.nist.gov/vuln/detail/CVE-2021-28971)
+    - [CVE-2021-28951](https://nvd.nist.gov/vuln/detail/CVE-2021-28951)
+    - [CVE-2021-28952](https://nvd.nist.gov/vuln/detail/CVE-2021-28952)
+    - [CVE-2021-29266](https://nvd.nist.gov/vuln/detail/CVE-2021-29266)
+    - [CVE-2021-28688](https://nvd.nist.gov/vuln/detail/CVE-2021-28688)
+    - [CVE-2021-29264](https://nvd.nist.gov/vuln/detail/CVE-2021-29264)
+    - [CVE-2021-29649](https://nvd.nist.gov/vuln/detail/CVE-2021-29649)
+    - [CVE-2021-29650](https://nvd.nist.gov/vuln/detail/CVE-2021-29650)
+    - [CVE-2021-29646](https://nvd.nist.gov/vuln/detail/CVE-2021-29646)
+    - [CVE-2021-29647](https://nvd.nist.gov/vuln/detail/CVE-2021-29647)
+    - [CVE-2021-29154](https://nvd.nist.gov/vuln/detail/CVE-2021-29154)
+    - [CVE-2021-29155](https://nvd.nist.gov/vuln/detail/CVE-2021-29155)
+    - [CVE-2021-23133](https://nvd.nist.gov/vuln/detail/CVE-2021-23133)
+    - [CVE-2021-27365](https://nvd.nist.gov/vuln/detail/CVE-2021-27365)
+    - [CVE-2021-27364](https://nvd.nist.gov/vuln/detail/CVE-2021-27364)
+    - [CVE-2021-27363](https://nvd.nist.gov/vuln/detail/CVE-2021-27363)
+    - [CVE-2021-28038](https://nvd.nist.gov/vuln/detail/CVE-2021-28038)
+    - [CVE-2021-28039](https://nvd.nist.gov/vuln/detail/CVE-2021-28039)
+    - [CVE-2021-28375](https://nvd.nist.gov/vuln/detail/CVE-2021-28375)
+    - [CVE-2021-28660](https://nvd.nist.gov/vuln/detail/CVE-2021-28660)
+    - [CVE-2021-27218](https://nvd.nist.gov/vuln/detail/CVE-2021-27218)
+    - [CVE-2021-27219](https://nvd.nist.gov/vuln/detail/CVE-2021-27219)
+    - [CVE-2020-25639](https://nvd.nist.gov/vuln/detail/CVE-2020-25639)
+    - [CVE-2021-27365](https://nvd.nist.gov/vuln/detail/CVE-2021-27365)
+    - [CVE-2021-27364](https://nvd.nist.gov/vuln/detail/CVE-2021-27364)
+    - [CVE-2021-27363](https://nvd.nist.gov/vuln/detail/CVE-2021-27363)
+    - [CVE-2021-28038](https://nvd.nist.gov/vuln/detail/CVE-2021-28038)
+    - [CVE-2021-28039](https://nvd.nist.gov/vuln/detail/CVE-2021-28039)
+    - [CVE-2021-26931](https://nvd.nist.gov/vuln/detail/CVE-2021-26931)
+    - [CVE-2021-26930](https://nvd.nist.gov/vuln/detail/CVE-2021-26930)
+    - [CVE-2021-26932](https://nvd.nist.gov/vuln/detail/CVE-2021-26932)
+* openssl
+    - [CVE-2021-23840](https://nvd.nist.gov/vuln/detail/CVE-2021-23840)
+    - [CVE-2021-23841](https://nvd.nist.gov/vuln/detail/CVE-2021-23841)
+    - [CVE-2020-1971](https://nvd.nist.gov/vuln/detail/CVE-2020-1971)
+    - [CVE-2021-3449](https://nvd.nist.gov/vuln/detail/CVE-2021-3449)
+    - [CVE-2021-3450](https://nvd.nist.gov/vuln/detail/CVE-2021-3450)
+* nvidia-drivers
+    - [CVE-2021-1052](https://nvd.nist.gov/vuln/detail/CVE-2021-1052)
+    - [CVE-2021-1053](https://nvd.nist.gov/vuln/detail/CVE-2021-1053)
+    - [CVE-2021-1056](https://nvd.nist.gov/vuln/detail/CVE-2021-1056)
+    - [CVE-2021-1076](https://nvd.nist.gov/vuln/detail/CVE-2021-1076)
+    - [CVE-2021-1077](https://nvd.nist.gov/vuln/detail/CVE-2021-1077)
+* runc
+    - [CVE-2021-30465](https://nvd.nist.gov/vuln/detail/CVE-2021-30465)
+* containerd
+    - [GHSA-6g2q-w5j3-fwh4](https://github.com/containerd/containerd/security/advisories/GHSA-6g2q-w5j3-fwh4)
+
 
 **Bug fixes**
 
 * Update-engine sent empty requests when restarted before a pending reboot ([Flatcar#388](https://github.com/kinvolk/Flatcar/issues/388))
 motd login prompt list of failed services: The output of “systemctl list-units –state=failed –no-legend” contains a bullet point which is not expected and ended up being taken as the unit name of failed units which was previously on the start of the line. Filtered the bullet point out to stay compatible with the old behavior in case upstream would remove the bullet point again. ([coreos-overlay#1042](https://github.com/kinvolk/coreos-overlay/pull/1042))
+* The Linux kernel IOMMU-related crash introduced in the 5.10.37 update got fixed through the 5.10.38 update ([Flatcar#400](https://github.com/kinvolk/Flatcar/issues/400))
+* Fix the patch to update DefaultTasksMax in systemd ([coreos-overlay#971](https://github.com/kinvolk/coreos-overlay/pull/971))
+* GCE: The old interface name ens4v1 which was replaced by eth0 due to a broken udev rule was restored, but now as alternative interface name, and eth0 will stay the primary name for consistency across cloud environments. ([init#38](https://github.com/kinvolk/init/pull/38))
+
+**Changes**
+
+* The virtio network interfaces got predictable interface names as alternative interface names, and thus these names can also be used to match for a specific interface in case there is more than one and the eth0 and eth1 name assignment is not stable. ([init#38](https://github.com/kinvolk/init/pull/38))
+
+
 
 **Updates**
 
 * Linux ([5.10.43](https://lwn.net/Articles/859022/))
+* nvidia-drivers ([460.73.01](https://www.nvidia.com/Download/driverResults.aspx/172376/en-us))
+* openssl ([1.1.1k](https://mta.openssl.org/pipermail/openssl-announce/2021-March/000197.html))
+* open-iscsi ([2.1.4](https://github.com/open-iscsi/open-iscsi/releases/tag/2.1.4))
 
 
 ### kubernetes [1.20.8](https://github.com/kubernetes/kubernetes/releases/tag/v1.20.8)
