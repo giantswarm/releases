@@ -1,5 +1,19 @@
 # :zap: Giant Swarm Release v15.0.0 for AWS :zap:
 
+This release provides support for Kubernetes 1.20 on AWS. It also enables the Container Storage Interface (CSI) and the automatic termination of unhealthy nodes by default.
+
+**Highlights**
+- Kubernetes 1.20 support;
+- Container Storage Interface (CSI) enabled by default;
+- Automatic termination of unhealthy nodes enabled by default;
+- Security fixes:
+    * 49 Linux CVEs;
+    * 5 openssl CVEs;
+    * 5 nvidia-drivers CVEs;
+    * 1 runc CVE;
+    * 1 containerd CVE;
+    * 1 Kubernetes CVE.
+
 **Warning:** From AWS workload cluster release v15.0.0, the automatic termination of unhealthy nodes is enabled by default. For more information about the feature and information how to disable it, please follow the [official documentation](https://docs.giantswarm.io/advanced/automatic-node-termination/). 
 
 ## Change details
