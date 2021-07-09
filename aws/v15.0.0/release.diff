@@ -64,7 +64,7 @@ spec:                                                              spec:
     version: 3.4.14                                                    version: 3.4.14
   - name: kubernetes                                                 - name: kubernetes
     version: 1.19.9                                             |      version: 1.20.8
-  date: "2021-06-15T07:27:27Z"                                  |    date: "2021-05-13T09:05:19Z"
+  date: "2021-06-15T07:27:27Z"                                  |    date: "2021-07-09T09:00:00Z"
   state: active                                                      state: active
 status:                                                            status:
                                                                 >    inUse: false
