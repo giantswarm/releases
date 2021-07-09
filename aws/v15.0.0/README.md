@@ -7,6 +7,7 @@ This release provides support for Kubernetes 1.20. It also enables the Container
 - Container Storage Interface (CSI) enabled by default;
 - `gp3` is now the default storage class instead of `gp2`;
 - Automatic termination of unhealthy nodes enabled by default;
+- New cluster resources can be namespaced by organization;
 - Security fixes:
     * 49 Linux CVEs;
     * 5 openssl CVEs;
