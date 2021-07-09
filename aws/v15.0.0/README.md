@@ -15,7 +15,7 @@ This release provides support for Kubernetes 1.20. It also enables the Container
     * 1 containerd CVE;
     * 1 Kubernetes CVE.
 
-**Warning:** From AWS workload cluster release v15.0.0, the automatic termination of unhealthy nodes is enabled by default. For more information about the feature and information how to disable it, please follow the [official documentation](https://docs.giantswarm.io/advanced/automatic-node-termination/). 
+> **_Warning:_**  From AWS workload cluster release v15.0.0, the automatic termination of unhealthy nodes is enabled by default. For more information about the feature and information how to disable it, please follow the [official documentation](https://docs.giantswarm.io/advanced/automatic-node-termination/). 
 
 ## Change details
 
