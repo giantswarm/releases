@@ -1,6 +1,6 @@
 # :zap: Giant Swarm Release v15.0.0 for AWS :zap:
 
-This release provides support for Kubernetes 1.20 on AWS. It also enables the Container Storage Interface (CSI) and the automatic termination of unhealthy nodes by default.
+This release provides support for Kubernetes 1.20. It also enables the Container Storage Interface (CSI) and the automatic termination of unhealthy nodes by default.
 
 **Highlights**
 - Kubernetes 1.20 support;
