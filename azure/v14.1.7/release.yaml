@@ -1,10 +1,10 @@
 # Generated with:
-# devctl release create --name 14.1.6 --provider azure --base 14.1.5 --component containerlinux@2605.12.0
+# devctl release create --name 14.1.7 --provider azure --base 14.1.6 --component azure-operator@5.5.4 --component kubernetes@1.19.12
 apiVersion: release.giantswarm.io/v1alpha1
 kind: Release
 metadata:
   creationTimestamp: null
-  name: v14.1.6
+  name: v14.1.7
 spec:
   apps:
   - name: cert-exporter
@@ -37,7 +37,7 @@ spec:
     version: 3.2.1
   - name: azure-operator
     releaseOperatorDeploy: true
-    version: 5.5.3
+    version: 5.5.4
   - name: cert-operator
     reference: 0.1.0-2
     releaseOperatorDeploy: true
@@ -46,15 +46,15 @@ spec:
     releaseOperatorDeploy: true
     version: 0.23.22
   - name: kubernetes
-    version: 1.19.10
+    version: 1.19.12
   - name: containerlinux
     version: 2605.12.0
   - name: calico
     version: 3.15.3
   - name: etcd
     version: 3.4.14
-  date: "2021-05-14T11:36:03Z"
-  state: deprecated
+  date: "2021-06-30T09:00:00Z"
+  state: active
 status:
   inUse: false
   ready: false

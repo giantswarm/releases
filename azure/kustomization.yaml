@@ -3,8 +3,8 @@ commonAnnotations:
 resources:
 - v13.1.1
 - v14.0.2
-- v14.1.5
 - v14.1.6
+- v14.1.7
 - v15.0.0
 transformers:
 - releaseNotesTransformer.yaml
