@@ -61,12 +61,12 @@ spec:
     name: policies-common
     releaseOperatorDeploy: true
     version: 0.0.2
-    reference: 0.0.2-07001fd57efa0a397a4aa28cf3442e4c20f4168d
+    reference: 0.0.2-70ba4893038821a62a49d65da05cca19e6ea7bfe
   - catalog: control-plane-test-catalog
     name: policies-aws
     releaseOperatorDeploy: true
     version: 0.0.2
-    reference: 0.0.2-07001fd57efa0a397a4aa28cf3442e4c20f4168d
+    reference: 0.0.2-70ba4893038821a62a49d65da05cca19e6ea7bfe
   - catalog: control-plane-catalog
     name: cluster-apps-operator
     releaseOperatorDeploy: true
