@@ -42,6 +42,11 @@ spec:
     releaseOperatorDeploy: true
     version: 4.1.0
   - catalog: control-plane-catalog
+    name: capa-iam-controller
+    reference: 0.1.0
+    releaseOperatorDeploy: true
+    version: 0.1.0
+  - catalog: control-plane-catalog
     name: cluster-api-bootstrap-provider-kubeadm
     releaseOperatorDeploy: true
     version: 0.3.19-gs1
@@ -60,11 +65,11 @@ spec:
   - catalog: control-plane-test-catalog
     name: policies-common
     releaseOperatorDeploy: true
-    version: 0.0.2
+    version: 0.0.4
   - catalog: control-plane-test-catalog
     name: policies-aws
     releaseOperatorDeploy: true
-    version: 0.0.2
+    version: 0.0.4
   - catalog: control-plane-catalog
     name: cluster-apps-operator
     releaseOperatorDeploy: true
