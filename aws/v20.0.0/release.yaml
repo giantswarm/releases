@@ -73,7 +73,7 @@ spec:
   - catalog: control-plane-test-catalog
     name: policies-aws
     releaseOperatorDeploy: true
-    version: 0.0.3
+    version: 0.0.4
   - catalog: control-plane-catalog
     name: cluster-apps-operator
     releaseOperatorDeploy: true
