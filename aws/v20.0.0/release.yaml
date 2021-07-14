@@ -65,7 +65,7 @@ spec:
   - catalog: control-plane-test-catalog
     name: policies-common
     releaseOperatorDeploy: true
-    version: 0.0.2
+    version: 0.0.4
   - catalog: control-plane-test-catalog
     name: policies-aws
     releaseOperatorDeploy: true
