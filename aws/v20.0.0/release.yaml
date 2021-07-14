@@ -15,7 +15,7 @@ spec:
     version: 2.7.1
   - catalog: default
     name: chart-operator
-    version: 2.11.0-capi-1
+    version: 2.18.0
   - name: cluster-autoscaler
     version: 1.19.3
   - componentVersion: 0.7.6
