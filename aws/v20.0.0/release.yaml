@@ -63,13 +63,9 @@ spec:
     releaseOperatorDeploy: true
     version: 0.6.6-gs1
   - catalog: control-plane-test-catalog
-    name: kyverno
-    releaseOperatorDeploy: true
-    version: 0.2.0
-  - catalog: control-plane-test-catalog
     name: policies-common
     releaseOperatorDeploy: true
-    version: 0.0.1
+    version: 0.0.2
   - catalog: control-plane-test-catalog
     name: policies-aws
     releaseOperatorDeploy: true
