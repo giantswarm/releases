@@ -1,0 +1,5 @@
+releases:
+    - name: "> 14.0.0"
+      requests:
+      - name: containerlinux
+        version: ">= 2605.12.0"

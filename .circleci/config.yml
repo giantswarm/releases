@@ -26,7 +26,7 @@ jobs:
           name: Kustomize helm charts
           command: |
             export XDG_CONFIG_HOME=$(pwd)
-            for i in aws azure kvm; do mkdir -p helm/releases-$i/templates; kustomize build --enable_alpha_plugins ./$i > helm/releases-$i/templates/releases.yaml; done
+            for i in aws azure kvm vmware; do mkdir -p helm/releases-$i/templates; kustomize build --enable_alpha_plugins ./$i > helm/releases-$i/templates/releases.yaml; done
       - persist_to_workspace:
           root: .
           paths:
@@ -45,29 +45,6 @@ workflows:
     jobs:
       - validate
       - build
-      # KVM
-      - architect/push-to-app-catalog:
-          name: push-releases-kvm-to-releases-catalog
-          app_catalog: releases-catalog
-          app_catalog_test: releases-test-catalog
-          attach_workspace: true
-          chart: releases-kvm
-          explicit_allow_chart_name_mismatch: true
-          on_tag: false
-          requires:
-            - build
-            - validate
-      - architect/push-to-app-collection:
-          name: push-releases-to-kvm-app-collection
-          app_catalog: releases
-          app_name: releases-kvm
-          app_collection_repo: kvm-app-collection
-          requires:
-            - push-releases-kvm-to-releases-catalog
-          filters:
-            # Trigger the job on merge to master.
-            branches:
-              only: master
       # AWS
       - architect/push-to-app-catalog:
           name: push-releases-aws-to-releases-catalog
@@ -114,6 +91,52 @@ workflows:
           requires:
             - push-releases-azure-to-releases-catalog
             - push-releases-to-aws-app-collection
+          filters:
+            # Trigger the job on merge to master.
+            branches:
+              only: master
+      # KVM
+      - architect/push-to-app-catalog:
+          name: push-releases-kvm-to-releases-catalog
+          app_catalog: releases-catalog
+          app_catalog_test: releases-test-catalog
+          attach_workspace: true
+          chart: releases-kvm
+          explicit_allow_chart_name_mismatch: true
+          on_tag: false
+          requires:
+            - build
+            - validate
+      - architect/push-to-app-collection:
+          name: push-releases-to-kvm-app-collection
+          app_catalog: releases
+          app_name: releases-kvm
+          app_collection_repo: kvm-app-collection
+          requires:
+            - push-releases-kvm-to-releases-catalog
+          filters:
+            # Trigger the job on merge to master.
+            branches:
+              only: master
+      # VMWARE
+      - architect/push-to-app-catalog:
+          name: push-releases-vmware-to-releases-catalog
+          app_catalog: releases-catalog
+          app_catalog_test: releases-test-catalog
+          attach_workspace: true
+          chart: releases-vmware
+          explicit_allow_chart_name_mismatch: true
+          on_tag: false
+          requires:
+            - build
+            - validate
+      - architect/push-to-app-collection:
+          name: push-releases-to-vmware-app-collection
+          app_catalog: releases
+          app_name: releases-vmware
+          app_collection_repo: vmware-app-collection
+          requires:
+            - push-releases-vmware-to-releases-catalog
           filters:
             # Trigger the job on merge to master.
             branches:
