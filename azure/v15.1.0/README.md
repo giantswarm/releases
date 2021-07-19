@@ -58,7 +58,7 @@ Release introduces feature allowing configuration of the public IP address for t
 #### Bug fixes**
 - Update-engine sent empty requests when restarted before a pending reboot ([Flatcar#388](https://github.com/kinvolk/Flatcar/issues/388))
 - motd login prompt list of failed services: The output of "systemctl list-units --state=failed --no-legend" contains a bullet point which is not expected and ended up being taken as the unit name of failed units which was previously on the start of the line. Filtered the bullet point out to stay compatible with the old behavior in case upstream would remove the bullet point again. ([coreos-overlay#1042](https://github.com/kinvolk/coreos-overlay/pull/1042))
-#### Updates**
+#### Updates
 - Linux ([5.10.43](https://lwn.net/Articles/859022/))
 
 
@@ -98,6 +98,5 @@ to handle situations like failed webhooks where we should retry.
 ### cluster-autoscaler [1.20.3](https://github.com/giantswarm/cluster-autoscaler-app/releases/tag/v1.20.3)
 
 - Allow users to set container resources
-
 
 
