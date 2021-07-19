@@ -2,7 +2,7 @@
 
 This is the Giant Swarm Azure stable release featuring Kubernetes [1.20.8](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.20.md#v1208)
 
-Release introduces feature allowing configuration of the public IP address for the NAT gateway of worker nodes for existing and new clusters. For more details please talk to your Account Engineer or follow [Giant Swarm Documentation](https://docs.giantswarm.io/advanced/egress-ip-address-azure/)
+Release introduces feature allowing configuration of the public IP address for the NAT gateway of worker nodes for existing and new clusters. For more details please talk to your Account Engineer or follow [Giant Swarm Documentation](https://docs.giantswarm.io/advanced/egress-ip-address-azure/).
 
 
 ## Change details
