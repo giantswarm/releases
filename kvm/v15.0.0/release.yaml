@@ -46,7 +46,7 @@ spec:
     catalog: control-plane-test-catalog
     version: 4.0.0-dev
     reference: 4.0.0-sha
-  date: "2021-08-1T12:13:26Z"
+  date: "2021-07-19T11:52:15Z"
   state: active
 status:
   inUse: false
