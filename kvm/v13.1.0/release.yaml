@@ -49,7 +49,7 @@ spec:
     releaseOperatorDeploy: true
     version: 3.14.2
   date: "2021-03-10T14:26:09Z"
-  state: active
+  state: deprecated
 status:
   inUse: false
   ready: false
