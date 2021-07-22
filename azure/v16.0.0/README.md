@@ -1,4 +1,4 @@
-# :zap: Giant Swarm Release v15.1.1 for Azure :zap:
+# :zap: Giant Swarm Release v16.0.0 for Azure :zap:
 
 This is a bugfix release that solves an issue preventing clusters to be successfully created on new organizations.
 
