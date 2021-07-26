@@ -45,7 +45,7 @@ spec:
     releaseOperatorDeploy: true
     catalog: control-plane-test-catalog
     version: 4.0.0-dev
-    reference: 4.0.0-sha
+    reference: 3.17.3-508926dbe3fa3a4dbcd16c86fb8ced5a45f13134
   date: "2021-07-19T11:52:15Z"
   state: active
 status:
