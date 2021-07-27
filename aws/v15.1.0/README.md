@@ -50,9 +50,12 @@ Not found
 
 
 
-### cert-manager [1.4.1](https://github.com/giantswarm/cert-manager-app/releases/tag/v1.4.1)
+### cert-manager [2.8.0](https://github.com/giantswarm/cert-manager-app/releases/tag/v2.8.0)
 
-Not found
+#### Changed
+- Label deployments with `giantswarm.io/monitoring_basic_sli: "true"`. ([#171](https://github.com/giantswarm/cert-manager-app/pull/171))
+- Migrate values file structure to match `config` repo. ([#172](https://github.com/giantswarm/cert-manager-app/pull/172))
+
 
 
 ### coredns [1.6.9](https://github.com/giantswarm/coredns-app/releases/tag/v1.6.9)
@@ -82,6 +85,14 @@ Not found
 
 #### Changed
 - Change Priority Class to `system-node-critical`
+
+
+
+### external-dns [2.4.0](https://github.com/giantswarm/external-dns-app/releases/tag/v2.4.0)
+
+#### Changed
+- Upgrade upstream external-dns from v0.7.6 to [v0.8.0](https://github.com/kubernetes-sigs/external-dns/releases/tag/v0.8.0).
+- Allow to configure the minimum interval between two consecutive synchronizations triggered from kubernetes events through `externalDNS.minEventSyncInterval`.
 
 
 
