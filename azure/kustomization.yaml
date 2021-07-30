@@ -9,6 +9,5 @@ resources:
 - v15.1.0
 - v15.1.1
 - v15.2.0-eric
-- v15.2.0
 transformers:
 - releaseNotesTransformer.yaml
