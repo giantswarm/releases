@@ -1,14 +1,14 @@
-# :zap: Giant Swarm Release v15.2.0 for Azure :zap:
+# :zap: Giant Swarm Release v15.2.0-eric for Azure :zap:
 
 << Add description here >>
 
 ## Change details
 
 
-### azure-operator [5.8.1](https://github.com/giantswarm/azure-operator/releases/tag/v5.8.1)
+### aws-operator [10.6.1](https://github.com/giantswarm/aws-operator/releases/tag/v10.6.1)
 
-#### Fixed
-- Fix namespace in secret reference of `AzureClusterIdentity`.
+#### Changed
+- Upgrade `k8scloudconfig` to v10.8.1 which includes a change to better determine if memory eviction thresholds are crossed.
 
 
 
@@ -197,9 +197,10 @@ to handle situations like failed webhooks where we should retry.
 
 
 
-### cluster-autoscaler [1.20.3](https://github.com/giantswarm/cluster-autoscaler-app/releases/tag/v1.20.3)
+### cluster-autoscaler [1.21.0](https://github.com/giantswarm/cluster-autoscaler-app/releases/tag/v1.21.0)
 
-- Allow users to set container resources
+#### Added
+- Add `VerticalPodAutoscaler` resource to adjust limits automatically.
 
 
 

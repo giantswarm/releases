@@ -1,14 +1,14 @@
-# :zap: Giant Swarm Release v15.0.0 for KVM :zap:
+# :zap: Giant Swarm Release v15.2.0-eric for AWS :zap:
 
 << Add description here >>
 
 ## Change details
 
 
-### kvm-operator [3.17.3](https://github.com/giantswarm/kvm-operator/releases/tag/v3.17.3)
+### azure-operator [5.8.1](https://github.com/giantswarm/azure-operator/releases/tag/v5.8.1)
 
 #### Fixed
-- Avoid panic during deletion of clusters with host volumes
+- Fix namespace in secret reference of `AzureClusterIdentity`.
 
 
 
