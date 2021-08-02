@@ -1,6 +1,6 @@
 # :zap: Giant Swarm Release v15.1.0 for AWS :zap:
 
-<< Add description here >>
+This release provides security and bug fixes for various components.
 
 ## Change details
 
@@ -27,17 +27,39 @@ _Nothing has changed._
 
 
 
+
 ### etcd [3.14.16](https://github.com/etcd-io/etcd/releases/tag/v3.14.16)
 
-Not found
+#### etcd server
+- Log [successful etcd server-side health check in debug level](https://github.com/etcd-io/etcd/pull/12677).
+- Fix [64 KB websocket notification message limit](https://github.com/etcd-io/etcd/pull/12402).
+- Add [`--experimental-warning-apply-duration`](https://github.com/etcd-io/etcd/pull/12448) flag which allows apply duration threshold to be configurable.
+- Fix [`--unsafe-no-fsync`](https://github.com/etcd-io/etcd/pull/12751) to still write-out data avoiding corruption (most of the time).
+- Reduce [around 30% memory allocation by logging range response size without marshal](https://github.com/etcd-io/etcd/pull/12871).
+- Add [exclude alarms from health check conditionally](https://github.com/etcd-io/etcd/pull/12880).
+
+#### Package `fileutil`
+- Fix [`F_OFD_` constants](https://github.com/etcd-io/etcd/pull/12444).
+
+#### Metrics
+- Fix [incorrect metrics generated when clients cancel watches](https://github.com/etcd-io/etcd/pull/12803) back-ported from (https://github.com/etcd-io/etcd/pull/12196).
+
+#### Dependency
+- Bump up [`gorilla/websocket` to v1.4.2](https://github.com/etcd-io/etcd/pull/12645).
+
+#### Go
+- Compile with [*Go 1.12.17*](https://golang.org/doc/devel/release.html#go1.12).
+
 
 
 ### calico [3.15.5](https://github.com/projectcalico/calico/releases/tag/v3.15.5)
 
 #### Bug fixes
+ - Handle namespaced resources during datastore migration properly. (@mgleung)
  - Fix that calico/node would fail to set NetworkUnavailable to false for etcd clusters with mismatched nodenames [node #949](https://github.com/projectcalico/node/pull/949) (@caseydavenport)
  - Fixes a bug where IPv6 networks were not handled properly by the failsafe rules [felix #2748](https://github.com/projectcalico/felix/pull/2748) (@mgleung)
  - Fix that, after a netlink read failure, Felix would tight loop reading from a closed channel.  Restart the event poll in that case. [felix #2713](https://github.com/projectcalico/felix/pull/2713) (@fasaxc)
+
 #### Other changes
  - FailsafeInboundHostPorts & FailsafeOutboundHostPorts now support restricting to specific cidrs. New format <protocol>:<net>:<port> [felix #2721](https://github.com/projectcalico/felix/pull/2721) (@mgleung)
 
