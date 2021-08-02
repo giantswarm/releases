@@ -63,9 +63,11 @@ Not found
 Not found
 
 
-### kube-state-metrics [1.9.8](https://github.com/giantswarm/kube-state-metrics-app/releases/tag/v1.9.8)
+### kube-state-metrics [1.3.1](https://github.com/giantswarm/kube-state-metrics-app/releases/tag/v1.3.1)
 
-Not found
+#### Changed
+- Set docker.io as the default registry
+
 
 
 ### metrics-server [0.4.4](https://github.com/giantswarm/metrics-server-app/releases/tag/v0.4.4)
@@ -81,10 +83,10 @@ Not found
 
 
 
-### node-exporter [1.2.0](https://github.com/giantswarm/node-exporter-app/releases/tag/v1.2.0)
+### node-exporter [1.7.2](https://github.com/giantswarm/node-exporter-app/releases/tag/v1.7.2)
 
 #### Changed
-- Change Priority Class to `system-node-critical`
+- Set docker.io as the default registry
 
 
 
