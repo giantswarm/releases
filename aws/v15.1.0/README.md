@@ -89,11 +89,6 @@ _Nothing has changed._
 
 
 
-### metrics-server [0.4.4](https://github.com/giantswarm/metrics-server-app/releases/tag/v0.4.4)
-
-Not found
-
-
 ### net-exporter [1.10.2](https://github.com/giantswarm/net-exporter/releases/tag/v1.10.2)
 
 #### Changed
