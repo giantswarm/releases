@@ -80,9 +80,9 @@ _Nothing has changed._
 
 
 
-### coredns [1.6.9](https://github.com/giantswarm/coredns-app/releases/tag/v1.6.9)
+### coredns [1.6.0](https://github.com/giantswarm/coredns-app/releases/tag/v1.6.0)
 
-Not found
+- Make targetCPUUtilizationPercentage in HPA configurable.
 
 
 ### kube-state-metrics [1.3.1](https://github.com/giantswarm/kube-state-metrics-app/releases/tag/v1.3.1)

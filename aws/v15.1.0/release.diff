@@ -22,7 +22,7 @@ spec:                                                              spec:
   - name: cluster-autoscaler                                         - name: cluster-autoscaler
     version: 1.20.3                                                    version: 1.20.3
   - componentVersion: 1.6.5                                     |    - name: coredns
-    name: coredns                                               |      version: 1.6.9
+    name: coredns                                               |      version: 1.6.0
     version: 1.4.1                                              |    - name: external-dns
   - componentVersion: 0.7.6                                     |      version: 2.4.0
     name: external-dns                                          |    - name: kiam
