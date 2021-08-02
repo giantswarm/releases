@@ -88,12 +88,6 @@ _Nothing has changed._
 - Make `targetCPUUtilizationPercentage` in HPA configurable.
 
 
-### kube-state-metrics [1.3.1](https://github.com/giantswarm/kube-state-metrics-app/releases/tag/v1.3.1)
-
-#### Changed
-- Set docker.io as the default registry
-
-
 
 ### metrics-server [0.4.4](https://github.com/giantswarm/metrics-server-app/releases/tag/v0.4.4)
 
