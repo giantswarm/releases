@@ -55,21 +55,21 @@ _Nothing has changed._
 ### calico [3.15.5](https://github.com/projectcalico/calico/releases/tag/v3.15.5)
 
 #### Bug fixes
- - Handle namespaced resources during datastore migration properly. (@mgleung)
  - Fix that calico/node would fail to set NetworkUnavailable to false for etcd clusters with mismatched nodenames [node #949](https://github.com/projectcalico/node/pull/949) (@caseydavenport)
  - Fixes a bug where IPv6 networks were not handled properly by the failsafe rules [felix #2748](https://github.com/projectcalico/felix/pull/2748) (@mgleung)
  - Fix that, after a netlink read failure, Felix would tight loop reading from a closed channel.  Restart the event poll in that case. [felix #2713](https://github.com/projectcalico/felix/pull/2713) (@fasaxc)
-
 #### Other changes
  - FailsafeInboundHostPorts & FailsafeOutboundHostPorts now support restricting to specific cidrs. New format <protocol>:<net>:<port> [felix #2721](https://github.com/projectcalico/felix/pull/2721) (@mgleung)
 
 
 
-### kiam [1.7.1](https://github.com/giantswarm/kiam-app/releases/tag/v1.7.1)
+### kiam [2.0.0](https://github.com/giantswarm/kiam-app/releases/tag/v2.0.0)
 
-#### Changed
-- Set docker.io as the default registry
+### Changed
 
+- Upgrade `kiam` version to 4.1.
+- Update RBAC API version from `v1beta1` to `v1`.
+- Add `kind: Issuer` and `group: cert-manager.io` to `Certificate` templates.
 
 
 ### cert-manager [2.8.0](https://github.com/giantswarm/cert-manager-app/releases/tag/v2.8.0)
@@ -82,10 +82,21 @@ _Nothing has changed._
 
 ### coredns [1.6.0](https://github.com/giantswarm/coredns-app/releases/tag/v1.6.0)
 
-#### Changed
-- Update `coredns` to upstream version [1.8.3](https://coredns.io/2021/02/24/coredns-1.8.3-release/).
-- Increase maximum replica count to 50 when using horizontal pod autoscaling.
 - Make `targetCPUUtilizationPercentage` in HPA configurable.
+
+
+
+### kube-state-metrics [1.3.1](https://github.com/giantswarm/kube-state-metrics-app/releases/tag/v1.3.1)
+
+#### Changed
+- Set docker.io as the default registry
+
+
+
+### metrics-server [1.3.0](https://github.com/giantswarm/metrics-server-app/releases/tag/v1.3.0)
+
+#### Added
+- Added new configuration value `extraArgs`.
 
 
 
