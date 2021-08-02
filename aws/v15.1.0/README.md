@@ -1,6 +1,6 @@
 # :zap: Giant Swarm Release v15.1.0 for AWS :zap:
 
-This release provides security and bug fixes for various components.
+<< Add description here >>
 
 ## Change details
 
@@ -27,29 +27,9 @@ _Nothing has changed._
 
 
 
-
 ### etcd [3.14.16](https://github.com/etcd-io/etcd/releases/tag/v3.14.16)
 
-#### etcd server
-- Log [successful etcd server-side health check in debug level](https://github.com/etcd-io/etcd/pull/12677).
-- Fix [64 KB websocket notification message limit](https://github.com/etcd-io/etcd/pull/12402).
-- Add [`--experimental-warning-apply-duration`](https://github.com/etcd-io/etcd/pull/12448) flag which allows apply duration threshold to be configurable.
-- Fix [`--unsafe-no-fsync`](https://github.com/etcd-io/etcd/pull/12751) to still write-out data avoiding corruption (most of the time).
-- Reduce [around 30% memory allocation by logging range response size without marshal](https://github.com/etcd-io/etcd/pull/12871).
-- Add [exclude alarms from health check conditionally](https://github.com/etcd-io/etcd/pull/12880).
-
-#### Package `fileutil`
-- Fix [`F_OFD_` constants](https://github.com/etcd-io/etcd/pull/12444).
-
-#### Metrics
-- Fix [incorrect metrics generated when clients cancel watches](https://github.com/etcd-io/etcd/pull/12803) back-ported from (https://github.com/etcd-io/etcd/pull/12196).
-
-#### Dependency
-- Bump up [`gorilla/websocket` to v1.4.2](https://github.com/etcd-io/etcd/pull/12645).
-
-#### Go
-- Compile with [*Go 1.12.17*](https://golang.org/doc/devel/release.html#go1.12).
-
+Not found
 
 
 ### calico [3.15.5](https://github.com/projectcalico/calico/releases/tag/v3.15.5)
@@ -63,13 +43,21 @@ _Nothing has changed._
 
 
 
+### app-operator [5.1.0](https://github.com/giantswarm/app-operator/releases/tag/v5.1.0)
+
+#### Changed
+- Create `AppCatalogEntry` CRs into the same namespace of Catalog CR.
+- Include `chart.keywords`, `chart.description` and `chart.upstreamChartVersion` in `AppCatalogEntry` CRs.
+
+
+
 ### kiam [2.0.0](https://github.com/giantswarm/kiam-app/releases/tag/v2.0.0)
 
-### Changed
-
+#### Changed
 - Upgrade `kiam` version to 4.1.
 - Update RBAC API version from `v1beta1` to `v1`.
 - Add `kind: Issuer` and `group: cert-manager.io` to `Certificate` templates.
+
 
 
 ### cert-manager [2.8.0](https://github.com/giantswarm/cert-manager-app/releases/tag/v2.8.0)
@@ -120,6 +108,24 @@ _Nothing has changed._
 #### Changed
 - Upgrade upstream external-dns from v0.7.6 to [v0.8.0](https://github.com/kubernetes-sigs/external-dns/releases/tag/v0.8.0).
 - Allow to configure the minimum interval between two consecutive synchronizations triggered from kubernetes events through `externalDNS.minEventSyncInterval`.
+
+
+
+### cert-exporter [1.7.1](https://github.com/giantswarm/cert-exporter/releases/tag/v1.7.1)
+
+#### Fixed
+- Fix configuration version in `Chart.yaml`.
+
+
+
+### chart-operator [2.18.0](https://github.com/giantswarm/chart-operator/releases/tag/v2.18.0)
+
+#### Added
+- Add releasemaxhistory resource which ensures we retry at a reduced rate when
+there are repeated failed upgrades.
+#### Changed
+- Upgrade Helm release when failed even if version or values have not changed
+to handle situations like failed webhooks where we should retry.
 
 
 
