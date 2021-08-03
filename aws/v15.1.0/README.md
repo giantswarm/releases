@@ -31,7 +31,7 @@ _Nothing has changed._
 
 
 
-### etcd [3.14.16](https://github.com/etcd-io/etcd/releases/tag/v3.14.16)
+### etcd [3.4.16](https://github.com/etcd-io/etcd/releases/tag/v3.4.16)
 
 #### etcd server
 - Log [successful etcd server-side health check in debug level](https://github.com/etcd-io/etcd/pull/12677).
