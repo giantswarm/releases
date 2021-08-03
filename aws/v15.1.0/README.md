@@ -130,13 +130,6 @@ _Nothing has changed._
 
 
 
-### node-exporter [1.7.2](https://github.com/giantswarm/node-exporter-app/releases/tag/v1.7.2)
-
-#### Changed
-- Set docker.io as the default registry
-
-
-
 ### external-dns [2.4.0](https://github.com/giantswarm/external-dns-app/releases/tag/v2.4.0)
 
 #### Changed
