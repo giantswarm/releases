@@ -67,6 +67,16 @@ _Nothing has changed._
 #### Changed
 - Create `AppCatalogEntry` CRs into the same namespace of Catalog CR.
 - Include `chart.keywords`, `chart.description` and `chart.upstreamChartVersion` in `AppCatalogEntry` CRs.
+- Create `AppCatalog` CRs from `Catalog` CRs for compatibility with existing app-operator releases.
+- Prepare helm values to configuration management.
+- Use `Catalog` CRs in `App` controller.
+- Reconcile to `Catalog` CRs instead of `AppCatalog`.
+- Get `Chart` CRD from the GitHub resources.
+- Get metadata constants from k8smetadata library not apiextensions.
+
+#### Fixed
+- For the chart CR watcher get the kubeconfig secret from the chart-operator app CR to avoid hardcoding it.
+- Quote namespace in helm templates to handle numeric workload cluster IDs.
 
 
 
