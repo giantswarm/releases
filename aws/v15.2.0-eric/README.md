@@ -5,7 +5,7 @@
 ## Change details
 
 
-### aws-operator [k8scloudconfig-featureflag](https://github.com/giantswarm/aws-operator/releases/tag/vk8scloudconfig-featureflag)
+### aws-operator [10.6.1-c8311b47e8686e8eb0b6eda1ed03641d4438f473](https://github.com/giantswarm/aws-operator/releases/tag/v10.6.1-c8311b47e8686e8eb0b6eda1ed03641d4438f473)
 
 Not found
 
