@@ -1,6 +1,10 @@
 # :zap: Giant Swarm Release v15.1.0 for AWS :zap:
 
-This release provides security and bug fixes for various components.
+This release provides stability improvements and bug fixes for various components.
+
+**Highlights**
+- Kubernetes 1.20.9;
+- Kiam 4.1
 
 ## Change details
 
@@ -67,6 +71,28 @@ _Nothing has changed._
 #### Changed
 - Create `AppCatalogEntry` CRs into the same namespace of Catalog CR.
 - Include `chart.keywords`, `chart.description` and `chart.upstreamChartVersion` in `AppCatalogEntry` CRs.
+- Create `AppCatalog` CRs from `Catalog` CRs for compatibility with existing app-operator releases.
+- Prepare helm values to configuration management.
+- Use `Catalog` CRs in `App` controller.
+- Reconcile to `Catalog` CRs instead of `AppCatalog`.
+- Get `Chart` CRD from the GitHub resources.
+- Get metadata constants from k8smetadata library not apiextensions.
+
+#### Fixed
+- For the chart CR watcher get the kubeconfig secret from the chart-operator app CR to avoid hardcoding it.
+- Quote namespace in helm templates to handle numeric workload cluster IDs.
+
+
+
+### aws-ebs-csi-driver [2.2.0](https://github.com/giantswarm/aws-ebs-csi-driver-app/releases/tag/v2.2.0)
+
+#### Added
+- CRD for snapshot-controller.
+
+### Changed
+- Update aws-ebs-csi-driver to v1.1.1.
+- Reduce default log level to 2.
+- Default volume resizing.
 
 
 
@@ -89,7 +115,10 @@ _Nothing has changed._
 
 ### coredns [1.6.0](https://github.com/giantswarm/coredns-app/releases/tag/v1.6.0)
 
+#### Changed
 - Make `targetCPUUtilizationPercentage` in HPA configurable.
+- Update `coredns` to upstream version [1.8.3](https://coredns.io/2021/02/24/coredns-1.8.3-release/).
+- Increase maximum replica count to 50 when using horizontal pod autoscaling.
 
 
 
@@ -115,13 +144,6 @@ _Nothing has changed._
 
 
 
-### node-exporter [1.7.2](https://github.com/giantswarm/node-exporter-app/releases/tag/v1.7.2)
-
-#### Changed
-- Set docker.io as the default registry
-
-
-
 ### external-dns [2.4.0](https://github.com/giantswarm/external-dns-app/releases/tag/v2.4.0)
 
 #### Changed
@@ -140,11 +162,19 @@ _Nothing has changed._
 ### chart-operator [2.18.0](https://github.com/giantswarm/chart-operator/releases/tag/v2.18.0)
 
 #### Added
-- Add releasemaxhistory resource which ensures we retry at a reduced rate when
-there are repeated failed upgrades.
+- Add releasemaxhistory resource which ensures we retry at a reduced rate when there are repeated failed upgrades.
+- Proxy support in helm template.
+
 #### Changed
-- Upgrade Helm release when failed even if version or values have not changed
-to handle situations like failed webhooks where we should retry.
+- Upgrade Helm release when failed even if version or values have not changed to handle situations like failed webhooks where we should retry.
+- Prepare helm values to configuration management.
+- Update architect-orb to v3.0.0.
+- [CAPI] Add tolerations to start on `NotReady` nodes for installing CNI.
+- [CAPI] Create `giantswarm-critical` priority class.
+- [CAPI] Use host network to allow installing CNI packaged as an app.
+
+#### Fixed
+- Improve status message when helm release has failed max number of attempts.
 
 
 
@@ -152,3 +182,4 @@ to handle situations like failed webhooks where we should retry.
 
 #### Changed
 Use app-operator-konfigure configmap for the app-operator per workload cluster.
+
