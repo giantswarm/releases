@@ -9,7 +9,7 @@ metadata:                                                          metadata:
   name: v15.0.0                                                 |    name: v15.1.0
 spec:                                                              spec:
   apps:                                                              apps:
-  - componentVersion: 1.1.3                                     |    - componentVersion: 1.1.1
+  - componentVersion: 1.1.0                                     |    - componentVersion: 1.1.1
     name: aws-ebs-csi-driver                                           name: aws-ebs-csi-driver
     version: 2.1.0                                              |      version: 2.2.0
   - name: cert-exporter                                              - name: cert-exporter
