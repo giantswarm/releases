@@ -57,7 +57,7 @@ spec:                                                              spec:
     version: 1.0.1                                                     version: 1.0.1
   - name: cluster-operator                                           - name: cluster-operator
     releaseOperatorDeploy: true                                        releaseOperatorDeploy: true
-    version: 3.8.0                                                     version: 3.8.0
+    version: 3.8.0                                              |      version: 3.9.0
   - name: containerlinux                                             - name: containerlinux
     version: 2765.2.6                                                  version: 2765.2.6
   - name: etcd                                                       - name: etcd

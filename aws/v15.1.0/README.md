@@ -148,3 +148,7 @@ to handle situations like failed webhooks where we should retry.
 
 
 
+### cluster-operator [3.9.0](https://github.com/giantswarm/cluster-operator/releases/tag/v3.9.0)
+
+#### Changed
+Use app-operator-konfigure configmap for the app-operator per workload cluster.
