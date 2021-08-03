@@ -1,5 +1,5 @@
 # Generated with:
-# devctl release create --name 15.2.0-eric --provider aws --base 15.0.0 --app cert-exporter@1.7.1 --app chart-operator@2.18.0 --app external-dns@2.4.0@0.8.0 --app net-exporter@1.10.2 --app cluster-autoscaler@1.20.3 --component aws-operator@k8scloudconfig-featureflag --component kubernetes@1.21.3 --component containerlinux@2765.2.6 --overwrite
+# devctl release create --name 15.2.0-eric --provider aws --base 15.0.0 --app cert-exporter@1.7.1 --app chart-operator@2.18.0 --app external-dns@2.4.0@0.8.0 --app net-exporter@1.10.2 --app cluster-autoscaler@1.20.3 --component aws-operator@10.6.1-c8311b47e8686e8eb0b6eda1ed03641d4438f473 --component kubernetes@1.21.3 --component containerlinux@2765.2.6 --overwrite
 apiVersion: release.giantswarm.io/v1alpha1
 kind: Release
 metadata:
@@ -48,7 +48,7 @@ spec:
     version: 1.8.0
   - name: aws-operator
     releaseOperatorDeploy: true
-    version: k8scloudconfig-featureflag
+    version: 10.6.1-c8311b47e8686e8eb0b6eda1ed03641d4438f473
   - name: calico
     version: 3.15.3
   - name: cert-operator
@@ -63,7 +63,7 @@ spec:
     version: 3.4.14
   - name: kubernetes
     version: 1.21.3
-  date: "2021-08-03T18:14:30Z"
+  date: "2021-08-03T18:28:23Z"
   state: active
 status:
   inUse: false
