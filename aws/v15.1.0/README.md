@@ -101,7 +101,10 @@ _Nothing has changed._
 
 ### coredns [1.6.0](https://github.com/giantswarm/coredns-app/releases/tag/v1.6.0)
 
+#### Changed
 - Make `targetCPUUtilizationPercentage` in HPA configurable.
+- Update `coredns` to upstream version [1.8.3](https://coredns.io/2021/02/24/coredns-1.8.3-release/).
+- Increase maximum replica count to 50 when using horizontal pod autoscaling.
 
 
 
