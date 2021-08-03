@@ -70,6 +70,18 @@ _Nothing has changed._
 
 
 
+### aws-ebs-csi-driver [2.2.0](https://github.com/giantswarm/aws-ebs-csi-driver-app/releases/tag/v2.2.0)
+
+#### Added
+- CRD for snapshot-controller.
+
+### Changed
+- Update aws-ebs-csi-driver to v1.1.1.
+- Reduce default log level to 2.
+- Default volume resizing.
+
+
+
 ### kiam [2.0.0](https://github.com/giantswarm/kiam-app/releases/tag/v2.0.0)
 
 #### Changed
