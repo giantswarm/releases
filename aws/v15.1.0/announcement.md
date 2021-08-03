@@ -1,1 +1,1 @@
-**Workload cluster release v15.1.0 for AWS is available**. It provides stability and bug fixes for various components. Further details can be found in the [release notes](https://docs.giantswarm.io/changes/workload-cluster-releases-aws/releases/aws-v15.1.0/).
+**Workload cluster release v15.1.0 for AWS is available**. It provides stability improvements and bug fixes for various components. Further details can be found in the [release notes](https://docs.giantswarm.io/changes/workload-cluster-releases-aws/releases/aws-v15.1.0/).
