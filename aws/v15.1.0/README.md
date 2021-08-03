@@ -152,11 +152,16 @@ _Nothing has changed._
 ### chart-operator [2.18.0](https://github.com/giantswarm/chart-operator/releases/tag/v2.18.0)
 
 #### Added
-- Add releasemaxhistory resource which ensures we retry at a reduced rate when
-there are repeated failed upgrades.
+- Add releasemaxhistory resource which ensures we retry at a reduced rate when there are repeated failed upgrades.
+- Proxy support in helm template.
+
 #### Changed
-- Upgrade Helm release when failed even if version or values have not changed
-to handle situations like failed webhooks where we should retry.
+- Upgrade Helm release when failed even if version or values have not changed to handle situations like failed webhooks where we should retry.
+- Prepare helm values to configuration management.
+- Update architect-orb to v3.0.0.
+- [CAPI] Add tolerations to start on `NotReady` nodes for installing CNI.
+- [CAPI] Create `giantswarm-critical` priority class.
+- [CAPI] Use host network to allow installing CNI packaged as an app.
 
-
-
+#### Fixed
+- Improve status message when helm release has failed max number of attempts.
