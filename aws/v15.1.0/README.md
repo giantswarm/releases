@@ -1,6 +1,6 @@
 # :zap: Giant Swarm Release v15.1.0 for AWS :zap:
 
-This release provides bug fixes for various components.
+This release provides stability and bug fixes for various components.
 
 **Highlights**
 - Kubernetes 1.20.9;
