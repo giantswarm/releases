@@ -12,6 +12,7 @@ resources:
 - v14.2.1
 - v14.2.2
 - v15.0.0
+- v15.1.0
 - v15.2.0-eric
 - v20.0.0
 transformers:
