@@ -1,5 +1,5 @@
 # Generated with:
-# devctl release create --name 15.2.0-eric --provider aws --base 15.0.0 --app cert-exporter@1.7.1 --app chart-operator@2.18.0 --app external-dns@2.4.0@0.8.0 --app net-exporter@1.10.2 --app cluster-autoscaler@1.20.3 --component aws-operator@10.6.1-c8311b47e8686e8eb0b6eda1ed03641d4438f473 --component kubernetes@1.21.3 --component containerlinux@2765.2.6 --overwrite
+# devctl release create --name 15.2.0-eric --provider aws --base 15.1.0 --component aws-operator@10.6.1-c8311b47e8686e8eb0b6eda1ed03641d4438f473 --component kubernetes@1.21.3 --component containerlinux@2765.2.6 --overwrite
 apiVersion: release.giantswarm.io/v1alpha1
 kind: Release
 metadata:
@@ -9,27 +9,27 @@ metadata:
   name: v15.2.0-eric
 spec:
   apps:
-  - componentVersion: 1.1.0
+  - componentVersion: 1.1.1
     name: aws-ebs-csi-driver
-    version: 2.1.0
+    version: 2.2.0
   - name: cert-exporter
     version: 1.7.1
   - componentVersion: 1.3.1
     name: cert-manager
-    version: 2.7.1
+    version: 2.8.0
   - name: chart-operator
     version: 2.18.0
   - name: cluster-autoscaler
     version: 1.20.3
-  - componentVersion: 1.6.5
+  - componentVersion: 1.8.3
     name: coredns
-    version: 1.4.1
+    version: 1.6.0
   - componentVersion: 0.8.0
     name: external-dns
     version: 2.4.0
-  - componentVersion: 3.6.0
+  - componentVersion: 4.1.0
     name: kiam
-    version: 1.7.1
+    version: 2.0.0
   - componentVersion: 1.9.7
     name: kube-state-metrics
     version: 1.3.1
@@ -43,27 +43,27 @@ spec:
     version: 1.7.2
   components:
   - name: app-operator
-    version: 4.4.0
+    version: 5.1.0
   - name: aws-cni
     version: 1.8.0
   - name: aws-operator
     releaseOperatorDeploy: true
     version: 10.6.1-c8311b47e8686e8eb0b6eda1ed03641d4438f473
   - name: calico
-    version: 3.15.3
+    version: 3.15.5
   - name: cert-operator
     releaseOperatorDeploy: true
     version: 1.0.1
   - name: cluster-operator
     releaseOperatorDeploy: true
-    version: 3.8.0
+    version: 3.9.0
   - name: containerlinux
     version: 2765.2.6
   - name: etcd
-    version: 3.4.14
+    version: 3.4.16
   - name: kubernetes
     version: 1.21.3
-  date: "2021-08-03T18:28:23Z"
+  date: "2021-08-04T18:11:32Z"
   state: active
 status:
   inUse: false
