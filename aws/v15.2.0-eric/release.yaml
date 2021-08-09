@@ -49,7 +49,8 @@ spec:
   - name: aws-operator
     releaseOperatorDeploy: true
     version: 15.0.0
-    Reference: 10.6.1-c8311b47e8686e8eb0b6eda1ed03641d4438f473
+    reference: 10.6.1-c8311b47e8686e8eb0b6eda1ed03641d4438f473
+    catalog: control-plane-test-catalog
   - name: calico
     version: 3.15.5
   - name: cert-operator
