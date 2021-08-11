@@ -41,17 +41,17 @@ spec:
     version: 4.2.0
   - name: cluster-api-bootstrap-provider-kubeadm
     catalog: control-plane-test-catalog
-    reference: 0.3.14-gs3-ed05270949d5ff3ea64df88098f9b3edc617825d # https://github.com/giantswarm/cluster-api-bootstrap-provider-kubeadm-app/pull/23
+    reference: 0.3.14-gs3-dab4d5347bf8afb93332003bca629ee6c17d9435 # https://github.com/giantswarm/cluster-api-bootstrap-provider-kubeadm-app/pull/23
     releaseOperatorDeploy: true
     version: 0.4.0
   - name: cluster-api-control-plane
     catalog: control-plane-test-catalog
-    reference: 0.3.22-gs2-7d1fcd6c10fc61785a8c862f128e737f0ecdba67 # https://github.com/giantswarm/cluster-api-control-plane-app/pull/21
+    reference: 0.3.22-gs2-3884db1c606c965a35d86dd209942e424ebd07ff # https://github.com/giantswarm/cluster-api-control-plane-app/pull/21
     releaseOperatorDeploy: true
     version: 0.4.0
   - name: cluster-api-core
     catalog: control-plane-test-catalog
-    reference: 0.3.22-gs1-f7ba0991411c6d57b31fe0753c204a44de8791a7 # https://github.com/giantswarm/cluster-api-core-app/pull/41
+    reference: 0.3.22-gs1-2b9cad7b6ca7f0eb5363e7460a26b6cb24a78629 # https://github.com/giantswarm/cluster-api-core-app/pull/41
     releaseOperatorDeploy: true
     version: 0.4.0
   - name: cluster-api-provider-azure
