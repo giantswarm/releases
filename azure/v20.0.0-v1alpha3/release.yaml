@@ -41,22 +41,22 @@ spec:
     version: 4.2.0
   - name: cluster-api-bootstrap-provider-kubeadm
     catalog: control-plane-test-catalog
-    reference: 0.3.14-gs3-bc0f950852d36c54b205757652f3f65cca0f447c # https://github.com/giantswarm/cluster-api-bootstrap-provider-kubeadm-app/pull/23
+    reference: 0.3.14-gs3-ed05270949d5ff3ea64df88098f9b3edc617825d # https://github.com/giantswarm/cluster-api-bootstrap-provider-kubeadm-app/pull/23
     releaseOperatorDeploy: true
     version: 0.4.0
   - name: cluster-api-control-plane
     catalog: control-plane-test-catalog
-    reference: 0.3.22-gs2-82597da9569779e91f940f3960571ea82aa4a87e # https://github.com/giantswarm/cluster-api-control-plane-app/pull/21
+    reference: 0.3.22-gs2-abb4d29cd056eaa1c7f6feb73ccd1abe72bed1e4 # https://github.com/giantswarm/cluster-api-control-plane-app/pull/21
     releaseOperatorDeploy: true
     version: 0.4.0
   - name: cluster-api-core
     catalog: control-plane-test-catalog
-    reference: 0.3.22-gs1-daf548c3d7b99c0ff16ac01bce4e75f4458d63d9 # https://github.com/giantswarm/cluster-api-core-app/pull/41
+    reference: 0.3.22-gs1-fb3dedfdc5adf6ef00033305693dfe28aeac7eba # https://github.com/giantswarm/cluster-api-core-app/pull/41
     releaseOperatorDeploy: true
     version: 0.4.0
   - name: cluster-api-provider-azure
     catalog: control-plane-test-catalog
-    reference: 0.4.12-gsalpha3-20774a630d34b0d801d4c630b8f6863808fd4ff1 # https://github.com/giantswarm/cluster-api-provider-azure-app/pull/22
+    reference: 0.4.12-gsalpha3-4385554bb87e42d785369e62cbf8fd0304e1f810 # https://github.com/giantswarm/cluster-api-provider-azure-app/pull/22
     releaseOperatorDeploy: true
     version: 0.5.0
   - name: capi-migration
