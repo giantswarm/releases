@@ -1,3 +1,5 @@
+                                                                >  # Generated with:
+                                                                >  # devctl release create --name 15.2.0 --provider aws --base 15.
 apiVersion: release.giantswarm.io/v1alpha1                         apiVersion: release.giantswarm.io/v1alpha1
 kind: Release                                                      kind: Release
 metadata:                                                          metadata:
@@ -41,13 +43,13 @@ spec:                                                              spec:
     version: 1.7.2                                                     version: 1.7.2
   components:                                                        components:
   - name: app-operator                                               - name: app-operator
-    releaseOperatorDeploy: false                                <
+    releaseOperatorDeploy: false                                       releaseOperatorDeploy: false
     version: 5.1.0                                                     version: 5.1.0
   - name: aws-cni                                                    - name: aws-cni
     version: 1.8.0                                                     version: 1.8.0
   - name: aws-operator                                               - name: aws-operator
     releaseOperatorDeploy: true                                        releaseOperatorDeploy: true
-    version: 10.6.1                                                    version: 10.6.1
+    version: 10.6.1                                             |      version: 10.7.0
   - name: calico                                                     - name: calico
     version: 3.15.5                                                    version: 3.15.5
   - name: cert-operator                                              - name: cert-operator
@@ -61,8 +63,8 @@ spec:                                                              spec:
   - name: etcd                                                       - name: etcd
     version: 3.4.16                                                    version: 3.4.16
   - name: kubernetes                                                 - name: kubernetes
-    version: 1.20.9                                             |      version: 1.20.10
-  date: "2021-08-03T10:00:00Z"                                  |    date: "2021-08-12T07:48:45Z"
+    version: 1.20.9                                                    version: 1.20.10
+  date: "2021-08-03T10:00:00Z"                                  |    date: "2021-08-11T14:29:39Z"
   state: active                                                      state: active
 status:                                                            status:
   ready: false                                                       ready: false

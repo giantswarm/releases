@@ -1,3 +1,5 @@
+# Generated with:
+# devctl release create --name 15.2.0 --provider aws --base 15.1.0 --component aws-operator@10.7.0 --overwrite
 apiVersion: release.giantswarm.io/v1alpha1
 kind: Release
 metadata:
@@ -41,12 +43,13 @@ spec:
     version: 1.7.2
   components:
   - name: app-operator
+    releaseOperatorDeploy: false
     version: 5.1.0
   - name: aws-cni
     version: 1.8.0
   - name: aws-operator
     releaseOperatorDeploy: true
-    version: 10.6.1
+    version: 10.7.0
   - name: calico
     version: 3.15.5
   - name: cert-operator
@@ -61,7 +64,8 @@ spec:
     version: 3.4.16
   - name: kubernetes
     version: 1.20.10
-  date: "2021-08-12T07:48:45Z"
+  date: "2021-08-11T14:29:39Z"
   state: active
 status:
+  inUse: false
   ready: false
