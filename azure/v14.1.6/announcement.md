@@ -1,0 +1,1 @@
+**Workload cluster release v14.1.6 for Azure** is now available. This release downgrades Flatcar Container Linux in order to debug some specific connectivity issues. Please do not upgrade to this release unless it is necessary. Reach out to your Solution Engineer to validate whether this release applies to your solution.

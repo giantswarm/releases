@@ -1,0 +1,55 @@
+# Generated with:
+# devctl release create --name v14.1.2 --provider kvm --base 14.1.1 --component containerlinux@2605.12.0
+apiVersion: release.giantswarm.io/v1alpha1
+kind: Release
+metadata:
+  creationTimestamp: null
+  name: v14.1.2
+spec:
+  apps:
+  - name: cert-exporter
+    version: 1.6.1
+  - name: chart-operator
+    version: 2.15.0
+  - componentVersion: 1.8.0
+    name: coredns
+    version: 1.4.1
+  - componentVersion: 1.9.7
+    name: kube-state-metrics
+    version: 1.3.1
+  - componentVersion: 0.4.1
+    name: metrics-server
+    version: 1.3.0
+  - name: net-exporter
+    version: 1.10.1
+  - componentVersion: 1.0.1
+    name: node-exporter
+    version: 1.7.2
+  components:
+  - name: app-operator
+    releaseOperatorDeploy: false
+    version: 4.4.0
+  - name: calico
+    version: 3.15.3
+  - name: cert-operator
+    releaseOperatorDeploy: true
+    version: 1.0.1
+  - name: cluster-operator
+    releaseOperatorDeploy: true
+    version: 0.27.1
+  - name: containerlinux
+    version: 2605.12.0
+  - name: etcd
+    version: 3.4.16
+  - name: flannel-operator
+    version: 0.2.0
+  - name: kubernetes
+    version: 1.19.11
+  - name: kvm-operator
+    releaseOperatorDeploy: true
+    version: 3.17.3
+  date: "2021-07-16T12:13:26Z"
+  state: active
+status:
+  inUse: false
+  ready: false

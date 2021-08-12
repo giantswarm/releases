@@ -1,13 +1,11 @@
 commonAnnotations:
   giantswarm.io/docs: https://docs.giantswarm.io/reference/cp-k8s-api/releases.release.giantswarm.io/
 resources:
-- v12.1.2
-- v13.0.1
-- v13.1.1
-- v14.0.0
-- v14.0.1
-- v14.0.2
-- v14.1.4
+- v14.1.6
+- v14.1.7
+- v15.0.0
+- v15.1.0
+- v15.1.1
 - v20.0.0-v1alpha3
 transformers:
 - releaseNotesTransformer.yaml

@@ -1,0 +1,1 @@
+**Workload cluster release v14.2.1 for AWS is available**. It fixes the issue which prevented clusters being created on some management clusters with the AWS v14.2.0 release. Further details can be found in the [release notes](https://docs.giantswarm.io/changes/workload-cluster-releases-aws/releases/aws-v14.2.1/).
