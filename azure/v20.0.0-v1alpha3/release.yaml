@@ -46,17 +46,17 @@ spec:
     version: 0.4.0
   - name: cluster-api-control-plane
     catalog: control-plane-test-catalog
-    reference: 0.3.22-gs2-6590d337df84bb671f177a49f12900ab61924dc5 # https://github.com/giantswarm/cluster-api-control-plane-app/pull/21
+    reference: 0.3.22-gs2-8bb5e52207d6637faaaca6ffa0eb5ee15053c32c # https://github.com/giantswarm/cluster-api-control-plane-app/pull/21
     releaseOperatorDeploy: true
     version: 0.4.0
   - name: cluster-api-core
     catalog: control-plane-test-catalog
-    reference: 0.3.22-gs1-680f8d704a13dd2fdd373096419188e2caa4bf8e # https://github.com/giantswarm/cluster-api-core-app/pull/41
+    reference: 0.3.22-gs1-d187c611793ac73d32e89af054e5593ed1d358a6 # https://github.com/giantswarm/cluster-api-core-app/pull/41
     releaseOperatorDeploy: true
     version: 0.4.0
   - name: cluster-api-provider-azure
     catalog: control-plane-test-catalog
-    reference: 0.4.12-gsalpha3-4385554bb87e42d785369e62cbf8fd0304e1f810 # https://github.com/giantswarm/cluster-api-provider-azure-app/pull/22
+    reference: 0.4.12-gsalpha3-26727224f1b85857150e37484dcf87fdd7a87c18 # https://github.com/giantswarm/cluster-api-provider-azure-app/pull/22
     releaseOperatorDeploy: true
     version: 0.5.0
   - name: capi-migration
