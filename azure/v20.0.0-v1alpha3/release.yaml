@@ -78,7 +78,7 @@ spec:
   - name: etcd
     version: 3.4.14
   date: "2021-03-02T14:50:41Z"
-  state: deprecated
+  state: active
 status:
   inUse: false
   ready: false
