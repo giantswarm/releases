@@ -48,8 +48,8 @@ spec:
     version: 1.8.0
   - name: aws-operator
     releaseOperatorDeploy: true
-    version: 10.6.2-dev
-    reference: 10.6.1-c8311b47e8686e8eb0b6eda1ed03641d4438f473
+    version: 10.7.0-dev
+    reference: 10.7.0-f349db36013fde4df14bdc3aa29245fcedb7aa74
     catalog: control-plane-test-catalog
   - name: calico
     version: 3.15.5
@@ -60,7 +60,7 @@ spec:
     releaseOperatorDeploy: true
     version: 3.9.0
   - name: containerlinux
-    version: 2765.2.6
+    version: 2905.2.1
   - name: etcd
     version: 3.4.16
   - name: kubernetes
