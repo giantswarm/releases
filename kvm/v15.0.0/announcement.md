@@ -1,1 +1,1 @@
-**Workload cluster release v15.0.0 for KVM** is now available. This is the first release for KVM with Kubernetes 1.20. It also removes the per-cluster Flannel network to improve performance and security while reducing complexity. See [release notes](https://docs.giantswarm.io/changes/workload-cluster-releases-kvm/releases/kvm-v14.1.2/) for more details.
+**Workload cluster release v15.0.0 for KVM** is now available. This is the first release for KVM with Kubernetes 1.20 and Calico 3.19.
