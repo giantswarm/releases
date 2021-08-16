@@ -30,7 +30,7 @@ spec:
     releaseOperatorDeploy: false
     version: 4.4.0
   - name: calico
-    version: 3.19.1
+    version: 3.19.2
   - name: cert-operator
     releaseOperatorDeploy: true
     version: 1.0.1
@@ -44,13 +44,13 @@ spec:
   - name: flannel-operator
     version: 0.2.0
   - name: kubernetes
-    version: 1.20.9
+    version: 1.20.10
   - name: kvm-operator
     releaseOperatorDeploy: true
     catalog: control-plane-test-catalog
-    version: 3.17.3-dev
-    reference: 3.17.3-c21aa03da4bb8cb9000197976d4fbb4e0ced2b6d
-  date: "2021-08-03T07:53:31Z"
+    version: 3.17.4-dev
+    reference: 3.17.3-f8a119af85ae61d8f65cfca70199ebcb04d95b94
+  date: "2021-08-17T12:00:00Z"
   state: active
 status:
   inUse: false
