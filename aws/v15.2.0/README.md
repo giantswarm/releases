@@ -5,7 +5,7 @@
 ## Change details
 
 
-### aws-operator [10.7.0](https://github.com/giantswarm/aws-operator/releases/tag/v10.7.0)
+### aws-operator [10.7.1](https://github.com/giantswarm/aws-operator/releases/tag/v10.7.1)
 
 ### Added
 
