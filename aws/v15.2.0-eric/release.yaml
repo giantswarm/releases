@@ -48,8 +48,8 @@ spec:
     version: 1.8.0
   - name: aws-operator
     releaseOperatorDeploy: true
-    version: 10.7.0-dev
-    reference: 10.7.0-f349db36013fde4df14bdc3aa29245fcedb7aa74
+    version: 10.7.1-dev
+    reference: 10.7.1-96b0c3d9ac489824ef96ddc93274b01ccb3ae907
     catalog: control-plane-test-catalog
   - name: calico
     version: 3.15.5
