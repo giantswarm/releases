@@ -5,54 +5,51 @@
 ## Change details
 
 
-### aws-operator [10.6.1-c8311b47e8686e8eb0b6eda1ed03641d4438f473](https://github.com/giantswarm/aws-operator/releases/tag/v10.6.1-c8311b47e8686e8eb0b6eda1ed03641d4438f473)
+### aws-operator [10.7.1-96b0c3d9ac489824ef96ddc93274b01ccb3ae907](https://github.com/giantswarm/aws-operator/releases/tag/v10.7.1-96b0c3d9ac489824ef96ddc93274b01ccb3ae907)
 
 Not found
 
 
-### kubernetes [1.21.3](https://github.com/kubernetes/kubernetes/releases/tag/v1.21.3)
+### kubernetes [1.21.4](https://github.com/kubernetes/kubernetes/releases/tag/v1.21.4)
 
 #### Feature
-- Kubernetes is now built with Golang 1.16.6 ([#103670](https://github.com/kubernetes/kubernetes/pull/103670), [@cpanato](https://github.com/cpanato)) [SIG Cloud Provider, Instrumentation, Release and Testing]
-- Updates the following images to pick up CVE fixes:
-  - `debian` to v1.8.0
-  - `debian-iptables` to v1.6.5
-  - `setcap` to v2.0.3 ([#103235](https://github.com/kubernetes/kubernetes/pull/103235), [@thejoycekung](https://github.com/thejoycekung)) [SIG API Machinery, Release and Testing]
+- Kubernetes is now built with Golang 1.16.7 ([#104201](https://github.com/kubernetes/kubernetes/pull/104201), [@cpanato](https://github.com/cpanato)) [SIG Cloud Provider, Instrumentation, Release and Testing]
 #### Bug or Regression
-- Fix scoring for NodeResourcesMostAllocated and NodeResourcesBalancedAllocation plugins when nodes have containers with no requests. This was leaving to under-utilization of small nodes. ([#102925](https://github.com/kubernetes/kubernetes/pull/102925), [@alculquicondor](https://github.com/alculquicondor)) [SIG Scheduling]
-- ServiceOwnsFrontendIP shouldn't report error when the public IP doesn't match ([#102516](https://github.com/kubernetes/kubernetes/pull/102516), [@nilo19](https://github.com/nilo19)) [SIG Cloud Provider]
-- Switch scheduler to generate the merge patch on pod status instead of the full pod ([#103133](https://github.com/kubernetes/kubernetes/pull/103133), [@marwanad](https://github.com/marwanad)) [SIG Scheduling]
-- VSphere: Fix regression during attach disk if datastore is within a storage folder or datastore cluster. ([#102969](https://github.com/kubernetes/kubernetes/pull/102969), [@gnufied](https://github.com/gnufied)) [SIG Cloud Provider]
+- Disable aufs module for gce clusters ([#103831](https://github.com/kubernetes/kubernetes/pull/103831), [@lizhuqi](https://github.com/lizhuqi)) [SIG Cloud Provider]
+- Fix kube-apiserver metric reporting for the deprecated watch path of /api/<version>/watch/... ([#104190](https://github.com/kubernetes/kubernetes/pull/104190), [@wojtek-t](https://github.com/wojtek-t)) [SIG API Machinery and Instrumentation]
+- Fix the code is leaking the defaulting between unrelated pod instances. ([#103284](https://github.com/kubernetes/kubernetes/pull/103284), [@kebe7jun](https://github.com/kebe7jun)) [SIG CLI]
+- Fix: Provide IPv6 support for internal load balancer ([#103794](https://github.com/kubernetes/kubernetes/pull/103794), [@nilo19](https://github.com/nilo19)) [SIG Cloud Provider]
+- Fix: cleanup outdated routes ([#102935](https://github.com/kubernetes/kubernetes/pull/102935), [@nilo19](https://github.com/nilo19)) [SIG Cloud Provider]
+- Fix: delete non existing disk issue ([#102083](https://github.com/kubernetes/kubernetes/pull/102083), [@andyzhangx](https://github.com/andyzhangx)) [SIG Cloud Provider]
+- Fix: ignore not a VMSS error for VMAS nodes in reconcileBackendPools ([#103997](https://github.com/kubernetes/kubernetes/pull/103997), [@nilo19](https://github.com/nilo19)) [SIG Cloud Provider]
+- Fix: return empty VMAS name if using standalone VM ([#103470](https://github.com/kubernetes/kubernetes/pull/103470), [@nilo19](https://github.com/nilo19)) [SIG Cloud Provider]
+- Fixed a bug that scheduler extenders are not called on preemptions ([#103019](https://github.com/kubernetes/kubernetes/pull/103019), [@ordovicia](https://github.com/ordovicia)) [SIG Scheduling]
+- Fixes an issue cleaning up CertificateSigningRequest objects with an unparseable `status.certificate` field ([#103948](https://github.com/kubernetes/kubernetes/pull/103948), [@liggitt](https://github.com/liggitt)) [SIG Apps and Auth]
+- Fixes issue with websocket-based watches of Service objects not closing correctly on timeout ([#102541](https://github.com/kubernetes/kubernetes/pull/102541), [@liggitt](https://github.com/liggitt)) [SIG API Machinery and Testing]
 #### Dependencies
 #### Added
 _Nothing has changed._
 #### Changed
-- sigs.k8s.io/structured-merge-diff/v4: v4.1.0 → v4.1.2
+- sigs.k8s.io/apiserver-network-proxy/konnectivity-client: v0.0.19 → v0.0.22
 #### Removed
 _Nothing has changed._
 
 
 
-### containerlinux [2765.2.6](https://www.flatcar-linux.org/releases/#release-2765.2.6)
-
+### containerlinux [2905.2.1](https://www.flatcar-linux.org/releases/#release-2905.2.1)
 
 **Security fixes**
 
-
-
-*   Linux ([CVE-2020-26558](https://nvd.nist.gov/vuln/detail/CVE-2020-26558), [CVE-2021-0129](https://nvd.nist.gov/vuln/detail/CVE-2021-0129), [CVE-2020-24587](https://nvd.nist.gov/vuln/detail/CVE-2020-24587), [CVE-2020-24586](https://nvd.nist.gov/vuln/detail/CVE-2020-24586), [CVE-2020-24588](https://nvd.nist.gov/vuln/detail/CVE-2020-24588), [CVE-2020-26139](https://nvd.nist.gov/vuln/detail/CVE-2020-26139), [CVE-2020-26145](https://nvd.nist.gov/vuln/detail/CVE-2020-26145), [CVE-2020-26147](https://nvd.nist.gov/vuln/detail/CVE-2020-26147), [CVE-2020-26141](https://nvd.nist.gov/vuln/detail/CVE-2020-26141), [CVE-2021-3564](https://nvd.nist.gov/vuln/detail/CVE-2021-3564), [CVE-2021-28691](https://nvd.nist.gov/vuln/detail/CVE-2021-28691), [CVE-2021-3587](https://nvd.nist.gov/vuln/detail/CVE-2021-3587), [CVE-2021-3573](https://nvd.nist.gov/vuln/detail/CVE-2021-3573))
+* Linux ([CVE-2021-37576](https://nvd.nist.gov/vuln/detail/CVE-2021-37576))
 
 **Bug fixes**
 
-
-
-*   Update-engine sent empty requests when restarted before a pending reboot ([Flatcar#388](https://github.com/kinvolk/Flatcar/issues/388))
-*   motd login prompt list of failed services: The output of "systemctl list-units --state=failed --no-legend" contains a bullet point which is not expected and ended up being taken as the unit name of failed units which was previously on the start of the line. Filtered the bullet point out to stay compatible with the old behavior in case upstream would remove the bullet point again. ([coreos-overlay#1042](https://github.com/kinvolk/coreos-overlay/pull/1042))
+* Set the cilium_vxlan interface to be not managed by networkd's default setup with DHCP as it's managed by Cilium. ([init#43](https://github.com/kinvolk/init/pull/43))
+* Disabled SELinux by default on `dockerd` wrapper script ([coreos-overlay#1149](https://github.com/kinvolk/coreos-overlay/pull/1149))
+* GCE: Granted CAP_NET_ADMIN to set routes for the TCP LB when starting oem-gce.service ([coreos-overlay#1146](https://github.com/kinvolk/coreos-overlay/pull/1146))
 
 **Updates**
 
-
-
-*   Linux ([5.10.43](https://lwn.net/Articles/859022/))
+* Linux ([5.10.55](https://lwn.net/Articles/864901/))
 
 
