@@ -59,11 +59,11 @@ spec:
     releaseOperatorDeploy: true
     version: 3.9.0
   - name: containerlinux
-    version: 2765.2.6
+    version: 2905.2.1
   - name: etcd
     version: 3.4.16
   - name: kubernetes
-    version: 1.20.9
+    version: 1.21.4
   date: "2021-08-18T13:47:58Z"
   state: active
 status:
