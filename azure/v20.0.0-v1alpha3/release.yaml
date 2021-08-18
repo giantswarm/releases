@@ -51,7 +51,7 @@ spec:
     version: 0.4.0
   - name: cluster-api-core
     catalog: control-plane-test-catalog
-    reference: 0.3.22-gs1-d187c611793ac73d32e89af054e5593ed1d358a6 # https://github.com/giantswarm/cluster-api-core-app/pull/41
+    reference: 0.3.22-gs1-fe053bde4007a6a88d6f68693623401d1a5c68cc # https://github.com/giantswarm/cluster-api-core-app/pull/41
     releaseOperatorDeploy: true
     version: 0.4.0
   - name: cluster-api-provider-azure
