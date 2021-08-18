@@ -2,7 +2,7 @@ apiVersion: release.giantswarm.io/v1alpha1
 kind: Release
 metadata:
   annotations:
-    "helm.sh/resource-policy": keep
+    "helm.sh/resource-policy": keep # TODO: Remove when this release is merged to master.
   creationTimestamp: null
   name: v20.0.0-v1alpha3
 spec:
@@ -16,7 +16,7 @@ spec:
     name: cert-manager
     version: 2.4.1
   - name: chart-operator
-    version: 2.11.0-a332e330b9a1e5a12e8484038f9120f243c578fe
+    version: 2.11.0-a332e330b9a1e5a12e8484038f9120f243c578fe # https://github.com/giantswarm/chart-operator/pull/721
     catalog: default-test
   - componentVersion: 0.7.6
     name: external-dns
@@ -41,22 +41,22 @@ spec:
     version: 4.2.0
   - name: cluster-api-bootstrap-provider-kubeadm
     catalog: control-plane-test-catalog
-    reference: 0.3.14-gs3-9a7f424ebcd553335b6b702c7d4e2a495652e983
+    reference: 0.3.14-gs3-9a7f424ebcd553335b6b702c7d4e2a495652e983 # https://github.com/giantswarm/cluster-api-bootstrap-provider-kubeadm-app/pull/23
     releaseOperatorDeploy: true
     version: 0.4.0
   - name: cluster-api-control-plane
     catalog: control-plane-test-catalog
-    reference: 0.3.22-gs2-675c820c191081e5274df446b7fff536def08c2b
+    reference: 0.3.22-gs2-675c820c191081e5274df446b7fff536def08c2b # https://github.com/giantswarm/cluster-api-control-plane-app/pull/21
     releaseOperatorDeploy: true
     version: 0.4.0
   - name: cluster-api-core
     catalog: control-plane-test-catalog
-    reference: 0.3.22-gs1-bba603ea579ab2e21bcfc5574f2b3ed4c1fa4bf5
+    reference: 0.3.22-gs1-bba603ea579ab2e21bcfc5574f2b3ed4c1fa4bf5 # https://github.com/giantswarm/cluster-api-core-app/pull/41
     releaseOperatorDeploy: true
     version: 0.4.0
   - name: cluster-api-provider-azure
     catalog: control-plane-test-catalog
-    reference: 0.4.12-gsalpha3-7fb8527b601cfbf6ba690073426a14ded0161959
+    reference: 0.4.12-gsalpha3-7fb8527b601cfbf6ba690073426a14ded0161959 # https://github.com/giantswarm/cluster-api-provider-azure-app/pull/22
     releaseOperatorDeploy: true
     version: 0.5.0
   - name: capi-migration
@@ -66,7 +66,7 @@ spec:
     version: 0.0.0
   - name: cluster-operator
     catalog: control-plane-test-catalog
-    reference: 3.6.1-5c303d6c9b708bda6404ae2974ce4a3b3f5269b3
+    reference: 3.6.1-5c303d6c9b708bda6404ae2974ce4a3b3f5269b3 # https://github.com/giantswarm/cluster-operator/pull/1375
     releaseOperatorDeploy: true
     version: 3.6.2-dev
   - name: kubernetes
