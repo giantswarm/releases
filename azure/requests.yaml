@@ -96,3 +96,5 @@ releases:
       requests:
       - name: containerlinux
         version: ">= 2605.12.0"
+    - name: "> 20.0.0"
+      requests: []
