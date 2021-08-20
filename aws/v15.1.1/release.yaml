@@ -11,7 +11,7 @@ spec:
   apps:
   - componentVersion: 1.1.1
     name: aws-ebs-csi-driver
-    version: 2.2.0
+    version: 2.2.1
   - name: cert-exporter
     version: 1.7.1
   - componentVersion: 1.3.1
