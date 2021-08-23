@@ -64,19 +64,20 @@ spec:
     reference: 0.0.0-ed5a1ec2eabb528c515e623edecdfac64e78e4b0
     releaseOperatorDeploy: true
     version: 0.0.0
-  - name: cluster-operator
-    catalog: control-plane-test-catalog
-    reference: 3.6.1-5c303d6c9b708bda6404ae2974ce4a3b3f5269b3 # https://github.com/giantswarm/cluster-operator/pull/1375
+  - catalog: control-plane-catalog
+    name: cluster-apps-operator
     releaseOperatorDeploy: true
-    version: 3.6.2-dev
-  - name: policies-common
-    catalog: control-plane-test-catalog
+    version: 0.1.0
+  - catalog: control-plane-test-catalog
+    name: policies-common
+    reference: 0.0.10-153896a35b8a2838f777cd25417934f40287406b # https://github.com/giantswarm/kyverno-policies/pull/81
     releaseOperatorDeploy: true
-    version: 0.0.10-153896a35b8a2838f777cd25417934f40287406b # https://github.com/giantswarm/kyverno-policies/pull/81
-  - name: policies-azure
-    catalog: control-plane-test-catalog
+    version: 0.0.10
+  - catalog: control-plane-test-catalog
+    name: policies-azure
+    reference: 0.0.10-153896a35b8a2838f777cd25417934f40287406b # https://github.com/giantswarm/kyverno-policies/pull/81
     releaseOperatorDeploy: true
-    version: 0.0.10-153896a35b8a2838f777cd25417934f40287406b # https://github.com/giantswarm/kyverno-policies/pull/81
+    version: 0.0.10
   - name: kubernetes
     version: 1.19.8
   - name: containerlinux
