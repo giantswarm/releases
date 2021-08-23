@@ -1,6 +1,6 @@
 # :zap: Giant Swarm Release v15.2.0 for AWS :zap:
 
-<< Add description here >>
+This release adds support to `aws-operator` to comply with the following additional AWS S3 policies `s3-bucket-public-read-prohibited, s3-bucket-ssl-requests-only, s3-bucket-public-write-prohibited, s3-bucket-server-side-encryption-enabled, s3-bucket-logging-enabled`.
 
 ## Change details
 
