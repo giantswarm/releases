@@ -70,12 +70,12 @@ spec:
     version: 0.1.0
   - catalog: control-plane-test-catalog
     name: policies-common
-    reference: 0.0.10-153896a35b8a2838f777cd25417934f40287406b # https://github.com/giantswarm/kyverno-policies/pull/81
+    reference: 0.0.10-076fb900f95954cc05af5e73adf93fcbbc93e36b # https://github.com/giantswarm/kyverno-policies/pull/81
     releaseOperatorDeploy: true
     version: 0.0.10
   - catalog: control-plane-test-catalog
     name: policies-azure
-    reference: 0.0.10-153896a35b8a2838f777cd25417934f40287406b # https://github.com/giantswarm/kyverno-policies/pull/81
+    reference: 0.0.10-076fb900f95954cc05af5e73adf93fcbbc93e36b # https://github.com/giantswarm/kyverno-policies/pull/81
     releaseOperatorDeploy: true
     version: 0.0.10
   - name: kubernetes
