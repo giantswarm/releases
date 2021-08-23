@@ -69,6 +69,14 @@ spec:
     reference: 3.6.1-5c303d6c9b708bda6404ae2974ce4a3b3f5269b3 # https://github.com/giantswarm/cluster-operator/pull/1375
     releaseOperatorDeploy: true
     version: 3.6.2-dev
+  - name: policies-common
+    catalog: control-plane-test-catalog
+    releaseOperatorDeploy: true
+    version: 0.0.10-153896a35b8a2838f777cd25417934f40287406b # https://github.com/giantswarm/kyverno-policies/pull/81
+  - name: policies-azure
+    catalog: control-plane-test-catalog
+    releaseOperatorDeploy: true
+    version: 0.0.10-153896a35b8a2838f777cd25417934f40287406b # https://github.com/giantswarm/kyverno-policies/pull/81
   - name: kubernetes
     version: 1.19.8
   - name: containerlinux
