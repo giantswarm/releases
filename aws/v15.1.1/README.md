@@ -1,6 +1,6 @@
 # :zap: Giant Swarm Release v15.1.1 for AWS :zap:
 
-This release provides bug fix for ebs-csi-driver resizing EBS volumes.
+This release provides a bug fix for `ebs-csi-driver` to enable it to resize EBS volumes.
 
 ## Change details
 
@@ -8,4 +8,3 @@ This release provides bug fix for ebs-csi-driver resizing EBS volumes.
 
 #### Fixed
 - Enable permissions for ebs volume resizing by default.
-
