@@ -42,12 +42,12 @@ spec:
     catalog: control-plane-test-catalog
     reference: 0.0.0-7484c1c803afdff46934ff159d96eee5ffa52f53 # https://github.com/giantswarm/cluster-api
     releaseOperatorDeploy: true
-    version: 0.4.1
+    version: 0.4.2
   - name: cluster-api-provider-azure
     catalog: control-plane-test-catalog
-    reference: 0.4.12-gsalpha3-1c3b8dca62eadc47840f7dcae1228bf668c89f74 # https://github.com/giantswarm/cluster-api-provider-azure-app/pull/22
+    reference: 0.4.12-gsalpha3-ead7c4c3a760075324f166f22e6911aefb462df5 # https://github.com/giantswarm/cluster-api-provider-azure-app/pull/22
     releaseOperatorDeploy: true
-    version: 0.5.0
+    version: 0.5.2
   - name: capi-migration
     catalog: control-plane-test-catalog
     reference: 0.0.0-ed5a1ec2eabb528c515e623edecdfac64e78e4b0
