@@ -39,9 +39,8 @@ spec:
   components:
   - catalog: control-plane-catalog
     name: app-operator
-    reference: 5.2.0
-    releaseOperatorDeploy: true
-    version: 4.1.0
+    releaseOperatorDeploy: false
+    version: 5.2.0
   - catalog: control-plane-catalog
     name: capa-iam-controller
     reference: 0.2.0
