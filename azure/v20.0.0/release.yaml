@@ -36,8 +36,8 @@ spec:
     version: 0.2.2
   components:
   - name: app-operator
-    releaseOperatorDeploy: true
-    version: 4.2.0
+    releaseOperatorDeploy: false
+    version: 5.2.0
   - name: cluster-api
     catalog: control-plane-test-catalog
     reference: 0.0.0-7484c1c803afdff46934ff159d96eee5ffa52f53 # https://github.com/giantswarm/cluster-api
