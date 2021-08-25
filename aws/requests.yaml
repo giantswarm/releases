@@ -5,6 +5,8 @@ releases:
           version: ">= 2.5.0"
         - name: cert-manager
           version: ">= 2.9.0"
+        - name: cert-exporter
+          version: ">= 1.8.0"
     - name: ">= 15.0.0"
       requests:
         - name: net-exporter
