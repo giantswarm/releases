@@ -15,7 +15,7 @@ spec:
     version: 2.7.1
   - catalog: default
     name: chart-operator
-    version: 2.18.0
+    version: 2.19.0
   - name: cluster-autoscaler
     version: 1.19.3
   - componentVersion: 0.7.6
@@ -39,7 +39,7 @@ spec:
   components:
   - catalog: control-plane-catalog
     name: app-operator
-    reference: 4.1.0
+    reference: 5.2.0
     releaseOperatorDeploy: true
     version: 4.1.0
   - catalog: control-plane-catalog
@@ -74,7 +74,7 @@ spec:
   - catalog: control-plane-catalog
     name: cluster-apps-operator
     releaseOperatorDeploy: true
-    version: 0.1.0
+    version: 0.3.0
   - catalog: control-plane-catalog
     name: kubernetes
     version: 1.19.9
