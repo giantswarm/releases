@@ -72,7 +72,7 @@ spec:
     version: 0.1.1
   - catalog: control-plane-test-catalog
     name: cluster-apps-operator
-    reference: 0.3.1-633b58c477348fee0fdd9d928bf71c7b1ad54560
+    reference: 0.3.1-fa0e2f5392a21a878d0dccc0773df85fe7019c78
     releaseOperatorDeploy: true
     version: 0.3.2-dev
   - catalog: control-plane-catalog
