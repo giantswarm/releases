@@ -15,7 +15,7 @@ spec:
     version: 2.7.1
   - catalog: default
     name: chart-operator
-    version: 2.18.0
+    version: 2.19.0
   - name: cluster-autoscaler
     version: 1.19.3
   - componentVersion: 0.7.6
@@ -39,9 +39,8 @@ spec:
   components:
   - catalog: control-plane-catalog
     name: app-operator
-    reference: 4.1.0
-    releaseOperatorDeploy: true
-    version: 4.1.0
+    releaseOperatorDeploy: false
+    version: 5.2.0
   - catalog: control-plane-catalog
     name: capa-iam-controller
     reference: 0.2.0
@@ -54,27 +53,27 @@ spec:
   - catalog: control-plane-test-catalog
     name: cluster-api-control-plane
     releaseOperatorDeploy: true
-    version: 0.3.22-gs1
+    version: 0.3.22-gs2
   - catalog: control-plane-catalog
     name: cluster-api-core
     releaseOperatorDeploy: true
-    version: 0.3.22-gs1
+    version: 0.3.22-gs4
   - catalog: control-plane-test-catalog
     name: cluster-api-provider-aws
     releaseOperatorDeploy: true
-    version: 0.6.8-gs1
+    version: 0.6.8-gs2
   - catalog: control-plane-test-catalog
     name: policies-common
     releaseOperatorDeploy: true
-    version: 0.0.5
+    version: 0.1.1
   - catalog: control-plane-test-catalog
     name: policies-aws
     releaseOperatorDeploy: true
-    version: 0.0.5
+    version: 0.1.1
   - catalog: control-plane-catalog
     name: cluster-apps-operator
     releaseOperatorDeploy: true
-    version: 0.1.0
+    version: 0.4.0
   - catalog: control-plane-catalog
     name: kubernetes
     version: 1.19.9

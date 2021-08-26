@@ -1,0 +1,1 @@
+**Workload cluster release v15.2.0 for AWS is available**. It adds support to `aws-operator` to comply with additional AWS S3 policies. Further details can be found in the [release notes](https://docs.giantswarm.io/changes/workload-cluster-releases-aws/releases/aws-v15.2.0/).
