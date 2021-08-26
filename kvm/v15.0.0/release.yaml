@@ -10,21 +10,21 @@ spec:
   - name: cert-exporter
     version: 1.8.0
   - name: chart-operator
-    version: 2.18.1
+    version: 2.19.0
   - componentVersion: 1.8.3
     name: coredns
     version: 1.6.0
   - componentVersion: 1.9.7
     name: kube-state-metrics
-    version: 1.3.1
+    version: 1.4.0
   - componentVersion: 0.4.1
     name: metrics-server
-    version: 1.3.0
+    version: 1.4.0
   - name: net-exporter
-    version: 1.10.2
+    version: 1.10.3
   - componentVersion: 1.0.1
     name: node-exporter
-    version: 1.7.2
+    version: 1.8.0
   components:
   - name: app-operator
     releaseOperatorDeploy: false
@@ -49,7 +49,7 @@ spec:
     releaseOperatorDeploy: true
     catalog: control-plane-test-catalog
     version: 3.17.4-dev
-    reference: 3.17.3-f8a119af85ae61d8f65cfca70199ebcb04d95b94
+    reference: 3.17.3-09debe766d4d48bac98a31f465594abec5777118
   date: "2021-08-17T12:00:00Z"
   state: active
 status:
