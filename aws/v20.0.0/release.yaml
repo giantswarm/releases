@@ -70,10 +70,10 @@ spec:
     name: policies-aws
     releaseOperatorDeploy: true
     version: 0.0.5
-  - catalog: control-plane-catalog
+  - catalog: control-plane-test-catalog
     name: cluster-apps-operator
     releaseOperatorDeploy: true
-    version: 0.3.0
+    version: 0.3.0-ec68ad99715b320f781ec86e2174ba116626d269
   - catalog: control-plane-catalog
     name: kubernetes
     version: 1.19.9
