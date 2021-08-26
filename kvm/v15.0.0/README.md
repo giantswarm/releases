@@ -92,7 +92,7 @@ View the major changes since Kubernetes v1.19 [here](https://github.com/kubernet
 
 ### net-exporter [1.10.3](https://github.com/giantswarm/net-exporter/releases/tag/v1.10.3)
 
-### Changed
+#### Changed
 
 - Prepare helm values to configuration management.
 - Update architect-orb to v4.0.0.
