@@ -72,8 +72,9 @@ spec:
     version: 0.1.1
   - catalog: control-plane-test-catalog
     name: cluster-apps-operator
+    reference: 0.3.1-633b58c477348fee0fdd9d928bf71c7b1ad54560
     releaseOperatorDeploy: true
-    version: 0.3.1-633b58c477348fee0fdd9d928bf71c7b1ad54560
+    version: 0.3.2-dev
   - catalog: control-plane-catalog
     name: kubernetes
     version: 1.19.9
