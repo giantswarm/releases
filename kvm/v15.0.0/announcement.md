@@ -1,1 +1,1 @@
-**Workload cluster release v15.0.0 for KVM** is now available. This is the first release for KVM with Kubernetes 1.20 and Calico 3.19.
+**Workload cluster release v15.0.0 for KVM** is now available. This is the first release for KVM with Kubernetes 1.20 and Calico 3.19. It also migrates the Calico datastore from etcd to Kubernetes.
