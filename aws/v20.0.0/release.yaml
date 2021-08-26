@@ -50,7 +50,7 @@ spec:
   - catalog: control-plane-catalog
     name: cluster-api-bootstrap-provider-kubeadm
     releaseOperatorDeploy: true
-    version: 0.3.22-gs4
+    version: 0.3.22-gs1
   - catalog: control-plane-test-catalog
     name: cluster-api-control-plane
     releaseOperatorDeploy: true
