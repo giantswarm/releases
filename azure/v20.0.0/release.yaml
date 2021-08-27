@@ -60,7 +60,8 @@ spec:
   - catalog: control-plane-test-catalog
     name: policies-common
     releaseOperatorDeploy: true
-    version: 0.0.11
+    reference: 0.1.2-f07301352e69b8f6ef25847c24fe6ae56693876a
+    version: 0.1.2
   - catalog: control-plane-test-catalog
     name: policies-azure
     releaseOperatorDeploy: true
