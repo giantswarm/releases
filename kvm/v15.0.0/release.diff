@@ -1,5 +1,5 @@
-# Generated with:                                                  # Generated with:
-# devctl release create --name v14.1.2 --provider kvm --base 14 |  # devctl release create --name v15.0.0 --provider kvm --base 14
+# Generated with:                                               <
+# devctl release create --name v14.1.2 --provider kvm --base 14 <
 apiVersion: release.giantswarm.io/v1alpha1                         apiVersion: release.giantswarm.io/v1alpha1
 kind: Release                                                      kind: Release
 metadata:                                                          metadata:
@@ -28,7 +28,7 @@ spec:                                                              spec:
   components:                                                        components:
   - name: app-operator                                               - name: app-operator
     releaseOperatorDeploy: false                                       releaseOperatorDeploy: false
-    version: 4.4.0                                                     version: 4.4.0
+    version: 4.4.0                                              |      version: 5.2.0
   - name: calico                                                     - name: calico
     version: 3.15.3                                             |      version: 3.19.2
   - name: cert-operator                                              - name: cert-operator
@@ -49,7 +49,7 @@ spec:                                                              spec:
     releaseOperatorDeploy: true                                        releaseOperatorDeploy: true
     version: 3.17.3                                             |      catalog: control-plane-test-catalog
   date: "2021-07-16T12:13:26Z"                                  |      version: 3.17.4-dev
-                                                                >      reference: 3.17.3-09debe766d4d48bac98a31f465594abec5777118
+                                                                >      reference: 3.17.3-c88a065b73888059a0a2a2df7c995f3482fd68dc
                                                                 >    date: "2021-08-17T12:00:00Z"
   state: active                                                      state: active
 status:                                                            status:
