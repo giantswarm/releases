@@ -7,9 +7,9 @@ metadata:
   name: v20.0.0
 spec:
   apps:
-  - catalog: giantswarm-playground
-    name: azure-calico-user-defined-routes
-    version: 0.1.0
+  - catalog: default
+    name: calico-policy-only
+    version: 0.2.0
   - name: cert-exporter
     version: 1.6.0
   - componentVersion: 1.1.0
