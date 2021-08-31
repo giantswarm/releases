@@ -17,9 +17,9 @@ spec:
     version: 2.4.1
   - name: chart-operator
     version: 2.19.0
-  - componentVersion: 0.7.6
+  - componentVersion: 0.9.0
     name: external-dns
-    version: 2.1.1
+    version: 2.6.0
   - componentVersion: 1.9.7
     name: kube-state-metrics
     version: 1.3.0
