@@ -57,15 +57,14 @@ spec:
     name: cluster-apps-operator
     releaseOperatorDeploy: true
     version: 0.5.0
-  - catalog: control-plane-test-catalog
+  - catalog: control-plane-catalog
     name: policies-common
     releaseOperatorDeploy: true
-    reference: 0.1.2-f07301352e69b8f6ef25847c24fe6ae56693876a
-    version: 0.1.2
-  - catalog: control-plane-test-catalog
+    version: 0.2.0
+  - catalog: control-plane-catalog
     name: policies-azure
     releaseOperatorDeploy: true
-    version: 0.0.11
+    version: 0.2.0
   - name: kubernetes
     version: 1.19.8
   - name: containerlinux
