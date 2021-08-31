@@ -73,7 +73,7 @@ spec:
   - catalog: control-plane-catalog
     name: cluster-apps-operator
     releaseOperatorDeploy: true
-    version: 0.4.0
+    version: 0.6.0
   - catalog: control-plane-catalog
     name: kubernetes
     version: 1.19.9
