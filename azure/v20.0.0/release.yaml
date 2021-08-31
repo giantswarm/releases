@@ -57,11 +57,11 @@ spec:
     name: cluster-apps-operator
     releaseOperatorDeploy: true
     version: 0.5.0
-  - catalog: control-plane-catalog
+  - catalog: control-plane-test-catalog
     name: policies-common
     releaseOperatorDeploy: true
     version: 0.2.0
-  - catalog: control-plane-catalog
+  - catalog: control-plane-test-catalog
     name: policies-azure
     releaseOperatorDeploy: true
     version: 0.2.0
