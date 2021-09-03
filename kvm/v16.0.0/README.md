@@ -31,3 +31,31 @@ _Nothing has changed._
 
 
 
+### containerlinux [2905.2.3](https://www.flatcar-linux.org/releases/#release-2905.2.3)
+
+New **Stable** release **2905.2.3**
+
+_Changes since **Stable 2905.2.2**_
+
+**Security fixes**
+
+
+
+* Linux ([CVE-2021-3653](https://nvd.nist.gov/vuln/detail/CVE-2021-3653), [CVE-2021-3656](https://nvd.nist.gov/vuln/detail/CVE-2021-3656), [CVE-2021-38166](https://nvd.nist.gov/vuln/detail/CVE-2021-38166)) 
+* openssl ([CVE-2021-3711](https://nvd.nist.gov/vuln/detail/CVE-2021-3711), [CVE-2021-3712](https://nvd.nist.gov/vuln/detail/CVE-2021-3712))
+
+**Bug Fixes**
+
+
+
+* Re-enabled kernel config FS_ENCRYPTION ([coreos-overlay#1212](https://github.com/kinvolk/coreos-overlay/pull/1212/))
+* Fixed Perl in dev-container ([coreos-overlay#1238](https://github.com/kinvolk/coreos-overlay/pull/1238))
+
+**Updates**
+
+
+
+* Linux ([5.10.61](https://lwn.net/Articles/867497/))
+* openssl ([1.1.1l](https://mta.openssl.org/pipermail/openssl-announce/2021-August/000206.html))
+
+

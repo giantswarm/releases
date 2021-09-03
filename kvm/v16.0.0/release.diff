@@ -38,7 +38,7 @@ spec:                                                              spec:
     releaseOperatorDeploy: true                                        releaseOperatorDeploy: true
     version: 0.27.2                                                    version: 0.27.2
   - name: containerlinux                                             - name: containerlinux
-    version: 2605.12.0                                                 version: 2605.12.0
+    version: 2605.12.0                                          |      version: 2905.2.3
   - name: etcd                                                       - name: etcd
     version: 3.4.16                                                    version: 3.4.16
   - name: flannel-operator                                           - name: flannel-operator
@@ -48,7 +48,7 @@ spec:                                                              spec:
   - name: kvm-operator                                               - name: kvm-operator
     releaseOperatorDeploy: true                                        releaseOperatorDeploy: true
     version: 3.18.0                                                    version: 3.18.0
-  date: "2021-09-01T12:00:00Z"                                  |    date: "2021-09-02T10:22:06Z"
+  date: "2021-09-01T12:00:00Z"                                  |    date: "2021-09-03T13:39:24Z"
   state: active                                                      state: active
 status:                                                            status:
   inUse: false                                                       inUse: false

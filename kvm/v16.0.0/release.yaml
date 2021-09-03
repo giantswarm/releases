@@ -1,5 +1,5 @@
 # Generated with:
-# devctl release create --name v16.0.0 --provider kvm --base 15.0.0 --component kubernetes@1.21.4 --overwrite
+# devctl release create --name v16.0.0 --provider kvm --base 15.0.0 --component kubernetes@1.21.4 --component containerlinux@2905.2.3 --overwrite
 apiVersion: release.giantswarm.io/v1alpha1
 kind: Release
 metadata:
@@ -37,7 +37,7 @@ spec:
     releaseOperatorDeploy: true
     version: 0.27.2
   - name: containerlinux
-    version: 2605.12.0
+    version: 2905.2.3
   - name: etcd
     version: 3.4.16
   - name: flannel-operator
@@ -47,7 +47,7 @@ spec:
   - name: kvm-operator
     releaseOperatorDeploy: true
     version: 3.18.0
-  date: "2021-09-02T10:22:06Z"
+  date: "2021-09-03T13:39:24Z"
   state: active
 status:
   inUse: false
