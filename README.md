@@ -286,3 +286,9 @@ to all Giant Swarm installations.
     - [v8.1.0](https://github.com/giantswarm/releases/tree/master/kvm/archived/v8.1.0)
   - v8.0
     - [v8.0.0](https://github.com/giantswarm/releases/tree/master/kvm/archived/v8.0.0)
+
+## VSphere
+
+- v0
+  - v0.1
+    - [v0.1.0](https://github.com/giantswarm/releases/tree/master/vsphere/v0.1.0)
