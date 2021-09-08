@@ -118,3 +118,28 @@ workflows:
             # Trigger the job on merge to master.
             branches:
               only: master
+      # VSphere
+      - architect/push-to-app-catalog:
+          name: push-releases-vsphere-to-releases-catalog
+          app_catalog: releases-catalog
+          app_catalog_test: releases-test-catalog
+          attach_workspace: true
+          chart: releases-vsphere
+          explicit_allow_chart_name_mismatch: true
+          on_tag: false
+          requires:
+            - build
+            - validate
+            - push-releases-azure-to-releases-catalog
+      - architect/push-to-app-collection:
+          name: push-releases-to-vsphere-app-collection
+          app_catalog: releases
+          app_name: releases-vsphere
+          app_collection_repo: vsphere-app-collection
+          requires:
+            - push-releases-vsphere-to-releases-catalog
+            - push-releases-to-azure-app-collection
+          filters:
+            # Trigger the job on merge to master.
+            branches:
+              only: master
