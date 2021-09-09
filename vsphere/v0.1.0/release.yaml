@@ -32,16 +32,11 @@ spec:
     reference: 0.0.0-0b9c3dfc2d22f7c512fde6f35dec068365dc6314 # https://github.com/giantswarm/cluster-api
     releaseOperatorDeploy: true
     version: 0.4.2
-  - name: cluster-api-provider-azure
+  - name: cluster-api-provider-vsphere
     catalog: control-plane-test-catalog
-    reference: 0.4.12-gsalpha3-93a1d79aad729599925e304d707497a9b721c0f8 # https://github.com/giantswarm/cluster-api-provider-azure-app/pull/22
+    reference: 0.0.0-de827239295e9fc4b93ac6d23b1400261bbd1fc6# https://github.com/giantswarm/cluster-api-provider-vsphere-app/pull/21
     releaseOperatorDeploy: true
-    version: 0.5.2
-  - name: capi-migration
-    catalog: control-plane-test-catalog
-    reference: 0.0.0-ed5a1ec2eabb528c515e623edecdfac64e78e4b0
-    releaseOperatorDeploy: true
-    version: 0.0.0
+    version: 0.8.1
   - catalog: control-plane-catalog
     name: cluster-apps-operator
     releaseOperatorDeploy: true
