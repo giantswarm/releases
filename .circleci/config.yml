@@ -26,7 +26,7 @@ jobs:
           name: Kustomize helm charts
           command: |
             export XDG_CONFIG_HOME=$(pwd)
-            for i in aws azure kvm; do mkdir -p helm/releases-$i/templates; kustomize build --enable_alpha_plugins ./$i > helm/releases-$i/templates/releases.yaml; done
+            for i in aws azure kvm vsphere; do mkdir -p helm/releases-$i/templates; kustomize build --enable_alpha_plugins ./$i > helm/releases-$i/templates/releases.yaml; done
       - persist_to_workspace:
           root: .
           paths:
