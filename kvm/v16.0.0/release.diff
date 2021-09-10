@@ -47,8 +47,8 @@ spec:                                                              spec:
     version: 1.20.10                                            |      version: 1.21.4
   - name: kvm-operator                                               - name: kvm-operator
     releaseOperatorDeploy: true                                        releaseOperatorDeploy: true
-    version: 3.18.0                                                    version: 3.18.0
-  date: "2021-09-01T12:00:00Z"                                  |    date: "2021-09-03T13:39:24Z"
+    version: 3.18.0                                             |      version: 3.18.1
+  date: "2021-09-01T12:00:00Z"                                  |    date: "2021-09-10T09:12:19Z"
   state: active                                                      state: active
 status:                                                            status:
   inUse: false                                                       inUse: false

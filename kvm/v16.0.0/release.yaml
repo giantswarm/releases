@@ -1,5 +1,5 @@
 # Generated with:
-# devctl release create --name v16.0.0 --provider kvm --base 15.0.0 --component kubernetes@1.21.4 --component containerlinux@2905.2.3 --overwrite
+# devctl release create --name v16.0.0 --provider kvm --base 15.0.0 --component kubernetes@1.21.4 --component containerlinux@2905.2.3 --component kvm-operator@3.18.1 --overwrite
 apiVersion: release.giantswarm.io/v1alpha1
 kind: Release
 metadata:
@@ -46,8 +46,8 @@ spec:
     version: 1.21.4
   - name: kvm-operator
     releaseOperatorDeploy: true
-    version: 3.18.0
-  date: "2021-09-03T13:39:24Z"
+    version: 3.18.1
+  date: "2021-09-10T09:12:19Z"
   state: active
 status:
   inUse: false

@@ -59,3 +59,8 @@ _Changes since **Stable 2905.2.2**_
 * openssl ([1.1.1l](https://mta.openssl.org/pipermail/openssl-announce/2021-August/000206.html))
 
 
+### kvm-operator [3.18.1](https://github.com/giantswarm/kvm-operator/releases/tag/v3.18.1)
+
+
+
+
