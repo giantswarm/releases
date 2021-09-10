@@ -1,0 +1,110 @@
+
+version: 2.1
+
+orbs:
+  architect: giantswarm/architect@4.2.0
+
+parameters:
+  push-aws:
+    type: boolean
+    default: false
+  push-azure:
+    type: boolean
+    default: false
+  push-kvm:
+    type: boolean
+    default: false
+  push-vsphere:
+    type: boolean
+    default: false
+
+workflows:
+  aws:
+    when: << pipeline.parameters.push-aws >>
+    jobs:
+      - architect/push-to-app-catalog:
+          name: push-releases-aws-to-releases-catalog
+          app_catalog: releases-catalog
+          app_catalog_test: releases-test-catalog
+          attach_workspace: true
+          chart: releases-aws
+          explicit_allow_chart_name_mismatch: true
+          on_tag: false
+      - architect/push-to-app-collection:
+          name: push-releases-to-aws-app-collection
+          app_catalog: releases
+          app_name: releases-aws
+          app_collection_repo: aws-app-collection
+          requires:
+            - push-releases-aws-to-releases-catalog
+          filters:
+            # Trigger the job on merge to master.
+            branches:
+              only: master
+  azure:
+    when: << pipeline.parameters.push-azure >>
+    jobs:
+      - architect/push-to-app-catalog:
+          name: push-releases-azure-to-releases-catalog
+          app_catalog: releases-catalog
+          app_catalog_test: releases-test-catalog
+          attach_workspace: true
+          chart: releases-azure
+          explicit_allow_chart_name_mismatch: true
+          on_tag: false
+      - architect/push-to-app-collection:
+          name: push-releases-to-azure-app-collection
+          app_catalog: releases
+          app_name: releases-azure
+          app_collection_repo: azure-app-collection
+          requires:
+            - push-releases-azure-to-releases-catalog
+          filters:
+            # Trigger the job on merge to master.
+            branches:
+              only: master
+  kvm:
+    when: << pipeline.parameters.push-kvm >>
+    jobs:
+      - architect/push-to-app-catalog:
+          name: push-releases-kvm-to-releases-catalog
+          app_catalog: releases-catalog
+          app_catalog_test: releases-test-catalog
+          attach_workspace: true
+          chart: releases-kvm
+          explicit_allow_chart_name_mismatch: true
+          on_tag: false
+      - architect/push-to-app-collection:
+          name: push-releases-to-kvm-app-collection
+          app_catalog: releases
+          app_name: releases-kvm
+          app_collection_repo: kvm-app-collection
+          requires:
+            - push-releases-kvm-to-releases-catalog
+          filters:
+            # Trigger the job on merge to master.
+            branches:
+              only: master
+
+  vsphere:
+    when: << pipeline.parameters.push-vsphere >>
+    jobs:
+      - architect/push-to-app-catalog:
+          name: push-releases-vsphere-to-releases-catalog
+          app_catalog: releases-catalog
+          app_catalog_test: releases-test-catalog
+          attach_workspace: true
+          chart: releases-vsphere
+          explicit_allow_chart_name_mismatch: true
+          on_tag: false
+      - architect/push-to-app-collection:
+          name: push-releases-to-vsphere-app-collection
+          app_catalog: releases
+          app_name: releases-vsphere
+          app_collection_repo: vsphere-app-collection
+          requires:
+            - push-releases-vsphere-to-releases-catalog
+          filters:
+            # Trigger the job on merge to master.
+            branches:
+              only: master
