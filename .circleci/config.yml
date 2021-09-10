@@ -46,7 +46,7 @@ workflows:
       - validate
       - build
       - path-filtering/filter:
-          name: check-updated-files
+          name: filter
           mapping: |
             aws/.* push-aws true
             azure/.* push-azure true
