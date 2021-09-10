@@ -1,6 +1,6 @@
 # :zap: Giant Swarm Release v16.0.0 for KVM :zap:
 
-<< Add description here >>
+This release upgrades Kubernetes to version 1.21 and containerlinux to 2905.2.3.
 
 ## Change details
 
