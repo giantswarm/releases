@@ -8,7 +8,7 @@ metadata:
 spec:
   apps:
   - name: cert-exporter
-    version: 1.7.1
+    version: 1.7.2
   - name: chart-operator
     version: 2.18.0
   - componentVersion: 1.8.0
