@@ -1,8 +1,10 @@
 
 version: 2.1
 
+setup: true
+
 orbs:
-  architect: giantswarm/architect@4.2.0
+  path-filtering: circleci/path-filtering@0.0.3
 
 jobs:
   build:
@@ -45,76 +47,14 @@ workflows:
     jobs:
       - validate
       - build
-      # KVM
-      - architect/push-to-app-catalog:
-          name: push-releases-kvm-to-releases-catalog
-          app_catalog: releases-catalog
-          app_catalog_test: releases-test-catalog
-          attach_workspace: true
-          chart: releases-kvm
-          explicit_allow_chart_name_mismatch: true
-          on_tag: false
+      - path-filtering/filter:
+          name: filter
+          mapping: |
+            aws/.* push-aws true
+            azure/.* push-azure true
+            kvm/.* push-kvm true
+          base-revision: master
+          config-path: .circleci/push_config.yml
           requires:
             - build
             - validate
-      - architect/push-to-app-collection:
-          name: push-releases-to-kvm-app-collection
-          app_catalog: releases
-          app_name: releases-kvm
-          app_collection_repo: kvm-app-collection
-          requires:
-            - push-releases-kvm-to-releases-catalog
-          filters:
-            # Trigger the job on merge to master.
-            branches:
-              only: master
-      # AWS
-      - architect/push-to-app-catalog:
-          name: push-releases-aws-to-releases-catalog
-          app_catalog: releases-catalog
-          app_catalog_test: releases-test-catalog
-          attach_workspace: true
-          chart: releases-aws
-          explicit_allow_chart_name_mismatch: true
-          on_tag: false
-          requires:
-            - build
-            - validate
-            - push-releases-kvm-to-releases-catalog
-      - architect/push-to-app-collection:
-          name: push-releases-to-aws-app-collection
-          app_catalog: releases
-          app_name: releases-aws
-          app_collection_repo: aws-app-collection
-          requires:
-            - push-releases-aws-to-releases-catalog
-            - push-releases-to-kvm-app-collection
-          filters:
-            # Trigger the job on merge to master.
-            branches:
-              only: master
-      # Azure
-      - architect/push-to-app-catalog:
-          name: push-releases-azure-to-releases-catalog
-          app_catalog: releases-catalog
-          app_catalog_test: releases-test-catalog
-          attach_workspace: true
-          chart: releases-azure
-          explicit_allow_chart_name_mismatch: true
-          on_tag: false
-          requires:
-            - build
-            - validate
-            - push-releases-aws-to-releases-catalog
-      - architect/push-to-app-collection:
-          name: push-releases-to-azure-app-collection
-          app_catalog: releases
-          app_name: releases-azure
-          app_collection_repo: azure-app-collection
-          requires:
-            - push-releases-azure-to-releases-catalog
-            - push-releases-to-aws-app-collection
-          filters:
-            # Trigger the job on merge to master.
-            branches:
-              only: master
