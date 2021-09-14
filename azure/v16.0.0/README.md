@@ -1,90 +1,189 @@
 # :zap: Giant Swarm Release v16.0.0 for Azure :zap:
 
-<< Add description here >>
+This is the first Giant Swarm Azure stable release featuring Kubernetes 1.21.
+
+In this release a few of the Azure resources related to the API server load balancer have been renamed to comply
+to Cluster API naming. If you have a feature that relies on the naming of Load Balancers, Health Probes, Backend Pools,
+or Load Balancing Rules please get in touch with your Solution Engineer. 
+
+With this release the deprecated Azure MSI extensions has been removed from node pools' VMs because it was unused.
+If you rely on the MSI extension being present for your workloads please talk with your Solution Engineer.
 
 ## Change details
 
 
-### azure-operator [5.8.2-dev](https://github.com/giantswarm/azure-operator/releases/tag/v5.8.2-dev)
+### azure-operator [5.9.0](https://github.com/giantswarm/azure-operator/releases/tag/v5.9.0)
 
-Not found
+### Changed
+
+- Use go embed in place of pkger.
+- Rename API backend pool to comply with CAPZ.
+- Rename API Load Balancing rule to comply with CAPZ.
+- Rename API health probe to comply with CAPZ.
+- Set `DisableOutputSnat` to true for API Load Balancer Load Balancing Rule to comply with CAPZ.
+- Bumped `k8scloudconfig` to support Kubernetes 1.21
+
+### Fixed
+
+- Ensure Spark CR release version label is updated when upgrading a cluster.
+
+### Removed
+
+- Remove MSI extension from node pools.
+- Remove VPN gateway cleanup code.
 
 
 ### kubernetes [1.21.4](https://github.com/kubernetes/kubernetes/releases/tag/v1.21.4)
 
-#### Feature
-- Kubernetes is now built with Golang 1.16.7 ([#104201](https://github.com/kubernetes/kubernetes/pull/104201), [@cpanato](https://github.com/cpanato)) [SIG Cloud Provider, Instrumentation, Release and Testing]
-#### Bug or Regression
-- Disable aufs module for gce clusters ([#103831](https://github.com/kubernetes/kubernetes/pull/103831), [@lizhuqi](https://github.com/lizhuqi)) [SIG Cloud Provider]
-- Fix kube-apiserver metric reporting for the deprecated watch path of /api/<version>/watch/... ([#104190](https://github.com/kubernetes/kubernetes/pull/104190), [@wojtek-t](https://github.com/wojtek-t)) [SIG API Machinery and Instrumentation]
-- Fix the code is leaking the defaulting between unrelated pod instances. ([#103284](https://github.com/kubernetes/kubernetes/pull/103284), [@kebe7jun](https://github.com/kebe7jun)) [SIG CLI]
-- Fix: Provide IPv6 support for internal load balancer ([#103794](https://github.com/kubernetes/kubernetes/pull/103794), [@nilo19](https://github.com/nilo19)) [SIG Cloud Provider]
-- Fix: cleanup outdated routes ([#102935](https://github.com/kubernetes/kubernetes/pull/102935), [@nilo19](https://github.com/nilo19)) [SIG Cloud Provider]
-- Fix: delete non existing disk issue ([#102083](https://github.com/kubernetes/kubernetes/pull/102083), [@andyzhangx](https://github.com/andyzhangx)) [SIG Cloud Provider]
-- Fix: ignore not a VMSS error for VMAS nodes in reconcileBackendPools ([#103997](https://github.com/kubernetes/kubernetes/pull/103997), [@nilo19](https://github.com/nilo19)) [SIG Cloud Provider]
-- Fix: return empty VMAS name if using standalone VM ([#103470](https://github.com/kubernetes/kubernetes/pull/103470), [@nilo19](https://github.com/nilo19)) [SIG Cloud Provider]
-- Fixed a bug that scheduler extenders are not called on preemptions ([#103019](https://github.com/kubernetes/kubernetes/pull/103019), [@ordovicia](https://github.com/ordovicia)) [SIG Scheduling]
-- Fixes an issue cleaning up CertificateSigningRequest objects with an unparseable `status.certificate` field ([#103948](https://github.com/kubernetes/kubernetes/pull/103948), [@liggitt](https://github.com/liggitt)) [SIG Apps and Auth]
-- Fixes issue with websocket-based watches of Service objects not closing correctly on timeout ([#102541](https://github.com/kubernetes/kubernetes/pull/102541), [@liggitt](https://github.com/liggitt)) [SIG API Machinery and Testing]
-#### Dependencies
-#### Added
-_Nothing has changed._
-#### Changed
-- sigs.k8s.io/apiserver-network-proxy/konnectivity-client: v0.0.19 → v0.0.22
-#### Removed
-_Nothing has changed._
+Updated from 1.20.8.
+
+Please be aware this is a major release of Kubernetes that brings deprecations and dropped APIs.
+Please read the [official changelog](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.21.md#whats-new-major-themes) 
+before upgrading to ensure your workloads are not affected.
+
+Detailed changes since previous release:
+
+- Changes in Kubernetes [v1.20.9](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.20.md#changelog-since-v1208)
+- Changes in Kubernetes [v1.20.10](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.20.md#changelog-since-v1209)
+- Changes in Kubernetes [v1.21.0](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.21.md#changelog-since-v1200)
+- Changes in Kubernetes [v1.21.1](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.21.md#changelog-since-v1210)
+- Changes in Kubernetes [v1.21.2](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.21.md#changelog-since-v1211)
+- Changes in Kubernetes [v1.21.3](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.21.md#changelog-since-v1212)
+- Changes in Kubernetes [v1.21.4](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.21.md#changelog-since-v1213)
 
 
+### containerlinux [2905.2.3](https://www.flatcar-linux.org/releases/#release-2905.2.3)
 
-### containerlinux [2905.2.2](https://www.flatcar-linux.org/releases/#release-2905.2.2)
+Updated from 2765.2.6.
 
-_Changes since **Stable**_ **2905.2.1**
+This release brings Linux Kernel version 5.10.61, Docker 19.03.15 and openssl 1.1.1l as well as a number of security fixes.
 
-**Security fixes**
-
-
-
-* Linux ([CVE-2021-34556](https://nvd.nist.gov/vuln/detail/CVE-2021-34556), [CVE-2021-35477](https://nvd.nist.gov/vuln/detail/CVE-2021-35477), [CVE-2021-38205](https://nvd.nist.gov/vuln/detail/CVE-2021-38205))
-* Go ([CVE-2021-36221](https://nvd.nist.gov/vuln/detail/CVE-2021-36221))
-* Systemd ([CVE-2020-13529](https://nvd.nist.gov/vuln/detail/CVE-2020-13529), [CVE-2021-33910](https://nvd.nist.gov/vuln/detail/CVE-2021-33910))
-
-**Bug Fixes**
-
-
-
-* Fixed `pam.d` sssd LDAP auth with sudo ([coreos-overlay#1170](https://github.com/kinvolk/coreos-overlay/pull/1170))
-* Let network-cleanup.service finish before entering rootfs ([coreos-overlay#1182](https://github.com/kinvolk/coreos-overlay/pull/1182))
-
-**Changes**
-
-
-
-* Switched to zstd for the initramfs ([coreos-overlay#1136](https://github.com/kinvolk/coreos-overlay/pull/1136))
-* Embedded new subkey in flatcar-install ([coreos-overlay#1180](https://github.com/kinvolk/coreos-overlay/pull/1180))
-
-**Updates**
-
-
-
-* Linux ([5.10.59](https://lwn.net/Articles/866302/))
-* Systemd ([247.9](https://github.com/systemd/systemd-stable/releases/tag/v247.9))
-* Go ([1.16.7](https://golang.org/doc/devel/release#go1.16.minor))
-* portage-utils ([0.90](https://github.com/gentoo/portage-utils/releases/tag/v0.90))
+Please refer to [Flatcar's release notes](https://www.flatcar-linux.org/releases/#release-2905.2.3) for all details.
 
 
 ### cert-exporter [1.8.0](https://github.com/giantswarm/cert-exporter/releases/tag/v1.8.0)
 
-#### Added
+Updated from 1.7.1.
+
+### Added
+
 - Add new `cert_exporter_certificate_cr_not_after` metric. This metric exports the `status.notAfter` field of cert-manager `Certificate` CR.
-#### Changed
+
+### Changed
+
 - Remove static certificate source label from `cert_exporter_secret_not_after` (static value `secret`) and `cert_exporter_not_after` (static value `file`) metrics.
 
 
+### chart-operator [2.19.0](https://github.com/giantswarm/chart-operator/releases/tag/v2.19.0)
 
-### external-dns [2.5.0](https://github.com/giantswarm/external-dns-app/releases/tag/v2.5.0)
+Updated from 2.18.0.
 
-#### Changed
+### Removed
+
+- Remove `tillermigration` resource now Helm 3 migration is complete.
+
+### Changed
+
+- Increase memory limit for deploying large charts in workload clusters.
+
+
+### coredns [1.6.0](https://github.com/giantswarm/coredns-app/releases/tag/v1.6.0)
+
+Updated from 1.4.1.
+
+### Changed
+
+- Make `targetCPUUtilizationPercentage` in HPA configurable.
+- Update `coredns` to upstream version [1.8.3](https://coredns.io/2021/02/24/coredns-1.8.3-release/).
+- Increase maximum replica count to 50 when using horizontal pod autoscaling.
+
+
+### external-dns [2.6.0](https://github.com/giantswarm/external-dns-app/releases/tag/v2.6.0)
+
+Updated from 2.4.0.
+
+### Added
+
+- Add support for CAPZ clusters by detecting the Azure configuration file location.
+
+### Changed
+
 - Upgrade upstream external-dns from v0.8.0 to [v0.9.0](https://github.com/kubernetes-sigs/external-dns/releases/tag/v0.9.0). The new release brings a lot of smaller improvements and bug fixes.
 
 
+### kube-state-metrics [1.4.0](https://github.com/giantswarm/kube-state-metrics-app/releases/tag/v1.4.0)
 
+Updated from 1.3.1.
+
+### Changed
+
+- Migrate to configuration management.
+- Update `architect-orb` to v4.0.0.
+
+
+### metrics-server [1.5.0](https://github.com/giantswarm/metrics-server-app/releases/tag/v1.5.0)
+
+Updated from 1.3.0.
+
+### Changed
+
+- Bumped API version for RoleBinding to v1 as it was using a deprecated version (removed in 1.22).
+
+
+### cluster-autoscaler [1.21.0-gs1](https://github.com/giantswarm/cluster-autoscaler-app/releases/tag/v1.21.0-gs1) 
+
+Updated from 1.20.3.
+
+### Changed
+
+- Updated cluster-autoscaler to version `1.21.0`.
+- Use new node selector `node-role.kubernetes.io/master` in place of deprecated one `kubernetes.io/role`.
+- Prepare helm values to configuration management.
+- Update architect-orb to v4.0.0.
+- Add `VerticalPodAutoscaler` resource to adjust limits automatically.
+
+
+### app-operator [5.2.0](https://github.com/giantswarm/app-operator/releases/tag/v5.2.0)
+
+Updated from 4.4.0.
+
+### Changed
+
+- Reject App CRs with version labels with the legacy `1.0.0` value.
+- Validate `.spec.catalog` using Catalog CRs instead of AppCatalog CRs.
+- Create `AppCatalogEntry` CRs into the same namespace of Catalog CR.
+- Include `chart.keywords`, `chart.description` and `chart.upstreamChartVersion` in `AppCatalogEntry` CRs.
+- Create `AppCatalog` CRs from `Catalog` CRs for compatibility with existing app-operator releases.
+- Prepare helm values to configuration management.
+- Use `Catalog` CRs in `App` controller.
+- Reconcile to `Catalog` CRs instead of `AppCatalog`.
+- Get `Chart` CRD from the GitHub resources.
+- Get metadata constants from k8smetadata library not apiextensions.
+
+### Fixed
+
+- Fix creating `AppCatalog` CRs in appcatalogsync resource.
+- For the chart CR watcher get the kubeconfig secret from the chart-operator app
+  CR to avoid hardcoding it.
+- Quote namespace in helm templates to handle numeric workload cluster IDs.
+
+
+### cluster-operator [0.27.2](https://github.com/giantswarm/cluster-operator/releases/tag/v0.27.2)
+
+Updated from 0.27.1.
+
+### Changed
+
+- Use `app-operator-konfigure` configmap for the app-operator per workload cluster.
+
+### Fixed
+
+- Fixed default value for calico subnet.
+
+
+### etcd [3.4.16](https://github.com/etcd-io/etcd/releases/tag/v3.4.16)
+
+Updated from 3.14.4.
+
+- Changelog in etcd [v3.14.15](https://github.com/etcd-io/etcd/blob/main/CHANGELOG-3.4.md#v3415-2021-02-26).
+- Changelog in etcd [v3.14.16](https://github.com/etcd-io/etcd/blob/main/CHANGELOG-3.4.md#v3416-2021-05-11).
