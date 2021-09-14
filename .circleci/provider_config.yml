@@ -52,6 +52,7 @@ workflows:
     when: << pipeline.parameters.push-aws >>
     jobs:
       - render:
+          name: render-aws
           provider: aws
       - architect/push-to-app-catalog:
           name: push-releases-aws-to-releases-catalog
@@ -62,7 +63,7 @@ workflows:
           explicit_allow_chart_name_mismatch: true
           on_tag: false
           requires:
-            - render
+            - render-aws
       - architect/push-to-app-collection:
           name: push-releases-to-aws-app-collection
           app_catalog: releases
@@ -78,6 +79,7 @@ workflows:
     when: << pipeline.parameters.push-azure >>
     jobs:
       - render:
+          name: render-azure
           provider: azure
       - architect/push-to-app-catalog:
           name: push-releases-azure-to-releases-catalog
@@ -88,7 +90,7 @@ workflows:
           explicit_allow_chart_name_mismatch: true
           on_tag: false
           requires:
-            - render
+            - render-azure
       - architect/push-to-app-collection:
           name: push-releases-to-azure-app-collection
           app_catalog: releases
@@ -104,6 +106,7 @@ workflows:
     when: << pipeline.parameters.push-kvm >>
     jobs:
       - render:
+          name: render-kvm
           provider: kvm
       - architect/push-to-app-catalog:
           name: push-releases-kvm-to-releases-catalog
@@ -114,7 +117,7 @@ workflows:
           explicit_allow_chart_name_mismatch: true
           on_tag: false
           requires:
-            - render
+            - render-kvm
       - architect/push-to-app-collection:
           name: push-releases-to-kvm-app-collection
           app_catalog: releases
