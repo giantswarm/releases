@@ -46,9 +46,8 @@ spec:
     version: 5.2.0
   - catalog: control-plane-catalog
     name: capa-aws-cni-operator
-    reference: 0.1.0
     releaseOperatorDeploy: true
-    version: 0.2.0
+    version: 0.1.0
   - catalog: control-plane-catalog
     name: capa-iam-controller
     reference: 0.2.0
