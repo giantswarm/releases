@@ -236,14 +236,14 @@ to all Giant Swarm installations.
 - v14
   - v14.1
     - [v14.1.2](https://github.com/giantswarm/releases/tree/master/kvm/v14.1.2)
-    - [v14.1.1](https://github.com/giantswarm/releases/tree/master/kvm/v14.1.1)
+    - [v14.1.1](https://github.com/giantswarm/releases/tree/master/kvm/archived/v14.1.1)
     - [v14.1.0](https://github.com/giantswarm/releases/tree/master/kvm/v14.1.0)
   - v14.0
     - [v14.0.0](https://github.com/giantswarm/releases/tree/master/kvm/v14.0.0)
 
 - v13
   - v13.1
-    - [v13.1.0](https://github.com/giantswarm/releases/tree/master/kvm/v13.1.0)
+    - [v13.1.0](https://github.com/giantswarm/releases/tree/master/kvm/archived/v13.1.0)
   - v13.0
     - [v13.0.1](https://github.com/giantswarm/releases/tree/master/kvm/archived/v13.0.1)
     - [v13.0.0](https://github.com/giantswarm/releases/tree/master/kvm/archived/v13.0.0)
