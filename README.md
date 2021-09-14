@@ -225,6 +225,10 @@ to all Giant Swarm installations.
 
 ## KVM
 
+- v16
+  - v16.0
+    - [v16.0.0](https://github.com/giantswarm/releases/tree/master/kvm/v16.0.0)
+
 - v15
   - v15.0
     - [v15.0.0](https://github.com/giantswarm/releases/tree/master/kvm/v15.0.0)
