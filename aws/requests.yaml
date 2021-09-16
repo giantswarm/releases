@@ -4,7 +4,7 @@ releases:
         - name: external-dns
           version: ">= 2.5.0"
         - name: cert-manager
-          version: ">= 2.9.0"
+          version: ">= 2.10.0"
         - name: cert-exporter
           version: ">= 1.8.0"
     - name: ">= 15.0.0"
