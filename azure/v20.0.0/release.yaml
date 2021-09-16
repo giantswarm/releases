@@ -52,11 +52,6 @@ spec:
     reference: 0.4.12-gsalpha3-93a1d79aad729599925e304d707497a9b721c0f8 # https://github.com/giantswarm/cluster-api-provider-azure-app/pull/22
     releaseOperatorDeploy: true
     version: 0.5.2
-  - name: capi-migration
-    catalog: control-plane-test-catalog
-    reference: 0.0.0-ed5a1ec2eabb528c515e623edecdfac64e78e4b0
-    releaseOperatorDeploy: true
-    version: 0.0.0
   - catalog: control-plane-catalog
     name: cluster-apps-operator
     releaseOperatorDeploy: true
