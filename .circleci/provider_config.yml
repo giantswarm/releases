@@ -1,0 +1,131 @@
+
+version: 2.1
+
+orbs:
+  architect: giantswarm/architect@4.3.0
+
+parameters:
+  push-aws:
+    type: boolean
+    default: false
+  push-azure:
+    type: boolean
+    default: false
+  push-kvm:
+    type: boolean
+    default: false
+
+jobs:
+  render:
+    docker:
+      - image: quay.io/giantswarm/architect
+    parameters:
+      provider:
+        type: string
+    steps:
+      - checkout
+      - run:
+          name: Install kustomize
+          command: |
+            CGO_ENABLED=0 go install sigs.k8s.io/kustomize/kustomize/v3
+      - run:
+          name: Install releaseNotesURLTransformer kustomize plugin
+          command: |
+            CGO_ENABLED=0 go get github.com/giantswarm/kustomize-plugin-releasenotesurlannotationtransformer@v0.2.0
+            mkdir -p "$PLUGIN_PATH"
+            cp /go/bin/kustomize-plugin-releasenotesurlannotationtransformer "$PLUGIN_PATH/releaseNotesURLAnnotationTransformer"
+          environment:
+            PLUGIN_PATH: "./kustomize/plugin/giantswarm.io/v1/releasenotesurlannotationtransformer"
+      - run:
+          name: Kustomize helm chart
+          command: |
+            export XDG_CONFIG_HOME=$(pwd)
+            mkdir -p helm/releases-<<parameters.provider>>/templates
+            kustomize build --enable_alpha_plugins ./<<parameters.provider>> > helm/releases-<<parameters.provider>>/templates/releases.yaml
+      - persist_to_workspace:
+          root: .
+          paths:
+            - helm
+
+workflows:
+  aws:
+    when: << pipeline.parameters.push-aws >>
+    jobs:
+      - render:
+          name: render-aws
+          provider: aws
+      - architect/push-to-app-catalog:
+          name: push-releases-aws-to-releases-catalog
+          app_catalog: releases-catalog
+          app_catalog_test: releases-test-catalog
+          attach_workspace: true
+          chart: releases-aws
+          explicit_allow_chart_name_mismatch: true
+          on_tag: false
+          requires:
+            - render-aws
+      - architect/push-to-app-collection:
+          name: push-releases-to-aws-app-collection
+          app_catalog: releases
+          app_name: releases-aws
+          app_collection_repo: aws-app-collection
+          requires:
+            - push-releases-aws-to-releases-catalog
+          filters:
+            # Trigger the job on merge to master.
+            branches:
+              only: master
+  azure:
+    when: << pipeline.parameters.push-azure >>
+    jobs:
+      - render:
+          name: render-azure
+          provider: azure
+      - architect/push-to-app-catalog:
+          name: push-releases-azure-to-releases-catalog
+          app_catalog: releases-catalog
+          app_catalog_test: releases-test-catalog
+          attach_workspace: true
+          chart: releases-azure
+          explicit_allow_chart_name_mismatch: true
+          on_tag: false
+          requires:
+            - render-azure
+      - architect/push-to-app-collection:
+          name: push-releases-to-azure-app-collection
+          app_catalog: releases
+          app_name: releases-azure
+          app_collection_repo: azure-app-collection
+          requires:
+            - push-releases-azure-to-releases-catalog
+          filters:
+            # Trigger the job on merge to master.
+            branches:
+              only: master
+  kvm:
+    when: << pipeline.parameters.push-kvm >>
+    jobs:
+      - render:
+          name: render-kvm
+          provider: kvm
+      - architect/push-to-app-catalog:
+          name: push-releases-kvm-to-releases-catalog
+          app_catalog: releases-catalog
+          app_catalog_test: releases-test-catalog
+          attach_workspace: true
+          chart: releases-kvm
+          explicit_allow_chart_name_mismatch: true
+          on_tag: false
+          requires:
+            - render-kvm
+      - architect/push-to-app-collection:
+          name: push-releases-to-kvm-app-collection
+          app_catalog: releases
+          app_name: releases-kvm
+          app_collection_repo: kvm-app-collection
+          requires:
+            - push-releases-kvm-to-releases-catalog
+          filters:
+            # Trigger the job on merge to master.
+            branches:
+              only: master
