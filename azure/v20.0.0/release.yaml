@@ -55,7 +55,7 @@ spec:
   - catalog: control-plane-catalog
     name: cluster-apps-operator
     releaseOperatorDeploy: true
-    version: 0.5.0
+    version: 0.6.1
   - catalog: control-plane-test-catalog
     name: policies-common
     releaseOperatorDeploy: true
