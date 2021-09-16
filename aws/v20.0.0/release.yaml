@@ -5,8 +5,11 @@ metadata:
   name: v20.0.0
 spec:
   apps:
-  - name: calico
-    version: 0.2.0
+  - name: aws-cni
+    version: 0.1.0
+    componentVersion: 1.8.0
+  - name: calico-policy-only
+    version: 0.3.0
     componentVersion: 3.18.0
   - name: cert-exporter
     version: 1.6.1
@@ -42,6 +45,10 @@ spec:
     releaseOperatorDeploy: false
     version: 5.2.0
   - catalog: control-plane-catalog
+    name: capa-aws-cni-operator
+    releaseOperatorDeploy: true
+    version: 0.1.0
+  - catalog: control-plane-catalog
     name: capa-iam-controller
     reference: 0.2.0
     releaseOperatorDeploy: true
@@ -65,11 +72,11 @@ spec:
   - catalog: control-plane-test-catalog
     name: policies-common
     releaseOperatorDeploy: true
-    version: 0.1.1
+    version: 0.5.0
   - catalog: control-plane-test-catalog
     name: policies-aws
     releaseOperatorDeploy: true
-    version: 0.1.1
+    version: 0.5.0
   - catalog: control-plane-catalog
     name: cluster-apps-operator
     releaseOperatorDeploy: true
