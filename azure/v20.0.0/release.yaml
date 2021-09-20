@@ -49,7 +49,7 @@ spec:
     version: 0.4.2
   - name: cluster-api-provider-azure
     catalog: control-plane-test-catalog
-    reference: 0.4.12-gsalpha3-93a1d79aad729599925e304d707497a9b721c0f8 # https://github.com/giantswarm/cluster-api-provider-azure-app/pull/22
+    reference: 0.4.12-gsalpha3-e136959bde1f7cb76a7058b34a7c73c44a8578a8 # https://github.com/giantswarm/cluster-api-provider-azure-app/pull/22
     releaseOperatorDeploy: true
     version: 0.5.2
   - catalog: control-plane-catalog
@@ -73,7 +73,7 @@ spec:
   - name: etcd
     version: 3.4.14
   date: "2021-03-02T14:50:41Z"
-  state: deprecated
+  state: active
 status:
-  inUse: true
+  inUse: false
   ready: false
