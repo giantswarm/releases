@@ -11,7 +11,7 @@ spec:
     name: calico-policy-only
     version: 0.2.0
   - name: cert-exporter
-    version: 1.6.0
+    version: 1.8.0
   - componentVersion: 1.1.0
     name: cert-manager
     version: 2.4.1
@@ -26,14 +26,14 @@ spec:
   - name: metrics-server
     version: 1.5.0
   - name: net-exporter
-    version: 1.9.2
+    version: 1.10.1
   - componentVersion: 1.0.1
     name: node-exporter
     version: 1.7.1
   - name: cluster-autoscaler
     version: 1.23.0
   - name: azure-scheduled-events
-    version: 0.2.2
+    version: 0.4.0
   components:
   - name: app-operator
     releaseOperatorDeploy: false
