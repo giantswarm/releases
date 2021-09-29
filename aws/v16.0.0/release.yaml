@@ -44,6 +44,7 @@ spec:
   components:
   - name: app-operator
     version: 5.2.0
+    releaseOperatorDeploy: false
   - name: aws-cni
     version: 1.9.0
   - name: aws-operator
