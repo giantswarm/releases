@@ -135,7 +135,7 @@ _Changes since **Stable 2905.2.2**_
 
 
 
-### cluster-autoscaler [1.21.0-gs1](https://github.com/giantswarm/cluster-autoscaler-app/releases/tag/v1.21.0-gs1)
+### cluster-autoscaler [1.21.0-gs2](https://github.com/giantswarm/cluster-autoscaler-app/releases/tag/v1.21.0-gs2)
 
 Not found
 

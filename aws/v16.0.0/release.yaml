@@ -1,5 +1,5 @@
 # Generated with:
-# devctl release create --name 16.0.0 --provider aws --base=15.2.1 --component aws-operator@10.9.0 --app external-dns@2.5.0@0.9.0 --overwrite --component containerlinux@2905.2.3 --component kubernetes@1.21.5 --app cert-exporter@1.8.0 --app cert-manager@2.10.0@1.5.3 --app chart-operator@2.19.0 --app cluster-autoscaler@1.21.0-gs1 --app external-dns@2.6.0@0.9.0 --app kube-state-metrics@1.4.0@1.9.7 --app metrics-server@1.5.0@0.4.1 --app net-exporter@1.10.3 --app node-exporter@1.8.0@1.0.1 --component app-operator@5.2.0 --component aws-cni@1.9.0 --component cluster-operator@3.10.0
+# devctl release create --name 16.0.0 --provider aws --base=15.2.1 --component aws-operator@10.9.0 --app external-dns@2.5.0@0.9.0 --overwrite --component containerlinux@2905.2.3 --component kubernetes@1.21.5 --app cert-exporter@1.8.0 --app cert-manager@2.10.0@1.5.3 --app chart-operator@2.19.0 --app cluster-autoscaler@1.21.0-gs2 --app external-dns@2.6.0@0.9.0 --app kube-state-metrics@1.4.0@1.9.7 --app metrics-server@1.5.0@0.4.1 --app net-exporter@1.10.3 --app node-exporter@1.8.0@1.0.1 --component app-operator@5.2.0 --component aws-cni@1.9.0 --component cluster-operator@3.10.0
 apiVersion: release.giantswarm.io/v1alpha1
 kind: Release
 metadata:
@@ -20,7 +20,7 @@ spec:
   - name: chart-operator
     version: 2.19.0
   - name: cluster-autoscaler
-    version: 1.21.0-gs1
+    version: 1.21.0-gs2
   - componentVersion: 1.8.3
     name: coredns
     version: 1.6.0
@@ -63,7 +63,7 @@ spec:
     version: 3.4.16
   - name: kubernetes
     version: 1.21.5
-  date: "2021-09-28T12:26:28Z"
+  date: "2021-09-29T07:23:19Z"
   state: active
 status:
   inUse: false
