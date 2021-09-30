@@ -1,0 +1,1 @@
+**Workload cluster release v15.1.0 for KVM** is now available.

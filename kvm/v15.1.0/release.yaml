@@ -2,7 +2,7 @@ apiVersion: release.giantswarm.io/v1alpha1
 kind: Release
 metadata:
   creationTimestamp: null
-  name: v15.0.0
+  name: v15.1.0
 spec:
   apps:
   - name: cert-exporter
@@ -17,7 +17,7 @@ spec:
     version: 1.4.0
   - componentVersion: 0.4.1
     name: metrics-server
-    version: 1.4.0
+    version: 1.5.0
   - name: net-exporter
     version: 1.10.3
   - componentVersion: 1.0.1
@@ -28,26 +28,26 @@ spec:
     releaseOperatorDeploy: false
     version: 5.2.0
   - name: calico
-    version: 3.19.2
+    version: 3.201
   - name: cert-operator
     releaseOperatorDeploy: true
-    version: 1.0.1
+    version: 1.1.0
   - name: cluster-operator
     releaseOperatorDeploy: true
     version: 0.27.2
   - name: containerlinux
-    version: 2605.12.0
+    version: 2905.2.5
   - name: etcd
-    version: 3.4.16
+    version: 3.5.0
   - name: flannel-operator
     version: 0.2.0
   - name: kubernetes
-    version: 1.20.10
+    version: 1.20.11
   - name: kvm-operator
     releaseOperatorDeploy: true
     version: 3.18.0
-  date: "2021-09-01T12:00:00Z"
-  state: deprecated
+  date: "2021-10-01T12:00:00Z"
+  state: active
 status:
   inUse: false
   ready: false

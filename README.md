@@ -230,6 +230,8 @@ to all Giant Swarm installations.
     - [v16.0.0](https://github.com/giantswarm/releases/tree/master/kvm/v16.0.0)
 
 - v15
+  - v15.1
+    - [v15.1.0](https://github.com/giantswarm/releases/tree/master/kvm/v15.1.0)
   - v15.0
     - [v15.0.0](https://github.com/giantswarm/releases/tree/master/kvm/v15.0.0)
 
