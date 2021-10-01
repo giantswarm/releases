@@ -14,7 +14,8 @@ spec:
     version: 2.2.1
   - name: cert-exporter
     version: 1.8.0
-  - name: cert-manager
+  - componentVersion: 1.5.3
+    name: cert-manager
     version: 2.10.0
   - name: chart-operator
     version: 2.18.0
@@ -23,7 +24,8 @@ spec:
   - componentVersion: 1.8.3
     name: coredns
     version: 1.6.0
-  - name: external-dns
+  - componentVersion: 0.9.0
+    name: external-dns
     version: 2.5.0
   - componentVersion: 4.1.0
     name: kiam
@@ -41,6 +43,7 @@ spec:
     version: 1.7.2
   components:
   - name: app-operator
+    releaseOperatorDeploy: false
     version: 5.1.0
   - name: aws-cni
     version: 1.8.0
