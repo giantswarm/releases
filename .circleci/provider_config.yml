@@ -146,6 +146,8 @@ workflows:
           chart: releases-vsphere
           explicit_allow_chart_name_mismatch: true
           on_tag: false
+          requires:
+            - render-vsphere
       - architect/push-to-app-collection:
           name: push-releases-to-vsphere-app-collection
           app_catalog: releases
