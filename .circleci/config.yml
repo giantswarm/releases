@@ -7,32 +7,6 @@ orbs:
   path-filtering: circleci/path-filtering@0.0.3
 
 jobs:
-  build:
-    docker:
-      - image: quay.io/giantswarm/architect
-    steps:
-      - checkout
-      - run:
-          name: Install kustomize
-          command: |
-            CGO_ENABLED=0 go install sigs.k8s.io/kustomize/kustomize/v3
-      - run:
-          name: Install releaseNotesURLTransformer kustomize plugin
-          command: |
-            CGO_ENABLED=0 go get github.com/giantswarm/kustomize-plugin-releasenotesurlannotationtransformer@v0.2.0
-            mkdir -p "$PLUGIN_PATH"
-            cp /go/bin/kustomize-plugin-releasenotesurlannotationtransformer "$PLUGIN_PATH/releaseNotesURLAnnotationTransformer"
-          environment:
-            PLUGIN_PATH: "./kustomize/plugin/giantswarm.io/v1/releasenotesurlannotationtransformer"
-      - run:
-          name: Kustomize helm charts
-          command: |
-            export XDG_CONFIG_HOME=$(pwd)
-            for i in aws azure kvm vsphere; do mkdir -p helm/releases-$i/templates; kustomize build --enable_alpha_plugins ./$i > helm/releases-$i/templates/releases.yaml; done
-      - persist_to_workspace:
-          root: .
-          paths:
-            - helm
   validate:
     docker:
       - image: quay.io/giantswarm/architect
@@ -46,7 +20,6 @@ workflows:
   workflow:
     jobs:
       - validate
-      - build
       - path-filtering/filter:
           name: filter
           mapping: |
@@ -55,7 +28,6 @@ workflows:
             kvm/.* push-kvm true
             vsphere/.* push-vsphere true
           base-revision: master
-          config-path: .circleci/push_config.yml
+          config-path: .circleci/provider_config.yml
           requires:
-            - build
             - validate
