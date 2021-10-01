@@ -1,3 +1,5 @@
+# Generated with:
+# devctl release create --name v15.1.0 --provider kvm --base 15.0.0 --component calico@3.20.1 --component etcd@3.5.0 --overwrite
 apiVersion: release.giantswarm.io/v1alpha1
 kind: Release
 metadata:
@@ -17,7 +19,7 @@ spec:
     version: 1.4.0
   - componentVersion: 0.4.1
     name: metrics-server
-    version: 1.5.0
+    version: 1.4.0
   - name: net-exporter
     version: 1.10.3
   - componentVersion: 1.0.1
@@ -31,22 +33,24 @@ spec:
     version: 3.20.1
   - name: cert-operator
     releaseOperatorDeploy: true
-    version: 1.1.0
+    version: 1.0.1
   - name: cluster-operator
     releaseOperatorDeploy: true
     version: 0.27.2
   - name: containerlinux
-    version: 2905.2.5
+    version: 2605.12.0
   - name: etcd
     version: 3.5.0
   - name: flannel-operator
     version: 0.2.0
   - name: kubernetes
-    version: 1.20.11
-  - name: kvm-operator
+    version: 1.20.10
+  - catalog: control-plane-test-catalog
+    name: kvm-operator
+    reference: 3.18.1-7ef343a7302a56d720af2e7fa7574f4847cc134f
     releaseOperatorDeploy: true
     version: 3.18.0
-  date: "2021-10-01T12:00:00Z"
+  date: "2021-10-01T08:37:52Z"
   state: active
 status:
   inUse: false
