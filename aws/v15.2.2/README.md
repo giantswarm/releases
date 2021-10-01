@@ -8,8 +8,6 @@ This release provides a security fix for [CVE-2021-25741](https://nvd.nist.gov/v
 ### kubernetes [1.20.11](https://github.com/kubernetes/kubernetes/releases/tag/v1.20.11)
 
 #### Bug or Regression
-- Fix: skip case sensitivity when checking Azure NSG rules
-  fix: ensure InstanceShutdownByProviderID return false for creating Azure VMs ([#104448](https://github.com/kubernetes/kubernetes/pull/104448), [@feiskyer](https://github.com/feiskyer)) [SIG Cloud Provider]
 - Kube-proxy: delete stale conntrack UDP entries for loadbalancer ingress IP. ([#104152](https://github.com/kubernetes/kubernetes/pull/104152), [@aojea](https://github.com/aojea)) [SIG Network]
 - Metrics changes: Fix exposed buckets of `scheduler_volume_scheduling_duration_seconds_bucket` metric ([#100720](https://github.com/kubernetes/kubernetes/pull/100720), [@dntosas](https://github.com/dntosas)) [SIG Apps, Instrumentation, Scheduling and Storage]
 - Pass additional flags to subpath mount to avoid flakes in certain conditions ([#104348](https://github.com/kubernetes/kubernetes/pull/104348), [@mauriciopoppe](https://github.com/mauriciopoppe)) [SIG Storage]
@@ -23,6 +21,3 @@ _Nothing has changed._
 _Nothing has changed._
 #### Removed
 _Nothing has changed._
-
-
-
