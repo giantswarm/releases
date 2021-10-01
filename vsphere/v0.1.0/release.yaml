@@ -28,13 +28,12 @@ spec:
     releaseOperatorDeploy: false
     version: 5.2.0
   - name: cluster-api
-    catalog: control-plane-test-catalog
-    reference: 0.0.0-0b9c3dfc2d22f7c512fde6f35dec068365dc6314 # https://github.com/giantswarm/cluster-api
+    catalog: control-plane-catalog
     releaseOperatorDeploy: true
-    version: 0.4.2
+    version: 0.4.1
   - name: cluster-api-provider-vsphere
     catalog: control-plane-test-catalog
-    reference: 0.0.0-5761ee2f0b4737d53ee910949cf296657633e1fa #https://github.com/giantswarm/cluster-api-provider-vsphere-app/pull/21
+    reference: 0.0.0-fcf2c95e2d76bd953e6ce42123f47ab82c90afb1 #https://github.com/giantswarm/cluster-api-provider-vsphere-app/pull/21
     releaseOperatorDeploy: true
     version: 0.8.1
   - catalog: control-plane-test-catalog
