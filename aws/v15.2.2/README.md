@@ -1,6 +1,6 @@
 # :zap: Giant Swarm Release v15.2.2 for AWS :zap:
 
-<< Add description here >>
+This release provides a security fix for [CVE-2021-25741](https://nvd.nist.gov/vuln/detail/CVE-2021-25741).
 
 ## Change details
 
