@@ -135,6 +135,9 @@ workflows:
   vsphere:
     when: << pipeline.parameters.push-vsphere >>
     jobs:
+      - render:
+          name: render-vsphere
+          provider: vsphere
       - architect/push-to-app-catalog:
           name: push-releases-vsphere-to-releases-catalog
           app_catalog: releases-catalog
