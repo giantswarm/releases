@@ -7,7 +7,18 @@
 
 ### aws-operator [10.9.1](https://github.com/giantswarm/aws-operator/releases/tag/v10.9.1)
 
-Not found
+#### Added
+- Add cloud tags propagation to S3 buckets.
+- Add provider tags to the AWS CNI ENIs.
+- Add configuration for `systemd-networkd` to ignore network interfaces used for AWS CNI.
+- Add changes to run properly on Flatcar 2905 and newer.
+
+#### Changed
+-  Update `aws-attach-etcd-dep` image version to `0.2.0` to include bugfixes.
+- Upgrade `k8scloudconfig` which is required for k8s 1.21.
+- Introducing `v1alpha3` CR's.
+- Update Flatcar AMI's to the latest stable releases.
+
 
 
 ### containerlinux [2905.2.3](https://www.flatcar-linux.org/releases/#release-2905.2.3)
