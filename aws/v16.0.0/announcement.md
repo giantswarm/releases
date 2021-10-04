@@ -1,0 +1,1 @@
+**Workload cluster release v16.0.0 for AWS is available**. It provides support for Kubernetes 1.21. Further details can be found in the [release notes](https://docs.giantswarm.io/changes/workload-cluster-releases-aws/releases/aws-v16.0.0/).
