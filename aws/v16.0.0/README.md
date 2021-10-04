@@ -203,3 +203,10 @@ _Changes since **Stable 2905.2.2**_
 
 
 
+### aws-ebs-csi-driver [2.3.1](https://github.com/giantswarm/aws-ebs-csi-driver-app/releases/tag/v2.3.1)
+
+#### Fixed
+- Enable permissions for ebs volume resizing by default.
+
+#### Changed
+- Bump aws-ebs-csi-driver version to `v1.2.0`
