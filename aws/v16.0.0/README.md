@@ -134,6 +134,11 @@ _Changes since **Stable 2905.2.2**_
 - Upgrade to upstream `v1.5.4` ([#191](https://github.com/giantswarm/cert-manager-app/pull/191)).
 - Add metadata to enable metrics scraping ([#181](https://github.com/giantswarm/cert-manager-app/pull/181)).
 - Fix startubjob PSP ([#191](https://github.com/giantswarm/cert-manager-app/pull/191))
+- Upgrade to upstream `v1.5.3` ([#184](https://github.com/giantswarm/cert-manager-app/pull/184)). This is the first version compatible with Kubernetes 1.22.
+- Add metadata to enable metrics scraping ([#181](https://github.com/giantswarm/cert-manager-app/pull/181)).
+- Update to upstream `v1.4.2` ([#174](https://github.com/giantswarm/cert-manager-app/pull/174)). This deprecates `v1alpha2`, `v1alpha3` and `v1beta1` versions of `cert-manager.io` and `acme.cert-manager.io` CRDs. Further information can be found in the [upstream release notes](https://cert-manager.io/docs/release-notes/release-notes-1.4/) of cert-manager.
+- Increase resource requests for the ClusterIssuer and CRD installation Jobs ([#174](https://github.com/giantswarm/cert-manager-app/pull/174)) to prevent timeouts.
+
 
 
 ### chart-operator [2.19.0](https://github.com/giantswarm/chart-operator/releases/tag/v2.19.0)
