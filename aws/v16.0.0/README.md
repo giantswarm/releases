@@ -165,10 +165,10 @@ _Changes since **Stable 2905.2.2**_
 
 
 
-### external-dns [2.6.0](https://github.com/giantswarm/external-dns-app/releases/tag/v2.6.0)
+### external-dns [2.5.0](https://github.com/giantswarm/external-dns-app/releases/tag/v2.5.0)
 
-#### Added
-- Add support for CAPZ clusters by detecting the Azure configuration file location.
+### Changed
+- Upgrade upstream external-dns from v0.8.0 to [v0.9.0](https://github.com/kubernetes-sigs/external-dns/releases/tag/v0.9.0). The new release brings a lot of smaller improvements and bug fixes.
 
 
 
