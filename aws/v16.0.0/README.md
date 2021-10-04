@@ -88,6 +88,9 @@ _Changes since **Stable 2905.2.2**_
 - Reject App CRs with version labels with the legacy `1.0.0` value.
 - Validate `.spec.catalog` using Catalog CRs instead of AppCatalog CRs.
 
+#### Fixed
+- Fix creating `AppCatalog` CRs in appcatalogsync resource.
+
 
 
 ### aws-cni [1.9.0](https://github.com/aws/amazon-vpc-cni-k8s/releases/tag/v1.9.0)
