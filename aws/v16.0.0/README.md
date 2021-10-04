@@ -1,6 +1,20 @@
 # :zap: Giant Swarm Release v16.0.0 for AWS :zap:
 
-<< Add description here >>
+This release provides support for Kubernetes 1.21.
+
+**Highlights**
+- Kubernetes 1.21 support;
+- New clusters must be created in the organization's namespaces. Clusters which don't respect this rule will be rejected;
+- Tags on custom resources are propagated to S3 buckets and AWS CNI ENIs;
+- `aws-operator` and `cluster-operator` have support for Cluster API `v1alpha3` resources;
+- Security fixes:
+    * 7 Linux CVEs;
+    * 2 Systemd CVEs;
+    * 2 openssl CVEs;
+    * 1 Kubernetes CVE;
+    * 1 Go CVE.
+
+> **_Warning:_** Starting with this release new clusters have to be created in the organization's namespace. Any new cluster defined in a different namespace is going to be rejected. Automation that creates Cluster CRs directly needs to be updated to define these clusters in the organization's namespace.
 
 ## Change details
 
