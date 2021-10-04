@@ -14,7 +14,7 @@ This release provides support for Kubernetes 1.21.
     * 1 Kubernetes CVE;
     * 1 Go CVE.
 
-> **_Warning:_** Starting with this release new clusters have to be created in the organization's namespace. Any new cluster defined in a different namespace is going to be rejected. Automation that creates Cluster CRs directly needs to be updated to define these clusters in the organization's namespace.
+> **_Warning:_** Starting with this release new clusters have to be created in the organization's namespace. Any new cluster defined in a different namespace is going to be rejected. Automation that creates Cluster CRs directly needs to be updated to define these clusters in the organization's namespace. Existing clusters are not impacted by this change and will be migrated later.
 
 ## Change details
 
