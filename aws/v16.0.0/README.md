@@ -146,6 +146,9 @@ _Changes since **Stable 2905.2.2**_
 #### Removed
 - Remove `tillermigration` resource now Helm 3 migration is complete.
 
+#### Changed
+- Increase memory limit for deploying large charts in workload clusters.
+
 
 
 ### cluster-autoscaler [1.21.0-gs2](https://github.com/giantswarm/cluster-autoscaler-app/releases/tag/v1.21.0-gs2)
