@@ -153,7 +153,16 @@ _Changes since **Stable 2905.2.2**_
 
 ### cluster-autoscaler [1.21.0-gs2](https://github.com/giantswarm/cluster-autoscaler-app/releases/tag/v1.21.0-gs2)
 
-Not found
+#### Changed
+- Fix RBAC for cluster autoscaler 1.21.
+- Updated cluster-autoscaler to version `1.21.0`.
+- Use new node selector `node-role.kubernetes.io/master` in place of deprecated one `kubernetes.io/role`.
+- Prepare helm values to configuration management.
+- Update architect-orb to v4.0.0.
+
+#### Added
+- Add `VerticalPodAutoscaler` resource to adjust limits automatically.
+
 
 
 ### external-dns [2.6.0](https://github.com/giantswarm/external-dns-app/releases/tag/v2.6.0)
