@@ -114,12 +114,12 @@ _Changes since **Stable 2905.2.2**_
 
 
 
-### cert-manager [2.10.0](https://github.com/giantswarm/cert-manager-app/releases/tag/v2.10.0)
+### cert-manager [2.11.0](https://github.com/giantswarm/cert-manager-app/releases/tag/v2.11.0)
 
 #### Changed
-- Upgrade to upstream `v1.5.3` ([#184](https://github.com/giantswarm/cert-manager-app/pull/184)). This is the first version compatible with Kubernetes 1.22.
+- Upgrade to upstream `v1.5.4` ([#191](https://github.com/giantswarm/cert-manager-app/pull/191)).
 - Add metadata to enable metrics scraping ([#181](https://github.com/giantswarm/cert-manager-app/pull/181)).
-
+- Fix startubjob PSP ([#191](https://github.com/giantswarm/cert-manager-app/pull/191))
 
 
 ### chart-operator [2.19.0](https://github.com/giantswarm/chart-operator/releases/tag/v2.19.0)
