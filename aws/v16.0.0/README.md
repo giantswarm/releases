@@ -23,30 +23,53 @@
 
 ### containerlinux [2905.2.3](https://www.flatcar-linux.org/releases/#release-2905.2.3)
 
-New **Stable** release **2905.2.3**
-
-_Changes since **Stable 2905.2.2**_
-
 **Security fixes**
 
+* Linux
+    - [CVE-2021-3653](https://nvd.nist.gov/vuln/detail/CVE-2021-3653)
+    - [CVE-2021-3656](https://nvd.nist.gov/vuln/detail/CVE-2021-3656)
+    - [CVE-2021-38166](https://nvd.nist.gov/vuln/detail/CVE-2021-38166)
+    - [CVE-2021-34556](https://nvd.nist.gov/vuln/detail/CVE-2021-34556)
+    - [CVE-2021-35477](https://nvd.nist.gov/vuln/detail/CVE-2021-35477)
+    - [CVE-2021-38205](https://nvd.nist.gov/vuln/detail/CVE-2021-38205)
+    - [CVE-2021-37576](https://nvd.nist.gov/vuln/detail/CVE-2021-37576)
+* openssl
+    - [CVE-2021-3711](https://nvd.nist.gov/vuln/detail/CVE-2021-3711)
+    - [CVE-2021-3712](https://nvd.nist.gov/vuln/detail/CVE-2021-3712)
+* Go
+    - [CVE-2021-36221](https://nvd.nist.gov/vuln/detail/CVE-2021-36221)
+* Systemd
+    - [CVE-2020-13529](https://nvd.nist.gov/vuln/detail/CVE-2020-13529)
+    - [CVE-2021-33910](https://nvd.nist.gov/vuln/detail/CVE-2021-33910)
 
-
-* Linux ([CVE-2021-3653](https://nvd.nist.gov/vuln/detail/CVE-2021-3653), [CVE-2021-3656](https://nvd.nist.gov/vuln/detail/CVE-2021-3656), [CVE-2021-38166](https://nvd.nist.gov/vuln/detail/CVE-2021-38166)) 
-* openssl ([CVE-2021-3711](https://nvd.nist.gov/vuln/detail/CVE-2021-3711), [CVE-2021-3712](https://nvd.nist.gov/vuln/detail/CVE-2021-3712))
 
 **Bug Fixes**
 
-
-
 * Re-enabled kernel config FS_ENCRYPTION ([coreos-overlay#1212](https://github.com/kinvolk/coreos-overlay/pull/1212/))
 * Fixed Perl in dev-container ([coreos-overlay#1238](https://github.com/kinvolk/coreos-overlay/pull/1238))
+* Fixed pam.d sssd LDAP auth with sudo ([coreos-overlay#1170](https://github.com/kinvolk/coreos-overlay/pull/1170))
+* Let network-cleanup.service finish before entering rootfs ([coreos-overlay#1182](https://github.com/kinvolk/coreos-overlay/pull/1182))
+* Set the cilium_vxlan interface to be not managed by networkd’s default setup with DHCP as it’s managed by Cilium. ([init#43](https://github.com/kinvolk/init/pull/43))
+* Disabled SELinux by default on dockerd wrapper script ([coreos-overlay#1149](https://github.com/kinvolk/coreos-overlay/pull/1149))
+* GCE: Granted CAP_NET_ADMIN to set routes for the TCP LB when starting oem-gce.service ([coreos-overlay#1146](https://github.com/kinvolk/coreos-overlay/pull/1146))
+
+
+
+**Changes**
+
+* Switched to zstd for the initramfs ([coreos-overlay#1136](https://github.com/kinvolk/coreos-overlay/pull/1136))
+* Embedded new subkey in flatcar-install ([coreos-overlay#1180](https://github.com/kinvolk/coreos-overlay/pull/1180))
+
+
 
 **Updates**
 
-
-
 * Linux ([5.10.61](https://lwn.net/Articles/867497/))
 * openssl ([1.1.1l](https://mta.openssl.org/pipermail/openssl-announce/2021-August/000206.html))
+* Systemd ([247.9](https://github.com/systemd/systemd-stable/releases/tag/v247.9))
+* Go ([1.16.7](https://golang.org/doc/devel/release#go1.16.minor))
+* portage-utils ([0.90](https://github.com/gentoo/portage-utils/releases/tag/v0.90))
+
 
 
 ### kubernetes [1.21.5](https://github.com/kubernetes/kubernetes/releases/tag/v1.21.5)
