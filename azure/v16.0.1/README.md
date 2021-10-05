@@ -1,6 +1,6 @@
 # :zap: Giant Swarm Release v16.0.1 for Azure :zap:
 
-This Workload CLuster release upgrades kubernetes to 1.21.5 in order to fix [CVE-2021-25741](https://github.com/kubernetes/kubernetes/issues/104980) where Symlink Exchange Can Allow Host Filesystem Access.
+This Workload Cluster release upgrades Kubernetes to 1.21.5 in order to fix [CVE-2021-25741](https://github.com/kubernetes/kubernetes/issues/104980) where Symlink Exchange Can Allow Host Filesystem Access.
 
 ## Change details
 
