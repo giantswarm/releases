@@ -1,1 +1,1 @@
-**Workload cluster release v16.0.1 for Azure** is now available. This release upgrades kubernetes version to 1.21.5. Further details can be found in the [release notes](https://docs.giantswarm.io/changes/workload-cluster-releases-azure/releases/azure-v16.0.1/).
+**Workload cluster release v16.0.1 for Azure** is now available. This release upgrades Kubernetes version to 1.21.5. Further details can be found in the [release notes](https://docs.giantswarm.io/changes/workload-cluster-releases-azure/releases/azure-v16.0.1/).
