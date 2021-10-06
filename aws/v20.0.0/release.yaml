@@ -49,10 +49,10 @@ spec:
     releaseOperatorDeploy: true
     version: 0.1.1
   - catalog: control-plane-catalog
-    name: capa-iam-controller
-    reference: 0.2.0
+    name: capa-iam-operator
+    reference: 0.3.0
     releaseOperatorDeploy: true
-    version: 0.2.0
+    version: 0.3.0
   - catalog: control-plane-catalog
     name: cluster-api-bootstrap-provider-kubeadm
     releaseOperatorDeploy: true
