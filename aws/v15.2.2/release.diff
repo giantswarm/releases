@@ -1,0 +1,71 @@
+# Generated with:                                                  # Generated with:
+# devctl release create --name 15.2.1 --provider aws --base 15. |  # devctl release create --name v15.2.2 --provider aws --base 15
+apiVersion: release.giantswarm.io/v1alpha1                         apiVersion: release.giantswarm.io/v1alpha1
+kind: Release                                                      kind: Release
+metadata:                                                          metadata:
+  annotations:                                                       annotations:
+    giantswarm.io/docs: https://docs.giantswarm.io/reference/cp        giantswarm.io/docs: https://docs.giantswarm.io/reference/cp
+  creationTimestamp: null                                            creationTimestamp: null
+  name: v15.2.1                                                 |    name: v15.2.2
+spec:                                                              spec:
+  apps:                                                              apps:
+  - componentVersion: 1.1.1                                          - componentVersion: 1.1.1
+    name: aws-ebs-csi-driver                                           name: aws-ebs-csi-driver
+    version: 2.2.1                                                     version: 2.2.1
+  - name: cert-exporter                                              - name: cert-exporter
+    version: 1.7.1                                                     version: 1.7.1
+  - componentVersion: 1.3.1                                          - componentVersion: 1.3.1
+    name: cert-manager                                                 name: cert-manager
+    version: 2.8.0                                                     version: 2.8.0
+  - name: chart-operator                                             - name: chart-operator
+    version: 2.18.0                                                    version: 2.18.0
+  - name: cluster-autoscaler                                         - name: cluster-autoscaler
+    version: 1.20.3                                                    version: 1.20.3
+  - componentVersion: 1.8.3                                          - componentVersion: 1.8.3
+    name: coredns                                                      name: coredns
+    version: 1.6.0                                                     version: 1.6.0
+  - componentVersion: 0.8.0                                          - componentVersion: 0.8.0
+    name: external-dns                                                 name: external-dns
+    version: 2.4.0                                                     version: 2.4.0
+  - componentVersion: 4.1.0                                          - componentVersion: 4.1.0
+    name: kiam                                                         name: kiam
+    version: 2.0.0                                                     version: 2.0.0
+  - componentVersion: 1.9.7                                          - componentVersion: 1.9.7
+    name: kube-state-metrics                                           name: kube-state-metrics
+    version: 1.3.1                                                     version: 1.3.1
+  - componentVersion: 0.4.1                                          - componentVersion: 0.4.1
+    name: metrics-server                                               name: metrics-server
+    version: 1.3.0                                                     version: 1.3.0
+  - name: net-exporter                                               - name: net-exporter
+    version: 1.10.2                                                    version: 1.10.2
+  - componentVersion: 1.0.1                                          - componentVersion: 1.0.1
+    name: node-exporter                                                name: node-exporter
+    version: 1.7.2                                                     version: 1.7.2
+  components:                                                        components:
+  - name: app-operator                                               - name: app-operator
+    releaseOperatorDeploy: false                                       releaseOperatorDeploy: false 
+    version: 5.1.0                                                     version: 5.1.0
+  - name: aws-cni                                                    - name: aws-cni
+    version: 1.8.0                                                     version: 1.8.0
+  - name: aws-operator                                               - name: aws-operator
+    releaseOperatorDeploy: true                                        releaseOperatorDeploy: true
+    version: 10.7.1                                                    version: 10.7.1
+  - name: calico                                                     - name: calico
+    version: 3.15.5                                                    version: 3.15.5
+  - name: cert-operator                                              - name: cert-operator
+    releaseOperatorDeploy: true                                        releaseOperatorDeploy: true
+    version: 1.0.1                                                     version: 1.0.1
+  - name: cluster-operator                                           - name: cluster-operator
+    releaseOperatorDeploy: true                                        releaseOperatorDeploy: true
+    version: 3.9.0                                                     version: 3.9.0
+  - name: containerlinux                                             - name: containerlinux
+    version: 2765.2.6                                                  version: 2765.2.6
+  - name: etcd                                                       - name: etcd
+    version: 3.4.16                                                    version: 3.4.16
+  - name: kubernetes                                                 - name: kubernetes
+    version: 1.20.9                                             |      version: 1.20.11
+  date: "2021-08-26T10:00:00Z"                                  |    date: "2021-10-01T11:49:41Z"
+  state: active                                                      state: active
+status:                                                            status:
+  inUse: false                                                       inUse: false
+  ready: false                                                       ready: false

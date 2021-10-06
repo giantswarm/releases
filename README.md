@@ -13,8 +13,12 @@ to all Giant Swarm installations.
 - v20
   - v20.0
     - [v20.0.0](https://github.com/giantswarm/releases/tree/master/aws/v20.0.0)
+- v16
+  - v16.0
+    - [v16.0.0](https://github.com/giantswarm/releases/tree/master/aws/v16.0.0)
 - v15
   - v15.2
+    - [v15.2.2](https://github.com/giantswarm/releases/tree/master/aws/v15.2.2)
     - [v15.2.1](https://github.com/giantswarm/releases/tree/master/aws/v15.2.1)
     - [v15.2.0](https://github.com/giantswarm/releases/tree/master/aws/v15.2.0)
   - v15.1
@@ -31,7 +35,7 @@ to all Giant Swarm installations.
     - [v14.1.1](https://github.com/giantswarm/releases/tree/master/aws/v14.1.1)
     - [v14.1.0](https://github.com/giantswarm/releases/tree/master/aws/archived/v14.1.0)
   - v14.0
-    - [v14.0.0](https://github.com/giantswarm/releases/tree/master/aws/v14.0.0)
+    - [v14.0.0](https://github.com/giantswarm/releases/tree/master/aws/archived/v14.0.0)
 - v13
   - v13.2
     - [v13.2.0](https://github.com/giantswarm/releases/tree/master/aws/v13.2.0)
@@ -39,7 +43,7 @@ to all Giant Swarm installations.
     - [v13.1.1](https://github.com/giantswarm/releases/tree/master/aws/archived/v13.1.1)
     - [v13.1.0](https://github.com/giantswarm/releases/tree/master/aws/v13.1.0)
   - v13.0
-    - [v13.0.0](https://github.com/giantswarm/releases/tree/master/aws/v13.0.0)
+    - [v13.0.0](https://github.com/giantswarm/releases/tree/master/aws/archived/v13.0.0)
 - v12
   - v12.7
     - [v12.7.2](https://github.com/giantswarm/releases/tree/master/aws/archived/v12.7.2)
