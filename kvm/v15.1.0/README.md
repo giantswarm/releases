@@ -43,3 +43,10 @@ _Nothing has changed._
 
 
 
+### kvm-operator [3.18.2](https://github.com/giantswarm/kvm-operator/releases/tag/v3.18.2)
+
+#### Changed
+- Disable apiserver flow control to mitigate etcd memory usage issues temporarily.
+
+
+
