@@ -1,1 +1,0 @@
-**Workload cluster release v0.1.0 for VSphere** is now available.
