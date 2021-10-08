@@ -43,7 +43,7 @@ spec:
   - catalog: control-plane-catalog
     name: azure-ad-pod-identity-app
     releaseOperatorDeploy: true
-    version: 0.6.0
+    version: 0.7.0
   - name: cluster-api
     catalog: control-plane-catalog
     releaseOperatorDeploy: true
