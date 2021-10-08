@@ -297,6 +297,6 @@ to all Giant Swarm installations.
 
 ## VSphere
 
-- v0
-  - v0.1
-    - [v0.1.0](https://github.com/giantswarm/releases/tree/master/vsphere/v0.1.0)
+- v20
+  - v20.0
+    - [v20.0.0](https://github.com/giantswarm/releases/tree/master/vsphere/v20.0.0)
