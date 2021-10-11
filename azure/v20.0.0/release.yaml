@@ -64,6 +64,10 @@ spec:
     name: policies-azure
     releaseOperatorDeploy: true
     version: 0.6.0
+  - catalog: control-plane-test-catalog
+    name: dns-operator-azure
+    releaseOperatorDeploy: true
+    version: 0.4.0
   - name: kubernetes
     version: 1.19.8
   - name: containerlinux
