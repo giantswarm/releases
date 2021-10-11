@@ -11,6 +11,8 @@ spec:
   - name: calico-policy-only
     version: 0.3.0
     componentVersion: 3.18.0
+  - name: capi-node-labeler
+    version: 0.2.0
   - name: cert-exporter
     version: 1.6.1
   - componentVersion: 1.3.1
@@ -72,11 +74,11 @@ spec:
   - catalog: control-plane-test-catalog
     name: policies-common
     releaseOperatorDeploy: true
-    version: 0.6.1
+    version: 0.6.2
   - catalog: control-plane-test-catalog
     name: policies-aws
     releaseOperatorDeploy: true
-    version: 0.6.1
+    version: 0.6.2
   - catalog: control-plane-catalog
     name: cluster-apps-operator
     releaseOperatorDeploy: true
