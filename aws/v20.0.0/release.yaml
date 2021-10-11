@@ -65,10 +65,10 @@ spec:
     name: cluster-api-core
     releaseOperatorDeploy: true
     version: 0.3.22-gs4
-  - catalog: control-plane-test-catalog
+  - catalog: control-plane-catalog
     name: cluster-api-provider-aws
     releaseOperatorDeploy: true
-    version: 0.6.8-gs5
+    version: 0.6.8-gs8
   - catalog: control-plane-test-catalog
     name: policies-common
     releaseOperatorDeploy: true
