@@ -27,6 +27,7 @@ spec:
     version: 1.8.0
   components:
   - name: app-operator
+    releaseOperatorDeploy: false
     version: 5.2.0
   - name: calico
     version: 3.20.1
@@ -47,7 +48,7 @@ spec:
   - name: kvm-operator
     releaseOperatorDeploy: true
     version: 3.18.2
-  date: "2021-10-06T13:58:58Z"
+  date: "2021-10-13T08:39:05Z"
   state: active
 status:
   inUse: false
