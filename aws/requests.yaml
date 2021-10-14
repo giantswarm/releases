@@ -1,4 +1,8 @@
 releases:
+    - name: "> 16.0.0"
+      requests:
+        - name: aws-ebs-csi-driver
+          version: ">= 2.7.0"
     - name: "> 15.2.2"
       requests:
         - name: external-dns
