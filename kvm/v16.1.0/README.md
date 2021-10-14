@@ -40,12 +40,7 @@ This release includes changes in calico and etcd that should lead to better perf
 - Reduce around 30% memory allocation by logging range response size without marshal.
 
 
-### kvm-operator [3.18.2](https://github.com/giantswarm/kvm-operator/releases/tag/v3.18.2)
-
-#### Changed
-- Disable apiserver flow control to mitigate etcd memory usage issues temporarily.
-
-
+### kvm-operator [3.18.3](https://github.com/giantswarm/kvm-operator/releases/tag/v3.18.3)
 
 ### kubernetes [1.21.5](https://github.com/kubernetes/kubernetes/releases/tag/v1.21.5)
 
