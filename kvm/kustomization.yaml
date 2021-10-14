@@ -5,6 +5,7 @@ resources:
 - v14.1.0
 - v14.1.2
 - v15.0.0
+- v15.1.0
 - v16.0.0
 - v16.1.0
 transformers:
