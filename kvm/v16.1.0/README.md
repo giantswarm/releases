@@ -42,6 +42,8 @@ This release includes changes in calico and etcd that should lead to better perf
 
 ### kvm-operator [3.18.3](https://github.com/giantswarm/kvm-operator/releases/tag/v3.18.3)
 
+- Fix calico mount errors
+
 ### kubernetes [1.21.5](https://github.com/kubernetes/kubernetes/releases/tag/v1.21.5)
 
 #### Feature
