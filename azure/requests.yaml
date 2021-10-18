@@ -5,6 +5,8 @@ releases:
           version: ">= 2.5.0"
         - name: cert-exporter
           version: ">= 1.8.0"
+        - name: cert-operator
+          version: "< 1.2.0"
     - name: "> 15.0.1"
       requests:
         - name: external-dns

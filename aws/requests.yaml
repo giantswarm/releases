@@ -3,6 +3,8 @@ releases:
       requests:
         - name: aws-ebs-csi-driver
           version: ">= 2.7.0"
+        - name: cert-operator
+          version: ">= 1.2.0"
     - name: "> 15.2.2"
       requests:
         - name: external-dns
