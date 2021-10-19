@@ -2,7 +2,7 @@ releases:
     - name: "> 16.1.0"
       requests:
         - name: aws-ebs-csi-driver
-          version: ">= 2.7.0"
+          version: ">= 2.7.1"
     - name: "> 16.0.0"
       requests:
         - name: cert-operator
