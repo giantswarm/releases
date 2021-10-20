@@ -1,4 +1,8 @@
 releases:
+    - name: "> 15.1.2 > 16.0.1"
+      requests:
+        - name: cert-exporter
+          version: ">= 2.0.0"
     - name: "> 15.1.2"
       requests:
         - name: external-dns
