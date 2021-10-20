@@ -3,7 +3,6 @@ kind: Release
 metadata:
   annotations:
     "helm.sh/resource-policy": keep # TODO: Remove when this release is merged to master.
-    "release-operator.giantswarm.io/reconcile-deprecated": "true"
   creationTimestamp: null
   name: v20.0.0
 spec:
@@ -78,7 +77,7 @@ spec:
   - name: etcd
     version: 3.4.14
   date: "2021-03-02T14:50:41Z"
-  state: deprecated
+  state: wip
 status:
   inUse: false
   ready: false
