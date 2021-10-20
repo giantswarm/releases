@@ -1,5 +1,9 @@
 releases:
-    - name: "> 16.1.0"
+    - name: "> 15.2.2 > 16.0.2"
+      requests:
+        - name: cert-exporter
+          version: ">= 2.0.0"
+    - name: "> 16.0.1"
       requests:
         - name: aws-ebs-csi-driver
           version: ">= 2.7.1"
