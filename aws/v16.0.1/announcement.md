@@ -1,0 +1,1 @@
+**Workload cluster release v16.0.1 for AWS is available**. It provides a fix for cert-operator. Further details can be found in the [release notes](https://docs.giantswarm.io/changes/workload-cluster-releases-aws/releases/aws-v16.0.1/).
