@@ -1,10 +1,10 @@
 # Generated with:
-# /Users/tobiaszkukawka/go/bin/devctl release create --name 15.1.1 --provider azure --base 15.1.0 --component azure-operator@5.8.1
+# /Users/tobiaszkukawka/go/bin/devctl release create --name 15.1.2 --provider azure --base 15.1.1 --component kubernetes@1.20.11 --overwrite
 apiVersion: release.giantswarm.io/v1alpha1
 kind: Release
 metadata:
   creationTimestamp: null
-  name: v15.1.1
+  name: v15.1.2
 spec:
   apps:
   - name: cert-exporter
@@ -44,14 +44,14 @@ spec:
     releaseOperatorDeploy: true
     version: 0.27.1
   - name: kubernetes
-    version: 1.20.8
+    version: 1.20.11
   - name: containerlinux
     version: 2765.2.6
   - name: calico
     version: 3.15.3
   - name: etcd
     version: 3.4.14
-  date: "2021-07-22T08:54:51Z"
+  date: "2021-10-07T11:37:50Z"
   state: active
 status:
   inUse: false

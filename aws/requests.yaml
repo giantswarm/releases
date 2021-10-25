@@ -1,10 +1,22 @@
 releases:
+    - name: "> 15.2.2 > 16.0.2"
+      requests:
+        - name: cert-exporter
+          version: ">= 2.0.0"
+    - name: "> 16.0.1"
+      requests:
+        - name: aws-ebs-csi-driver
+          version: ">= 2.7.1"
+    - name: "> 16.0.0"
+      requests:
+        - name: cert-operator
+          version: ">= 1.2.0"
     - name: "> 15.2.2"
       requests:
         - name: external-dns
           version: ">= 2.5.0"
         - name: cert-manager
-          version: ">= 2.10.0"
+          version: ">= 2.11.0"
         - name: cert-exporter
           version: ">= 1.8.0"
     - name: ">= 15.0.0"

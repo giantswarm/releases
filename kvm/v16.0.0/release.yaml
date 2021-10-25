@@ -48,7 +48,7 @@ spec:
     releaseOperatorDeploy: true
     version: 3.18.1
   date: "2021-09-10T09:12:19Z"
-  state: active
+  state: deprecated
 status:
   inUse: false
   ready: false
