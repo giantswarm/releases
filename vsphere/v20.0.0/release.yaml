@@ -32,8 +32,7 @@ spec:
     releaseOperatorDeploy: true
     version: 0.4.1
   - name: cluster-api-provider-vsphere
-    catalog: control-plane-test-catalog
-    reference: 0.0.0-fcf2c95e2d76bd953e6ce42123f47ab82c90afb1 #https://github.com/giantswarm/cluster-api-provider-vsphere-app/pull/21
+    catalog: control-plane-catalog
     releaseOperatorDeploy: true
     version: 0.8.1
   - catalog: control-plane-test-catalog
@@ -51,8 +50,8 @@ spec:
     version: 3.19.2
   - name: etcd
     version: 3.4.14
-  date: "2021-09-08T12:00:00Z"
-  state: active
+  date: "2021-10-25T12:00:00Z"
+  state: wip
 status:
   inUse: false
   ready: false
