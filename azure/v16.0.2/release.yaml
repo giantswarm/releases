@@ -36,8 +36,8 @@ spec:
     version: 5.2.0
   - catalog: control-plane-catalog
     name: azure-operator
-    releaseOperatorDeploy: true
-    version: 5.9.0
+    releaseOperatorDeploy: false
+    version: 5.9.1-dev
   - name: cert-operator
     releaseOperatorDeploy: true
     version: 1.2.0
@@ -47,7 +47,7 @@ spec:
   - name: kubernetes
     version: 1.21.6
   - name: containerlinux
-    version: 2905.2.6
+    version: 2905.2.5
   - name: calico
     version: 3.15.3
   - name: etcd
