@@ -1,5 +1,5 @@
 # Generated with:
-# /home/whites/workspace/devctl/devctl release create --name 16.0.2 --provider azure --base 16.0.1 --component kubernetes@1.21.6 --app cert-exporter@2.0.0 --app chart-operator@2.19.1 --app net-exporter@1.10.3 --app node-exporter@1.8.0 --app cluster-autoscaler@1.21.0-gs2--component cert-operator@1.2.0 --component containerlinux@2905.2.6 --overwrite
+# /home/whites/workspace/devctl/devctl release create --name 16.0.2 --provider azure --base 16.0.1 --component kubernetes@1.21.6 --app cert-exporter@2.0.0 --app chart-operator@2.19.1 --app net-exporter@1.10.3 --app node-exporter@1.8.0 --app cluster-autoscaler@1.21.0-gs2 --component cert-operator@1.2.0 --component containerlinux@2905.2.6 --overwrite
 apiVersion: release.giantswarm.io/v1alpha1
 kind: Release
 metadata:
@@ -28,7 +28,7 @@ spec:
     name: node-exporter
     version: 1.8.0
   - name: cluster-autoscaler
-    version: 1.21.0-gs2--component
+    version: 1.21.0-gs2
   - name: azure-scheduled-events
     version: 0.4.0
   components:
@@ -36,11 +36,11 @@ spec:
     version: 5.2.0
   - catalog: control-plane-catalog
     name: azure-operator
-    releaseOperatorDeploy: false
-    version: 5.9.1-dev
+    releaseOperatorDeploy: true
+    version: 5.9.0
   - name: cert-operator
     releaseOperatorDeploy: true
-    version: 1.0.1
+    version: 1.2.0
   - name: cluster-operator
     releaseOperatorDeploy: true
     version: 0.27.2
@@ -52,8 +52,8 @@ spec:
     version: 3.15.3
   - name: etcd
     version: 3.4.16
-  date: "2021-11-02T09:00:03Z"
-  state: wip
+  date: "2021-11-02T09:08:31Z"
+  state: active
 status:
   inUse: false
   ready: false

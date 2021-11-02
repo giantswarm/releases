@@ -28,7 +28,7 @@ spec:                                                              spec:
     name: node-exporter                                                name: node-exporter
     version: 1.7.2                                              |      version: 1.8.0
   - name: cluster-autoscaler                                         - name: cluster-autoscaler
-    version: 1.21.0-gs1                                         |      version: 1.21.0-gs2--component
+    version: 1.21.0-gs1                                         |      version: 1.21.0-gs2
   - name: azure-scheduled-events                                     - name: azure-scheduled-events
     version: 0.4.0                                                     version: 0.4.0
   components:                                                        components:
@@ -40,7 +40,7 @@ spec:                                                              spec:
     version: 5.9.0                                                     version: 5.9.0
   - name: cert-operator                                              - name: cert-operator
     releaseOperatorDeploy: true                                        releaseOperatorDeploy: true
-    version: 1.0.1                                                     version: 1.0.1
+    version: 1.0.1                                              |      version: 1.2.0
   - name: cluster-operator                                           - name: cluster-operator
     releaseOperatorDeploy: true                                        releaseOperatorDeploy: true
     version: 0.27.2                                                    version: 0.27.2
@@ -52,8 +52,8 @@ spec:                                                              spec:
     version: 3.15.3                                                    version: 3.15.3
   - name: etcd                                                       - name: etcd
     version: 3.4.16                                                    version: 3.4.16
-  date: "2021-10-05T14:31:38Z"                                  |    date: "2021-11-02T09:00:03Z"
-  state: active                                                      state: active
+  date: "2021-10-05T14:31:38Z"                                  |    date: "2021-11-02T09:08:31Z"
+  state: deprecated                                             |    state: active
 status:                                                            status:
   inUse: false                                                       inUse: false
   ready: false                                                       ready: false

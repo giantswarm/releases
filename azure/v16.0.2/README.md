@@ -35,6 +35,15 @@ _Nothing has changed._
 
 
 
+### cert-operator [1.2.0](https://github.com/giantswarm/cert-operator/releases/tag/v1.2.0)
+
+#### Changed
+- Introducing `v1alpha3` CR's.
+#### Added
+- Add check to ensure that the `Cluster` resource is in the same namespace as the `certConfig` before creating the secret there.
+
+
+
 ### containerlinux [2905.2.6](https://www.flatcar-linux.org/releases/#release-2905.2.6)
 
 Containerlinux release "2905.2.6" was not found in the changelog
@@ -74,7 +83,7 @@ Containerlinux release "2905.2.6" was not found in the changelog
 
 
 
-### cluster-autoscaler [1.21.0-gs2--component](https://github.com/giantswarm/cluster-autoscaler-app/releases/tag/v1.21.0-gs2--component)
+### cluster-autoscaler [1.21.0-gs2](https://github.com/giantswarm/cluster-autoscaler-app/releases/tag/v1.21.0-gs2)
 
 Not found
 
