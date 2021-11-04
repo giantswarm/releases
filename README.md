@@ -149,7 +149,7 @@ to all Giant Swarm installations.
 
 - v20
   - v20.0
-    - [v20.0.0](https://github.com/giantswarm/releases/tree/master/azure/v20.0.0)
+    - [v20.0.0-alpha1](https://github.com/giantswarm/releases/tree/master/azure/v20.0.0-alpha1)
 
 - v16
   - v16.0
