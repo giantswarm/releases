@@ -41,7 +41,7 @@ spec:
     reference: 5.9.0-5383e01f002b6091786e41aebd910d91ceb08b32
   - name: cert-operator
     releaseOperatorDeploy: true
-    version: 1.2.0
+    version: 1.0.1
   - name: cluster-operator
     releaseOperatorDeploy: true
     version: 0.27.2
