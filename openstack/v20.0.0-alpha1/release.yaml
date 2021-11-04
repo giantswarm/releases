@@ -34,7 +34,7 @@ spec:
   - name: cluster-api-provider-openstack
     catalog: control-plane-catalog
     releaseOperatorDeploy: true
-    version: 0.8.1
+    version: 0.4.0
   - catalog: control-plane-test-catalog
     name: policies-common
     releaseOperatorDeploy: true
