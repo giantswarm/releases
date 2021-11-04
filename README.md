@@ -309,4 +309,4 @@ to all Giant Swarm installations.
 
 - v20
   - v20.0
-    - [v20.0.0](https://github.com/giantswarm/releases/tree/master/vsphere/v20.0.0)
+    - [v20.0.0-alpha1](https://github.com/giantswarm/releases/tree/master/vsphere/v20.0.0-alpha1)
