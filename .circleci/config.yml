@@ -26,6 +26,7 @@ workflows:
             aws/.* push-aws true
             azure/.* push-azure true
             kvm/.* push-kvm true
+            vsphere/.* push-vsphere true
           base-revision: master
           config-path: .circleci/provider_config.yml
           requires:
