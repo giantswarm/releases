@@ -1,0 +1,1 @@
+**Workload cluster release v16.0.2 for Azure** is now available. This release upgrades Kubernetes version to 1.21.6 and Flatcar version to 2905.2.5. Further details can be found in the [release notes](https://docs.giantswarm.io/changes/workload-cluster-releases-azure/releases/azure-v16.0.2/).
