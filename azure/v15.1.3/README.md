@@ -92,4 +92,15 @@ This release includes the fix for the following Linux Kernel CVE advisories: CVE
 - Use new node selector `node-role.kubernetes.io/master` in place of deprecated one `kubernetes.io/role`.
 
 
+### external-dns [2.6.0](https://github.com/giantswarm/external-dns-app/releases/tag/v2.6.0)
+
+Updated from 2.4.0.
+
+#### Added
+
+- Add support for CAPZ clusters by detecting the Azure configuration file location.
+
+#### Changed
+
+- Upgrade upstream external-dns from v0.8.0 to [v0.9.0](https://github.com/kubernetes-sigs/external-dns/releases/tag/v0.9.0). The new release brings a lot of smaller improvements and bug fixes.
 
