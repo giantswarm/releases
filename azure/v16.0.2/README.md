@@ -1,6 +1,11 @@
 # :zap: Giant Swarm Release v16.0.2 for Azure :zap:
 
-<< Add description here >>
+This is a patch release that brings the newest 1.21 Kubernetes version as well as updated version of
+all the Giant Swarm's softwares.
+
+It also improves the upgrade process when Azure Disk PVCs are used.
+With this release, the node draining process should be much more reliable and the general impact
+on the workloads should be as good as it can be.
 
 ## Change details
 
@@ -24,29 +29,23 @@
 - Fix: ignore the case when updating Azure tags (#104686, @nilo19) [SIG Cloud Provider]
 - Revert PR #102925 which introduced unexpected scheduling behavior based on balanced resource allocation (#105238, @damemi) [SIG Scheduling]
 - Updates golang.org/x/text to v0.3.6 to fix CVE-2020-28852 (#102601, @jonesbr17) [SIG API Machinery, CLI, Cloud Provider, Cluster Lifecycle, Instrumentation, Node and Storage]
-#### Dependencies
-#### Added
-_Nothing has changed._
-#### Changed
-- golang.org/x/text: v0.3.4 → v0.3.6
-- k8s.io/klog/v2: v2.8.0 → v2.9.0
-#### Removed
-_Nothing has changed._
 
 
+### azure-operator [5.10.0](https://github.com/giantswarm/cert-operator/releases/tag/v1.2.0)
 
-### cert-operator [1.2.0](https://github.com/giantswarm/cert-operator/releases/tag/v1.2.0)
+### Changed
 
-#### Changed
-- Introducing `v1alpha3` CR's.
-#### Added
-- Add check to ensure that the `Cluster` resource is in the same namespace as the `certConfig` before creating the secret there.
+- Delegate Storage account type selection for master VM's disks to Azure API.
+- Separate the drain and node deletion phases during node pool upgrades to avoid stuck disks.
+
+### Fixed
+
+- During an upgrade, fixed the detection of a master node being upgraded to wait before upgrading node pools.
 
 
+### containerlinux [2905.2.5](https://www.flatcar-linux.org/releases/#release-2905.2.5)
 
-### containerlinux [2905.2.6](https://www.flatcar-linux.org/releases/#release-2905.2.6)
-
-Containerlinux release "2905.2.6" was not found in the changelog
+This release includes the fix for the following Linux Kernel CVE advisories: CVE-2021-41073, CVE-2020-16119, CVE-2021-3753, CVE-2021-3739, CVE-2021-40490.
 
 
 ### cert-exporter [2.0.0](https://github.com/giantswarm/cert-exporter/releases/tag/v2.0.0)
@@ -85,6 +84,8 @@ Containerlinux release "2905.2.6" was not found in the changelog
 
 ### cluster-autoscaler [1.21.0-gs2](https://github.com/giantswarm/cluster-autoscaler-app/releases/tag/v1.21.0-gs2)
 
-Not found
+#### Fixed
+
+- Fix RBAC for cluster autoscaler 1.21.
 
 
