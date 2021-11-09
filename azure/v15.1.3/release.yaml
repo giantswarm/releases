@@ -33,11 +33,9 @@ spec:
   components:
   - name: app-operator
     version: 4.4.0
-  - catalog: control-plane-test-catalog
-    name: azure-operator
+  - name: azure-operator
     releaseOperatorDeploy: true
-    reference: 5.8.1-1487535e9c80417f9ce6db8a80d98b954f42e3df
-    version: 5.8.2-dev
+    version: 5.8.2
   - name: cert-operator
     releaseOperatorDeploy: true
     version: 1.0.1
