@@ -37,29 +37,9 @@ on the workloads should be as good as it can be.
 - During an upgrade, fixed the detection of a master node being upgraded to wait before upgrading node pools.
 
 
-### cert-operator [1.2.0](https://github.com/giantswarm/cert-operator/releases/tag/v1.2.0)
-
-#### Changed
-- Introducing `v1alpha3` CR's.
-#### Added
-- Add check to ensure that the `Cluster` resource is in the same namespace as the `certConfig` before creating the secret there.
-
-
-
 ### containerlinux [2905.2.5](https://www.flatcar-linux.org/releases/#release-2905.2.5)
 
 This release includes the fix for the following Linux Kernel CVE advisories: CVE-2021-41073, CVE-2020-16119, CVE-2021-3753, CVE-2021-3739, CVE-2021-40490.
-
-
-
-### cert-exporter [2.0.0](https://github.com/giantswarm/cert-exporter/releases/tag/v2.0.0)
-
-#### Changed
-- Export presence of `giantswarm.io/service-type: managed` label in cert-manager `Issuer` and `ClusterIssuer` CR referenced by `Certificate` CR `issuerRef` spec field to `cert_exporter_certificate_cr_not_after` metric as `managed_issuer` label.
-- Add `--monitor-files` and `--monitor-secrets` flags.
-- Add Deployment to helm chart to avoid exporting secrets and certificate metrics from DaemonSets.
-- Build container image using retagged giantswarm alpine.
-- Run as non-root inside container.
 
 
 
