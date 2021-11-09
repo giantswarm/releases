@@ -1,16 +1,16 @@
 # Generated with:
-# /Users/tobiaszkukawka/go/bin/devctl release create --name 16.0.1 --provider azure --base 16.0.0 --component kubernetes@1.21.5 --overwrite
+# /home/whites/workspace/devctl/devctl release create --name 16.0.2 --provider azure --base 16.0.1 --component kubernetes@1.21.6 --app cert-exporter@2.0.0 --app chart-operator@2.19.1 --app net-exporter@1.10.3 --app node-exporter@1.8.0 --app cluster-autoscaler@1.21.0-gs2 --component cert-operator@1.2.0 --component containerlinux@2905.2.6 --overwrite
 apiVersion: release.giantswarm.io/v1alpha1
 kind: Release
 metadata:
   creationTimestamp: null
-  name: v16.0.1
+  name: v16.0.2
 spec:
   apps:
   - name: cert-exporter
-    version: 1.8.0
+    version: 2.0.0
   - name: chart-operator
-    version: 2.19.0
+    version: 2.19.1
   - componentVersion: 1.8.3
     name: coredns
     version: 1.6.0
@@ -23,12 +23,12 @@ spec:
   - name: metrics-server
     version: 1.5.0
   - name: net-exporter
-    version: 1.10.2
+    version: 1.10.3
   - componentVersion: 1.0.1
     name: node-exporter
-    version: 1.7.2
+    version: 1.8.0
   - name: cluster-autoscaler
-    version: 1.21.0-gs1
+    version: 1.21.0-gs2
   - name: azure-scheduled-events
     version: 0.4.0
   components:
@@ -37,7 +37,7 @@ spec:
   - catalog: control-plane-catalog
     name: azure-operator
     releaseOperatorDeploy: true
-    version: 5.9.0
+    version: 5.10.0
   - name: cert-operator
     releaseOperatorDeploy: true
     version: 1.0.1
@@ -45,15 +45,15 @@ spec:
     releaseOperatorDeploy: true
     version: 0.27.2
   - name: kubernetes
-    version: 1.21.5
+    version: 1.21.6
   - name: containerlinux
-    version: 2905.2.3
+    version: 2905.2.5
   - name: calico
     version: 3.15.3
   - name: etcd
     version: 3.4.16
-  date: "2021-10-05T14:31:38Z"
-  state: deprecated
+  date: "2021-11-02T09:08:31Z"
+  state: active
 status:
   inUse: false
   ready: false
