@@ -1,6 +1,6 @@
 [![CircleCI](https://circleci.com/gh/giantswarm/releases.svg?style=shield)](https://circleci.com/gh/giantswarm/releases)
 
-# Giant Swarm Workload Cluster Releases
+# Whites rocks big time
 
 This repository contains workload cluster release notes and changelogs.
 
