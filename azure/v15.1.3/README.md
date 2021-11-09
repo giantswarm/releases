@@ -43,6 +43,18 @@ This release includes the fix for the following Linux Kernel CVE advisories: CVE
 
 
 
+### cert-exporter [1.8.0](https://github.com/giantswarm/cert-exporter/releases/tag/v1.8.0)
+
+#### Added
+
+- Add new `cert_exporter_certificate_cr_not_after` metric. This metric exports the `status.notAfter` field of cert-manager `Certificate` CR.
+
+#### Changed
+
+- Remove static certificate source label from `cert_exporter_secret_not_after` (static value `secret`) and `cert_exporter_not_after` (static value `file`) metrics.
+
+
+
 ### chart-operator [2.19.1](https://github.com/giantswarm/chart-operator/releases/tag/v2.19.1)
 
 #### Changed
