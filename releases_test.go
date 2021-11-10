@@ -229,8 +229,12 @@ func Test_Releases(t *testing.T) {
 			name:     "case 3: kvm releases are valid",
 		},
 		{
+			provider: "openstack",
+			name:     "case 4: openstack releases are valid",
+    },
+    {
 			provider: "vsphere",
-			name:     "case 4: vsphere releases are valid",
+			name:     "case 5: vsphere releases are valid",
 		},
 	}
 
