@@ -46,7 +46,7 @@ spec:                                                              spec:
     releaseOperatorDeploy: false                                       releaseOperatorDeploy: false
     version: 5.2.0                                                     version: 5.2.0
   - name: aws-cni                                                    - name: aws-cni
-    version: 1.9.0                                                     version: 1.9.0
+    version: 1.9.0                                              |      version: 1.9.3
   - name: aws-operator                                               - name: aws-operator
     releaseOperatorDeploy: true                                        releaseOperatorDeploy: true
     version: 10.9.1                                             |      version: enable-cni-prefix
