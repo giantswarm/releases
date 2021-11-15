@@ -48,8 +48,9 @@ spec:
   - name: aws-cni
     version: 1.9.0
   - name: aws-operator
+    reference: 10.9.1-0e868d6c6475d532e1d014ac76093996aebff2ae
     releaseOperatorDeploy: true
-    version: enable-cni-prefix
+    version: 10.9.2-dev
   - name: calico
     version: 3.15.5
   - name: cert-operator
