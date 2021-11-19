@@ -62,7 +62,10 @@ _Nothing has changed._
 ### aws-ebs-csi-driver [2.7.1](https://github.com/giantswarm/aws-ebs-csi-driver-app/releases/tag/v2.7.1)
 
 #### Changed
-- Update chart app version.
+- Bump aws-ebs-csi-driver version to v1.4.0.
+- Pre-Hook for snapshot CRDs.
+- Use deployment for external-snapshot-controller.
+- Change VolumeSnapshotter CRDs storage version from v1beta1 to v1.
 
 
 
