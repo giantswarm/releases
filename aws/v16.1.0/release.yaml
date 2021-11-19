@@ -1,5 +1,5 @@
 # Generated with:
-# devctl release create --name v16.1.0 --provider aws --base 16.0.1 --component aws-operator@enable-cni-prefix --overwrite
+# devctl release create --name v16.1.0 --provider aws --base 16.0.1 --component aws-operator@enable-cni-prefix --component cluster-operator@3.11.0 --component aws-cni@1.9.3 --component kubernetes@1.21.7 --app aws-ebs-csi-driver@2.7.1 --app cert-exporter@2.0.0 --overwrite
 apiVersion: release.giantswarm.io/v1alpha1
 kind: Release
 metadata:
@@ -9,7 +9,7 @@ metadata:
   name: v16.1.0
 spec:
   apps:
-  - componentVersion: 1.2.0
+  - componentVersion: 1.4.0
     name: aws-ebs-csi-driver
     version: 2.7.1
   - name: cert-exporter
@@ -48,9 +48,8 @@ spec:
   - name: aws-cni
     version: 1.9.3
   - name: aws-operator
-    reference: 10.9.1-0e868d6c6475d532e1d014ac76093996aebff2ae
     releaseOperatorDeploy: true
-    version: 10.9.2-dev
+    version: v10.10.0
   - name: calico
     version: 3.15.5
   - name: cert-operator
@@ -64,8 +63,8 @@ spec:
   - name: etcd
     version: 3.4.16
   - name: kubernetes
-    version: 1.21.5
-  date: "2021-11-15T15:32:07Z"
+    version: 1.21.7
+  date: "2021-11-19T15:01:47Z"
   state: active
 status:
   inUse: false
