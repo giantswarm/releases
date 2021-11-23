@@ -5,9 +5,49 @@
 ## Change details
 
 
+### aws-cni [1.9.3](https://github.com/aws/amazon-vpc-cni-k8s/releases/tag/v1.9.3)
+
+* Improvement - [Update golang](https://github.com/aws/amazon-vpc-cni-k8s/pull/1665) (#1665, [@jayanthvn](https://github.com/jayanthvn))
+* Improvement - [Pod startup latency with Calico and EKS](https://github.com/aws/amazon-vpc-cni-k8s/pull/1629) (#1629, [@jayanthvn](https://github.com/jayanthvn))
+* Bug - [Make error count granular](https://github.com/aws/amazon-vpc-cni-k8s/pull/1651) (#1651, [@jayanthvn](https://github.com/jayanthvn))
+* Bug - [ServiceAccount should precede DaemonSet in yaml aws](https://github.com/aws/amazon-vpc-cni-k8s/pull/1637) (#1637, [@sramabad1](https://github.com/sramabad1))
+* Testing - [Enable unit tests upon PR to release branch](https://github.com/aws/amazon-vpc-cni-k8s/pull/1684) (#1684, [@vikasmb](https://github.com/vikasmb))
+* Testing - [Upgrade EKS cluster version](https://github.com/aws/amazon-vpc-cni-k8s/pull/1680) (#1680, [@vikasmb](https://github.com/vikasmb)) 
+
+
+
+### aws-ebs-csi-driver [2.7.1](https://github.com/giantswarm/aws-ebs-csi-driver-app/releases/tag/v2.7.1)
+
+#### Changed
+- Bump aws-ebs-csi-driver version to v1.4.0.
+- Pre-Hook for snapshot CRDs.
+- Use deployment for external-snapshot-controller.
+- Change VolumeSnapshotter CRDs storage version from v1beta1 to v1.
+
+
+
 ### aws-operator [10.10.0](https://github.com/giantswarm/aws-operator/releases/tag/v10.10.0)
 
-TBD
+#### Added
+
+- Adding latest flatcar images.
+- Introduce AWS CNI Prefix delegation.
+
+#### Changed
+
+- Use k8smetadata for annotations.
+
+
+
+### cert-exporter [2.0.0](https://github.com/giantswarm/cert-exporter/releases/tag/v2.0.0)
+
+#### Changed
+- Export presence of `giantswarm.io/service-type: managed` label in cert-manager `Issuer` and `ClusterIssuer` CR referenced by `Certificate` CR `issuerRef` spec field to `cert_exporter_certificate_cr_not_after` metric as `managed_issuer` label.
+- Add `--monitor-files` and `--monitor-secrets` flags.
+- Add Deployment to helm chart to avoid exporting secrets and certificate metrics from DaemonSets.
+- Build container image using retagged giantswarm alpine.
+- Run as non-root inside container.
+
 
 
 ### cluster-operator [3.11.0](https://github.com/giantswarm/cluster-operator/releases/tag/v3.11.0)
@@ -19,14 +59,11 @@ verify it.
 
 
 
-### aws-cni [1.9.3](https://github.com/aws/amazon-vpc-cni-k8s/releases/tag/v1.9.3)
+### kiam-watchdog [0.4.0](https://github.com/giantswarm/kiam-watchdog/releases/tag/v0.4.0)
 
-* Improvement - [Update golang](https://github.com/aws/amazon-vpc-cni-k8s/pull/1665) (#1665, [@jayanthvn](https://github.com/jayanthvn))
-* Improvement - [Pod startup latency with Calico and EKS](https://github.com/aws/amazon-vpc-cni-k8s/pull/1629) (#1629, [@jayanthvn](https://github.com/jayanthvn))
-* Bug - [Make error count granular](https://github.com/aws/amazon-vpc-cni-k8s/pull/1651) (#1651, [@jayanthvn](https://github.com/jayanthvn))
-* Bug - [ServiceAccount should precede DaemonSet in yaml aws](https://github.com/aws/amazon-vpc-cni-k8s/pull/1637) (#1637, [@sramabad1](https://github.com/sramabad1))
-* Testing - [Enable unit tests upon PR to release branch](https://github.com/aws/amazon-vpc-cni-k8s/pull/1684) (#1684, [@vikasmb](https://github.com/vikasmb))
-* Testing - [Upgrade EKS cluster version](https://github.com/aws/amazon-vpc-cni-k8s/pull/1680) (#1680, [@vikasmb](https://github.com/vikasmb)) 
+#### Added
+
+- Add node-selector and tolerations.
 
 
 
@@ -56,27 +93,5 @@ _Nothing has changed._
 - k8s.io/utils: 67b214c → da69540
 #### Removed
 _Nothing has changed._
-
-
-
-### aws-ebs-csi-driver [2.7.1](https://github.com/giantswarm/aws-ebs-csi-driver-app/releases/tag/v2.7.1)
-
-#### Changed
-- Bump aws-ebs-csi-driver version to v1.4.0.
-- Pre-Hook for snapshot CRDs.
-- Use deployment for external-snapshot-controller.
-- Change VolumeSnapshotter CRDs storage version from v1beta1 to v1.
-
-
-
-### cert-exporter [2.0.0](https://github.com/giantswarm/cert-exporter/releases/tag/v2.0.0)
-
-#### Changed
-- Export presence of `giantswarm.io/service-type: managed` label in cert-manager `Issuer` and `ClusterIssuer` CR referenced by `Certificate` CR `issuerRef` spec field to `cert_exporter_certificate_cr_not_after` metric as `managed_issuer` label.
-- Add `--monitor-files` and `--monitor-secrets` flags.
-- Add Deployment to helm chart to avoid exporting secrets and certificate metrics from DaemonSets.
-- Build container image using retagged giantswarm alpine.
-- Run as non-root inside container.
-
 
 
