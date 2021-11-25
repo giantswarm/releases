@@ -57,15 +57,15 @@ spec:
   - catalog: control-plane-catalog
     name: cluster-api-bootstrap-provider-kubeadm
     releaseOperatorDeploy: true
-    version: 0.3.22-gs10
+    version: 0.3.22-gs11
   - catalog: control-plane-catalog
     name: cluster-api-control-plane
     releaseOperatorDeploy: true
-    version: 0.3.22-gs10
+    version: 0.3.22-gs11
   - catalog: control-plane-catalog
     name: cluster-api-core
     releaseOperatorDeploy: true
-    version: 0.3.22-gs5
+    version: 0.3.22-gs6
   - catalog: control-plane-catalog
     name: cluster-api-provider-aws
     releaseOperatorDeploy: true
