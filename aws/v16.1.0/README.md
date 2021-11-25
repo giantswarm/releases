@@ -59,6 +59,34 @@ verify it.
 
 
 
+### containerlinux [2905.2.6](https://www.flatcar-linux.org/releases/#release-2905.2.6)
+
+**Security fixes**
+
+* Linux
+    - [CVE-2021-3764](https://nvd.nist.gov/vuln/detail/CVE-2021-3764)
+    - [CVE-2021-3744](https://nvd.nist.gov/vuln/detail/CVE-2021-3744)
+    - [CVE-2021-38300](https://nvd.nist.gov/vuln/detail/CVE-2021-38300)
+    - [CVE-2021-20321](https://nvd.nist.gov/vuln/detail/CVE-2021-20321)
+    - [CVE-2021-41864](https://nvd.nist.gov/vuln/detail/CVE-2021-41864)
+* containerd
+    - [CVE-2021-41103](https://nvd.nist.gov/vuln/detail/CVE-2021-41103)
+
+
+**Bux fixes**
+
+The tcsd service for TPM 1 is not started on machines with TPM 2 anymore where it fails and isn’t necessary ([flatcar-linux/coreos-overlay#1364](https://github.com/flatcar-linux/coreos-overlay/pull/1364))
+
+
+
+**Updates**
+
+Linux ([5.10.75](https://lwn.net/Articles/873465/))
+ca-certificates ([3.69.1](https://firefox-source-docs.mozilla.org/security/nss/releases/nss_3_69_1.html#nss-3-69-1-release-notes))
+containerd ([1.5.7](https://github.com/containerd))
+
+
+
 ### kiam-watchdog [0.4.0](https://github.com/giantswarm/kiam-watchdog/releases/tag/v0.4.0)
 
 #### Added

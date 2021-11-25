@@ -61,7 +61,7 @@ spec:                                                              spec:
     releaseOperatorDeploy: true                                        releaseOperatorDeploy: true
     version: 3.10.0                                             |      version: 3.11.0
   - name: containerlinux                                             - name: containerlinux
-    version: 2905.2.3                                                  version: 2905.2.3
+    version: 2905.2.3                                           |      version: 2905.2.6
   - name: etcd                                                       - name: etcd
     version: 3.4.16                                                    version: 3.4.16
   - name: kubernetes                                                 - name: kubernetes
