@@ -13,6 +13,8 @@ releases:
       requests:
         - name: cert-operator
           version: ">= 1.2.0"
+        - name: kube-state-metrics
+          version: ">= 1.5.0"
     - name: "> 15.2.2"
       requests:
         - name: external-dns
