@@ -32,6 +32,12 @@
 - Use deployment for external-snapshot-controller.
 - Change VolumeSnapshotter CRDs storage version from v1beta1 to v1.
 
+#### Fixed
+- Move CRD's to template.
+
+#### Added
+- Add common labels to allow helm operating on CRD's.
+
 
 
 ### aws-operator [10.10.0](https://github.com/giantswarm/aws-operator/releases/tag/v10.10.0)
