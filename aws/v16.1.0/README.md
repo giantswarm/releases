@@ -83,13 +83,19 @@ verify it.
     - [CVE-2021-38300](https://nvd.nist.gov/vuln/detail/CVE-2021-38300)
     - [CVE-2021-20321](https://nvd.nist.gov/vuln/detail/CVE-2021-20321)
     - [CVE-2021-41864](https://nvd.nist.gov/vuln/detail/CVE-2021-41864)
+    - [CVE-2021-41073](https://nvd.nist.gov/vuln/detail/CVE-2021-41073)
+    - [CVE-2020-16119](https://nvd.nist.gov/vuln/detail/CVE-2020-16119)
+    - [CVE-2021-3753](https://nvd.nist.gov/vuln/detail/CVE-2021-3753)
+    - [CVE-2021-3739](https://nvd.nist.gov/vuln/detail/CVE-2021-3739)
+    - [CVE-2021-40490](https://nvd.nist.gov/vuln/detail/CVE-2021-40490)
 * containerd
     - [CVE-2021-41103](https://nvd.nist.gov/vuln/detail/CVE-2021-41103)
 
 
 **Bux fixes**
 
-The tcsd service for TPM 1 is not started on machines with TPM 2 anymore where it fails and isn’t necessary ([flatcar-linux/coreos-overlay#1364](https://github.com/flatcar-linux/coreos-overlay/pull/1364))
+* The tcsd service for TPM 1 is not started on machines with TPM 2 anymore where it fails and isn’t necessary ([flatcar-linux/coreos-overlay#1364](https://github.com/flatcar-linux/coreos-overlay/pull/1364))
+* The Mellanox NIC Linux driver issue introduced in the previous release was fixed ([Flatcar#520](https://github.com/flatcar-linux/Flatcar/issues/520))
 
 
 
