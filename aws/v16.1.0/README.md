@@ -117,14 +117,21 @@ containerd ([1.5.7](https://github.com/containerd))
 
 ### kubernetes [1.21.7](https://github.com/kubernetes/kubernetes/releases/tag/v1.21.7)
 
+#### API Change
+- Kube-apiserver: Fixes handling of CRD schemas containing literal null values in enums (#104989, @liggitt) [SIG API Machinery, Apps and Network]
+
 #### Feature
 - Kubernetes is now built with Golang 1.16.10 (#106224, @cpanato) [SIG Cloud Provider, Instrumentation, Release and Testing]
 - Update debian-base, debian-iptables, setcap images to pick up CVE fixes
   - Debian-base to v1.9.0
   - Debian-iptables to v1.6.7
   - setcap to v2.0.4 (#106147, @cpanato) [SIG Release and Testing]
+- Kubernetes is now built with Golang 1.16.9 (#105672, @cpanato) [SIG Cloud Provider, Instrumentation, Release and Testing]
+
 #### Failing Test
 - Fixes hostpath storage e2e tests within SELinux enabled env (#105787, @Elbehery) [SIG Testing]
+- Backport: e2e.test now uses the secure port to retrieve metrics data to ensure compatibility with 1.21 and 1.22 (for upgrade tests) (#104328, @pohly) [SIG API Machinery, Instrumentation, Storage and Testing]
+
 #### Bug or Regression
 - EndpointSlice Mirroring controller now cleans up managed EndpointSlices when a Service selector is added (#106135, @robscott) [SIG Apps, Network and Testing]
 - Fix a bug that `--disabled-metrics` doesn't function well. (#106391, @Huang-Wei) [SIG API Machinery, Cluster Lifecycle and Instrumentation]
@@ -133,12 +140,25 @@ containerd ([1.5.7](https://github.com/containerd))
 - Fixed very rare volume corruption when a pod is deleted while kubelet is offline.
   Retry FibreChannel devices cleanup after error to ensure FC device is detached before it can be used on another node. (#102656, @jsafrane) [SIG API Machinery, CLI, Cloud Provider, Cluster Lifecycle, Instrumentation and Storage]
 - Support more than 100 disk mounts on Windows (#105673, @andyzhangx) [SIG Storage and Windows]
+- Aggregate errors when putting vmss
+  fix: consolidate logs for instance not found error (#105365, @nilo19) [SIG Cloud Provider]
+- Allow CSI drivers to just run offline expansion tests (#102740, @gnufied) [SIG Storage and Testing]
+- Bump klog to v2.9.0, fixing log lines that render as byte arrays (#105407, @ehashman) [SIG Architecture, CLI, Cloud Provider, Cluster Lifecycle, Instrumentation and Storage]
+- Fix overriding logs files on reboot. (#105614, @rphillips) [SIG Node]
+- Fix winkernel kube-proxy to only use dual stack when host and networking supports it (#101047, @jsturtevant) [SIG Network and Windows]
+- Fix: ignore not a VMSS error for VMAS nodes in EnsureBackendPoolDeleted. (#105402, @ialidzhikov) [SIG Cloud Provider]
+- Fix: ignore the case when updating Azure tags (#104686, @nilo19) [SIG Cloud Provider]
+- Revert PR #102925 which introduced unexpected scheduling behavior based on balanced resource allocation (#105238, @damemi) [SIG Scheduling]
+- Updates golang.org/x/text to v0.3.6 to fix CVE-2020-28852 (#102601, @jonesbr17) [SIG API Machinery, CLI, Cloud Provider, Cluster Lifecycle, Instrumentation, Node and Storage]
+
 #### Dependencies
 #### Added
 _Nothing has changed._
 #### Changed
 - k8s.io/kube-openapi: 591a79e → 3cc51fd
 - k8s.io/utils: 67b214c → da69540
+- k8s.io/klog/v2: v2.8.0 → v2.9.0
+- golang.org/x/text: v0.3.4 → v0.3.6
 #### Removed
 _Nothing has changed._
 
