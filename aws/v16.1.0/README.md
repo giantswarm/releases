@@ -48,7 +48,7 @@ This release provides stability improvements, bug fixes and security fixes for v
 
 
 
-### aws-operator [10.10.0](https://github.com/giantswarm/aws-operator/releases/tag/v10.10.0)
+### aws-operator [10.10.1](https://github.com/giantswarm/aws-operator/releases/tag/v10.10.1)
 
 #### Added
 
@@ -59,6 +59,9 @@ This release provides stability improvements, bug fixes and security fixes for v
 
 - Use k8smetadata for annotations.
 
+### Fixed
+
+- Setting `kubernetes.io/replace/internal-elb` tag on private subnet TCNP stack.
 
 
 ### cert-exporter [2.0.0](https://github.com/giantswarm/cert-exporter/releases/tag/v2.0.0)
