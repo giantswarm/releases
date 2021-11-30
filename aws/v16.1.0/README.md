@@ -1,6 +1,14 @@
 # :zap: Giant Swarm Release v16.1.0 for AWS :zap:
 
-<< Add description here >>
+This release provides stability improvements, bug fixes and security fixes for various components. It also adds AWS CNI prefix delegation support.
+
+**Highlights**
+- Kubernetes 1.21.7 support;
+- [AWS CNI prefix delegation](https://docs.giantswarm.io/ui-api/management-api/crd/awsclusters.infrastructure.giantswarm.io/#v1alpha2-alpha.cni.aws.giantswarm.io/prefix-delegation);
+- AWS EBS CSI driver with volume snapshot support;
+- Security fixes:
+    * 10 Linux CVEs;
+    * 1 containerd CVEs.
 
 ## Change details
 
@@ -147,7 +155,6 @@ containerd ([1.5.7](https://github.com/containerd))
 - Fix overriding logs files on reboot. (#105614, @rphillips) [SIG Node]
 - Fix winkernel kube-proxy to only use dual stack when host and networking supports it (#101047, @jsturtevant) [SIG Network and Windows]
 - Fix: ignore not a VMSS error for VMAS nodes in EnsureBackendPoolDeleted. (#105402, @ialidzhikov) [SIG Cloud Provider]
-- Fix: ignore the case when updating Azure tags (#104686, @nilo19) [SIG Cloud Provider]
 - Revert PR #102925 which introduced unexpected scheduling behavior based on balanced resource allocation (#105238, @damemi) [SIG Scheduling]
 - Updates golang.org/x/text to v0.3.6 to fix CVE-2020-28852 (#102601, @jonesbr17) [SIG API Machinery, CLI, Cloud Provider, Cluster Lifecycle, Instrumentation, Node and Storage]
 
