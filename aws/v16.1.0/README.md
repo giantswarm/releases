@@ -126,12 +126,16 @@ containerd ([1.5.7](https://github.com/containerd))
 
 
 
-### kube-state-metrics [1.5.0](https://github.com/giantswarm/kube-state-metrics-app/releases/tag/v1.5.0)
+### kube-state-metrics [1.5.1](https://github.com/giantswarm/kube-state-metrics-app/releases/tag/v1.5.1)
 
 #### Changed
 
 - Update architect-orb to v4.8.0 to stop pushing to app collection helm chart.
 - Bumped to upstream version v2.2.4.
+
+#### Fixed
+
+- Fix permission to list and watch `leases.coordination.k8s.io`.
 
 
 
