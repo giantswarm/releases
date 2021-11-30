@@ -59,7 +59,7 @@ This release provides stability improvements, bug fixes and security fixes for v
 
 - Use k8smetadata for annotations.
 
-### Fixed
+#### Fixed
 
 - Setting `kubernetes.io/replace/internal-elb` tag on private subnet TCNP stack.
 
