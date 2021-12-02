@@ -64,16 +64,6 @@ This release provides stability improvements, bug fixes and security fixes for v
 - Setting `kubernetes.io/replace/internal-elb` tag on private subnet TCNP stack.
 
 
-### cert-exporter [2.0.0](https://github.com/giantswarm/cert-exporter/releases/tag/v2.0.0)
-
-#### Changed
-- Export presence of `giantswarm.io/service-type: managed` label in cert-manager `Issuer` and `ClusterIssuer` CR referenced by `Certificate` CR `issuerRef` spec field to `cert_exporter_certificate_cr_not_after` metric as `managed_issuer` label.
-- Add `--monitor-files` and `--monitor-secrets` flags.
-- Add Deployment to helm chart to avoid exporting secrets and certificate metrics from DaemonSets.
-- Build container image using retagged giantswarm alpine.
-- Run as non-root inside container.
-
-
 
 ### cluster-operator [3.11.0](https://github.com/giantswarm/cluster-operator/releases/tag/v3.11.0)
 
