@@ -5,19 +5,24 @@ metadata:
   name: v20.0.0-alpha1
 spec:
   apps:
+  - componentVersion: 3.18.0
+    name: calico
+    version: 0.2.0
+  - name: cloud-provider-openstack
+    version: 0.1.0
   - name: cert-exporter
-    version: 1.8.0
+    version: 2.0.0
   - name: chart-operator
-    version: 2.19.0
+    version: 2.19.1
   - componentVersion: 1.8.3
     name: coredns
     version: 1.6.0
-  - componentVersion: 1.9.7
+  - componentVersion: 2.2.4
     name: kube-state-metrics
-    version: 1.4.0
+    version: 1.5.1
   - componentVersion: 0.4.1
     name: metrics-server
-    version: 1.4.0
+    version: 1.5.0
   - name: net-exporter
     version: 1.10.3
   - componentVersion: 1.0.1
@@ -27,26 +32,7 @@ spec:
   - name: app-operator
     releaseOperatorDeploy: false
     version: 5.2.0
-  - name: cluster-api
-    catalog: control-plane-catalog
-    releaseOperatorDeploy: true
-    version: 0.4.1
-  - name: cluster-api-provider-openstack
-    catalog: control-plane-catalog
-    releaseOperatorDeploy: true
-    version: 0.4.0
-  - catalog: control-plane-test-catalog
-    name: policies-common
-    releaseOperatorDeploy: true
-    version: 0.6.1
-  - name: cluster-apps-operator
-    releaseOperatorDeploy: true
-    version: 0.6.0
-  - name: kubernetes
-    version: 1.20.10
-  - name: etcd
-    version: 3.4.14
-  date: "2021-11-04T12:00:00Z"
+  date: "2021-12-03T12:00:00Z"
   state: wip
 status:
   inUse: false
