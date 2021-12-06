@@ -14,9 +14,6 @@ spec:
     version: 2.0.0
   - name: chart-operator
     version: 2.19.1
-  - componentVersion: 1.8.3
-    name: coredns
-    version: 1.6.0
   - componentVersion: 2.2.4
     name: kube-state-metrics
     version: 1.5.1
