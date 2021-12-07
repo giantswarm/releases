@@ -1,14 +1,24 @@
 # :zap: Giant Swarm Release v16.1.0 for Azure :zap:
 
-<< Add description here >>
+This release
 
 ## Change details
+
+### azure-operator [5.10.2](https://github.com/giantswarm/azure-operator/releases/tag/v5.10.2)
+
+Upgraded from version 5.10.0
+
+#### Changed
+- When looking for the encryption secret, search on all namespaces (to support latest cluster-operator).
+
+#### Fixed
+- Consider case when API is down when checking if Master node is upgrading during node pool reconciliation.
+
 
 
 ### cluster-operator [3.12.0](https://github.com/giantswarm/cluster-operator/releases/tag/v3.12.0)
 
-#### Changed
-- Added support for Azure by selectively disabling features that are AWS specific.
+Switched from the legacy branch to the master branch. The [changelog](https://github.com/giantswarm/cluster-operator/blob/master/CHANGELOG.md) is huge, please check details in the project page.
 
 
 
@@ -20,12 +30,6 @@
 
 
 
-### azure-operator [5.10.1](https://github.com/giantswarm/azure-operator/releases/tag/v5.10.1)
-
-#### Changed
-- When looking for the encryption secret, search on all namespaces (to support latest cluster-operator).
-
-
 
 ### cert-operator [1.1.0](https://github.com/giantswarm/cert-operator/releases/tag/v1.1.0)
 
@@ -34,13 +38,6 @@
 - Replace `jwt-go` with `golang-jwt/jwt`.
 - Manage Secrets in the same namespace in which CertConfigs are found.
 - Make `expirationThreshold` configurable.
-
-
-
-### cluster-operator [3.12.0](https://github.com/giantswarm/cluster-operator/releases/tag/v3.12.0)
-
-#### Changed
-- Added support for Azure by selectively disabling features that are AWS specific.
 
 
 
@@ -75,7 +72,10 @@ _Nothing has changed._
 
 ### containerlinux [2983.2.0](https://www.flatcar-linux.org/releases/#release-2983.2.0)
 
-Containerlinux release "2983.2.0" was not found in the changelog
+Upgraded from version 2905.2.5.
+
+This upgrade provides the solution for a high number of security issues in the Linux Kernel, Containerd and Golang.
+Please check details in the [upstream changelog page](https://www.flatcar-linux.org/releases/).
 
 
 ### calico [3.15.5](https://github.com/projectcalico/calico/releases/tag/v3.15.5)
