@@ -27,12 +27,13 @@
 
 
 
-### cert-operator [1.2.0](https://github.com/giantswarm/cert-operator/releases/tag/v1.2.0)
+### cert-operator [1.1.0](https://github.com/giantswarm/cert-operator/releases/tag/v1.1.0)
 
 #### Changed
-- Introducing `v1alpha3` CR's.
-#### Added
-- Add check to ensure that the `Cluster` resource is in the same namespace as the `certConfig` before creating the secret there.
+- Adjust helm chart to be used with `config-controller`.
+- Replace `jwt-go` with `golang-jwt/jwt`.
+- Manage Secrets in the same namespace in which CertConfigs are found.
+- Make `expirationThreshold` configurable.
 
 
 
