@@ -1,6 +1,6 @@
 # :zap: Giant Swarm Release v16.1.0 for Azure :zap:
 
-This release
+This is a security release featuring the latest Kubernetes 1.21 and Flatcar Linux versions as well as an updated version of the Giant Swarm applications. 
 
 ## Change details
 
