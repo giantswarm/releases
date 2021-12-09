@@ -22,7 +22,10 @@ Switched from the legacy branch to the master branch. The [changelog](https://gi
 
 
 
-### app-operator [5.3.0](https://github.com/giantswarm/app-operator/releases/tag/v5.3.0)
+### app-operator [5.3.1](https://github.com/giantswarm/app-operator/releases/tag/v5.3.1)
+
+#### Added
+- Support for App CRs with a v prefixed version. This enables Flux to automatically update the version based on its image tag.
 
 #### Changed
 - Use dynamic client instead of generated client for watching chart CRs.
