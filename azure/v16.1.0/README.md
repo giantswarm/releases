@@ -91,7 +91,9 @@ Please check details in the [upstream changelog page](https://www.flatcar-linux.
 
 ### etcd [3.4.18](https://github.com/etcd-io/etcd/releases/tag/v3.4.18)
 
-Not found
+Upgraded from version 3.4.16.
+
+Please check details in the [upstream changelog page](https://github.com/etcd-io/etcd/blob/main/CHANGELOG-3.4.md).
 
 
 ### kube-state-metrics [1.5.1](https://github.com/giantswarm/kube-state-metrics-app/releases/tag/v1.5.1)
