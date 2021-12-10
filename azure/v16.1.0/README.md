@@ -4,7 +4,7 @@ This is a security release featuring the latest Kubernetes 1.21 and Flatcar Linu
 
 ## Change details
 
-### azure-operator [5.10.2](https://github.com/giantswarm/azure-operator/releases/tag/v5.10.2)
+### azure-operator [5.11.0](https://github.com/giantswarm/azure-operator/releases/tag/v5.11.0)
 
 Upgraded from version 5.10.0
 
@@ -14,6 +14,8 @@ Upgraded from version 5.10.0
 #### Fixed
 - Consider case when API is down when checking if Master node is upgrading during node pool reconciliation.
 
+#### Removed
+- Remove creation of legacy `AzureClusterConfig` CR as they are unused.
 
 
 ### cluster-operator [3.12.0](https://github.com/giantswarm/cluster-operator/releases/tag/v3.12.0)
