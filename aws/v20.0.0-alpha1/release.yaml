@@ -61,7 +61,7 @@ spec:
   - catalog: control-plane-catalog
     name: cluster-api-provider-aws
     releaseOperatorDeploy: true
-    version: 1.2.0-gsalphatest.1
+    version: 1.1.0-gsalphatest.1
   - catalog: control-plane-test-catalog
     name: policies-common
     releaseOperatorDeploy: true
