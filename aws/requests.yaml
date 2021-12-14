@@ -1,6 +1,8 @@
 releases:
     - name: "> 16.1.0"
       requests:
+        - name: aws-ebs-csi-driver
+          version: ">= 2.8.0" 
         - name: containerlinux
           version: ">= 2983.2.0"
     - name: "> 15.2.2 > 16.0.2"
