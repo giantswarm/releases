@@ -43,4 +43,11 @@ Please check details in the [upstream changelog page](https://github.com/etcd-io
 - Run as non-root inside container.
 
 
+### aws-ebs-csi-driver [2.8.0](https://github.com/giantswarm/aws-ebs-csi-driver-app/releases/tag/v2.8.0)
+
+### Changed
+
+- Bump aws-ebs-csi-driver version to `v1.5.0`.
+- Enable metrics.
+
 
