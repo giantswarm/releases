@@ -1,4 +1,8 @@
 releases:
+    - name: "> 16.2.0 > 16.1.0 > 16.0.1"
+      requests:
+        - name: cert-exporter
+          version: ">= 2.0.1"
     - name: "> 16.1.0"
       requests:
         - name: containerlinux
