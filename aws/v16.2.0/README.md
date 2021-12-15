@@ -1,6 +1,6 @@
 # :zap: Giant Swarm Release v16.2.0 for AWS :zap:
 
-This is a security release featuring the latest Flatcar Linux version as well as an updated version of the Giant Swarm applications.
+This is a security release featuring the latest Flatcar Linux version as well as various updates to Giant Swarm applications.
 
 ## Change details
 
