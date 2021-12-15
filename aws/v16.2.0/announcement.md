@@ -1,0 +1,1 @@
+**Workload cluster release v16.2.0 for AWS is available**. This is a security release featuring the latest Flatcar Linux version as well as various updates to Giant Swarm applications. Further details can be found in the [release notes](https://docs.giantswarm.io/changes/workload-cluster-releases-aws/releases/aws-v16.2.0/).
