@@ -3,6 +3,8 @@ releases:
       requests:
         - name: cert-exporter
           version: ">= 2.0.1"
+        - name: external-dns
+          version: ">= 2.7.0"
     - name: "> 16.0.2"
       requests:
         - name: cert-operator
