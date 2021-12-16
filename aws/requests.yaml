@@ -5,6 +5,8 @@ releases:
           version: ">= 2.0.1"
         - name: external-dns
           version: ">= 2.7.0"
+        - name: cert-manager
+          version: ">= 2.12.0"
     - name: "> 16.1.0"
       requests:
         - name: containerlinux
