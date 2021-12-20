@@ -2,6 +2,8 @@
 
 This is a security release featuring the latest Flatcar Linux version as well as various updates to Giant Swarm applications.
 
+> **_Warning:_** The `flatcar` image included in this release enabled `cgroups v2` by default. Java applications can crash if they are using older JDK versions because they are unable to identify the memory limits from `cgroups v2`. This has been fixed on newer JDK versions. Please make sure that your applications are using the latest JDK 15, JDK 16 or JDK 17 before upgrading to this release. Upstream issue: https://bugs.openjdk.java.net/browse/JDK-8230305 .
+
 ## Change details
 
 
