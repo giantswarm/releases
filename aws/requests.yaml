@@ -1,8 +1,16 @@
 releases:
+    - name: "> 16.2.0 > 16.1.0 > 16.0.1"
+      requests:
+        - name: cert-exporter
+          version: ">= 2.0.1"
+        - name: external-dns
+          version: ">= 2.7.0"
+        - name: cert-manager
+          version: ">= 2.12.0"
     - name: "> 16.1.0"
       requests:
         - name: containerlinux
-          version: ">= 2983.2.1"
+          version: ">= 2983.2.0"
     - name: "> 15.2.2 > 16.0.2"
       requests:
         - name: cluster-operator
