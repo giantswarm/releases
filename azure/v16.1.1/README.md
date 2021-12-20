@@ -2,7 +2,7 @@
 
 This is a bug fix release to handle a problem during upgrades we found in release 16.1.0.
 
-> **_Warning:_** The `flatcar` image included in this release enabled `cgroups v2` by default. Java applications can crash if they are using older JDK versions because they are unable to identify the memory limits from `cgroups v2`. This has been fixed on newer JDK versions. Please make sure that your applications are using the latest JDK 15 or JDK 17 before upgrading to this release. Upstream issue: https://bugs.openjdk.java.net/browse/JDK-8230305 .
+> **_Warning:_** The `flatcar` image included in this release enabled `cgroups v2` by default. Java applications can crash if they are using older JDK versions because they are unable to identify the memory limits from `cgroups v2`. This has been fixed on newer JDK versions. Please make sure that your applications are using the latest JDK 15, JDK 16 or JDK 17 before upgrading to this release. Upstream issue: https://bugs.openjdk.java.net/browse/JDK-8230305 .
 
 ## Change details
 
