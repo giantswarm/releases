@@ -75,7 +75,8 @@ spec:
   - name: etcd
     version: 3.4.14
   date: "2021-03-02T14:50:41Z"
-  state: wip
+  state: preview
+  notice: This is a preview release only intended to be used for testing. No support is offered at the moment
 status:
   inUse: false
   ready: false
