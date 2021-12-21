@@ -1,0 +1,73 @@
+# Generated with:                                                  # Generated with:
+# /home/whites/workspace/devctl/devctl release create --name 16 |  # /home/whites/workspace/devctl/devctl release create --name 16
+apiVersion: release.giantswarm.io/v1alpha1                         apiVersion: release.giantswarm.io/v1alpha1
+kind: Release                                                      kind: Release
+metadata:                                                          metadata:
+  annotations:                                                       annotations:
+    giantswarm.io/docs: https://docs.giantswarm.io/reference/cp        giantswarm.io/docs: https://docs.giantswarm.io/reference/cp
+  creationTimestamp: null                                            creationTimestamp: null
+  name: v16.2.0                                                 |    name: v16.2.1
+spec:                                                              spec:
+  apps:                                                              apps:
+  - componentVersion: 1.5.0                                          - componentVersion: 1.5.0
+    name: aws-ebs-csi-driver                                           name: aws-ebs-csi-driver
+    version: 2.8.0                                                     version: 2.8.0
+  - name: cert-exporter                                              - name: cert-exporter
+    version: 2.0.0                                              |      version: 2.0.1
+  - componentVersion: 1.5.4                                          - componentVersion: 1.5.4
+    name: cert-manager                                                 name: cert-manager
+    version: 2.11.0                                                    version: 2.11.0
+  - name: chart-operator                                             - name: chart-operator
+    version: 2.19.0                                                    version: 2.19.0
+  - name: cluster-autoscaler                                         - name: cluster-autoscaler
+    version: 1.21.0-gs2                                         |      version: 1.21.2-gs1
+  - componentVersion: 1.8.3                                          - componentVersion: 1.8.3
+    name: coredns                                                      name: coredns
+    version: 1.6.0                                                     version: 1.6.0
+  - componentVersion: 0.9.0                                     |    - componentVersion: 0.10.2
+    name: external-dns                                          |      name: external-dns
+    version: 2.6.0                                              |      version: 2.7.0
+  - componentVersion: 4.1.0                                          - componentVersion: 4.1.0
+    name: kiam                                                         name: kiam
+    version: 2.0.0                                                     version: 2.0.0
+  - name: kiam-watchdog                                              - name: kiam-watchdog
+    version: 0.4.0                                                     version: 0.4.0
+  - componentVersion: 2.2.4                                          - componentVersion: 2.2.4
+    name: kube-state-metrics                                           name: kube-state-metrics
+    version: 1.5.1                                                     version: 1.5.1
+  - componentVersion: 0.4.1                                          - componentVersion: 0.4.1
+    name: metrics-server                                               name: metrics-server
+    version: 1.5.0                                                     version: 1.5.0
+  - name: net-exporter                                               - name: net-exporter
+    version: 1.10.3                                                    version: 1.10.3
+  - componentVersion: 1.0.1                                          - componentVersion: 1.0.1
+    name: node-exporter                                                name: node-exporter
+    version: 1.8.0                                                     version: 1.8.0
+  components:                                                        components:
+  - name: app-operator                                               - name: app-operator
+    releaseOperatorDeploy: false                                       releaseOperatorDeploy: false
+    version: 5.3.1                                                     version: 5.3.1
+  - name: aws-cni                                                    - name: aws-cni
+    version: 1.9.3                                                     version: 1.9.3
+  - name: aws-operator                                               - name: aws-operator
+    releaseOperatorDeploy: true                                        releaseOperatorDeploy: true
+    version: 10.10.1                                                   version: 10.10.1
+  - name: calico                                                     - name: calico
+    version: 3.15.5                                                    version: 3.15.5
+  - name: cert-operator                                              - name: cert-operator
+    releaseOperatorDeploy: true                                        releaseOperatorDeploy: true
+    version: 1.2.0                                                     version: 1.2.0
+  - name: cluster-operator                                           - name: cluster-operator
+    releaseOperatorDeploy: true                                        releaseOperatorDeploy: true
+    version: 3.11.0                                                    version: 3.11.0
+  - name: containerlinux                                             - name: containerlinux
+    version: 2983.2.0                                           |      version: 2905.2.6
+  - name: etcd                                                       - name: etcd
+    version: 3.4.18                                                    version: 3.4.18
+  - name: kubernetes                                                 - name: kubernetes
+    version: 1.21.7                                             |      version: 1.21.8
+  date: "2021-12-09T10:14:45Z"                                  |    date: "2021-12-21T16:09:45Z"
+  state: deprecated                                             |    state: active
+status:                                                            status:
+  inUse: false                                                       inUse: false
+  ready: false                                                       ready: false
