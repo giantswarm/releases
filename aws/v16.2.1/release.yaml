@@ -1,5 +1,5 @@
 # Generated with:
-# /home/whites/workspace/devctl/devctl release create --name 16.2.1 --provider aws --base 16.2.0 --component containerlinux@2905.2.6 --component kubernetes@1.21.8 --app cluster-autoscaler@1.21.2-gs1 --app cert-exporter@2.0.1 --app external-dns@2.7.0 --overwrite
+# /home/whites/workspace/devctl/devctl release create --name 16.2.1 --provider aws --base 16.2.0 --component containerlinux@2905.2.6 --component kubernetes@1.21.8 --app cluster-autoscaler@1.21.2-gs1 --app cert-exporter@2.0.1 --app external-dns@2.7.0 --app cert-manager@2.12.0 --overwrite
 apiVersion: release.giantswarm.io/v1alpha1
 kind: Release
 metadata:
@@ -14,9 +14,8 @@ spec:
     version: 2.8.0
   - name: cert-exporter
     version: 2.0.1
-  - componentVersion: 1.5.4
-    name: cert-manager
-    version: 2.11.0
+  - name: cert-manager
+    version: 2.12.0
   - name: chart-operator
     version: 2.19.0
   - name: cluster-autoscaler
@@ -24,8 +23,7 @@ spec:
   - componentVersion: 1.8.3
     name: coredns
     version: 1.6.0
-  - componentVersion: 0.10.2
-    name: external-dns
+  - name: external-dns
     version: 2.7.0
   - componentVersion: 4.1.0
     name: kiam
@@ -66,7 +64,7 @@ spec:
     version: 3.4.18
   - name: kubernetes
     version: 1.21.8
-  date: "2021-12-21T16:09:45Z"
+  date: "2021-12-21T16:16:03Z"
   state: active
 status:
   inUse: false

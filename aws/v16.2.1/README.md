@@ -9,7 +9,6 @@ It also bumps to latest Kubernetes 1.21 patch release and to latest 1.21 cluster
 
 Downgraded from 2983.2.0 to restore Cgroups v1.
 
-
 ### kubernetes [1.21.8](https://github.com/kubernetes/kubernetes/releases/tag/v1.21.8)
 
 #### Feature
@@ -34,7 +33,9 @@ _Nothing has changed._
 
 ### cluster-autoscaler [1.21.2-gs1](https://github.com/giantswarm/cluster-autoscaler-app/releases/tag/v1.21.2-gs1)
 
-Not found
+### Changed
+
+- Upgraded to upstream version 1.21.2.
 
 
 ### cert-exporter [2.0.1](https://github.com/giantswarm/cert-exporter/releases/tag/v2.0.1)
@@ -51,6 +52,13 @@ Not found
 - Remove support for Kubernetes <= 1.18.
 #### Fixed
 - Fix dry-run option.
+
+
+
+### cert-manager [2.12.0](https://github.com/giantswarm/cert-manager-app/releases/tag/v2.12.0)
+
+#### Changed
+- Upgrade to upstream image [`v1.6.1`](https://github.com/jetstack/cert-manager/releases/tag/v1.6.1) ([#204](https://github.com/giantswarm/cert-manager-app/pull/204)). This version stops serving cert-manager API versions `v1alpha2, v1alpha3, and v1beta1`. If you need to upgrade your resources, [this document](https://cert-manager.io/docs/installation/upgrading/remove-deprecated-apis/#upgrading-existing-cert-manager-resources) explains the process.
 
 
 
