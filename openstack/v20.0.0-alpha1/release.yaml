@@ -1,0 +1,36 @@
+apiVersion: release.giantswarm.io/v1alpha1
+kind: Release
+metadata:
+  creationTimestamp: null
+  name: v20.0.0-alpha1
+spec:
+  apps:
+  - componentVersion: 3.18.0
+    name: calico
+    version: 0.2.0
+  - name: cloud-provider-openstack
+    version: 0.1.0
+  - name: cert-exporter
+    version: 2.0.0
+  - name: chart-operator
+    version: 2.19.1
+  - componentVersion: 2.2.4
+    name: kube-state-metrics
+    version: 1.5.1
+  - componentVersion: 0.4.1
+    name: metrics-server
+    version: 1.5.0
+  - name: net-exporter
+    version: 1.10.3
+  - componentVersion: 1.0.1
+    name: node-exporter
+    version: 1.8.0
+  components:
+  - name: app-operator
+    releaseOperatorDeploy: false
+    version: 5.2.0
+  date: "2021-12-03T12:00:00Z"
+  state: wip
+status:
+  inUse: false
+  ready: false

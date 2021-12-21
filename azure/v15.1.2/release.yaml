@@ -43,6 +43,7 @@ spec:
   - name: cluster-operator
     releaseOperatorDeploy: true
     version: 0.27.1
+    reference: 0.27.1-1
   - name: kubernetes
     version: 1.20.11
   - name: containerlinux
@@ -52,7 +53,7 @@ spec:
   - name: etcd
     version: 3.4.14
   date: "2021-10-07T11:37:50Z"
-  state: active
+  state: deprecated
 status:
   inUse: false
   ready: false

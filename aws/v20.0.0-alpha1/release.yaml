@@ -2,7 +2,7 @@ apiVersion: release.giantswarm.io/v1alpha1
 kind: Release
 metadata:
   creationTimestamp: null
-  name: v20.0.0
+  name: v20.0.0-alpha1
 spec:
   apps:
   - name: aws-cni
@@ -57,27 +57,27 @@ spec:
   - catalog: control-plane-catalog
     name: cluster-api-bootstrap-provider-kubeadm
     releaseOperatorDeploy: true
-    version: 0.3.22-gs6
+    version: 0.3.22-gs12
   - catalog: control-plane-catalog
     name: cluster-api-control-plane
     releaseOperatorDeploy: true
-    version: 0.3.22-gs9
+    version: 0.3.22-gs12
   - catalog: control-plane-catalog
     name: cluster-api-core
     releaseOperatorDeploy: true
-    version: 0.3.22-gs4
+    version: 0.3.22-gs6
   - catalog: control-plane-catalog
     name: cluster-api-provider-aws
     releaseOperatorDeploy: true
-    version: 0.6.8-gs8
+    version: 0.6.8-gs10
   - catalog: control-plane-test-catalog
     name: policies-common
     releaseOperatorDeploy: true
-    version: 0.6.2
+    version: 0.10.0
   - catalog: control-plane-test-catalog
     name: policies-aws
     releaseOperatorDeploy: true
-    version: 0.6.2
+    version: 0.10.0
   - catalog: control-plane-catalog
     name: cluster-apps-operator
     releaseOperatorDeploy: true

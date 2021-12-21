@@ -1,0 +1,1 @@
+**Workload cluster release v16.1.1 for Azure** is now available. This is a bug fix release to handle a problem during upgrades we found in release 16.1.0. Further details can be found in the [release notes](https://docs.giantswarm.io/changes/workload-cluster-releases-azure/releases/azure-v16.1.1/).
