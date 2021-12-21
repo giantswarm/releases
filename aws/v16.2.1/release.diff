@@ -24,7 +24,7 @@ spec:                                                              spec:
   - componentVersion: 1.8.3                                          - componentVersion: 1.8.3
     name: coredns                                                      name: coredns
     version: 1.6.0                                                     version: 1.6.0
-  - componentVersion: 0.9.0                                     |    - componentVersion: 0.10.3
+  - componentVersion: 0.9.0                                     |    - componentVersion: 0.10.2
     name: external-dns                                          |      name: external-dns
     version: 2.5.0                                              |      version: 2.7.0
   - componentVersion: 4.1.0                                          - componentVersion: 4.1.0
