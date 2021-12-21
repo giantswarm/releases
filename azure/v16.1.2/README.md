@@ -37,6 +37,22 @@ _Nothing has changed._
 
 #### Changed
 
-- Updated cluster-autoscaler to version 1.21.2.
+- Upgraded to upstream version 1.21.2. 
+
+
+### cert-exporter [2.0.1](https://github.com/giantswarm/cert-exporter/releases/tag/v2.0.1)
+
+#### Changed
+- Equalise labels in the helm chart.
+
+
+### external-dns [2.7.0](https://github.com/giantswarm/external-dns-app/releases/tag/v2.7.0)
+
+#### Changed
+- Upgrade upstream external-dns from v0.9.0 to [v0.10.2](https://github.com/kubernetes-sigs/external-dns/releases/tag/v0.10.2). The new release brings a lot of smaller improvements and bug fixes.
+- Remove support for Kubernetes <= 1.18.
+#### Fixed
+- Fix dry-run option.
+
 
 

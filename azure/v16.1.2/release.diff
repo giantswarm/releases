@@ -8,15 +8,15 @@ metadata:                                                          metadata:
 spec:                                                              spec:
   apps:                                                              apps:
   - name: cert-exporter                                              - name: cert-exporter
-    version: 2.0.0                                                     version: 2.0.0
+    version: 2.0.0                                              |      version: 2.0.1
   - name: chart-operator                                             - name: chart-operator
     version: 2.19.1                                                    version: 2.19.1
   - componentVersion: 1.8.3                                          - componentVersion: 1.8.3
     name: coredns                                                      name: coredns
     version: 1.6.0                                                     version: 1.6.0
-  - componentVersion: 0.9.0                                          - componentVersion: 0.9.0
-    name: external-dns                                                 name: external-dns
-    version: 2.6.0                                                     version: 2.6.0
+  - componentVersion: 0.9.0                                     |    - componentVersion: 0.10.2
+    name: external-dns                                          |      name: external-dns
+    version: 2.6.0                                              |      version: 2.7.0
   - componentVersion: 2.2.4                                          - componentVersion: 2.2.4
     name: kube-state-metrics                                           name: kube-state-metrics
     version: 1.5.1                                                     version: 1.5.1
@@ -52,7 +52,7 @@ spec:                                                              spec:
     version: 3.15.5                                                    version: 3.15.5
   - name: etcd                                                       - name: etcd
     version: 3.4.18                                                    version: 3.4.18
-  date: "2021-12-14T08:14:17Z"                                  |    date: "2021-12-21T15:49:12Z"
+  date: "2021-12-14T08:14:17Z"                                  |    date: "2021-12-21T16:04:34Z"
   state: deprecated                                             |    state: active
 status:                                                            status:
   inUse: false                                                       inUse: false
