@@ -1,7 +1,7 @@
 # :zap: Giant Swarm Release v16.1.2 for Azure :zap:
 
 This release downgrades Flatcar to version `2905.2.6` to restore version 1 of the kernel cgroups feature.
-It also bumps to latest Kubernetes 1.21 patch release and to latest 1.21 cluster autoscaler.
+Additionally latest Kubernetes 1.21 patch release and latest 1.21 cluster autoscaler version are applied.
 
 ## Change details
 
