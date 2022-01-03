@@ -4,6 +4,7 @@ releases:
         - name: containerlinux
           version: "<= 2905.2.6"
     - name: "> 16.1.2"
+      requests:
       - name: cert-operator
         version: ">= 1.3.0"
     - name: "> 16.1.1 > 16.0.2 > 15.1.3"
