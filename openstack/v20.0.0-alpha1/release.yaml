@@ -9,7 +9,7 @@ spec:
     name: calico
     version: 0.2.0
   - name: cloud-provider-openstack
-    version: 0.1.0
+    version: 0.1.1
   - name: cert-exporter
     version: 2.0.0
   - name: chart-operator
