@@ -52,7 +52,7 @@ spec:
     catalog: control-plane-test-catalog
     releaseOperatorDeploy: true
     version: 10.10.2-dev
-    reference: 10.10.1-000ade851293f29e051ee1a1a8c462413ae4bb6a
+    reference: 10.10.1-4648172d254558d8de0fd77c1d9088eeedf30feb
   - name: calico
     version: 3.15.5
   - name: cert-operator
