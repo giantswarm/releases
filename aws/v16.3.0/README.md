@@ -1,6 +1,11 @@
 # :zap: Giant Swarm Release v16.3.0 for AWS :zap:
 
-<< Add description here >>
+This version provides the latest release of aws-cni, coredns, kiam and kube-state-metrics as well as the latest version
+of many Giant Swarm apps.
+
+Among other things, with this release the `EBS Volume Snapshot` feature is fixed and the new `af-south-1` AWS region is supported.
+
+It keeps using the 2905.2.6 version of Flatcar Linux using cgroups v1. 
 
 ## Change details
 
@@ -18,7 +23,7 @@
 
 ### aws-cni [1.10.1](https://github.com/aws/amazon-vpc-cni-k8s/releases/tag/v1.10.1)
 
-Not found
+Upgraded from version 1.9.3. Please check [upstream changelog](https://github.com/aws/amazon-vpc-cni-k8s/releases) for details.
 
 
 ### cert-operator [1.3.0](https://github.com/giantswarm/cert-operator/releases/tag/v1.3.0)
