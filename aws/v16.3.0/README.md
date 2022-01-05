@@ -1,6 +1,6 @@
 # :zap: Giant Swarm Release v16.3.0 for AWS :zap:
 
-This version provides the latest release of aws-cni, coredns, kiam and kube-state-metrics as well as the latest version
+This version provides the latest releases of aws-cni, coredns, kiam and kube-state-metrics as well as the latest version
 of many Giant Swarm apps.
 
 Among other things, with this release the `EBS Volume Snapshot` feature is fixed and the new `af-south-1` AWS region is supported.
