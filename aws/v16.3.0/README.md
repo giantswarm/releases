@@ -5,7 +5,7 @@ of many Giant Swarm apps.
 
 Among other things, with this release the `EBS Volume Snapshot` feature is fixed and the new `af-south-1` AWS region is supported.
 
-It keeps using the 2905.2.6 version of Flatcar Linux using cgroups v1. 
+It keeps using the 2905.2.6 version of Flatcar Linux with cgroups v1. 
 
 ## Change details
 
