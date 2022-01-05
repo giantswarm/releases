@@ -28,9 +28,14 @@ Not found
 
 
 
-### aws-operator [10.10.2-dev](https://github.com/giantswarm/aws-operator/releases/tag/v10.10.2-dev)
+### aws-operator [10.11.0](https://github.com/giantswarm/aws-operator/releases/tag/v10.11.0)
 
-Not found
+#### Added
+- Add AMI for `af-south-1` region.
+- IAM permission for EBS snapshots.
+#### Fixed
+- Adjusted aws-cni manifests to support version 1.10.1.
+
 
 
 ### chart-operator [2.20.0](https://github.com/giantswarm/chart-operator/releases/tag/v2.20.0)
