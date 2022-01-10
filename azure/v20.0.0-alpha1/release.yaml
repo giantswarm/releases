@@ -48,8 +48,9 @@ spec:
     version: 0.4.1
   - name: cluster-api-provider-azure
     catalog: control-plane-catalog
+    reference: 0.5.3-gs1-23c3b0c54ace6164677787dda6bdf31c6af0e3f8
     releaseOperatorDeploy: true
-    version: 0.5.3-gs1
+    version: 0.5.3
   - catalog: control-plane-catalog
     name: cluster-apps-operator
     releaseOperatorDeploy: true
