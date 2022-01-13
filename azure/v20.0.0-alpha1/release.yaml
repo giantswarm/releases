@@ -49,7 +49,7 @@ spec:
     version: 0.4.1
   - name: cluster-api-provider-azure
     catalog: control-plane-test-catalog
-    reference: 0.5.3-gs1-2b502473af277df98c3667ad46c889b501f5469c
+    reference: 0.5.3-gs1-60af407b5f19cf45117de663a9107990a388b700
     releaseOperatorDeploy: true
     version: 0.5.3
   - catalog: control-plane-catalog
