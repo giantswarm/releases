@@ -1,4 +1,8 @@
 releases:
+    - name: ">= 17.0.0-alpha1"
+      requests:
+        - name: calico
+          version: ">= 3.21.3"
     - name: "< 17.0.0"
       requests:
         - name: containerlinux
