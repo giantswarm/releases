@@ -48,9 +48,11 @@ spec:
     version: 5.4.0
   - name: aws-cni
     version: 1.10.1
-  - name: aws-operator
+  - catalog: control-plane-test-catalog
+    name: aws-operator
     releaseOperatorDeploy: true
-    version: 10.11.0
+    version: 10.11.1-dev
+    reference: 10.11.0-a09c235eefba2cab15771d2c9a31b07a4aa0e95f
   - name: calico
     version: 3.21.3
   - name: cert-operator
