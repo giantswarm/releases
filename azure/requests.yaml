@@ -3,10 +3,14 @@ releases:
       requests:
         - name: calico
           version: ">= 3.21.3"
+        - name: app-operator
+          version: ">= 5.4.1"
     - name: "< 17.0.0"
       requests:
         - name: containerlinux
           version: "<= 2905.2.6"
+        - name: app-operator
+          version: ">= 5.4.1"
     - name: "> 16.1.2"
       requests:
       - name: cert-operator
