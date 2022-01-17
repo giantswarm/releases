@@ -39,13 +39,6 @@ _Nothing has changed._
 Containerlinux release "3033.2.0" was not found in the changelog
 
 
-### azure-operator [5.13.0](https://github.com/giantswarm/azure-operator/releases/tag/v5.13.0)
-
-#### Changed
-- Bumped k8scc to latest version to support Calico 3.21.
-
-
-
 ### external-dns [2.8.0](https://github.com/giantswarm/external-dns-app/releases/tag/v2.8.0)
 
 #### Changed

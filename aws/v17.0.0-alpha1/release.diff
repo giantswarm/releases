@@ -65,9 +65,7 @@ spec:                                                              spec:
     version: 3.4.18                                                    version: 3.4.18
   - name: kubernetes                                                 - name: kubernetes
     version: 1.21.8                                             |      version: 1.22.5
-  date: "2022-01-05T07:55:50Z"                                  |    - name: azure-operator
-                                                                >      version: 5.13.0
-                                                                >    date: "2022-01-14T15:40:08Z"
+  date: "2022-01-05T07:55:50Z"                                  |    date: "2022-01-14T15:40:08Z"
   state: active                                                      state: active
 status:                                                            status:
   inUse: false                                                       inUse: false
