@@ -39,6 +39,13 @@ _Nothing has changed._
 Containerlinux release "3033.2.0" was not found in the changelog
 
 
+### app-operator [5.4.1](https://github.com/giantswarm/app-operator/releases/tag/v5.4.1)
+
+#### Fixed
+- Embed Chart CRD in app-operator to prevent hitting GitHub API rate limits.
+
+
+
 ### external-dns [2.8.0](https://github.com/giantswarm/external-dns-app/releases/tag/v2.8.0)
 
 #### Changed

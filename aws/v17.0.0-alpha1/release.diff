@@ -45,12 +45,15 @@ spec:                                                              spec:
     version: 1.9.0                                                     version: 1.9.0
   components:                                                        components:
   - name: app-operator                                               - name: app-operator
-    version: 5.4.0                                                     version: 5.4.0
+    version: 5.4.0                                              |      version: 5.4.1
   - name: aws-cni                                                    - name: aws-cni
     version: 1.10.1                                                    version: 1.10.1
-  - name: aws-operator                                               - name: aws-operator
+  - catalog: control-plane-test-catalog                              - catalog: control-plane-test-catalog
+    name: aws-operator                                                 name: aws-operator
+                                                                >      reference: 10.11.0-a09c235eefba2cab15771d2c9a31b07a4aa0e95f
     releaseOperatorDeploy: true                                        releaseOperatorDeploy: true
-    version: 10.11.0                                                   version: 10.11.0
+    version: 10.11.1-dev                                               version: 10.11.1-dev
+    reference: 10.11.0-a09c235eefba2cab15771d2c9a31b07a4aa0e95f <
   - name: calico                                                     - name: calico
     version: 3.15.5                                             |      version: 3.21.3
   - name: cert-operator                                              - name: cert-operator
@@ -65,7 +68,7 @@ spec:                                                              spec:
     version: 3.4.18                                                    version: 3.4.18
   - name: kubernetes                                                 - name: kubernetes
     version: 1.21.8                                             |      version: 1.22.5
-  date: "2022-01-05T07:55:50Z"                                  |    date: "2022-01-14T15:40:08Z"
+  date: "2022-01-05T07:55:50Z"                                  |    date: "2022-01-17T09:27:52Z"
   state: active                                                      state: active
 status:                                                            status:
   inUse: false                                                       inUse: false
