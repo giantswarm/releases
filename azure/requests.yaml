@@ -13,6 +13,8 @@ releases:
       requests:
       - name: cert-operator
         version: ">= 1.3.0"
+      - name: external-dns
+        version: ">= 2.8.0"
     - name: "> 16.1.1 > 16.0.2 > 15.1.3"
       requests:
         - name: cert-exporter
