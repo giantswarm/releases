@@ -5,14 +5,10 @@
 ## Change details
 
 
-### app-operator [5.4.0](https://github.com/giantswarm/app-operator/releases/tag/v5.4.0)
+### app-operator [5.4.1](https://github.com/giantswarm/app-operator/releases/tag/v5.4.1)
 
-#### Changed
-- Update Helm to `v3.6.3`.
-- Use controller-runtime client to remove CAPI dependency.
-- Use `apptestctl` to install CRDs in integration tests to avoid hitting GitHub rate limits.
-#### Removed
-- Remove `releasemigration` resource now migration to Helm 3 is complete.
+#### Fixed
+- Embed Chart CRD in app-operator to prevent hitting GitHub API rate limits.
 
 
 
