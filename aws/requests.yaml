@@ -5,6 +5,8 @@ releases:
           version: ">= 3.21.3"
         - name: app-operator
           version: ">= 5.4.1"
+        - name: aws-cni
+          version: ">= 1.10.1-nftables"
     - name: "< 17.0.0-alpha1"
       requests:
         - name: containerlinux
