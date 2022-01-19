@@ -1,0 +1,1 @@
+**Workload cluster release v16.3.1 for AWS is available**. It updates the calculation of max pods per instance for the newly added instance types. Further details can be found in the [release notes](https://docs.giantswarm.io/changes/workload-cluster-releases-aws/releases/aws-v16.3.1/).
