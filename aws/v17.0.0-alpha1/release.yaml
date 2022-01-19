@@ -1,5 +1,5 @@
 # Generated with:
-# /home/whites/workspace/devctl/devctl release create --name 17.0.0-alpha1 --provider aws --base 16.3.0 --app external-dns@2.8.0@0.10.2 --app cluster-autoscaler@1.22.2-gs2 --component calico@3.21.3 --component kubernetes@1.22.5 --component containerlinux@3033.2.0 --component app-operator@5.4.1 --overwrite
+# /home/whites/workspace/devctl/devctl release create --name 17.0.0-alpha1 --provider aws --base 16.3.0 --app external-dns@2.8.0@0.10.2 --app cluster-autoscaler@1.22.2-gs2 --component calico@3.21.3 --component kubernetes@1.22.5 --component containerlinux@3033.2.0 --component app-operator@5.4.1 --component aws-operator@10.13.0 --component aws-cni@1.10.1-nftables --overwrite
 apiVersion: release.giantswarm.io/v1alpha1
 kind: Release
 metadata:
@@ -48,11 +48,9 @@ spec:
     version: 5.4.1
   - name: aws-cni
     version: 1.10.1-nftables
-  - catalog: control-plane-test-catalog
-    name: aws-operator
+  - name: aws-operator
     releaseOperatorDeploy: true
-    version: 10.12.1-dev
-    reference: 10.12.0-3b0e9a8e334ab761990ba9cb4d060f2df6805b89
+    version: 10.13.0
   - name: calico
     version: 3.21.3
   - name: cert-operator
@@ -67,7 +65,7 @@ spec:
     version: 3.4.18
   - name: kubernetes
     version: 1.22.5
-  date: "2022-01-17T09:27:52Z"
+  date: "2022-01-19T13:15:18Z"
   state: active
 status:
   inUse: false

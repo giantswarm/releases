@@ -46,6 +46,18 @@ Containerlinux release "3033.2.0" was not found in the changelog
 
 
 
+### aws-operator [10.13.0](https://github.com/giantswarm/aws-operator/releases/tag/v10.13.0)
+
+#### Changed
+- Bump `k8scloudconfig` to latest release to support Calico 3.21.
+
+
+
+### aws-cni [1.10.1-nftables](https://github.com/aws/amazon-vpc-cni-k8s/releases/tag/v1.10.1-nftables)
+
+Not found
+
+
 ### external-dns [2.8.0](https://github.com/giantswarm/external-dns-app/releases/tag/v2.8.0)
 
 #### Changed
