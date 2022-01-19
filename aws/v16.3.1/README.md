@@ -1,6 +1,6 @@
 # :zap: Giant Swarm Release v16.3.1 for AWS :zap:
 
-<< Add description here >>
+This release updates the calculation of max pods per instance for the newly added instance types.
 
 ## Change details
 
@@ -10,6 +10,3 @@
 #### Changed
 - Max pods setting per for new EC2 instances.
 - Bump `etcd-cluster-migrator` version to `v1.1.0`.
-
-
-
