@@ -1,6 +1,6 @@
 # :zap: Giant Swarm Release v16.3.1 for AWS :zap:
 
-This release updates the calculation of max pods per instance for the newly added instance types.
+This release correctly accounts for the recently added instance types in the calculation of max pods.
 
 ## Change details
 
