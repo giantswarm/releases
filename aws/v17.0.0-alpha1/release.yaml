@@ -47,12 +47,12 @@ spec:
   - name: app-operator
     version: 5.4.1
   - name: aws-cni
-    version: 1.10.1
+    version: 1.10.1-nftables
   - catalog: control-plane-test-catalog
     name: aws-operator
     releaseOperatorDeploy: true
-    version: 10.11.1-dev
-    reference: 10.11.0-154f22fadd24fe8ef085fee1714bc2c91c9ba16a
+    version: 10.12.1-dev
+    reference: 10.12.0-3b0e9a8e334ab761990ba9cb4d060f2df6805b89
   - name: calico
     version: 3.21.3
   - name: cert-operator
