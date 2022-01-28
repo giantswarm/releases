@@ -12,7 +12,7 @@ An release that is enabling an encryption key rotation for kubernetes secret enc
 
 
 
-### cluster-operator [v3.13.0](https://github.com/giantswarm/cluster-operator/releases/tag/vv3.13.0)
+### cluster-operator [3.13.0](https://github.com/giantswarm/cluster-operator/releases/tag/v3.13.0)
 
 - Removed encryption key creation. Encryption keys will be managed by `encryption-provider-operator`.
 
