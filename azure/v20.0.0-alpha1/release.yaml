@@ -44,14 +44,12 @@ spec:
     version: 0.7.0
   - name: cluster-api
     catalog: control-plane-test-catalog
-    reference: 0.4.1-a7c86c466b2f485586c07cab13f9ff3584198045
     releaseOperatorDeploy: true
-    version: 0.4.1
+    version: 1.0.0
   - name: cluster-api-provider-azure
     catalog: control-plane-test-catalog
-    reference: 0.5.3-gs1-60af407b5f19cf45117de663a9107990a388b700
     releaseOperatorDeploy: true
-    version: 0.5.3
+    version: 1.0.0
   - catalog: control-plane-catalog
     name: cluster-apps-operator
     releaseOperatorDeploy: true
