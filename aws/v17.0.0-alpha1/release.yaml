@@ -65,8 +65,9 @@ spec:
     version: 3.4.18
   - name: kubernetes
     version: 1.22.5
-  date: "2022-01-19T13:15:18Z"
-  state: active
+  date: "2022-01-31T10:00:00Z"
+  notice: "This is a preview release meant only for testing. Upgrades to and from this release are not supported."
+  state: preview
 status:
   inUse: false
   ready: false

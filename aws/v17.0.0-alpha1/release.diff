@@ -1,12 +1,12 @@
 # Generated with:                                                  # Generated with:
-# devctl release create --name 16.3.0 --provider aws --base 16. |  # /home/whites/workspace/devctl/devctl release create --name 17
+# devctl release create --name v16.3.1 --provider aws --base 16 |  # /home/whites/workspace/devctl/devctl release create --name 17
 apiVersion: release.giantswarm.io/v1alpha1                         apiVersion: release.giantswarm.io/v1alpha1
 kind: Release                                                      kind: Release
 metadata:                                                          metadata:
   annotations:                                                       annotations:
     giantswarm.io/docs: https://docs.giantswarm.io/reference/cp        giantswarm.io/docs: https://docs.giantswarm.io/reference/cp
   creationTimestamp: null                                            creationTimestamp: null
-  name: v16.3.0                                                 |    name: v17.0.0-alpha1
+  name: v16.3.1                                                 |    name: v17.0.0-alpha1
 spec:                                                              spec:
   apps:                                                              apps:
   - componentVersion: 1.5.0                                          - componentVersion: 1.5.0
@@ -50,7 +50,7 @@ spec:                                                              spec:
     version: 1.10.1                                             |      version: 1.10.1-nftables
   - name: aws-operator                                               - name: aws-operator
     releaseOperatorDeploy: true                                        releaseOperatorDeploy: true
-    version: 10.11.0                                            |      version: 10.13.0
+    version: 10.12.0                                            |      version: 10.13.0
   - name: calico                                                     - name: calico
     version: 3.15.5                                             |      version: 3.21.3
   - name: cert-operator                                              - name: cert-operator
@@ -65,8 +65,9 @@ spec:                                                              spec:
     version: 3.4.18                                                    version: 3.4.18
   - name: kubernetes                                                 - name: kubernetes
     version: 1.21.8                                             |      version: 1.22.5
-  date: "2022-01-05T07:55:50Z"                                  |    date: "2022-01-19T13:15:18Z"
-  state: active                                                      state: active
+  date: "2022-01-19T10:23:42Z"                                  |    date: "2022-01-31T10:00:00Z"
+  state: active                                                 |    notice: "This is a preview release meant only for testing. Up
+                                                                >    state: preview
 status:                                                            status:
   inUse: false                                                       inUse: false
   ready: false                                                       ready: false
