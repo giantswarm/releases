@@ -1,12 +1,7 @@
 commonAnnotations:
   giantswarm.io/docs: https://docs.giantswarm.io/ui-api/management-api/crd/releases.release.giantswarm.io/
 resources:
-- v14.0.0
-- v14.1.0
-- v14.1.2
-- v15.0.0
 - v15.1.0
-- v16.0.0
 - v16.1.0
 - v16.1.1
 transformers:
