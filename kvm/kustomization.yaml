@@ -3,5 +3,6 @@ commonAnnotations:
 resources:
 - v15.1.0
 - v16.1.0
+- v16.1.1
 transformers:
 - releaseNotesTransformer.yaml
