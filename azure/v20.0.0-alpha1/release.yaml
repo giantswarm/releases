@@ -43,11 +43,11 @@ spec:
     releaseOperatorDeploy: true
     version: 0.7.0
   - name: cluster-api
-    catalog: control-plane-test-catalog
+    catalog: control-plane-catalog
     releaseOperatorDeploy: true
     version: 1.0.0
   - name: cluster-api-provider-azure
-    catalog: control-plane-test-catalog
+    catalog: control-plane-catalog
     releaseOperatorDeploy: true
     version: 1.0.0
   - catalog: control-plane-catalog
