@@ -1,6 +1,0 @@
-commonAnnotations:
-  giantswarm.io/docs: https://docs.giantswarm.io/ui-api/management-api/crd/releases.release.giantswarm.io/
-resources:
-- v20.0.0-alpha1
-transformers:
-- releaseNotesTransformer.yaml
