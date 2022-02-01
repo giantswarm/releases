@@ -8,12 +8,9 @@ import (
 	"testing"
 
 	"github.com/blang/semver/v4"
-	"github.com/giantswarm/apiextensions/pkg/apis/release/v1alpha1"
 	"github.com/giantswarm/microerror"
+	"github.com/giantswarm/release-operator/v3/api/v1alpha1"
 	"github.com/giantswarm/versionbundle"
-	"k8s.io/apiextensions-apiserver/pkg/apis/apiextensions"
-	v1 "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1"
-	"k8s.io/apiextensions-apiserver/pkg/apiserver/validation"
 	"sigs.k8s.io/yaml"
 )
 
@@ -279,36 +276,13 @@ func Test_Releases(t *testing.T) {
 				t.Fatal(microerror.Mask(err))
 			}
 
-			crd := v1alpha1.NewReleaseCRD()
-
-			for _, crdVersion := range crd.Spec.Versions {
-				var v apiextensions.CustomResourceValidation
-				// Convert the CRD validation into the version-independent form.
-				err := v1.Convert_v1_CustomResourceValidation_To_apiextensions_CustomResourceValidation(crdVersion.Schema, &v, nil)
-				if err != nil {
-					t.Fatal(microerror.Mask(err))
+			// Ensure that releases satisfy OpenAPI validation.
+			for _, release := range releases {
+				// Check that the release is registered in the main provider kustomization.yaml resources.
+				if _, ok := providerResources[release.Name]; !ok {
+					t.Errorf("release %s not registered in %s/%s", release.Name, tc.provider, kustomizationFilename)
 				}
-
-				validator, _, err := validation.NewSchemaValidator(&v)
-				if err != nil {
-					t.Fatal(microerror.Mask(err))
-				}
-
-				// Ensure that releases satisfy OpenAPI validation.
-				for _, release := range releases {
-					// Check that the release is registered in the main provider kustomization.yaml resources.
-					if _, ok := providerResources[release.Name]; !ok {
-						t.Errorf("release %s not registered in %s/%s", release.Name, tc.provider, kustomizationFilename)
-					}
-					providerResources[release.Name] = true
-					result := validator.Validate(release)
-					if len(result.Errors) > 0 {
-						t.Errorf("invalid release: %#v", release)
-						for i, err := range result.Errors {
-							t.Errorf("validation error %d: %#v", i, err)
-						}
-					}
-				}
+				providerResources[release.Name] = true
 			}
 
 			for _, release := range releases {
