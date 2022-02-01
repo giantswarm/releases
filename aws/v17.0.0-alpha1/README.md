@@ -1057,14 +1057,17 @@ Pull requests:
 
 
 
-### aws-operator [10.13.0](https://github.com/giantswarm/aws-operator/releases/tag/v10.13.0)
+### aws-operator [10.15.0](https://github.com/giantswarm/aws-operator/releases/tag/v10.15.0)
+
+### Added
+
+- Add support for feature that enables forcing cgroups v1 for Flatcar version `3033.2.0` and above.
 
 #### Changed
-- Bump `k8scloudconfig` to latest release to support Calico 3.21.
 - Max pods setting per for new EC2 instances.
 - Bump `etcd-cluster-migrator` version to `v1.1.0`.
-
-
+- Bump `k8scloudconfig` version to `v11.0.1`.
+- Changes to EncryptionConfig in order to fully work with `encryption-provider-operator`.
 
 ### aws-cni [1.10.1-nftables](https://github.com/aws/amazon-vpc-cni-k8s/releases/tag/v1.10.1-nftables)
 
