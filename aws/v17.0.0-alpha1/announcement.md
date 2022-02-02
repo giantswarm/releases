@@ -6,3 +6,6 @@
 
 **Known Issues**
 - Java applications are unable to identify memory limits when using a `JRE` prior to v15 in a Control Groups v2 environment. Support was added in `JRE` v15 and later. More details are available in the [upstream issue](https://bugs.openjdk.java.net/browse/JDK-8230305). We recommend using the latest LTS JRE available (currently v17) to ensure continued compatibility with future releases.
+
+**Control Groups v1**
+To ensure a smooth transition, in case you need time to modify applications to make them compatible with Control Groups v2, we provide a mechanism that will allow using Control Groups v1 on specific node pools. More details are available in our [documentation](https://docs.giantswarm.io/advanced/forcing-cgroupsv1/).
