@@ -9,11 +9,13 @@ It also includes latest version of Calico.
 ### aws-ebs-csi-driver [2.8.1](https://github.com/giantswarm/aws-ebs-csi-driver-app/releases/tag/v2.8.1)
 
 #### Fixed
-
 - Use node selector according to control-plane and nodepool labels.
 
 
-### aws-operator [10.14.0](https://github.com/giantswarm/aws-operator/releases/tag/v10.14.0)
+### aws-operator [10.14.1](https://github.com/giantswarm/aws-operator/releases/tag/v10.14.1)
+
+#### Fixed
+- Autoselect region ARN for ebs snapshots.
 
 #### Changed
 - Changes to EncryptionConfig in order to fully work with `encryption=provider-operator`.
