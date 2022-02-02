@@ -6,7 +6,7 @@ It also includes latest version of Calico.
 ## Change details
 
 
-### aws-ebs-csi-driver-app [2.8.1](https://github.com/giantswarm/aws-ebs-csi-driver-app/releases/tag/v2.8.1)
+### aws-ebs-csi-driver [2.8.1](https://github.com/giantswarm/aws-ebs-csi-driver-app/releases/tag/v2.8.1)
 
 #### Fixed
 
