@@ -48,7 +48,11 @@ _Nothing has changed._
 Containerlinux release "3033.2.0" was not found in the changelog
 
 
-### azure-operator [5.13.0](https://github.com/giantswarm/azure-operator/releases/tag/v5.13.0)
+### azure-operator [5.14.0](https://github.com/giantswarm/azure-operator/releases/tag/v5.14.0)
+
+### Added
+
+- Add support for feature that enables forcing cgroups v1 for Flatcar version `3033.2.0` and above.
 
 #### Changed
 - Bumped k8scc to latest version to support Calico 3.21.
