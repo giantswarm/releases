@@ -67,7 +67,7 @@ spec:
     version: 1.22.5
   date: "2022-01-31T10:00:00Z"
   notice: "This is a preview release meant only for testing. Upgrades to and from this release are not supported."
-  state: active
+  state: preview
 status:
   inUse: false
   ready: false
