@@ -50,7 +50,7 @@ spec:
     version: 1.10.1
   - name: aws-operator
     releaseOperatorDeploy: true
-    version: 10.14.0
+    version: 10.14.1
   - name: calico
     version: 3.21.3
   - name: cert-operator
