@@ -15,6 +15,7 @@ to all Giant Swarm installations.
     - [v20.0.0-alpha1](https://github.com/giantswarm/releases/tree/master/aws/v20.0.0-alpha1)
 - v16
   - v16.3
+    - [v16.3.1](https://github.com/giantswarm/releases/tree/master/aws/v16.3.1)
     - [v16.3.0](https://github.com/giantswarm/releases/tree/master/aws/v16.3.0)
 - v16
   - v16.2
@@ -47,7 +48,7 @@ to all Giant Swarm installations.
     - [v14.0.0](https://github.com/giantswarm/releases/tree/master/aws/archived/v14.0.0)
 - v13
   - v13.2
-    - [v13.2.0](https://github.com/giantswarm/releases/tree/master/aws/v13.2.0)
+    - [v13.2.0](https://github.com/giantswarm/releases/tree/master/aws/archived/v13.2.0)
   - v13.1
     - [v13.1.1](https://github.com/giantswarm/releases/tree/master/aws/archived/v13.1.1)
     - [v13.1.0](https://github.com/giantswarm/releases/tree/master/aws/v13.1.0)
@@ -169,8 +170,8 @@ to all Giant Swarm installations.
     - [v16.0.0](https://github.com/giantswarm/releases/tree/master/azure/archived/v16.0.0)
 - v15
   - v15.1
-    - [v15.1.3](https://github.com/giantswarm/releases/tree/master/azure/v15.1.3)
-    - [v15.1.2](https://github.com/giantswarm/releases/tree/master/azure/v15.1.2)
+    - [v15.1.3](https://github.com/giantswarm/releases/tree/master/azure/archived/v15.1.3)
+    - [v15.1.2](https://github.com/giantswarm/releases/tree/master/azure/archived/v15.1.2)
     - [v15.1.1](https://github.com/giantswarm/releases/tree/master/azure/archived/v15.1.1)
     - [v15.1.0](https://github.com/giantswarm/releases/tree/master/azure/archived/v15.1.0)
   - v15.0
@@ -250,23 +251,25 @@ to all Giant Swarm installations.
 ## KVM
 
 - v16
-  - v16.0
-    - [v16.0.0](https://github.com/giantswarm/releases/tree/master/kvm/v16.0.0)
+  - v16.1
+    - [v16.1.1](https://github.com/giantswarm/releases/tree/master/kvm/v16.1.1)
     - [v16.1.0](https://github.com/giantswarm/releases/tree/master/kvm/v16.1.0)
+  - v16.0
+    - [v16.0.0](https://github.com/giantswarm/releases/tree/master/kvm/archived/v16.0.0)
 
 - v15
   - v15.1
     - [v15.1.0](https://github.com/giantswarm/releases/tree/master/kvm/v15.1.0)
   - v15.0
-    - [v15.0.0](https://github.com/giantswarm/releases/tree/master/kvm/v15.0.0)
+    - [v15.0.0](https://github.com/giantswarm/releases/tree/master/kvm/archived/v15.0.0)
 
 - v14
   - v14.1
-    - [v14.1.2](https://github.com/giantswarm/releases/tree/master/kvm/v14.1.2)
+    - [v14.1.2](https://github.com/giantswarm/releases/tree/master/kvm/archived/v14.1.2)
     - [v14.1.1](https://github.com/giantswarm/releases/tree/master/kvm/archived/v14.1.1)
-    - [v14.1.0](https://github.com/giantswarm/releases/tree/master/kvm/v14.1.0)
+    - [v14.1.0](https://github.com/giantswarm/releases/tree/master/kvm/archived/v14.1.0)
   - v14.0
-    - [v14.0.0](https://github.com/giantswarm/releases/tree/master/kvm/v14.0.0)
+    - [v14.0.0](https://github.com/giantswarm/releases/tree/master/kvm/archived/v14.0.0)
 
 - v13
   - v13.1
@@ -320,16 +323,3 @@ to all Giant Swarm installations.
     - [v8.1.0](https://github.com/giantswarm/releases/tree/master/kvm/archived/v8.1.0)
   - v8.0
     - [v8.0.0](https://github.com/giantswarm/releases/tree/master/kvm/archived/v8.0.0)
-
-## OpenStack
-
-- v20
-  - v20.0
-    - [v20.0.0-alpha1](https://github.com/giantswarm/releases/tree/master/openstack/v20.0.0-alpha1)
-
-## VSphere
-
-- v20
-  - v20.0
-    - [v20.0.0-alpha1](https://github.com/giantswarm/releases/tree/master/vsphere/v20.0.0-alpha1)
-

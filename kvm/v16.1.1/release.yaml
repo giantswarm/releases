@@ -2,7 +2,7 @@ apiVersion: release.giantswarm.io/v1alpha1
 kind: Release
 metadata:
   creationTimestamp: null
-  name: v20.0.0-alpha1
+  name: v16.1.1
 spec:
   apps:
   - name: cert-exporter
@@ -27,31 +27,27 @@ spec:
   - name: app-operator
     releaseOperatorDeploy: false
     version: 5.2.0
-  - name: cluster-api
-    catalog: control-plane-catalog
-    releaseOperatorDeploy: true
-    version: 0.4.1
-  - name: cluster-api-provider-vsphere
-    catalog: control-plane-catalog
-    releaseOperatorDeploy: true
-    version: 0.8.1
-  - catalog: control-plane-test-catalog
-    name: policies-common
-    releaseOperatorDeploy: true
-    version: 0.6.1
-  - name: cluster-apps-operator
-    releaseOperatorDeploy: true
-    version: 0.6.0
-  - name: kubernetes
-    version: 1.20.10
-  - name: containerlinux
-    version: 2605.12.0
   - name: calico
-    version: 3.19.2
+    version: 3.20.1
+  - name: cert-operator
+    releaseOperatorDeploy: true
+    version: 1.0.1
+  - name: cluster-operator
+    releaseOperatorDeploy: true
+    version: 0.27.2
+  - name: containerlinux
+    version: 2905.2.3
   - name: etcd
-    version: 3.4.14
-  date: "2021-11-04T12:00:00Z"
-  state: wip
+    version: 3.5.0
+  - name: flannel-operator
+    version: 0.2.0
+  - name: kubernetes
+    version: 1.21.5
+  - name: kvm-operator
+    releaseOperatorDeploy: true
+    version: 3.18.4
+  date: "2022-01-28T20:55:00Z"
+  state: active
 status:
   inUse: false
   ready: false
