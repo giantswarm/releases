@@ -6,6 +6,13 @@ It also includes latest version of Calico.
 ## Change details
 
 
+### aws-ebs-csi-driver-app [2.8.1](https://github.com/giantswarm/aws-ebs-csi-driver-app/releases/tag/v2.8.1)
+
+#### Fixed
+
+- Use node selector according to control-plane and nodepool labels.
+
+
 ### aws-operator [10.14.0](https://github.com/giantswarm/aws-operator/releases/tag/v10.14.0)
 
 #### Changed
