@@ -110,3 +110,9 @@ If you already specify `--aws-batch-change-interval` or `--aws-zones-cache-durat
 - Allow setting Route53 credentials (`externalDNS.aws_access_key_id` and `externalDNS.aws_secret_access_key`) indepentent from `aws.access` value.
 - Allow setting the AWS default region (`aws.region`) indepentent from `aws.access` value.
 - Allow to omit the `--domain-filter` flag completely by setting `externalDNS.domainFilterList` to `null`.
+- 
+### kiam-watchdog [0.5.1](https://github.com/giantswarm/kiam-watchdog/releases/tag/v0.5.1)
+
+### Added
+
+- Added --probe-mode flag to allow using either 'route53' or 'sts' to probe AWS API. 'sts' is the default.

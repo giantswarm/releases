@@ -31,7 +31,7 @@ spec:
     name: kiam
     version: 2.1.0
   - name: kiam-watchdog
-    version: 0.4.0
+    version: 0.5.1
   - componentVersion: 2.3.0
     name: kube-state-metrics
     version: 1.6.0
