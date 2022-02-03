@@ -1,0 +1,1 @@
+**Workload cluster release v16.4.0 for AWS is available**. It provides a new feature to automatically rotate the Kubernetes API key used to encrypt secret data in etcd and it also includes latest version of Calico. Further details can be found in the [release notes](https://docs.giantswarm.io/changes/workload-cluster-releases-aws/releases/aws-v16.4.0/).
