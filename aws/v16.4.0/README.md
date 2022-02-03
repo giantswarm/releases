@@ -4,7 +4,9 @@ This release provides a new feature to automatically rotate the Kubernetes API k
 
 **Highlights**
 - Automation of the Kubernetes API key used to encrypt secret data in etcd;
-- Calico `v3.21.3`.
+- Calico `v3.21.3`;
+- Fixed IAM policy to select ARNs of EBS snapshots for AWS China;
+- `kiam-watchdog` now probes STS instead of Route53 by default.
 
 ## Change details
 
