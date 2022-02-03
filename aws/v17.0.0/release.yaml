@@ -54,7 +54,7 @@ spec:
     version: 1.9.0
   components:
   - name: app-operator
-    version: 5.4.1
+    version: 5.6.0
   - name: aws-cni
     version: 1.10.1-nftables
   - name: aws-operator
