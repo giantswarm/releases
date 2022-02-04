@@ -47,7 +47,7 @@ spec:                                                              spec:
     releaseOperatorDeploy: true                                        releaseOperatorDeploy: true
     version: 3.18.4                                                    version: 3.18.4
   date: "2022-01-28T20:55:00Z"                                  |    date: "2022-02-04T15:52:34Z"
-  state: active                                                      state: active
+  state: deprecated                                             |    state: active
 status:                                                            status:
   inUse: false                                                       inUse: false
   ready: false                                                       ready: false
