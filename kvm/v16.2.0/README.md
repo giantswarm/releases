@@ -1,6 +1,6 @@
 # :zap: Giant Swarm Release v16.2.0 for KVM :zap:
 
-<< Add description here >>
+This release updates several preinstalled apps running in the workload cluster to reduce Kubernetes API server load and etcd memory usage in certain installations.
 
 ## Change details
 
