@@ -1,6 +1,6 @@
 # :zap: Giant Swarm Release v16.4.0 for AWS :zap:
 
-This release provides a new feature to automatically rotate the Kubernetes API key used to encrypt secret data in etcd. It also includes latest version of Calico.
+This release provides a new feature to automatically rotate the Kubernetes API key used to encrypt secret data in etcd. It also includes the latest version of Calico.
 
 **Highlights**
 - Automation of the Kubernetes API key used to encrypt secret data in etcd;
