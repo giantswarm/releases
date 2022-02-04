@@ -10,12 +10,12 @@ This release provides a new feature to automatically rotate the Kubernetes API k
 
 **How does the Kubernetes API key rotation work?**
 
-* The rotation is disabled by default and has to be enabled by setting annotation `encryption.giantswarm.io/enable-rotation` on the secret `${CLUSTER-ID}-encryption-provider-config`.
-* The key rotation happens once is the key 180 days old (counting from creation timestamp on `${CLUSTER-ID}-encryption-provider-config` secret or from last key rotation).It can also be forced by setting annotation `encryption.giantswarm.io/force-rotation` to start the rotation process immediately.
-* Once the process of key rotation start, new config is generated containing the new key and the old key. 
-* Next step requires a roll of master nodes(either manually or during an update).
-* Once master nodes has been rolled and have up-to-date configuration for the encryption, `encryption-provider-operator` will rewrite all secrets which will cause the secrets to be re-encrypted with use of the new key.
-* After all secrets are rewritten, operator will remove the old encryption key.
+* The rotation is disabled by default and has to be enabled by setting the `encryption.giantswarm.io/enable-rotation` annotation on the `${CLUSTER-ID}-encryption-provider-config` secret;
+* The key rotation happens if the key is at least 180 days old (counting from creation timestamp on `${CLUSTER-ID}-encryption-provider-config` secret or from last key rotation). It can also be forced by setting the `encryption.giantswarm.io/force-rotation` annotation to start the rotation process immediately;
+* A new config is generated containing the new and old keys as soon as the process starts;
+* The next step requires a roll of the control plane nodes (either manually or during an update);
+* After the control plane nodes have been rolled and are using the new encryption configuration, the `encryption-provider-operator` will rewrite all secrets. This leads to the re-encryption of all secrets with the new key;
+* The operator will remove the old encryption key after all the secrets are rewritten.
 
 
 ## Change details
