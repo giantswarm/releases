@@ -8,6 +8,8 @@ This release provides a new feature to automatically rotate the Kubernetes API k
 - Fixed IAM policy to select ARNs of EBS snapshots for AWS China;
 - `kiam-watchdog` now probes STS instead of Route53 by default.
 
+**How is the Kubernetes API key rotation work?**
+
 ## Change details
 
 
