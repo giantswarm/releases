@@ -10,6 +10,14 @@ This release provides a new feature to automatically rotate the Kubernetes API k
 
 **How does the Kubernetes API key rotation work?**
 
+* The rotation is disabled by default and has to be enabled by setting annotation `encryption.giantswarm.io/enable-rotation` on the secret `${CLUSTER-ID}-encryption-provider-config`.
+* The key rotation happens once is the key 180 days old (counting from creation timestamp on `${CLUSTER-ID}-encryption-provider-config` secret or from last key rotation).It can also be forced by setting annotation `encryption.giantswarm.io/force-rotation` to start the rotation process immediately.
+* Once the process of key rotation start, new config is generated containing the new key and the old key. 
+* Next step requires a roll of master nodes(either manually or during an update).
+* Once master nodes has been rolled and have up-to-date configuration for the encryption, `encryption-provider-operator` will rewrite all secrets which will cause the secrets to be re-encrypted with use of the new key.
+* After all secrets are rewritten, operator will remove the old encryption key.
+
+
 ## Change details
 
 
