@@ -4,7 +4,7 @@ This release provides initial support for creating clusters with Cluster API for
 
 > **_Warning:_** This is an **`alpha preview release`** intended only for testing cluster creation. Upgrading to or from this version is not supported.
 
-> **_Warning:_** There is a breaking change if `kubectl` is used manage machine pools. The `MachinePool` resource was moved to a new Kubernetes API Group named `machinepools.cluster.x-k8s.io` from `machinepools.exp.cluster.x-k8s.io`. The full resource path has to be specified when using `kubectl-gs` in order to access the machine pools created with the old API group. More details are available [below](###Machine pools with kubectl-gs).
+> **_Warning:_** There is a breaking change if `kubectl` is used manage machine pools. The `MachinePool` resource was moved to a new Kubernetes API Group named `machinepools.cluster.x-k8s.io` from `machinepools.exp.cluster.x-k8s.io`. The full resource path has to be specified when using `kubectl-gs` in order to access the machine pools created with the old API group. More details are available [below](#machine-pools).
 
 ```
 kubectl get machinepools.exp.cluster.x-k8s.io -A
@@ -21,7 +21,7 @@ kubectl gs template nodepool  --provider azure --release "v20.0.0-alpha1" --orga
 
 At the moment, only `MachinePool` and `AzureMachinePool` Cluster API custom resources are supported.
 
-### Machine pools with kubectl-gs
+### <a name="machine-pools"></a> Machine pools with kubectl-gs
 
 There is a breaking change that you should be aware of if you use `kubectl` to manage `MachinePools`.
 The `MachinePool` and `AzureMachinePool` CRDs have been moved to a new kubernetes API Group.
