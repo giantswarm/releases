@@ -1,4 +1,3 @@
-**Workload cluster release v20.0.0-alpha1 for Azure** is now available. 
+**Workload cluster release v20.0.0-alpha1 for Azure** is now available. It provides initial support for creating clusters with Cluster API for Azure (CAPZ).
 
-We are happy to announce our first Giant Swarm ClusterAPI alpha release.
-Using this release to create cluster means using all the power from ClusterAPI but inside the Giant Swarm product.
+> **_Warning:_** This is an **`alpha preview release`** intended only for testing cluster creation. Upgrading to or from this version is not supported.
