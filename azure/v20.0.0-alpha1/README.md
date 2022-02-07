@@ -1,20 +1,16 @@
 # :zap: Giant Swarm Release v20.0.0-alpha1 for Azure :zap:
 
-We are happy to announce our first Giant Swarm ClusterAPI alpha release.
-Using this release to create cluster means using all the power from ClusterAPI but inside the Giant Swarm product.
+This release provides initial support for creating clusters with Cluster API for Azure (CAPZ).
+
+> **_Warning:_** This is an **`alpha preview release`** intended only for testing cluster creation. Upgrading to or from this version is not supported.
 
 ## Change details
 
-This is an alpha release, but you can already create clusters in a similar fashion as your regular Giant Swarm clusters.
+Clusters are created in a similar way as regular Giant Swarm clusters by using the `v20.0.0-alpha1` release with the `kubectl gs` command:
 
 ```
 kubectl gs template cluster --provider azure --release v20.0.0-alpha1 --organization giantswarm --description 'test' --output cluster.yaml
 kubectl gs template nodepool  --provider azure --release "v20.0.0-alpha1" --organization giantswarm --cluster-name "hc27f" --description "np1" --nodes-min 3 --nodes-max 10 --output nodepool.yaml
 ```
 
-Please notice that since this is an alpha release, the clusters you create won't be upgradable to next releases.
-Also, please don't upgrade your existing clusters to this release.
-
-With ClusterAPI you get the freedom to configure many aspects of your Kubernetes clusters directly from the Custom Resources.
-We don't support all the Custom Resources just yet, but are working hard to provide you all that are available on upstream ClusterAPI.
-Currently we only support the `MachinePool` and `AzureMachinePool` objects for creating nodepools.
+At the moment, only `MachinePool` and `AzureMachinePool` Cluster API custom resources are supported.
