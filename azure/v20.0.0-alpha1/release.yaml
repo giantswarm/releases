@@ -1,0 +1,82 @@
+apiVersion: release.giantswarm.io/v1alpha1
+kind: Release
+metadata:
+  creationTimestamp: null
+  name: v20.0.0-alpha1
+spec:
+  apps:
+  - catalog: default
+    name: calico-policy-only
+    version: 0.2.0
+  - name: cert-exporter
+    version: 1.8.0
+  - componentVersion: 1.1.0
+    name: cert-manager
+    version: 2.4.1
+  - name: chart-operator
+    version: 2.19.1
+  - componentVersion: 0.9.0
+    name: external-dns
+    version: 2.6.0
+  - componentVersion: 1.9.7
+    name: kube-state-metrics
+    version: 1.3.0
+  - name: metrics-server
+    version: 1.5.0
+  - name: net-exporter
+    version: 1.10.1
+  - componentVersion: 1.0.1
+    name: node-exporter
+    version: 1.7.1
+  - name: cluster-autoscaler
+    version: 1.23.0
+  - name: azure-scheduled-events
+    version: 0.4.0
+  - name: azure-storageclasses
+    version: 0.1.0
+  components:
+  - name: app-operator
+    releaseOperatorDeploy: false
+    version: 5.2.0
+  - catalog: control-plane-catalog
+    name: azure-ad-pod-identity-app
+    releaseOperatorDeploy: true
+    version: 0.7.0
+  - name: cluster-api
+    catalog: control-plane-catalog
+    releaseOperatorDeploy: true
+    version: 1.0.1
+  - name: cluster-api-provider-azure
+    catalog: control-plane-catalog
+    releaseOperatorDeploy: true
+    version: 1.0.0
+  - catalog: control-plane-catalog
+    name: cluster-apps-operator
+    releaseOperatorDeploy: true
+    version: 0.6.1
+  - catalog: control-plane-test-catalog
+    name: policies-common
+    releaseOperatorDeploy: true
+    version: 0.14.0
+  - catalog: control-plane-test-catalog
+    name: policies-azure
+    releaseOperatorDeploy: true
+    version: 0.14.0
+  - catalog: control-plane-test-catalog
+    name: dns-operator-azure
+    releaseOperatorDeploy: true
+    version: 0.4.0
+  - name: kubernetes
+    version: 1.19.8
+  - name: containerlinux
+    version: 2605.12.0
+  - name: calico
+    version: 3.15.3
+  - name: etcd
+    version: 3.4.14
+  date: "2021-03-02T14:50:41Z"
+  state: preview
+  notice: This is a preview release only intended to be used for testing. No support is offered at the moment
+status:
+  inUse: false
+  ready: false
