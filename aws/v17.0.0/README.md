@@ -1133,7 +1133,7 @@ If you already specify `--aws-batch-change-interval` or `--aws-zones-cache-durat
 - Fix sts successful check.
 
 
-### vertical-pod-autoscaler [2.1.0](https://github.com/giantswarm/vertical-pod-autoscaler-app/releases/tag/v2.1.0)
+### vertical-pod-autoscaler [2.1.1](https://github.com/giantswarm/vertical-pod-autoscaler-app/releases/tag/v2.1.1)
 
-#### Added
-- Network Policy for VPA.
+#### Fixed
+- Fix naming of VPA deployments in workload clusters.
