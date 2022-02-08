@@ -7,3 +7,5 @@
 ```
 kubectl get machinepools.exp.cluster.x-k8s.io -A
 ```
+
+Clusters can be created with `kubectl-gs` by following the [documentation](https://docs.giantswarm.io/ui-api/kubectl-gs/template-cluster/#flags-capz).

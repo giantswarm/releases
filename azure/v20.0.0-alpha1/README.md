@@ -10,6 +10,8 @@ This release provides initial support for creating clusters with Cluster API for
 kubectl get machinepools.exp.cluster.x-k8s.io -A
 ```
 
+Clusters can be created with `kubectl-gs` by following the [documentation](https://docs.giantswarm.io/ui-api/kubectl-gs/template-cluster/#flags-capz).
+
 ## Change details
 
 Clusters are created in a similar way as regular Giant Swarm clusters by using the `v20.0.0-alpha1` release with the `kubectl gs` command:
