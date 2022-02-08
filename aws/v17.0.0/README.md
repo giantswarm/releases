@@ -1,6 +1,6 @@
 # :zap: Giant Swarm Release v17.0.0 for AWS :zap:
 
-This release provides support for Kubernetes 1.22 and has Control Groups v2 enabled by default. It also introduces Vertical Pod autoscaling to help size Pods for the optimal CPU and memory resources required
+This release provides support for Kubernetes 1.22, has Control Groups v2 enabled by default and it introduces Vertical Pod autoscaling to help size Pods for the optimal CPU and memory resources required.
 
 **Highlights**
 - Kubernetes 1.22 support;
@@ -25,8 +25,6 @@ This release provides support for Kubernetes 1.22 and has Control Groups v2 enab
     * 1 polkit CVE;
     * 1 sssd CVE;
     * 1 SDK: perl CVE;
-
-> **_Warning:_** This is an **`alpha preview release`** intended only for testing Kubernetes v1.22 changes and Control Groups v2 compatibility. Upgrading to or from this version is not supported.
 
 > **_Warning:_** Kubernetes v1.22 removed certain APIs and features. More details are available in the [upstream blog post](https://kubernetes.io/blog/2021/07/14/upcoming-changes-in-kubernetes-1-22/).
 
