@@ -13,6 +13,8 @@ releases:
           version: ">= 3.21.3"
         - name: app-operator
           version: ">= 5.4.1"
+        - name: azure-scheduled-events
+          version: ">= 0.6.0"
     - name: "< 17.0.0"
       requests:
         - name: containerlinux
