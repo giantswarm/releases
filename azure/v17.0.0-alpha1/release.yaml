@@ -31,7 +31,7 @@ spec:
   - name: cluster-autoscaler
     version: 1.22.2-gs1
   - name: azure-scheduled-events
-    version: 0.5.0
+    version: 0.6.0
   components:
   - name: app-operator
     version: 5.4.1

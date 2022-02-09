@@ -106,4 +106,8 @@ Not found
 
 Not found
 
+### azure-scheduled-events [0.6.0](https://github.com/giantswarm/azure-scheduled-events/releases/tag/v0.6.0)
 
+### Added
+
+- Add `priorityClassName: "system-node-critical"` to Daemonset to give higher priority during scheduling.
