@@ -1114,9 +1114,10 @@ Pull requests:
 - Use node selector according to control-plane and nodepool labels.
 
 
-### aws-operator [10.15.1](https://github.com/giantswarm/aws-operator/releases/tag/v10.15.1)
+### aws-operator [10.16.0](https://github.com/giantswarm/aws-operator/releases/tag/v10.16.0)
 
 #### Added
+- New flatcar releases.
 - Add support for feature that enables forcing cgroups v1 for Flatcar version `3033.2.0` and above.
 
 #### Changed
