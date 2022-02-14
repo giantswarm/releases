@@ -38,7 +38,7 @@ To ensure a smooth transition, in case you need time to modify applications to m
 ## Change details
 
 
-### kubernetes [1.22.5](https://github.com/kubernetes/kubernetes/releases/tag/v1.22.5)
+### kubernetes [1.22.6](https://github.com/kubernetes/kubernetes/releases/tag/v1.22.6)
 
 #### What's New (Major Themes)
 
@@ -814,7 +814,7 @@ This vulnerability was reported by Fabricio Voznika and Mark Wolters of Google.
 
 
 
-### containerlinux [3033.2.0](https://www.flatcar-linux.org/releases/#release-3033.2.0)
+### containerlinux [3033.2.2](https://www.flatcar-linux.org/releases/#release-3033.2.2)
 
 **Breaking changes**
 
@@ -826,6 +826,20 @@ several known issues:
 **Security fixes**
 
 * Linux
+    - [CVE-2021-43976](https://nvd.nist.gov/vuln/detail/CVE-2021-43976)
+    - [CVE-2022-0330](https://nvd.nist.gov/vuln/detail/CVE-2022-0330)
+    - [CVE-2022-22942](https://nvd.nist.gov/vuln/detail/CVE-2022-22942)
+    - [CVE-2021-4135](https://nvd.nist.gov/vuln/detail/CVE-2021-4135)
+    - [CVE-2021-4155](https://nvd.nist.gov/vuln/detail/CVE-2021-4155)
+    - [CVE-2021-28711](https://nvd.nist.gov/vuln/detail/CVE-2021-28711)
+    - [CVE-2021-28712](https://nvd.nist.gov/vuln/detail/CVE-2021-28712)
+    - [CVE-2021-28713](https://nvd.nist.gov/vuln/detail/CVE-2021-28713)
+    - [CVE-2021-28714](https://nvd.nist.gov/vuln/detail/CVE-2021-28714)
+    - [CVE-2021-28715](https://nvd.nist.gov/vuln/detail/CVE-2021-28715)
+    - [CVE-2021-39685](https://nvd.nist.gov/vuln/detail/CVE-2021-39685)
+    - [CVE-2021-44733](https://nvd.nist.gov/vuln/detail/CVE-2021-44733)
+    - [CVE-2021-45095](https://nvd.nist.gov/vuln/detail/CVE-2021-45095)
+    - [CVE-2022-0185](https://nvd.nist.gov/vuln/detail/CVE-2022-0185)
     - [CVE-2021-4002](https://nvd.nist.gov/vuln/detail/CVE-2021-4002)
     - [CVE-2020-27820](https://nvd.nist.gov/vuln/detail/CVE-2020-27820)
     - [CVE-2021-4001](https://nvd.nist.gov/vuln/detail/CVE-2021-4001)
@@ -874,6 +888,7 @@ several known issues:
 * ca-certificates
     - [CVE-2021-43527](https://nvd.nist.gov/vuln/detail/CVE-2021-43527)
 * containerd
+    - [CVE-2021-43816](https://nvd.nist.gov/vuln/detail/CVE-2021-43816)
     - [CVE-2021-41103](https://nvd.nist.gov/vuln/detail/CVE-2021-41103)
     - [CVE-2021-41190](https://nvd.nist.gov/vuln/detail/CVE-2021-41190)
 * curl
@@ -885,9 +900,24 @@ several known issues:
     - [CVE-2021-41089](https://nvd.nist.gov/vuln/detail/CVE-2021-41089)
     - [CVE-2021-41091](https://nvd.nist.gov/vuln/detail/CVE-2021-41091)
     - [CVE-2021-41190](https://nvd.nist.gov/vuln/detail/CVE-2021-41190)
+* expat
+    - [CVE-2022-23852](hrrp://nvd.nist.gov/vuln/detail/CVE-2022-23852)
+    - [CVE-2022-23990](https://nvd.nist.gov/vuln/detail/CVE-2022-23990)
+    - [CVE-2021-45960](https://nvd.nist.gov/vuln/detail/CVE-2021-45960)
+    - [CVE-2021-46143](https://nvd.nist.gov/vuln/detail/CVE-2021-46143)
+    - [CVE-2022-22822](https://nvd.nist.gov/vuln/detail/CVE-2022-22822)
+    - [CVE-2022-22823](https://nvd.nist.gov/vuln/detail/CVE-2022-22823)
+    - [CVE-2022-22824](https://nvd.nist.gov/vuln/detail/CVE-2022-22824)
+    - [CVE-2022-22825](https://nvd.nist.gov/vuln/detail/CVE-2022-22825)
+    - [CVE-2022-22826](https://nvd.nist.gov/vuln/detail/CVE-2022-22826)
+    - [CVE-2022-22827](https://nvd.nist.gov/vuln/detail/CVE-2022-22827)
 * git
     - [CVE-2021-40330](https://nvd.nist.gov/vuln/detail/CVE-2021-40330)
 * glibc
+    - [CVE-2021-3998](https://nvd.nist.gov/vuln/detail/CVE-2021-3998)
+    - [CVE-2021-3999](https://nvd.nist.gov/vuln/detail/CVE-2021-3999)
+    - [CVE-2022-23218](https://nvd.nist.gov/vuln/detail/CVE-2022-23218)
+    - [CVE-2022-23219](https://nvd.nist.gov/vuln/detail/CVE-2022-23219)
     - [CVE-2021-38604](https://nvd.nist.gov/vuln/detail/CVE-2021-38604)
 * gnupg
     - [CVE-2020-25125](https://nvd.nist.gov/vuln/detail/CVE-2020-25125)
@@ -897,6 +927,7 @@ several known issues:
     - [CVE-2021-20305](https://nvd.nist.gov/vuln/detail/CVE-2021-20305)
     - [CVE-2021-3580](https://nvd.nist.gov/vuln/detail/CVE-2021-3580)
 * polkit
+    - [CVE-2021-40340](https://nvd.nist.gov/vuln/detail/CVE-2021-40340)
     - [CVE-2021-3560](https://nvd.nist.gov/vuln/detail/CVE-2021-3560)
 * sssd
     - [CVE-2021-3621](https://nvd.nist.gov/vuln/detail/CVE-2021-3621)
@@ -913,6 +944,11 @@ several known issues:
     - [CVE-2020-10878](https://nvd.nist.gov/vuln/detail/CVE-2020-10878)
 
 **Bug fixes**
+* SDK: Fixed build error popping up in the new SDK Container because policycoreutils used the wrong ROOT to update the SELinux store ([flatcar-linux/coreos-overlay#1502](https://github.com/flatcar-linux/coreos-overlay/pull/1502))
+* Fixed leak of SELinux policy store to the root filesystem top directory due to wrong store path in policycoreutils instead of /var/lib/selinux ([flatcar-linux/Flatcar#596](https://github.com/flatcar-linux/Flatcar/issues/596))
+* Ensured that the /run/xtables.lock coordination file exists for modifications of the xtables backend from containers (must be bind-mounted) or the iptables-legacy binaries on the host ([flatcar-linux/init#57](https://github.com/flatcar-linux/init/pull/57))
+* dev container: Fix github URL for coreos-overlay and portage-stable to use repos from flatcar-linux org directly instead of relying on redirects from the kinvolk org. This fixes checkouts with emerge-gitclone inside dev-container. ([flatcar-linux/scripts#194](https://github.com/flatcar-linux/scripts/pull/194))
+* SDK: Fixed build error popping up in the new SDK Container because policycoreutils used the wrong ROOT to update the SELinux store ([flatcar-linux/coreos-overlay#1502](https://github.com/flatcar-linux/coreos-overlay/pull/1502))
 * arm64: the Polkit service does not crash anymore. ([flatcar-linux/Flatcar#156](https://github.com/flatcar-linux/Flatcar/issues/156))
 * toolbox: fixed support for multi-layered docker images ([toolbox#5](https://github.com/flatcar-linux/toolbox/pull/5))
 * Run emergency.target on ignition/torcx service unit failure in dracut ([bootengine#28](https://github.com/flatcar-linux/bootengine/pull/28))
@@ -921,22 +957,24 @@ several known issues:
 * Use https protocol instead of git for Github URLs ([flatcar-linux/coreos-overlay#1394](https://github.com/flatcar-linux/coreos-overlay/pull/1394))
 
 **Changes**
+* Backported elf support for iproute2 ([flatcar-linux/coreos-overlay#1256](https://github.com/flatcar-linux/coreos-overlay/pull/1526))
 * Added GPIO support ([coreos-overlay#1236](https://github.com/flatcar-linux/coreos-overlay/pull/1236))
 * Enabled SELinux in permissive mode on ARM64 ([coreos-overlay#1245](https://github.com/flatcar-linux/coreos-overlay/pull/1245))
 * The iptables command uses the nftables kernel backend instead of the iptables backend, you can also migrate to using the nft tool instead of iptables. Containers with iptables binaries that use the iptables backend will result in mixing both kernel backends which is supported but you have to look up the rules separately (on the host you can use the iptables-legacy and friends).
 * Added missing SELinux rule as initial step to resolve Torcx unpacking issue ([coreos-overlay#1426](https://github.com/flatcar-linux/coreos-overlay/pull/1426))
 
 **Updates**
-* Linux ([5.10.84](https://lwn.net/Articles/878041/))
-* Linux Firmware ([20210919](https://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git/tag/?h=20210919))
-* Docker ([20.10.9](https://docs.docker.com/engine/release-notes/#20109))
+* Linux ([5.10.96](https://lwn.net/Articles/883442))
+* Linux Firmware ([20211216](https://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git/tag/?h=20211216))
+* expat ([2.4.4](https://github.com/libexpat/libexpat/blob/R_2_4_4/expat/Changes))
+* ca-certificates ([3.74](https://firefox-source-docs.mozilla.org/security/nss/releases/nss_3_74.html))
+* Docker ([20.10.12](https://docs.docker.com/engine/release-notes/#201012))
+* containerd ([1.5.9](https://github.com/containerd/containerd/releases/tag/v1.5.9))
 * Go ([1.17.5](https://go.googlesource.com/go/+/refs/tags/go1.17.5))
-* containerd ([1.5.8](https://github.com/containerd/containerd/releases/tag/v1.5.8))
 * systemd ([249.4](https://github.com/systemd/systemd-stable/blob/v249.4/NEWS))
 * bash ([5.1_p8](https://lists.gnu.org/archive/html/info-gnu/2020-12/msg00003.html))
 * binutils ([2.37](https://sourceware.org/pipermail/binutils/2021-July/117384.html))
 * curl ([7.79.1](https://curl.se/changes.html#7_79_1))
-* ca-certificates ([3.73](https://groups.google.com/a/mozilla.org/g/dev-tech-crypto/c/vy9284s8APM))
 * duktape ([2.6.0](https://github.com/svaarala/duktape/blob/master/doc/release-notes-v2-6.rst))
 * ebtables ([2.0.11](https://lwn.net/Articles/806179/))
 * git ([2.32.0](https://github.com/git/git/blob/master/Documentation/RelNotes/2.32.0.txt))
