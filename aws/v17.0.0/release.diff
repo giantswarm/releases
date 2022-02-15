@@ -53,7 +53,7 @@ spec:                                                              spec:
   - name: app-operator                                               - name: app-operator
     version: 5.4.1                                              |      version: 5.6.0
   - name: aws-cni                                                    - name: aws-cni
-    version: 1.10.1-nftables                                           version: 1.10.1-nftables
+    version: 1.10.1-nftables                                    |      version: 1.10.2-nftables
   - name: aws-operator                                               - name: aws-operator
     releaseOperatorDeploy: true                                        releaseOperatorDeploy: true
     version: 10.15.0                                            |      version: 10.16.0

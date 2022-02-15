@@ -1102,10 +1102,9 @@ Pull requests:
 - Fix error handling in chart CR watcher when chart CRD not installed.
 
 
-### aws-cni [1.10.1-nftables](https://github.com/aws/amazon-vpc-cni-k8s/releases/tag/v1.10.1-nftables)
+### aws-cni [1.10.2](https://github.com/aws/amazon-vpc-cni-k8s/releases/tag/v1.10.2)
 
-#### Changed
-- Use `nftables` instead of `iptables`.
+Upgraded from version 1.10.1. Please check [upstream changelog](https://github.com/aws/amazon-vpc-cni-k8s/releases/tag/v1.10.2) for details.
 
 
 ### aws-ebs-csi-driver [2.8.1](https://github.com/giantswarm/aws-ebs-csi-driver-app/releases/tag/v2.8.1)
