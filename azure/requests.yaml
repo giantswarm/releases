@@ -7,6 +7,8 @@ releases:
         version: ">= 5.6.0"
       - name: cluster-autoscaler
         version: ">= 1.22.2-gs3"
+      - name: azure-operator
+        version: ">= 5.15.0"
     - name: ">= 17.0.0-alpha1"
       requests:
         - name: calico
