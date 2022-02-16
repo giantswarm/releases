@@ -1172,6 +1172,11 @@ If you already specify `--aws-batch-change-interval` or `--aws-zones-cache-durat
 - Fix sts successful check.
 
 
+### kube-state-metrics [1.7.0](https://github.com/giantswarm/kube-state-metrics-app/releases/tag/v1.7.0)
+
+#### Changed
+- Raise priorityClass to `system-cluster-critical` to increase scheduling chances in master-only clusters.
+
 ### vertical-pod-autoscaler [2.1.1](https://github.com/giantswarm/vertical-pod-autoscaler-app/releases/tag/v2.1.1)
 
 #### Fixed
