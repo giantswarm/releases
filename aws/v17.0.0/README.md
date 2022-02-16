@@ -26,7 +26,7 @@ This release provides support for Kubernetes 1.22, has Control Groups v2 enabled
     * 1 sssd CVE;
     * 1 SDK: perl CVE;
 
-> **_Warning:_** Kubernetes v1.22 removed certain APIs and features. More details are available in the [upstream blog post](https://kubernetes.io/blog/2021/07/14/upcoming-changes-in-kubernetes-1-22/).
+> **_Warning:_** Kubernetes v1.22 removed certain APIs and features. More details are available in the [upstream blog post](https://kubernetes.io/blog/2021/07/14/upcoming-changes-in-kubernetes-1-22/). We are also disabling `rpcbind` by default to mitigate security risks, NFS `v2` and `v3` won't be supported anymore. Please double check if any of your application still uses those versions before you upgrade.
 
 **Known Issues**
 - Java applications are unable to identify memory limits when using a `JRE` prior to v15 in a Control Groups v2 environment. Support was added in `JRE` v15 and later. More details are available in the [upstream issue](https://bugs.openjdk.java.net/browse/JDK-8230305). We recommend using the latest LTS JRE available (currently v17) to ensure continued compatibility with future releases.
@@ -1113,13 +1113,14 @@ Upgraded from version 1.10.1. Please check [upstream changelog](https://github.c
 - Use node selector according to control-plane and nodepool labels.
 
 
-### aws-operator [10.16.0](https://github.com/giantswarm/aws-operator/releases/tag/v10.16.0)
+### aws-operator [10.17.0](https://github.com/giantswarm/aws-operator/releases/tag/v10.17.0)
 
 #### Added
 - New flatcar releases.
 - Add support for feature that enables forcing cgroups v1 for Flatcar version `3033.2.0` and above.
 
 #### Changed
+- Bumped k8scloudconfig to disable rpc-statd service.
 - Max pods setting per for new EC2 instances.
 - Bump `etcd-cluster-migrator` version to `v1.1.0`.
 - Bump `k8scloudconfig` version to `v11.0.1`.
