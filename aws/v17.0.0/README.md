@@ -1,10 +1,13 @@
 # :zap: Giant Swarm Release v17.0.0 for AWS :zap:
 
-This release provides support for Kubernetes 1.22, has Control Groups v2 enabled by default and it introduces Vertical Pod autoscaling to help size Pods for the optimal CPU and memory resources required.
+This release provides support for Kubernetes 1.22, has Control Groups v2 enabled by default and it includes the Vertical Pod autoscaler.
 
 **Highlights**
 - Kubernetes 1.22 support;
 - Control Groups v2 are enabled by default;
+- The Vertical Pod autoscaler is included by default to help size pods for the optimal CPU and memory usage;
+- `rpcbind` is disabled by default to mitigate security risks. NFS `v2` and `v3` are not supported anymore;
+- `ebs-csi-node` tolerates all custom taints;
 - Security fixes:
     * 30 Linux CVEs;
     * 8 Go CVEs;
@@ -26,7 +29,9 @@ This release provides support for Kubernetes 1.22, has Control Groups v2 enabled
     * 1 sssd CVE;
     * 1 SDK: perl CVE;
 
-> **_Warning:_** Kubernetes v1.22 removed certain APIs and features. More details are available in the [upstream blog post](https://kubernetes.io/blog/2021/07/14/upcoming-changes-in-kubernetes-1-22/). We are also disabling `rpcbind` by default to mitigate security risks, NFS `v2` and `v3` won't be supported anymore. Please double check if any of your application still uses those versions before you upgrade.
+> **_Warning:_** Kubernetes v1.22 removed certain APIs and features. More details are available in the [upstream blog post](https://kubernetes.io/blog/2021/07/14/upcoming-changes-in-kubernetes-1-22/).
+
+> **_Warning:_** `rpcbind` is disabled by default to mitigate security risks. NFS `v2` and `v3` are not supported anymore. Please double check if any of your application still use any of those versions before you upgrade.
 
 **Known Issues**
 - Java applications are unable to identify memory limits when using a `JRE` prior to v15 in a Control Groups v2 environment. Support was added in `JRE` v15 and later. More details are available in the [upstream issue](https://bugs.openjdk.java.net/browse/JDK-8230305). We recommend using the latest LTS JRE available (currently v17) to ensure continued compatibility with future releases.
