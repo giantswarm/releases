@@ -1182,6 +1182,9 @@ If you already specify `--aws-batch-change-interval` or `--aws-zones-cache-durat
 #### Changed
 - Raise priorityClass to `system-cluster-critical` to increase scheduling chances in master-only clusters.
 
+#### Fixed
+- Fixed missing labels from kube_<resource-name>_labels
+
 ### vertical-pod-autoscaler [2.1.1](https://github.com/giantswarm/vertical-pod-autoscaler-app/releases/tag/v2.1.1)
 
 #### Fixed
