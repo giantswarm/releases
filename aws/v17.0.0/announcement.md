@@ -1,4 +1,4 @@
-**Workload cluster release v17.0.0 for AWS is available**. It provides support for Kubernetes 1.22, has Control Groups v2 enabled by default and it includes the Vertical Pod autoscaler. Further details can be found in the [release notes](https://docs.giantswarm.io/changes/workload-cluster-releases-aws/releases/aws-v17.0.0/).
+**Workload cluster release v17.0.0 for AWS is available**. It provides support for Kubernetes 1.22, has Control Groups v2 enabled by default and includes the Vertical Pod autoscaler. Further details can be found in the [release notes](https://docs.giantswarm.io/changes/workload-cluster-releases-aws/releases/aws-v17.0.0/).
 
 > **_Warning:_** Kubernetes v1.22 removed certain APIs and features. More details are available in the [upstream blog post](https://kubernetes.io/blog/2021/07/14/upcoming-changes-in-kubernetes-1-22/).
 
