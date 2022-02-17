@@ -2,7 +2,7 @@
 
 > **_Warning:_** Kubernetes v1.22 removed certain APIs and features. More details are available in the [upstream blog post](https://kubernetes.io/blog/2021/07/14/upcoming-changes-in-kubernetes-1-22/).
 
-> **_Warning:_** `rpcbind` is disabled by default to mitigate security risks. NFS `v2` and `v3` are not supported anymore. Please, check if any of your applications require one of those versions before you upgrade.
+> **_Warning:_** `rpcbind` is disabled by default to mitigate security risks. Any application which requires it will no longer work. NFS `v2` and `v3` are such applications and are no longer supported. Please, check if any you have any application which depend on `rpcbind` before you upgrade.
 
 **Known Issues**
 - Java applications are unable to identify memory limits when using a `JRE` prior to v15 in a Control Groups v2 environment. Support was added in `JRE` v15 and later. More details are available in the [upstream issue](https://bugs.openjdk.java.net/browse/JDK-8230305). We recommend using the latest LTS JRE available (currently v17) to ensure continued compatibility with future releases.
