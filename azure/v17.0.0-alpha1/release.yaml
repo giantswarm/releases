@@ -27,7 +27,7 @@ spec:
     name: node-exporter
     version: 1.8.0
   - name: cluster-autoscaler
-    version: 1.22.2-gs2
+    version: 1.21.2-gs2
   - name: azure-scheduled-events
     version: 0.6.0
   - componentVersion: 0.9.2
