@@ -9,23 +9,24 @@ This release provides support for Kubernetes 1.22, has Control Groups v2 enabled
 - `rpcbind` is disabled by default to mitigate security risks. NFS `v2` and `v3` are not supported anymore;
 - `ebs-csi-node` tolerates all custom taints;
 - Security fixes:
-    * 30 Linux CVEs;
+    * 44 Linux CVEs;
+    * 10 expat;
     * 8 Go CVEs;
+    * 5 glibc CVE;
     * 4 Docker CVEs;
     * 3 curl CVEs;
     * 3 vim CVEs;
+    * 2 polkit CVE;
     * 2 bash CVEs;
     * 2 binutils CVEs;
-    * 2 containerd CVEs;
+    * 3 containerd CVEs;
     * 2 nettle CVEs;
     * 2 SDK: bison CVEs;
     * 1 ca-certificates CVE;
     * 1 util-linux CVE;
     * 1 git CVE;
-    * 1 glibc CVE;
     * 1 gnupg CVE;
     * 1 libgcrypt CVE;
-    * 1 polkit CVE;
     * 1 sssd CVE;
     * 1 SDK: perl CVE;
 
@@ -263,7 +264,10 @@ This vulnerability was reported by Fabricio Voznika and Mark Wolters of Google.
 - The options `--ssh-user` and `--ssh-key` are removed. They only functioned on GCE, and only in-tree. Use the apiserver network proxy instead. ([#102297](https://github.com/kubernetes/kubernetes/pull/102297), [@deads2k](https://github.com/deads2k))
 - Track Job completion through status and Pod finalizers, removing dependency on Pod tombstones. ([#98238](https://github.com/kubernetes/kubernetes/pull/98238), [@alculquicondor](https://github.com/alculquicondor)) [SIG API Machinery, Apps, Auth and Testing]
 - Track ownership of scale subresource for all scalable resources i.e. Deployment, ReplicaSet, StatefulSet, ReplicationController, and Custom Resources. ([#98377](https://github.com/kubernetes/kubernetes/pull/98377), [@nodo](https://github.com/nodo)) [SIG API Machinery and Testing]
+
+
 #### Feature
+- Kube-apiserver: when merging lists, Server Side Apply now prefers the order of the submitted request instead of the existing persisted object ([#107568](https://github.com/kubernetes/kubernetes/pull/107568), [@jiahuif](https://github.com/jiahuif)) [SIG API Machinery, Auth, CLI, Cloud Provider, Cluster Lifecycle, Instrumentation, Storage and Testing]
 - Kubernetes is now built with Golang 1.16.12 ([#106982](https://github.com/kubernetes/kubernetes/pull/106982), [@cpanato](https://github.com/cpanato)) [SIG Cloud Provider, Instrumentation, Release and Testing]
 - Update golang.org/x/net to v0.0.0-20211209124913-491a49abca63 ([#106960](https://github.com/kubernetes/kubernetes/pull/106960), [@cpanato](https://github.com/cpanato)) [SIG API Machinery, Auth, CLI, Cloud Provider, Cluster Lifecycle, Instrumentation, Node and Storage]
 - Kubernetes is now built with Golang 1.16.10 (#106223, @cpanato) [SIG Cloud Provider, Instrumentation, Release and Testing]
@@ -416,7 +420,17 @@ This vulnerability was reported by Fabricio Voznika and Mark Wolters of Google.
 - Resolves an issue with the "ServiceAccountIssuerDiscovery should support OIDC discovery" conformance test failing on clusters which are configured with issuers outside the cluster ([#101589](https://github.com/kubernetes/kubernetes/pull/101589), [@mtaufen](https://github.com/mtaufen)) [SIG Auth and Testing]
 
 
+#### Other (Cleanup or Flake)
+- Updates konnectivity-network-proxy to v0.0.27. This includes a memory leak fix for the network proxy ([#107187](https://github.com/kubernetes/kubernetes/pull/107187), [@rata](https://github.com/rata)) [SIG API Machinery, Auth and Cloud Provider]
+
+
 #### Bug or Regression
+- An inefficient lock in EndpointSlice controller metrics cache has been reworked. Network programming latency may be significantly reduced in certain scenarios, especially in clusters with a large number of Services. ([#107168](https://github.com/kubernetes/kubernetes/pull/107168), [@robscott](https://github.com/robscott)) [SIG Apps and Network]
+- Client-go: fix that paged list calls with ResourceVersionMatch set would fail once paging kicked in. ([#107335](https://github.com/kubernetes/kubernetes/pull/107335), [@fasaxc](https://github.com/fasaxc)) [SIG API Machinery]
+- Fix a panic when using invalid output format in kubectl create secret command ([#107346](https://github.com/kubernetes/kubernetes/pull/107346), [@rikatz](https://github.com/rikatz)) [SIG CLI]
+- Fix: azuredisk parameter lowercase translation issue ([#107429](https://github.com/kubernetes/kubernetes/pull/107429), [@andyzhangx](https://github.com/andyzhangx)) [SIG Cloud Provider and Storage]
+- Fixes a rare race condition handling requests that timeout ([#107459](https://github.com/kubernetes/kubernetes/pull/107459), [@liggitt](https://github.com/liggitt)) [SIG API Machinery]
+- Mount-utils: Detect potential stale file handle ([#107039](https://github.com/kubernetes/kubernetes/pull/107039), [@andyzhangx](https://github.com/andyzhangx)) [SIG Storage]
 - A pod that the Kubelet rejects was still considered as being accepted for a brief period of time after rejection, which might cause some pods to be rejected briefly that could fit on the node.  A pod that is still terminating (but has status indicating it has failed) may also still be consuming resources and so should also be considered. ([#104918](https://github.com/kubernetes/kubernetes/pull/104918), [@ehashman](https://github.com/ehashman)) [SIG Node]
 - Fix: skip instance not found when decoupling vmss from lb ([#105836](https://github.com/kubernetes/kubernetes/pull/105836), [@nilo19](https://github.com/nilo19)) [SIG Cloud Provider]
 - Kubeadm: allow the "certs check-expiration" command to not require the existence of the cluster CA key (ca.key file) when checking the expiration of managed certificates in kubeconfig files. ([#106930](https://github.com/kubernetes/kubernetes/pull/106930), [@neolit123](https://github.com/neolit123)) [SIG Cluster Lifecycle]
@@ -680,6 +694,9 @@ This vulnerability was reported by Fabricio Voznika and Mark Wolters of Google.
 - go.opentelemetry.io/proto/otlp: v0.7.0
 - go.uber.org/goleak: v1.1.10
 #### Changed
+- github.com/google/cadvisor: [v0.39.2 → v0.39.3](https://github.com/google/cadvisor/compare/v0.39.2...v0.39.3)
+- sigs.k8s.io/apiserver-network-proxy/konnectivity-client: v0.0.22 → v0.0.27
+- sigs.k8s.io/structured-merge-diff/v4: v4.1.2 → v4.2.1
 - golang.org/x/net: 37e1c6a → 491a49a
 - github.com/opencontainers/runc: [v1.0.1 → v1.0.2](https://github.com/opencontainers/runc/compare/v1.0.1...v1.0.2)
 - k8s.io/utils: 4b05e18 → bdf08cb
