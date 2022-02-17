@@ -71,7 +71,7 @@ spec:                                                              spec:
     version: 3.4.18                                                    version: 3.4.18
   - name: kubernetes                                                 - name: kubernetes
     version: 1.22.5                                             |      version: 1.22.6
-  date: "2022-01-31T10:00:00Z"                                  |    date: "2022-02-03T11:40:02Z"
+  date: "2022-01-31T10:00:00Z"                                  |    date: "2022-02-17T10:00:00Z"
   notice: "This is a preview release meant only for testing. Up |    state: active
   state: preview                                                <
 status:                                                            status:
