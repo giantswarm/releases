@@ -1,6 +1,6 @@
 # :zap: Giant Swarm Release v16.1.1 for AWS :zap:
 
-This release provides a fix for `aws-ebs-csi-driver` to ensure all taints for `ebs-node` are tolerated as well as selecting the right node selector for worker nodes.
+This release provides a fix for `aws-ebs-csi-driver` to ensure all taints for `ebs-node` are tolerated as well as selecting the right node selector for all nodes.
 
 ## Change details
 
