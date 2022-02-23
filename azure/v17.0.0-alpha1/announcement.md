@@ -1,4 +1,4 @@
-**Workload cluster release v17.0.0-alpha1 for Azure is available**. It provides support for Kubernetes 1.22 and has Control Groups v2 enabled by default. Further details can be found in the [release notes](https://docs.giantswarm.io/changes/workload-cluster-releases-aws/releases/azure-v17.0.0-alpha1/).
+**Workload cluster release v17.0.0-alpha1 for Azure is available**. It provides support for Kubernetes 1.22 and has Control Groups v2 enabled by default. Further details can be found in the [release notes](https://docs.giantswarm.io/changes/workload-cluster-releases-azure/releases/azure-v17.0.0-alpha1/).
 
 > **_Warning:_** This is an **`alpha preview release`** intended only for testing Kubernetes v1.22 changes and Control Groups v2 compatibility. Upgrading to or from this version is not supported.
 
