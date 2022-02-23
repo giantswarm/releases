@@ -1,0 +1,1 @@
+**Workload cluster release v16.4.1 for AWS is available**. It allows one replica of `coredns` to run on the control plane nodes for clusters without any node pools. Further details can be found in the [release notes](https://docs.giantswarm.io/changes/workload-cluster-releases-aws/releases/aws-v16.4.1/).
