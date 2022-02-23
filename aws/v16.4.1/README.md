@@ -1,6 +1,6 @@
 # :zap: Giant Swarm Release v16.4.1 for AWS :zap:
 
-<< Add description here >>
+This release allows one replica of `coredns` to run on the control plane nodes for clusters without any node pools.
 
 ## Change details
 
