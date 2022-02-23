@@ -42,7 +42,7 @@ spec:
   - catalog: control-plane-catalog
     name: azure-operator
     releaseOperatorDeploy: true
-    version: 5.14.0
+    version: 5.16.0
   - name: cert-operator
     releaseOperatorDeploy: true
     version: 1.3.0

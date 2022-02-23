@@ -53,7 +53,7 @@ _Nothing has changed._
 
 
 
-### azure-operator [5.14.0](https://github.com/giantswarm/azure-operator/releases/tag/v5.14.0)
+### azure-operator [5.16.0](https://github.com/giantswarm/azure-operator/releases/tag/v5.16.0)
 
 #### Added
 - Add support for feature that enables forcing cgroups v1 for Flatcar version `3033.2.0` and above.
@@ -64,6 +64,11 @@ _Nothing has changed._
 - Upgraded to giantswarm/micrologger v0.6.0
 - Upgraded to giantswarm/versionbundle v1.0.0
 - Upgraded to spf13/viper v1.10.0
+- Make nodepool nodes roll in case the user switches between cgroups v1 and v2
+- Drop dependency on giantswarm/apiextensions/v2
+- Bump k8scloudconfig to disable rpc-statd
+
+
 
 
 
