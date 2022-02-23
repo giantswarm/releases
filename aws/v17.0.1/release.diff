@@ -71,8 +71,8 @@ spec:                                                              spec:
     version: 3.4.18                                                    version: 3.4.18
   - name: kubernetes                                                 - name: kubernetes
     version: 1.22.6                                                    version: 1.22.6
-  date: "2022-02-17T10:00:00Z"                                  |    date: "2022-02-22T14:10:19Z"
-  state: active                                                      state: active
+  date: "2022-02-17T10:00:00Z"                                  |    date: "2022-02-23T10:00:00Z"
+  state: deprecated                                             |    state: active
 status:                                                            status:
   inUse: false                                                       inUse: false
   ready: false                                                       ready: false
