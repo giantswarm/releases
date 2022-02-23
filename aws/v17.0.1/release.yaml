@@ -1,12 +1,12 @@
 # Generated with:
-# devctl release create --name v17.0.0 --provider aws --base v17.0.0-alpha1 --component aws-operator@10.15.1
+# /home/whites/workspace/devctl/devctl release create --name 17.0.1 --provider aws --base 17.0.0 --app coredns@1.8.0@1.8.6 --overwrite
 apiVersion: release.giantswarm.io/v1alpha1
 kind: Release
 metadata:
   annotations:
     giantswarm.io/docs: https://docs.giantswarm.io/reference/cp-k8s-api/releases.release.giantswarm.io/
   creationTimestamp: null
-  name: v17.0.0
+  name: v17.0.1
 spec:
   apps:
   - componentVersion: 1.5.0
@@ -23,7 +23,7 @@ spec:
     version: 1.22.2-gs3
   - componentVersion: 1.8.6
     name: coredns
-    version: 1.7.0
+    version: 1.8.0
   - componentVersion: 0.10.2
     name: external-dns
     version: 2.9.0
@@ -71,8 +71,8 @@ spec:
     version: 3.4.18
   - name: kubernetes
     version: 1.22.6
-  date: "2022-02-17T10:00:00Z"
-  state: deprecated
+  date: "2022-02-23T10:00:00Z"
+  state: active
 status:
   inUse: false
   ready: false
