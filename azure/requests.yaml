@@ -21,7 +21,9 @@ releases:
           version: ">= 5.4.1"
         - name: azure-scheduled-events
           version: ">= 0.6.0"
-    - name: "< 17.0.0"
+        - name: containerlinux
+          version: ">= 3033.2.2"
+    - name: "< 17.0.0-alpha1"
       requests:
         - name: containerlinux
           version: "<= 2905.2.6"
