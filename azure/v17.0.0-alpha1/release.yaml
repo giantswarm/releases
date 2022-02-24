@@ -14,7 +14,8 @@ spec:
   - componentVersion: 1.8.3
     name: coredns
     version: 1.6.0
-  - name: external-dns
+  - componentVersion: 0.10.2
+    name: external-dns
     version: 2.9.0
   - componentVersion: 2.2.4
     name: kube-state-metrics
