@@ -59,7 +59,8 @@ spec:                                                              spec:
   - name: etcd                                                       - name: etcd
     version: 3.4.18                                                    version: 3.4.18
   date: "2021-12-21T16:04:34Z"                                  |    date: "2022-02-24T10:00:00Z"
-  state: active                                                      state: active
+  state: active                                                 |    notice: "This is a preview release meant only for testing. Up
+                                                                >    state: preview
 status:                                                            status:
   inUse: false                                                       inUse: false
   ready: false                                                       ready: false
