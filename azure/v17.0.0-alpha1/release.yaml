@@ -59,7 +59,8 @@ spec:
   - name: etcd
     version: 3.4.18
   date: "2022-02-24T10:00:00Z"
-  state: active
+  notice: "This is a preview release meant only for testing. Upgrades to and from this release are not supported."
+  state: preview
 status:
   inUse: false
   ready: false
