@@ -38,22 +38,6 @@ spec:
   - name: app-operator
     releaseOperatorDeploy: false
     version: 5.2.0
-  - catalog: control-plane-catalog
-    name: azure-ad-pod-identity-app
-    releaseOperatorDeploy: true
-    version: 0.8.0
-  - name: cluster-api
-    catalog: control-plane-catalog
-    releaseOperatorDeploy: true
-    version: 1.0.2
-  - name: cluster-api-provider-azure
-    catalog: control-plane-catalog
-    releaseOperatorDeploy: true
-    version: 1.0.0
-  - catalog: control-plane-catalog
-    name: cluster-apps-operator
-    releaseOperatorDeploy: true
-    version: 0.6.1
   - catalog: control-plane-test-catalog
     name: policies-common
     releaseOperatorDeploy: true
@@ -62,10 +46,6 @@ spec:
     name: policies-azure
     releaseOperatorDeploy: true
     version: 0.14.0
-  - catalog: control-plane-test-catalog
-    name: dns-operator-azure
-    releaseOperatorDeploy: true
-    version: 0.4.0
   - name: kubernetes
     version: 1.19.8
   - name: containerlinux
