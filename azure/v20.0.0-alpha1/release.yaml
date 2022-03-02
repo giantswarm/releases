@@ -7,45 +7,45 @@ spec:
   apps:
   - catalog: default
     name: calico-policy-only
-    version: 0.2.0
+    version: 0.3.0
   - name: cert-exporter
     version: 1.8.0
   - componentVersion: 1.1.0
     name: cert-manager
-    version: 2.4.1
+    version: 2.11.0
   - name: chart-operator
-    version: 2.19.1
+    version: 2.20.0
   - componentVersion: 0.9.0
     name: external-dns
     version: 2.6.0
   - componentVersion: 1.9.7
     name: kube-state-metrics
-    version: 1.3.0
+    version: 1.4.0
   - name: metrics-server
     version: 1.5.0
   - name: net-exporter
-    version: 1.10.1
+    version: 1.10.3
   - componentVersion: 1.0.1
     name: node-exporter
-    version: 1.7.1
+    version: 1.8.0
   - name: cluster-autoscaler
-    version: 1.23.0
+    version: 1.21.2-gs1
   - name: azure-scheduled-events
-    version: 0.4.0
+    version: 0.6.0
   - name: azure-storageclasses
     version: 0.1.0
   components:
   - name: app-operator
     releaseOperatorDeploy: false
-    version: 5.2.0
+    version: 5.7.5
   - catalog: control-plane-test-catalog
     name: policies-common
     releaseOperatorDeploy: true
-    version: 0.14.0
+    version: 0.16.0
   - catalog: control-plane-test-catalog
     name: policies-azure
     releaseOperatorDeploy: true
-    version: 0.14.0
+    version: 0.16.0
   - name: kubernetes
     version: 1.19.8
   - name: containerlinux
