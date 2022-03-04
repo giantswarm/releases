@@ -28,3 +28,7 @@ This release updates several preinstalled apps running in the workload cluster t
 
 
 
+### kvm-operator [3.18.5](https://github.com/giantswarm/kvm-operator/releases/tag/v3.18.5)
+
+#### Fixed
+- Update k8scloudconfig to v10.16.1 for calico permissions fix.
