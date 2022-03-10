@@ -1,0 +1,1 @@
+**Workload cluster release v17.0.2 for AWS is available**. It downgrades the version of Flatcar (containerlinux) being used to avoid a bug in launching certain EC2 instance types. Further details can be found in the [release notes](https://docs.giantswarm.io/changes/workload-cluster-releases-aws/releases/aws-v17.0.2/).
