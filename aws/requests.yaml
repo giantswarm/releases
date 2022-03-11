@@ -3,7 +3,7 @@ releases:
       requests:
         - name: coredns
           version: ">= 1.8.0"
-    - name: "> 17.0.1"
+    - name: "> 17.0.2"
       requests:
         - name: net-exporter
           version: ">= 1.11.0"

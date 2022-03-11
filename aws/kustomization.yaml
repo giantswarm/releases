@@ -20,6 +20,7 @@ resources:
 - v17.0.0-alpha1
 - v17.0.0
 - v17.0.1
+- v17.0.2
 - v17.1.0
 - v20.0.0-alpha1
 transformers:
