@@ -5,7 +5,7 @@
 ## Change details
 
 
-### cluster-operator [3.14.0](https://github.com/giantswarm/cluster-operator/releases/tag/v3.14.0)
+### cluster-operator [3.14.1](https://github.com/giantswarm/cluster-operator/releases/tag/v3.14.1)
 
 #### Added
 - Add IAM Roles for Service Accounts feature support for AWS.
