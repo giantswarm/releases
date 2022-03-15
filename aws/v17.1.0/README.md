@@ -2,6 +2,14 @@
 
 This release introduces IAM roles for service accounts (IRSA) as an alternative to Kiam. More details are available in the [documentation](https://docs.giantswarm.io/advanced/iam-roles-for-service-accounts/).
 
+> **_Warning:_** IAM roles for service accounts requires the following additional permissions to be granted:
+- `iam:CreateOpenIDConnectProvider`
+- `iam:DeleteOpenIDConnectProvider`
+- `iam:TagOpenIDConnectProvider`
+- `iam:UntagOpenIDConnectProvider`
+- `s3:PutObjectAcl`
+All the AWS prerequisites are available in the [giantswarm-aws-account-prerequisites repository](https://github.com/giantswarm/giantswarm-aws-account-prerequisites).
+
 ## Change details
 
 
