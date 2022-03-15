@@ -31,5 +31,8 @@
 #### Changed
 - Updated `whiteListRouteRegexp` to default to `/latest/meta-data/placement/availability-zone`
 
+#### Fixed
+- Merged two release workflows into one to handle both tags
 
-
+#### Added
+- Build script to generate an IRSA compatible version of each release
