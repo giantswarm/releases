@@ -1,6 +1,6 @@
 # :zap: Giant Swarm Release v17.1.0 for AWS :zap:
 
- A release that is introducing a new alpha feature IAM roles for service accounts (IRSA). Documentation - [IAM roles for service accounts](https://docs.giantswarm.io/advanced/iam-roles-for-service-accounts/)
+This release introduces IAM roles for service accounts (IRSA) as an alternative to Kiam. More details are available in the [documentation](https://docs.giantswarm.io/advanced/iam-roles-for-service-accounts/).
 
 ## Change details
 
