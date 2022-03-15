@@ -15,5 +15,15 @@
 
 - Added support for specifying balance-similar-node-groups flag
           
+### azure-operator [5.17.0](https://github.com/giantswarm/azure-operator/releases/tag/v5.17.0)
+
+***Fixed***
+
+- Fix panic while checking for cgroups version during upgrade.
+
+***Added***
+
+- Add GiantSwarmCluster tag to Vnet.
+
 
 
