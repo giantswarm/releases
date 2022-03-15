@@ -53,7 +53,7 @@ spec:
   - name: kubernetes
     version: 1.22.6
   - name: containerlinux
-    version: 3033.2.3
+    version: 3033.2.2
   - name: calico
     version: 3.21.3
   - name: etcd
