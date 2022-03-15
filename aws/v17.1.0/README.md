@@ -8,6 +8,7 @@ This release introduces IAM roles for service accounts (IRSA) as an alternative 
 - `iam:TagOpenIDConnectProvider`
 - `iam:UntagOpenIDConnectProvider`
 - `s3:PutObjectAcl`
+
 All the AWS prerequisites are available in the [giantswarm-aws-account-prerequisites repository](https://github.com/giantswarm/giantswarm-aws-account-prerequisites).
 
 ## Change details
