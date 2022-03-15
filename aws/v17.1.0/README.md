@@ -10,6 +10,9 @@
 #### Added
 - Add IAM Roles for Service Accounts feature support for AWS.
 
+### Changed
+- Update `aws-pod-identity-webhook` app version.
+
 
 
 ### aws-operator [10.18.0](https://github.com/giantswarm/aws-operator/releases/tag/v10.18.0)
