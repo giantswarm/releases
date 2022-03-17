@@ -1105,19 +1105,29 @@ Pull requests:
 - Add HostPort support in the gRPC dataplane cni-plugin #1119 (@AloysAugustin)
 
 
-### app-operator [5.6.0](https://github.com/giantswarm/app-operator/releases/tag/v5.6.0)
+### app-operator [5.8.0](https://github.com/giantswarm/app-operator/releases/tag/v5.8.0)
 
 #### Added
 - Support watching app CRs in organization namespace with cluster label selector.
-
-#### Changed 
+- Annotate App CRs after bootstrapping chart-operator to trigger reconciliation.
+- Add support for relative URLs in catalog indexes.
+#### Changed
 - Get tarball URL for chart CRs from index.yaml for better community app catalog support.
-
 #### Fixed
 - Embed Chart CRD in app-operator to prevent hitting GitHub API rate limits.
 - When bootstrapping chart-operator the helm release should not include the cluster ID.
 - Fix getting kubeconfig in chart CR watcher.
 - Fix error handling in chart CR watcher when chart CRD not installed.
+- Restrict PSP usage to only named resource.
+- Remove compatible providers validation for AppCatalogEntry as its overly strict.
+- Push image to Docker Hub to not rely on crsync.
+- Fixing patch to not reset fields.
+- Allow usage of chart-operator PSP so it can be bootstrapped.
+- Fix label selector in app values watcher so it supports CAPI clusters.
+- Strip cluster name from App CR name to determine Chart CR name in chart/current.go resource to fix WC app updates.
+- Continue processing AppCatalogEntry CRs if an error occurs.
+- Only show AppCatalogEntry CRs that are compatible with the current provider.
+- For internal catalogs generate tarball URLs instead of checking index.yaml to prevent chicken egg problems in new clusters.
 
 
 ### cert-operator [1.3.0](https://github.com/giantswarm/cert-operator/releases/tag/v1.3.0)
@@ -1141,15 +1151,18 @@ Pull requests:
 - Make nodepool nodes roll in case the user switches between cgroups v1 and v2
 - Drop dependency on giantswarm/apiextensions/v2
 - Bump k8scloudconfig to disable rpc-statd
-###Fixed###
+#### Fixed
 - Fix panic while checking for cgroups version during upgrade.
 
 
-### chart-operator [2.20.0](https://github.com/giantswarm/chart-operator/releases/tag/v2.20.0)
+### chart-operator [2.20.1](https://github.com/giantswarm/chart-operator/releases/tag/v2.20.0)
 
 #### Changed
 - Update Helm to v3.6.3.
 - Use controller-runtime client to remove CAPI dependency.
+- Use apptestctl to install CRDs in integration tests to avoid hitting GitHub rate limits.
+#### Fixed
+- Fix status resource to use Helm release status if it exists.
 #### Removed
 - Remove unused helm 2 release collector.
 
@@ -1172,10 +1185,12 @@ If you already specify `--aws-batch-change-interval` or `--aws-zones-cache-durat
 - Allow to omit the `--domain-filter` flag completely by setting `externalDNS.domainFilterList` to `null`.
 
 
-### azure-scheduled-events [0.6.0](https://github.com/giantswarm/azure-scheduled-events/releases/tag/v0.6.0)
+### azure-scheduled-events [0.6.1](https://github.com/giantswarm/azure-scheduled-events/releases/tag/v0.6.0)
 
 #### Added
 - Add `priorityClassName: "system-node-critical"` to Daemonset to give higher priority during scheduling.
+#### Changed
+- Reduce resource requests.
 
 
 ### vertical-pod-autoscaler [2.1.1](https://github.com/giantswarm/vertical-pod-autoscaler-app/releases/tag/v2.1.1)
@@ -1186,9 +1201,8 @@ If you already specify `--aws-batch-change-interval` or `--aws-zones-cache-durat
 
 ### cluster-autoscaler [1.22.2-gs4](https://github.com/giantswarm/cluster-autoscaler-app/releases/tag/v1.22.2-gs4)
 
-###Fixed###
+#### Fixed
 - Updated to correct cluster-autoscaler version
 - Use GS-built 1.22 image to deliver upstream unreleased fix kubernetes/autoscaler#4600
- 
-###Added###
+#### Added
 - Added support for specifying balance-similar-node-groups flag
