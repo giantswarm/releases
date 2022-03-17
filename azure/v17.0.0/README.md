@@ -28,8 +28,6 @@ This release provides support for Kubernetes 1.22, has Control Groups v2 enabled
     * 1 sssd CVE;
     * 1 SDK: perl CVE;
 
-> **_Warning:_** This is an **`alpha preview release`** intended only for testing Kubernetes v1.22 changes and Control Groups v2 compatibility. Upgrading to or from this version is not supported.
-
 > **_Warning:_** Kubernetes v1.22 removed certain APIs and features. More details are available in the [upstream blog post](https://kubernetes.io/blog/2021/07/14/upcoming-changes-in-kubernetes-1-22/).
 
 > **_Warning:_** `rpcbind` is disabled by default to mitigate security risks. Any application which requires it will no longer work. NFS `v2` and `v3` are such applications and are no longer supported. Please, check if any you have any application which depend on `rpcbind` before you upgrade.
