@@ -11,7 +11,7 @@ releases:
         version: ">= 5.15.0"
       - name: kube-state-metrics
         version: ">= 1.7.0"
-      - name: core-dns
+      - name: coredns
         version: ">= 1.8.0"
       - name: net-exporter
         version: ">= 1.11.0"
@@ -31,7 +31,7 @@ releases:
           version: "<= 2905.2.6"
     - name: "> 16.1.2 < 17.0.0-alpha1"
       requests:
-      - name: core-dns
+      - name: coredns
         version: ">= 1.8.0"
     - name: "> 16.1.2"
       requests:
