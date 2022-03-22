@@ -32,7 +32,7 @@ to all Giant Swarm installations.
     - [v16.3.0](https://github.com/giantswarm/releases/tree/master/aws/v16.3.0)
 - v16
   - v16.2
-    - [v16.2.1](https://github.com/giantswarm/releases/tree/master/aws/v16.2.1)
+    - [v16.2.1](https://github.com/giantswarm/releases/tree/master/aws/archived/v16.2.1)
     - [v16.2.0](https://github.com/giantswarm/releases/tree/master/aws/archived/v16.2.0)
   - v16.1
     - [v16.1.1](https://github.com/giantswarm/releases/tree/master/aws/v16.1.1)
@@ -176,6 +176,7 @@ to all Giant Swarm installations.
 
 - v17
   - v17.0
+    - [v17.0.0](https://github.com/giantswarm/releases/tree/master/azure/v17.0.0)
     - [v17.0.0-alpha1](https://github.com/giantswarm/releases/tree/master/azure/v17.0.0-alpha1)
 
 - v16
