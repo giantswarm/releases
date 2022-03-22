@@ -5,6 +5,8 @@ releases:
           version: ">= 2.3.0"
         - name: kiam-watchdog
           version: ">= 0.6.0"
+        - name: aws-ebs-csi-driver
+          version: ">= 2.9.0"
     - name: "> 17.0.0"
       requests:
         - name: coredns
