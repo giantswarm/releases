@@ -66,11 +66,11 @@ spec:                                                              spec:
     releaseOperatorDeploy: true                                        releaseOperatorDeploy: true
     version: 3.14.1                                                    version: 3.14.1
   - name: containerlinux                                             - name: containerlinux
-    version: 3033.2.0                                                  version: 3033.2.0
+    version: 3033.2.0                                           |      version: 3033.2.4
   - name: etcd                                                       - name: etcd
     version: 3.4.18                                                    version: 3.4.18
   - name: kubernetes                                                 - name: kubernetes
-    version: 1.22.6                                                    version: 1.22.6
+    version: 1.22.6                                             |      version: 1.22.8
   date: "2022-03-15T08:00:00Z"                                  |    date: "2022-03-21T13:59:04Z"
   state: active                                                      state: active
 status:                                                            status:
