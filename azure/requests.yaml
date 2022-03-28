@@ -3,6 +3,8 @@ releases:
       requests:
       - name: azure-operator
         version: ">= 5.18.0"
+      - name: chart-operator
+        version: ">= 2.20.1"
     - name: "> 17.0.0-alpha1"
       requests:
       - name: external-dns
