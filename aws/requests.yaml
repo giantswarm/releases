@@ -7,6 +7,8 @@ releases:
           version: ">= 0.6.0"
         - name: aws-ebs-csi-driver
           version: ">= 2.9.0"
+        - name: chart-operator
+          version: ">= 2.20.1"
     - name: "> 17.0.0"
       requests:
         - name: coredns
