@@ -9,13 +9,16 @@
 
 #### Changed
 - Update CAPI dependencies.
--- Allow resource limits/requests to be passed as values.
--- Switch `gp2` to `gp3` volumes.
--- Allow etcd volume IOPS and Throughput to be set.
+- Allow resource limits/requests to be passed as values.
+- Switch `gp2` to `gp3` volumes.
+- Allow etcd volume IOPS and Throughput to be set.
 
 
 
 ### cluster-operator [4.0.1](https://github.com/giantswarm/cluster-operator/releases/tag/v4.0.1)
+
+#### Changed
+- Update CAPI dependencies.
 
 #### Fixed
 - Only list apps from cluster namespace.

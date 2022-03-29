@@ -9,7 +9,8 @@ metadata:
   name: v17.2.0
 spec:
   apps:
-  - name: aws-ebs-csi-driver
+  - componentVersion: 1.5.0
+    name: aws-ebs-csi-driver
     version: 2.9.0
   - name: cert-exporter
     version: 2.0.1
@@ -26,7 +27,8 @@ spec:
   - componentVersion: 0.10.2
     name: external-dns
     version: 2.9.0
-  - name: kiam
+  - componentVersion: 4.2.0
+    name: kiam
     version: 2.3.0
   - name: kiam-watchdog
     version: 0.6.0
