@@ -97,3 +97,12 @@ New **Stable** Release **3033.2.4**
 
 
 
+### chart-operator [2.20.1](https://github.com/giantswarm/chart-operator/releases/tag/v2.20.1)
+
+#### Changed
+- Use `apptestctl` to install CRDs in integration tests to avoid hitting GitHub rate limits.
+
+#### Fixed
+- Fix `status` resource to use Helm release status if it exists.
+
+
