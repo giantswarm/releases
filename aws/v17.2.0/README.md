@@ -5,7 +5,10 @@
 ## Change details
 
 
-### aws-operator [11.0.0](https://github.com/giantswarm/aws-operator/releases/tag/v11.0.0)
+### aws-operator [11.1.0](https://github.com/giantswarm/aws-operator/releases/tag/v11.1.0)
+
+#### Added
+ - Add annotation to ASG to make cluster-autoscaler work when scaling from zero replicas.
 
 #### Changed
 - Update CAPI dependencies.
