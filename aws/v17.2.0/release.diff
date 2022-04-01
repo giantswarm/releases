@@ -72,7 +72,7 @@ spec:                                                              spec:
   - name: kubernetes                                                 - name: kubernetes
     version: 1.22.6                                             |      version: 1.22.8
   date: "2022-03-15T08:00:00Z"                                  |    date: "2022-03-01T10:00:00Z"
-  state: active                                                      state: active
+  state: deprecated                                             |    state: active
 status:                                                            status:
   inUse: false                                                       inUse: false
   ready: false                                                       ready: false
