@@ -5,13 +5,12 @@
 ## Change details
 
 
-### aws-operator [11.2.0](https://github.com/giantswarm/aws-operator/releases/tag/v11.2.0)
+### aws-operator [11.1.0](https://github.com/giantswarm/aws-operator/releases/tag/v11.1.0)
 
 #### Added
  - Add annotation to ASG to make cluster-autoscaler work when scaling from zero replicas.
 
 #### Changed
-- Bumped k8scc to 13.2.0 to enable VPA for kube-proxy.
 - Update CAPI dependencies.
 - Allow resource limits/requests to be passed as values.
 - Switch `gp2` to `gp3` volumes.
