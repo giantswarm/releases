@@ -33,19 +33,26 @@
 
 #### API Change
 - Fixes a regression in v1beta1 PodDisruptionBudget handling of "strategic merge patch"-type API requests for the `selector` field. Prior to 1.21, these requests would merge `matchLabels` content and replace `matchExpressions` content. In 1.21, patch requests touching the `selector` field started replacing the entire selector. This is consistent with server-side apply and the v1 PodDisruptionBudget behavior, but should not have been changed for v1beta1. ([#108141](https://github.com/kubernetes/kubernetes/pull/108141), [@liggitt](https://github.com/liggitt)) [SIG Auth and Testing]
+
 #### Feature
 - Kubernetes is now built with Golang 1.16.15 ([#108564](https://github.com/kubernetes/kubernetes/pull/108564), [@cpanato](https://github.com/cpanato)) [SIG Cloud Provider, Instrumentation, Release and Testing]
+
 #### Bug or Regression
 - Bump sigs.k8s.io/apiserver-network-proxy/konnectivity-client to v0.0.30, fixing goroutine leaks in kube-apiserver. ([#108439](https://github.com/kubernetes/kubernetes/pull/108439), [@andrewsykim](https://github.com/andrewsykim)) [SIG API Machinery, Auth and Cloud Provider]
 - Fix static pod restarts in cases where the container is not present. ([#108189](https://github.com/kubernetes/kubernetes/pull/108189), [@rphillips](https://github.com/rphillips)) [SIG Node]
 - Fixes a bug where a partial EndpointSlice update could cause node name information to be dropped from endpoints that were not updated. ([#108202](https://github.com/kubernetes/kubernetes/pull/108202), [@robscott](https://github.com/robscott)) [SIG Network]
 - Fixes a regression in the kubelet restarting static pods. ([#108303](https://github.com/kubernetes/kubernetes/pull/108303), [@rphillips](https://github.com/rphillips)) [SIG Node and Testing]
 - Increase Azure ACR credential provider timeout ([#108209](https://github.com/kubernetes/kubernetes/pull/108209), [@andyzhangx](https://github.com/andyzhangx)) [SIG Cloud Provider]
+- Fix Azurefile volumeid collision issue in csi migration ([#107575](https://github.com/kubernetes/kubernetes/pull/107575), [@andyzhangx](https://github.com/andyzhangx)) [SIG Cloud Provider and Storage]
+- Fix: delete non existing Azure disk issue ([#107406](https://github.com/kubernetes/kubernetes/pull/107406), [@andyzhangx](https://github.com/andyzhangx)) [SIG Cloud Provider]
+- Fix: ignore the case when comparing azure tags in service annotation (azure) ([#107580](https://github.com/kubernetes/kubernetes/pull/107580), [@nilo19](https://github.com/nilo19)) [SIG Cloud Provider]
+
 #### Dependencies
 #### Added
 _Nothing has changed._
 #### Changed
 - sigs.k8s.io/apiserver-network-proxy/konnectivity-client: v0.0.27 → v0.0.30
+- k8s.io/utils: bdf08cb → 6203023
 #### Removed
 _Nothing has changed._
 
