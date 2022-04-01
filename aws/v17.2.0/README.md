@@ -1,6 +1,19 @@
 # :zap: Giant Swarm Release v17.2.0 for AWS :zap:
 
-<< Add description here >>
+This release improves the performance of `etcd` by using `gp3` volumes with provisioned IOPS. It also provides stability improvements, bug fixes and security fixes for various components.
+
+**Highlights**
+- [`etcd` `gp3` volumes with provisioned IOPS](https://github.com/giantswarm/roadmap/issues/916);
+- [Control Groups v1 can be enabled without rebooting the instance](https://github.com/giantswarm/roadmap/issues/944);
+- [`m4` instance types can be used again](https://github.com/giantswarm/roadmap/issues/891);
+- Security fixes:
+  * 11 Linux CVEs;
+  * 5 expat CVEs;
+  * 4 Go CVEs;
+  * 1 systemd CVE;
+  * 1 containerd CVE;
+  * 1 openssl CVE;
+  * 1 ignition
 
 ## Change details
 
