@@ -109,3 +109,21 @@ New **Stable** Release **3033.2.4**
 - Fix `status` resource to use Helm release status if it exists.
 
 
+
+### cert-operator [2.0.0](https://github.com/giantswarm/cert-operator/releases/tag/v2.0.0)
+
+#### Changed
+- Use v1beta1 CAPI CRDs.
+- Bump `giantswarm/apiextensions` to `v6.0.0`.
+- Bump `giantswarm/exporterkit` to `v1.0.0`.
+- Bump `giantswarm/microendpoint` to `v1.0.0`.
+- Bump `giantswarm/microerror` to `v0.4.0`.
+- Bump `giantswarm/microkit` to `v1.0.0`.
+- Bump `giantswarm/micrologger` to `v0.6.0`.
+- Bump `giantswarm/k8sclient` to `v7.0.1`.
+- Bump `giantswarm/operatorkit` to `v7.0.1`.
+- Bump k8s dependencies to `v0.22.2`.
+- Bump `controller-runtime` to `v0.10.3`.
+- Use `apptestctl` to install CRDs in integration tests to avoid hitting GitHub rate limits.
+
+

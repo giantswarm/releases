@@ -61,7 +61,7 @@ spec:
     version: 3.21.3
   - name: cert-operator
     releaseOperatorDeploy: true
-    version: 1.3.0
+    version: 2.0.0
   - name: cluster-operator
     releaseOperatorDeploy: true
     version: 4.0.1
