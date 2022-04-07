@@ -1,4 +1,8 @@
 releases:
+    - name: "> 16.1.1 > 16.3.1 > 16.4.1 > 17.1.0 > 17.2.0"
+      requests:
+        - name: kube-state-metrics
+          version: ">= 1.9.0"
     - name: "> 17.1.0"
       requests:
         - name: kiam

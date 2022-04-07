@@ -1,4 +1,8 @@
 releases:
+- name: "> 16.1.2 > 16.2.1"
+  requests:
+  - name: kube-state-metrics
+    version: ">= 1.9.0"
 - name: "> 16.2.0"
   requests:
   - name: chart-operator
