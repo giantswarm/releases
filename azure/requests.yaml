@@ -1,5 +1,5 @@
 releases:
-    - name: "> 16.0.2 > 16.1.2"
+    - name: "> 16.0.2 > 16.1.2 > 17.0.1 > 17.1.0"
       requests:
       - name: kube-state-metrics
         version: ">= 1.9.0"
