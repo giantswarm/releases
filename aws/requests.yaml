@@ -3,6 +3,8 @@ releases:
       requests:
         - name: kube-state-metrics
           version: ">= 1.9.0"
+        - name: cert-manager
+          version: ">= 2.13.0"
     - name: "> 17.1.0"
       requests:
         - name: kiam
