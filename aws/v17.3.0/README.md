@@ -12,10 +12,9 @@
 
 
 
-### aws-cni [1.10.3-nftables](https://github.com/aws/amazon-vpc-cni-k8s/releases/tag/v1.10.3-nftables)
+### aws-cni [1.10.3](https://github.com/aws/amazon-vpc-cni-k8s/releases/tag/v1.10.3)
 
-Not found
-
+Upgraded from version 1.10.2. Please check [upstream changelog](https://github.com/aws/amazon-vpc-cni-k8s/releases/tag/v1.10.3) for details.
 
 ### cert-operator [2.0.1](https://github.com/giantswarm/cert-operator/releases/tag/v2.0.1)
 

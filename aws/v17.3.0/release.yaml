@@ -14,22 +14,26 @@ spec:
     version: 2.9.0
   - name: cert-exporter
     version: 2.2.0
-  - name: cert-manager
+  - componentVersion: 1.6.1
+    name: cert-manager
     version: 2.13.0
   - name: chart-operator
     version: 2.21.0
   - name: cluster-autoscaler
     version: 1.22.2-gs6
-  - name: coredns
+  - componentVersion: 1.8.7
+    name: coredns
     version: 1.9.0
-  - name: external-dns
+  - componentVersion: 0.10.2
+    name: external-dns
     version: 2.9.1
   - componentVersion: 4.2.0
     name: kiam
     version: 2.3.0
   - name: kiam-watchdog
     version: 0.7.0
-  - name: kube-state-metrics
+  - componentVersion: 2.3.0
+    name: kube-state-metrics
     version: 1.9.0
   - componentVersion: 0.5.2
     name: metrics-server
