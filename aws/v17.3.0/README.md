@@ -4,6 +4,16 @@
 
 ## Change details
 
+### aws-ebs-csi-driver [2.12.0](https://github.com/giantswarm/aws-ebs-csi-driver-app/releases/tag/v2.12.0)
+
+#### Added
+- Allow specifying driverMode for the controller component.
+
+#### Changed
+- Allow specifying nodeSelector and hostNetwork for controller and node.
+- Bump aws-ebs-csi-driver version to v1.5.1.
+
+
 
 ### aws-operator [11.7.0](https://github.com/giantswarm/aws-operator/releases/tag/v11.7.0)
 
