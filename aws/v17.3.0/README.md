@@ -22,14 +22,21 @@
 
 
 
-### aws-cni [1.10.3](https://github.com/aws/amazon-vpc-cni-k8s/releases/tag/v1.10.3)
+### aws-cni [1.11.0](https://github.com/aws/amazon-vpc-cni-k8s/releases/tag/v1.11.0)
 
-Upgraded from version 1.10.2. Please check [upstream changelog](https://github.com/aws/amazon-vpc-cni-k8s/releases/tag/v1.10.3) for details.
+Upgraded from version 1.10.2. Please check [upstream changelog](https://github.com/aws/amazon-vpc-cni-k8s/releases/tag/v1.11.0) for details.
 
 ### cert-operator [2.0.1](https://github.com/giantswarm/cert-operator/releases/tag/v2.0.1)
 
 #### Fixed
 - Bump go module major version.
+
+
+
+### cluster-operator [4.0.2](https://github.com/giantswarm/cluster-operator/releases/tag/v4.0.2)
+
+#### Fixed
+- List apps by namespace.
 
 
 
