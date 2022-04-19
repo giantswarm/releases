@@ -217,10 +217,11 @@ Not found
 
 
 
-### kube-state-metrics [1.9.0](https://github.com/giantswarm/kube-state-metrics-app/releases/tag/v1.9.0)
+### kube-state-metrics [1.10.0](https://github.com/giantswarm/kube-state-metrics-app/releases/tag/v1.10.0)
 
 #### Changed
 - Make `--metric-labels-allowlist` configurable through user values.
+- Add Node Pool labels to the default allowed labels in `--metric-labels-allowlist`.
 
 
 

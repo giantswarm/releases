@@ -34,7 +34,7 @@ spec:                                                              spec:
     version: 0.6.0                                              |      version: 0.7.0
   - componentVersion: 2.3.0                                          - componentVersion: 2.3.0
     name: kube-state-metrics                                           name: kube-state-metrics
-    version: 1.7.0                                              |      version: 1.9.0
+    version: 1.7.0                                              |      version: 1.10.0
   - componentVersion: 0.5.2                                          - componentVersion: 0.5.2
     name: metrics-server                                               name: metrics-server
     version: 1.6.0                                                     version: 1.6.0
