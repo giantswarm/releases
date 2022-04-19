@@ -15,10 +15,10 @@
 
 
 
-### aws-operator [11.7.0](https://github.com/giantswarm/aws-operator/releases/tag/v11.7.0)
+### aws-operator [11.8.0](https://github.com/giantswarm/aws-operator/releases/tag/v11.8.0)
 
 #### Added
-- Added latest flatcar images.
+- Added separate service account flag for IRSA.
 
 
 
