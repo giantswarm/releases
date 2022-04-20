@@ -15,10 +15,11 @@
 
 
 
-### aws-operator [11.8.0](https://github.com/giantswarm/aws-operator/releases/tag/v11.8.0)
+### aws-operator [11.9.0](https://github.com/giantswarm/aws-operator/releases/tag/v11.9.0)
 
 #### Added
 - Added separate service account flag for IRSA.
+- Add `POD_SECURITY_GROUP_ENFORCING_MODE` to `aws-node` Daemonset.
 
 
 
