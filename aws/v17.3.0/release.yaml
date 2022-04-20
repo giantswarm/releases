@@ -54,7 +54,7 @@ spec:
     version: 1.11.0-nftables
   - name: aws-operator
     releaseOperatorDeploy: true
-    version: 11.9.0
+    version: 11.9.1
   - name: calico
     version: 3.21.3
   - name: cert-operator

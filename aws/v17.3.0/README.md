@@ -15,12 +15,14 @@
 
 
 
-### aws-operator [11.9.0](https://github.com/giantswarm/aws-operator/releases/tag/v11.9.0)
+### aws-operator [11.9.1](https://github.com/giantswarm/aws-operator/releases/tag/v11.9.1)
 
 #### Added
 - Added separate service account flag for IRSA.
 - Add `POD_SECURITY_GROUP_ENFORCING_MODE` to `aws-node` Daemonset.
 
+#### Fixed
+- AWS Region Endpoint for IRSA.
 
 
 ### aws-cni [1.11.0](https://github.com/aws/amazon-vpc-cni-k8s/releases/tag/v1.11.0)
