@@ -5,6 +5,8 @@ releases:
     version: ">= 1.9.0"
   - name: cert-manager
     version: ">= 2.13.0"
+  - name: cluster-operator
+    version: ">= 4.0.2"
 - name: "> 17.1.0"
   requests:
   - name: kiam
