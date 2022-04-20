@@ -1,8 +1,4 @@
 releases:
-- name: "> 16.0.2 > 16.1.2 > 17.0.1 > 17.1.0"
-  requests:
-  - name: kube-state-metrics
-    version: ">= 1.10.0"
 - name: "> 17.0.0"
   requests:
   - name: azure-operator
@@ -10,7 +6,7 @@ releases:
   - name: chart-operator
     version: ">= 2.20.1"
   - name: kube-state-metrics
-    version: ">= 1.9.0"
+    version: ">= 1.10.0"
 - name: "> 17.0.0-alpha1"
   requests:
   - name: external-dns
@@ -45,6 +41,8 @@ releases:
   requests:
   - name: coredns
     version: ">= 1.8.0"
+  - name: kube-state-metrics
+    version: ">= 1.10.0"
 - name: "> 16.1.2"
   requests:
   - name: cert-operator
@@ -64,7 +62,7 @@ releases:
   - name: cert-operator
     version: ">= 1.1.0 < 1.2.0"
   - name: kube-state-metrics
-    version: ">= 1.5.0"
+    version: ">= 1.10.0"
   - name: cluster-operator
     version: ">= 3.12.0"
   - name: azure-operator
