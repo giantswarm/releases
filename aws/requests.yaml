@@ -5,6 +5,8 @@ releases:
     version: ">= 1.9.0"
   - name: cert-manager
     version: ">= 2.13.0"
+  - name: external-dns
+    version: ">= 2.10.0"
 - name: "> 17.1.0"
   requests:
   - name: kiam
@@ -21,6 +23,8 @@ releases:
     version: ">= 1.9.0"
   - name: cert-manager
     version: ">= 2.13.0"
+  - name: external-dns
+    version: ">= 2.10.0"
 - name: "> 17.0.0"
   requests:
   - name: coredns
