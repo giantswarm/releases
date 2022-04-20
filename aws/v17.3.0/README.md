@@ -15,13 +15,14 @@
 
 
 
-### aws-operator [11.9.1](https://github.com/giantswarm/aws-operator/releases/tag/v11.9.1)
+### aws-operator [11.9.2](https://github.com/giantswarm/aws-operator/releases/tag/v11.9.2)
 
 #### Added
 - Added separate service account flag for IRSA.
 - Add `POD_SECURITY_GROUP_ENFORCING_MODE` to `aws-node` Daemonset.
 
 #### Fixed
+- Issuer S3 endpoint for IRSA.
 - AWS Region Endpoint for IRSA.
 
 
