@@ -221,6 +221,23 @@ Not found
 
 
 
+### kubernetes [1.22.9](https://github.com/kubernetes/kubernetes/releases/tag/v1.22.9)
+
+#### Bug or Regression
+
+- Fixed a regression that could incorrectly reject pods with OutOfCpu errors if they were rapidly scheduled after other pods were reported as complete in the API. The Kubelet now waits to report the phase of a pod as terminal in the API until all running containers are guaranteed to have stopped and no new containers can be started.  Short-lived pods may take slightly longer (~1s) to report Succeeded or Failed after this change. ([#108749](https://github.com/kubernetes/kubernetes/pull/108749), [@bobbypage](https://github.com/bobbypage)) [SIG Apps, Node and Testing]
+- Fixes error handling in a kubectl method used in downstream packages. ([#108520](https://github.com/kubernetes/kubernetes/pull/108520), [@heybronson](https://github.com/heybronson)) [SIG CLI]
+
+#### Dependencies
+#### Added
+_Nothing has changed._
+#### Changed
+_Nothing has changed._
+#### Removed
+_Nothing has changed._
+
+
+
 ### kube-state-metrics [1.10.0](https://github.com/giantswarm/kube-state-metrics-app/releases/tag/v1.10.0)
 
 #### Changed
