@@ -1,73 +1,75 @@
 releases:
-    - name: "> 16.0.2 > 16.1.2 > 17.0.1 > 17.1.0"
-      requests:
-      - name: kube-state-metrics
-        version: ">= 1.9.0"
-    - name: "> 17.0.0"
-      requests:
-      - name: azure-operator
-        version: ">= 5.18.0"
-      - name: chart-operator
-        version: ">= 2.20.1"
-      - name: kube-state-metrics
-        version: ">= 1.9.0"
-    - name: "> 17.0.0-alpha1"
-      requests:
-      - name: external-dns
-        version: ">= 2.9.0"
-      - name: app-operator
-        version: ">= 5.6.0"
-      - name: cluster-autoscaler
-        version: ">= 1.22.2-gs4"
-      - name: azure-operator
-        version: ">= 5.15.0"
-      - name: kube-state-metrics
-        version: ">= 1.7.0"
-      - name: coredns
-        version: ">= 1.8.0"
-      - name: net-exporter
-        version: ">= 1.11.0"
-    - name: ">= 17.0.0-alpha1"
-      requests:
-        - name: calico
-          version: ">= 3.21.3"
-        - name: app-operator
-          version: ">= 5.4.1"
-        - name: azure-scheduled-events
-          version: ">= 0.6.0"
-        - name: containerlinux
-          version: ">= 3033.2.2"
-    - name: "< 17.0.0-alpha1"
-      requests:
-        - name: containerlinux
-          version: "<= 2905.2.6"
-    - name: "> 16.1.2 < 17.0.0-alpha1"
-      requests:
-      - name: coredns
-        version: ">= 1.8.0"
-    - name: "> 16.1.2"
-      requests:
-      - name: cert-operator
-        version: ">= 1.3.0"
-      - name: external-dns
-        version: ">= 2.9.0"
-    - name: "> 16.0.2 > 16.1.1 < 20.0.0"
-      requests:
-        - name: cert-exporter
-          version: ">= 2.0.1"
-        - name: external-dns
-          version: ">= 2.7.0"
-    - name: "> 16.0.2 < 16.1.0"
-      requests:
-        - name: cert-exporter
-          version: ">= 2.0.0"
-        - name: cert-operator
-          version: ">= 1.1.0 < 1.2.0"
-        - name: kube-state-metrics
-          version: ">= 1.5.0"
-        - name: cluster-operator
-          version: ">= 3.12.0"
-        - name: azure-operator
-          version: ">= 5.10.1"
-        - name: azure-scheduled-events
-          version: ">= 0.5.0"
+- name: "> 17.0.0"
+  requests:
+  - name: azure-operator
+    version: ">= 5.18.0"
+  - name: chart-operator
+    version: ">= 2.20.1"
+  - name: kube-state-metrics
+    version: ">= 1.10.0"
+  - name: external-dns
+    version: ">= 2.10.0"
+- name: "> 17.0.0-alpha1"
+  requests:
+  - name: app-operator
+    version: ">= 5.6.0"
+  - name: cluster-autoscaler
+    version: ">= 1.22.2-gs4"
+  - name: azure-operator
+    version: ">= 5.15.0"
+  - name: kube-state-metrics
+    version: ">= 1.7.0"
+  - name: coredns
+    version: ">= 1.8.0"
+  - name: net-exporter
+    version: ">= 1.11.0"
+- name: ">= 17.0.0-alpha1"
+  requests:
+  - name: calico
+    version: ">= 3.21.3"
+  - name: app-operator
+    version: ">= 5.4.1"
+  - name: azure-scheduled-events
+    version: ">= 0.6.0"
+  - name: containerlinux
+    version: ">= 3033.2.2"
+  - name: external-dns
+    version: ">= 2.9.0"
+- name: "< 17.0.0-alpha1"
+  requests:
+  - name: containerlinux
+    version: "<= 2905.2.6"
+- name: "> 16.1.2 < 17.0.0-alpha1"
+  requests:
+  - name: coredns
+    version: ">= 1.8.0"
+  - name: kube-state-metrics
+    version: ">= 1.10.0"
+  - name: external-dns
+    version: ">= 2.10.0"
+- name: "> 16.1.2"
+  requests:
+  - name: cert-operator
+    version: ">= 1.3.0"
+- name: "> 16.0.2 > 16.1.1 < 20.0.0"
+  requests:
+  - name: cert-exporter
+    version: ">= 2.0.1"
+  - name: external-dns
+    version: ">= 2.7.0"
+- name: "> 16.0.2 < 16.1.0"
+  requests:
+  - name: cert-exporter
+    version: ">= 2.0.0"
+  - name: cert-operator
+    version: ">= 1.1.0 < 1.2.0"
+  - name: kube-state-metrics
+    version: ">= 1.10.0"
+  - name: external-dns
+    version: ">= 2.10.0"
+  - name: cluster-operator
+    version: ">= 3.12.0"
+  - name: azure-operator
+    version: ">= 5.10.1"
+  - name: azure-scheduled-events
+    version: ">= 0.5.0"
