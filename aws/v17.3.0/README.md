@@ -167,6 +167,23 @@ _Changes since **Beta 3139.1.1**_
 - Update `helmclient` to v4.10.0.
 - Update giantswarm/appcatalog to `v0.7.0`, adding support for internal OCI chart catalogs.
 
+#### Added
+- Add support for relative URLs in catalog indexes.
+- Annotate App CRs after bootstrapping chart-operator to trigger reconciliation.
+
+#### Fixed
+- Continue processing `AppCatalogEntry` CRs if an error occurs.
+- Only show `AppCatalogEntry` CRs that are compatible with the current provider.
+- For internal catalogs generate tarball URLs instead of checking `index.yaml`
+to prevent chicken egg problems in new clusters.
+- Fix label selector in app values watcher so it supports CAPI clusters.
+- Strip cluster name from App CR name to determine Chart CR name in `chart/current.go` resource to fix WC app updates.
+- Allow usage of chart-operator PSP so it can be bootstrapped.
+- Fixing patch to not reset fields.
+- Remove compatible providers validation for `AppCatalogEntry` as its overly strict.
+- Push image to Docker Hub to not rely on crsync.
+- Restrict PSP usage to only named resource.
+
 
 
 ### cert-exporter [2.2.0](https://github.com/giantswarm/cert-exporter/releases/tag/v2.2.0)
