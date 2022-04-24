@@ -199,7 +199,13 @@ _Changes since **Beta 3139.1.1**_
 
 ### cluster-autoscaler [1.22.2-gs6](https://github.com/giantswarm/cluster-autoscaler-app/releases/tag/v1.22.2-gs6)
 
-Not found
+#### Added
+- Support cloud provider alias names (GCP -> GCE).
+
+#### Fixed
+- Updated to correct cluster-autoscaler version.
+- Use GS-built 1.22 image to deliver upstream [unreleased fix](https://github.com/kubernetes/autoscaler/pull/4600).
+
 
 
 ### coredns [1.9.0](https://github.com/giantswarm/coredns-app/releases/tag/v1.9.0)
