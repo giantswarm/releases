@@ -20,10 +20,19 @@
 #### Added
 - Added separate service account flag for IRSA.
 - Add `POD_SECURITY_GROUP_ENFORCING_MODE` to `aws-node` Daemonset.
+- Added latest flatcar images.
 
 #### Fixed
 - Issuer S3 endpoint for IRSA.
 - AWS Region Endpoint for IRSA.
+- Ignore S3 bucket deletion for audit logs.
+
+#### Removed
+- Remove tag `kubernetes.io/role/internal-elb` from machine deployment subnets.
+
+#### Changed
+- Bumped k8scc to 13.4.0 to enable VPA for kube-proxy.
+
 
 
 ### aws-cni [1.11.0](https://github.com/aws/amazon-vpc-cni-k8s/releases/tag/v1.11.0)
