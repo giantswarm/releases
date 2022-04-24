@@ -254,6 +254,7 @@ _Nothing has changed._
 #### Changed
 - Make `--metric-labels-allowlist` configurable through user values.
 - Add Node Pool labels to the default allowed labels in `--metric-labels-allowlist`.
+- Allow `giantswarm.io/service-type` labels from kube_<resource-name>_labels (Deployment, DaemonSet, StatefulSet).
 
 
 
