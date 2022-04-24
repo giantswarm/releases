@@ -173,6 +173,11 @@ _Changes since **Beta 3139.1.1**_
 
 #### Changed
 - Change priorityClass to `system-node-critical` for the daemonset.
+- Make exporter's monitor flags configurable.
+
+#### Fixed
+- Allow egress to port 1053 to make in-cluster DNS queries work.
+- Allow egress to port 443 to allow accessing vault.
 
 
 
