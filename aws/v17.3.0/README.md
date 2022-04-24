@@ -2,6 +2,27 @@
 
 << Add description here >>
 
+
+**Highlights**
+- Security fixes:
+  * 18 SDK: QEMU CVEs;
+  * 8 vim CVEs;
+  * 4 SDK: edk2-ovmf CVEs;
+  * 3 SDK: mantle CVEs;
+  * 2 Linux CVEs;
+  * 2 containerd CVEs;
+  * 2 Ignition CVEs;
+  * 2 Go CVEs;
+  * 2 libarchive CVEs;
+  * 2 torcx CVEs;
+  * 1 OpenSSH CVE;
+  * 1 openssl CVE;
+  * 1 gcc CVE;
+  * 1 krb5 CVE;
+  * 1 SDK: libxslt CVE;
+  * 1 SDK: Rust.
+
+
 ## Change details
 
 ### aws-ebs-csi-driver [2.12.0](https://github.com/giantswarm/aws-ebs-csi-driver-app/releases/tag/v2.12.0)
