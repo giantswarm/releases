@@ -3,7 +3,7 @@
 This release adds support for [Node Local DNS Cache](https://github.com/giantswarm/roadmap/issues/828). It also provides stability improvements, bug fixes and security fixes for various components.
 
 **Highlights**
-- [Node Local DNS Cache](https://github.com/giantswarm/roadmap/issues/828). It can be enabled by installing the `k8s-dns-node-cache-app`;
+- [Node Local DNS Cache](https://github.com/giantswarm/roadmap/issues/828). It can be enabled by installing the `k8s-dns-node-cache-app` from the `Playground` catalog;
 - Tag `IAM Roles for Service Accounts` AWS resources. See [roadmap issue](https://github.com/giantswarm/roadmap/issues/984);
 - Enable encryption for the S3 bucket used by `IAM Roles for Service Accounts`. See [roadmap issue](https://github.com/giantswarm/roadmap/issues/985);
 - VPA configuration for `kube-proxy`;
