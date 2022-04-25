@@ -1,0 +1,1 @@
+**Workload cluster release v17.3.0 for AWS is available**. It adds support for node local DNS cache. It also provides stability improvements, bug fixes and security fixes for various components. Further details can be found in the [release notes](https://docs.giantswarm.io/changes/workload-cluster-releases-aws/releases/aws-v17.3.0/).
