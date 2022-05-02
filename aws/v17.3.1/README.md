@@ -1,6 +1,6 @@
 # :zap: Giant Swarm Release v17.3.1 for AWS :zap:
 
-This release fixes a bug when external SNAT is enabled. 
+This release fixes a bug in AWS CNI when external SNAT is enabled. 
 
 ## Change details
 
