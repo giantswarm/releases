@@ -5,8 +5,8 @@
 ## Change details
 
 
-### aws-operator [11.9.4-dev](https://github.com/giantswarm/aws-operator/releases/tag/v11.9.4-dev)
+### aws-operator [11.10.0](https://github.com/giantswarm/aws-operator/releases/tag/v11.10.0)
 
-Not found
-
+#### Added
+ - Set optionally the `kubernetes.io/role/internal-elb` tag to machine deployment subnets.
 
