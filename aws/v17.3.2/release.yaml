@@ -1,5 +1,5 @@
 # Generated with:
-# devctl release create --name v17.3.2 --provider aws --base v17.3.1 --component aws-operator@11.9.4-dev
+# devctl release create --name v17.3.2 --provider aws --base v17.3.1 --component aws-operator@11.10.0
 apiVersion: release.giantswarm.io/v1alpha1
 kind: Release
 metadata:
