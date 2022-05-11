@@ -1,6 +1,6 @@
 # :zap: Giant Swarm Release v17.3.2 for AWS :zap:
 
-<< Add description here >>
+This release reintroduces tagging private subnets on node pools to enable autodiscovery for internal ELBs by setting the annotation `alpha.aws.giantswarm.io/internal-elb: ""` on AWSMachineDeployment CR's.
 
 ## Change details
 
