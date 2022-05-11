@@ -1,0 +1,1 @@
+**Workload cluster release v17.3.2 for AWS is available**. It allows to set a new annotation on specific node pools to use internal ELBs. Further details can be found in the [release notes](https://docs.giantswarm.io/changes/workload-cluster-releases-aws/releases/aws-v17.3.2/).
