@@ -3,6 +3,10 @@ releases:
   requests:
   - name: external-dns
     version: ">= 2.10.0"
+- name: "> 17.3.2"
+  requests:
+  - name: metrics-server-app
+    version: ">= 1.7.0"
 - name: "> 17.2.0"
   requests:
   - name: kube-state-metrics
