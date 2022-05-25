@@ -9,6 +9,8 @@ releases:
     version: ">= 1.10.0"
   - name: external-dns
     version: ">= 2.10.0"
+  - name: vertical-pod-autoscaler
+    version: ">= 2.4.0"
 - name: "> 17.0.0-alpha1"
   requests:
   - name: app-operator
