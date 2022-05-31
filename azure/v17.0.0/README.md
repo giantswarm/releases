@@ -33,7 +33,7 @@ This release provides support for Kubernetes 1.22, has Control Groups v2 enabled
 > **_Warning:_** `rpcbind` is disabled by default to mitigate security risks. Any application which requires it will no longer work. NFS `v2` and `v3` are such applications and are no longer supported. Please, check if any you have any application which depend on `rpcbind` before you upgrade.
 
 **Known Issues**
-- Java applications are unable to identify memory limits when using a `JRE` prior to v15 in a Control Groups v2 environment. Support was added in `JRE` v15 and later. More details are available in the [upstream issue](https://bugs.openjdk.java.net/browse/JDK-8230305). We recommend using the latest LTS JRE available (currently v17) to ensure continued compatibility with future releases.
+- Java applications are unable to identify memory limits when using a `JRE` prior to v15 in a Control Groups v2 environment. Support was added in `JRE` v15 and later. More details are available in the [upstream issue](https://bugs.openjdk.java.net/browse/JDK-8230305). We recommend using the latest LTS JRE available (currently v17) to ensure continued compatibility with future releases;
 - Go applications, which use an older version of [uber-go/automaxprocs](https://github.com/uber-go/automaxprocs), are unable to properly set `GOMAXPROCS`. Such applications need to be updated to use at least `v1.5.1` of `uber-go/automaxprocs`.
 
 **Control Groups v1**
