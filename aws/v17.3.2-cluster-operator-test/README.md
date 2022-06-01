@@ -1,4 +1,4 @@
-# :zap: Giant Swarm Release v17.3.3-cluster-operator-test for AWS :zap:
+# :zap: Giant Swarm Release v17.3.2-cluster-operator-test for AWS :zap:
 
 Testing cluster-operator changes
 

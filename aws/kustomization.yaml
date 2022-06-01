@@ -17,6 +17,7 @@ resources:
 - v17.3.0
 - v17.3.1
 - v17.3.2
+- v17.3.2-cluster-operator-test
 - v20.0.0-alpha1
 transformers:
 - releaseNotesTransformer.yaml

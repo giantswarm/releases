@@ -18,6 +18,7 @@ to all Giant Swarm installations.
     - [v17.3.2](https://github.com/giantswarm/releases/tree/master/aws/v17.3.2)
     - [v17.3.1](https://github.com/giantswarm/releases/tree/master/aws/v17.3.1)
     - [v17.3.0](https://github.com/giantswarm/releases/tree/master/aws/v17.3.0)
+    - [v17.3.2-cluster-operator-test](https://github.com/giantswarm/releases/tree/master/aws/v17.3.2-cluster-operator-test)
   - v17.2
     - [v17.2.0](https://github.com/giantswarm/releases/tree/master/aws/v17.2.0)
   - v17.1
