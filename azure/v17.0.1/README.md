@@ -1,6 +1,6 @@
 # :zap: Giant Swarm Release v17.0.1 for Azure :zap:
 
-<< Add description here >>
+This release provides security hardening of app-operator to tighten RBAC permissions as well as honoring write contexts more accurately.
 
 ## Change details
 
