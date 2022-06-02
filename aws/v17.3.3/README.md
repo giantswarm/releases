@@ -1,6 +1,6 @@
 # :zap: Giant Swarm Release v17.3.3 for AWS :zap:
 
-<< Add description here >>
+This release provides security hardening of app-operator to tighten RBAC permissions as well as honoring write contexts more accurately.
 
 ## Change details
 
@@ -9,6 +9,4 @@
 
 #### Fixed
 - Add missing permissions for `apps/deployments`.
-
-
 
