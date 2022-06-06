@@ -1,10 +1,10 @@
 # Generated with:
-# /Users/tobiaszkukawka/go/bin/devctl release create --name v17.0.0 --provider azure --base v17.0.0-alpha1 --app cluster-autoscaler@1.22.2-gs4 --overwrite
+# devctl release create --provider azure --name v17.0.1 --base v17.0.0 --component app-operator@5.10.2
 apiVersion: release.giantswarm.io/v1alpha1
 kind: Release
 metadata:
   creationTimestamp: null
-  name: v17.0.0
+  name: v17.0.1
 spec:
   apps:
   - name: cert-exporter
@@ -39,7 +39,7 @@ spec:
     version: 1.0.0
   components:
   - name: app-operator
-    version: 5.8.0
+    version: 5.10.2
   - catalog: control-plane-catalog
     name: azure-operator
     releaseOperatorDeploy: true
@@ -58,8 +58,8 @@ spec:
     version: 3.21.3
   - name: etcd
     version: 3.4.18
-  date: "2022-03-17T14:43:09Z"
-  state: deprecated
+  date: "2022-05-19T11:39:38Z"
+  state: active
 status:
   inUse: false
   ready: false
