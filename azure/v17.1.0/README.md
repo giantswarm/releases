@@ -12,34 +12,10 @@
 
 
 
-### azure-operator [5.19.0](https://github.com/giantswarm/azure-operator/releases/tag/v5.19.0)
+### azure-operator [5.20.0](https://github.com/giantswarm/azure-operator/releases/tag/v5.20.0)
 
-#### Added
-- Added possibility to specify VNet CIDR in `AzureCluster`.
-- Migrate MachinePool CRs from `exp.cluster.x-k8s.io/v1alpha3` to `cluster.x-k8s.io/v1beta1`
-- Migrate AzureMachinePool CRs from `exp.infrastructure.cluster.x-k8s.io/v1alpha3` to `infrastructure.cluster.x-k8s.io/v1beta1`
 #### Changed
-- Use systemd cgroup driver on masters and cgroups v2 worker nodes. 
-- Update github.com/Azure/azure-sdk-for-go to v58.1.0+incompatible
-- Update github.com/giantswarm/apiextensions to v6.0.0
-- Update github.com/giantswarm/certs to v4.0.0
-- Update github.com/giantswarm/conditions to v0.5.0
-- Update github.com/giantswarm/conditions-handler to v0.3.0
-- Update github.com/giantswarm/k8sclient to v7.0.1
-- Update github.com/giantswarm/k8scloudconfig to v13.4.0
-- Update github.com/giantswarm/operatorkit to v7.0.1
-- Update github.com/giantswarm/release-operator to v3.2.0
-- Update github.com/giantswarm/tenantcluster to v6.0.0
-- Update k8s.io/api to v0.22.2
-- Update k8s.io/apiextensions-apiserver to v0.22.2
-- Update k8s.io/apimachinery to v0.22.2
-- Update k8s.io/client-go to v0.22.2
-- Update sigs.k8s.io/cluster-api to v1.0.5
-- Update sigs.k8s.io/cluster-api-provider-azure to v1.0.2
-- Update sigs.k8s.io/controller-runtime to v0.10.3
-- Bump various other dependencies to address CVEs.
-#### Fixed
-- Set `AzureMachine.Status.Ready` according to AzureMachine's Ready condition.
+- Bumped k8scc to latest version to fix `localhost` node name problem.
 
 
 
