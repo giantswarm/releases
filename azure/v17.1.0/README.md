@@ -190,3 +190,10 @@ _Nothing has changed._
 
 
 
+### kube-state-metrics [1.10.0](https://github.com/giantswarm/kube-state-metrics-app/releases/tag/v1.10.0)
+
+#### Changed
+- Add `Node Pool` labels to the default allowed labels in `--metric-labels-allowlist`.
+
+
+
