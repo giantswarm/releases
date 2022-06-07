@@ -1,5 +1,5 @@
 # Generated with:
-# devctl release create --name 17.1.0 --provider azure --base 17.0.1 --app cert-exporter@2.2.0 --app chart-operator@2.23.0 --app coredns@1.9.0@1.8.7 --app external-dns@2.14.0@0.11.0 --component app-operator@5.12.0 --component azure-operator@5.19.0 --component cert-operator@2.0.1 --component cluster-operator@4.3.0 --component containerlinux@3139.2.1 --component calico@3.21.5 --component etcd@3.5.4 --app metrics-server@1.7.0@0.5.2 --app net-exporter@1.12.0 --app node-exporter@1.12.0 --app azure-scheduled-events@0.7.0 --app vertical-pod-autoscaler@2.4.0@0.10.0 --app vertical-pod-autoscaler-crd@1.0.1@0.9.2 --component kubernetes@1.22.10 --app kube-state-metrics@1.10.0@2.3.0 --overwrite
+# devctl release create --name 17.1.0 --provider azure --base 17.0.1 --app cert-exporter@2.2.0 --app chart-operator@2.23.0 --app coredns@1.9.0@1.8.7 --app external-dns@2.14.0@0.11.0 --component app-operator@5.12.0 --component azure-operator@5.19.0 --component cert-operator@2.0.1 --component containerlinux@3139.2.1 --component calico@3.21.5 --component etcd@3.5.4 --app metrics-server@1.7.0@0.5.2 --app net-exporter@1.12.0 --app node-exporter@1.12.0 --app azure-scheduled-events@0.7.0 --app vertical-pod-autoscaler@2.4.0@0.10.0 --app vertical-pod-autoscaler-crd@1.0.1@0.9.2 --component kubernetes@1.22.10 --app kube-state-metrics@1.10.0@2.3.0 --overwrite
 apiVersion: release.giantswarm.io/v1alpha1
 kind: Release
 metadata:
@@ -49,7 +49,7 @@ spec:
     version: 2.0.1
   - name: cluster-operator
     releaseOperatorDeploy: true
-    version: 4.3.0
+    version: 3.12.0
   - name: kubernetes
     version: 1.22.10
   - name: containerlinux
@@ -58,7 +58,7 @@ spec:
     version: 3.21.5
   - name: etcd
     version: 3.5.4
-  date: "2022-06-07T08:49:07Z"
+  date: "2022-06-07T11:54:36Z"
   state: active
 status:
   inUse: false

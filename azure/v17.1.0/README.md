@@ -50,13 +50,6 @@
 
 
 
-### cluster-operator [4.3.0](https://github.com/giantswarm/cluster-operator/releases/tag/v4.3.0)
-
-#### Changed
-- Do not update "app-operator.giantswarm.io/version" label on app-operators when their value is 0.0.0 (aka they are reconciled by the management cluster app-operator). This is a use-case for App Bundles for example, because the App CRs they contain should be created in the MC so should be reconciled by the MC app-operator.
-
-
-
 ### containerlinux [3139.2.1](https://www.flatcar-linux.org/releases/#release-3139.2.1)
 
 New **Stable** Release **3139.2.1**
