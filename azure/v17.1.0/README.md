@@ -5,42 +5,153 @@
 ## Change details
 
 
-### azure-operator [5.18.1-dev](https://github.com/giantswarm/azure-operator/releases/tag/v5.18.1-dev)
+### app-operator [5.12.0](https://github.com/giantswarm/app-operator/releases/tag/v5.12.0)
+
+#### Added
+- Add `initialBootstrapMode` flag to allow deploying CNI as managed apps.
+
+
+
+### azure-operator [5.19.0](https://github.com/giantswarm/azure-operator/releases/tag/v5.19.0)
+
+#### Added
+- Added possibility to specify VNet CIDR in `AzureCluster`.
+- Migrate MachinePool CRs from `exp.cluster.x-k8s.io/v1alpha3` to `cluster.x-k8s.io/v1beta1`
+- Migrate AzureMachinePool CRs from `exp.infrastructure.cluster.x-k8s.io/v1alpha3` to `infrastructure.cluster.x-k8s.io/v1beta1`
+#### Changed
+- Use systemd cgroup driver on masters and cgroups v2 worker nodes. 
+- Update github.com/Azure/azure-sdk-for-go to v58.1.0+incompatible
+- Update github.com/giantswarm/apiextensions to v6.0.0
+- Update github.com/giantswarm/certs to v4.0.0
+- Update github.com/giantswarm/conditions to v0.5.0
+- Update github.com/giantswarm/conditions-handler to v0.3.0
+- Update github.com/giantswarm/k8sclient to v7.0.1
+- Update github.com/giantswarm/k8scloudconfig to v13.4.0
+- Update github.com/giantswarm/operatorkit to v7.0.1
+- Update github.com/giantswarm/release-operator to v3.2.0
+- Update github.com/giantswarm/tenantcluster to v6.0.0
+- Update k8s.io/api to v0.22.2
+- Update k8s.io/apiextensions-apiserver to v0.22.2
+- Update k8s.io/apimachinery to v0.22.2
+- Update k8s.io/client-go to v0.22.2
+- Update sigs.k8s.io/cluster-api to v1.0.5
+- Update sigs.k8s.io/cluster-api-provider-azure to v1.0.2
+- Update sigs.k8s.io/controller-runtime to v0.10.3
+- Bump various other dependencies to address CVEs.
+#### Fixed
+- Set `AzureMachine.Status.Ready` according to AzureMachine's Ready condition.
+
+
+
+### cert-operator [2.0.1](https://github.com/giantswarm/cert-operator/releases/tag/v2.0.1)
+
+#### Fixed
+- Bump go module major version.
+
+
+
+### cluster-operator [4.3.0](https://github.com/giantswarm/cluster-operator/releases/tag/v4.3.0)
+
+#### Changed
+- Do not update "app-operator.giantswarm.io/version" label on app-operators when their value is 0.0.0 (aka they are reconciled by the management cluster app-operator). This is a use-case for App Bundles for example, because the App CRs they contain should be created in the MC so should be reconciled by the MC app-operator.
+
+
+
+### containerlinux [3139.2.1](https://www.flatcar-linux.org/releases/#release-3139.2.1)
+
+New **Stable** Release **3139.2.1**
+
+_Changes since **Stable 3139.2.0**_
+
+#### Security fixes:
+
+- Linux ([CVE-2022-28390](https://nvd.nist.gov/vuln/detail/CVE-2022-28390), [CVE-2022-0168](https://nvd.nist.gov/vuln/detail/CVE-2022-0168), [CVE-2022-1158](https://nvd.nist.gov/vuln/detail/CVE-2022-1158), [CVE-2022-1353](https://nvd.nist.gov/vuln/detail/CVE-2022-1353), [CVE-2022-1198](https://nvd.nist.gov/vuln/detail/CVE-2022-1198), [CVE-2022-28389](https://nvd.nist.gov/vuln/detail/CVE-2022-28389), [CVE-2022-28388](https://nvd.nist.gov/vuln/detail/CVE-2022-28388), [CVE-2022-1516](https://nvd.nist.gov/vuln/detail/CVE-2022-1516), [CVE-2022-1263](https://nvd.nist.gov/vuln/detail/CVE-2022-1263), [CVE-2022-29582](https://nvd.nist.gov/vuln/detail/CVE-2022-29582), [CVE-2022-1204](https://nvd.nist.gov/vuln/detail/CVE-2022-1204), [CVE-2022-1205](https://nvd.nist.gov/vuln/detail/CVE-2022-1205), [CVE-2022-0500](https://nvd.nist.gov/vuln/detail/CVE-2022-0500), [CVE-2022-23222](https://nvd.nist.gov/vuln/detail/CVE-2022-23222))
+- nvidia-drivers ([CVE-2022-21814](https://nvd.nist.gov/vuln/detail/CVE-2022-21814), [CVE-2022-21813](https://nvd.nist.gov/vuln/detail/CVE-2022-21813))
+- Go ([CVE-2022-24675](https://nvd.nist.gov/vuln/detail/CVE-2022-24675))
+
+#### Bug fixes:
+
+- AWS: specify correct console (ttyS0) on kernel command line for ARM64 instances ([coreos-overlay#1628](https://github.com/flatcar-linux/coreos-overlay/pull/1628))
+- GCE: Restored oem-gce.service functionality on GCP ([coreos-overlay#1813](https://github.com/flatcar-linux/coreos-overlay/pull/1813))
+- Added pahole to developer container, without it kernel modules built against /usr/src/linux may fail to probe with an 'invalid relocation target' error ([coreos-overlay#1839](https://github.com/flatcar-linux/coreos-overlay/pull/1839))
+
+#### Changes:
+
+- Merge the Flatcar Pro features into the regular Flatcar images ([coreos-overlay#1679](https://github.com/flatcar-linux/coreos-overlay/pull/1679)) 
+- GCE: Enabled GVE kernel driver, which adds support for Google Virtual NIC on GCP ([coreos-overlay#1802](https://github.com/flatcar-linux/coreos-overlay/pull/1802))
+- SDK: Dropped the mantle binaries (kola, ore, etc.) from the SDK, they are now provided by the `ghcr.io/flatcar-linux/mantle` image ([coreos-overlay#1827](https://github.com/flatcar-linux/coreos-overlay/pull/1827), [scripts#275](https://github.com/flatcar-linux/scripts/pull/275))
+
+#### Updates:
+
+- Linux ([5.15.37](https://lwn.net/Articles/893264) (includes [5.15.36](https://lwn.net/Articles/892812), [5.15.35](https://lwn.net/Articles/892002), [5.15.34](https://lwn.net/Articles/891251), [5.15.33](https://lwn.net/Articles/890722)))
+- Go ([1.17.9](https://go.googlesource.com/go/+/refs/tags/go1.17.9))
+- ca-certificates ([3.78](https://firefox-source-docs.mozilla.org/security/nss/releases/nss_3_78.html))
+- nvidia-drivers ([510.47.03](https://docs.nvidia.com/datacenter/tesla/tesla-release-notes-510-47-03/index.html)) 
+- GCE: google compute-image-packages ([20190124](https://github.com/GoogleCloudPlatform/compute-image-packages/releases/tag/20190124))
+
+
+### calico [3.21.5](https://github.com/projectcalico/calico/releases/tag/v3.21.5)
 
 Not found
 
 
-### containerlinux [3033.2.4](https://www.flatcar-linux.org/releases/#release-3033.2.4)
+### etcd [3.5.4](https://github.com/etcd-io/etcd/releases/tag/v3.5.4)
 
-Containerlinux release "3033.2.4" was not found in the changelog
+Not found
 
 
-### kubernetes [1.22.8](https://github.com/kubernetes/kubernetes/releases/tag/v1.22.8)
+### kubernetes [1.22.10](https://github.com/kubernetes/kubernetes/releases/tag/v1.22.10)
 
-#### API Change
-- Fixes a regression in v1beta1 PodDisruptionBudget handling of "strategic merge patch"-type API requests for the `selector` field. Prior to 1.21, these requests would merge `matchLabels` content and replace `matchExpressions` content. In 1.21, patch requests touching the `selector` field started replacing the entire selector. This is consistent with server-side apply and the v1 PodDisruptionBudget behavior, but should not have been changed for v1beta1. ([#108141](https://github.com/kubernetes/kubernetes/pull/108141), [@liggitt](https://github.com/liggitt)) [SIG Auth and Testing]
-#### Feature
-- Kubernetes is now built with Golang 1.16.15 ([#108564](https://github.com/kubernetes/kubernetes/pull/108564), [@cpanato](https://github.com/cpanato)) [SIG Cloud Provider, Instrumentation, Release and Testing]
 #### Bug or Regression
-- Bump sigs.k8s.io/apiserver-network-proxy/konnectivity-client to v0.0.30, fixing goroutine leaks in kube-apiserver. ([#108439](https://github.com/kubernetes/kubernetes/pull/108439), [@andrewsykim](https://github.com/andrewsykim)) [SIG API Machinery, Auth and Cloud Provider]
-- Fix static pod restarts in cases where the container is not present. ([#108189](https://github.com/kubernetes/kubernetes/pull/108189), [@rphillips](https://github.com/rphillips)) [SIG Node]
-- Fixes a bug where a partial EndpointSlice update could cause node name information to be dropped from endpoints that were not updated. ([#108202](https://github.com/kubernetes/kubernetes/pull/108202), [@robscott](https://github.com/robscott)) [SIG Network]
-- Fixes a regression in the kubelet restarting static pods. ([#108303](https://github.com/kubernetes/kubernetes/pull/108303), [@rphillips](https://github.com/rphillips)) [SIG Node and Testing]
-- Increase Azure ACR credential provider timeout ([#108209](https://github.com/kubernetes/kubernetes/pull/108209), [@andyzhangx](https://github.com/andyzhangx)) [SIG Cloud Provider]
+- Correct event registration for multiple scheduler plugins; this fixes a potential significant delay in re-queueing unschedulable pods. ([#109447](https://github.com/kubernetes/kubernetes/pull/109447), [@ahg-g](https://github.com/ahg-g)) [SIG Scheduling and Testing]
+- Existing InTree AzureFile PVs which don't have a secret namespace defined will now work properly after enabling CSI migration - the namespace will be obtained from ClaimRef. ([#108000](https://github.com/kubernetes/kubernetes/pull/108000), [@RomanBednar](https://github.com/RomanBednar)) [SIG Cloud Provider and Storage]
+- Failure to start a container cannot accidentally result in the pod being considered "Succeeded" in the presence of deletion. ([#108883](https://github.com/kubernetes/kubernetes/pull/108883), [@rphillips](https://github.com/rphillips)) [SIG Node]
+- Kubeadm: add the flag "--experimental-initial-corrupt-check" to etcd static Pod manifests to ensure etcd member data consistency ([#109076](https://github.com/kubernetes/kubernetes/pull/109076), [@neolit123](https://github.com/neolit123)) [SIG Cluster Lifecycle]
 #### Dependencies
 #### Added
 _Nothing has changed._
 #### Changed
-- sigs.k8s.io/apiserver-network-proxy/konnectivity-client: v0.0.27 → v0.0.30
+_Nothing has changed._
 #### Removed
 _Nothing has changed._
 
 
 
-### metrics-server [1.6.0](https://github.com/giantswarm/metrics-server-app/releases/tag/v1.6.0)
+### cert-exporter [2.2.0](https://github.com/giantswarm/cert-exporter/releases/tag/v2.2.0)
 
 #### Changed
-- Updated metrics-server version to 0.5.2.
+- Change priorityClass to `system-node-critical` for the daemonset.
+
+
+
+### chart-operator [2.23.0](https://github.com/giantswarm/chart-operator/releases/tag/v2.23.0)
+
+#### Changed
+- Always create `giantswarm-critical` priority class if it does not exist.
+
+
+
+### coredns [1.9.0](https://github.com/giantswarm/coredns-app/releases/tag/v1.9.0)
+
+#### Added
+- Add toleration for `node.cloudprovider.kubernetes.io/uninitialized`.
+#### Changed
+- Update `coredns` to upstream version [1.8.7](https://coredns.io/2021/12/09/coredns-1.8.7-release/).
+ 
+
+
+
+### external-dns [2.14.0](https://github.com/giantswarm/external-dns-app/releases/tag/v2.14.0)
+
+#### Added
+- VerticalPodAutoscaler for automatically setting requests and limits depending on usage. Fixes OOM kills on huge clusters.
+
+
+
+### metrics-server [1.7.0](https://github.com/giantswarm/metrics-server-app/releases/tag/v1.7.0)
+
+#### Changed
+- Set `kubelet-preferred-address-types` to `Hostname` on `AWS`.
 
 
 
@@ -51,11 +162,10 @@ _Nothing has changed._
 
 
 
-### node-exporter [1.10.0](https://github.com/giantswarm/node-exporter-app/releases/tag/v1.10.0)
+### node-exporter [1.12.0](https://github.com/giantswarm/node-exporter-app/releases/tag/v1.12.0)
 
 #### Changed
-- Disable the fibrechannel collector.
-- Disable the tapestats collector.
+- Enabled `diskstats` collector.
 
 
 
@@ -66,10 +176,10 @@ _Nothing has changed._
 
 
 
-### vertical-pod-autoscaler [2.1.2](https://github.com/giantswarm/vertical-pod-autoscaler-app/releases/tag/v2.1.2)
+### vertical-pod-autoscaler [2.4.0](https://github.com/giantswarm/vertical-pod-autoscaler-app/releases/tag/v2.4.0)
 
-#### Fixed
-- Fixed default value for admission controller PDB.
+#### Changed
+- Use patched docker image tagged `0.10.0-oomfix` for `recommender` and updater (see https://github.com/giantswarm/roadmap/issues/923).
 
 
 
