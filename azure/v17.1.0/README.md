@@ -93,10 +93,10 @@ _Nothing has changed._
 
 
 
-### chart-operator [2.23.0](https://github.com/giantswarm/chart-operator/releases/tag/v2.23.0)
+### chart-operator [2.22.0](https://github.com/giantswarm/chart-operator/releases/tag/v2.22.0)
 
-#### Changed
-- Always create `giantswarm-critical` priority class if it does not exist.
+#### Added
+- Split Helm client into private Helm client for `giantswarm`-namespaced apps and public Helm client for rest of the apps.
 
 
 
