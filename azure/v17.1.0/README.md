@@ -93,11 +93,19 @@ _Nothing has changed._
 
 
 
-### chart-operator [2.22.0](https://github.com/giantswarm/chart-operator/releases/tag/v2.22.0)
+### chart-operator [2.24.0](https://github.com/giantswarm/chart-operator/releases/tag/v2.24.0)
 
 #### Added
 - Split Helm client into private Helm client for `giantswarm`-namespaced apps and public Helm client for rest of the apps.
+- Add Helm release failure reason when it is known, and if there is a currently successfully released version
 
+### Changed
+- Add chart-pull-failed error to differentiate between issues when pulling chart tarball and other problems.
+- Always create giantswarm-critical priority class if it does not exist.
+- Update `helmclient` to v4.10.0.
+
+### Fixed
+- Fix missing PriorityClass issue.
 
 
 ### coredns [1.9.0](https://github.com/giantswarm/coredns-app/releases/tag/v1.9.0)

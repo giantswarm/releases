@@ -10,7 +10,7 @@ spec:                                                              spec:
   - name: cert-exporter                                              - name: cert-exporter
     version: 2.0.1                                              |      version: 2.2.0
   - name: chart-operator                                             - name: chart-operator
-    version: 2.20.1                                             |      version: 2.22.0
+    version: 2.20.1                                             |      version: 2.24.0
   - componentVersion: 1.8.6                                     |    - componentVersion: 1.8.7
     name: coredns                                                      name: coredns
     version: 1.8.0                                              |      version: 1.9.0
