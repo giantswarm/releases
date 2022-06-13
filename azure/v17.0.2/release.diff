@@ -10,7 +10,7 @@ spec:                                                              spec:
   - name: cert-exporter                                              - name: cert-exporter
     version: 2.0.1                                                     version: 2.0.1
   - name: chart-operator                                             - name: chart-operator
-    version: 2.20.1                                                    version: 2.20.1
+    version: 2.20.1                                             |      version: 2.24.0
   - componentVersion: 1.8.6                                          - componentVersion: 1.8.6
     name: coredns                                                      name: coredns
     version: 1.8.0                                                     version: 1.8.0
@@ -19,21 +19,21 @@ spec:                                                              spec:
     version: 2.9.0                                                     version: 2.9.0
   - componentVersion: 2.2.4                                          - componentVersion: 2.2.4
     name: kube-state-metrics                                           name: kube-state-metrics
-    version: 1.7.0                                                     version: 1.7.0
+    version: 1.7.0                                              |      version: 1.10.0
   - name: metrics-server                                             - name: metrics-server
     version: 1.5.0                                                     version: 1.5.0
   - name: net-exporter                                               - name: net-exporter
     version: 1.11.0                                                    version: 1.11.0
   - componentVersion: 1.0.1                                          - componentVersion: 1.0.1
     name: node-exporter                                                name: node-exporter
-    version: 1.8.0                                                     version: 1.8.0
+    version: 1.8.0                                              |      version: 1.12.0
   - name: cluster-autoscaler                                         - name: cluster-autoscaler
     version: 1.22.2-gs4                                                version: 1.22.2-gs4
   - name: azure-scheduled-events                                     - name: azure-scheduled-events
     version: 0.6.1                                                     version: 0.6.1
   - componentVersion: 0.9.2                                          - componentVersion: 0.9.2
     name: vertical-pod-autoscaler                                      name: vertical-pod-autoscaler
-    version: 2.1.1                                                     version: 2.1.1
+    version: 2.1.1                                              |      version: 2.4.0
   - componentVersion: 0.9.2                                          - componentVersion: 0.9.2
     name: vertical-pod-autoscaler-crd                                  name: vertical-pod-autoscaler-crd
     version: 1.0.0                                                     version: 1.0.0
@@ -58,15 +58,7 @@ spec:                                                              spec:
     version: 3.21.3                                                    version: 3.21.3
   - name: etcd                                                       - name: etcd
     version: 3.4.18                                                    version: 3.4.18
-  date: "2022-05-19T11:39:38Z"                                  |    - name: chart-operator
-                                                                >      version: 2.24.0--component
-                                                                >    - name: kube-state-metrics
-                                                                >      version: 1.10.0
-                                                                >    - name: vertical-pod-autoscaler
-                                                                >      version: 2.4.0
-                                                                >    - name: node-exporter
-                                                                >      version: 1.12.0
-                                                                >    date: "2022-06-13T09:39:04Z"
+  date: "2022-05-19T11:39:38Z"                                  |    date: "2022-06-13T09:39:04Z"
   state: active                                                      state: active
 status:                                                            status:
   inUse: false                                                       inUse: false

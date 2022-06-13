@@ -1,6 +1,6 @@
 # :zap: Giant Swarm Release v17.0.2 for Azure :zap:
 
-<< Add description here >>
+This release provides quality of life improvements and bug fixes to operators and apps.
 
 ## Change details
 

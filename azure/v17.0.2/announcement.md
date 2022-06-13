@@ -1,0 +1,1 @@
+**Workload cluster release v17.0.2 for Azure is available**. This release provides quality of life improvements and bug fixes to operators and apps. Major version was bumped because cluster-operator was upgraded from v3 to v4 (4.3.0).
