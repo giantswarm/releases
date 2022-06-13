@@ -62,7 +62,7 @@ spec:
     version: 2.0.1
   - name: cluster-operator
     releaseOperatorDeploy: true
-    version: 4.0.2
+    version: 4.3.0
   - name: containerlinux
     version: 3139.2.0
   - name: etcd
