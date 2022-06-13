@@ -63,3 +63,14 @@ This release provides quality of life improvements and bug fixes to operators an
 - Fix admission-controller webhook-service name.
 - Fix webhook name in generated secret certificate.
 - Prefix generated secret certificate with release-name.
+
+
+### node-exporter [v1.12.0](https://github.com/giantswarm/node-exporter-app/releases/tag/v1.12.0)
+
+#### Added
+- Add options to be able to disable nvme and conntrack collectors.
+
+#### Changed
+- Enabled diskstats collector.
+- Disable the fibrechannel collector.
+- Disable the tapestats collector.
