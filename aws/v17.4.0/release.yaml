@@ -24,7 +24,8 @@ spec:
   - componentVersion: 1.8.7
     name: coredns
     version: 1.9.0
-  - name: external-dns
+  - componentVersion: 0.11.0
+    name: external-dns
     version: 2.14.0
   - componentVersion: 4.2.0
     name: kiam
