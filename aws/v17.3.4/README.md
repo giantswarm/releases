@@ -1,6 +1,6 @@
 # :zap: Giant Swarm Release v17.3.4 for AWS :zap:
 
-This release provides quality of life improvements and bug fixes to app-operator and chart-operator.
+This release provides quality of life improvements and bug fixes to operators.
 
 ## Change details
 
@@ -27,3 +27,8 @@ This release provides quality of life improvements and bug fixes to app-operator
 #### Fixed
 - Fix missing PriorityClass issue.
 
+
+### metrics-server-app [v1.7.0](https://github.com/giantswarm/metrics-server-app/releases/tag/v1.7.0)
+
+#### Changed
+- Set kubelet-preferred-address-types to Hostname on AWS.
