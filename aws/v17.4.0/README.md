@@ -101,3 +101,10 @@ Not found
 - VerticalPodAutoscaler for automatically setting requests and limits depending on usage. Fixes OOM kills on huge clusters.
 
 
+### aws-cni
+
+TBD
+
+### containerd
+
+TBD

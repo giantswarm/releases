@@ -51,7 +51,7 @@ spec:
   - name: app-operator
     version: 5.12.0
   - name: aws-cni
-    version: 1.11.0-nftables
+    version: 1.11.2-nftables
   - name: aws-operator
     releaseOperatorDeploy: true
     version: 11.13.1-dev
@@ -65,7 +65,7 @@ spec:
     releaseOperatorDeploy: true
     version: 4.3.0
   - name: containerlinux
-    version: 3139.2.0
+    version: 3139.2.2
   - name: etcd
     version: 3.4.18
   - name: kubernetes
