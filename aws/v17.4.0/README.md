@@ -110,4 +110,10 @@ _Nothing has changed._
 - Set `kubelet-preferred-address-types` to `Hostname` on `AWS`.
 
 
+### aws-ebs-csi-driver [1.6.2](https://github.com/kubernetes-sigs/aws-ebs-csi-driver/blob/master/CHANGELOG.md#v162)
+
+#### Notable changes
+- Address CVE ALAS-2022-1792
+
+
 
