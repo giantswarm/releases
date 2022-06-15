@@ -1,5 +1,5 @@
 # Generated with:
-# devctl release create --name v17.4.0 --provider aws --base v17.3.3 --component aws-operator@11.14.0 --component cluster-operator@4.3.0 --component app-operator@5.12.0 --component aws-cni@1.11.2 --component containerlinux@3139.2.2 --component kubernetes@1.22.10 --app external-dns@2.14.0 --app chart-operator@2.24.0 --app node-exporter@1.12.0 --app vertical-pod-autoscaler@2.4.0 --app metrics-server@1.7.0 --overwrite
+# devctl release create --name v17.4.0 --provider aws --base v17.3.3 --component aws-operator@11.14.1 --component cluster-operator@4.3.0 --component app-operator@5.12.0 --component aws-cni@1.11.2 --component containerlinux@3139.2.2 --component kubernetes@1.22.10 --app external-dns@2.14.0 --app chart-operator@2.24.0 --app node-exporter@1.12.0 --app vertical-pod-autoscaler@2.4.0 --app metrics-server@1.7.0 --overwrite
 apiVersion: release.giantswarm.io/v1alpha1
 kind: Release
 metadata:
@@ -56,7 +56,7 @@ spec:
     version: 1.11.2-nftables
   - name: aws-operator
     releaseOperatorDeploy: true
-    version: 11.14.0
+    version: 11.14.1
   - name: calico
     version: 3.21.3
   - name: cert-operator

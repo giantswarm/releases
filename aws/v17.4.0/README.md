@@ -5,10 +5,13 @@
 ## Change details
 
 
-### aws-operator [11.14.0](https://github.com/giantswarm/aws-operator/releases/tag/v11.14.0)
+### aws-operator [11.14.1](https://github.com/giantswarm/aws-operator/releases/tag/v11.14.1)
 
-#### Added 
-- Added new flatcar 3139.2.2 image release.
+#### Fixed
+- Fix principal ARN for Route53 trusted entity.
+
+#### Changed
+- Remove `imagePullSecrets`
 
 
 
