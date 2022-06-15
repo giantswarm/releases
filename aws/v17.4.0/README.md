@@ -116,4 +116,10 @@ _Nothing has changed._
 - Address CVE ALAS-2022-1792
 
 
+### webhook-exporer [0.1.0](https://github.com/giantswarm/webhook-exporter/releases/tag/v0.1.0)
+
+#### Added
+- Initial webhook-exporter.
+
+
 

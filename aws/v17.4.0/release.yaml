@@ -47,6 +47,8 @@ spec:
     version: 2.4.0
   - name: vertical-pod-autoscaler-crd
     version: 1.0.1
+  - name: webhook-exporter
+    version: 0.1.0
   components:
   - name: app-operator
     version: 5.12.0
