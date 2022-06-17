@@ -60,13 +60,14 @@ _Changes since **Stable 3139.2.1**_
 - Go ([1.17.10](https://go.googlesource.com/go/+/refs/tags/go1.17.10))
 
 
-### kubernetes [1.22.10](https://github.com/kubernetes/kubernetes/releases/tag/v1.22.10)
+### kubernetes [1.22.11](https://github.com/kubernetes/kubernetes/releases/tag/v1.22.11)
 
 #### Bug or Regression
-- Correct event registration for multiple scheduler plugins; this fixes a potential significant delay in re-queueing unschedulable pods. ([#109447](https://github.com/kubernetes/kubernetes/pull/109447), [@ahg-g](https://github.com/ahg-g)) [SIG Scheduling and Testing]
-- Existing InTree AzureFile PVs which don't have a secret namespace defined will now work properly after enabling CSI migration - the namespace will be obtained from ClaimRef. ([#108000](https://github.com/kubernetes/kubernetes/pull/108000), [@RomanBednar](https://github.com/RomanBednar)) [SIG Cloud Provider and Storage]
-- Failure to start a container cannot accidentally result in the pod being considered "Succeeded" in the presence of deletion. ([#108883](https://github.com/kubernetes/kubernetes/pull/108883), [@rphillips](https://github.com/rphillips)) [SIG Node]
-- Kubeadm: add the flag "--experimental-initial-corrupt-check" to etcd static Pod manifests to ensure etcd member data consistency ([#109076](https://github.com/kubernetes/kubernetes/pull/109076), [@neolit123](https://github.com/neolit123)) [SIG Cluster Lifecycle]
+- Bug Fix: Kube-proxy dropped endpointSlice's local endpoints when upgrading from 1.20 to 1.22 ([#110245](https://github.com/kubernetes/kubernetes/pull/110245), [@xh4n3](https://github.com/xh4n3)) [SIG Network]
+- EndpointSlices marked for deletion are now ignored during reconciliation. ([#110482](https://github.com/kubernetes/kubernetes/pull/110482), [@aryan9600](https://github.com/aryan9600)) [SIG Apps and Network]
+- Fixed a kubelet issue that could result in invalid pod status updates to be sent to the api-server where pods would be reported in a terminal phase but also report a ready condition of true in some cases. ([#110481](https://github.com/kubernetes/kubernetes/pull/110481), [@bobbypage](https://github.com/bobbypage)) [SIG Node and Testing]
+- Pods will now post their readiness during termination. ([#110418](https://github.com/kubernetes/kubernetes/pull/110418), [@aojea](https://github.com/aojea)) [SIG Network, Node and Testing]
+
 #### Dependencies
 #### Added
 _Nothing has changed._

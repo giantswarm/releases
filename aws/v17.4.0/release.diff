@@ -70,7 +70,7 @@ spec:                                                              spec:
   - name: etcd                                                       - name: etcd
     version: 3.4.18                                                    version: 3.4.18
   - name: kubernetes                                                 - name: kubernetes
-    version: 1.22.9                                             |      version: 1.22.10
+    version: 1.22.9                                             |      version: 1.22.11
   date: "2022-06-02T10:00:00Z"                                  |    date: "2022-06-14T12:56:45Z"
   state: active                                                      state: active
 status:                                                            status:
