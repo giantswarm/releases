@@ -5,12 +5,14 @@
 ## Change details
 
 
-### aws-operator [11.14.1](https://github.com/giantswarm/aws-operator/releases/tag/v11.14.1)
+### aws-operator [11.15.0](https://github.com/giantswarm/aws-operator/releases/tag/v11.14.1)
 
 #### Fixed
 - Fix principal ARN for Route53 trusted entity.
 
 #### Changed
+- Set default upgrade batch to 10% from 33%
+- Set default pause time to 10 minutes
 - Remove `imagePullSecrets`
 
 
