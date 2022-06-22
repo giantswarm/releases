@@ -5,17 +5,31 @@
 ## Change details
 
 
-### app-operator [5.12.0](https://github.com/giantswarm/app-operator/releases/tag/v5.12.0)
+### app-operator [6.0.1](https://github.com/giantswarm/app-operator/releases/tag/v6.0.1)
 
 #### Added
-- Add `initialBootstrapMode` flag to allow deploying CNI as managed apps.
+- Add support for Catalogs that define multiple repository mirrors to be used in case some of them are unreachable.
+#### Changed
+- Only run `PodMonitor` outside of bootstrap mode.
 
 
 
-### azure-operator [5.20.0](https://github.com/giantswarm/azure-operator/releases/tag/v5.20.0)
+### azure-operator [5.21.0](https://github.com/giantswarm/azure-operator/releases/tag/v5.21.0)
 
 #### Changed
-- Bumped k8scc to latest version to fix `localhost` node name problem.
+- Changes to EncryptionConfig in order to work with `encryption-provider-operator`.
+#### Fixed
+- Add pause annotation before deleting old machinepool and azuremachinepool CRs during migration to non-exp.
+- Update ownerReference UIDs during migration to non-exp.
+- Avoid updating `AzureCluster` at every reconciliation loop in the `subnet` resource.
+- Avoid saving `AzureCluster` status if there are no changes to avoid useless reconciliation loops.
+
+
+
+### cluster-operator [4.3.0](https://github.com/giantswarm/cluster-operator/releases/tag/v4.3.0)
+
+#### Changed
+- Do not update "app-operator.giantswarm.io/version" label on app-operators when their value is 0.0.0 (aka they are reconciled by the management cluster app-operator). This is a use-case for App Bundles for example, because the App CRs they contain should be created in the MC so should be reconciled by the MC app-operator.
 
 
 
@@ -26,37 +40,27 @@
 
 
 
-### containerlinux [3139.2.1](https://www.flatcar-linux.org/releases/#release-3139.2.1)
+### containerlinux [3139.2.2](https://www.flatcar-linux.org/releases/#release-3139.2.2)
 
-New **Stable** Release **3139.2.1**
+New **Stable** Release **3139.2.2**
 
-_Changes since **Stable 3139.2.0**_
+_Changes since **Stable 3139.2.1**_
 
 #### Security fixes:
 
-- Linux ([CVE-2022-28390](https://nvd.nist.gov/vuln/detail/CVE-2022-28390), [CVE-2022-0168](https://nvd.nist.gov/vuln/detail/CVE-2022-0168), [CVE-2022-1158](https://nvd.nist.gov/vuln/detail/CVE-2022-1158), [CVE-2022-1353](https://nvd.nist.gov/vuln/detail/CVE-2022-1353), [CVE-2022-1198](https://nvd.nist.gov/vuln/detail/CVE-2022-1198), [CVE-2022-28389](https://nvd.nist.gov/vuln/detail/CVE-2022-28389), [CVE-2022-28388](https://nvd.nist.gov/vuln/detail/CVE-2022-28388), [CVE-2022-1516](https://nvd.nist.gov/vuln/detail/CVE-2022-1516), [CVE-2022-1263](https://nvd.nist.gov/vuln/detail/CVE-2022-1263), [CVE-2022-29582](https://nvd.nist.gov/vuln/detail/CVE-2022-29582), [CVE-2022-1204](https://nvd.nist.gov/vuln/detail/CVE-2022-1204), [CVE-2022-1205](https://nvd.nist.gov/vuln/detail/CVE-2022-1205), [CVE-2022-0500](https://nvd.nist.gov/vuln/detail/CVE-2022-0500), [CVE-2022-23222](https://nvd.nist.gov/vuln/detail/CVE-2022-23222))
-- nvidia-drivers ([CVE-2022-21814](https://nvd.nist.gov/vuln/detail/CVE-2022-21814), [CVE-2022-21813](https://nvd.nist.gov/vuln/detail/CVE-2022-21813))
-- Go ([CVE-2022-24675](https://nvd.nist.gov/vuln/detail/CVE-2022-24675))
+- Linux ([CVE-2022-1734](https://nvd.nist.gov/vuln/detail/CVE-2022-1734), [CVE-2022-28893](https://nvd.nist.gov/vuln/detail/CVE-2022-28893), [CVE-2022-1012](https://nvd.nist.gov/vuln/detail/CVE-2022-1012), [CVE-2022-1729](https://nvd.nist.gov/vuln/detail/CVE-2022-1729))
+- Go ([CVE-2022-29526](https://nvd.nist.gov/vuln/detail/CVE-2022-29526))
 
 #### Bug fixes:
 
-- AWS: specify correct console (ttyS0) on kernel command line for ARM64 instances ([coreos-overlay#1628](https://github.com/flatcar-linux/coreos-overlay/pull/1628))
-- GCE: Restored oem-gce.service functionality on GCP ([coreos-overlay#1813](https://github.com/flatcar-linux/coreos-overlay/pull/1813))
-- Added pahole to developer container, without it kernel modules built against /usr/src/linux may fail to probe with an 'invalid relocation target' error ([coreos-overlay#1839](https://github.com/flatcar-linux/coreos-overlay/pull/1839))
+- Ensured `/etc/flatcar/update.conf` exists because it happens to be used as flag file for Ansible ([init#71](https://github.com/flatcar-linux/init/pull/71))
+- GCP: Fixed shutdown script execution ([coreos-overlay#1912](https://github.com/flatcar-linux/coreos-overlay/pull/1912), [flatcar#743](https://github.com/flatcar-linux/Flatcar/issues/743))
 
-#### Changes:
-
-- Merge the Flatcar Pro features into the regular Flatcar images ([coreos-overlay#1679](https://github.com/flatcar-linux/coreos-overlay/pull/1679)) 
-- GCE: Enabled GVE kernel driver, which adds support for Google Virtual NIC on GCP ([coreos-overlay#1802](https://github.com/flatcar-linux/coreos-overlay/pull/1802))
-- SDK: Dropped the mantle binaries (kola, ore, etc.) from the SDK, they are now provided by the `ghcr.io/flatcar-linux/mantle` image ([coreos-overlay#1827](https://github.com/flatcar-linux/coreos-overlay/pull/1827), [scripts#275](https://github.com/flatcar-linux/scripts/pull/275))
 
 #### Updates:
 
-- Linux ([5.15.37](https://lwn.net/Articles/893264) (includes [5.15.36](https://lwn.net/Articles/892812), [5.15.35](https://lwn.net/Articles/892002), [5.15.34](https://lwn.net/Articles/891251), [5.15.33](https://lwn.net/Articles/890722)))
-- Go ([1.17.9](https://go.googlesource.com/go/+/refs/tags/go1.17.9))
-- ca-certificates ([3.78](https://firefox-source-docs.mozilla.org/security/nss/releases/nss_3_78.html))
-- nvidia-drivers ([510.47.03](https://docs.nvidia.com/datacenter/tesla/tesla-release-notes-510-47-03/index.html)) 
-- GCE: google compute-image-packages ([20190124](https://github.com/GoogleCloudPlatform/compute-image-packages/releases/tag/20190124))
+- Linux ([5.15.43](https://lwn.net/Articles/896231/) (includes [5.15.42](https://lwn.net/Articles/896226), [5.15.41](https://lwn.net/Articles/895645), [5.15.40](https://lwn.net/Articles/895318), [5.15.39](https://lwn.net/Articles/895070), [5.15.38](https://lwn.net/Articles/894357)))
+- Go ([1.17.10](https://go.googlesource.com/go/+/refs/tags/go1.17.10))
 
 
 ### calico [3.21.5](https://github.com/projectcalico/calico/releases/tag/v3.21.5)
@@ -95,26 +99,17 @@ _Nothing has changed._
 
 ### chart-operator [2.24.0](https://github.com/giantswarm/chart-operator/releases/tag/v2.24.0)
 
-#### Added
-- Split Helm client into private Helm client for `giantswarm`-namespaced apps and public Helm client for rest of the apps.
-- Add Helm release failure reason when it is known, and if there is a currently successfully released version
-
-### Changed
-- Add chart-pull-failed error to differentiate between issues when pulling chart tarball and other problems.
-- Always create giantswarm-critical priority class if it does not exist.
-- Update `helmclient` to v4.10.0.
-
-### Fixed
-- Fix missing PriorityClass issue.
-
-
-### coredns [1.9.0](https://github.com/giantswarm/coredns-app/releases/tag/v1.9.0)
-
-#### Added
-- Add toleration for `node.cloudprovider.kubernetes.io/uninitialized`.
 #### Changed
-- Update `coredns` to upstream version [1.8.7](https://coredns.io/2021/12/09/coredns-1.8.7-release/).
- 
+- Add `chart-pull-failed` error to differentiate between issues when pulling chart tarball and other problems.
+#### Fixed
+- Fix missing `PriorityClass` issue.
+
+
+
+### coredns [1.10.1](https://github.com/giantswarm/coredns-app/releases/tag/v1.10.1)
+
+#### Fixed
+- Added component label to deployment labels as well
 
 
 
@@ -123,6 +118,11 @@ _Nothing has changed._
 #### Added
 - VerticalPodAutoscaler for automatically setting requests and limits depending on usage. Fixes OOM kills on huge clusters.
 
+
+
+### cluster-autoscaler [1.22.2-gs6](https://github.com/giantswarm/cluster-autoscaler-app/releases/tag/v1.22.2-gs6)
+
+Not found
 
 
 ### metrics-server [1.7.0](https://github.com/giantswarm/metrics-server-app/releases/tag/v1.7.0)
