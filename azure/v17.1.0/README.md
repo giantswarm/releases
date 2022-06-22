@@ -1,6 +1,6 @@
 # :zap: Giant Swarm Release v17.1.0 for Azure :zap:
 
-This is a maintenace azure release that provides the latest Kubernetes 1.22 version as well as the latest version of all giantswarm releases.
+This is a maintenance azure release that provides the latest Kubernetes 1.22 version as well as the latest version of all giantswarm releases.
 It also uses etcd 3.5 for improved performance and reliability.
 
 Starting from this version it is possible to enable the automated rotation of the encryption key for Kubernetes secrets. This feature is disabled by default.
