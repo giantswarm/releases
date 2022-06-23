@@ -1,10 +1,23 @@
 # :zap: Giant Swarm Release v17.1.0 for Azure :zap:
 
-This is a maintenance azure release that provides the latest Kubernetes 1.22 version as well as the latest version of all giantswarm releases.
+This maintenance Azure workload cluster release provides the latest Kubernetes 1.22 version as well as the latest version of all Giant Swarm components.
 It also uses etcd 3.5 for improved performance and reliability.
 
-Starting from this version it is possible to enable the automated rotation of the encryption key for Kubernetes secrets. This feature is disabled by default.
-If you are interested in enabling it please ask your Solution engineer. 
+**Highlights**
+- Automation of the Kubernetes API key used to encrypt secret data in etcd;
+- Kubernetes `v1.22.10`;
+- etcd `3.5.4`.
+
+
+**How does the Kubernetes API key rotation work?**
+
+* The rotation is disabled by default and has to be enabled by setting the `encryption.giantswarm.io/enable-rotation` annotation on the `${CLUSTER-ID}-encryption-provider-config` secret;
+* The key rotation happens if the key is at least 180 days old (counting from creation timestamp on `${CLUSTER-ID}-encryption-provider-config` secret or from last key rotation). It can also be forced by setting the `encryption.giantswarm.io/force-rotation` annotation to start the rotation process immediately;
+* A new config is generated containing the new and old keys as soon as the process starts;
+* The next step requires a roll of the control plane nodes (either manually or during an update);
+* After the control plane nodes have been rolled and are using the new encryption configuration, the `encryption-provider-operator` will rewrite all secrets. This leads to the re-encryption of all secrets with the new key;
+* The operator will remove the old encryption key after all the secrets are rewritten.
+
 
 ## Change details
 
