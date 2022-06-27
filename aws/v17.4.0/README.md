@@ -100,7 +100,7 @@ _Nothing has changed._
 ### chart-operator [2.24.0](https://github.com/giantswarm/chart-operator/releases/tag/v2.24.0)
 
 #### Added
-- Add Helm release failure reason when it is known, and if there is a currently successfully released version
+- Add Helm release failure reason when it is known, and if there is a currently successfully released version (this includes values schema validation errors as well)
 - Split Helm client into private Helm client for giantswarm-namespaced apps and public Helm client for rest of the apps.
 
 
