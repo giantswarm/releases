@@ -20,7 +20,7 @@ spec:
   - name: chart-operator
     version: 2.24.0
   - name: cluster-autoscaler
-    version: 1.22.2-gs6
+    version: 1.22.2-gs7
   - componentVersion: 1.8.7
     name: coredns
     version: 1.9.0
