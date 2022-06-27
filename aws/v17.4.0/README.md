@@ -99,8 +99,16 @@ _Nothing has changed._
 
 ### chart-operator [2.24.0](https://github.com/giantswarm/chart-operator/releases/tag/v2.24.0)
 
+#### Added
+- Add Helm release failure reason when it is known, and if there is a currently successfully released version
+- Split Helm client into private Helm client for giantswarm-namespaced apps and public Helm client for rest of the apps.
+
+
 #### Changed
 - Add `chart-pull-failed` error to differentiate between issues when pulling chart tarball and other problems.
+- Always create giantswarm-critical priority class if it does not exist.
+- Add initialBootstrapMode flag to allow deploying CNI as managed apps.
+
 #### Fixed
 - Fix missing `PriorityClass` issue.
 
