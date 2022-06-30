@@ -1,4 +1,8 @@
 releases:
+- name: "> 17.1.0"
+  requests:
+  - name: kube-state-metrics
+    version: ">= 1.11.0"
 - name: ">= 17.1.0"
   requests:
   - name: external-dns
