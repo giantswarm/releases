@@ -88,7 +88,11 @@ _Nothing has changed._
 #### Removed
 _Nothing has changed._
 
+### cert-manager [2.15.0](https://github.com/giantswarm/cert-manager-app/releases/tag/v2.15.0)
 
+#### Changed
+- Upgrade to upstream image [`v1.7.3`](https://github.com/jetstack/cert-manager/releases/tag/v1.7.3) which increases some hard-coded timeouts for certain ACME issuers (ZeroSSL and Sectigo) ([#243](https://github.com/giantswarm/cert-manager-app/pull/243))
+- Update kubectl container version to `1.24.2` ([#243](https://github.com/giantswarm/cert-manager-app/pull/243))
 
 ### external-dns [2.14.0](https://github.com/giantswarm/external-dns-app/releases/tag/v2.14.0)
 
