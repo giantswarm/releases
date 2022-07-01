@@ -26,7 +26,7 @@ spec:                                                              spec:
     version: 1.9.0                                                     version: 1.9.0
   - componentVersion: 0.10.2                                    |    - componentVersion: 0.11.0
     name: external-dns                                                 name: external-dns
-    version: 2.9.1                                              |      version: 2.14.0
+    version: 2.9.1                                              |      version: 2.15.0
   - componentVersion: 4.2.0                                          - componentVersion: 4.2.0
     name: kiam                                                         name: kiam
     version: 2.3.0                                                     version: 2.3.0

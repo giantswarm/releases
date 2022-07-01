@@ -94,11 +94,14 @@ _Nothing has changed._
 - Upgrade to upstream image [`v1.7.3`](https://github.com/jetstack/cert-manager/releases/tag/v1.7.3) which increases some hard-coded timeouts for certain ACME issuers (ZeroSSL and Sectigo) ([#243](https://github.com/giantswarm/cert-manager-app/pull/243))
 - Update kubectl container version to `1.24.2` ([#243](https://github.com/giantswarm/cert-manager-app/pull/243))
 
-### external-dns [2.14.0](https://github.com/giantswarm/external-dns-app/releases/tag/v2.14.0)
+### external-dns [2.15.0](https://github.com/giantswarm/external-dns-app/releases/tag/v2.15.0)
 
 #### Added
 - VerticalPodAutoscaler for automatically setting requests and limits depending on usage. Fixes OOM kills on huge clusters.
 
+#### Changed
+- Update test dependencies and py-helm-charts version to [0.7.0](https://github.com/giantswarm/pytest-helm-charts/blob/master/CHANGELOG.md) ([#173](https://github.com/giantswarm/external-dns-app/pull/173))
+- Ignore IRSA annotation for service account when using AWS `external` access.
 
 
 ### chart-operator [2.24.0](https://github.com/giantswarm/chart-operator/releases/tag/v2.24.0)
