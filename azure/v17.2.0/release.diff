@@ -44,7 +44,7 @@ spec:                                                              spec:
   - catalog: control-plane-catalog                                   - catalog: control-plane-catalog
     name: azure-operator                                               name: azure-operator
     releaseOperatorDeploy: true                                        releaseOperatorDeploy: true
-    version: 5.21.0                                                    version: 5.21.0
+    version: 5.21.0                                             |      version: 5.22.0
   - name: cert-operator                                              - name: cert-operator
     releaseOperatorDeploy: true                                        releaseOperatorDeploy: true
     version: 2.0.1                                                     version: 2.0.1
@@ -59,7 +59,7 @@ spec:                                                              spec:
     version: 3.21.5                                                    version: 3.21.5
   - name: etcd                                                       - name: etcd
     version: 3.5.4                                                     version: 3.5.4
-  date: "2022-06-23T10:00:00Z"                                  |    date: "2022-07-04T09:27:19Z"
+  date: "2022-06-23T10:00:00Z"                                  |    date: "2022-07-04T11:38:01Z"
   state: active                                                      state: active
 status:                                                            status:
   inUse: false                                                       inUse: false

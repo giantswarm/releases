@@ -5,6 +5,17 @@
 ## Change details
 
 
+### azure-operator [5.22.0](https://github.com/giantswarm/azure-operator/releases/tag/v5.22.0)
+
+#### Changed
+- Tighten pod and container security contexts for PSS restricted policies.
+#### Fixed
+- Fix handling of `MachinePools'` status fields for empty node pools.
+#### Changed
+- Bump `k8scc` to enable `auditd` monitoring for `execve` syscalls.
+
+
+
 ### containerlinux [3139.2.3](https://www.flatcar-linux.org/releases/#release-3139.2.3)
 
 New **Stable** Release **3139.2.3**
