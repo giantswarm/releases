@@ -282,6 +282,7 @@ to all Giant Swarm installations.
 
 - v16
   - v16.2
+    - [v16.2.1](https://github.com/giantswarm/releases/tree/master/kvm/v16.2.1)
     - [v16.2.0](https://github.com/giantswarm/releases/tree/master/kvm/v16.2.0)
   - v16.1
     - [v16.1.1](https://github.com/giantswarm/releases/tree/master/kvm/v16.1.1)

@@ -1,5 +1,5 @@
 releases:
-- name: "> 16.2.1"
+- name: "> 16.2.0"
   requests:
   - name: chart-operator
     version: ">= 2.20.1"
