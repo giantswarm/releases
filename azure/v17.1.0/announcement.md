@@ -1,0 +1,1 @@
+**Workload cluster release v17.1.0 for Azure is available**. It provides the latest Kubernetes 1.22 version as well as the latest version of all Giant Swarm components. It also uses etcd 3.5 for improved performance and reliability. Further details can be found in the [release notes](https://docs.giantswarm.io/changes/workload-cluster-releases-azure/releases/azure-v17.1.0/).
