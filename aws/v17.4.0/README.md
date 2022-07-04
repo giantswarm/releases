@@ -5,27 +5,13 @@
 ## Change details
 
 
-### aws-operator [11.15.0](https://github.com/giantswarm/aws-operator/releases/tag/v11.14.1)
-
-#### Fixed
-- Fix principal ARN for Route53 trusted entity.
+### aws-operator [11.15.0](https://github.com/giantswarm/aws-operator/releases/tag/v11.15.0)
 
 #### Changed
 - Set default upgrade batch to 10% from 33%
 - Set default pause time to 10 minutes
-- Remove `imagePullSecrets`
 
 
-### cluster-autoscaler [1.22.2-gs7](https://github.com/giantswarm/cluster-autoscaler-app/releases/tag/v1.22.2-gs7)
-
-#### Changed
-Enable balance similar nodepools by default
-
-#### Fixed
-Ignore labels to consider nodepools similar groups
-
-#### Added
-Support to add extra arguments
 
 ### cluster-operator [4.3.0](https://github.com/giantswarm/cluster-operator/releases/tag/v4.3.0)
 
@@ -34,42 +20,36 @@ Support to add extra arguments
 
 
 
-### app-operator [5.12.0](https://github.com/giantswarm/app-operator/releases/tag/v5.12.0)
+### app-operator [6.0.1](https://github.com/giantswarm/app-operator/releases/tag/v6.0.1)
 
 #### Added
-- Add `initialBootstrapMode` flag to allow deploying CNI as managed apps.
+- Add support for Catalogs that define multiple repository mirrors to be used in case some of them are unreachable.
+#### Changed
+- Only run `PodMonitor` outside of bootstrap mode.
 
 
 
-### aws-cni [1.11.2](https://github.com/aws/amazon-vpc-cni-k8s/releases/tag/v1.11.2)
+### aws-cni [1.11.2-nftables](https://github.com/aws/amazon-vpc-cni-k8s/releases/tag/v1.11.2-nftables)
 
-* Improvement -  [Updated golang to Go 1.18](https://github.com/aws/amazon-vpc-cni-k8s/pull/1991) (@orsenthil)
-* Improvement -  [Updated containernetworking/cni version to 0.8.1 to address CVE-2021-20206](https://github.com/aws/amazon-vpc-cni-k8s/pull/1996) (@orsenthil)
-* Improvement -  [Updated CNI Plugins to v1.1.1](https://github.com/aws/amazon-vpc-cni-k8s/pull/1997) (@orsenthil)
+Not found
 
 
+### containerlinux [3139.2.3](https://www.flatcar-linux.org/releases/#release-3139.2.3)
 
-### containerlinux [3139.2.2](https://www.flatcar-linux.org/releases/#release-3139.2.2)
+New **Stable** Release **3139.2.3**
 
-New **Stable** Release **3139.2.2**
-
-_Changes since **Stable 3139.2.1**_
+Changes since **Stable 3139.2.2**
 
 #### Security fixes:
 
-- Linux ([CVE-2022-1734](https://nvd.nist.gov/vuln/detail/CVE-2022-1734), [CVE-2022-28893](https://nvd.nist.gov/vuln/detail/CVE-2022-28893), [CVE-2022-1012](https://nvd.nist.gov/vuln/detail/CVE-2022-1012), [CVE-2022-1729](https://nvd.nist.gov/vuln/detail/CVE-2022-1729))
-- Go ([CVE-2022-29526](https://nvd.nist.gov/vuln/detail/CVE-2022-29526))
-
-#### Bug fixes:
-
-- Ensured `/etc/flatcar/update.conf` exists because it happens to be used as flag file for Ansible ([init#71](https://github.com/flatcar-linux/init/pull/71))
-- GCP: Fixed shutdown script execution ([coreos-overlay#1912](https://github.com/flatcar-linux/coreos-overlay/pull/1912), [flatcar#743](https://github.com/flatcar-linux/Flatcar/issues/743))
-
+- Linux ([CVE-2022-1789](https://nvd.nist.gov/vuln/detail/CVE-2022-1789), [CVE-2022-1852](https://nvd.nist.gov/vuln/detail/CVE-2022-1852), [CVE-2022-1972](https://nvd.nist.gov/vuln/detail/CVE-2022-1972), [CVE-2022-1973](https://nvd.nist.gov/vuln/detail/CVE-2022-1973), [CVE-2022-2078](https://nvd.nist.gov/vuln/detail/CVE-2022-2078), [CVE-2022-32250](https://nvd.nist.gov/vuln/detail/CVE-2022-32250), [CVE-2022-32981](https://nvd.nist.gov/vuln/detail/CVE-2022-32981))
+- libpcre2 ([CVE-2022-1586](https://nvd.nist.gov/vuln/detail/CVE-2022-1586), [CVE-2022-1587](https://nvd.nist.gov/vuln/detail/CVE-2022-1587))
 
 #### Updates:
 
-- Linux ([5.15.43](https://lwn.net/Articles/896231/) (includes [5.15.42](https://lwn.net/Articles/896226), [5.15.41](https://lwn.net/Articles/895645), [5.15.40](https://lwn.net/Articles/895318), [5.15.39](https://lwn.net/Articles/895070), [5.15.38](https://lwn.net/Articles/894357)))
-- Go ([1.17.10](https://go.googlesource.com/go/+/refs/tags/go1.17.10))
+- Linux ([5.15.48](https://lwn.net/Articles/898124) (includes [5.15.47](https://lwn.net/Articles/897904), [5.15.46](https://lwn.net/Articles/897377), [5.15.45](https://lwn.net/Articles/897167), [5.15.44](https://lwn.net/Articles/896647)))
+- ca-certificates ([3.79](https://firefox-source-docs.mozilla.org/security/nss/releases/nss_3_79.html))
+- libpcre2 ([10.40](https://github.com/PCRE2Project/pcre2/blob/pcre2-10.40/NEWS))
 
 
 ### kubernetes [1.22.11](https://github.com/kubernetes/kubernetes/releases/tag/v1.22.11)
@@ -79,7 +59,6 @@ _Changes since **Stable 3139.2.1**_
 - EndpointSlices marked for deletion are now ignored during reconciliation. ([#110482](https://github.com/kubernetes/kubernetes/pull/110482), [@aryan9600](https://github.com/aryan9600)) [SIG Apps and Network]
 - Fixed a kubelet issue that could result in invalid pod status updates to be sent to the api-server where pods would be reported in a terminal phase but also report a ready condition of true in some cases. ([#110481](https://github.com/kubernetes/kubernetes/pull/110481), [@bobbypage](https://github.com/bobbypage)) [SIG Node and Testing]
 - Pods will now post their readiness during termination. ([#110418](https://github.com/kubernetes/kubernetes/pull/110418), [@aojea](https://github.com/aojea)) [SIG Network, Node and Testing]
-
 #### Dependencies
 #### Added
 _Nothing has changed._
@@ -88,43 +67,32 @@ _Nothing has changed._
 #### Removed
 _Nothing has changed._
 
-### cert-manager [2.15.0](https://github.com/giantswarm/cert-manager-app/releases/tag/v2.15.0)
 
-#### Changed
-- Upgrade to upstream image [`v1.7.3`](https://github.com/jetstack/cert-manager/releases/tag/v1.7.3) which increases some hard-coded timeouts for certain ACME issuers (ZeroSSL and Sectigo) ([#243](https://github.com/giantswarm/cert-manager-app/pull/243))
-- Update kubectl container version to `1.24.2` ([#243](https://github.com/giantswarm/cert-manager-app/pull/243))
+
+### calico [3.21.5](https://github.com/projectcalico/calico/releases/tag/v3.21.5)
+
+Not found
+
 
 ### external-dns [2.15.0](https://github.com/giantswarm/external-dns-app/releases/tag/v2.15.0)
-
-#### Added
-- VerticalPodAutoscaler for automatically setting requests and limits depending on usage. Fixes OOM kills on huge clusters.
 
 #### Changed
 - Update test dependencies and py-helm-charts version to [0.7.0](https://github.com/giantswarm/pytest-helm-charts/blob/master/CHANGELOG.md) ([#173](https://github.com/giantswarm/external-dns-app/pull/173))
 - Ignore IRSA annotation for service account when using AWS `external` access.
 
 
-### chart-operator [2.24.0](https://github.com/giantswarm/chart-operator/releases/tag/v2.24.0)
 
-#### Added
-- Add Helm release failure reason when it is known, and if there is a currently successfully released version (this includes values schema validation errors as well)
-- Split Helm client into private Helm client for giantswarm-namespaced apps and public Helm client for rest of the apps.
-
+### chart-operator [2.24.1](https://github.com/giantswarm/chart-operator/releases/tag/v2.24.1)
 
 #### Changed
-- Add `chart-pull-failed` error to differentiate between issues when pulling chart tarball and other problems.
-- Always create giantswarm-critical priority class if it does not exist.
-- Add initialBootstrapMode flag to allow deploying CNI as managed apps.
-
-#### Fixed
-- Fix missing `PriorityClass` issue.
+- Update `helmclient` to v4.10.1.
 
 
 
-### node-exporter [1.12.0](https://github.com/giantswarm/node-exporter-app/releases/tag/v1.12.0)
+### node-exporter [1.13.0](https://github.com/giantswarm/node-exporter-app/releases/tag/v1.13.0)
 
 #### Changed
-- Enabled `diskstats` collector.
+- Disable boot partition from the `filesystem` exporter.
 
 
 
@@ -141,16 +109,39 @@ _Nothing has changed._
 - Set `kubelet-preferred-address-types` to `Hostname` on `AWS`.
 
 
-### aws-ebs-csi-driver [1.6.2](https://github.com/kubernetes-sigs/aws-ebs-csi-driver/blob/master/CHANGELOG.md#v162)
 
-#### Notable changes
-- Address CVE ALAS-2022-1792
+### cert-manager [2.15.0](https://github.com/giantswarm/cert-manager-app/releases/tag/v2.15.0)
+
+#### Changed
+- Upgrade to upstream image [`v1.7.3`](https://github.com/jetstack/cert-manager/releases/tag/v1.7.3) which increases some hard-coded timeouts for certain ACME issuers (ZeroSSL and Sectigo) ([#243](https://github.com/giantswarm/cert-manager-app/pull/243))
+- Update kubectl container version to `1.24.2` ([#243](https://github.com/giantswarm/cert-manager-app/pull/243))
 
 
-### webhook-exporer [0.1.0](https://github.com/giantswarm/webhook-exporter/releases/tag/v0.1.0)
+
+### aws-ebs-csi-driver [2.14.0](https://github.com/giantswarm/aws-ebs-csi-driver-app/releases/tag/v2.14.0)
+
+#### Changed
+- Remove `imagePullSecrets` from values.yaml
+- Bump aws-ebs-csi-driver version to `v1.6.2`.
+
+
+
+### cluster-autoscaler [1.22.2-gs7](https://github.com/giantswarm/cluster-autoscaler-app/releases/tag/v1.22.2-gs7)
+
+Not found
+
+
+### coredns [1.10.0](https://github.com/giantswarm/coredns-app/releases/tag/v1.10.0)
 
 #### Added
-- Initial webhook-exporter.
+- Add `app.kubernetes.io/component` on deployments so that management-cluster-admission controller does not complain.
+
+
+
+### kube-state-metrics [1.11.0](https://github.com/giantswarm/kube-state-metrics-app/releases/tag/v1.11.0)
+
+#### Add
+- Allow `application.giantswarm.io/team` label.
 
 
 
