@@ -6,7 +6,7 @@ metadata:
   annotations:
     giantswarm.io/docs: https://docs.giantswarm.io/reference/cp-k8s-api/releases.release.giantswarm.io/
   creationTimestamp: null
-  name: v17.4.0
+  name: v17.4.0-auditd
 spec:
   apps:
   - componentVersion: 1.6.2
@@ -52,9 +52,11 @@ spec:
     version: 6.0.1
   - name: aws-cni
     version: 1.11.2-nftables
-  - name: aws-operator
+  - catalog: control-plane-test-catalog
+    name: aws-operator
     releaseOperatorDeploy: true
-    version: 11.15.0
+    version: 11.15.1-dev
+    reference: 11.15.0-a52f5f681bc594c9cd7eaa8232ac6ecc4841b55b
   - name: calico
     version: 3.21.5
   - name: cert-operator
@@ -70,7 +72,7 @@ spec:
   - name: kubernetes
     version: 1.22.11
   date: "2022-07-04T07:08:25Z"
-  state: active
+  state: wip
 status:
   inUse: false
   ready: false
