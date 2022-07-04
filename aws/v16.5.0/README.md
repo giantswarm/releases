@@ -26,24 +26,6 @@
 Not found
 
 
-### containerlinux [3139.2.3](https://www.flatcar-linux.org/releases/#release-3139.2.3)
-
-New **Stable** Release **3139.2.3**
-
-Changes since **Stable 3139.2.2**
-
-#### Security fixes:
-
-- Linux ([CVE-2022-1789](https://nvd.nist.gov/vuln/detail/CVE-2022-1789), [CVE-2022-1852](https://nvd.nist.gov/vuln/detail/CVE-2022-1852), [CVE-2022-1972](https://nvd.nist.gov/vuln/detail/CVE-2022-1972), [CVE-2022-1973](https://nvd.nist.gov/vuln/detail/CVE-2022-1973), [CVE-2022-2078](https://nvd.nist.gov/vuln/detail/CVE-2022-2078), [CVE-2022-32250](https://nvd.nist.gov/vuln/detail/CVE-2022-32250), [CVE-2022-32981](https://nvd.nist.gov/vuln/detail/CVE-2022-32981))
-- libpcre2 ([CVE-2022-1586](https://nvd.nist.gov/vuln/detail/CVE-2022-1586), [CVE-2022-1587](https://nvd.nist.gov/vuln/detail/CVE-2022-1587))
-
-#### Updates:
-
-- Linux ([5.15.48](https://lwn.net/Articles/898124) (includes [5.15.47](https://lwn.net/Articles/897904), [5.15.46](https://lwn.net/Articles/897377), [5.15.45](https://lwn.net/Articles/897167), [5.15.44](https://lwn.net/Articles/896647)))
-- ca-certificates ([3.79](https://firefox-source-docs.mozilla.org/security/nss/releases/nss_3_79.html))
-- libpcre2 ([10.40](https://github.com/PCRE2Project/pcre2/blob/pcre2-10.40/NEWS))
-
-
 ### kubernetes [1.21.14](https://github.com/kubernetes/kubernetes/releases/tag/v1.21.14)
 
 
