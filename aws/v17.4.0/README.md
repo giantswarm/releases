@@ -5,11 +5,13 @@
 ## Change details
 
 
-### aws-operator [11.15.0](https://github.com/giantswarm/aws-operator/releases/tag/v11.15.0)
+### aws-operator [11.16.0](https://github.com/giantswarm/aws-operator/releases/tag/v11.16.0)
 
+#### Added
+- Added new flatcar 3139.2.3 image release.
 #### Changed
-- Set default upgrade batch to 10% from 33%
-- Set default pause time to 10 minutes
+- Tighten pod and container security contexts for PSS restricted policies.
+- Bump `k8scc` to enable `auditd` monitoring for `execve` syscalls.
 
 
 
