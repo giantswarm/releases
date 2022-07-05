@@ -21,7 +21,7 @@
 
 
 
-### aws-cni [1.11.2-nftables](https://github.com/aws/amazon-vpc-cni-k8s/releases/tag/v1.11.2-nftables)
+### aws-cni [1.11.2-iptables](https://github.com/aws/amazon-vpc-cni-k8s/releases/tag/v1.11.2-iptables)
 
 Not found
 
