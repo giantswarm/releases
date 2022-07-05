@@ -48,7 +48,7 @@ spec:
   - name: vertical-pod-autoscaler-crd
     version: 1.0.1
   - name: etcd-kubernetes-resources-count-exporter
-    version: 0.4.0
+    version: 0.5.0
   components:
   - name: app-operator
     version: 6.0.1
