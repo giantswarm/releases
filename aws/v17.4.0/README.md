@@ -1,6 +1,7 @@
 # :zap: Giant Swarm Release v17.4.0 for AWS :zap:
 
-<< Add description here >>
+This is a security release featuring the latest version of Kubernetes 1.22 (1.22.11), Flatcar Container Linux (3139.2.3) and all of Giant Swarm applications.
+It also enables auditd monitoring of `execve` syscalls to ease audit logging and adds a new exporter to get visibility over the number of objects stored in the Kubernetes API at all times.
 
 ## Change details
 
@@ -33,7 +34,7 @@
 
 ### aws-cni [1.11.2-nftables](https://github.com/aws/amazon-vpc-cni-k8s/releases/tag/v1.11.2-nftables)
 
-Not found
+Upgraded from version 1.11.0. Please check [upstream changelog](https://github.com/aws/amazon-vpc-cni-k8s/releases/tag/v1.11.2) for details.
 
 
 ### containerlinux [3139.2.3](https://www.flatcar-linux.org/releases/#release-3139.2.3)
@@ -61,14 +62,6 @@ Changes since **Stable 3139.2.2**
 - EndpointSlices marked for deletion are now ignored during reconciliation. ([#110482](https://github.com/kubernetes/kubernetes/pull/110482), [@aryan9600](https://github.com/aryan9600)) [SIG Apps and Network]
 - Fixed a kubelet issue that could result in invalid pod status updates to be sent to the api-server where pods would be reported in a terminal phase but also report a ready condition of true in some cases. ([#110481](https://github.com/kubernetes/kubernetes/pull/110481), [@bobbypage](https://github.com/bobbypage)) [SIG Node and Testing]
 - Pods will now post their readiness during termination. ([#110418](https://github.com/kubernetes/kubernetes/pull/110418), [@aojea](https://github.com/aojea)) [SIG Network, Node and Testing]
-#### Dependencies
-#### Added
-_Nothing has changed._
-#### Changed
-_Nothing has changed._
-#### Removed
-_Nothing has changed._
-
 
 
 ### calico [3.21.5](https://github.com/projectcalico/calico/releases/tag/v3.21.5)
@@ -130,7 +123,17 @@ Not found
 
 ### cluster-autoscaler [1.22.2-gs7](https://github.com/giantswarm/cluster-autoscaler-app/releases/tag/v1.22.2-gs7)
 
-Not found
+### Changed
+
+- Enable balance similar nodepools by default
+
+### Fixed
+
+- Ignore labels to consider nodepools similar groups
+
+### Added
+
+- Support to add extra arguments
 
 
 ### coredns [1.10.0](https://github.com/giantswarm/coredns-app/releases/tag/v1.10.0)
