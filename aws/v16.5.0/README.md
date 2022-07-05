@@ -1,6 +1,6 @@
 # :zap: Giant Swarm Release v16.5.0 for AWS :zap:
 
-This is a security release featuring the latest version of Kubernetes 1.21 (1.21.14), and all of Giant Swarm applications.
+This is a security release featuring the latest version of Kubernetes 1.21 (1.21.14) and all of Giant Swarm applications.
 
 ## Change details
 
