@@ -1,6 +1,6 @@
 # :zap: Giant Swarm Release v16.5.0 for AWS :zap:
 
-<< Add description here >>
+This is a security release featuring the latest version of Kubernetes 1.21 (1.21.14), and all of Giant Swarm applications.
 
 ## Change details
 
@@ -23,17 +23,25 @@
 
 ### aws-cni [1.11.2-iptables](https://github.com/aws/amazon-vpc-cni-k8s/releases/tag/v1.11.2-iptables)
 
-Not found
+Upgraded from version 1.10.1. Please check [upstream changelog](https://github.com/aws/amazon-vpc-cni-k8s/releases/tag/v1.11.2) for details.
 
 
 ### kubernetes [1.21.14](https://github.com/kubernetes/kubernetes/releases/tag/v1.21.14)
 
+Upgraded from 1.21.9.
 
+This release brings bug and security fixes.
+
+Please refer to the [official changelog](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.21.md#v1219) for all the details.
 
 
 ### calico [3.21.5](https://github.com/projectcalico/calico/releases/tag/v3.21.5)
 
-Not found
+Upgraded from 3.12.3.
+
+This upgrade bring security and bug fixes.
+
+Please refer to the [official changelog](https://projectcalico.docs.tigera.io/archive/v3.21/release-notes/#v3215) for all details.
 
 
 ### external-dns [2.15.0](https://github.com/giantswarm/external-dns-app/releases/tag/v2.15.0)
@@ -58,13 +66,6 @@ Not found
 
 
 
-### vertical-pod-autoscaler [2.4.0](https://github.com/giantswarm/vertical-pod-autoscaler-app/releases/tag/v2.4.0)
-
-#### Changed
-- Use patched docker image tagged `0.10.0-oomfix` for `recommender` and updater (see https://github.com/giantswarm/roadmap/issues/923).
-
-
-
 ### metrics-server [1.7.0](https://github.com/giantswarm/metrics-server-app/releases/tag/v1.7.0)
 
 #### Changed
@@ -86,11 +87,6 @@ Not found
 - Remove `imagePullSecrets` from values.yaml
 - Bump aws-ebs-csi-driver version to `v1.6.2`.
 
-
-
-### cluster-autoscaler [1.21.2-gs1](https://github.com/giantswarm/cluster-autoscaler-app/releases/tag/v1.21.2-gs1)
-
-Not found
 
 
 ### coredns [1.10.0](https://github.com/giantswarm/coredns-app/releases/tag/v1.10.0)
