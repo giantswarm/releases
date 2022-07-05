@@ -20,7 +20,7 @@ spec:                                                              spec:
   - name: chart-operator                                             - name: chart-operator
     version: 2.20.0                                             |      version: 2.24.1
   - name: cluster-autoscaler                                         - name: cluster-autoscaler
-    version: 1.21.2-gs1                                         |      version: 1.21.2-gs2
+    version: 1.21.2-gs1                                                version: 1.21.2-gs1
   - componentVersion: 1.8.6                                     |    - componentVersion: 1.8.7
     name: coredns                                                      name: coredns
     version: 1.8.0                                              |      version: 1.10.0
@@ -67,7 +67,7 @@ spec:                                                              spec:
     version: 3.4.18                                                    version: 3.4.18
   - name: kubernetes                                                 - name: kubernetes
     version: 1.21.9                                             |      version: 1.21.14
-  date: "2022-06-02T10:00:00Z"                                  |    date: "2022-07-04T11:16:50Z"
+  date: "2022-06-02T10:00:00Z"                                  |    date: "2022-07-05T06:58:46Z"
   state: active                                                      state: active
 status:                                                            status:
   inUse: false                                                       inUse: false

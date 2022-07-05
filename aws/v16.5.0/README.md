@@ -88,7 +88,7 @@ Not found
 
 
 
-### cluster-autoscaler [1.21.2-gs2](https://github.com/giantswarm/cluster-autoscaler-app/releases/tag/v1.21.2-gs2)
+### cluster-autoscaler [1.21.2-gs1](https://github.com/giantswarm/cluster-autoscaler-app/releases/tag/v1.21.2-gs1)
 
 Not found
 
