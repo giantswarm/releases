@@ -147,3 +147,9 @@ Not found
 
 
 
+### etcd-kubernetes-resources-count-exporter [0.4.0](https://github.com/giantswarm/etcd-kubernetes-resources-count-exporter/releases/tag/v0.4.0)
+
+Added new default app to expose count of kubernetes objects in the cluster.
+
+
+

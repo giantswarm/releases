@@ -1,5 +1,5 @@
 # Generated with:                                                  # Generated with:
-# devctl release create --provider aws --name v17.3.3 --base v1 |  # devctl release create --name v17.4.0 --provider aws --base v1
+# devctl release create --provider aws --name v17.3.3 --base v1 |  # /home/whites/workspace/devctl/devctl release create --name v1
 apiVersion: release.giantswarm.io/v1alpha1                         apiVersion: release.giantswarm.io/v1alpha1
 kind: Release                                                      kind: Release
 metadata:                                                          metadata:
@@ -47,6 +47,8 @@ spec:                                                              spec:
     version: 2.1.2                                              |      version: 2.4.0
   - name: vertical-pod-autoscaler-crd                                - name: vertical-pod-autoscaler-crd
     version: 1.0.1                                                     version: 1.0.1
+                                                                >    - name: etcd-kubernetes-resources-count-exporter
+                                                                >      version: 0.4.0
   components:                                                        components:
   - name: app-operator                                               - name: app-operator
     version: 5.10.2                                             |      version: 6.0.1
@@ -69,7 +71,7 @@ spec:                                                              spec:
     version: 3.4.18                                                    version: 3.4.18
   - name: kubernetes                                                 - name: kubernetes
     version: 1.22.9                                             |      version: 1.22.11
-  date: "2022-06-02T10:00:00Z"                                  |    date: "2022-07-04T10:58:44Z"
+  date: "2022-06-02T10:00:00Z"                                  |    date: "2022-07-05T14:27:03Z"
   state: active                                                      state: active
 status:                                                            status:
   inUse: false                                                       inUse: false
