@@ -76,7 +76,17 @@ _Nothing has changed._
 
 ### cluster-autoscaler [1.22.2-gs7](https://github.com/giantswarm/cluster-autoscaler-app/releases/tag/v1.22.2-gs7)
 
-Not found
+### Changed
+
+- Enable balance similar nodepools by default
+
+### Fixed
+
+- Ignore labels to consider nodepools similar groups
+
+### Added
+
+- Support to add extra arguments
 
 
 ### coredns [1.10.0](https://github.com/giantswarm/coredns-app/releases/tag/v1.10.0)
