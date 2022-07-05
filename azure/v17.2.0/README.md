@@ -1,6 +1,7 @@
 # :zap: Giant Swarm Release v17.2.0 for Azure :zap:
 
-<< Add description here >>
+This is a security release featuring the latest version of Flatcar Container Linux (3139.2.3), Kubernetes (1.22.11), and all of Giant Swarm applications.
+It also enables auditd monitoring of `execve` syscalls to ease audit logging.
 
 ## Change details
 
