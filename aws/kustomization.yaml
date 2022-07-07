@@ -2,15 +2,12 @@ commonAnnotations:
   giantswarm.io/docs: https://docs.giantswarm.io/ui-api/management-api/crd/releases.release.giantswarm.io/
 resources:
 - v16.0.1
-- v16.1.0
 - v16.1.1
 - v16.3.0
 - v16.3.1
-- v16.4.0
 - v16.4.1
 - v16.4.2
 - v16.5.0
-- v17.0.0-alpha1
 - v17.0.0
 - v17.0.1
 - v17.0.2
