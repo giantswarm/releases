@@ -1,6 +1,6 @@
 # :zap: Giant Swarm Release v17.4.1 for AWS :zap:
 
-<< Add description here >>
+This is a patch release bringing improvements to app-operator and chart-operator such as pod and container security contexts for PSS and more. It also contains a cert-manager fixing upgrade of stored apiversions.
 
 ## Change details
 
