@@ -18,6 +18,8 @@
 
 ### cert-manager [2.15.1](https://github.com/giantswarm/cert-manager-app/releases/tag/v2.15.1)
 
-Not found
+#### Fixed
+- Automatically try to execute `cmctl upgrade migrate-api-version` in crd install job to upgrade stored apiversions ([#245](https://github.com/giantswarm/cert-manager-app/pull/245))
+
 
 
