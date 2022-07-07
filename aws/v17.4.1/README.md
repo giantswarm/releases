@@ -16,6 +16,18 @@
 
 
 
+### chart-operator [2.25.0](https://github.com/giantswarm/chart-operator/releases/tag/v2.25.0)
+
+#### Changed
+- Tighten pod and container security contexts for PSS restricted policies.
+- Use downward API to set deployment env var `KUBERNETES_SERVICE_HOST` to `status.hostIP`.
+- Change `initialBootstrapMode` configuration value to `bootstrapMode`.
+- Use private Helm client for installing app-operators from control-plane-test-catalog
+#### Added
+- Allow to set api server pod port when enabling `initialBootstrapMode`.
+
+
+
 ### cert-manager [2.15.1](https://github.com/giantswarm/cert-manager-app/releases/tag/v2.15.1)
 
 #### Fixed

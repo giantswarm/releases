@@ -1,5 +1,5 @@
 # Generated with:
-# devctl release create --provider aws --name v17.4.1 --base v17.4.0 --component app-operator@6.1.0 --app cert-manager@2.15.1@1.7.3 --overwrite
+# devctl release create --provider aws --name v17.4.1 --base v17.4.0 --component app-operator@6.1.0 --app chart-operator@2.25.0 --app cert-manager@2.15.1@1.7.3 --overwrite
 apiVersion: release.giantswarm.io/v1alpha1
 kind: Release
 metadata:
@@ -18,7 +18,7 @@ spec:
     name: cert-manager
     version: 2.15.1
   - name: chart-operator
-    version: 2.24.1
+    version: 2.25.0
   - name: cluster-autoscaler
     version: 1.22.2-gs7
   - componentVersion: 1.8.7
@@ -71,7 +71,7 @@ spec:
     version: 3.4.18
   - name: kubernetes
     version: 1.22.11
-  date: "2022-07-07T11:03:02Z"
+  date: "2022-07-07T11:08:42Z"
   state: active
 status:
   inUse: false
