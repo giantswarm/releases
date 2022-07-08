@@ -1,6 +1,6 @@
 # :zap: Giant Swarm Release v16.2.1 for KVM :zap:
 
-This release enables the cluster to define multiple registry mirrors.
+This release enables the workload clusters to define multiple registry mirrors.
 
 ## Change details
 
