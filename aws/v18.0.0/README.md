@@ -23,3 +23,35 @@ _Nothing has changed._
 
 
 
+### etcd [3.5.4](https://github.com/etcd-io/etcd/releases/tag/v3.5.4)
+
+Not found
+
+
+### aws-ebs-csi-driver [2.16.0](https://github.com/giantswarm/aws-ebs-csi-driver-app/releases/tag/v2.16.0)
+
+Not found
+
+
+### coredns [1.11.0](https://github.com/giantswarm/coredns-app/releases/tag/v1.11.0)
+
+Not found
+
+
+### cluster-autoscaler [1.23.1](https://github.com/giantswarm/cluster-autoscaler-app/releases/tag/v1.23.1)
+
+Not found
+
+
+### metrics-server [1.8.0](https://github.com/giantswarm/metrics-server-app/releases/tag/v1.8.0)
+
+Not found
+
+
+### vertical-pod-autoscaler [2.4.1](https://github.com/giantswarm/vertical-pod-autoscaler-app/releases/tag/v2.4.1)
+
+#### Fixed
+- Correct selector in admission controller PDB
+
+
+
