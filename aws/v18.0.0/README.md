@@ -30,22 +30,62 @@ Not found
 
 ### aws-ebs-csi-driver [2.16.0](https://github.com/giantswarm/aws-ebs-csi-driver-app/releases/tag/v2.16.0)
 
-Not found
+#### Changed
+- Bump aws-ebs-csi-driver version to `v1.8.0`.
+
 
 
 ### coredns [1.11.0](https://github.com/giantswarm/coredns-app/releases/tag/v1.11.0)
 
-Not found
+#### Changed
+- Update `coredns` to upstream version [1.9.3](https://coredns.io/2022/05/27/coredns-1.9.3-release/).
+
 
 
 ### cluster-autoscaler [1.23.1](https://github.com/giantswarm/cluster-autoscaler-app/releases/tag/v1.23.1)
 
-Not found
+#### Changed
+- Update cluster-autoscaler to version `1.23.1`.
+#### [1.22.2-gs7] - 2022-06-27
+#### Changed
+- Enable balance similar nodepools by default
+#### Fixed
+- Ignore labels to consider nodepools similar groups
+#### Added
+- Support to add extra arguments
+#### [1.22.2-gs6] - 2022-04-07
+#### [1.22.2-gs5] - 2022-04-06
+#### Added
+- Support cloud provider alias names (GCP -> GCE)
+#### [1.22.2-gs4] - 2022-03-08
+#### Fixed
+- Updated to correct cluster-autoscaler version
+- Use GS-built 1.22 image to deliver upstream unreleased fix https://github.com/kubernetes/autoscaler/pull/4600
+#### [1.22.2-gs3] - 2022-02-07
+#### Added
+- Added support for specifying `balance-similar-node-groups` flag
+#### [1.22.2-gs2] - 2022-01-14
+#### Fixed
+- Fix RBAC for version 1.22.
+#### [1.22.2-gs1] - 2022-01-11
+#### Changed
+- Updated cluster-autoscaler to version `1.22.2`.
+#### [1.21.2-gs1] - 2021-12-21
+#### Changed
+- Updated cluster-autoscaler to version `1.21.2`.
+#### [1.21.0-gs2] - 2021-09-29
+- Fix RBAC for cluster autoscaler 1.21.
+#### [1.21.0-gs1] - 2021-09-13
+#### Changed
+- Updated cluster-autoscaler to version `1.21.0`.
+
 
 
 ### metrics-server [1.8.0](https://github.com/giantswarm/metrics-server-app/releases/tag/v1.8.0)
 
-Not found
+#### Changed
+- Updated metrics-server version to 0.6.1.
+
 
 
 ### vertical-pod-autoscaler [2.4.1](https://github.com/giantswarm/vertical-pod-autoscaler-app/releases/tag/v2.4.1)
