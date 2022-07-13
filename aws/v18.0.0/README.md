@@ -49,6 +49,11 @@ Not found
 
 
 
+### aws-cloud-controller-manager [1.23.2-gs1](https://github.com/giantswarm/aws-cloud-controller-manager-app/releases/tag/v1.23.2-gs1)
+
+### Changed
+- Bump to upstream version 1.23.2.
+
 ### metrics-server [1.8.0](https://github.com/giantswarm/metrics-server-app/releases/tag/v1.8.0)
 
 #### Changed

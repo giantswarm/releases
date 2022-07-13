@@ -49,6 +49,9 @@ spec:                                                              spec:
     version: 1.0.1                                                     version: 1.0.1
   - name: etcd-kubernetes-resources-count-exporter                   - name: etcd-kubernetes-resources-count-exporter
     version: 0.5.0                                                     version: 0.5.0
+                                                                >    - componentVersion: 1.23.2
+                                                                >      name: aws-cloud-controller-manager
+                                                                >      version: 1.23.2-gs1
   components:                                                        components:
   - name: app-operator                                               - name: app-operator
     version: 6.1.0                                                     version: 6.1.0
@@ -71,7 +74,7 @@ spec:                                                              spec:
     version: 3.4.18                                             |      version: 3.5.4
   - name: kubernetes                                                 - name: kubernetes
     version: 1.22.11                                            |      version: 1.23.8
-  date: "2022-07-07T11:08:42Z"                                  |    date: "2022-07-12T14:14:45Z"
+  date: "2022-07-07T11:08:42Z"                                  |    date: "2022-07-13T09:41:53Z"
   state: active                                                      state: active
 status:                                                            status:
   inUse: false                                                       inUse: false

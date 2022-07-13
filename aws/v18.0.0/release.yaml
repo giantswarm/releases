@@ -1,5 +1,5 @@
 # Generated with:
-# devctl release create --name v18.0.0 --provider aws --base v17.4.1 --app aws-ebs-csi-driver@2.16.0@1.8.0 --app coredns@1.11.0@1.9.3 --app cluster-autoscaler@1.23.1 --app metrics-server@1.8.0@0.6.1 --app vertical-pod-autoscaler@2.4.1 --component kubernetes@1.23.8 --component etcd@3.5.4 --overwrite
+# devctl release create --name v18.0.0 --provider aws --base v17.4.1 --app aws-ebs-csi-driver@2.16.0@1.8.0 --app coredns@1.11.0@1.9.3 --app cluster-autoscaler@1.23.1 --app aws-cloud-controller-manager@1.23.2-gs1@1.23.2 --app metrics-server@1.8.0@0.6.1 --app vertical-pod-autoscaler@2.4.1 --component kubernetes@1.23.8 --component etcd@3.5.4 --overwrite
 apiVersion: release.giantswarm.io/v1alpha1
 kind: Release
 metadata:
@@ -49,6 +49,9 @@ spec:
     version: 1.0.1
   - name: etcd-kubernetes-resources-count-exporter
     version: 0.5.0
+  - componentVersion: 1.23.2
+    name: aws-cloud-controller-manager
+    version: 1.23.2-gs1
   components:
   - name: app-operator
     version: 6.1.0
@@ -71,7 +74,7 @@ spec:
     version: 3.5.4
   - name: kubernetes
     version: 1.23.8
-  date: "2022-07-12T14:14:45Z"
+  date: "2022-07-13T09:41:53Z"
   state: active
 status:
   inUse: false
