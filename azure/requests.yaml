@@ -1,4 +1,12 @@
 releases:
+- name: "> 17.2.0"
+  requests:
+  - name: app-operator
+    version: ">= 6.3.0"
+  - name: cluster-operator
+    version: ">= 4.3.0"
+  - name: chart-operator
+    version: ">= 2.25.0"
 - name: "> 17.1.0"
   requests:
   - name: kube-state-metrics
