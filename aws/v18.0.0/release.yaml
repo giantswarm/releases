@@ -1,5 +1,5 @@
 # Generated with:
-# devctl release create --name v18.0.0 --provider aws --base v17.4.1 --app aws-ebs-csi-driver@2.16.0@1.8.0 --app coredns@1.11.0@1.9.3 --app cluster-autoscaler@1.23.1 --app metrics-server@1.8.0@0.6.1 --app vertical-pod-autoscaler@2.4.1 --component aws-operator@16.0.0 --component kubernetes@1.23.9 --component etcd@3.5.4 --component aws-cloud-controller-manager@1.23.1 --overwrite
+# devctl release create --name v18.0.0 --provider aws --base v17.4.1 --app aws-ebs-csi-driver@2.16.0@1.8.0 --app coredns@1.11.0@1.9.3 --app cluster-autoscaler@1.23.1 --app metrics-server@1.8.0@0.6.1 --app vertical-pod-autoscaler@2.4.1 --component aws-operator@16.0.0 --component kubernetes@1.23.9 --component etcd@3.5.4 --component aws-cloud-controller-manager@1.23.1 --component app-operator@6.3.0 --overwrite
 apiVersion: release.giantswarm.io/v1alpha1
 kind: Release
 metadata:
