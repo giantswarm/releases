@@ -5,33 +5,67 @@
 ## Change details
 
 
-### kubernetes [1.23.8](https://github.com/kubernetes/kubernetes/releases/tag/v1.23.8)
+### kubernetes [1.23.9](https://github.com/kubernetes/kubernetes/releases/tag/v1.23.9)
 
-#### Feature
-- Kubernetes is now built with Golang 1.17.11 ([#110423](https://github.com/kubernetes/kubernetes/pull/110423), [@cpanato](https://github.com/cpanato)) [SIG Cloud Provider, Instrumentation, Release and Testing]
 #### Bug or Regression
-- EndpointSlices marked for deletion are now ignored during reconciliation. ([#110483](https://github.com/kubernetes/kubernetes/pull/110483), [@aryan9600](https://github.com/aryan9600)) [SIG Apps and Network]
-- Fixed a kubelet issue that could result in invalid pod status updates to be sent to the api-server where pods would be reported in a terminal phase but also report a ready condition of true in some cases. ([#110480](https://github.com/kubernetes/kubernetes/pull/110480), [@bobbypage](https://github.com/bobbypage)) [SIG Node and Testing]
-- Pods will now post their readiness during termination. ([#110417](https://github.com/kubernetes/kubernetes/pull/110417), [@aojea](https://github.com/aojea)) [SIG Network, Node and Testing]
+- Fix a bug that caused the wrong result length when using --chunk-size and --selector together ([#110757](https://github.com/kubernetes/kubernetes/pull/110757), [@Abirdcfly](https://github.com/Abirdcfly)) [SIG API Machinery and Testing]
+- Fix bug that prevented the job controller from enforcing activeDeadlineSeconds when set ([#110545](https://github.com/kubernetes/kubernetes/pull/110545), [@harshanarayana](https://github.com/harshanarayana)) [SIG Apps]
+- Fix image pulling failure when IMDS is unavailable in kubelet startup ([#110523](https://github.com/kubernetes/kubernetes/pull/110523), [@andyzhangx](https://github.com/andyzhangx)) [SIG Cloud Provider]
+- Fix printing resources with int64 fields ([#110602](https://github.com/kubernetes/kubernetes/pull/110602), [@sanchezl](https://github.com/sanchezl)) [SIG API Machinery]
+- Fixed a regression introduced in 1.23.0 where Azure load balancers were not kept up to date with the state of cluster nodes. In particular, nodes that are not in the ready state and are not newly created (i.e. not having the `node.cloudprovider.kubernetes.io/uninitialized` taint) now get removed from Azure load balancers. ([#109932](https://github.com/kubernetes/kubernetes/pull/109932), [@ricky-rav](https://github.com/ricky-rav)) [SIG Cloud Provider]
+- Fixed potential scheduler crash when scheduling with unsatisfied nodes in PodTopologySpread. ([#110853](https://github.com/kubernetes/kubernetes/pull/110853), [@kerthcet](https://github.com/kerthcet)) [SIG Scheduling]
+- Kubeadm: fix the bug that configurable KubernetesVersion not respected during kubeadm join ([#111022](https://github.com/kubernetes/kubernetes/pull/111022), [@SataQiu](https://github.com/SataQiu)) [SIG Cluster Lifecycle]
+- Reduced time taken to sync proxy rules on Windows kube-proxy with kernelspace mode ([#110702](https://github.com/kubernetes/kubernetes/pull/110702), [@daschott](https://github.com/daschott)) [SIG Network and Windows]
+- Updated cAdvisor to v0.43.1 to pick up a kubelet fix where network metrics can be missing in some cases when used with containerd ([#111013](https://github.com/kubernetes/kubernetes/pull/111013), [@bobbypage](https://github.com/bobbypage)) [SIG Node]
 #### Dependencies
 #### Added
 _Nothing has changed._
 #### Changed
-_Nothing has changed._
+- github.com/google/cadvisor: [v0.43.0 → v0.43.1](https://github.com/google/cadvisor/compare/v0.43.0...v0.43.1)
 #### Removed
 _Nothing has changed._
 
 
 
+
 ### etcd [3.5.4](https://github.com/etcd-io/etcd/releases/tag/v3.5.4)
 
-Not found
+Please check [upstream changelog](https://github.com/etcd-io/etcd/blob/main/CHANGELOG/CHANGELOG-3.5.md#v354-2022-04-24) for details.
+
+
+
+### app-operator [6.3.0] (https://github.com/giantswarm/app-operator/releases/tag/v6.3.0)
+
+#### Added
+- App multi layer configs support, see: https://github.com/giantswarm/rfc/tree/main/multi-layer-app-config#enhancing-app-cr
+- Watch config maps and secrets listed in the extraConfigs section of App CR for multi layer configs, see: https://github.com/giantswarm/rfc/tree/main/multi-layer-app-config#enhancing-app-cr
+- If no userconfig configmap or secret reference is specified but one is found following the default naming convention (*-user-values / *-user-secrets) then the App resource is updated to reference the found configmap/secret.
+
+#### Changed
+- Bump github.com/giantswarm/app to v6.12.0
+
+
+
+### aws-cloud-controller-manager [1.23.1](https://github.com/kubernetes/cloud-provider-aws/releases/tag/v1.23.1)
+
+Please check [upstream changelog](https://github.com/kubernetes/cloud-provider-aws/blob/master/docs/CHANGELOG.md#v1231) for details.
+
 
 
 ### aws-ebs-csi-driver [2.16.0](https://github.com/giantswarm/aws-ebs-csi-driver-app/releases/tag/v2.16.0)
 
 #### Changed
 - Bump aws-ebs-csi-driver version to `v1.8.0`.
+
+
+
+### aws-operator [12.0.0](https://github.com/giantswarm/aws-operator/releases/tag/v12.0.0)
+
+#### Added
+- Use external cloud controller manager for AWS.
+
+#### Changed
+- Mount containerd socket instead of dockershim one to `aws-node` pods.
 
 
 
@@ -48,11 +82,6 @@ Not found
 - Update cluster-autoscaler to version `1.23.1`.
 
 
-
-### aws-cloud-controller-manager [1.23.2-gs1](https://github.com/giantswarm/aws-cloud-controller-manager-app/releases/tag/v1.23.2-gs1)
-
-### Changed
-- Bump to upstream version 1.23.2.
 
 ### metrics-server [1.8.0](https://github.com/giantswarm/metrics-server-app/releases/tag/v1.8.0)
 

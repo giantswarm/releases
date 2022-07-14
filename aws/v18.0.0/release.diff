@@ -49,17 +49,16 @@ spec:                                                              spec:
     version: 1.0.1                                                     version: 1.0.1
   - name: etcd-kubernetes-resources-count-exporter                   - name: etcd-kubernetes-resources-count-exporter
     version: 0.5.0                                                     version: 0.5.0
-                                                                >    - componentVersion: 1.23.2
-                                                                >      name: aws-cloud-controller-manager
-                                                                >      version: 1.23.2-gs1
   components:                                                        components:
   - name: app-operator                                               - name: app-operator
-    version: 6.1.0                                                     version: 6.1.0
+    version: 6.1.0                                              |      version: 6.3.0
+                                                                >    - name: aws-cloud-controller-manager
+                                                                >      version: 1.23.1
   - name: aws-cni                                                    - name: aws-cni
     version: 1.11.2-nftables                                           version: 1.11.2-nftables
   - name: aws-operator                                               - name: aws-operator
     releaseOperatorDeploy: true                                        releaseOperatorDeploy: true
-    version: 11.16.0                                                   version: 11.16.0
+    version: 11.16.0                                            |      version: 16.0.0
   - name: calico                                                     - name: calico
     version: 3.21.5                                                    version: 3.21.5
   - name: cert-operator                                              - name: cert-operator
@@ -73,8 +72,8 @@ spec:                                                              spec:
   - name: etcd                                                       - name: etcd
     version: 3.4.18                                             |      version: 3.5.4
   - name: kubernetes                                                 - name: kubernetes
-    version: 1.22.11                                            |      version: 1.23.8
-  date: "2022-07-07T11:08:42Z"                                  |    date: "2022-07-13T09:41:53Z"
+    version: 1.22.11                                            |      version: 1.23.
+  date: "2022-07-07T11:08:42Z"                                  >    date: "2022-07-14T12:10:47Z"
   state: active                                                      state: active
 status:                                                            status:
   inUse: false                                                       inUse: false
