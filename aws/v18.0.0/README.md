@@ -59,13 +59,17 @@ Please check [upstream changelog](https://github.com/kubernetes/cloud-provider-a
 
 
 
-### aws-operator [12.0.0](https://github.com/giantswarm/aws-operator/releases/tag/v12.0.0)
+### aws-operator [12.1.0](https://github.com/giantswarm/aws-operator/releases/tag/v12.1.0)
 
 #### Added
 - Use external cloud controller manager for AWS.
+- Containerd EBS Volume.
 
 #### Changed
 - Mount containerd socket instead of dockershim one to `aws-node` pods.
+
+#### Fixed
+- Fix crictl.yaml on worker nodes.
 
 
 
