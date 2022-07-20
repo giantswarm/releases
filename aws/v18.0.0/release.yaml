@@ -6,9 +6,12 @@ metadata:
   annotations:
     giantswarm.io/docs: https://docs.giantswarm.io/reference/cp-k8s-api/releases.release.giantswarm.io/
   creationTimestamp: null
-  name: v18.0.0
+  name: v18.0.0-whites
 spec:
   apps:
+  - componentVersion: 1.23.1
+    name: aws-cloud-controller-manager
+    version: 1.23.1
   - componentVersion: 1.8.0
     name: aws-ebs-csi-driver
     version: 2.16.0
@@ -18,12 +21,17 @@ spec:
     name: cert-manager
     version: 2.15.1
   - name: chart-operator
-    version: 2.25.0
+    version: 2.26.0
+  - componentVersion: 1.11.2
+    name: cilium
+    version: 0.2.4
   - name: cluster-autoscaler
     version: 1.23.1
   - componentVersion: 1.9.3
     name: coredns
     version: 1.11.0
+  - name: etcd-kubernetes-resources-count-exporter
+    version: 0.5.0
   - componentVersion: 0.11.0
     name: external-dns
     version: 2.15.0
@@ -47,18 +55,14 @@ spec:
     version: 2.4.1
   - name: vertical-pod-autoscaler-crd
     version: 1.0.1
-  - name: etcd-kubernetes-resources-count-exporter
-    version: 0.5.0
   components:
   - name: app-operator
     version: 6.3.0
-  - name: aws-cloud-controller-manager
-    version: 1.23.1
-  - name: aws-cni
-    version: 1.11.2-nftables
-  - name: aws-operator
+  - catalog: control-plane-test-catalog
+    name: aws-operator
     releaseOperatorDeploy: true
-    version: 12.1.0
+    version: 12.1.1-dev
+    reference: 12.1.0-79cf4869e4341a180bb9faaba45dd8f8a70dd454
   - name: calico
     version: 3.21.5
   - name: cert-operator
@@ -73,8 +77,8 @@ spec:
     version: 3.5.4
   - name: kubernetes
     version: 1.23.9
-  date: "2022-07-14T12:10:47Z"
-  state: active
+  date: "2022-07-19T12:10:47Z"
+  state: wip
 status:
   inUse: false
   ready: false
