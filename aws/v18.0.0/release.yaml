@@ -9,9 +9,9 @@ metadata:
   name: v18.0.0-whites
 spec:
   apps:
-  - componentVersion: 1.23.1
+  - componentVersion: 1.23.2
     name: aws-cloud-controller-manager
-    version: 1.23.1
+    version: 1.23.2-gs2
   - componentVersion: 1.8.0
     name: aws-ebs-csi-driver
     version: 2.16.0
@@ -62,21 +62,25 @@ spec:
     name: aws-operator
     releaseOperatorDeploy: true
     version: 12.1.1-dev
-    reference: 12.1.0-79cf4869e4341a180bb9faaba45dd8f8a70dd454
+    reference: 12.1.0-368e66880665e6b9b45b2b967dfd948b00749b48
   - name: calico
     version: 3.21.5
   - name: cert-operator
     releaseOperatorDeploy: true
     version: 2.0.1
-  - name: cluster-operator
+  - catalog: control-plane-test-catalog
+    name: cluster-operator
     releaseOperatorDeploy: true
-    version: 4.3.0
+    version: 4.3.1-dev
+    reference: 4.3.0-e51f84beabba68efff1481e403c26f3eede42885
   - name: containerlinux
     version: 3139.2.3
   - name: etcd
     version: 3.5.4
   - name: kubernetes
     version: 1.23.9
+  - name: aws-cni
+    version: 0.1.0-deleteme
   date: "2022-07-19T12:10:47Z"
   state: wip
 status:
