@@ -14,7 +14,7 @@ spec:
     version: 1.23.2-gs2
   - componentVersion: 1.8.0
     name: aws-ebs-csi-driver
-    version: 2.16.0
+    version: 2.16.1
   - name: cert-exporter
     version: 2.2.0
   - componentVersion: 1.7.3
@@ -72,7 +72,7 @@ spec:
     name: cluster-operator
     releaseOperatorDeploy: true
     version: 4.3.1-dev
-    reference: 4.3.0-41cf9278c4011f535ee2f18fe00bf4de4b66f96d
+    reference: 4.3.0-94b902d04bff6b0cd08d2936909d085e344bd2d2
   - name: containerlinux
     version: 3139.2.3
   - name: etcd
