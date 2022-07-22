@@ -4,4 +4,6 @@ This is a patch release to downgrade Cert Manager to release 2.11.0 due to break
 
 ## Change details
 
-Revert breaking changes from Cert Manager update with API versions
+### cert-manager [2.11.0](https://github.com/giantswarm/cert-manager-app/releases/tag/v2.11.0)
+
+#### Revert breaking changes from Cert Manager `2.15.0` update with API versions
