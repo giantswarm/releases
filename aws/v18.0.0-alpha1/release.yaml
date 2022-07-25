@@ -1,12 +1,12 @@
 # Generated with:
-# devctl release create --name v18.0.0 --provider aws --base v17.4.1 --app aws-ebs-csi-driver@2.16.1@1.8.0 --app coredns@1.11.0@1.9.3 --app cluster-autoscaler@1.23.1 --app metrics-server@1.8.0@0.6.1 --app vertical-pod-autoscaler@2.4.1 --component aws-operator@16.0.0 --component kubernetes@1.23.9 --component etcd@3.5.4 --component aws-cloud-controller-manager@1.23.1 --component app-operator@6.3.0 --overwrite
+# /home/whites/workspace/devctl/devctl release create --name v18.0.0-alpha1 --provider aws --base v17.4.1 --app aws-ebs-csi-driver@2.16.1@1.8.0 --app coredns@1.11.0@1.9.3 --app cluster-autoscaler@1.23.1 --app metrics-server@1.8.0@0.6.1 --app vertical-pod-autoscaler@2.4.1 --component aws-operator@v13.0.0-alpha1 --component kubernetes@1.23.9 --component etcd@3.5.4 --app aws-cloud-controller-manager@1.23.1 --component app-operator@6.3.0 --app cilium@0.2.5@1.11.2 --app chart-operator@2.26.0 --component cluster-operator@4.4.0 --overwrite
 apiVersion: release.giantswarm.io/v1alpha1
 kind: Release
 metadata:
   annotations:
     giantswarm.io/docs: https://docs.giantswarm.io/reference/cp-k8s-api/releases.release.giantswarm.io/
   creationTimestamp: null
-  name: v18.0.0-whites
+  name: v18.0.0-alpha1
 spec:
   apps:
   - componentVersion: 1.23.2
@@ -24,7 +24,7 @@ spec:
     version: 2.26.0
   - componentVersion: 1.11.2
     name: cilium
-    version: 0.2.4
+    version: 0.2.5
   - name: cluster-autoscaler
     version: 1.23.1
   - componentVersion: 1.9.3
@@ -58,11 +58,9 @@ spec:
   components:
   - name: app-operator
     version: 6.3.0
-  - catalog: control-plane-test-catalog
-    name: aws-operator
+  - name: aws-operator
     releaseOperatorDeploy: true
-    version: 12.1.1-dev
-    reference: 12.1.0-1112cece5cd9393dffdcdf5a691e136643c6dfdc
+    version: v13.0.0-alpha1
   - name: calico
     version: 3.21.5
   - name: cert-operator
@@ -77,10 +75,8 @@ spec:
     version: 3.5.4
   - name: kubernetes
     version: 1.23.9
-  - name: aws-cni
-    version: 0.1.0-deleteme
-  date: "2022-07-19T12:10:47Z"
-  state: wip
+  date: "2022-07-25T15:43:00Z"
+  state: active
 status:
   inUse: false
   ready: false

@@ -1,8 +1,13 @@
-# :zap: Giant Swarm Release v18.0.0 for AWS :zap:
+# :zap: Giant Swarm Release v18.0.0-alpha1 for AWS :zap:
 
 << Add description here >>
 
 ## Change details
+
+
+### aws-operator [v13.0.0-alpha1](https://github.com/giantswarm/aws-operator/releases/tag/vv13.0.0-alpha1)
+
+Not found
 
 
 ### kubernetes [1.23.9](https://github.com/kubernetes/kubernetes/releases/tag/v1.23.9)
@@ -27,28 +32,20 @@ _Nothing has changed._
 
 
 
-
 ### etcd [3.5.4](https://github.com/etcd-io/etcd/releases/tag/v3.5.4)
 
-Please check [upstream changelog](https://github.com/etcd-io/etcd/blob/main/CHANGELOG/CHANGELOG-3.5.md#v354-2022-04-24) for details.
+Not found
 
 
+### aws-cloud-controller-manager [1.23.1](https://github.com/giantswarm/aws-cloud-controller-manager-app/releases/tag/v1.23.1)
 
-### app-operator [6.3.0] (https://github.com/giantswarm/app-operator/releases/tag/v6.3.0)
+Not found
+
+
+### app-operator [6.3.0](https://github.com/giantswarm/app-operator/releases/tag/v6.3.0)
 
 #### Added
-- App multi layer configs support, see: https://github.com/giantswarm/rfc/tree/main/multi-layer-app-config#enhancing-app-cr
-- Watch config maps and secrets listed in the extraConfigs section of App CR for multi layer configs, see: https://github.com/giantswarm/rfc/tree/main/multi-layer-app-config#enhancing-app-cr
-- If no userconfig configmap or secret reference is specified but one is found following the default naming convention (*-user-values / *-user-secrets) then the App resource is updated to reference the found configmap/secret.
-
-#### Changed
-- Bump github.com/giantswarm/app to v6.12.0
-
-
-
-### aws-cloud-controller-manager [1.23.1](https://github.com/kubernetes/cloud-provider-aws/releases/tag/v1.23.1)
-
-Please check [upstream changelog](https://github.com/kubernetes/cloud-provider-aws/blob/master/docs/CHANGELOG.md#v1231) for details.
+- If no userconfig configmap or secret reference is specified but one is found following the default naming convention (`*-user-values` / `*-user-secrets`) then the App resource is updated to reference the found configmap/secret.
 
 
 
@@ -56,23 +53,6 @@ Please check [upstream changelog](https://github.com/kubernetes/cloud-provider-a
 
 #### Fixed
 - Changing controller `httpEndpoint` to `8610` because of overlapping ports.
-
-#### Changed
-- Bump aws-ebs-csi-driver version to `v1.8.0`.
-
-
-
-### aws-operator [12.1.0](https://github.com/giantswarm/aws-operator/releases/tag/v12.1.0)
-
-#### Added
-- Use external cloud controller manager for AWS.
-- Containerd EBS Volume.
-
-#### Changed
-- Mount containerd socket instead of dockershim one to `aws-node` pods.
-
-#### Fixed
-- Fix crictl.yaml on worker nodes.
 
 
 
@@ -87,6 +67,38 @@ Please check [upstream changelog](https://github.com/kubernetes/cloud-provider-a
 
 #### Changed
 - Update cluster-autoscaler to version `1.23.1`.
+#### [1.22.2-gs7] - 2022-06-27
+#### Changed
+- Enable balance similar nodepools by default
+#### Fixed
+- Ignore labels to consider nodepools similar groups
+#### Added
+- Support to add extra arguments
+#### [1.22.2-gs6] - 2022-04-07
+#### [1.22.2-gs5] - 2022-04-06
+#### Added
+- Support cloud provider alias names (GCP -> GCE)
+#### [1.22.2-gs4] - 2022-03-08
+#### Fixed
+- Updated to correct cluster-autoscaler version
+- Use GS-built 1.22 image to deliver upstream unreleased fix https://github.com/kubernetes/autoscaler/pull/4600
+#### [1.22.2-gs3] - 2022-02-07
+#### Added
+- Added support for specifying `balance-similar-node-groups` flag
+#### [1.22.2-gs2] - 2022-01-14
+#### Fixed
+- Fix RBAC for version 1.22.
+#### [1.22.2-gs1] - 2022-01-11
+#### Changed
+- Updated cluster-autoscaler to version `1.22.2`.
+#### [1.21.2-gs1] - 2021-12-21
+#### Changed
+- Updated cluster-autoscaler to version `1.21.2`.
+#### [1.21.0-gs2] - 2021-09-29
+- Fix RBAC for cluster autoscaler 1.21.
+#### [1.21.0-gs1] - 2021-09-13
+#### Changed
+- Updated cluster-autoscaler to version `1.21.0`.
 
 
 
@@ -101,6 +113,21 @@ Please check [upstream changelog](https://github.com/kubernetes/cloud-provider-a
 
 #### Fixed
 - Correct selector in admission controller PDB
+
+
+
+### cilium [0.2.5](https://github.com/giantswarm/cilium-app/releases/tag/v0.2.5)
+
+#### Changed
+- Use retagged images instead of upstream ones.
+- Run the default policies creation job in hostNetwork.
+
+
+
+### chart-operator [2.26.0](https://github.com/giantswarm/chart-operator/releases/tag/v2.26.0)
+
+#### Changed
+- Use `127.0.0.1` as KUBERNETES_SERVICE_HOST when `bootstrapMode` is enabled.
 
 
 

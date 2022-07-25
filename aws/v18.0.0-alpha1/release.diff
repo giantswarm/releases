@@ -1,12 +1,12 @@
 # Generated with:                                                  # Generated with:
-# devctl release create --provider aws --name v17.4.1 --base v1 |  # devctl release create --name v18.0.0 --provider aws --base v1
+# devctl release create --provider aws --name v17.4.1 --base v1 |  # /home/whites/workspace/devctl/devctl release create --name v1
 apiVersion: release.giantswarm.io/v1alpha1                         apiVersion: release.giantswarm.io/v1alpha1
 kind: Release                                                      kind: Release
 metadata:                                                          metadata:
   annotations:                                                       annotations:
     giantswarm.io/docs: https://docs.giantswarm.io/reference/cp        giantswarm.io/docs: https://docs.giantswarm.io/reference/cp
   creationTimestamp: null                                            creationTimestamp: null
-  name: v17.4.1                                                 |    name: v18.0.0
+  name: v17.4.1                                                 |    name: v18.0.0-alpha1
 spec:                                                              spec:
   apps:                                                              apps:
   - componentVersion: 1.6.2                                     |    - componentVersion: 1.8.0
@@ -18,7 +18,7 @@ spec:                                                              spec:
     name: cert-manager                                                 name: cert-manager
     version: 2.15.1                                                    version: 2.15.1
   - name: chart-operator                                             - name: chart-operator
-    version: 2.25.0                                                    version: 2.25.0
+    version: 2.25.0                                             |      version: 2.26.0
   - name: cluster-autoscaler                                         - name: cluster-autoscaler
     version: 1.22.2-gs7                                         |      version: 1.23.1
   - componentVersion: 1.8.7                                     |    - componentVersion: 1.9.3
@@ -49,16 +49,17 @@ spec:                                                              spec:
     version: 1.0.1                                                     version: 1.0.1
   - name: etcd-kubernetes-resources-count-exporter                   - name: etcd-kubernetes-resources-count-exporter
     version: 0.5.0                                                     version: 0.5.0
+                                                                >    - componentVersion: 1.11.2
+                                                                >      name: cilium
+                                                                >      version: 0.2.5
   components:                                                        components:
   - name: app-operator                                               - name: app-operator
     version: 6.1.0                                              |      version: 6.3.0
-                                                                >    - name: aws-cloud-controller-manager
-                                                                >      version: 1.23.1
   - name: aws-cni                                                    - name: aws-cni
     version: 1.11.2-nftables                                           version: 1.11.2-nftables
   - name: aws-operator                                               - name: aws-operator
     releaseOperatorDeploy: true                                        releaseOperatorDeploy: true
-    version: 11.16.0                                            |      version: 12.1.0
+    version: 11.16.0                                            |      version: v13.0.0-alpha1
   - name: calico                                                     - name: calico
     version: 3.21.5                                                    version: 3.21.5
   - name: cert-operator                                              - name: cert-operator
@@ -72,8 +73,10 @@ spec:                                                              spec:
   - name: etcd                                                       - name: etcd
     version: 3.4.18                                             |      version: 3.5.4
   - name: kubernetes                                                 - name: kubernetes
-    version: 1.22.11                                            |      version: 1.23.
-  date: "2022-07-07T11:08:42Z"                                  >    date: "2022-07-14T12:10:47Z"
+    version: 1.22.11                                            |      version: 1.23.9
+  date: "2022-07-07T11:08:42Z"                                  |    - name: aws-cloud-controller-manager
+                                                                >      version: 1.23.1
+                                                                >    date: "2022-07-25T15:43:00Z"
   state: active                                                      state: active
 status:                                                            status:
   inUse: false                                                       inUse: false
