@@ -1,5 +1,5 @@
 # Generated with:
-# /home/whites/workspace/devctl/devctl release create --name v18.0.0-alpha1 --provider aws --base v17.4.1 --app aws-ebs-csi-driver@2.16.1@1.8.0 --app coredns@1.11.0@1.9.3 --app cluster-autoscaler@1.23.1 --app metrics-server@1.8.0@0.6.1 --app vertical-pod-autoscaler@2.4.1 --component aws-operator@v13.0.0-alpha1 --component kubernetes@1.23.9 --component etcd@3.5.4 --app aws-cloud-controller-manager@1.23.1 --component app-operator@6.3.0 --app cilium@0.2.5@1.11.2 --app chart-operator@2.26.0 --component cluster-operator@4.4.0 --overwrite
+# /home/whites/workspace/devctl/devctl release create --name v18.0.0-alpha1 --provider aws --base v17.4.1 --app aws-ebs-csi-driver@2.16.1@1.8.0 --app coredns@1.11.0@1.9.3 --app cluster-autoscaler@1.23.1 --app metrics-server@1.8.0@0.6.1 --app vertical-pod-autoscaler@2.4.1 --component aws-operator@13.0.0-alpha1 --component kubernetes@1.23.9 --component etcd@3.5.4 --app aws-cloud-controller-manager@1.23.1-gs2@1.23.1 --component app-operator@6.3.0 --app cilium@0.2.5@1.11.2 --app chart-operator@2.26.0 --component cluster-operator@4.4.0 --overwrite
 apiVersion: release.giantswarm.io/v1alpha1
 kind: Release
 metadata:

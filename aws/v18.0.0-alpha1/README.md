@@ -5,7 +5,7 @@
 ## Change details
 
 
-### aws-operator [v13.0.0-alpha1](https://github.com/giantswarm/aws-operator/releases/tag/vv13.0.0-alpha1)
+### aws-operator [13.0.0-alpha1](https://github.com/giantswarm/aws-operator/releases/tag/v13.0.0-alpha1)
 
 Not found
 

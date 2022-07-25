@@ -21,9 +21,14 @@ spec:                                                              spec:
     version: 2.25.0                                             |      version: 2.26.0
   - name: cluster-autoscaler                                         - name: cluster-autoscaler
     version: 1.22.2-gs7                                         |      version: 1.23.1
+                                                                >    - componentVersion: 1.11.2
+                                                                >      name: cilium
+                                                                >      version: 0.2.5
   - componentVersion: 1.8.7                                     |    - componentVersion: 1.9.3
     name: coredns                                                      name: coredns
     version: 1.10.0                                             |      version: 1.11.0
+  - name: etcd-kubernetes-resources-count-exporter                   - name: etcd-kubernetes-resources-count-exporter
+    version: 0.5.0                                                     version: 0.5.0
   - componentVersion: 0.11.0                                         - componentVersion: 0.11.0
     name: external-dns                                                 name: external-dns
     version: 2.15.0                                                    version: 2.15.0
@@ -47,16 +52,11 @@ spec:                                                              spec:
     version: 2.4.0                                              |      version: 2.4.1
   - name: vertical-pod-autoscaler-crd                                - name: vertical-pod-autoscaler-crd
     version: 1.0.1                                                     version: 1.0.1
-  - name: etcd-kubernetes-resources-count-exporter                   - name: etcd-kubernetes-resources-count-exporter
-    version: 0.5.0                                                     version: 0.5.0
-                                                                >    - componentVersion: 1.11.2
-                                                                >      name: cilium
-                                                                >      version: 0.2.5
   components:                                                        components:
   - name: app-operator                                               - name: app-operator
     version: 6.1.0                                              |      version: 6.3.0
-  - name: aws-cni                                                    - name: aws-cni
-    version: 1.11.2-nftables                                           version: 1.11.2-nftables
+  - name: aws-cni                                               <
+    version: 1.11.2-nftables                                    <
   - name: aws-operator                                               - name: aws-operator
     releaseOperatorDeploy: true                                        releaseOperatorDeploy: true
     version: 11.16.0                                            |      version: v13.0.0-alpha1
