@@ -86,6 +86,7 @@ releases:
   - name: external-dns
     version: ">= 2.10.0"
 - name: "> 17.0.0-alpha1 < 18.0.0-alpha1"
+  requests:
   - name: vertical-pod-autoscaler
     version: "< 2.5.0"
 - name: "> 16.4.0 < 17.0.0-alpha1"
