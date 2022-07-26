@@ -60,7 +60,7 @@ spec:
     version: 6.3.0
   - name: aws-operator
     releaseOperatorDeploy: true
-    version: v13.0.0-alpha1
+    version: 13.0.0-alpha1
   - name: calico
     version: 3.21.5
   - name: cert-operator
