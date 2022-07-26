@@ -58,9 +58,11 @@ spec:
   components:
   - name: app-operator
     version: 6.3.0
-  - name: aws-operator
+  - catalog: control-plane-test-catalog
+    name: aws-operator
     releaseOperatorDeploy: true
-    version: 13.0.0-alpha1
+    version: 13.0.1-dev
+    reference: 13.0.0-alpha1-670551578b2b94f5ff498dfe1312f0f662ff571a
   - name: calico
     version: 3.21.5
   - name: cert-operator
