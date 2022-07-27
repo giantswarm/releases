@@ -1,8 +1,14 @@
 # :zap: Giant Swarm Release v18.0.0-alpha1 for AWS :zap:
 
-<< Add description here >>
+This release provides support for Kubernetes 1.23 and replaces the use of AWS CNI with Cilium. Release also upgrades most of running components which can be found further in release notes.
+
+> **_Warning:_** This is an **`alpha preview release`** intended only for testing Kubernetes v1.23 changes and replacement of AWS CNI with Cilium. Upgrading to or from this version is not supported.
 
 ## Change details
+
+### kubernetes [1.23.9](https://github.com/kubernetes/kubernetes/releases/tag/v1.23.9)
+
+Upgraded from version 1.22. Please refer to the [official changelog](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.23.md) for all details.
 
 
 ### aws-operator [13.0.0-alpha2](https://github.com/giantswarm/aws-operator/releases/tag/v13.0.0-alpha2)
@@ -10,16 +16,6 @@
 Upgraded from 11.16.0.
 
 Please refer to the [changelog](https://github.com/giantswarm/aws-operator/blob/master/CHANGELOG.md) for all details.
-
-
-### kubernetes [1.23.9](https://github.com/kubernetes/kubernetes/releases/tag/v1.23.9)
-
-Upgraded from version 1.22.
-
-This upgrade brings lots of changes, security and bug fixes and deprecations.
-
-Please refer to the [official changelog](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.23.md) for all details.
-
 
 
 ### etcd [3.5.4](https://github.com/etcd-io/etcd/releases/tag/v3.5.4)
