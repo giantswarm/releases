@@ -1,5 +1,5 @@
 # Generated with:
-# /home/whites/workspace/devctl/devctl release create --name v18.0.0-alpha1 --provider aws --base v17.4.1 --app aws-ebs-csi-driver@2.16.1@1.8.0 --app coredns@1.11.0@1.9.3 --app cluster-autoscaler@1.23.1 --app metrics-server@1.8.0@0.6.1 --app vertical-pod-autoscaler@2.4.1 --component aws-operator@13.0.0-alpha1 --component kubernetes@1.23.9 --component etcd@3.5.4 --app aws-cloud-controller-manager@1.23.1-gs2@1.23.1 --component app-operator@6.3.0 --app cilium@0.2.6@1.11.2 --app chart-operator@2.26.0 --component cluster-operator@4.4.0 --overwrite
+# /home/whites/workspace/devctl/devctl release create --name v18.0.0-alpha1 --provider aws --base v17.4.1 --app aws-ebs-csi-driver@2.16.1@1.8.0 --app coredns@1.11.0@1.9.3 --app cluster-autoscaler@1.23.1 --app metrics-server@1.8.0@0.6.1 --app vertical-pod-autoscaler@2.4.2 --component aws-operator@13.0.0-alpha2 --component kubernetes@1.23.9 --component etcd@3.5.4 --app aws-cloud-controller-manager@1.23.1-gs2@1.23.1 --component app-operator@6.3.0 --app cilium@0.2.6@1.11.2 --app chart-operator@2.26.0 --component cluster-operator@4.4.0 --overwrite
 apiVersion: release.giantswarm.io/v1alpha1
 kind: Release
 metadata:
@@ -52,17 +52,15 @@ spec:
     name: node-exporter
     version: 1.13.0
   - name: vertical-pod-autoscaler
-    version: 2.4.1
+    version: 2.4.2
   - name: vertical-pod-autoscaler-crd
     version: 1.0.1
   components:
   - name: app-operator
     version: 6.3.0
-  - catalog: control-plane-test-catalog
-    name: aws-operator
+  - name: aws-operator
     releaseOperatorDeploy: true
-    version: 13.0.1-dev
-    reference: 13.0.0-alpha1-8fd8f1afeae295a8dc039aacbc43dfea3e95a073
+    version: 13.0.1-alpha2
   - name: calico
     version: 3.21.5
   - name: cert-operator
