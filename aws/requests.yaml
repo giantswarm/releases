@@ -1,12 +1,16 @@
 releases:
-- name: "> 17.4.1"
+- name: ">= 17.5.0"
   requests:
   - name: app-operator
     version: ">= 6.3.0"
+- name: "> 17.4.1"
+  requests:
   - name: cluster-operator
     version: ">= 4.3.0"
   - name: chart-operator
     version: ">= 2.25.0"
+  - name: cert-manager
+    version: ">= 2.15.2"
 - name: ">= 17.4.0"
   requests:
   - name: external-dns
