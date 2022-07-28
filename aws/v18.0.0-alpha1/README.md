@@ -770,5 +770,8 @@ Cilium is now the CNI in place of calico and AWS-cni.
 #### Changed
 - Use `127.0.0.1` as KUBERNETES_SERVICE_HOST when `bootstrapMode` is enabled.
 
+### cert-manager [2.15.2](https://github.com/giantswarm/cert-manager-app/releases/tag/v2.15.2)
 
+#### Fixed
 
+- RBAC for `cmctl upgrade migrate-api-version` ([#249](https://github.com/giantswarm/cert-manager-app/pull/249)).
