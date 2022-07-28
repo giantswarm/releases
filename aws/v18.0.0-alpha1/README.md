@@ -4,7 +4,11 @@ This release provides support for Kubernetes 1.23 and replaces the use of AWS CN
 
 > **_Warning:_** This is an **`alpha preview release`** intended only for testing Kubernetes v1.23 changes and replacement of AWS CNI with Cilium. Upgrading to or from this version is not supported.
 
-## Change details
+***Cilium highlights***
+- [Network Policy](https://docs.cilium.io/en/stable/concepts/kubernetes/policy/#networkpolicy-state) provided by Cilium does not cover support for setting [ipBlock with Pod IP](https://github.com/cilium/cilium/issues/9209). Components in need of this will have to use [CiliumNetworkPolicy](https://docs.cilium.io/en/stable/concepts/kubernetes/policy/#ciliumnetworkpolicy) which has wider scope.
+- `Pod Subnet` which can be used to create ENIs for peering with VPCs is removed with Cilium. Please pay attention if any of the workloads depend on that connection as it will have to be adjusted accordingly.
+
+ ## Change details
 
 ### kubernetes [1.23.9](https://github.com/kubernetes/kubernetes/releases/tag/v1.23.9)
 
