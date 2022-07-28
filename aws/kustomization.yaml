@@ -20,6 +20,7 @@ resources:
 - v17.3.3
 - v17.4.1
 - v17.4.2
+- v18.0.0-alpha1
 - v20.0.0-alpha1
 transformers:
 - releaseNotesTransformer.yaml
