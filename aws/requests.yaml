@@ -1,5 +1,5 @@
 releases:
-- name: ">= 18.0.0-alpha1"
+- name: "> 18.0.0-alpha1"
   requests:
   - name: etcd-kubernetes-resources-count-exporter
     version: ">= 0.5.1"
