@@ -9,6 +9,8 @@ releases:
     version: ">= 2.25.0"
   - name: etcd-kubernetes-resources-count-exporter
     version: ">= 0.5.1"
+  - name: external-dns
+    version: ">= 2.15.1"
 - name: "> 17.1.0"
   requests:
   - name: kube-state-metrics
