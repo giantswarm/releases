@@ -37,7 +37,7 @@ spec:                                                              spec:
     version: 2.15.0                                             |      version: 2.15.1
   - componentVersion: 4.2.0                                          - componentVersion: 4.2.0
     name: kiam                                                         name: kiam
-    version: 2.3.0                                                     version: 2.3.0
+    version: 2.3.0                                              |      version: 2.4.0
   - name: kiam-watchdog                                              - name: kiam-watchdog
     version: 0.7.0                                                     version: 0.7.0
   - componentVersion: 2.5.0                                          - componentVersion: 2.5.0
@@ -68,14 +68,14 @@ spec:                                                              spec:
     version: 2.0.1                                                     version: 2.0.1
   - name: cluster-operator                                           - name: cluster-operator
     releaseOperatorDeploy: true                                        releaseOperatorDeploy: true
-    version: 4.4.0                                              |      version: 4.5.0
+    version: 4.4.0                                              |      version: 4.5.1
   - name: containerlinux                                             - name: containerlinux
     version: 3139.2.3                                           |      version: 3227.2.1
   - name: etcd                                                       - name: etcd
     version: 3.5.4                                                     version: 3.5.4
   - name: kubernetes                                                 - name: kubernetes
     version: 1.23.9                                                    version: 1.23.9
-  date: "2022-07-27T11:11:59Z"                                  |    date: "2022-08-08T16:01:35Z"
+  date: "2022-07-27T11:11:59Z"                                  |    date: "2022-08-09T13:01:46Z"
   state: active                                                      state: active
 status:                                                            status:
   inUse: false                                                       inUse: false

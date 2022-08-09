@@ -35,8 +35,7 @@ spec:
   - componentVersion: 0.11.0
     name: external-dns
     version: 2.15.1
-  - catalog:
-    componentVersion: 4.2.0
+  - componentVersion: 4.2.0
     name: kiam
     version: 2.4.0
   - name: kiam-watchdog
@@ -59,11 +58,11 @@ spec:
   components:
   - name: app-operator
     version: 6.3.0
-  - catalog: control-plane-test-catalog
-    name: aws-operator
+  - name: aws-operator
     releaseOperatorDeploy: true
-    version: 13.0.1-dev
-    reference: 13.0.0-alpha2-9f21ce476c15e5d9bb1ea12e0f1e141ae36c09b6
+    version: 13.0.0-alpha2
+  - name: calico
+    version: 3.21.5
   - name: cert-operator
     releaseOperatorDeploy: true
     version: 2.0.1
@@ -76,8 +75,8 @@ spec:
     version: 3.5.4
   - name: kubernetes
     version: 1.23.9
-  date: "2022-08-08T16:01:35Z"
-  state: wip
+  date: "2022-08-09T13:01:46Z"
+  state: active
 status:
   inUse: false
   ready: false

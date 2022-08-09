@@ -5,10 +5,10 @@
 ## Change details
 
 
-### cluster-operator [4.5.0](https://github.com/giantswarm/cluster-operator/releases/tag/v4.5.0)
+### cluster-operator [4.5.1](https://github.com/giantswarm/cluster-operator/releases/tag/v4.5.1)
 
-#### Added
-- Add cilium app config map.
+#### Changed
+- Add `CNI_CONF_NAME` env to cilium app config.
 
 
 
@@ -37,6 +37,13 @@ Changes since Stable 3227.2.0
 
 - Linux ([5.15.58](https://lwn.net/Articles/902917) (includes [5.15.57](https://lwn.net/Articles/902317), [5.15.56](https://lwn.net/Articles/902101)))
 - ca-certificates ([3.81](https://firefox-source-docs.mozilla.org/security/nss/releases/nss_3_81.html))
+
+
+
+### kiam [2.4.0](https://github.com/giantswarm/kiam-app/releases/tag/v2.4.0)
+
+#### Changed
+- Change the kube-system annotation job's Restart Policy to `OnFailure`.
 
 
 
