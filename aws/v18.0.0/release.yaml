@@ -58,11 +58,11 @@ spec:
   components:
   - name: app-operator
     version: 6.3.0
-  - name: aws-operator
+  - catalog: control-plane-test-catalog
+    name: aws-operator
     releaseOperatorDeploy: true
-    version: 13.0.0-alpha2
-  - name: calico
-    version: 3.21.5
+    version: 13.0.1-dev
+    reference: 13.0.0-alpha2-9f21ce476c15e5d9bb1ea12e0f1e141ae36c09b6
   - name: cert-operator
     releaseOperatorDeploy: true
     version: 2.0.1
@@ -75,7 +75,7 @@ spec:
     version: 3.5.4
   - name: kubernetes
     version: 1.23.9
-  date: "2022-08-09T13:01:46Z"
+  date: "2022-08-09T13:02:33Z"
   state: active
 status:
   inUse: false
