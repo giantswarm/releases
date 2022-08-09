@@ -62,7 +62,7 @@ spec:
     name: aws-operator
     releaseOperatorDeploy: true
     version: 13.0.1-dev
-    reference: 13.0.0-alpha2-77807e87ea214853ac01d847e68f9bad5cc42a5a
+    reference: 13.0.0-alpha2-3b98e7590db8926520846a8ca3874d2b51fc8d0d
   - name: cert-operator
     releaseOperatorDeploy: true
     version: 2.0.1
