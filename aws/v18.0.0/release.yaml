@@ -62,7 +62,7 @@ spec:
     name: aws-operator
     releaseOperatorDeploy: true
     version: 13.0.1-dev
-    reference: 13.0.0-alpha2-0491707d10b21a45bad6da5ed571a0b5d73a2243
+    reference: 13.0.0-alpha2-77807e87ea214853ac01d847e68f9bad5cc42a5a
   - name: cert-operator
     releaseOperatorDeploy: true
     version: 2.0.1
@@ -76,7 +76,7 @@ spec:
   - name: kubernetes
     version: 1.23.9
   date: "2022-08-09T13:02:33Z"
-  state: active
+  state: wip
 status:
   inUse: false
   ready: false
