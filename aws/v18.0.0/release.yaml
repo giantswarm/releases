@@ -62,13 +62,15 @@ spec:
     name: aws-operator
     releaseOperatorDeploy: true
     version: 13.0.1-dev
-    reference: 13.0.0-alpha2-3b98e7590db8926520846a8ca3874d2b51fc8d0d
+    reference: 13.0.0-alpha2-291aaee25b05f9283b43b4270a4005e60f699d24
   - name: cert-operator
     releaseOperatorDeploy: true
     version: 2.0.1
-  - name: cluster-operator
+  - catalog: control-plane-test-catalog
+    name: cluster-operator
     releaseOperatorDeploy: true
-    version: 4.5.1
+    version: 4.5.2-dev
+    reference: 4.5.1-0ee3d458ac4fee94412d7ca139b5d109f30146a7
   - name: containerlinux
     version: 3227.2.1
   - name: etcd
