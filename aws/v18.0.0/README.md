@@ -5,10 +5,10 @@
 ## Change details
 
 
-### cluster-operator [4.5.1](https://github.com/giantswarm/cluster-operator/releases/tag/v4.5.1)
+### cluster-operator [4.5.2](https://github.com/giantswarm/cluster-operator/releases/tag/v4.5.2)
 
 #### Changed
-- Add `CNI_CONF_NAME` env to cilium app config.
+- Set `cni.exclusive` to `false` in cilium app config.
 
 
 
@@ -40,10 +40,8 @@ Changes since Stable 3227.2.0
 
 
 
-### kiam [2.4.0](https://github.com/giantswarm/kiam-app/releases/tag/v2.4.0)
+### kiam [2.5.0](https://github.com/giantswarm/kiam-app/releases/tag/v2.5.0)
 
-#### Changed
-- Change the kube-system annotation job's Restart Policy to `OnFailure`.
 
 
 

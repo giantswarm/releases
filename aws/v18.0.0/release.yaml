@@ -1,5 +1,5 @@
 # Generated with:
-# /home/whites/workspace/devctl/devctl release create --provider aws --base 18.0.0-alpha1 --name 18.0.0 --app kiam@2.5.0@4.2.0 --app external-dns@2.15.1@0.11.0 --component cluster-operator@4.5.1 --component containerlinux@3227.2.1 --app chart-operator@2.27.0 --app etcd-kubernetes-resources-count-exporter@0.5.1 --app vertical-pod-autoscaler@2.5.0 --overwrite
+# /home/whites/workspace/devctl/devctl release create --provider aws --base 18.0.0-alpha1 --name 18.0.0 --app kiam@2.5.0@4.2.0 --app external-dns@2.15.1@0.11.0 --component cluster-operator@4.5.2 --component containerlinux@3227.2.1 --app chart-operator@2.27.0 --app etcd-kubernetes-resources-count-exporter@0.5.1 --app vertical-pod-autoscaler@2.5.0 --overwrite
 apiVersion: release.giantswarm.io/v1alpha1
 kind: Release
 metadata:
@@ -66,19 +66,17 @@ spec:
   - name: cert-operator
     releaseOperatorDeploy: true
     version: 2.0.1
-  - catalog: control-plane-test-catalog
-    name: cluster-operator
+  - name: cluster-operator
     releaseOperatorDeploy: true
-    version: 4.5.2-dev
-    reference: 4.5.1-0ee3d458ac4fee94412d7ca139b5d109f30146a7
+    version: 4.5.2
   - name: containerlinux
     version: 3227.2.1
   - name: etcd
     version: 3.5.4
   - name: kubernetes
     version: 1.23.9
-  date: "2022-08-09T13:02:33Z"
-  state: wip
+  date: "2022-08-11T07:24:06Z"
+  state: active
 status:
   inUse: false
   ready: false
