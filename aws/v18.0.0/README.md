@@ -1,13 +1,16 @@
 # :zap: Giant Swarm Release v18.0.0 for AWS :zap:
 
-This release provides support for Kubernetes 1.23 and replaces the use of AWS CNI with Cilium. Moreover new GS version implements use of more secured Cloudfront Domain for IRSA for non-China regions, please refer to our [official documentation](https://docs.giantswarm.io/advanced/iam-roles-for-service-accounts/) for the change details. Most of running components will also be upgraded for which details can be found in release notes.
+This release provides support for Kubernetes 1.23, replaces the use of AWS CNI with Cilium and upgrades most of components. CloudFront and a private S3 bucket are now used by IRSA in non-China regions, please refer to [official documentation](https://docs.giantswarm.io/advanced/iam-roles-for-service-accounts/#aws-release-v18xx-or-higher-for-non-china-regions-1) for the change details.
+
+> **_Warning:_** The AWS CNI pod subnets are no longer used by Cilium. Please add custom routes with the node subnet(s) CIDR(s) instead of the AWS CNI pod subnets CIDR before upgrading to this release.
 
 ***Cilium highlights***
 - [Network Policy](https://docs.cilium.io/en/stable/concepts/kubernetes/policy/#networkpolicy-state) provided by Cilium does not cover support for setting [ipBlock with Pod IP](https://github.com/cilium/cilium/issues/9209). Components in need of this will have to use [CiliumNetworkPolicy](https://docs.cilium.io/en/stable/concepts/kubernetes/policy/#ciliumnetworkpolicy) which has wider scope.
 - The AWS CNI pod subnets are no longer used by Cilium. Please add custom routes with the node subnet(s) CIDR(s) instead of the AWS CNI pod subnets CIDR before upgrading to this release.
 
-***IRSA highlights applicable for IRSA enabled clusters***
-- Prior to upgrades please reach out to your Account Engineer and GiantSwarm team will help you in seemless migration.
+***IRSA highlights***
+- Please read the [updated documentation](https://docs.giantswarm.io/advanced/iam-roles-for-service-accounts/#aws-release-v18xx-or-higher-for-non-china-regions-1)
+- Prior to upgrades please reach out to your Account Engineer and GiantSwarm team will help you in seemless migration if you have already enabled IRSA.
 - Please remember to adapt the IAM policies prior to upgrade as specified in the [documentation](https://docs.giantswarm.io/advanced/iam-roles-for-service-accounts/)
 
 ## Change details
