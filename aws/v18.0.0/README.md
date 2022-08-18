@@ -9,7 +9,7 @@ This release provides support for Kubernetes 1.23, replaces the use of AWS CNI w
 - The AWS CNI pod subnets are no longer used by Cilium. Please add custom routes with the node subnet(s) CIDR(s) instead of the AWS CNI pod subnets CIDR before upgrading to this release.
 
 ***IRSA highlights***
-- Please read the [updated documentation](https://docs.giantswarm.io/advanced/iam-roles-for-service-accounts/#aws-release-v18xx-or-higher-for-non-china-regions-1)
+- Please read the [updated documentation](https://docs.giantswarm.io/advanced/iam-roles-for-service-accounts/)
 - Prior to upgrades please reach out to your Account Engineer and GiantSwarm team will help you in seemless migration if you have already enabled IRSA.
 - Please remember to adapt the IAM policies prior to upgrade as specified in the [documentation](https://docs.giantswarm.io/advanced/iam-roles-for-service-accounts/)
 
