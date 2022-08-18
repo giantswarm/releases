@@ -1,6 +1,6 @@
 # :zap: Giant Swarm Release v18.0.0 for AWS :zap:
 
-This release provides support for Kubernetes 1.23, replaces the use of AWS CNI with Cilium and upgrades most of components. CloudFront and a private S3 bucket are now used by IRSA in non-China regions, please refer to [official documentation](https://docs.giantswarm.io/advanced/iam-roles-for-service-accounts/#aws-release-v18xx-or-higher-for-non-china-regions-1) for the change details.
+This release provides support for Kubernetes 1.23, replaces the use of AWS CNI with Cilium and upgrades most of components. CloudFront and a private S3 bucket are now used by IRSA in non-China regions.
 
 > **_Warning:_** The AWS CNI pod subnets are no longer used by Cilium. Please add custom routes with the node subnet(s) CIDR(s) instead of the AWS CNI pod subnets CIDR before upgrading to this release.
 
