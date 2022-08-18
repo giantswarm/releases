@@ -80,3 +80,15 @@ Changes since Stable 3227.2.0
 
 
 
+### aws-operator [13.0.0](https://github.com/giantswarm/aws-operator/releases/tag/v13.0.0)
+
+#### Changed
+- Use Cloudfront Domain for IRSA for non-China regions.
+- Ensure `aws-node` daemonset does not schedule on upgraded nodes.
+- Ensure `aws-node` daemonset has `AWS_VPC_K8S_CNI_EXCLUDE_SNAT_CIDRS` env var set to the cilium cidr during migration to cilium.
+- Cleanup `aws-node` resources after a successful migration.
+- Cleanup `calico` resources after a successful migration.
+- Use `cilium.giantswarm.io/pod-cidr` annotation as Cilium Pod CIDR.
+- Add Flatcar `3227.2.1` AMI.
+- Bump `k8scloudconfig` to support newer flatcar.
+- Set EC2's `HttpPutResponseHopLimit` flag to 2.

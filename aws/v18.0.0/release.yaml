@@ -58,11 +58,9 @@ spec:
   components:
   - name: app-operator
     version: 6.3.0
-  - catalog: control-plane-test-catalog
-    name: aws-operator
+  - name: aws-operator
     releaseOperatorDeploy: true
-    version: 13.0.1-dev
-    reference: 13.0.0-alpha2-348f2828495a237ddc91f965e4eafdb7438de947
+    version: 13.0.0
   - name: cert-operator
     releaseOperatorDeploy: true
     version: 2.0.1
