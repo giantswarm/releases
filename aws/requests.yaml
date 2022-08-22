@@ -1,8 +1,4 @@
 releases:
-- name: "> 18.0.0"
-  requests:
-  - name: cert-manager
-    version: ">= 2.15.3"
 - name: "> 18.0.0-alpha1"
   requests:
   - name: etcd-kubernetes-resources-count-exporter
@@ -17,8 +13,6 @@ releases:
   requests:
   - name: external-dns
     version: ">= 2.15.1"
-  - name: cert-manager
-    version: ">= 2.15.3"
 - name: "> 17.4.1"
   requests:
   - name: cluster-operator
