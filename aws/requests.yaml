@@ -1,6 +1,8 @@
 releases:
 - name: "> 18.0.0"
   requests:
+  - name: cert-manager
+    version: ">= 2.15.3"
   - name: external-dns
     version: ">= 2.15.2"
 - name: "> 18.0.0-alpha1"
@@ -15,6 +17,8 @@ releases:
     version: ">= 6.3.0"
 - name: "> 17.4.3 < 18.0.0-alpha1" 
   requests:
+  - name: cert-manager
+    version: ">= 2.15.3"
   - name: external-dns
     version: ">= 2.15.2"
 - name: "> 17.4.1"
