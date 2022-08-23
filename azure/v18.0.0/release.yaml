@@ -44,10 +44,11 @@ spec:
   components:
   - name: app-operator
     version: 6.3.0
-  - catalog: control-plane-catalog
+  - catalog: control-plane-test-catalog
     name: azure-operator
     releaseOperatorDeploy: true
-    version: 5.22.0
+    version: 5.22.1-dev
+    reference: 5.22.0-66ea81b75112f43e6fa555d793c04771933617d0
   - name: cert-operator
     releaseOperatorDeploy: true
     version: 2.0.1
@@ -63,7 +64,7 @@ spec:
   - name: etcd
     version: 3.5.4
   date: "2022-08-22T14:59:04Z"
-  state: active
+  state: wip
 status:
   inUse: false
   ready: false
