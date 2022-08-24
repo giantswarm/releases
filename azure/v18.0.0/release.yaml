@@ -7,6 +7,15 @@ metadata:
   name: v18.0.0
 spec:
   apps:
+  - componentVersion: 1.23.17
+    name: azure-cloud-controller-manager
+    version: 1.23.17-gs3
+  - componentVersion: 1.23.17
+    name: azure-cloud-node-manager
+    version: 1.23.17-gs2
+  - componentVersion: 1.21.0
+    name: azuredisk-csi-driver
+    version: 1.21.0-gs3
   - name: cert-exporter
     version: 2.2.0
   - name: chart-operator
@@ -48,7 +57,7 @@ spec:
     name: azure-operator
     releaseOperatorDeploy: true
     version: 5.22.1-dev
-    reference: 5.22.0-66ea81b75112f43e6fa555d793c04771933617d0
+    reference: 5.22.0-d194d21a06587241078e7f0d25039bd8f3374969
   - name: cert-operator
     releaseOperatorDeploy: true
     version: 2.0.1
