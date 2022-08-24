@@ -49,9 +49,9 @@ spec:
     version: 1.0.1
   - name: etcd-kubernetes-resources-count-exporter
     version: 0.5.1
-  - componentVersion: 1.23.1
+  - componentVersion: 1.23.2
     name: aws-cloud-controller-manager
-    version: 1.23.1-gs2
+    version: 1.23.2-gs2
   components:
   - name: app-operator
     version: 6.3.0
