@@ -49,9 +49,6 @@ spec:
     version: 1.0.1
   - name: etcd-kubernetes-resources-count-exporter
     version: 0.5.1
-  - componentVersion: 1.23.2
-    name: aws-cloud-controller-manager
-    version: 1.23.2-gs2
   components:
   - name: app-operator
     version: 6.3.0
@@ -61,7 +58,7 @@ spec:
     name: aws-operator
     releaseOperatorDeploy: true
     version: "13.0.1-dev"
-    reference: 13.0.0-7666ecb8076323ee858cf8ec029ac267d358b16f
+    reference: 13.0.0-41e7928cc2e5a9deac5ab0f9738b68f308e665da
   - name: calico
     version: 3.21.5
   - name: cert-operator
