@@ -54,11 +54,9 @@ spec:
     version: 6.3.0
   - name: aws-cni
     version: 1.11.2-nftables
-  - catalog: control-plane-test-catalog
-    name: aws-operator
+  - name: aws-operator
     releaseOperatorDeploy: true
-    version: "13.0.1-dev"
-    reference: 13.0.0-174df20b7d6274521a0f8f9b3eff337d5bc80a53
+    version: 13.1.0
   - name: calico
     version: 3.21.5
   - name: cert-operator
