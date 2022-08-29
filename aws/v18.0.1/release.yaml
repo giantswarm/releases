@@ -16,7 +16,7 @@ spec:
     version: 2.2.0
   - componentVersion: 1.7.3
     name: cert-manager
-    version: 2.15.2
+    version: 2.15.3
   - name: chart-operator
     version: 2.27.0
   - name: cluster-autoscaler
@@ -26,7 +26,7 @@ spec:
     version: 1.11.0
   - componentVersion: 0.11.0
     name: external-dns
-    version: 2.15.1
+    version: 2.15.2
   - componentVersion: 4.2.0
     name: kiam
     version: 2.5.0

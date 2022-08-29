@@ -17,3 +17,20 @@ This release provides support for Kubernetes 1.23 and upgrades most components. 
 ### aws-operator [13.2.0](https://github.com/giantswarm/aws-operator/releases/tag/v13.2.0)
 
 Update to latest aws-operator release to support k8s 1.23.
+
+### cert-manager [2.15.3](https://github.com/giantswarm/cert-manager-app/releases/tag/v2.15.3)
+
+### Added
+
+- Webhook: Add `PodDisruptionBudget` and pod anti-affinity.
+- Startup  API check: Add `NetworkPolicy`.
+
+### Changed
+
+- Webhook: Increase replica count to 2.
+
+### external-dns [2.15.2](https://github.com/giantswarm/external-dns-app/releases/tag/v2.15.2)
+
+### Changed
+
+- Update init container image to v3.16.2([#182](https://github.com/giantswarm/external-dns-app/pull/182))
