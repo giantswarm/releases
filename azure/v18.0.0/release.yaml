@@ -33,7 +33,7 @@ spec:
     version: 2.15.2
   - componentVersion: 2.5.0
     name: kube-state-metrics
-    version: 1.11.0
+    version: 1.12.1
   - componentVersion: 0.6.1
     name: metrics-server
     version: 1.8.0
@@ -60,7 +60,7 @@ spec:
     name: azure-operator
     releaseOperatorDeploy: true
     version: 5.22.1-dev
-    reference: 5.22.0-4fbef41fb9b5bee34c2af48efe7ec150efcf004b
+    reference: 5.22.0-4735fd00b63423fef84790cd6eaaec51a5eff646
   - name: cert-operator
     releaseOperatorDeploy: true
     version: 2.0.1
