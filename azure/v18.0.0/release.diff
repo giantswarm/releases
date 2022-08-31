@@ -75,7 +75,7 @@ spec:                                                              spec:
   - name: etcd                                                       - name: etcd
     version: 3.5.4                                                     version: 3.5.4
   date: "2022-07-04T11:38:01Z"                                  |    date: "2022-08-31T08:39:04Z"
-  state: active                                                 |    state: wip
+  state: active                                                      state: active
 status:                                                            status:
   inUse: false                                                       inUse: false
   ready: false                                                       ready: false

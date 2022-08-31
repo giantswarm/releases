@@ -1,0 +1,1 @@
+**Workload cluster release v18.0.0 for Azure is available**. This is the first release featuring Kubernetes 1.23 and out-of-tree controller manager and CSI provisioner. It also provides updated version of all components. Further details can be found in the [release notes](https://docs.giantswarm.io/changes/workload-cluster-releases-azure/releases/azure-v18.0.0/).
