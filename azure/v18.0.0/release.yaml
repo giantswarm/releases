@@ -9,7 +9,7 @@ spec:
   apps:
   - componentVersion: 1.23.17
     name: azure-cloud-controller-manager
-    version: 1.23.17-gs3
+    version: 1.23.17-gs4
   - componentVersion: 1.23.17
     name: azure-cloud-node-manager
     version: 1.23.17-gs2
