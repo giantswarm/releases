@@ -60,7 +60,7 @@ spec:
     name: azure-operator
     releaseOperatorDeploy: true
     version: 6.0.1-dev
-    reference: 6.0.0-2e296325031a797efd6f0702f1cd419f86f959d8
+    reference: 6.0.0-6f213004f290221e0d1a867cc4e0d5025fc7cfe3
   - name: cert-operator
     releaseOperatorDeploy: true
     version: 2.0.1
