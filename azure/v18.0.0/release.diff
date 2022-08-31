@@ -33,7 +33,7 @@ spec:                                                              spec:
     version: 2.15.0                                             |      version: 2.15.2
   - componentVersion: 2.5.0                                          - componentVersion: 2.5.0
     name: kube-state-metrics                                           name: kube-state-metrics
-    version: 1.11.0                                                    version: 1.11.0
+    version: 1.11.0                                             |      version: 1.12.1
   - componentVersion: 0.5.2                                     |    - componentVersion: 0.6.1
     name: metrics-server                                               name: metrics-server
     version: 1.7.0                                              |      version: 1.8.0
@@ -65,7 +65,7 @@ spec:                                                              spec:
     version: 2.0.1                                                     version: 2.0.1
   - name: cluster-operator                                           - name: cluster-operator
     releaseOperatorDeploy: true                                        releaseOperatorDeploy: true
-    version: 4.3.0                                              |      version: 4.5.2
+    version: 4.3.0                                              |      version: 4.6.0
   - name: kubernetes                                                 - name: kubernetes
     version: 1.22.11                                            |      version: 1.23.9
   - name: containerlinux                                             - name: containerlinux
