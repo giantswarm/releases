@@ -56,11 +56,10 @@ spec:
   components:
   - name: app-operator
     version: 6.3.0
-  - catalog: control-plane-test-catalog
+  - catalog: control-plane-catalog
     name: azure-operator
     releaseOperatorDeploy: true
-    version: 6.0.1-dev
-    reference: 6.0.0-6f213004f290221e0d1a867cc4e0d5025fc7cfe3
+    version: 6.0.1
   - name: cert-operator
     releaseOperatorDeploy: true
     version: 2.0.1

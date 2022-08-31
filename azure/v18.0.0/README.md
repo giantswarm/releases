@@ -5,7 +5,7 @@ Furthermore, this release is the first to use out-of-tree controller manager and
 
 ## Change details
 
-### azure-operator [6.0.0](https://github.com/giantswarm/azure-operator/releases/tag/v6.0.0)
+### azure-operator [6.0.1](https://github.com/giantswarm/azure-operator/releases/tag/v6.0.1)
 
 #### Changed
 - Support for k8s 1.23.
