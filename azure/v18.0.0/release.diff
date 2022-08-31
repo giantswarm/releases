@@ -65,7 +65,7 @@ spec:                                                              spec:
     version: 2.0.1                                                     version: 2.0.1
   - name: cluster-operator                                           - name: cluster-operator
     releaseOperatorDeploy: true                                        releaseOperatorDeploy: true
-    version: 4.3.0                                              |      version: 4.6.0
+    version: 4.3.0                                              |      version: 4.6.1
   - name: kubernetes                                                 - name: kubernetes
     version: 1.22.11                                            |      version: 1.23.9
   - name: containerlinux                                             - name: containerlinux
