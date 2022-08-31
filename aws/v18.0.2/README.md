@@ -15,8 +15,10 @@ This release fixes incompability with Cgroups V1 that was introduced in v18.0.0.
 ## Change details
 
 
-### aws-operator [13.2.1-dev](https://github.com/giantswarm/aws-operator/releases/tag/v13.2.1-dev)
+### aws-operator [13.2.1](https://github.com/giantswarm/aws-operator/releases/tag/v13.2.1)
 
-Not found
+### Fixed
+
+- Fixed regression on cgroups v1 support after switching to containerd.
 
 
