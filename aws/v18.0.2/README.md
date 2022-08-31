@@ -1,6 +1,6 @@
 # :zap: Giant Swarm Release v18.0.2 for AWS :zap:
 
-<< Add description here >>
+This release fixes incompability with Cgroups V1 that was introduced in v18.0.0. The issue came from dropping dockershim and switching to containerd.
 
 ## Change details
 
