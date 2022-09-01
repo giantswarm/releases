@@ -4,7 +4,7 @@ apiVersion: release.giantswarm.io/v1alpha1
 kind: Release
 metadata:
   creationTimestamp: null
-  name: v18.0.0-whites
+  name: v18.0.0
 spec:
   apps:
   - componentVersion: 1.23.17
