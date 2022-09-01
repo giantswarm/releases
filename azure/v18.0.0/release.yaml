@@ -4,7 +4,7 @@ apiVersion: release.giantswarm.io/v1alpha1
 kind: Release
 metadata:
   creationTimestamp: null
-  name: v18.0.0
+  name: v18.0.0-whites
 spec:
   apps:
   - componentVersion: 1.23.17
@@ -59,7 +59,7 @@ spec:
   - catalog: control-plane-catalog
     name: azure-operator
     releaseOperatorDeploy: true
-    version: 6.0.1
+    version: 6.0.2
   - name: cert-operator
     releaseOperatorDeploy: true
     version: 2.0.1
