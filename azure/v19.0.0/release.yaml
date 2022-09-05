@@ -4,7 +4,7 @@ apiVersion: release.giantswarm.io/v1alpha1
 kind: Release
 metadata:
   creationTimestamp: null
-  name: v19.0.0-dev
+  name: v19.0.0
 spec:
   apps:
   - componentVersion: 1.23.17
