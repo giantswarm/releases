@@ -1,4 +1,8 @@
 releases:
+- name: "> 18.0.0"
+  requests:
+  - name: metrics-server-app
+    version: ">= 2.0.0"
 - name: "> 17.2.0"
   requests:
   - name: app-operator

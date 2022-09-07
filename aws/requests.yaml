@@ -1,4 +1,8 @@
 releases:
+- name: "> 18.0.2"
+  requests:
+  - name: metrics-server-app
+    version: ">= 2.0.0"
 - name: "> 18.0.0"
   requests:
   - name: cert-manager
