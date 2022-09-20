@@ -213,12 +213,12 @@ to all Giant Swarm installations.
 
 - v16
   - v16.1
-    - [v16.1.3](https://github.com/giantswarm/releases/tree/master/azure/v16.1.3)
+    - [v16.1.3](https://github.com/giantswarm/releases/tree/master/azure/archived/v16.1.3)
     - [v16.1.2](https://github.com/giantswarm/releases/tree/master/azure/archived/v16.1.2)
     - [v16.1.1](https://github.com/giantswarm/releases/tree/master/azure/archived/v16.1.1)
     - [v16.1.0](https://github.com/giantswarm/releases/tree/master/azure/archived/v16.1.0)
   - v16.0
-    - [v16.0.2](https://github.com/giantswarm/releases/tree/master/azure/v16.0.2)
+    - [v16.0.2](https://github.com/giantswarm/releases/tree/master/azure/archived/v16.0.2)
     - [v16.0.1](https://github.com/giantswarm/releases/tree/master/azure/archived/v16.0.1)
     - [v16.0.0](https://github.com/giantswarm/releases/tree/master/azure/archived/v16.0.0)
 
