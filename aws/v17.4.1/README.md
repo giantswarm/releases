@@ -35,3 +35,7 @@ This is a patch release bringing improvements to app-operator and chart-operator
 
 
 
+### vertical-pod-autoscaler [2.4.1](https://github.com/giantswarm/vertical-pod-autoscaler-app/releases/tag/v2.4.1)
+
+#### Fixed
+- Correct selector in admission controller PDB

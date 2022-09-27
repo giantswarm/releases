@@ -44,7 +44,7 @@ spec:                                                              spec:
     name: node-exporter                                                name: node-exporter
     version: 1.13.0                                                    version: 1.13.0
   - name: vertical-pod-autoscaler                                    - name: vertical-pod-autoscaler
-    version: 2.4.0                                                     version: 2.4.0
+    version: 2.4.0                                              |      version: 2.4.1
   - name: vertical-pod-autoscaler-crd                                - name: vertical-pod-autoscaler-crd
     version: 1.0.1                                                     version: 1.0.1
   - name: etcd-kubernetes-resources-count-exporter                   - name: etcd-kubernetes-resources-count-exporter
