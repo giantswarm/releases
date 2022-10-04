@@ -5,12 +5,14 @@ releases:
     version: ">= 5.0.0"
   - name: app-operator
     version: ">= 6.4.1"
+  - name: kube-state-metrics
+    version: ">= 1.14.0"
 - name: "> 18.0.2"
   requests:
   - name: metrics-server-app
     version: ">= 2.0.0"
   - name: kube-state-metrics
-    version: ">= 1.13.0"
+    version: ">= 1.14.0"
   - name: cluster-operator
     version: ">= 4.6.1"
 - name: "> 18.0.0"
