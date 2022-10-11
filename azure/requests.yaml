@@ -71,5 +71,3 @@ releases:
     version: ">= 3033.2.2"
   - name: external-dns
     version: ">= 2.9.0"
-
-
