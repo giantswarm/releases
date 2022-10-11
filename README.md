@@ -196,6 +196,7 @@ to all Giant Swarm installations.
 
 - v18
   - v18.0
+    - [v18.0.2](https://github.com/giantswarm/releases/tree/master/azure/v18.0.2)
     - [v18.0.1](https://github.com/giantswarm/releases/tree/master/azure/v18.0.1)
     - [v18.0.0](https://github.com/giantswarm/releases/tree/master/azure/archived/v18.0.0)
 - 
