@@ -21,3 +21,8 @@ This release fixes a misconfiguration of IRSA that caused downtime in the API se
 
 - Add cluster API endpoint as sts audience.
 
+### metrics-server [2.0.0](https://github.com/giantswarm/metrics-server-app/releases/tag/v2.0.0)
+
+### Changed
+
+- Switch to HA setup.
