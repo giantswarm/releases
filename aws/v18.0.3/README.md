@@ -15,7 +15,11 @@ This release fixes a misconfiguration of IRSA that caused downtime in the API se
 ## Change details
 
 
-### aws-operator [13.2.2](https://github.com/giantswarm/aws-operator/releases/tag/v13.2.2)
+### aws-operator [13.2.3](https://github.com/giantswarm/aws-operator/releases/tag/v13.2.2)
+
+### Changed
+
+- Avoid duplicate --service-account-signing-key-file flag being set for API server.
 
 ### Fixed
 
