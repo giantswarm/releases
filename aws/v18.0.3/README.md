@@ -9,7 +9,7 @@ This release fixes a misconfiguration of IRSA that caused downtime in the API se
 
 ***Features removed from v18.0.0***
 
-- Cilium CNI was rolled back, and this release once again uses AWS CNI. This was done because of an upstream bug that prevented some advanced networking features to work properly.
+- Cilium CNI was rolled back, and this release still uses AWS CNI. This was done because of an upstream bug that prevented some advanced networking features to work properly.
 - Out-of-tree cloud controller manager was removed, and in-tree alternative was enabled again because of an upstream bug regarding AWS CNI. Bug is already fixed in 1.24 version of upstream repo. 
 
 ## Change details
