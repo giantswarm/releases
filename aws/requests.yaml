@@ -9,6 +9,8 @@ releases:
     version: ">= 1.14.0"
   - name: cert-manager
     version: ">= 2.17.1"
+  - name: observability-bundle
+    version: "0.1.1"
 - name: "> 18.0.3"
   requests:
   - name: metrics-server
