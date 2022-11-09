@@ -208,7 +208,7 @@ to all Giant Swarm installations.
     - [v17.1.0](https://github.com/giantswarm/releases/tree/master/azure/v17.1.0)
 
   - v17.0
-    - [v17.0.1](https://github.com/giantswarm/releases/tree/master/azure/v17.0.1)
+    - [v17.0.1](https://github.com/giantswarm/releases/tree/master/azure/archived/v17.0.1)
     - [v17.0.0](https://github.com/giantswarm/releases/tree/master/azure/archived/v17.0.0)
     - [v17.0.0-alpha1](https://github.com/giantswarm/releases/tree/master/azure/archived/v17.0.0-alpha1)
 
