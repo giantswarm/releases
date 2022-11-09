@@ -6,7 +6,7 @@ releases:
   - name: app-operator
     version: ">= 6.4.1"
   - name: observability-bundle
-    version: ">= 0.1.1"
+    version: ">= 0.1.2"
 - name: "> 18.0.1"
   requests:
   - name: metrics-server-app
