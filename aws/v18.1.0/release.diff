@@ -68,7 +68,7 @@ spec:                                                            spec:
   - name: containerlinux                                           - name: containerlinux
     version: 3227.2.1                                                version: 3227.2.1
   - name: etcd                                                     - name: etcd
-    version: 3.5.4                                             |     version: 3.5.6
+    version: 3.5.4                                             |     version: 3.5.5
   - name: kubernetes                                               - name: kubernetes
     version: 1.23.9                                            |     version: 1.23.14
   date: "2022-11-02T09:34:12Z"                                 |   date: "2022-11-15T13:27:55Z"

@@ -47,9 +47,38 @@ _Nothing has changed._
 
 
 
-### etcd [3.5.6](https://github.com/etcd-io/etcd/releases/tag/v3.5.6)
+### etcd [3.5.5](https://github.com/etcd-io/etcd/releases/tag/v3.5.5)
 
-Not found
+#### Deprecations
+- Deprecated [SetKeepAlive and SetKeepAlivePeriod in limitListenerConn](https://github.com/etcd-io/etcd/pull/14366).
+
+#### Package `clientv3`
+- Fix [do not overwrite authTokenBundle on dial](https://github.com/etcd-io/etcd/pull/14132).
+- Fix [IsOptsWithPrefix returns false even if WithPrefix() is included](https://github.com/etcd-io/etcd/pull/14187).
+
+#### etcd server
+- [Build official darwin/arm64 artifacts](https://github.com/etcd-io/etcd/pull/14436).
+- Add [`etcd --max-concurrent-streams`](https://github.com/etcd-io/etcd/pull/14219) flag to configure the max concurrent streams each client can open at a time, and defaults to math.MaxUint32.
+- Add [`etcd --experimental-compact-hash-check-enabled --experimental-compact-hash-check-time`](https://github.com/etcd-io/etcd/issues/14039) flags to support enabling reliable corruption detection on compacted revisions.
+- Fix [unexpected error during txn](https://github.com/etcd-io/etcd/issues/14110).
+- Fix [lease leak issue due to tokenProvider isn't enabled when restoring auth store from a snapshot](https://github.com/etcd-io/etcd/pull/13205).
+- Fix [the race condition between goroutine and channel on the same leases to be revoked](https://github.com/etcd-io/etcd/pull/14087).
+- Fix [lessor may continue to schedule checkpoint after stepping down leader role](https://github.com/etcd-io/etcd/pull/14087).
+- Fix [Restrict the max size of each WAL entry to the remaining size of the WAL file](https://github.com/etcd-io/etcd/pull/14127).
+- Fix [Protect rangePermCache with a RW lock correctly](https://github.com/etcd-io/etcd/pull/14227)
+- Fix [memberID equals zero in corruption alarm](https://github.com/etcd-io/etcd/pull/14272)
+- Fix [Durability API guarantee broken in single node cluster](https://github.com/etcd-io/etcd/pull/14424)
+- Fix [etcd fails to start after performing alarm list operation and then power off/on](https://github.com/etcd-io/etcd/pull/14429)
+- Fix [authentication data not loaded on member startup](https://github.com/etcd-io/etcd/pull/14409)
+
+#### etcdctl v3
+
+- Fix [etcdctl move-leader may fail for multiple endpoints](https://github.com/etcd-io/etcd/pull/14434)
+
+
+#### Other
+- [Bump golang.org/x/crypto to latest version](https://github.com/etcd-io/etcd/pull/13996) to address [CVE-2022-27191](https://github.com/advisories/GHSA-8c26-wmh5-6g9v).
+- [Bump OpenTelemetry to 1.0.1 and gRPC to 1.41.0](https://github.com/etcd-io/etcd/pull/14312).
 
 
 ### kiam [2.5.1](https://github.com/giantswarm/kiam-app/releases/tag/v2.5.1)
