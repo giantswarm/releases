@@ -144,3 +144,17 @@ _Nothing has changed._
 
 
 
+### aws-operator [14.1.0](https://github.com/giantswarm/aws-operator/releases/tag/v14.1.0)
+
+#### Changed
+- Use custom KMS key for encryption on your Amazon EBS volumes.
+- Enable IRSA by default in release v19.0.0.
+- Bump k8scc to 15.1.1.
+- Added EFS policy to the ec2 instance role to allow to use the EFS driver out of the box
+- Add both the cloudfront domain and alias domain in route53manager role policy.
+
+#### Fixed
+- Allow rolling nodes when there is a change in the AWSMachineDeployment even when CF stack was never updated before.
+- Quickly delete DrainerConfigs during cluster or machine deployment deletion to speedup cluster deletion process.
+- Fix disabling of kube-proxy in v19+.
+
