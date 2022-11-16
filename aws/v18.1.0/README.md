@@ -88,15 +88,10 @@ _Nothing has changed._
 
 
 
-### aws-ebs-csi-driver [2.17.0](https://github.com/giantswarm/aws-ebs-csi-driver-app/releases/tag/v2.17.0)
+### aws-ebs-csi-driver [2.18.0](https://github.com/giantswarm/aws-ebs-csi-driver-app/releases/tag/v2.18.0)
 
 #### Changed
-- Add short names for Volume Snapshot CRDs.
-- Update aws-ebs-csi-driver version to `v1.12.1`.
-- Update csi-snapshotter version to `v6.0.1`.
-- Update csi-resizer version to `v1.4.0`.
-- Update csi-node-driver-registrar version to `v2.5.1`.
-- Update snapshot-controller version to `v6.1.1`.
+- Update aws-ebs-csi-driver version to `v1.13.0`.
 
 
 
