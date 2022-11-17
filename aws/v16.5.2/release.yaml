@@ -1,5 +1,5 @@
 # Generated with:
-# devctl release create --name v16.5.2 --provider aws --base v16.5.1 --app kiam@2.5.1@4.2.0 --component aws-operator@10.14.1 --overwrite
+# devctl release create --name v16.5.2 --provider aws --base v16.5.1 --app kiam@2.5.1@4.2.0 --component aws-operator@10.14.2 --overwrite
 apiVersion: release.giantswarm.io/v1alpha1
 kind: Release
 metadata:
