@@ -1,6 +1,6 @@
 # :zap: Giant Swarm Release v18.1.0 for AWS :zap:
 
-<< Add description here >>
+ This release contains changes that address the several vulnerabilities. Additionally we ensure IAM permissions for Elastic File System (EFS) are set correctly on workload clusters.
 
 ## Change details
 
