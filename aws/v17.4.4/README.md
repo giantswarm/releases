@@ -17,3 +17,20 @@ Not found
 
 
 
+### cert-manager [2.15.3](https://github.com/giantswarm/cert-manager-app/releases/tag/v2.15.3)
+
+#### Added
+- Webhook: Add `PodDisruptionBudget` and pod anti-affinity.
+- Startup  API check: Add `NetworkPolicy`.
+#### Changed
+- Webhook: Increase replica count to 2.
+
+
+
+### external-dns [2.15.2](https://github.com/giantswarm/external-dns-app/releases/tag/v2.15.2)
+
+#### Changed
+- Update init container image to v3.16.2([#182](https://github.com/giantswarm/external-dns-app/pull/182))
+
+
+

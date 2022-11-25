@@ -16,7 +16,7 @@ spec:                                                            spec:
     version: 2.2.0                                                   version: 2.2.0
   - componentVersion: 1.7.3                                        - componentVersion: 1.7.3
     name: cert-manager                                               name: cert-manager
-    version: 2.15.2                                                  version: 2.15.2
+    version: 2.15.2                                            |     version: 2.15.3
   - name: chart-operator                                           - name: chart-operator
     version: 2.25.0                                                  version: 2.25.0
   - name: cluster-autoscaler                                       - name: cluster-autoscaler
@@ -26,7 +26,7 @@ spec:                                                            spec:
     version: 1.10.0                                                  version: 1.10.0
   - componentVersion: 0.11.0                                       - componentVersion: 0.11.0
     name: external-dns                                               name: external-dns
-    version: 2.15.0                                                  version: 2.15.0
+    version: 2.15.0                                            |     version: 2.15.2
   - componentVersion: 4.2.0                                        - componentVersion: 4.2.0
     name: kiam                                                       name: kiam
     version: 2.3.0                                             |     version: 2.5.1
@@ -71,7 +71,7 @@ spec:                                                            spec:
     version: 3.4.18                                                  version: 3.4.18
   - name: kubernetes                                               - name: kubernetes
     version: 1.22.11                                                 version: 1.22.11
-  date: "2022-07-28T13:37:47Z"                                 |   date: "2022-11-25T11:27:29Z"
+  date: "2022-07-28T13:37:47Z"                                 |   date: "2022-11-25T11:37:09Z"
   state: active                                                    state: active
 status:                                                          status:
   inUse: false                                                     inUse: false
