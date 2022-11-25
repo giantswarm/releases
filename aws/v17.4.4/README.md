@@ -1,6 +1,6 @@
 # :zap: Giant Swarm Release v17.4.4 for AWS :zap:
 
-<< Add description here >>
+This is a patch release to add missing Elastic File System (EFS) IAM permissions. It also allows EFS CSI Driver to get the Instance Identity from the Instance Metadata Service (IMDS).
 
 ## Change details
 
