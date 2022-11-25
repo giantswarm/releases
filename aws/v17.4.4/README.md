@@ -7,7 +7,9 @@
 
 ### aws-operator [11.16.1](https://github.com/giantswarm/aws-operator/releases/tag/v11.16.1)
 
-Not found
+#### Fixed
+- Added EFS policy to the ec2 instance role to allow to use the EFS driver out of the box
+
 
 
 ### kiam [2.5.1](https://github.com/giantswarm/kiam-app/releases/tag/v2.5.1)
