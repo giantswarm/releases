@@ -9,6 +9,8 @@ releases:
     version: ">= 0.1.4"
   - name: vertical-pod-autoscaler
     version: ">= 2.5.3"
+  - name: k8s-dns-node-cache
+    version: ">= 1.1.0
 - name: "> 18.0.1"
   requests:
   - name: metrics-server-app
