@@ -4,7 +4,7 @@ apiVersion: release.giantswarm.io/v1alpha1
 kind: Release
 metadata:
   creationTimestamp: null
-  name: v19.0.0-whites
+  name: v19.0.0
 spec:
   apps:
   - componentVersion: 1.24.5
@@ -53,14 +53,15 @@ spec:
   - componentVersion: 0.9.2
     name: vertical-pod-autoscaler-crd
     version: 1.0.1
+  - name: observability-bundle
+    version: 0.1.8
   components:
   - name: app-operator
     version: 6.5.0
-  - catalog: control-plane-test-catalog
+  - catalog: control-plane-catalog
     name: azure-operator
     releaseOperatorDeploy: true
-    version: 6.0.4-dev
-    reference: 6.0.3-a74170ce338dd40000781b22c398687186720e19
+    version: 7.0.0
   - name: cert-operator
     releaseOperatorDeploy: true
     version: 3.0.1
