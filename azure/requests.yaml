@@ -7,6 +7,8 @@ releases:
     version: ">= 6.4.1"
   - name: observability-bundle
     version: ">= 0.1.4"
+  - name: vertical-pod-autoscaler
+    version: ">= 2.5.3"
 - name: "> 18.0.1"
   requests:
   - name: metrics-server-app
