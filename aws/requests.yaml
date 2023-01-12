@@ -13,6 +13,8 @@ releases:
     version: ">= 0.1.4"
   - name: k8s-dns-node-cache-app
     version: ">= 1.1.0"
+  - name: node-exporter
+    version: ">= 1.14.1"
 - name: "> 18.1.0"
   requests:
   - name: vertical-pod-autoscaler
@@ -41,7 +43,7 @@ releases:
   requests:
   - name: app-operator
     version: ">= 6.3.0"
-- name: "> 17.4.3 < 18.0.0-alpha1" 
+- name: "> 17.4.3 < 18.0.0-alpha1"
   requests:
   - name: cert-manager
     version: ">= 2.15.3"
