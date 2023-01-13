@@ -61,3 +61,79 @@ Not found
 
 
 
+### aws-ebs-csi-driver [2.19.0](https://github.com/giantswarm/aws-ebs-csi-driver-app/releases/tag/v2.19.0)
+
+#### Fixed
+- Fix scraping monitoring port.
+#### Added
+- Support for running behind a proxy.
+  - `HTTP_PROXY`,`HTTPS_PROXY` and `NO_PROXY` are set as environment variables in `deployment/ebs-plugin` if defined in `values.yaml`.
+- Support for using `cluster-apps-operator` specific `cluster.proxy` values.
+
+
+
+### cert-exporter [2.3.1](https://github.com/giantswarm/cert-exporter/releases/tag/v2.3.1)
+
+#### Fixed
+- Allow eviction for cert-exporter-deployment.
+
+
+
+### chart-operator [2.33.2](https://github.com/giantswarm/chart-operator/releases/tag/v2.33.2)
+
+
+
+
+### coredns [1.13.0](https://github.com/giantswarm/coredns-app/releases/tag/v1.13.0)
+
+#### Added
+- `values.schema.json` file
+#### Changed
+- Move nodeselector `label:value` to values.yaml to allow customizing it for CAPZ
+- Add toleration for `node-role.kubernetes.io/control-plane` to masters instance
+
+
+
+### external-dns [2.23.1](https://github.com/giantswarm/external-dns-app/releases/tag/v2.23.1)
+
+#### Fixed
+- Restore missing pod annotations in deployment ([#232](https://github.com/giantswarm/external-dns-app/pull/232)).
+
+
+
+### kiam [2.6.0](https://github.com/giantswarm/kiam-app/releases/tag/v2.6.0)
+
+- Support for running behind a proxy.
+  - `HTTP_PROXY`,`HTTPS_PROXY` and `NO_PROXY` are set as environment variables in deployment if defined in `values.yaml`.
+- Support for using `cluster-apps-operator` specific `cluster.proxy` values.
+
+
+
+### kube-state-metrics [1.14.2](https://github.com/giantswarm/kube-state-metrics-app/releases/tag/v1.14.2)
+
+#### Changed
+- Re add to Azure collections.
+
+
+
+### metrics-server [2.0.0](https://github.com/giantswarm/metrics-server-app/releases/tag/v2.0.0)
+
+#### Changed
+- Switch to HA setup.
+
+
+
+### net-exporter [1.13.0](https://github.com/giantswarm/net-exporter/releases/tag/v1.13.0)
+
+#### Added
+- Add helm chart values schema
+#### Changed
+- Update to Go 1.18
+- Update github.com/giantswarm/k8sclient to v7.0.1
+- Update github.com/giantswarm/micrologger to v1.0.0
+- Update github.com/miekg/dns to v1.1.50
+- Update k8s.io deps to v0.26.0
+- Update docker-kubectl to 1.25.4
+
+
+
