@@ -7,6 +7,8 @@
 
 ### aws-operator [14.1.1](https://github.com/giantswarm/aws-operator/releases/tag/v14.1.1)
 
-Not found
+#### Changed
+- Bump k8scc to 15.4.0.
+
 
 

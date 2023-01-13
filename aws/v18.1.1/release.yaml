@@ -1,5 +1,5 @@
 # Generated with:
-# devctl release create --name v18.1.1 --provider aws --base v18.1.0 --component aws-operator@14.1.1
+# devctl release create --name v18.1.1 --provider aws --base v18.1.0 --component aws-operator@14.1.1 --overwrite
 apiVersion: release.giantswarm.io/v1alpha1
 kind: Release
 metadata:
@@ -71,7 +71,7 @@ spec:
     version: 3.5.5
   - name: kubernetes
     version: 1.23.14
-  date: "2023-01-13T08:21:16Z"
+  date: "2023-01-13T08:48:17Z"
   state: active
 status:
   inUse: false

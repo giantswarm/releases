@@ -71,7 +71,7 @@ spec:                                                            spec:
     version: 3.5.5                                                   version: 3.5.5
   - name: kubernetes                                               - name: kubernetes
     version: 1.23.14                                                 version: 1.23.14
-  date: "2022-11-15T13:27:55Z"                                 |   date: "2023-01-13T08:21:16Z"
+  date: "2022-11-15T13:27:55Z"                                 |   date: "2023-01-13T08:48:17Z"
   state: active                                                    state: active
 status:                                                          status:
   inUse: false                                                     inUse: false
