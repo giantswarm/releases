@@ -1,6 +1,6 @@
 # :zap: Giant Swarm Release v18.1.1 for AWS :zap:
 
-This release contains revised allocation calculation on the master nodes. Kubernetes api-server's cpu request are changed to be the half of the *available* CPUs in the VM. This fix will open up more space for other workloads scheduled to run on the master nodes.
+This release contains revised allocation calculation on the master nodes. Kubernetes api-server's cpu request are changed to be the half of the **available** CPUs in the VM. This fix will open up more space for other workloads scheduled to run on the master nodes.
 
 ## Change details
 
