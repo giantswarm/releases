@@ -51,7 +51,7 @@ spec:                                                            spec:
     version: 1.0.0                                                   version: 1.0.0
   components:                                                      components:
   - name: app-operator                                             - name: app-operator
-    version: 6.4.1                                                   version: 6.4.1
+    version: 6.4.1                                             |     version: 6.5.0
   - name: aws-cni                                                  - name: aws-cni
     version: 1.11.2-nftables                                         version: 1.11.2-nftables
   - name: aws-operator                                             - name: aws-operator
@@ -68,10 +68,10 @@ spec:                                                            spec:
   - name: containerlinux                                           - name: containerlinux
     version: 3227.2.1                                                version: 3227.2.1
   - name: etcd                                                     - name: etcd
-    version: 3.5.5                                                   version: 3.5.5
+    version: 3.5.5                                             |     version: 3.5.6
   - name: kubernetes                                               - name: kubernetes
-    version: 1.23.14                                                 version: 1.23.14
-  date: "2022-11-15T13:27:55Z"                                 |   date: "2023-01-13T15:44:23Z"
+    version: 1.23.14                                           |     version: 1.23.15
+  date: "2022-11-15T13:27:55Z"                                 |   date: "2023-01-13T15:59:32Z"
   state: deprecated                                            |   state: active
 status:                                                          status:
   inUse: false                                                     inUse: false
