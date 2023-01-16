@@ -1,55 +1,200 @@
 # :zap: Giant Swarm Release v19.0.0 for Azure :zap:
 
-<< Add description here >>
+This is the first Azure release featuring Kubernetes 1.24.
 
 ## Change details
 
 
-### containerlinux [3227.2.2](https://www.flatcar-linux.org/releases/#release-3227.2.2)
+### app-operator [6.5.0](https://github.com/giantswarm/app-operator/releases/tag/v6.5.0)
 
-_Note: The ARM64 AWS AMI of the Stable release has an unknown issue of corrupted images which we are still investigating. We will release the AMI as soon as we have resolved the issue. Follow [#840](https://github.com/flatcar-linux/Flatcar/issues/840) for more information_
-
-_Changes since **Stable 3227.2.1**_
-
-#### Security fixes:
-
-- Linux ([CVE-2022-1679](https://nvd.nist.gov/vuln/detail/CVE-2022-1679), [CVE-2022-2585](https://nvd.nist.gov/vuln/detail/CVE-2022-2585), [CVE-2022-2586](https://nvd.nist.gov/vuln/detail/CVE-2022-2586), [CVE-2022-2588](https://nvd.nist.gov/vuln/detail/CVE-2022-2588), [CVE-2022-26373](https://nvd.nist.gov/vuln/detail/CVE-2022-26373), [CVE-2022-36946](https://nvd.nist.gov/vuln/detail/CVE-2022-36946))
-
-#### Bug fixes:
-
-- AWS: added EKS support for version 1.22 and 1.23. ([coreos-overlay#2110](https://github.com/flatcar-linux/coreos-overlay/pull/2110), [Flatcar#829](https://github.com/flatcar-linux/Flatcar/issues/829))
-- VMWare: excluded `wireguard` (and others) from `systemd-networkd` management. ([init#80](https://github.com/flatcar-linux/init/pull/80))
-
-#### Changes:
-
-- The new image signing subkey was added to the public key embedded into `flatcar-install` (the old expired on 10th August 2022), only an updated `flatcar-install` script can verify releases signed with the new key ([init#79](https://github.com/flatcar-linux/init/pull/79))
-
-#### Updates:
-
-- Linux ([5.15.63](https://lwn.net/Articles/906061) (includes [5.15.62](https://lwn.net/Articles/905533), [5.15.61](https://lwn.net/Articles/904959), [5.15.60](https://lwn.net/Articles/904461), [5.15.59](https://lwn.net/Articles/903688))
-- ca-certificates ([3.82](https://firefox-source-docs.mozilla.org/security/nss/releases/nss_3_82.html))
+#### Fixed
+- Fix building URLs for OCI Repositories assigned to non-internal `Catalogs`.
 
 
 
-### kubernetes [1.24.3](https://github.com/kubernetes/kubernetes/releases/tag/v1.24.3)
+### azure-operator [7.0.0](https://github.com/giantswarm/azure-operator/releases/tag/v7.0.0)
 
-#### Bug or Regression
-- Fix a bug on endpointslices tests comparing the wrong metrics ([#110920](https://github.com/kubernetes/kubernetes/pull/110920), [@jluhrsen](https://github.com/jluhrsen)) [SIG Apps and Network]
-- Fix a bug that caused the wrong result length when using --chunk-size and --selector together ([#110735](https://github.com/kubernetes/kubernetes/pull/110735), [@Abirdcfly](https://github.com/Abirdcfly)) [SIG API Machinery and Testing]
-- Fix bug that prevented the job controller from enforcing activeDeadlineSeconds when set ([#110544](https://github.com/kubernetes/kubernetes/pull/110544), [@harshanarayana](https://github.com/harshanarayana)) [SIG Apps]
-- Fix image pulling failure when IMDS is unavailable in kubelet startup ([#110523](https://github.com/kubernetes/kubernetes/pull/110523), [@andyzhangx](https://github.com/andyzhangx)) [SIG Cloud Provider]
-- Fix printing resources with int64 fields ([#110572](https://github.com/kubernetes/kubernetes/pull/110572), [@sanchezl](https://github.com/sanchezl)) [SIG API Machinery]
-- Fix unnecessary recreation of placeholder EndpointSlice ([#110732](https://github.com/kubernetes/kubernetes/pull/110732), [@jluhrsen](https://github.com/jluhrsen)) [SIG Apps and Network]
-- Fixed a regression introduced in 1.24.0 where Azure load balancers were not kept up to date with the state of cluster nodes. In particular, nodes that are not in the ready state and are not newly created (i.e. not having the `node.cloudprovider.kubernetes.io/uninitialized` taint) now get removed from Azure load balancers. ([#109931](https://github.com/kubernetes/kubernetes/pull/109931), [@ricky-rav](https://github.com/ricky-rav)) [SIG Cloud Provider]
-- Kubeadm: fix error adding extra prefix unix:// to CRI endpoints that were missing URL scheme ([#110634](https://github.com/kubernetes/kubernetes/pull/110634), [@pacoxu](https://github.com/pacoxu)) [SIG Cluster Lifecycle]
-- Kubeadm: fix the bug that configurable KubernetesVersion not respected during kubeadm join ([#111021](https://github.com/kubernetes/kubernetes/pull/111021), [@SataQiu](https://github.com/SataQiu)) [SIG Cluster Lifecycle]
-#### Dependencies
-#### Added
-_Nothing has changed._
 #### Changed
-_Nothing has changed._
-#### Removed
-_Nothing has changed._
+- Bump k8scc to support k8s 1.24.
+
+
+
+### cert-operator [3.0.1](https://github.com/giantswarm/cert-operator/releases/tag/v3.0.1)
+
+#### Fixed
+- Allow running unique and non unique cert-operators in the same namespace.
+
+
+
+### cluster-operator [5.3.0](https://github.com/giantswarm/cluster-operator/releases/tag/v5.3.0)
+
+#### Changed
+- Enable IRSA by default on v19+ clusters.
+
+
+
+### kubernetes [1.24.9](https://github.com/kubernetes/kubernetes/releases/tag/v1.24.9)
+
+Bumped from version 1.23.9. Please read upstream [release announcement](https://kubernetes.io/blog/2022/05/03/kubernetes-1-24-release-announcement/) for all details.
+
+
+### containerlinux [3374.2.1](https://www.flatcar-linux.org/releases/#release-3374.2.1)
+
+Upgraded from `3227.2.1`.
+
+Please refer to the [upstream changelog](https://www.flatcar.org/releases/#stable-release) for all details.
+
+### azure-cloud-controller-manager [1.24.6-gs1](https://github.com/giantswarm/azure-cloud-controller-manager-app/releases/tag/v1.24.6-gs1)
+
+#### Changed
+
+- Bump to upstream version v1.24.5.
+
+#### Added
+- Add support to make `CPI` run on `CAPZ` based clusters.
+
+
+### azure-cloud-node-manager [1.24.6-gs1](https://github.com/giantswarm/azure-cloud-node-manager-app/releases/tag/v1.24.6-gs1)
+
+### Changed
+
+- Bump to upstream version v1.24.5.
+
+### Fixed
+
+- Fix resources in yaml. it was defined twice
+
+
+
+### azuredisk-csi-driver [1.25.2-gs1](https://github.com/giantswarm/azuredisk-csi-driver-app/releases/tag/v1.25.2-gs1)
+
+### Changed
+
+- Bumped azuredisk-csi to upstream version 1.25.0.
+
+
+### cert-exporter [2.3.1](https://github.com/giantswarm/cert-exporter/releases/tag/v2.3.1)
+
+#### Fixed
+- Allow eviction for cert-exporter-deployment.
+
+
+
+### chart-operator [2.33.2](https://github.com/giantswarm/chart-operator/releases/tag/v2.33.2)
+
+#### Changed
+
+- Add support for new control-plane label in k8s 1.24.
+
+#### Added
+
+- Support for running behind a proxy.
+- Add support to run in private cloud clusters, which cannot provide any working externalDNSIP.
+
+### coredns [1.13.0](https://github.com/giantswarm/coredns-app/releases/tag/v1.13.0)
+
+#### Added
+- Possibility to set scale down stabilizationWindowSeconds behaviour
+
+#### Changed
+- Move nodeselector `label:value` to values.yaml to allow customizing it for CAPZ
+- Add toleration for `node-role.kubernetes.io/control-plane` to masters instance
+
+
+
+### etcd-kubernetes-resources-count-exporter [1.0.0](https://github.com/giantswarm/etcd-kubernetes-resources-count-exporter/releases/tag/v1.0.0)
+
+#### Changed
+- Push to azure and AWS app collection.
+- Run in kube-system by default.
+- Change default registry to docker.io.
+
+
+
+### external-dns [2.22.0](https://github.com/giantswarm/external-dns-app/releases/tag/v2.22.0)
+
+#### Added
+- Support for running behind a proxy.
+- Add nodeSelector, affinity, topologySpreadContraints and tolerations values to align to upstream ([223](https://github.com/giantswarm/external-dns-app/pull/223))
+
+#### Changed 
+- ServiceAccount: Align to upstream ([#222](https://github.com/giantswarm/external-dns-app/pull/222)).
+- Labels: Add labels from values.
+- Allow overrides of service account annotations ([#221](https://github.com/giantswarm/external-dns-app/pull/221)).
+
+
+
+### kube-state-metrics [1.14.1](https://github.com/giantswarm/kube-state-metrics-app/releases/tag/v1.14.1)
+
+#### Added
+
+- Allow topology.kubernetes.io/region & topology.kubernetes.io/zone labels.
+
+#### Changed
+
+- Upgrade kube-state-metrics to 2.6.0
+
+
+### metrics-server [2.0.0](https://github.com/giantswarm/metrics-server-app/releases/tag/v2.0.0)
+
+#### Changed
+- Switch to HA setup.
+
+
+
+### net-exporter [1.13.0](https://github.com/giantswarm/net-exporter/releases/tag/v1.13.0)
+
+#### Added
+- Add helm chart values schema
+#### Changed
+- Update to Go 1.18
+- Update github.com/giantswarm/k8sclient to v7.0.1
+- Update github.com/giantswarm/micrologger to v1.0.0
+- Update github.com/miekg/dns to v1.1.50
+- Update k8s.io deps to v0.26.0
+- Update docker-kubectl to 1.25.4
+
+
+
+### node-exporter [1.15.0](https://github.com/giantswarm/node-exporter-app/releases/tag/v1.15.0)
+
+#### Added
+
+- Enable ethtool collector.
+
+#### Fixed
+
+- Fix collector systemd
+- Fix duplicate scrapping by GiantSwarm Prometheus
+
+
+### cluster-autoscaler [1.24.0-gs1](https://github.com/giantswarm/cluster-autoscaler-app/releases/tag/v1.24.0-gs1)
+
+#### Changed
+- Update cluster-autoscaler to version `1.24.0`.
+
+
+
+### azure-scheduled-events [0.8.0](https://github.com/giantswarm/azure-scheduled-events/releases/tag/v0.8.0)
+
+#### Changed
+- Bumped dependencies.
+- Switched to go 1.18. 
+
+
+
+### vertical-pod-autoscaler [2.5.2](https://github.com/giantswarm/vertical-pod-autoscaler-app/releases/tag/v2.5.2)
+
+### Changed
+
+- Using custom docker image with openssl to fix vpa-certgen job
+
+
+
+### observability-bundle [0.1.8](https://github.com/giantswarm/observability-bundle/releases/tag/v0.1.8)
+
+#### Changed
+- Upgrade `prometheus-agent` from 0.1.6 to 0.1.7.
 
 
 
