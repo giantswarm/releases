@@ -187,6 +187,7 @@ Please refer to the [upstream changelog](https://www.flatcar.org/releases/#stabl
 
 ### Changed
 
+- Increased memory limits for updater, recommender and admissionController
 - Using custom docker image with openssl to fix vpa-certgen job
 
 
@@ -197,4 +198,8 @@ Please refer to the [upstream changelog](https://www.flatcar.org/releases/#stabl
 - Upgrade `prometheus-agent` from 0.1.6 to 0.1.7.
 
 
+### k8s-dns-node-cache [1.1.0](https://github.com/giantswarm/k8s-dns-node-cache-app/releases/tag/v1.1.0)
+
+#### Added
+- First release featuring upstream version 1.21.4.
 

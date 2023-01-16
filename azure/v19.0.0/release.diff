@@ -49,12 +49,14 @@ spec:                                                              spec:
     version: 0.7.0                                              |      version: 0.8.0
   - componentVersion: 0.11.0                                         - componentVersion: 0.11.0
     name: vertical-pod-autoscaler                                      name: vertical-pod-autoscaler
-    version: 2.5.0                                              |      version: 2.5.2
+    version: 2.5.0                                              |      version: 2.5.3
   - componentVersion: 0.9.2                                          - componentVersion: 0.9.2
     name: vertical-pod-autoscaler-crd                                  name: vertical-pod-autoscaler-crd
     version: 1.0.1                                                     version: 1.0.1
                                                                 >    - name: observability-bundle
                                                                 >      version: 0.1.8
+                                                                >    - name: k8s-dns-node-cache
+                                                                >      version: 1.1.0
   components:                                                        components:
   - name: app-operator                                               - name: app-operator
     version: 6.3.0                                              |      version: 6.5.0
