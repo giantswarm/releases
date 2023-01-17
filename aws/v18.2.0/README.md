@@ -27,7 +27,20 @@ _Nothing has changed._
 
 ### etcd [3.5.6](https://github.com/etcd-io/etcd/releases/tag/v3.5.6)
 
-Not found
+#### etcd server
+- Fix [auth invalid token and old revision errors in watch](https://github.com/etcd-io/etcd/pull/14547)
+- Fix [avoid closing a watch with ID 0 incorrectly](https://github.com/etcd-io/etcd/pull/14563)
+- Fix [auth: fix data consistency issue caused by recovery from snapshot](https://github.com/etcd-io/etcd/pull/14648)
+- Fix [revision might be inconsistency between members when etcd crashes during processing defragmentation operation](https://github.com/etcd-io/etcd/pull/14733)
+- Fix [timestamp in inconsistent format](https://github.com/etcd-io/etcd/pull/14799)
+- Fix [Failed resolving host due to lost DNS record](https://github.com/etcd-io/etcd/pull/14573)
+#### Package `clientv3`
+- Fix [Add backoff before retry when watch stream returns unavailable](https://github.com/etcd-io/etcd/pull/14582).
+- Fix [stack overflow error in double barrier](https://github.com/etcd-io/etcd/pull/14658)
+- Fix [Refreshing token on CommonName based authentication causes segmentation violation in client](https://github.com/etcd-io/etcd/pull/14790).
+#### etcd grpc-proxy
+- Add [`etcd grpc-proxy start --listen-cipher-suites`](https://github.com/etcd-io/etcd/pull/14500) flag to support adding configurable cipher list.
+
 
 
 ### app-operator [6.5.0](https://github.com/giantswarm/app-operator/releases/tag/v6.5.0)
@@ -61,14 +74,10 @@ Not found
 
 
 
-### aws-ebs-csi-driver [2.19.0](https://github.com/giantswarm/aws-ebs-csi-driver-app/releases/tag/v2.19.0)
+### aws-ebs-csi-driver [2.20.0](https://github.com/giantswarm/aws-ebs-csi-driver-app/releases/tag/v2.20.0)
 
-#### Fixed
-- Fix scraping monitoring port.
-#### Added
-- Support for running behind a proxy.
-  - `HTTP_PROXY`,`HTTPS_PROXY` and `NO_PROXY` are set as environment variables in `deployment/ebs-plugin` if defined in `values.yaml`.
-- Support for using `cluster-apps-operator` specific `cluster.proxy` values.
+#### Changed
+- Updated ebs-csi-driver to `v1.15` and updated sidecar images.
 
 
 
