@@ -1,6 +1,10 @@
 # :zap: Giant Swarm Release v19.0.0 for Azure :zap:
 
-This is the first Azure release featuring Kubernetes 1.24.
+This is the first Azure release featuring Kubernetes 1.24. For increased performance the kubernetes api-server's cpu request are changed to be the half of the **available** CPUs in the VM. Release consists of upgrades to most of components that are listed below. 
+
+Important to note this release adds two new components:
+- [k8s-dns-node-cache](https://github.com/giantswarm/k8s-dns-node-cache-app) - improving cluster DNS performance by running a dns caching agent on cluster nodes as a DaemonSet.
+- [observability-bundle](https://github.com/giantswarm/observability-bundle) - revised monitoring solution that provides necessary components to enable observability capabilities in a workload cluster. This upgrade can temporairly affect prometheus but the monitoring team is paged immediately to perform manual steps and cleanup. Hence there should be little to no impact.
 
 ## Change details
 
@@ -15,7 +19,8 @@ This is the first Azure release featuring Kubernetes 1.24.
 ### azure-operator [7.0.0](https://github.com/giantswarm/azure-operator/releases/tag/v7.0.0)
 
 #### Changed
-- Bump k8scc to support k8s 1.24.
+- Bump k8scc to [15.4.0](https://github.com/giantswarm/k8scloudconfig/blob/master/CHANGELOG.md#1540---2023-01-11) for k8s 1.24 support.
+- Change apiserver's cpu request to be 1/2 of the available CPUs in the VM.
 
 
 
