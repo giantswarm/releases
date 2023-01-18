@@ -1,6 +1,6 @@
 # :zap: Giant Swarm Release v18.2.0 for AWS :zap:
 
-<< Add description here >>
+tbd
 
 ## Change details
 
@@ -54,6 +54,7 @@ _Nothing has changed._
 
 #### Changed
 - Bump k8scc to 15.4.0.
+- Change apiserver's cpu request to be 1/2 of the available CPUs in the VM.
 
 
 
@@ -64,6 +65,7 @@ _Nothing has changed._
 - Fix duplicate scrapping by GiantSwarm Prometheus
 #### Added
 - Add values schema
+- Enable ethtool collector
 
 
 
