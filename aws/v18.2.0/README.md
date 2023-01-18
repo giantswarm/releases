@@ -103,10 +103,10 @@ _Nothing has changed._
 
 
 
-### external-dns [2.23.1](https://github.com/giantswarm/external-dns-app/releases/tag/v2.23.1)
+### external-dns [2.23.2](https://github.com/giantswarm/external-dns-app/releases/tag/v2.23.2)
 
 #### Fixed
-- Restore missing pod annotations in deployment ([#232](https://github.com/giantswarm/external-dns-app/pull/232)).
+- Hardcode `external-dns.name` default name dropping the `-app` suffix ([#235](https://github.com/giantswarm/external-dns-app/pull/235))
 
 
 
