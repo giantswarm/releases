@@ -49,6 +49,8 @@ spec:                                                            spec:
     version: 1.0.1                                                   version: 1.0.1
   - name: etcd-kubernetes-resources-count-exporter                 - name: etcd-kubernetes-resources-count-exporter
     version: 1.0.0                                                   version: 1.0.0
+                                                               >   - name: observability-bundle
+                                                               >     version: 0.1.9
   components:                                                      components:
   - name: app-operator                                             - name: app-operator
     version: 6.4.1                                             |     version: 6.5.0
@@ -71,7 +73,7 @@ spec:                                                            spec:
     version: 3.5.5                                             |     version: 3.5.6
   - name: kubernetes                                               - name: kubernetes
     version: 1.23.14                                           |     version: 1.23.15
-  date: "2023-01-13T08:48:17Z"                                 |   date: "2023-01-18T11:52:09Z"
+  date: "2023-01-13T08:48:17Z"                                 |   date: "2023-01-18T12:05:24Z"
   state: active                                                    state: active
 status:                                                          status:
   inUse: false                                                     inUse: false

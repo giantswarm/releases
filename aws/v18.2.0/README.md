@@ -148,3 +148,11 @@ _Nothing has changed._
 
 
 
+### observability-bundle [0.1.9](https://github.com/giantswarm/observability-bundle/releases/tag/v0.1.9)
+
+#### Changed
+- Upgrade `prometheus-operator-app` to 3.0.0.
+- Upgrade `prometheus-operator-crd` to 3.0.0.
+
+
+
