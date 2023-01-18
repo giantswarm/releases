@@ -4,7 +4,7 @@ This is the first Azure release featuring Kubernetes 1.24. For increased perform
 
 Important to note this release adds two new components:
 - [k8s-dns-node-cache](https://github.com/giantswarm/k8s-dns-node-cache-app) - improving cluster DNS performance by running a dns caching agent on cluster nodes as a DaemonSet.
-- [observability-bundle](https://github.com/giantswarm/observability-bundle) - revised monitoring solution that provides necessary components to enable observability capabilities in a workload cluster. This upgrade can temporairly affect prometheus but the monitoring team is paged immediately to perform manual steps and cleanup. Hence there should be little to no impact.
+- [observability-bundle](https://github.com/giantswarm/observability-bundle) - revised monitoring solution that provides necessary components to enable observability capabilities in a workload cluster. This upgrade can temporairly affect prometheus but the monitoring team is paged immediately to perform manual steps and cleanup. Hence there should be little to no impact. Please reach out to your Account Engineer who will notify and sync with Giant Swarm monitoring team upfront.
 
 ## Change details
 
