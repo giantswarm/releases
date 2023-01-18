@@ -1,5 +1,5 @@
 # Generated with:
-# devctl release create --name v18.2.0 --provider aws --base v18.1.0 --component kubernetes@1.23.15 --component etcd@3.5.6 --component app-operator@6.5.0 --component aws-operator@14.4.0 --app node-exporter@1.15.0@1.3.1 --app vertical-pod-autoscaler@2.5.3 --app aws-ebs-csi-driver@2.20.0@1.15.0 --app cert-exporter@2.3.1 --app chart-operator@2.33.2 --app coredns@1.13.0@1.9.3 --app external-dns@2.23.2@0.11.0 --app kiam@2.6.0@4.2.0 --app kube-state-metrics@1.14.2@2.6.0 --app metrics-server@2.0.0@0.6.1 --app net-exporter@1.13.0 --overwrite
+# devctl release create --name v18.2.0 --provider aws --base v18.1.1 --component kubernetes@1.23.15 --component etcd@3.5.6 --component app-operator@6.5.0 --component aws-operator@14.4.0 --app node-exporter@1.15.0@1.3.1 --app vertical-pod-autoscaler@2.5.3 --app aws-ebs-csi-driver@2.20.0@1.15.0 --app cert-exporter@2.3.1 --app chart-operator@2.33.2 --app coredns@1.13.0@1.9.3 --app external-dns@2.23.2@0.11.0 --app kiam@2.6.0@4.2.0 --app kube-state-metrics@1.14.2@2.6.0 --app metrics-server@2.0.0@0.6.1 --app net-exporter@1.13.0 --overwrite
 apiVersion: release.giantswarm.io/v1alpha1
 kind: Release
 metadata:
@@ -71,7 +71,7 @@ spec:
     version: 3.5.6
   - name: kubernetes
     version: 1.23.15
-  date: "2023-01-18T08:43:04Z"
+  date: "2023-01-18T11:52:09Z"
   state: active
 status:
   inUse: false
