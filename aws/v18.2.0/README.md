@@ -50,11 +50,25 @@ _Nothing has changed._
 
 
 
-### aws-operator [14.4.0](https://github.com/giantswarm/aws-operator/releases/tag/v14.4.0)
+### aws-operator [14.5.0](https://github.com/giantswarm/aws-operator/releases/tag/v14.5.0)
 
-#### Changed
-- Bump k8scc to 15.4.0.
+### Added
+
+- Add `ALB Controller` IAM role.
+- Allow disk size configuration of logging volume. New default value is 15Gb.
+- Allow different values for docker and containerd volume.
+- Allowed the use of all seccomp profiles for components under the restricted podsecurity policy.
+- Set the default seccomp profile to runtime/default under the restricted podsecurity policy.
+
+### Changed
+
+- Update k8scloudconfig to allow setting custom kernel parameters in the 'net.*' namespace.
+- Remove IP limit when prefix delegation is enabled. IP limit will be 110 for nodes with Prefix Delegation.
 - Change apiserver's cpu request to be 1/2 of the available CPUs in the VM.
+
+### Fixed
+
+- Fix Docker rate limit for pulling images.
 
 
 
