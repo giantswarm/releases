@@ -1,6 +1,6 @@
 # :zap: Giant Swarm Release v18.2.0 for AWS :zap:
 
-tbd
+<< Add description here >>
 
 ## Change details
 
@@ -52,23 +52,25 @@ _Nothing has changed._
 
 ### aws-operator [14.5.0](https://github.com/giantswarm/aws-operator/releases/tag/v14.5.0)
 
-### Added
-
+#### Added
 - Add `ALB Controller` IAM role.
-- Allow disk size configuration of logging volume. New default value is 15Gb.
-- Allow different values for docker and containerd volume.
-- Allowed the use of all seccomp profiles for components under the restricted podsecurity policy.
-- Set the default seccomp profile to runtime/default under the restricted podsecurity policy.
-
-### Changed
-
+#### Changed
 - Update k8scloudconfig to allow setting custom kernel parameters in the 'net.*' namespace.
 - Remove IP limit when prefix delegation is enabled. IP limit will be 110 for nodes with Prefix Delegation.
-- Change apiserver's cpu request to be 1/2 of the available CPUs in the VM.
-
-### Fixed
-
+#### Added
+- Allow disk size configuration of logging volume. New default value is 15Gb.
+- Allow different values for docker and containerd volume.
+#### Fixed
 - Fix Docker rate limit for pulling images.
+
+
+
+### cluster-operator [5.4.0](https://github.com/giantswarm/cluster-operator/releases/tag/v5.4.0)
+
+#### Added
+- Add `aws.region` field in the cluster configmap.
+#### Changed
+- Make the `aws` related fields only present on aws clusters' cluster configmap.
 
 
 
@@ -79,7 +81,6 @@ _Nothing has changed._
 - Fix duplicate scrapping by GiantSwarm Prometheus
 #### Added
 - Add values schema
-- Enable ethtool collector
 
 
 
