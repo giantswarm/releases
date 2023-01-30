@@ -58,7 +58,7 @@ spec:                                                              spec:
     version: 1.11.2-nftables                                           version: 1.11.2-nftables
   - name: aws-operator                                               - name: aws-operator
     releaseOperatorDeploy: true                                        releaseOperatorDeploy: true
-    version: 14.1.1                                             |      version: 14.5.0
+    version: 14.1.1                                             |      version: 14.6.0
   - name: calico                                                     - name: calico
     version: 3.21.5                                                    version: 3.21.5
   - name: cert-operator                                              - name: cert-operator
@@ -73,7 +73,7 @@ spec:                                                              spec:
     version: 3.5.5                                              |      version: 3.5.6
   - name: kubernetes                                                 - name: kubernetes
     version: 1.23.14                                            |      version: 1.23.15
-  date: "2023-01-13T08:48:17Z"                                  |    date: "2023-01-30T15:47:29Z"
+  date: "2023-01-13T08:48:17Z"                                  |    date: "2023-01-30T17:01:43Z"
   state: active                                                      state: active
 status:                                                            status:
   inUse: false                                                       inUse: false
