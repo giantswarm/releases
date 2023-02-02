@@ -50,12 +50,10 @@ _Nothing has changed._
 
 
 
-### aws-operator [14.6.0](https://github.com/giantswarm/aws-operator/releases/tag/v14.6.0)
+### aws-operator [14.7.0](https://github.com/giantswarm/aws-operator/releases/tag/v14.7.0)
 
-#### Fixed
-- Adjust ALBController IAM role name.
-#### Changed
-- Add AMIs for flatcar versions 3374.2.1, 3374.2.2 and 3374.2.3.
+#### Added
+- Label node pool nodes with `cgroups.giantswarm.io/version` to indicate which cgroup version they are running.
 
 
 
