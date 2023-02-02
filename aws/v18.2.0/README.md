@@ -59,12 +59,12 @@ _Nothing has changed._
 
 
 
-### cluster-operator [5.4.0](https://github.com/giantswarm/cluster-operator/releases/tag/v5.4.0)
+### cluster-operator [5.5.0](https://github.com/giantswarm/cluster-operator/releases/tag/v5.5.0)
 
+#### Fixed
+- Fix user config CM mapping for bundle apps.
 #### Added
-- Add `aws.region` field in the cluster configmap.
-#### Changed
-- Make the `aws` related fields only present on aws clusters' cluster configmap.
+- Read app dependencies from Release CR to avoid deadlock installing apps in new clusters.
 
 
 
