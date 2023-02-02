@@ -43,10 +43,10 @@ _Nothing has changed._
 
 
 
-### app-operator [6.5.0](https://github.com/giantswarm/app-operator/releases/tag/v6.5.0)
+### app-operator [6.6.0](https://github.com/giantswarm/app-operator/releases/tag/v6.6.0)
 
-#### Fixed
-- Fix building URLs for OCI Repositories assigned to non-internal `Catalogs`.
+#### Added
+- Add support for dependencies between apps using `app-operator.giantswarm.io/depends-on` annotation.
 
 
 

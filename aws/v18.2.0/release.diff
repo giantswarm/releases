@@ -53,7 +53,7 @@ spec:                                                              spec:
                                                                 >      version: 0.1.9
   components:                                                        components:
   - name: app-operator                                               - name: app-operator
-    version: 6.4.1                                              |      version: 6.5.0
+    version: 6.4.1                                              |      version: 6.6.0
   - name: aws-cni                                                    - name: aws-cni
     version: 1.11.2-nftables                                           version: 1.11.2-nftables
   - name: aws-operator                                               - name: aws-operator
@@ -73,7 +73,7 @@ spec:                                                              spec:
     version: 3.5.5                                              |      version: 3.5.6
   - name: kubernetes                                                 - name: kubernetes
     version: 1.23.14                                            |      version: 1.23.15
-  date: "2023-01-13T08:48:17Z"                                  |    date: "2023-02-02T14:05:47Z"
+  date: "2023-01-13T08:48:17Z"                                  |    date: "2023-02-02T14:42:18Z"
   state: active                                                      state: active
 status:                                                            status:
   inUse: false                                                       inUse: false
