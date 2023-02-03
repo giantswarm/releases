@@ -50,10 +50,8 @@ _Nothing has changed._
 
 
 
-### aws-operator [14.7.0](https://github.com/giantswarm/aws-operator/releases/tag/v14.7.0)
+### aws-operator [14.7.1](https://github.com/giantswarm/aws-operator/releases/tag/v14.7.1)
 
-#### Added
-- Label node pool nodes with `cgroups.giantswarm.io/version` to indicate which cgroup version they are running.
 
 
 
