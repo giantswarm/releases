@@ -1,6 +1,13 @@
 # :zap: Giant Swarm Release v18.2.0 for AWS :zap:
 
-<< Add description here >>
+This release contains changes that address several kubernetes vulnerabilities as well as improvements:
+
+- Node pool nodes will be labeled with the current cgroup version. 
+- Docker Rate Limits will be fixed when trying to pull images too often
+- Custom kernel parameters in the 'net.*' namespace are allowed to be set 
+- The size of EBS Volumes for Logging (new default is `15Gb`), Docker and Containerd can be modified
+- IP limit for node is removed when `Prefix Delegation` is enabled, without we keep the limit of `110`
+- The `ALB Controller` IAM role (`gs-$CLUSTERID-ALBController-Role`) will be created by default for each cluster
 
 ## Change details
 
