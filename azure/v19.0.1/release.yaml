@@ -1,5 +1,5 @@
 # Generated with:
-# devctl release create --name v19.0.1 --provider azure --base v19.0.0 --component kubernetes@1.24.10 --component etcd@3.5.7 --component app-operator@6.6.0 --component cluster-operator@5.5.0 --component containerlinux@3374.2.3 --app external-dns@2.23.2@0.11.0 --app observability-bundle@0.1.9 --overwrite
+# devctl release create --name v19.0.1 --provider azure --base v19.0.0 --component azure-operator@7.1.0 --component kubernetes@1.24.10 --component etcd@3.5.7 --component app-operator@6.6.0 --component cluster-operator@5.5.0 --component containerlinux@3374.2.3 --app external-dns@2.23.2@0.11.0 --app observability-bundle@0.1.9 --overwrite
 apiVersion: release.giantswarm.io/v1alpha1
 kind: Release
 metadata:
@@ -63,7 +63,7 @@ spec:
   - catalog: control-plane-catalog
     name: azure-operator
     releaseOperatorDeploy: true
-    version: 7.0.0
+    version: 7.1.0
   - name: cert-operator
     releaseOperatorDeploy: true
     version: 3.0.1
@@ -78,7 +78,7 @@ spec:
     version: 3.21.6
   - name: etcd
     version: 3.5.7
-  date: "2023-02-06T15:35:45Z"
+  date: "2023-02-07T10:48:28Z"
   state: active
 status:
   inUse: false

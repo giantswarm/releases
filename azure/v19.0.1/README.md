@@ -1,8 +1,18 @@
 # :zap: Giant Swarm Release v19.0.1 for Azure :zap:
 
-<< Add description here >>
+This is a maintainance and security release, featuring latest Flatcar Container Linux and Kubernetes versions.
+It is now possible to provide a custom user config for `bundle` default apps.
+Lastly, we enabled the `CronJobTimeZone` feature, see https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/#time-zones .
 
 ## Change details
+
+
+### azure-operator [7.1.0](https://github.com/giantswarm/azure-operator/releases/tag/v7.1.0)
+
+#### Changed
+- Bump k8scc to support improve reliability of calico deployment process for new clusters.
+- Enable `CronJobTimeZone` feature gate.
+
 
 
 ### kubernetes [1.24.10](https://github.com/kubernetes/kubernetes/releases/tag/v1.24.10)
