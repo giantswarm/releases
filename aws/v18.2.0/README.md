@@ -1,6 +1,6 @@
 # :zap: Giant Swarm Release v18.2.0 for AWS :zap:
 
-This release contains changes that address several kubernetes vulnerabilities as well as improvements:
+This release contains changes that address several Kubernetes vulnerabilities as well as improvements:
 
 - Node pool nodes will be labeled with the current cgroup version. 
 - Docker Rate Limits will be fixed when trying to pull images too often
