@@ -2,7 +2,7 @@
 
 This release contains changes that address several Kubernetes vulnerabilities bringing it to the latest `1.23.15` version. 
 
-Additionally to allow customers better cost optimatization the size of EBS Volumes for Logging, Docker and Containerd can be now modified. After analysis of the Logging EBS Volume usage itself, the default has been changed from 100GB to 15GB per node for cost savings. Please contact your Account Engineer to start the analysis of the Docker and Contanerd Volumes sizes for the targets to be modified.
+Additionally to allow customers better cost optimatization the size of [EBS Volumes for Logging, Docker and Containerd can be now modified](https://docs.giantswarm.io/use-the-api/management-api/crd/awsmachinedeployments.infrastructure.giantswarm.io/#v1alpha2). After analysis of the Logging EBS Volume usage itself, the default has been changed from 100GB to 15GB per node for cost savings. Please contact your Account Engineer to start the analysis of the Docker and Contanerd Volumes sizes for the targets to be modified.
 
 Summary of further improvements can be found in the list below:
 - Node pool nodes will be labeled with the current cgroup version. 
