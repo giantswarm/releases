@@ -4,7 +4,7 @@ This release contains changes that address several Kubernetes vulnerabilities br
 
 Additionally to allow customers better cost optimatization the size of [EBS Volumes for Logging, Docker and Containerd can be now modified](https://docs.giantswarm.io/use-the-api/management-api/crd/awsmachinedeployments.infrastructure.giantswarm.io/#v1alpha3). After analysis of the Logging EBS Volume usage itself, the default has been changed from 100GB to 15GB per node for cost savings. Please contact your Account Engineer to start the analysis of the Docker and Contanerd Volumes sizes for the targets to be modified.
 
-***Important to note this release adds new component***
+***Important to note this release adds new component:***
 - [observability-bundle](https://github.com/giantswarm/observability-bundle) - revised monitoring solution that provides necessary components to enable observability capabilities in a workload cluster. This upgrade can temporairly affect prometheus but the monitoring team is paged immediately to perform manual steps and cleanup. Hence there should be little to no impact. If prometheus-operator is in use on the Workload Clusters, please reach out to your Account Engineer who will notify and sync with Giant Swarm monitoring team upfront.
 
 Summary of further improvements can be found in the list below:
