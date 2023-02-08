@@ -1,0 +1,2 @@
+**Workload cluster release v19.0.1 for Azure is available**. This is a maintainance and security release, featuring latest Flatcar Container Linux and Kubernetes versions. It is now possible to provide a custom user config for `bundle` default apps. Lastly, we enabled the `CronJobTimeZone` feature. Further details can be found in the [release notes](https://docs.giantswarm.io/changes/workload-cluster-releases-azure/releases/azure-v19.0.1/).
+
