@@ -1,11 +1,13 @@
 # :zap: Giant Swarm Release v18.2.0 for AWS :zap:
 
-This release contains changes that address several Kubernetes vulnerabilities as well as improvements:
+This release contains changes that address several Kubernetes vulnerabilities bringing it to the latest `1.23.15` version. 
 
+Additionally to allow customers better cost optimatization the size of EBS Volumes for Logging, Docker and Containerd can be now modified. After analysis of the Logging EBS Volume usage itself, the default has been changed from 100GB to 15GB per node for cost savings. Please contact your Account Engineer to start the analysis of the Docker and Contanerd Volumes sizes for the targets to be modified.
+
+Summary of further improvements can be found in the list below:
 - Node pool nodes will be labeled with the current cgroup version. 
 - Docker Rate Limits will be fixed when trying to pull images too often
 - Custom kernel parameters in the 'net.*' namespace are allowed to be set 
-- The size of EBS Volumes for Logging (new default is `15Gb`), Docker and Containerd can be modified
 - IP limit for node is removed when `Prefix Delegation` is enabled, without we keep the limit of `110`
 - The `ALB Controller` IAM role (`gs-$CLUSTERID-ALBController-Role`) will be created by default for each cluster
 
@@ -59,7 +61,25 @@ _Nothing has changed._
 
 ### aws-operator [14.7.1](https://github.com/giantswarm/aws-operator/releases/tag/v14.7.1)
 
+#### Added
+- Label node pool nodes with cgroups.giantswarm.io/version to indicate which cgroup version they are running.
+- Add ALB Controller IAM role.
+- Allow disk size configuration of logging volume. New default value is 15Gb.
+- Allow different values for docker and containerd volume.
 
+#### Changed
+- Switch container registry in China
+- Add AMIs for flatcar versions 3374.2.0, 3374.2.1, 3374.2.2 and 3374.2.3.
+- Update k8scloudconfig to allow setting custom kernel parameters in the 'net.*' namespace.
+- Remove IP limit when prefix delegation is enabled. IP limit will be 110 for nodes with Prefix Delegation.
+- Bump k8scc to [15.4.0](https://github.com/giantswarm/k8scloudconfig/blob/master/CHANGELOG.md#1540---2023-01-11). (Lower apiserver's cpu request to be 1/2 of the available CPUs in the VM)
+- Bump k8scc to [15.3.0](https://github.com/giantswarm/k8scloudconfig/blob/master/CHANGELOG.md#1530---2022-11-29). (Label master nodes with node-role.kubernetes.io/control-plane to comply with kubeadm/CAPI)
+- Bump k8scc to [15.2.0](https://github.com/giantswarm/k8scloudconfig/blob/master/CHANGELOG.md#1520---2022-11-24). (Add component label to scheduler and controller-manager's manifests. Add missing registry mirror to containerd config.)
+
+
+#### Fixed
+- Adjust ALBController IAM role name.
+- Fix Docker rate limit for pulling images.
 
 
 ### cluster-operator [5.5.0](https://github.com/giantswarm/cluster-operator/releases/tag/v5.5.0)
@@ -104,6 +124,12 @@ _Nothing has changed._
 
 ### chart-operator [2.33.2](https://github.com/giantswarm/chart-operator/releases/tag/v2.33.2)
 
+#### Added 
+- Add support to run in private cloud clusters, which cannot provide any working externalDNSIP.
+- New error for values schema validation.
+
+#### Changed
+- Use transitional errors coming from running Helm in the Chart CR status.
 
 
 
