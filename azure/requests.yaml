@@ -2,7 +2,7 @@ releases:
 - name: "> 19.0.1"
   requests:
   - name: coredns
-    version: ">= 1.14.0"
+    version: ">= 1.14.1"
 - name: ">= 19.0.0"
   requests:
   - name: cluster-operator

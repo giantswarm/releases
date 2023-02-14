@@ -3,6 +3,8 @@ releases:
   requests:
   - name: chart-operator
     version: ">= 2.20.1"
+  - name: coredns
+    version: ">= 1.14.1"
   - name: kube-state-metrics
     version: ">= 1.13.0"
 - name: "> 16.1.1 < 16.2.0"
