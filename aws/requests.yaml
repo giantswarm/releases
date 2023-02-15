@@ -16,7 +16,7 @@ releases:
 - name: "> 18.2.0"
   requests:
   - name: coredns
-    version: ">= 1.14.1"
+    version: ">= 1.14.2"
 - name: "> 18.1.1"
   requests:
   - name: vertical-pod-autoscaler
