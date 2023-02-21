@@ -3,6 +3,8 @@ releases:
   requests:
   - name: coredns
     version: ">= 1.14.2"
+  - name: observability-bundle
+    version: ">= 0.2.0"
 - name: ">= 19.0.0"
   requests:
   - name: cluster-operator
