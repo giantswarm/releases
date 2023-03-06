@@ -1,6 +1,6 @@
 # :zap: Giant Swarm Release v18.2.1 for AWS :zap:
 
-<< Add description here >>
+This release contains changes that improves the stability of cluster upgrades
 
 ## Change details
 
