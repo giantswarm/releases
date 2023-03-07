@@ -3,7 +3,6 @@ commonAnnotations:
 resources:
 - v16.5.1
 - v16.5.2
-- v17.0.1
 - v17.0.2
 - v17.1.0
 - v17.2.0
