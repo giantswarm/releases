@@ -191,6 +191,8 @@ _Nothing has changed._
 
 ### irsa-servicemonitors [0.0.1](https://github.com/giantswarm/irsa-servicemonitors-app/releases/tag/v0.0.1)
 
+#### Added
 
+- First release
 
 
