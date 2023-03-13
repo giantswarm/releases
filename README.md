@@ -10,6 +10,9 @@ merged to the `master` branch, workload cluster releases get automatically deplo
 to all Giant Swarm installations.
 
 ## AWS
+- v19
+  - v19.0
+    - [v19.0.0-alpha1](https://github.com/giantswarm/releases/tree/master/aws/v19.0.0-alpha1) 
 - v18
   - v18.0
     - [v18.2.1](https://github.com/giantswarm/releases/tree/master/aws/v18.2.1)
