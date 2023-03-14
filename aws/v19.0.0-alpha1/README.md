@@ -13,6 +13,7 @@ This Giant Swarm release introduces Kubernetes 1.24, replaces the use of AWS CNI
 - The AWS CNI pod subnets are no longer used by Cilium. Please add custom routes with the node subnet(s) CIDR(s) instead of the AWS CNI pod subnets CIDR before upgrading to this release.
 - The upgrade process [documentation](https://handbook.giantswarm.io/docs/support-and-ops/ops-recipes/upgrade-to-cilium/) is available. Please read it carefully and reach out in case of questions.
 - Cilium will have Hubble UI enabled by default for troubleshooting and observability.
+- Due to changes to CRs during upgrade the `gitops` automation will have to be suspended and any applied changes backported to the repos before resuming.
 
 ***IRSA highlights***
 - Please read the [updated documentation](https://docs.giantswarm.io/advanced/iam-roles-for-service-accounts/)
