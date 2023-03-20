@@ -9,8 +9,6 @@ releases:
     version: ">= 1.14.0"
   - name: cert-manager
     version: ">= 2.17.1"
-  - name: observability-bundle
-    version: ">= 0.2.0"
   - name: vertical-pod-autoscaler-app
     version: ">= 3.2.0"
   - name: vertical-pod-autoscaler-crd
@@ -21,6 +19,8 @@ releases:
   requests:
   - name: coredns
     version: ">= 1.14.2"
+  - name: observability-bundle
+    version: ">= 0.2.0"
 - name: "> 18.1.1"
   requests:
   - name: vertical-pod-autoscaler
