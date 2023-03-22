@@ -4,7 +4,7 @@ releases:
   - name: coredns
     version: ">= 1.14.2"
   - name: observability-bundle
-    version: ">= 0.2.0"
+    version: ">= 0.3.0"
   - name: vertical-pod-autoscaler-app
     version: ">= 3.3.0"
   - name: vertical-pod-autoscaler-crd
