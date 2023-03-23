@@ -9,6 +9,8 @@ releases:
     version: ">= 1.14.0"
   - name: cert-manager
     version: ">= 2.17.1"
+  - name: observability-bundle
+    version: ">= 0.3.0"
   - name: vertical-pod-autoscaler-app
     version: ">= 3.3.0"
   - name: vertical-pod-autoscaler-crd
