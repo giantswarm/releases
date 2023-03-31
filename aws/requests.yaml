@@ -17,7 +17,7 @@ releases:
     version: ">= 2.0.0"
   - name: k8s-dns-node-cache-app
     version: ">= 1.1.0"
-- name: "> 18.2.1"
+- name: "> 18.3.0"
   requests:
   - name: coredns
     version: ">= 1.14.2"
