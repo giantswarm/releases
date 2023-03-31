@@ -56,9 +56,12 @@ spec:
     version: 6.6.0
   - name: aws-cni
     version: 1.12.6
-  - name: aws-operator
     releaseOperatorDeploy: true
-    version: 14.8.1
+  - catalog: control-plane-test-catalog
+    name: aws-operator
+    releaseOperatorDeploy: true
+    version: 14.8.1-dev
+    reference: 14.8.0-9d9b0f87e4319d4551d4997b4151c713cf737145
   - name: calico
     version: 3.21.5
   - name: cert-operator
