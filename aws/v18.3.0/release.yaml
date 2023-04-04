@@ -75,7 +75,7 @@ spec:
     version: 1.23.17
   - name: cluster-autoscaler
     version: 1.23.1-gs1
-  date: "2023-04-03T11:22:19Z"
+  date: "2023-04-04T11:22:19Z"
   state: active
 status:
   inUse: false
