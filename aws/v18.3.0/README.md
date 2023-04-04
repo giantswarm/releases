@@ -1,6 +1,6 @@
 # :zap: Giant Swarm Release v18.3.0 for AWS :zap:
 
-This release contains changes that address several vulnerabilities as well as improvements.
+This release contains changes that address several vulnerabilities as well as improvements in the stability of etcd cluster for large clusters.
 
 ## Change details
 
