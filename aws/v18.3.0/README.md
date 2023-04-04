@@ -1,6 +1,6 @@
 # :zap: Giant Swarm Release v18.3.0 for AWS :zap:
 
-<< Add description here >>
+This release contains changes that address several vulnerabilities as well as improvements.
 
 ## Change details
 
