@@ -28,11 +28,14 @@ _Changes since **Stable 3374.2.2**_
 
 
 
-### aws-operator [14.8.1](https://github.com/giantswarm/aws-operator/releases/tag/v14.8.1)
+### aws-operator [14.12.0](https://github.com/giantswarm/aws-operator/releases/tag/v14.12.0)
 
 #### Changed
 - Set ENV for nftables in `aws-cni`.
+- Improved etcd resiliency and allow customization of --quota-backend-bytes.
 - Bump k8s-api-healthz image to 0.2.0.
+- When creating a cluster, create the master ASGs in parallel.
+
 #### Fixed
 - Don't mark master instance as unhealthy if local etcd instance is unresponsive but the whole etcd cluster is also down.
 - Don't mark master instance as unhealthy if local API server instance is unresponsive but the whole API server is also down.
