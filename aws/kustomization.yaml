@@ -3,12 +3,6 @@ commonAnnotations:
 resources:
 - v16.5.1
 - v16.5.2
-- v17.0.1
-- v17.0.2
-- v17.1.0
-- v17.2.0
-- v17.3.3
-- v17.4.1
 - v17.4.3
 - v17.4.4
 - v18.0.2
@@ -16,5 +10,8 @@ resources:
 - v18.1.0
 - v18.1.1
 - v18.2.0
+- v18.2.1
+- v18.3.0
+- v19.0.0-alpha1
 transformers:
 - releaseNotesTransformer.yaml
