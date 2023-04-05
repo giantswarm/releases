@@ -38,7 +38,11 @@ This Giant Swarm release introduces Kubernetes 1.24, replaces the use of AWS CNI
 - Changed VPA to consider unique and workload cluster operators as well and added support for min allowed fields of CPU and memory
 
 
-### aws-operator [14.12.0](https://github.com/giantswarm/aws-operator/releases/tag/v14.12.0)
+### aws-operator [14.12.1](https://github.com/giantswarm/aws-operator/releases/tag/v14.12.1)
+
+#### Added
+
+- Added ami IDs for flatcar `3374.2.4` and `3374.2.5`.
 
 #### Changed
 - Set ENV for nftables in `aws-cni`.
