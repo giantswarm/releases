@@ -11,7 +11,7 @@ releases:
     version: ">= 2.17.1"
   - name: observability-bundle
     version: ">= 0.3.0"
-  - name: vertical-pod-autoscaler-app
+  - name: vertical-pod-autoscaler
     version: ">= 3.3.0"
   - name: vertical-pod-autoscaler-crd
     version: ">= 2.0.0"
