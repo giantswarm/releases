@@ -1,5 +1,5 @@
 # Generated with:
-# ../devctl/devctl release create --name v18.4.0 --provider aws --base v18.3.0 --app cilium-prerequisites@0.1.1 --overwrite
+# devctl release create --name v18.4.0 --provider aws --base v18.3.0 --app cilium-prerequisites@0.1.1 --component aws-operator@14.13.0 --app observability-bundle@0.4.0 --app vertical-pod-autoscaler@3.4.0 --app vertical-pod-autoscaler-crd@2.0.0 --overwrite
 apiVersion: release.giantswarm.io/v1alpha1
 kind: Release
 metadata:
@@ -44,13 +44,13 @@ spec:
     name: node-exporter
     version: 1.15.0
   - name: vertical-pod-autoscaler
-    version: 2.5.3
+    version: 3.4.0
   - name: vertical-pod-autoscaler-crd
-    version: 1.0.1
+    version: 2.0.0
   - name: etcd-kubernetes-resources-count-exporter
     version: 1.0.0
   - name: observability-bundle
-    version: 0.3.0
+    version: 0.4.0
   - name: cilium-prerequisites
     version: 0.1.1
   components:
@@ -60,7 +60,7 @@ spec:
     version: 1.12.6
   - name: aws-operator
     releaseOperatorDeploy: true
-    version: 14.12.0
+    version: 14.13.0
   - name: calico
     version: 3.21.5
   - name: cert-operator
@@ -75,7 +75,7 @@ spec:
     version: 3.5.6
   - name: kubernetes
     version: 1.23.17
-  date: "2023-04-18T09:59:46Z"
+  date: "2023-04-18T12:15:06Z"
   state: active
 status:
   inUse: false
