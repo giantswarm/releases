@@ -50,3 +50,13 @@
 
 
 
+### kiam [3.0.0](https://github.com/giantswarm/kiam-app/releases/tag/v3.0.0)
+
+#### Added
+- Allow running without iptables mode
+- Add cilium local redirect policy
+- Move to Cilium Network Policies
+- Move to main catalog
+
+
+

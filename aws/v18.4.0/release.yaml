@@ -1,5 +1,5 @@
 # Generated with:
-# devctl release create --name v18.4.0 --provider aws --base v18.3.0 --app cilium-prerequisites@0.1.1 --component aws-operator@14.13.0 --app observability-bundle@0.4.0 --app vertical-pod-autoscaler@3.4.0 --app vertical-pod-autoscaler-crd@2.0.0 --overwrite
+# devctl release create --name v18.4.0 --provider aws --base v18.3.0 --app cilium-prerequisites@0.1.1 --component aws-operator@14.13.0 --app observability-bundle@0.4.0 --app vertical-pod-autoscaler@3.4.0 --app vertical-pod-autoscaler-crd@2.0.0 --app kiam@3.0.0@4.2.0 --overwrite
 apiVersion: release.giantswarm.io/v1alpha1
 kind: Release
 metadata:
@@ -29,7 +29,7 @@ spec:
     version: 2.23.2
   - componentVersion: 4.2.0
     name: kiam
-    version: 2.6.0
+    version: 3.0.0
   - name: kiam-watchdog
     version: 0.7.0
   - componentVersion: 2.6.0
@@ -75,7 +75,7 @@ spec:
     version: 3.5.6
   - name: kubernetes
     version: 1.23.17
-  date: "2023-04-18T12:15:06Z"
+  date: "2023-04-18T12:54:51Z"
   state: active
 status:
   inUse: false
