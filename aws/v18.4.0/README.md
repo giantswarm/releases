@@ -28,6 +28,24 @@
 
 
 
+### containerlinux [3374.2.5](https://www.flatcar-linux.org/releases/#release-3374.2.5)
+
+ _Changes since **Stable 3374.2.4**_
+ 
+ #### Security fixes:
+ 
+ - Linux ([CVE-2022-4129](https://nvd.nist.gov/vuln/detail/CVE-2022-4129), [CVE-2022-4382](https://nvd.nist.gov/vuln/detail/CVE-2022-4382), [CVE-2022-4842](https://nvd.nist.gov/vuln/detail/CVE-2022-4842), [CVE-2023-1073](https://nvd.nist.gov/vuln/detail/CVE-2023-1073), [CVE-2023-1074](https://nvd.nist.gov/vuln/detail/CVE-2023-1074), [CVE-2023-23559](https://nvd.nist.gov/vuln/detail/CVE-2023-23559))
+ 
+ #### Bug fixes:
+ 
+ - Excluded the special Kubernetes network interfaces `nodelocaldns` and `kube-ipvs0` from being managed with systemd-networkd which interfered with the setup ([init#89](https://github.com/flatcar/init/pull/89)).
+ 
+ #### Updates:
+ 
+ - Linux ([5.15.92](https://lwn.net/Articles/922340) (includes [5.15.91](https://lwn.net/Articles/921851), [5.15.90](https://lwn.net/Articles/921029)))
+
+
+
 ### cilium-prerequisites [0.1.1](https://github.com/giantswarm/cilium-prerequisites/releases/tag/v0.1.1)
 
 #### Fixed 

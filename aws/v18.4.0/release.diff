@@ -70,12 +70,12 @@ spec:                                                            spec:
     releaseOperatorDeploy: true                                      releaseOperatorDeploy: true
     version: 5.5.0                                                   version: 5.5.0
   - name: containerlinux                                           - name: containerlinux
-    version: 3374.2.3                                                version: 3374.2.3
+    version: 3374.2.3                                          |     version: 3374.2.5
   - name: etcd                                                     - name: etcd
     version: 3.5.6                                                   version: 3.5.6
   - name: kubernetes                                               - name: kubernetes
     version: 1.23.17                                                 version: 1.23.17
-  date: "2023-04-04T11:22:19Z"                                 |   date: "2023-04-19T05:48:07Z"
+  date: "2023-04-04T11:22:19Z"                                 |   date: "2023-04-19T07:07:52Z"
   state: active                                                    state: active
 status:                                                          status:
   inUse: false                                                     inUse: false
