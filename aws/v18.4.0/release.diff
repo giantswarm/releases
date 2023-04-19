@@ -32,9 +32,9 @@ spec:                                                            spec:
     version: 2.6.0                                                   version: 2.6.0
   - name: kiam-watchdog                                            - name: kiam-watchdog
     version: 0.7.0                                                   version: 0.7.0
-  - componentVersion: 2.6.0                                        - componentVersion: 2.6.0
-    name: kube-state-metrics                                         name: kube-state-metrics
-    version: 1.14.2                                                  version: 1.14.2
+  - componentVersion: 2.6.0                                    <
+    name: kube-state-metrics                                   <
+    version: 1.14.2                                            <
   - componentVersion: 0.6.1                                        - componentVersion: 0.6.1
     name: metrics-server                                             name: metrics-server
     version: 2.0.0                                                   version: 2.0.0
