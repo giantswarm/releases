@@ -1,6 +1,6 @@
 # :zap: Giant Swarm Release v18.4.0 for AWS :zap:
 
-<< Add description here >>
+ This release contains changes that address several vulnerabilities and overall improvements. We changed the IRSA trust policy for external-dns IAM role so it can be used by multiple external-dns in your workload clusters.
 
 ## Change details
 
