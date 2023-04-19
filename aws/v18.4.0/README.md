@@ -14,6 +14,20 @@
 
 
 
+### cert-operator [3.0.1](https://github.com/giantswarm/cert-operator/releases/tag/v3.0.1)
+
+#### Fixed
+- Allow running unique and non unique cert-operators in the same namespace.
+
+
+
+### app-operator [6.6.4](https://github.com/giantswarm/app-operator/releases/tag/v6.6.4)
+
+#### Changed
+- Improved feedback when searching for an app in catalog.
+
+
+
 ### cilium-prerequisites [0.1.1](https://github.com/giantswarm/cilium-prerequisites/releases/tag/v0.1.1)
 
 #### Fixed 

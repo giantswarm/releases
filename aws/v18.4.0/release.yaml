@@ -1,5 +1,5 @@
 # Generated with:
-# devctl release create --name v18.4.0 --provider aws --base v18.3.0 --app cilium-prerequisites@0.1.1 --component aws-operator@14.13.0 --app observability-bundle@0.4.0 --app vertical-pod-autoscaler@3.4.2 --app vertical-pod-autoscaler-crd@2.0.1 --app kiam@3.0.0@4.2.0 --app aws-ebs-csi-driver@2.21.0@1.15.0 --app cert-exporter@2.4.0 --app cert-manager@2.21.0@1.8.2 --app chart-operator@2.34.0 --app coredns@1.15.2@1.9.3 --app external-dns@2.35.1@0.11.0 --app kube-state-metrics@1.15.0@2.6.0 --app metrics-server@2.1.0@0.6.1 --app net-exporter@1.14.0 --overwrite
+# devctl release create --name v18.4.0 --provider aws --base v18.3.0 --app cilium-prerequisites@0.1.1 --component aws-operator@14.13.0 --app observability-bundle@0.4.0 --app vertical-pod-autoscaler@3.4.2 --app vertical-pod-autoscaler-crd@2.0.1 --app kiam@3.0.0@4.2.0 --app aws-ebs-csi-driver@2.21.0@1.15.0 --app cert-exporter@2.4.0 --app cert-manager@2.21.0@1.8.2 --app chart-operator@2.34.0 --app coredns@1.15.2@1.9.3 --app external-dns@2.35.1@0.11.0 --app kube-state-metrics@1.15.0@2.6.0 --app metrics-server@2.1.0@0.6.1 --app net-exporter@1.14.0 --component cert-operator@3.0.1 --component app-operator@6.6.4 --overwrite
 apiVersion: release.giantswarm.io/v1alpha1
 kind: Release
 metadata:
@@ -55,7 +55,7 @@ spec:
     version: 0.1.1
   components:
   - name: app-operator
-    version: 6.6.0
+    version: 6.6.4
   - name: aws-cni
     version: 1.12.6
   - name: aws-operator
@@ -65,7 +65,7 @@ spec:
     version: 3.21.5
   - name: cert-operator
     releaseOperatorDeploy: true
-    version: 2.0.1
+    version: 3.0.1
   - name: cluster-operator
     releaseOperatorDeploy: true
     version: 5.5.0
@@ -75,7 +75,7 @@ spec:
     version: 3.5.6
   - name: kubernetes
     version: 1.23.17
-  date: "2023-04-19T05:43:23Z"
+  date: "2023-04-19T05:48:07Z"
   state: active
 status:
   inUse: false

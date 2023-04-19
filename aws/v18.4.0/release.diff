@@ -55,7 +55,7 @@ spec:                                                            spec:
                                                                >     version: 0.1.1
   components:                                                      components:
   - name: app-operator                                             - name: app-operator
-    version: 6.6.0                                                   version: 6.6.0
+    version: 6.6.0                                             |     version: 6.6.4
   - name: aws-cni                                                  - name: aws-cni
     version: 1.12.6                                                  version: 1.12.6
   - name: aws-operator                                             - name: aws-operator
@@ -65,7 +65,7 @@ spec:                                                            spec:
     version: 3.21.5                                                  version: 3.21.5
   - name: cert-operator                                            - name: cert-operator
     releaseOperatorDeploy: true                                      releaseOperatorDeploy: true
-    version: 2.0.1                                                   version: 2.0.1
+    version: 2.0.1                                             |     version: 3.0.1
   - name: cluster-operator                                         - name: cluster-operator
     releaseOperatorDeploy: true                                      releaseOperatorDeploy: true
     version: 5.5.0                                                   version: 5.5.0
@@ -75,7 +75,7 @@ spec:                                                            spec:
     version: 3.5.6                                                   version: 3.5.6
   - name: kubernetes                                               - name: kubernetes
     version: 1.23.17                                                 version: 1.23.17
-  date: "2023-04-04T11:22:19Z"                                 |   date: "2023-04-19T05:43:23Z"
+  date: "2023-04-04T11:22:19Z"                                 |   date: "2023-04-19T05:48:07Z"
   state: active                                                    state: active
 status:                                                          status:
   inUse: false                                                     inUse: false
