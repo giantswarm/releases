@@ -1,6 +1,6 @@
 # :zap: Giant Swarm Release v18.4.0 for AWS :zap:
 
- This release contains changes that address several vulnerabilities and overall improvements. We changed the IRSA trust policy for external-dns IAM role so it can be used by multiple external-dns in your workload clusters.
+This release contains changes that address several vulnerabilities and overall improvements. We changed the IRSA trust policy for external-dns IAM role so it can be used by multiple external-dns in your workload clusters.
 
 ## Change details
 
@@ -39,14 +39,10 @@
 
 
 
-### observability-bundle [0.4.0](https://github.com/giantswarm/observability-bundle/releases/tag/v0.4.0)
+### observability-bundle [0.4.2](https://github.com/giantswarm/observability-bundle/releases/tag/v0.4.2)
 
-#### Added
-- Add extra configmap and secret to `promtail-app`.
 #### Changed
-- Upgrade `prometheus-operator-app` to 4.2.1.
-#### Removed
-- Moving prometheus-operator-app user-configs to the prometheus-operator-app https://github.com/giantswarm/prometheus-operator-app/pull/249
+- Upgrade `prometheus-agent-app` to 0.4.1.
 
 
 

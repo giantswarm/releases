@@ -77,7 +77,7 @@ spec:
   - name: etcd-kubernetes-resources-count-exporter
     version: 1.0.0
   - name: observability-bundle
-    version: 0.4.0
+    version: 0.4.2
   - name: cilium-prerequisites
     version: 0.1.1
   components:
