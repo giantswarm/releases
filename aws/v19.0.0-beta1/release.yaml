@@ -17,56 +17,124 @@ spec:
     version: 2.21.0
   - name: cert-exporter
     version: 2.4.0
+    dependsOn:
+    - aws-cloud-controller-manager
+    - cilium
+    - coredns
+    - vertical-pod-autoscaler-crd
   - componentVersion: 1.8.2
     name: cert-manager
     version: 2.21.0
+    dependsOn:
+    - aws-cloud-controller-manager
+    - cilium
+    - coredns
+    - vertical-pod-autoscaler-crd
   - name: chart-operator
     version: 2.34.0
   - componentVersion: 1.13.0
     name: cilium
-    version: 0.9.0
+    version: 0.9.3
+    dependsOn:
+    - aws-cloud-controller-manager
   - componentVersion: 1.24.0
     name: cluster-autoscaler
     version: 1.24.0-gs1
+    dependsOn:
+    - aws-cloud-controller-manager
+    - cilium
+    - coredns
+    - vertical-pod-autoscaler-crd
   - componentVersion: 1.9.3
     name: coredns
     version: 1.14.2
+    dependsOn:
+    - aws-cloud-controller-manager
+    - cilium
   - componentVersion: 0.11.0
     name: external-dns
     version: 2.35.0
+    dependsOn:
+    - aws-cloud-controller-manager
+    - cilium
+    - coredns
+    - vertical-pod-autoscaler-crd
   - componentVersion: 2.6.0
     name: kube-state-metrics
     version: 1.15.0
+    dependsOn:
+    - aws-cloud-controller-manager
+    - cilium
+    - coredns
+    - vertical-pod-autoscaler-crd
   - componentVersion: 0.6.1
     name: metrics-server
     version: 2.1.0
+    dependsOn:
+    - aws-cloud-controller-manager
+    - cilium
+    - coredns
+    - vertical-pod-autoscaler-crd
   - name: net-exporter
     version: 1.14.0
+    dependsOn:
+    - aws-cloud-controller-manager
+    - cilium
+    - coredns
+    - vertical-pod-autoscaler-crd
   - componentVersion: 1.3.1
     name: node-exporter
     version: 1.15.0
+    dependsOn:
+    - aws-cloud-controller-manager
+    - cilium
+    - coredns
+    - vertical-pod-autoscaler-crd
   - name: vertical-pod-autoscaler
     version: 3.4.0
+    dependsOn:
+    - aws-cloud-controller-manager
+    - cilium
+    - coredns
+    - vertical-pod-autoscaler-crd
   - name: vertical-pod-autoscaler-crd
     version: 2.0.0
   - name: etcd-kubernetes-resources-count-exporter
     version: 1.0.0
   - name: observability-bundle
     version: 0.3.0
+    dependsOn:
+    - aws-cloud-controller-manager
+    - cilium
+    - coredns
   - name: k8s-dns-node-cache-app
     version: 2.1.0
+    dependsOn:
+    - aws-cloud-controller-manager
+    - cilium
+    - coredns
+    - vertical-pod-autoscaler-crd
   - name: prometheus-blackbox-exporter
     version: 0.3.1
+    dependsOn:
+    - aws-cloud-controller-manager
+    - cilium
+    - coredns
+    - vertical-pod-autoscaler-crd
   - name: cilium-servicemonitors
     version: 0.0.2
+    dependsOn:
+    - prometheus-operator-crd
   - name: irsa-servicemonitors
     version: 0.0.1
+    dependsOn:
+    - prometheus-operator-crd
   components:
   - name: app-operator
     version: 6.6.3
   - name: aws-operator
     releaseOperatorDeploy: true
-    version: 14.12.1
+    version: 14.14.0
   - name: cert-operator
     releaseOperatorDeploy: true
     version: 3.0.1
