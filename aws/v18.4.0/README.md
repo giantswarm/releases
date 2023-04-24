@@ -1,6 +1,6 @@
 # :zap: Giant Swarm Release v18.4.0 for AWS :zap:
 
-This release contains changes that address several vulnerabilities and overall improvements. Most important change is extending the IRSA trust policy for external-dns IAM role so it can be used by multiple external-dns in your workload clusters especially with IRSA enabled.
+This release contains changes that address several vulnerabilities and overall improvements. Most important change is extending the IRSA trust policy for external-dns IAM role so it can be used by multiple external-dns in your workload clusters with IRSA enabled.
 
 This release also adds a new component `cilium-prerequisites` that installs `CiliumNetworkPolicy` CRDs towards the easier and downtime-free Cilium migration. This application can also be installed from the catalog.
 
