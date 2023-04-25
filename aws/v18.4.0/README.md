@@ -7,12 +7,10 @@ This release also adds a new component `cilium-prerequisites` that installs `Cil
 ## Change details
 
 
-### aws-operator [14.13.0](https://github.com/giantswarm/aws-operator/releases/tag/v14.13.0)
+### aws-operator [14.13.1](https://github.com/giantswarm/aws-operator/releases/tag/v14.13.1)
 
 #### Fixed
-- Use `alpine` as image for aws-cni's `routes-fixer`. 
-#### Changed
-- Allow externalDNS role to be assumed by any SA containing "external-dns" to allow multiple app deployments.
+- Allow to enable ACLs for a S3 buckets.
 
 
 
