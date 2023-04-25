@@ -4,6 +4,9 @@ This release contains changes that address several vulnerabilities and overall i
 
 This release also adds a new component `cilium-prerequisites` that installs `CiliumNetworkPolicy` CRDs towards the easier and downtime-free Cilium migration. This application can also be installed from the catalog.
 
+***Important for IRSA***
+When upgrading to AWS Release `v18.4.0` you can additionally set a annotation on AWSCluster CR `alpha.aws.giantswarm.io/enable-cloudfront-alias: ""` to enable the usage of the Cloudfront alternate domain name before v19 where it will be a default. This is useful if you want to take immeditately actions replacing `Kiam`.
+
 ## Change details
 
 
