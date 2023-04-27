@@ -74,7 +74,7 @@ spec:
   - name: kubernetes
     version: 1.23.17
   date: "2023-04-04T11:22:19Z"
-  state: active
+  state: deprecated
 status:
   inUse: false
   ready: false
