@@ -17,6 +17,7 @@ to all Giant Swarm installations.
 - v18
   - v18.0
     - [v18.4.0](https://github.com/giantswarm/releases/tree/master/aws/v18.4.0)
+    - [v18.3.1](https://github.com/giantswarm/releases/tree/master/aws/v18.3.1)
     - [v18.3.0](https://github.com/giantswarm/releases/tree/master/aws/v18.3.0)
     - [v18.2.1](https://github.com/giantswarm/releases/tree/master/aws/v18.2.1)
     - [v18.2.0](https://github.com/giantswarm/releases/tree/master/aws/v18.2.0)
