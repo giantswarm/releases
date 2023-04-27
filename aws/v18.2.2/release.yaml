@@ -1,12 +1,12 @@
 # Generated with:
-# devctl release create --name v18.2.1 --provider aws --base v18.2.0 --component aws-operator@14.8.0 --overwrite
+# devctl release create --name v18.2.2 --provider aws --base v18.2.1 --component aws-operator@14.8.1 --overwrite
 apiVersion: release.giantswarm.io/v1alpha1
 kind: Release
 metadata:
   annotations:
     giantswarm.io/docs: https://docs.giantswarm.io/reference/cp-k8s-api/releases.release.giantswarm.io/
   creationTimestamp: null
-  name: v18.2.1
+  name: v18.2.2
 spec:
   apps:
   - componentVersion: 1.15.0
@@ -58,7 +58,7 @@ spec:
     version: 1.11.2-nftables
   - name: aws-operator
     releaseOperatorDeploy: true
-    version: 14.8.0
+    version: 14.8.1
   - name: calico
     version: 3.21.5
   - name: cert-operator
@@ -73,8 +73,8 @@ spec:
     version: 3.5.6
   - name: kubernetes
     version: 1.23.15
-  date: "2023-03-02T10:06:00Z"
-  state: deprecated
+  date: "2023-04-27T09:33:40Z"
+  state: active
 status:
   inUse: false
   ready: false
