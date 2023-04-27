@@ -7,6 +7,9 @@ This release also adds a new component `cilium-prerequisites` that installs `Cil
 ***Important for IRSA***
 When upgrading to AWS Release `v18.4.0` you can additionally set a annotation on AWSCluster CR `alpha.aws.giantswarm.io/enable-cloudfront-alias: ""` to enable the usage of the Cloudfront alternate domain name before v19 where it will be a default. This is useful if you want to take immeditately actions replacing `Kiam`.
 
+***IAM Permissions Requirements***
+The minimal requirement for the IAM permissions is [Version 3.1.0](https://github.com/giantswarm/giantswarm-aws-account-prerequisites/blob/master/CHANGELOG.md#310---2023-04-27) of [giantswarm-aws-account-prerequisites](https://github.com/giantswarm/giantswarm-aws-account-prerequisites/) repository.
+
 ## Change details
 
 
