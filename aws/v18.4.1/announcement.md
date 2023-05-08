@@ -1,0 +1,3 @@
+**Workload cluster release v18.4.1 for AWS is available**. This release contains small improvements. It disables ETCD compaction request from apiserver which is included in etcd by default and upgrades `observability-bundle`. Please check [IAM permissions requirements](https://github.com/giantswarm/giantswarm-aws-account-prerequisites/blob/master/CHANGELOG.md#320---2023-04-27) for this release. Further details can be found in the [release notes](https://docs.giantswarm.io/changes/workload-cluster-releases-aws/releases/aws-v18.4.1/).
+
+> **_Info:_** Cilium support that was introduced in 18.0.0 was rolled back to AWS CNI because of an unresolved upstream bug. Cilium support is postponed to version v19.0.0.
