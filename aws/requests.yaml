@@ -10,7 +10,7 @@ releases:
   - name: cert-manager
     version: ">= 2.17.1"
   - name: external-dns
-    version: ">= 2.35.1"
+    version: ">= 2.37.0"
   # This also requires the removal of the kube-state-metrics app as it is now included in the bundle.
   - name: observability-bundle
     version: ">= 0.4.3"
