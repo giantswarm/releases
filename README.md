@@ -203,6 +203,10 @@ to all Giant Swarm installations.
 
 ## Azure
 
+- v20
+  - v20.0
+    - [v20.0.0-beta1](https://github.com/giantswarm/releases/tree/master/azure/v20.0.0-beta1)
+
 - v19
   - v19.0
     - [v19.0.1](https://github.com/giantswarm/releases/tree/master/azure/v19.0.1)
@@ -212,7 +216,7 @@ to all Giant Swarm installations.
   - v18.0
     - [v18.0.1](https://github.com/giantswarm/releases/tree/master/azure/v18.0.1)
     - [v18.0.0](https://github.com/giantswarm/releases/tree/master/azure/archived/v18.0.0)
-- 
+ 
 - v17
   - v17.2
     - [v17.2.0](https://github.com/giantswarm/releases/tree/master/azure/archived/v17.2.0)
