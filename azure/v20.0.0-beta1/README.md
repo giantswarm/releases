@@ -1,6 +1,6 @@
 # :zap: Giant Swarm Release v20.0.0-beta1 for Azure :zap:
 
-<< Add description here >>
+This is Giant Swarm release preparing towards Kubernetes 1.25 with migration PSPs. This is unsecure release by default disabling all PSPs from all components. Please do not upgrade to that release directly and talk to your Account Engineer for more details.
 
 ## Change details
 
