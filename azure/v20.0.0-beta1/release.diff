@@ -119,7 +119,7 @@ spec:                                                              spec:
   - catalog: control-plane-catalog                                   - catalog: control-plane-catalog
     name: azure-operator                                               name: azure-operator
     releaseOperatorDeploy: true                                        releaseOperatorDeploy: true
-    version: 7.1.0                                              |      version: 8.0.0
+    version: 7.1.0                                              |      version: 8.0.1
   - name: cert-operator                                              - name: cert-operator
     releaseOperatorDeploy: true                                        releaseOperatorDeploy: true
     version: 3.0.1                                                     version: 3.0.1

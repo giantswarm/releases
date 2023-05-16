@@ -110,7 +110,7 @@ spec:
   - catalog: control-plane-catalog
     name: azure-operator
     releaseOperatorDeploy: true
-    version: 8.0.0
+    version: 8.0.1
   - name: cert-operator
     releaseOperatorDeploy: true
     version: 3.0.1
