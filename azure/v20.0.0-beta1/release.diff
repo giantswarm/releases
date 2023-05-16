@@ -110,7 +110,7 @@ spec:                                                              spec:
     - azure-cloud-node-manager                                         - azure-cloud-node-manager
     - coredns                                                          - coredns
   - name: k8s-dns-node-cache                                         - name: k8s-dns-node-cache
-    version: 1.1.0                                              |      version: 2.1.0
+    version: 1.1.0                                              |      version: 1.2.0
     dependsOn:                                                         dependsOn:
     - azure-cloud-controller-manager                                   - azure-cloud-controller-manager
     - azure-cloud-node-manager                                         - azure-cloud-node-manager
