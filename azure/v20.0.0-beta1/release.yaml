@@ -76,7 +76,7 @@ spec:
     - vertical-pod-autoscaler-crd
   - componentVersion: 1.24.0
     name: cluster-autoscaler
-    version: 1.24.0-gs1
+    version: 1.25.1-gs1
     dependsOn:
     - azure-cloud-controller-manager
     - azure-cloud-node-manager
