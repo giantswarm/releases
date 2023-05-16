@@ -1,6 +1,6 @@
 # :zap: Giant Swarm Release v20.0.0-beta1 for Azure :zap:
 
-This is Giant Swarm release preparing towards Kubernetes 1.25 with migration PSPs. This is unsecured release by default disabling all PSPs from all components. Please do not upgrade to that release directly and talk to your Account Engineer for more details.
+<< Add description here >>
 
 ## Change details
 
@@ -15,10 +15,14 @@ This is Giant Swarm release preparing towards Kubernetes 1.25 with migration PSP
 
 
 
-### azure-operator [7.2.0](https://github.com/giantswarm/azure-operator/releases/tag/v7.2.0)
+### azure-operator [8.0.0](https://github.com/giantswarm/azure-operator/releases/tag/v8.0.0)
 
+#### Added
+- Add new control-plane label to detect master nodes.
+#### Removed
+- Remove logic that migrates CAPI CRDs from experimental group to new group.
 #### Changed
-- Bump k8s-api-healthz image to 0.2.0.
+- Kubernetes 1.25 support.
 
 
 
