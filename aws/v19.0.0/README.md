@@ -1,5 +1,7 @@
 # :zap: Giant Swarm Release v19.0.0 for AWS :zap:
 
+> **WARNING:** Please talk to your Account Engineer prior to upgrading. You will be provided with a checklist to follow and validate your clusters.
+
 This release includes upgrades of components and Kubernetes version to 1.24. The upgrade to `v19.0.0` involve two major changes for customers, namely the migration from the AWS VPC CNI to Cilium and the replacement of Kiam with IAM Roles for Service Accounts(IRSA) for authenticating pods against the AWS API.
 Next sections are describing important changes we will introduce with the new release, the key benefits, what customers can do to prepare and how to avoid downtime during this crucial upgrade. 
 
