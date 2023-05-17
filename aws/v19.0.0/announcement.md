@@ -4,4 +4,4 @@
 
 > **_CNI Warning:_** Upgrade includes changes from AWS CNI to Cilium, please check `Cilium` section for further details.
 
-> **_IAM Warning:_** The `kiam` application will be removed from clusters in favor of IAM Roles for Service Accounts (IRSA). please check `IRSA` section for further details.
+> **_IAM Warning:_** The `kiam` application will be removed from clusters in favor of IAM Roles for Service Accounts (IRSA), please check `IRSA` section for further details.
