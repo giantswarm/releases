@@ -17,11 +17,11 @@ spec:                                                              spec:
     version: 2.21.0                                             <
   - name: cert-exporter                                              - name: cert-exporter
     version: 2.4.0                                              |      version: 2.5.1
-    dependsOn:                                                  <
-    - aws-cloud-controller-manager                              <
-    - cilium                                                    <
-    - coredns                                                   <
-    - vertical-pod-autoscaler-crd                               <
+    dependsOn:                                                         dependsOn:
+    - aws-cloud-controller-manager                                     - aws-cloud-controller-manager
+    - cilium                                                           - cilium
+    - coredns                                                          - coredns
+    - vertical-pod-autoscaler-crd                                      - vertical-pod-autoscaler-crd
   - componentVersion: 1.8.2                                          - componentVersion: 1.8.2
     name: cert-manager                                                 name: cert-manager
     version: 2.21.0                                                    version: 2.21.0
@@ -129,8 +129,8 @@ spec:                                                              spec:
     - prometheus-operator-crd                                          - prometheus-operator-crd
   - name: irsa-servicemonitors                                       - name: irsa-servicemonitors
     version: 0.0.1                                                     version: 0.0.1
-    dependsOn:                                                  <
-    - prometheus-operator-crd                                   <
+    dependsOn:                                                         dependsOn:
+    - prometheus-operator-crd                                          - prometheus-operator-crd
   components:                                                        components:
   - name: app-operator                                               - name: app-operator
     version: 6.6.3                                              |      version: 6.7.0
