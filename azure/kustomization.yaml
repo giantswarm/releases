@@ -4,5 +4,6 @@ resources:
 - v18.0.1
 - v19.0.0
 - v19.0.1
+- v20.0.0-beta1
 transformers:
 - releaseNotesTransformer.yaml
