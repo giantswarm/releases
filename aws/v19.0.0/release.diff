@@ -12,9 +12,9 @@ spec:                                                              spec:
   - componentVersion: 1.24.1                                         - componentVersion: 1.24.1
     name: aws-cloud-controller-manager                                 name: aws-cloud-controller-manager
     version: 1.24.1-gs1                                         |      version: 1.24.1-gs7
-  - componentVersion: 1.15.0                                    |    - name: aws-ebs-csi-driver
-    name: aws-ebs-csi-driver                                    |      version: 2.21.1
-    version: 2.21.0                                             <
+  - componentVersion: 1.15.0                                         - componentVersion: 1.15.0
+    name: aws-ebs-csi-driver                                           name: aws-ebs-csi-driver
+    version: 2.21.0                                             |      version: 2.21.1
   - name: cert-exporter                                              - name: cert-exporter
     version: 2.4.0                                              |      version: 2.5.1
     dependsOn:                                                         dependsOn:
