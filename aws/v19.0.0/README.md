@@ -29,7 +29,7 @@ Additionally, while `Cilium's Network Policy` provides powerful security feature
 
 It's important to note that due to changes to `Cluster CR's` during the upgrade process, `GitOps` automation will have to be suspended and any applied changes backported to the repos before resuming. Keep this in mind as you prepare for the upgrade. This needs to be evaluated on a case-by-case basis, since different GitOps implementations might only keep _some_ parts of `Cluster` CRs in Git. Feel free to reach out to your Account Engineer to understand more about these changes.
 
-To ensure a smooth transition to `Cilium`, we've prepared a [comprehensive upgrade process](https://handbook.giantswarm.io/docs/support-and-ops/ops-recipes/upgrade-to-cilium/) that explains every migration step in detail, so you can feel confident in following the process and avoid any potential issues.
+To ensure a smooth transition to `Cilium`, we've prepared a [comprehensive upgrade process](https://handbook.giantswarm.io/docs/support-and-ops/ops-recipes/upgrade-to-cilium/) that explains every migration step in detail, so you can feel confident in following the process and avoid any potential issues. We have also extended our [documentation](https://docs.giantswarm.io/platform-overview/cluster-management/vintage/aws/#pod-networking) which describes differences between `AWS CNI` and `Cilium`
 
 #### Cilium and AWS Load Balancer Controller
 
@@ -40,7 +40,7 @@ For further information, please checkout the [documentation](https://kubernetes-
 #### Cilium and pod CIDR
 
 While switching to Cilium we are forced to change the CIDR used to assign IPs to Pods (192.168.0.0/16 by default).
-The process is automated for the vast majority of the clusters, but if you had set up custom networking settings in your cluster the upgrade might be blocked by admission controllers. If that is the case, reach out to your SA and you'll receive guidance how to move on with the upgrade. Same thing applies uf you don't want to stick with the default value and prefer to change it.
+The process is automated for the vast majority of the clusters, but if you had set up custom networking settings in your cluster the upgrade might be blocked by admission controllers. If that is the case, reach out to your SA and you'll receive guidance how to move on with the upgrade. Same thing applies if you don't want to stick with the default value and prefer to change it.
 
 #### Cilium and improved IP space usage
 
