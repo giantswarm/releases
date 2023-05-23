@@ -71,7 +71,7 @@ _Changes since **Stable 3510.2.0**_
 
 
 
-### azure-cloud-controller-manager [1.24.18-gs3](https://github.com/giantswarm/azure-cloud-controller-manager-app/releases/tag/v1.24.18-gs3)
+### azure-cloud-controller-manager [1.24.18-gs4](https://github.com/giantswarm/azure-cloud-controller-manager-app/releases/tag/v1.24.18-gs4)
 
 #### Changed
 - Remove `capabitlities.apiversion.has` check for VPA to avoid race condition between this app being installed and the api-version providing app being installed

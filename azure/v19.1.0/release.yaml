@@ -9,7 +9,7 @@ spec:
   apps:
   - componentVersion: 1.24.18
     name: azure-cloud-controller-manager
-    version: 1.24.18-gs3
+    version: 1.24.18-gs4
     dependsOn:
     - vertical-pod-autoscaler-crd
   - componentVersion: 1.24.18
