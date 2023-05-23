@@ -10,12 +10,18 @@ spec:
   - componentVersion: 1.24.18
     name: azure-cloud-controller-manager
     version: 1.24.18-gs3
+    dependsOn:
+    - vertical-pod-autoscaler-crd
   - componentVersion: 1.24.18
     name: azure-cloud-node-manager
     version: 1.24.18-gs3
+    dependsOn:
+    - vertical-pod-autoscaler-crd
   - componentVersion: 1.26.2
     name: azuredisk-csi-driver
     version: 1.26.2-gs4
+    dependsOn:
+    - vertical-pod-autoscaler-crd
   - componentVersion: 1.26.0
     name: azurefile-csi-driver
     version: 1.26.0-gs2
