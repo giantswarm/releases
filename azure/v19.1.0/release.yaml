@@ -96,6 +96,7 @@ spec:
     - azure-cloud-node-manager
     - coredns
     - vertical-pod-autoscaler-crd
+    - prometheus-operator-crd
   - name: vertical-pod-autoscaler-crd
     version: 2.0.1
   - name: observability-bundle
