@@ -12,9 +12,13 @@ spec:
   - componentVersion: 1.24.1
     name: aws-cloud-controller-manager
     version: 1.24.1-gs7
+    dependsOn:
+    - vertical-pod-autoscaler-crd
   - componentVersion: 1.15.0
     name: aws-ebs-csi-driver
     version: 2.21.1
+    dependsOn:
+    - vertical-pod-autoscaler-crd
   - name: cert-exporter
     version: 2.5.1
     dependsOn:
@@ -94,6 +98,8 @@ spec:
     version: 2.0.1
   - name: etcd-kubernetes-resources-count-exporter
     version: 1.2.0
+    dependsOn:
+    - vertical-pod-autoscaler-crd
   - name: observability-bundle
     version: 0.5.1
     dependsOn:
