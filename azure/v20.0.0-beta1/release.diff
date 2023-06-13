@@ -104,7 +104,7 @@ spec:                                                              spec:
     name: vertical-pod-autoscaler-crd                           |      version: 2.0.1
     version: 1.0.1                                              <
   - name: observability-bundle                                       - name: observability-bundle
-    version: 0.1.9                                              |      version: 0.5.1
+    version: 0.1.9                                              |      version: 0.7.0
     dependsOn:                                                         dependsOn:
     - azure-cloud-controller-manager                                   - azure-cloud-controller-manager
     - azure-cloud-node-manager                                         - azure-cloud-node-manager
