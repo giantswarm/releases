@@ -1,5 +1,5 @@
 releases:
-- name: "> 20.0.0"
+- name: "> 19.0.2 < 19.999.999"
   requests:
   - name: coredns
     version: ">= 1.14.2"
