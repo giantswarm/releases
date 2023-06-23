@@ -57,7 +57,7 @@ spec:                                                              spec:
     - cilium                                                           - cilium
   - componentVersion: 0.11.0                                         - componentVersion: 0.11.0
     name: external-dns                                                 name: external-dns
-    version: 2.35.0                                             |      version: 2.37.0
+    version: 2.35.0                                             |      version: 2.37.1
     dependsOn:                                                  <
     - aws-cloud-controller-manager                              <
     - cilium                                                    <
