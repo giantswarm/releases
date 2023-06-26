@@ -119,7 +119,8 @@ spec:                                                              spec:
     - azure-cloud-controller-manager                                   - azure-cloud-controller-manager
     - azure-cloud-node-manager                                         - azure-cloud-node-manager
     - coredns                                                          - coredns
-                                                                >    - name: security-bundle
+                                                                >    - catalog: giantswarm
+                                                                >      name: security-bundle
                                                                 >      version: 0.16.0
                                                                 >      dependsOn:
                                                                 >      - azure-cloud-controller-manager
@@ -131,7 +132,7 @@ spec:                                                              spec:
   - catalog: control-plane-catalog                                   - catalog: control-plane-catalog
     name: azure-operator                                               name: azure-operator
     releaseOperatorDeploy: true                                        releaseOperatorDeploy: true
-    version: 7.1.0                                              |      version: 7.2.0
+    version: 7.1.0                                              |      version: 7.3.0
   - name: cert-operator                                              - name: cert-operator
     releaseOperatorDeploy: true                                        releaseOperatorDeploy: true
     version: 3.0.1                                                     version: 3.0.1
