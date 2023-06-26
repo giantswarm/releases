@@ -144,7 +144,7 @@ We're aiming to provide a comprehensive blackbox monitoring tool that can valida
 
 
 
-### aws-operator [14.17.1](https://github.com/giantswarm/aws-operator/releases/tag/v14.17.1)
+### aws-operator [14.17.1-patch1](https://github.com/giantswarm/aws-operator/releases/tag/v14.17.1-patch1)
 
 #### Added
 - Add toleration for new control-plane taint.
@@ -215,7 +215,7 @@ We're aiming to provide a comprehensive blackbox monitoring tool that can valida
 
 
 
-### external-dns [2.37.0](https://github.com/giantswarm/external-dns-app/releases/tag/v2.37.0)
+### external-dns [2.37.1](https://github.com/giantswarm/external-dns-app/releases/tag/v2.37.1)
 
 #### Changed
 - Disable PSPs for k8s 1.25 and newer.

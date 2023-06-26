@@ -12,9 +12,13 @@ spec:                                                              spec:
   - componentVersion: 1.24.1                                         - componentVersion: 1.24.1
     name: aws-cloud-controller-manager                                 name: aws-cloud-controller-manager
     version: 1.24.1-gs1                                         |      version: 1.24.1-gs7
+                                                                >      dependsOn:
+                                                                >      - vertical-pod-autoscaler-crd
   - componentVersion: 1.15.0                                         - componentVersion: 1.15.0
     name: aws-ebs-csi-driver                                           name: aws-ebs-csi-driver
     version: 2.21.0                                             |      version: 2.21.1
+                                                                >      dependsOn:
+                                                                >      - vertical-pod-autoscaler-crd
   - name: cert-exporter                                              - name: cert-exporter
     version: 2.4.0                                              |      version: 2.5.1
     dependsOn:                                                         dependsOn:
@@ -53,7 +57,7 @@ spec:                                                              spec:
     - cilium                                                           - cilium
   - componentVersion: 0.11.0                                         - componentVersion: 0.11.0
     name: external-dns                                                 name: external-dns
-    version: 2.35.0                                             |      version: 2.37.0
+    version: 2.35.0                                             |      version: 2.37.1
     dependsOn:                                                  <
     - aws-cloud-controller-manager                              <
     - cilium                                                    <
@@ -102,6 +106,8 @@ spec:                                                              spec:
     version: 2.0.0                                              |      version: 2.0.1
   - name: etcd-kubernetes-resources-count-exporter                   - name: etcd-kubernetes-resources-count-exporter
     version: 1.0.0                                              |      version: 1.2.0
+                                                                >      dependsOn:
+                                                                >      - vertical-pod-autoscaler-crd
   - name: observability-bundle                                       - name: observability-bundle
     version: 0.3.0                                              |      version: 0.5.1
     dependsOn:                                                         dependsOn:
@@ -137,6 +143,7 @@ spec:                                                              spec:
   - name: aws-operator                                               - name: aws-operator
     releaseOperatorDeploy: true                                        releaseOperatorDeploy: true
     version: 14.15.0                                            |      version: 14.17.1
+                                                                >      reference: 14.17.1-patch1
   - name: cert-operator                                              - name: cert-operator
     releaseOperatorDeploy: true                                        releaseOperatorDeploy: true
     version: 3.0.1                                                     version: 3.0.1
