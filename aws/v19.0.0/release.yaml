@@ -88,7 +88,7 @@ spec:
     - vertical-pod-autoscaler-crd
   - componentVersion: 0.13.0
     name: vertical-pod-autoscaler
-    version: 3.4.2
+    version: 3.5.2
     dependsOn:
     - aws-cloud-controller-manager
     - cilium
