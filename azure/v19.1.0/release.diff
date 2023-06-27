@@ -78,6 +78,7 @@ spec:                                                              spec:
     - azure-cloud-node-manager                                         - azure-cloud-node-manager
     - coredns                                                          - coredns
     - vertical-pod-autoscaler-crd                                      - vertical-pod-autoscaler-crd
+                                                                >      - prometheus-operator-crd
   - componentVersion: 1.3.1                                          - componentVersion: 1.3.1
     name: node-exporter                                                name: node-exporter
     version: 1.15.0                                             |      version: 1.16.1
@@ -86,6 +87,7 @@ spec:                                                              spec:
     - azure-cloud-node-manager                                         - azure-cloud-node-manager
     - coredns                                                          - coredns
     - vertical-pod-autoscaler-crd                                      - vertical-pod-autoscaler-crd
+                                                                >      - prometheus-operator-crd
   - componentVersion: 1.24.0                                         - componentVersion: 1.24.0
     name: cluster-autoscaler                                           name: cluster-autoscaler
     version: 1.24.0-gs1                                         |      version: 1.24.0-gs2
