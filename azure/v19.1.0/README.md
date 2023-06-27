@@ -17,10 +17,11 @@ This is the release preparing for the migration away from Pod Security Policies(
 
 
 
-### azure-operator [7.2.0](https://github.com/giantswarm/azure-operator/releases/tag/v7.2.0)
+### azure-operator [7.3.0](https://github.com/giantswarm/azure-operator/releases/tag/v7.3.0)
 
 #### Changed
-- Bump k8s-api-healthz image to 0.2.0.
+- Bump k8scc to 16.2.0
+- Remove logic that migrates CAPI CRDs from experimental group to new group.
 
 
 
@@ -31,53 +32,64 @@ This is the release preparing for the migration away from Pod Security Policies(
 
 
 
-### kubernetes [1.24.13](https://github.com/kubernetes/kubernetes/releases/tag/v1.24.13)
+### kubernetes [1.24.15](https://github.com/kubernetes/kubernetes/releases/tag/v1.24.15)
 
 #### Feature
-- Kubernetes is now built with Go 1.19.8 ([#117132](https://github.com/kubernetes/kubernetes/pull/117132), [@xmudrii](https://github.com/xmudrii)) [SIG Release and Testing]
+- Kubernetes 1.24.x is now built with Go 1.19.10 ([#118557](https://github.com/kubernetes/kubernetes/pull/118557), [@puerco](https://github.com/puerco)) [SIG API Machinery, Architecture, Auth, CLI, Cloud Provider, Cluster Lifecycle, Instrumentation, Node, Release, Storage and Testing]
 #### Bug or Regression
-- Fix missing delete events on informer re-lists to ensure all delete events are correctly emitted and using the latest known object state, so that all event handlers and stores always reflect the actual apiserver state as best as possible ([#115901](https://github.com/kubernetes/kubernetes/pull/115901), [@odinuge](https://github.com/odinuge)) [SIG API Machinery]
-- Fix: Route controller should update routes with NodeIP changed ([#116360](https://github.com/kubernetes/kubernetes/pull/116360), [@lzhecheng](https://github.com/lzhecheng)) [SIG Cloud Provider]
-- Kubelet: Fix fs quota monitoring on volumes ([#116795](https://github.com/kubernetes/kubernetes/pull/116795), [@pacoxu](https://github.com/pacoxu)) [SIG Storage]
-#### Other (Cleanup or Flake)
-- Service session affinity timeout tests are no longer required for Kubernetes network plugin conformance due to variations in existing implementations. New conformance tests will be developed to better express conformance in future releases. ([#112806](https://github.com/kubernetes/kubernetes/pull/112806), [@dcbw](https://github.com/dcbw)) [SIG Architecture, Network and Testing]
+- Fixes a bug at kube-apiserver start where APIService objects for custom resources could be deleted and recreated. ([#118104](https://github.com/kubernetes/kubernetes/pull/118104), [@liggitt](https://github.com/liggitt)) [SIG API Machinery and Testing]
+- If `kubeadm reset` finds no etcd member ID for the peer it removes during the `remove-etcd-member` phase, it continues immediately to other phases, instead of retrying the phase for up to 3 minutes before continuing. ([#118192](https://github.com/kubernetes/kubernetes/pull/118192), [@dlipovetsky](https://github.com/dlipovetsky)) [SIG Cluster Lifecycle]
+- Kubeadm: fix a bug where the static pod changes detection logic is inconsistent with kubelet ([#118069](https://github.com/kubernetes/kubernetes/pull/118069), [@SataQiu](https://github.com/SataQiu)) [SIG Cluster Lifecycle]
 #### Dependencies
 #### Added
-_Nothing has changed._
+- github.com/a8m/tree: [10a5fd5](https://github.com/a8m/tree/tree/10a5fd5)
+- github.com/dougm/pretty: [2ee9d74](https://github.com/dougm/pretty/tree/2ee9d74)
+- github.com/rasky/go-xdr: [4930550](https://github.com/rasky/go-xdr/tree/4930550)
+- github.com/vmware/vmw-guestinfo: [25eff15](https://github.com/vmware/vmw-guestinfo/tree/25eff15)
 #### Changed
-- sigs.k8s.io/apiserver-network-proxy/konnectivity-client: v0.0.35 → v0.0.36
+- github.com/google/uuid: [v1.1.2 → v1.3.0](https://github.com/google/uuid/compare/v1.1.2...v1.3.0)
+- github.com/kr/pretty: [v0.2.1 → v0.3.0](https://github.com/kr/pretty/compare/v0.2.1...v0.3.0)
+- github.com/rogpeppe/go-internal: [v1.3.0 → v1.6.1](https://github.com/rogpeppe/go-internal/compare/v1.3.0...v1.6.1)
+- github.com/vmware/govmomi: [v0.20.3 → v0.30.0](https://github.com/vmware/govmomi/compare/v0.20.3...v0.30.0)
 #### Removed
 _Nothing has changed._
 
 
 
-### containerlinux [3510.2.1](https://www.flatcar-linux.org/releases/#release-3510.2.1)
+### containerlinux [3510.2.2](https://www.flatcar-linux.org/releases/#release-3510.2.2)
 
-_Changes since **Stable 3510.2.0**_
-
+ _Changes since **Stable 3510.2.1**_
+ 
 #### Security fixes:
-
-- Linux ([CVE-2022-4269](https://nvd.nist.gov/vuln/detail/CVE-2022-4269), [CVE-2022-4379](https://nvd.nist.gov/vuln/detail/CVE-2022-4379), [CVE-2023-1076](https://nvd.nist.gov/vuln/detail/CVE-2023-1076), [CVE-2023-1077](https://nvd.nist.gov/vuln/detail/CVE-2023-1077), [CVE-2023-1079](https://nvd.nist.gov/vuln/detail/CVE-2023-1079), [CVE-2023-1118](https://nvd.nist.gov/vuln/detail/CVE-2023-1118), [CVE-2023-1611](https://nvd.nist.gov/vuln/detail/CVE-2023-1611), [CVE-2023-1670](https://nvd.nist.gov/vuln/detail/CVE-2023-1670), [CVE-2023-1829](https://nvd.nist.gov/vuln/detail/CVE-2023-1829), [CVE-2023-1855](https://nvd.nist.gov/vuln/detail/CVE-2023-1855), [CVE-2023-1989](https://nvd.nist.gov/vuln/detail/CVE-2023-1989), [CVE-2023-1990](https://nvd.nist.gov/vuln/detail/CVE-2023-1990), [CVE-2023-23004](https://nvd.nist.gov/vuln/detail/CVE-2023-23004), [CVE-2023-25012](https://nvd.nist.gov/vuln/detail/CVE-2023-25012), [CVE-2023-28466](https://nvd.nist.gov/vuln/detail/CVE-2023-28466), [CVE-2023-30456](https://nvd.nist.gov/vuln/detail/CVE-2023-30456), [CVE-2023-30772](https://nvd.nist.gov/vuln/detail/CVE-2023-30772))
-- nvidia-drivers ([CVE-2022-31607](https://nvd.nist.gov/vuln/detail/CVE-2022-31607), [CVE-2022-31608](https://nvd.nist.gov/vuln/detail/CVE-2022-31608), [CVE-2022-31615](https://nvd.nist.gov/vuln/detail/CVE-2022-31615), [CVE-2022-34665](https://nvd.nist.gov/vuln/detail/CVE-2022-34665), [CVE-2022-34666](https://nvd.nist.gov/vuln/detail/CVE-2022-34666), [CVE-2022-34670](https://nvd.nist.gov/vuln/detail/CVE-2022-34670), [CVE-2022-34673](https://nvd.nist.gov/vuln/detail/CVE-2022-34673), [CVE-2022-34674](https://nvd.nist.gov/vuln/detail/CVE-2022-34674), [CVE-2022-34676](https://nvd.nist.gov/vuln/detail/CVE-2022-34676), [CVE-2022-34677](https://nvd.nist.gov/vuln/detail/CVE-2022-34677), [CVE-2022-34678](https://nvd.nist.gov/vuln/detail/CVE-2022-34678), [CVE-2022-34679](https://nvd.nist.gov/vuln/detail/CVE-2022-34679), [CVE-2022-34680](https://nvd.nist.gov/vuln/detail/CVE-2022-34680), [CVE-2022-34682](https://nvd.nist.gov/vuln/detail/CVE-2022-34682), [CVE-2022-34684](https://nvd.nist.gov/vuln/detail/CVE-2022-34684), [CVE-2022-42254](https://nvd.nist.gov/vuln/detail/CVE-2022-42254), [CVE-2022-42255](https://nvd.nist.gov/vuln/detail/CVE-2022-42255), [CVE-2022-42256](https://nvd.nist.gov/vuln/detail/CVE-2022-42256), [CVE-2022-42257](https://nvd.nist.gov/vuln/detail/CVE-2022-42257), [CVE-2022-42258](https://nvd.nist.gov/vuln/detail/CVE-2022-42258), [CVE-2022-42259](https://nvd.nist.gov/vuln/detail/CVE-2022-42259), [CVE-2022-42260](https://nvd.nist.gov/vuln/detail/CVE-2022-42260), [CVE-2022-42261](https://nvd.nist.gov/vuln/detail/CVE-2022-42261), [CVE-2022-42263](https://nvd.nist.gov/vuln/detail/CVE-2022-42263), [CVE-2022-42264](https://nvd.nist.gov/vuln/detail/CVE-2022-42264), [CVE-2022-42265](https://nvd.nist.gov/vuln/detail/CVE-2022-42265))
-
+ 
+ - Linux ([CVE-2023-1380](https://nvd.nist.gov/vuln/detail/CVE-2023-1380), [CVE-2023-1859](https://nvd.nist.gov/vuln/detail/CVE-2023-1859), [CVE-2023-2002](https://nvd.nist.gov/vuln/detail/CVE-2023-2002), [CVE-2023-2269](https://nvd.nist.gov/vuln/detail/CVE-2023-2269), [CVE-2023-31436](https://nvd.nist.gov/vuln/detail/CVE-2023-31436), [CVE-2023-32233](https://nvd.nist.gov/vuln/detail/CVE-2023-32233))
+ 
 #### Bug fixes:
-- Fixed the broken emerge-gitclone in the dev-container owing to the missing migration action around the unification of the Flatcar core repositories
-
+ 
+ 
 #### Changes:
-- The package upgrade for nvidia-drivers might result in not supporting a few of the older NVIDIA Tesla GPUs. If you are facing issues, set `NVIDIA_DRIVER_VERSION=460.106.00` in `/etc/flatcar/nvidia-metadata`
-
+ 
+ 
 #### Updates:
+ 
+ - Linux ([5.15.111](https://lwn.net/Articles/931652) (includes [5.15.110](https://lwn.net/Articles/930600), [5.15.109](https://lwn.net/Articles/930263), [5.15.108](https://lwn.net/Articles/929679), [5.15.107](https://lwn.net/Articles/929015)))
+ - ca-certificates ([3.89.1](https://firefox-source-docs.mozilla.org/security/nss/releases/nss_3_89_1.html))
 
-- Linux ([5.15.106](https://lwn.net/Articles/928343) (includes [5.15.105](https://lwn.net/Articles/927860), [5.15.104](https://lwn.net/Articles/926873), [5.15.103](https://lwn.net/Articles/926415), [5.15.102](https://lwn.net/Articles/925991), [5.15.101](https://lwn.net/Articles/925939), [5.15.100](https://lwn.net/Articles/925913), [5.15.99](https://lwn.net/Articles/925844)))
-- nvidia-drivers ([525.105.17](https://docs.nvidia.com/datacenter/tesla/tesla-release-notes-525-105-17/index.html))
+
+
+### etcd [3.5.9](https://github.com/etcd-io/etcd/releases/tag/v3.5.9)
+
+#### etcd server
+- Fix [LeaseTimeToLive API may return keys to clients which have no read permission on the keys](https://github.com/etcd-io/etcd/pull/15815).
+#### Dependencies
+- Compile binaries using [go 1.19.9](https://github.com/etcd-io/etcd/pull/15822).
 
 
 
 ### azure-cloud-controller-manager [1.24.18-gs4](https://github.com/giantswarm/azure-cloud-controller-manager-app/releases/tag/v1.24.18-gs4)
 
 #### Changed
-- Remove `capabitlities.apiversion.has` check for VPA to avoid race condition between this app being installed and the api-version providing app being installed
-  - With this change the installation of the chart will fail until the `api-version` is available
+- Use `node-role.kubernetes.io/control-plane: ""` as master node selector.
 
 
 
@@ -104,7 +116,7 @@ _Changes since **Stable 3510.2.0**_
 
 
 
-### cert-exporter [2.5.1](https://github.com/giantswarm/cert-exporter/releases/tag/v2.5.1)
+### cert-exporter [2.6.0](https://github.com/giantswarm/cert-exporter/releases/tag/v2.6.0)
 
 
 
@@ -125,17 +137,19 @@ _Changes since **Stable 3510.2.0**_
 
 
 
-### etcd-kubernetes-resources-count-exporter [1.2.0](https://github.com/giantswarm/etcd-kubernetes-resources-count-exporter/releases/tag/v1.2.0)
+### etcd-kubernetes-resources-count-exporter [1.2.1](https://github.com/giantswarm/etcd-kubernetes-resources-count-exporter/releases/tag/v1.2.1)
+
+#### Removed
+- Removed debug code that was dumping all events' contents to stdout.
+
+
+
+### external-dns [2.37.1](https://github.com/giantswarm/external-dns-app/releases/tag/v2.37.1)
 
 #### Changed
-- Disable PSPs for k8s 1.25 and newer.
-
-
-
-### external-dns [2.37.0](https://github.com/giantswarm/external-dns-app/releases/tag/v2.37.0)
-
-#### Changed
-- Disable PSPs for k8s 1.25 and newer.
+- Remove deprecated annotation from Pod.[#265](https://github.com/giantswarm/external-dns-app/pull/265).
+#### Fixed
+- Fix indentation in environment variables for secret injection [#272](https://github.com/giantswarm/external-dns-app/pull/272).
 
 
 
@@ -147,18 +161,17 @@ _Changes since **Stable 3510.2.0**_
 
 
 
-### net-exporter [1.15.0](https://github.com/giantswarm/net-exporter/releases/tag/v1.15.0)
+### net-exporter [1.16.2](https://github.com/giantswarm/net-exporter/releases/tag/v1.16.2)
 
 #### Changed
-- Allow requests from the api-server.
-- Disable PSPs for k8s 1.25 and newer.
+- Reduce CPU and Mem requests.
 
 
 
-### node-exporter [1.16.0](https://github.com/giantswarm/node-exporter-app/releases/tag/v1.16.0)
+### node-exporter [1.16.1](https://github.com/giantswarm/node-exporter-app/releases/tag/v1.16.1)
 
 #### Changed
-- Disable PSPs for k8s 1.25 and newer.
+- Enable service monitor.
 
 
 
@@ -171,10 +184,18 @@ _Changes since **Stable 3510.2.0**_
 
 
 
-### vertical-pod-autoscaler [3.4.2](https://github.com/giantswarm/vertical-pod-autoscaler-app/releases/tag/v3.4.2)
+### azure-scheduled-events [0.8.0](https://github.com/giantswarm/azure-scheduled-events/releases/tag/v0.8.0)
 
 #### Changed
-- Remove circleci job for pushing to shared app collection
+- Bumped dependencies.
+- Switched to go 1.18. 
+
+
+
+### vertical-pod-autoscaler [3.5.2](https://github.com/giantswarm/vertical-pod-autoscaler-app/releases/tag/v3.5.2)
+
+#### Changed
+- Raised limits for all components.
 
 
 
@@ -185,10 +206,19 @@ _Changes since **Stable 3510.2.0**_
 
 
 
-### observability-bundle [0.5.1](https://github.com/giantswarm/observability-bundle/releases/tag/v0.5.1)
+### observability-bundle [0.7.0](https://github.com/giantswarm/observability-bundle/releases/tag/v0.7.0)
 
 #### Changed
-- Remove cluster prefix to app name in _helpers.tpl
+- Upgrade `prometheus-operator-app` to 5.0.5.
+- Upgrade `prometheus-operator-crd` to 5.0.0.
+
+
+
+### security-bundle [0.16.0](https://github.com/giantswarm/security-bundle/releases/tag/v0.16.0)
+
+#### Changed
+- Update to `kyverno` (app) version 0.14.7, introducing exception mechanisms for `chart-operator` and restricting wildcards for Kinds.
+- Disabled the default apps `falco`, `trivy`, `trivy-operator` and `starboard-exporter`. This apps can be manually enabled.
 
 
 
