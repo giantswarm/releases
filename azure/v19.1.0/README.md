@@ -1,6 +1,8 @@
 # :zap: Giant Swarm Release v19.1.0 for Azure :zap:
 
-<< Add description here >>
+This is a maintainance and security release, featuring latest Flatcar Container Linux and Kubernetes versions. 
+
+This is the release preparing for the migration away from Pod Security Policies(PSP) in favor of Pod Security Standards(PSS) in Kubernetes 1.25. Newly installed application called `security-bundle` will deploy `kyverno` in `audit` mode, which will validate the existance of the policies and exceptions for the PSS implementation. For more information please read our official [documentation](https://docs.giantswarm.io/advanced/security-policy-enforcement/)
 
 ## Change details
 
