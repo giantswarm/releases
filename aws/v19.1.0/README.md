@@ -29,3 +29,39 @@ _Nothing has changed._
 
 
 
+### cert-manager [2.24.1](https://github.com/giantswarm/cert-manager-app/releases/tag/v2.24.1)
+
+#### Added
+- Add `cluster-autoscaler safe-to-evict` annotation to `controller` and `cainjector` through newly introduced `controller.podAnnotations` and `cainjector.podAnnotations` values. ([#330](https://github.com/giantswarm/cert-manager-app/pull/330))
+
+
+
+### net-exporter [1.16.2](https://github.com/giantswarm/net-exporter/releases/tag/v1.16.2)
+
+#### Changed
+- Reduce CPU and Mem requests.
+
+
+
+### node-exporter [1.16.1](https://github.com/giantswarm/node-exporter-app/releases/tag/v1.16.1)
+
+#### Changed
+- Enable service monitor.
+
+
+
+### observability-bundle [0.7.1](https://github.com/giantswarm/observability-bundle/releases/tag/v0.7.1)
+
+#### Changed
+- Upgrade `promtail-app` to 1.1.1.
+- Upgrade `prometheus-operator-app` to 5.0.6.
+
+
+
+### vertical-pod-autoscaler [3.5.3](https://github.com/giantswarm/vertical-pod-autoscaler-app/releases/tag/v3.5.3)
+
+#### Added
+- Add `cluster-autoscaler safe-to-evict` annotation to `recommender` and `updater`
+
+
+
