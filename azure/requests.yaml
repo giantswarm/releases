@@ -11,8 +11,12 @@ releases:
   - name: observability-bundle
     version: ">= 0.7.0"
   - name: vertical-pod-autoscaler
-    version: ">= 3.5.3"
+    version: ">= 3.3.0"
   - name: vertical-pod-autoscaler-crd
     version: ">= 2.0.0"
   - name: app-operator
     version: ">= 6.6.3"
+- name: "> 19.1.0 < 19.999.999"
+  requests:
+  - name: vertical-pod-autoscaler
+    version: ">= 3.5.3"
