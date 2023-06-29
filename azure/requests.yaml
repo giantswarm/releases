@@ -1,4 +1,11 @@
 releases:
+- name: "> 19.1.0 < 19.999.999"
+  requests:
+  - name: vertical-pod-autoscaler
+    version: ">= 3.5.3"
+  # This also requires the removal of the kube-state-metrics app as it is now included in the bundle.
+  - name: observability-bundle
+    version: ">= 0.7.1"
 - name: "> 19.0.2 < 19.999.999"
   requests:
   - name: coredns
@@ -16,7 +23,3 @@ releases:
     version: ">= 2.0.0"
   - name: app-operator
     version: ">= 6.6.3"
-- name: "> 19.1.0 < 19.999.999"
-  requests:
-  - name: vertical-pod-autoscaler
-    version: ">= 3.5.3"
