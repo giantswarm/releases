@@ -20,3 +20,6 @@ releases:
   requests:
   - name: vertical-pod-autoscaler
     version: ">= 3.5.3"
+  # This also requires the removal of the kube-state-metrics app as it is now included in the bundle.
+  - name: observability-bundle
+    version: ">= 0.7.1"
