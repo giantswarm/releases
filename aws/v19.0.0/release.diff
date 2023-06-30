@@ -11,7 +11,7 @@ spec:                                                              spec:
   apps:                                                              apps:
   - componentVersion: 1.24.1                                         - componentVersion: 1.24.1
     name: aws-cloud-controller-manager                                 name: aws-cloud-controller-manager
-    version: 1.24.1-gs1                                         |      version: 1.24.1-gs7
+    version: 1.24.1-gs1                                         |      version: 1.24.1-gs9
                                                                 >      dependsOn:
                                                                 >      - vertical-pod-autoscaler-crd
   - componentVersion: 1.15.0                                         - componentVersion: 1.15.0
@@ -43,7 +43,7 @@ spec:                                                              spec:
     - aws-cloud-controller-manager                                     - aws-cloud-controller-manager
   - componentVersion: 1.24.0                                         - componentVersion: 1.24.0
     name: cluster-autoscaler                                           name: cluster-autoscaler
-    version: 1.24.0-gs1                                         |      version: 1.24.0-gs2
+    version: 1.24.0-gs1                                         |      version: 1.24.0-gs3
     dependsOn:                                                         dependsOn:
     - aws-cloud-controller-manager                                     - aws-cloud-controller-manager
     - cilium                                                           - cilium
