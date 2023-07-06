@@ -19,3 +19,18 @@ _Changes since **Stable 3510.2.2**_
 - ca-certificates ([3.90](https://firefox-source-docs.mozilla.org/security/nss/releases/nss_3_90.html))
 
 
+### vertical-pod-autoscaler [3.5.3](https://github.com/giantswarm/vertical-pod-autoscaler-app/releases/tag/v3.5.3)
+
+#### Added
+- Add `cluster-autoscaler safe-to-evict` annotation to `recommender` and `updater`
+
+
+
+### observability-bundle [0.7.1](https://github.com/giantswarm/observability-bundle/releases/tag/v0.7.1)
+
+#### Changed
+- Upgrade `promtail-app` to 1.1.1.
+- Upgrade `prometheus-operator-app` to 5.0.6.
+
+
+
