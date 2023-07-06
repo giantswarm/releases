@@ -28,8 +28,6 @@ releases:
   requests:
   - name: coredns
     version: ">= 1.14.2"
-  - name: k8s-audit-metrics
-    version: ">= 0.5.3"
   - name: observability-bundle
     version: ">= 0.2.0"
 - name: "> 18.1.1"

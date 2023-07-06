@@ -1,0 +1,109 @@
+apiVersion: cluster.x-k8s.io/v1beta1
+kind: Cluster
+metadata:
+  annotations:
+    giantswarm.io/docs: https://docs.giantswarm.io/use-the-api/management-api/crd/clusters.cluster.x-k8s.io/
+  creationTimestamp: null
+  labels:
+    cluster-operator.giantswarm.io/version: 5.6.0
+    cluster.x-k8s.io/cluster-name: jmwsendgax
+    giantswarm.io/cluster: jmwsendgax
+    giantswarm.io/organization: giantswarm
+    giantswarm.io/service-priority: highest
+    release.giantswarm.io/version: 19.0.0-nick
+  name: jmwsendgax
+  namespace: org-giantswarm
+spec:
+  controlPlaneEndpoint:
+    host: ""
+    port: 0
+  infrastructureRef:
+    apiVersion: infrastructure.giantswarm.io/v1alpha3
+    kind: AWSCluster
+    name: jmwsendgax
+    namespace: org-giantswarm
+status:
+  controlPlaneReady: false
+  infrastructureReady: false
+---
+apiVersion: infrastructure.giantswarm.io/v1alpha3
+kind: AWSCluster
+metadata:
+  annotations:
+    giantswarm.io/docs: https://docs.giantswarm.io/use-the-api/management-api/crd/awsclusters.infrastructure.giantswarm.io/
+  creationTimestamp: null
+  labels:
+    aws-operator.giantswarm.io/version: 14.15.0
+    cluster.x-k8s.io/cluster-name: jmwsendgax
+    giantswarm.io/cluster: jmwsendgax
+    giantswarm.io/organization: giantswarm
+    release.giantswarm.io/version: 19.0.0-nick
+  name: jmwsendgax
+  namespace: org-giantswarm
+spec:
+  cluster:
+    description: ""
+    dns:
+      domain: ""
+    kubeProxy: {}
+    oidc:
+      claims: {}
+  provider:
+    credentialSecret:
+      name: ""
+      namespace: giantswarm
+    master:
+      availabilityZone: eu-central-1a
+      instanceType: m5.xlarge
+    nodes: {}
+    pods:
+      externalSNAT: false
+    region: ""
+status:
+  cluster: {}
+  provider:
+    network: {}
+---
+apiVersion: infrastructure.giantswarm.io/v1alpha3
+kind: G8sControlPlane
+metadata:
+  annotations:
+    giantswarm.io/docs: https://docs.giantswarm.io/use-the-api/management-api/crd/g8scontrolplanes.infrastructure.giantswarm.io/
+  creationTimestamp: null
+  labels:
+    cluster-operator.giantswarm.io/version: 5.6.0
+    cluster.x-k8s.io/cluster-name: jmwsendgax
+    giantswarm.io/cluster: jmwsendgax
+    giantswarm.io/control-plane: j7ayuqwy67
+    giantswarm.io/organization: giantswarm
+    release.giantswarm.io/version: 19.0.0-nick
+  name: j7ayuqwy67
+  namespace: org-giantswarm
+spec:
+  infrastructureRef:
+    apiVersion: infrastructure.giantswarm.io/v1alpha3
+    kind: AWSControlPlane
+    name: j7ayuqwy67
+    namespace: org-giantswarm
+  replicas: 1
+status: {}
+---
+apiVersion: infrastructure.giantswarm.io/v1alpha3
+kind: AWSControlPlane
+metadata:
+  annotations:
+    giantswarm.io/docs: https://docs.giantswarm.io/use-the-api/management-api/crd/awscontrolplanes.infrastructure.giantswarm.io/
+  creationTimestamp: null
+  labels:
+    aws-operator.giantswarm.io/version: 14.15.0
+    cluster.x-k8s.io/cluster-name: jmwsendgax
+    giantswarm.io/cluster: jmwsendgax
+    giantswarm.io/control-plane: j7ayuqwy67
+    giantswarm.io/organization: giantswarm
+    release.giantswarm.io/version: 19.0.0-nick
+  name: j7ayuqwy67
+  namespace: org-giantswarm
+spec:
+  availabilityZones:
+  - eu-central-1a
+  instanceType: m5.xlarge
