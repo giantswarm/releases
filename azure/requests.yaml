@@ -8,6 +8,8 @@ releases:
   # This also requires the removal of the kube-state-metrics app as it is now included in the bundle.
   - name: observability-bundle
     version: ">= 0.7.1"
+  - name: security-bundle
+    version: ">= 0.16.2"
 - name: "> 19.0.2 < 19.999.999"
   requests:
   - name: coredns
