@@ -9,6 +9,8 @@ releases:
     version: ">= 2.24.1"
   - name: external-dns
     version: ">= 2.37.0"
+  - name: k8s-audit-metrics
+    version: ">= 0.5.3"
   - name: net-exporter
     version: ">= 1.16.2"
   - name: node-exporter
@@ -26,6 +28,8 @@ releases:
   requests:
   - name: coredns
     version: ">= 1.14.2"
+  - name: k8s-audit-metrics
+    version: ">= 0.5.3"
   - name: observability-bundle
     version: ">= 0.2.0"
 - name: "> 18.1.1"

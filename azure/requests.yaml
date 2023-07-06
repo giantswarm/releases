@@ -1,6 +1,8 @@
 releases:
 - name: "> 19.1.0 < 19.999.999"
   requests:
+  - name: k8s-audit-metrics
+    version: ">= 0.5.3"
   - name: vertical-pod-autoscaler
     version: ">= 3.5.3"
   # This also requires the removal of the kube-state-metrics app as it is now included in the bundle.
