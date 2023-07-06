@@ -210,6 +210,7 @@ to all Giant Swarm installations.
 
 - v19
   - v19.1
+    - [v19.1.1](https://github.com/giantswarm/releases/tree/master/azure/v19.1.1)
     - [v19.1.0](https://github.com/giantswarm/releases/tree/master/azure/v19.1.0)
 
   - v19.0
