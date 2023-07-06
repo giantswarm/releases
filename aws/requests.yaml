@@ -1,4 +1,8 @@
 releases:
+- name: ">= 19.1.0 < 19.999.999"
+  requests:
+  - name: security-bundle
+    version: ">= 0.16.2"
 - name: ">= 19.0.1"
   requests:
   - name: cluster-operator
