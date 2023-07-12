@@ -115,7 +115,7 @@ spec:                                                              spec:
     - cilium                                                           - cilium
     - coredns                                                          - coredns
   - name: k8s-dns-node-cache-app                                     - name: k8s-dns-node-cache-app
-    version: 2.1.0                                                     version: 2.1.0
+    version: 2.1.0                                                     version: 2.3.1
     dependsOn:                                                         dependsOn:
     - aws-cloud-controller-manager                                     - aws-cloud-controller-manager
     - cilium                                                           - cilium
