@@ -38,7 +38,7 @@ spec:                                                              spec:
     version: 2.34.0                                             |      version: 2.35.0
   - componentVersion: 1.13.0                                         - componentVersion: 1.13.0
     name: cilium                                                       name: cilium
-    version: 0.9.3                                              |      version: 0.10.0
+    version: 0.9.3                                              |      version: 0.11.0
     dependsOn:                                                         dependsOn:
     - aws-cloud-controller-manager                                     - aws-cloud-controller-manager
   - componentVersion: 1.24.0                                         - componentVersion: 1.24.0
@@ -115,7 +115,7 @@ spec:                                                              spec:
     - cilium                                                           - cilium
     - coredns                                                          - coredns
   - name: k8s-dns-node-cache-app                                     - name: k8s-dns-node-cache-app
-    version: 2.1.0                                                     version: 2.3.1
+    version: 2.1.0                                              |      version: 2.3.1
     dependsOn:                                                         dependsOn:
     - aws-cloud-controller-manager                                     - aws-cloud-controller-manager
     - cilium                                                           - cilium
@@ -143,13 +143,14 @@ spec:                                                              spec:
   - name: aws-operator                                               - name: aws-operator
     releaseOperatorDeploy: true                                        releaseOperatorDeploy: true
     version: 14.15.0                                            |      version: 14.17.1
-                                                                >      reference: 14.17.1-patch1
+                                                                >      reference: 14.17.1-patch2
   - name: cert-operator                                              - name: cert-operator
     releaseOperatorDeploy: true                                        releaseOperatorDeploy: true
     version: 3.0.1                                                     version: 3.0.1
   - name: cluster-operator                                           - name: cluster-operator
     releaseOperatorDeploy: true                                        releaseOperatorDeploy: true
     version: 5.6.0                                              |      version: 5.6.1
+                                                                >      reference: 5.6.1-patch1
   - name: containerlinux                                             - name: containerlinux
     version: 3374.2.3                                           |      version: 3510.2.0
   - name: etcd                                                       - name: etcd
