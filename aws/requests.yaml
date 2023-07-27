@@ -11,6 +11,8 @@ releases:
     version: ">= 6.6.3"
   - name: cert-manager
     version: ">= 2.24.1"
+  - name: cilium-servicemonitors
+    version: ">= 0.1.2"
   - name: external-dns
     version: ">= 2.37.0"
   - name: k8s-audit-metrics
