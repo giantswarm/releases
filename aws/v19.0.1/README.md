@@ -1,6 +1,6 @@
 # :zap: Giant Swarm Release v19.0.1 for AWS :zap:
 
-<< Add description here >>
+This is a patch release that provides improved performance for in-cluster DNS resolution.
 
 ## Change details
 
