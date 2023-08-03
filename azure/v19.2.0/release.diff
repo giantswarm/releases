@@ -116,8 +116,8 @@ spec:                                                              spec:
   - catalog: giantswarm                                              - catalog: giantswarm
     name: security-bundle                                              name: security-bundle
     version: 0.16.0                                             |      version: 0.16.2
-    dependsOn:                                                  <
-    - azure-cloud-controller-manager                            <
+    dependsOn:                                                  |    - name: k8s-audit-metrics
+    - azure-cloud-controller-manager                            |      version: 0.6.0
     - azure-cloud-node-manager                                  <
     - coredns                                                   <
   components:                                                        components:
@@ -141,7 +141,7 @@ spec:                                                              spec:
     version: 3.21.6                                                    version: 3.21.6
   - name: etcd                                                       - name: etcd
     version: 3.5.9                                                     version: 3.5.9
-  date: "2023-06-26T07:36:21Z"                                  |    date: "2023-08-03T12:27:45Z"
+  date: "2023-06-26T07:36:21Z"                                  |    date: "2023-08-03T12:34:35Z"
   state: active                                                      state: active
 status:                                                            status:
   inUse: false                                                       inUse: false
