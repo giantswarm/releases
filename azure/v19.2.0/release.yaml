@@ -49,7 +49,7 @@ spec:
     - vertical-pod-autoscaler-crd
   - componentVersion: 0.11.0
     name: external-dns
-    version: 2.38.0
+    version: 2.37.1
     dependsOn:
     - azure-cloud-controller-manager
     - azure-cloud-node-manager
