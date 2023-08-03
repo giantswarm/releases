@@ -86,22 +86,6 @@ _Nothing has changed._
 
 
 
-### external-dns [2.38.0](https://github.com/giantswarm/external-dns-app/releases/tag/v2.38.0)
-
-#### Changed
-- Move CRD jobs into a separated subchart ([#275](https://github.com/giantswarm/external-dns-app/pull/275)).
-- Prepare new values for alignment ([]()).
-  - Add domainFilter and extraArgs values.
-  - Add interval, namepsaceFilter and minEventSyncInterval values.
-  - Add txtPrefix value with higher priority.
-  - Add txtOwnerId value with higher priority.
-  - Add annotationFilter value with higher priority.
-- Allow projected volumes across all providers ([#282](https://github.com/giantswarm/external-dns-app/pull/282)).
-#### Removed
-- Hardcoded references to `provider==vmware` ([#277](https://github.com/giantswarm/external-dns-app/pull/277)).
-
-
-
 ### net-exporter [1.17.0](https://github.com/giantswarm/net-exporter/releases/tag/v1.17.0)
 
 #### Changed
