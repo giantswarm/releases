@@ -124,6 +124,7 @@ spec:                                                              spec:
                                                                 >      version: 0.6.1
                                                                 >      dependsOn:
                                                                 >      - vertical-pod-autoscaler-crd
+                                                                >      - kyverno
   components:                                                        components:
   - name: app-operator                                               - name: app-operator
     version: 6.7.0                                              |      version: 6.8.0
