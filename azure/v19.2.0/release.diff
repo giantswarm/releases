@@ -121,7 +121,9 @@ spec:                                                              spec:
     - azure-cloud-node-manager                                         - azure-cloud-node-manager
     - coredns                                                          - coredns
                                                                 >    - name: k8s-audit-metrics
-                                                                >      version: 0.6.0
+                                                                >      version: 0.6.1
+                                                                >      dependsOn:
+                                                                >      - vertical-pod-autoscaler-crd
   components:                                                        components:
   - name: app-operator                                               - name: app-operator
     version: 6.7.0                                              |      version: 6.8.0

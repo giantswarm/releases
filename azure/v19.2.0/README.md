@@ -149,7 +149,7 @@ _Nothing has changed._
 
 
 
-### k8s-audit-metrics [0.6.0](https://github.com/giantswarm/k8s-audit-metrics/releases/tag/v0.6.0)
+### k8s-audit-metrics [0.6.1](https://github.com/giantswarm/k8s-audit-metrics/releases/tag/v0.6.1)
 
 #### Fixed
 - Added required values for pss policies.
