@@ -12,6 +12,13 @@
 
 
 
+### azure-operator [7.4.0](https://github.com/giantswarm/azure-operator/releases/tag/v7.4.0)
+
+#### Fixed
+- Add necessary values for PSS policy warnings. 
+
+
+
 ### cert-operator [3.2.0](https://github.com/giantswarm/cert-operator/releases/tag/v3.2.0)
 
 #### Fixed

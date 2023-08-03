@@ -1,5 +1,5 @@
 # Generated with:                                                  # Generated with:
-# devctl release create --overwrite --provider azure --base 19. |  # devctl release create --provider azure --base 19.
+# devctl release create --overwrite --provider azure --base 19. |  # devctl release create --provider azure --name 19.2.0 --base 1
 apiVersion: release.giantswarm.io/v1alpha1                         apiVersion: release.giantswarm.io/v1alpha1
 kind: Release                                                      kind: Release
 metadata:                                                          metadata:
@@ -128,7 +128,7 @@ spec:                                                              spec:
   - catalog: control-plane-catalog                                   - catalog: control-plane-catalog
     name: azure-operator                                               name: azure-operator
     releaseOperatorDeploy: true                                        releaseOperatorDeploy: true
-    version: 7.3.0                                                     version: 7.3.0
+    version: 7.3.0                                              |      version: 7.4.0
   - name: cert-operator                                              - name: cert-operator
     releaseOperatorDeploy: true                                        releaseOperatorDeploy: true
     version: 3.0.1                                              |      version: 3.2.0
