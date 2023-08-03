@@ -1,0 +1,1 @@
+**Workload cluster release v19.0.1 for AWS is available**. This is a patch release that provides improved performance for in-cluster DNS resolution. Further details can be found in the [release notes](https://docs.giantswarm.io/changes/workload-cluster-releases-aws/releases/aws-v19.0.1/).

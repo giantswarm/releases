@@ -3,8 +3,6 @@ releases:
   requests:
   - name: security-bundle
     version: ">= 0.16.2"
-- name: ">= 19.0.1"
-  requests:
   - name: cluster-operator
     version: ">= 5.3.0"
   - name: app-operator
