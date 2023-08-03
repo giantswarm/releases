@@ -26,4 +26,9 @@ This is a patch release that provides improved performance for in-cluster DNS re
 - Enable TCP connections for external zones
 
 
+### vertical-pod-autoscaler-app [3.5.4](https://github.com/giantswarm/vertical-pod-autoscaler-app/releases/tag/v3.5.4)
 
+#### Changed
+- Specified `failureThreshold` and `periodSeconds` for recommender's liveness probe.
+- Upgrade dependency chart to 7.1.0.
+- Upgrade VPA components to 0.14.0
