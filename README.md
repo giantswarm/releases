@@ -1,4 +1,4 @@
-[![CircleCI](https://circleci.com/gh/giantswarm/releases.svg?style=shield)](https://circleci.com/gh/giantswarm/releases)
+[![CircleCI](https://dl.circleci.com/status-badge/img/gh/giantswarm/releases/tree/master.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/giantswarm/releases/tree/master)
 
 # Giant Swarm Workload Cluster Releases
 
