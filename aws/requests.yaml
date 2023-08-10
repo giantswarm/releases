@@ -11,6 +11,8 @@ releases:
     version: ">= 2.24.1"
   - name: cilium-servicemonitors
     version: ">= 0.1.2"
+  - name: aws-ebs-csi-driver
+    version: ">= 2.25.0"
   - name: external-dns
     version: ">= 2.37.0"
   - name: k8s-audit-metrics
