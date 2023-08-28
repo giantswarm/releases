@@ -155,9 +155,9 @@ spec:
     version: 6.7.0
   - catalog: control-plane-test-catalog
     name: aws-operator
-    reference: 14.19.2-468a76ec119d72213c331556e16711bb6de43248
+    reference: 14.19.2-466c72e6cc11ad1a7dbbbd31a4156befe90f9b31
     releaseOperatorDeploy: true
-    version: 14.19.3-dev
+    version: 14.19.3-eni
   - catalog: control-plane-catalog
     name: cert-operator
     releaseOperatorDeploy: true
