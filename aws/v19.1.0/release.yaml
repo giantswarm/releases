@@ -106,7 +106,7 @@ spec:
     - coredns
     - vertical-pod-autoscaler-crd
     name: vertical-pod-autoscaler
-    version: 3.5.2
+    version: 3.5.4
   - catalog: default
     name: vertical-pod-autoscaler-crd
     version: 2.0.1
@@ -121,7 +121,7 @@ spec:
     - cilium
     - coredns
     name: observability-bundle
-    version: 0.5.1
+    version: 0.7.3
   - catalog: default
     dependsOn:
     - aws-cloud-controller-manager
