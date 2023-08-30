@@ -164,7 +164,7 @@ spec:
     version: 3.0.1
   - catalog: control-plane-test-catalog
     name: cluster-operator
-    reference: 5.7.1-14b34fe01fd81157bc7605d999bd3fca2def785d
+    reference: 5.7.1-eeedbe0f280c645ff5926dcd93ceea8cfd520689
     releaseOperatorDeploy: true
     version: 5.7.2-dev
   - catalog: control-plane-catalog
