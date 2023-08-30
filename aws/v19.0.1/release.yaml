@@ -1,12 +1,12 @@
 # Generated with:
-# devctl release create --name 19.0.0 --base 19.0.0-beta1 --provider aws --overwrite --app aws-cloud-controller-manager@1.24.1-gs7@1.24.1 --app aws-ebs-csi-driver@2.21.1 --app cert-exporter@2.5.1 --app cert-manager@2.24.1@1.12.1 --app chart-operator@2.35.0 --app cilium@0.10.0@1.13.0 --app cluster-autoscaler@1.24.0-gs2@1.24.0 --app coredns@1.17.0@1.9.3 --app external-dns@2.37.1@0.11.0 --app metrics-server@2.2.0@0.6.1 --app net-exporter@1.15.0 --app node-exporter@1.16.0@1.3.1 --app vertical-pod-autoscaler@3.4.2@0.13.0 --app vertical-pod-autoscaler-crd@2.0.1 --app etcd-kubernetes-resources-count-exporter@1.2.0 --app observability-bundle@0.5.1 --app k8s-dns-node-cache@2.1.0 --app prometheus-blackbox-exporter@0.3.2 --app cilium-servicemonitors@0.1.1 --app irsa-servicemonitors@0.0.1 --component app-operator@6.7.0 --component aws-operator@14.17.1 --component cert-operator@3.0.1 --component cluster-operator@5.6.1 --component containerlinux@3510.2.0 --component etcd@3.5.7 --component kubernetes@1.24.13
+# /home/whites/workspace/devctl/devctl release create --overwrite --provider aws --base 19.0.0 --name 19.0.1 --app coredns@1.18.0 --app k8s-dns-node-cache-app@2.4.0
 apiVersion: release.giantswarm.io/v1alpha1
 kind: Release
 metadata:
   annotations:
     giantswarm.io/docs: https://docs.giantswarm.io/reference/cp-k8s-api/releases.release.giantswarm.io/
   creationTimestamp: null
-  name: v19.0.0
+  name: v19.0.1
 spec:
   apps:
   - componentVersion: 1.24.1
@@ -51,7 +51,7 @@ spec:
     - vertical-pod-autoscaler-crd
   - componentVersion: 1.9.3
     name: coredns
-    version: 1.17.1
+    version: 1.18.0
     dependsOn:
     - aws-cloud-controller-manager
     - cilium
@@ -86,9 +86,9 @@ spec:
     - cilium
     - coredns
     - vertical-pod-autoscaler-crd
-  - componentVersion: 0.13.0
+  - componentVersion: 0.14.0
     name: vertical-pod-autoscaler
-    version: 3.5.2
+    version: 3.5.4
     dependsOn:
     - aws-cloud-controller-manager
     - cilium
@@ -107,7 +107,7 @@ spec:
     - cilium
     - coredns
   - name: k8s-dns-node-cache-app
-    version: 2.3.1
+    version: 2.4.0
     dependsOn:
     - aws-cloud-controller-manager
     - cilium
@@ -149,7 +149,7 @@ spec:
     version: 3.5.7
   - name: kubernetes
     version: 1.24.13
-  date: "2023-05-17T09:34:06Z"
+  date: "2023-08-02T09:59:41Z"
   state: active
 status:
   inUse: false

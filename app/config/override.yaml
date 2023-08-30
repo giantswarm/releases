@@ -10,6 +10,3 @@ coredns:
   useUpgradeForce: false
 net-exporter:
   chart: "net-exporter"
-# Upgrade force is disabled to avoid affecting customer workloads.
-nginx-ingress-controller:
-  useUpgradeForce: false

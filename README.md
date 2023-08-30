@@ -1,4 +1,4 @@
-[![CircleCI](https://circleci.com/gh/giantswarm/releases.svg?style=shield)](https://circleci.com/gh/giantswarm/releases)
+[![CircleCI](https://dl.circleci.com/status-badge/img/gh/giantswarm/releases/tree/master.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/giantswarm/releases/tree/master)
 
 # Giant Swarm Workload Cluster Releases
 
@@ -14,22 +14,23 @@ to all Giant Swarm installations.
   - v19.1
     - [v19.1.0](https://github.com/giantswarm/releases/tree/master/aws/v19.1.0)
   - v19.0
+    - [v19.0.1](https://github.com/giantswarm/releases/tree/master/aws/v19.0.1)
     - [v19.0.0](https://github.com/giantswarm/releases/tree/master/aws/v19.0.0)
-    - [v19.0.0-beta1](https://github.com/giantswarm/releases/tree/master/aws/v19.0.0-beta1)
-    - [v19.0.0-alpha1](https://github.com/giantswarm/releases/tree/master/aws/v19.0.0-alpha1) 
+    - [v19.0.0-beta1](https://github.com/giantswarm/releases/tree/master/aws/archived/v19.0.0-beta1)
+    - [v19.0.0-alpha1](https://github.com/giantswarm/releases/tree/master/aws/archived/v19.0.0-alpha1) 
 - v18
   - v18.0
     - [v18.4.2](https://github.com/giantswarm/releases/tree/master/aws/v18.4.2)
     - [v18.4.1](https://github.com/giantswarm/releases/tree/master/aws/archived/v18.4.1)
-    - [v18.4.0](https://github.com/giantswarm/releases/tree/master/aws/v18.4.0)
-    - [v18.3.1](https://github.com/giantswarm/releases/tree/master/aws/v18.3.1)
-    - [v18.3.0](https://github.com/giantswarm/releases/tree/master/aws/v18.3.0)
+    - [v18.4.0](https://github.com/giantswarm/releases/tree/master/aws/archived/v18.4.0)
+    - [v18.3.1](https://github.com/giantswarm/releases/tree/master/aws/archived/v18.3.1)
+    - [v18.3.0](https://github.com/giantswarm/releases/tree/master/aws/archived/v18.3.0)
     - [v18.2.2](https://github.com/giantswarm/releases/tree/master/aws/v18.2.2)
-    - [v18.2.1](https://github.com/giantswarm/releases/tree/master/aws/v18.2.1)
+    - [v18.2.1](https://github.com/giantswarm/releases/tree/master/aws/archived/v18.2.1)
     - [v18.2.0](https://github.com/giantswarm/releases/tree/master/aws/v18.2.0)
     - [v18.1.1](https://github.com/giantswarm/releases/tree/master/aws/v18.1.1)
     - [v18.1.0](https://github.com/giantswarm/releases/tree/master/aws/v18.1.0)
-    - [v18.0.3](https://github.com/giantswarm/releases/tree/master/aws/v18.0.3)
+    - [v18.0.3](https://github.com/giantswarm/releases/tree/master/aws/archived/v18.0.3)
     - [v18.0.2](https://github.com/giantswarm/releases/tree/master/aws/archived/v18.0.2)
     - [v18.0.1](https://github.com/giantswarm/releases/tree/master/aws/archived/v18.0.1)
     - [v18.0.0](https://github.com/giantswarm/releases/tree/master/aws/archived/v18.0.0)

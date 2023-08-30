@@ -4,19 +4,13 @@ resources:
 - v16.5.1
 - v16.5.2
 - v17.4.4
-- v18.0.3
 - v18.1.0
 - v18.1.1
 - v18.2.0
-- v18.2.1
 - v18.2.2
-- v18.3.0
-- v18.3.1
-- v18.4.0
 - v18.4.2
-- v19.0.0-alpha1
-- v19.0.0-beta1
 - v19.0.0
+- v19.0.1
 - v19.1.0
 transformers:
 - releaseNotesTransformer.yaml
