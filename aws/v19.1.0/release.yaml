@@ -99,14 +99,14 @@ spec:
     name: node-exporter
     version: 1.16.0
   - catalog: default
-    componentVersion: 0.13.0
+    componentVersion: 0.14.0
     dependsOn:
     - aws-cloud-controller-manager
     - cilium
     - coredns
     - vertical-pod-autoscaler-crd
     name: vertical-pod-autoscaler
-    version: 3.5.4
+    version: 4.0.0
   - catalog: default
     name: vertical-pod-autoscaler-crd
     version: 2.0.1
