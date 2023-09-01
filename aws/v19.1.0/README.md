@@ -40,24 +40,6 @@
 - Rename function for better readbility.
 
 
-
-### containerlinux [3510.2.6](https://www.flatcar-linux.org/releases/#release-3510.2.6)
-
- _Changes since **Stable 3510.2.5**_
- 
- #### Security fixes:
- 
- - Linux ([CVE-2022-48502](https://nvd.nist.gov/vuln/detail/CVE-2022-48502), [CVE-2023-20593](https://nvd.nist.gov/vuln/detail/CVE-2023-20593), [CVE-2023-2898](https://nvd.nist.gov/vuln/detail/CVE-2023-2898), [CVE-2023-31248](https://nvd.nist.gov/vuln/detail/CVE-2023-31248), [CVE-2023-35001](https://nvd.nist.gov/vuln/detail/CVE-2023-35001), [CVE-2023-3611](https://nvd.nist.gov/vuln/detail/CVE-2023-3611), [CVE-2023-3776](https://nvd.nist.gov/vuln/detail/CVE-2023-3776), [CVE-2023-38432](https://nvd.nist.gov/vuln/detail/CVE-2023-38432), [CVE-2023-3863](https://nvd.nist.gov/vuln/detail/CVE-2023-3863))
- - linux-firmware ([CVE-2023-20593](https://nvd.nist.gov/vuln/detail/CVE-2023-20593))
- 
- #### Updates:
- 
- - Linux ([5.15.122](https://lwn.net/Articles/939104) (includes [5.15.121](https://lwn.net/Articles/939016), [5.15.120](https://lwn.net/Articles/937404)))
- - ca-certificates ([3.92](https://firefox-source-docs.mozilla.org/security/nss/releases/nss_3_92.html))
- - linux-firmware ([20230625](https://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git/tag/?h=20230625))
-
-
-
 ### etcd [3.5.9](https://github.com/etcd-io/etcd/releases/tag/v3.5.9)
 
 #### etcd server

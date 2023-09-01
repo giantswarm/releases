@@ -167,7 +167,7 @@ spec:                                                            spec:
                                                                >     releaseOperatorDeploy: true
                                                                >     version: 5.8.0
   - name: containerlinux                                           - name: containerlinux
-    version: 3510.2.0                                          |     version: 3510.2.6
+    version: 3510.2.0                                                version: 3510.2.0
   - name: etcd                                                     - name: etcd
     version: 3.5.7                                             |     version: 3.5.9
   - name: kubernetes                                               - name: kubernetes
