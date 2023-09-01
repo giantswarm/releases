@@ -98,25 +98,18 @@ _Nothing has changed._
 
 
 
-### cilium [0.11.1](https://github.com/giantswarm/cilium-app/releases/tag/v0.11.1)
+### coredns [1.18.1](https://github.com/giantswarm/coredns-app/releases/tag/v1.18.1)
+
+#### Fixed
+- Remove `fallthrough` for reverse zones from kubernetes plugin.
+
+
+
+### external-dns [2.39.0](https://github.com/giantswarm/external-dns-app/releases/tag/v2.39.0)
 
 #### Changed
-- Create custom CNI config depending on provider to allow bigger customization.
-- Bump all manifests to upstream version 1.13.6.
-
-
-
-### net-exporter [1.17.0](https://github.com/giantswarm/net-exporter/releases/tag/v1.17.0)
-
-#### Changed
-- Add security context values to make chart comply to PodSecurityStandard restricted profile.
-
-
-
-### node-exporter [1.16.1](https://github.com/giantswarm/node-exporter-app/releases/tag/v1.16.1)
-
-#### Changed
-- Enable service monitor.
+- Replace monitoring labels with ServiceMonitor ([#296](https://github.com/giantswarm/external-dns-app/pull/296)).
+- Update ATS to 0.4.1 and python deps ([#297](https://github.com/giantswarm/external-dns-app/pull/297)).
 
 
 
@@ -142,10 +135,35 @@ WARNING: this version requires Cilium to run because of the dependency on the Ci
 
 
 
+### observability-bundle [0.7.3](https://github.com/giantswarm/observability-bundle/releases/tag/v0.7.3)
+
+#### Changed
+- Add extra config for `prometheus-operator-app` to be able to enable cilium.
+#### Changed
+- Upgrade `prometheus-operator-app` and `prometheus-operator-crd` to 5.1.0.
+
+
+
+### cilium-servicemonitors [0.1.2](https://github.com/giantswarm/cilium-servicemonitors-app/releases/tag/v0.1.2)
+
+#### Changed
+- Drop metrics with high cardinality.
+- Increase scrape interval to 60s.
+
+
+
 ### aws-ebs-csi-driver [2.25.0](https://github.com/giantswarm/aws-ebs-csi-driver-app/releases/tag/v2.25.0)
 
 #### Changed
 - Updated ebs-csi-driver to `v1.21.0` and updated sidecar images.
+
+
+
+### cilium [0.11.1](https://github.com/giantswarm/cilium-app/releases/tag/v0.11.1)
+
+#### Changed
+- Create custom CNI config depending on provider to allow bigger customization.
+- Bump all manifests to upstream version 1.13.6.
 
 
 
@@ -157,18 +175,17 @@ WARNING: this version requires Cilium to run because of the dependency on the Ci
 
 
 
-### coredns [1.18.1](https://github.com/giantswarm/coredns-app/releases/tag/v1.18.1)
-
-#### Fixed
-- Remove `fallthrough` for reverse zones from kubernetes plugin.
-
-
-
-### external-dns [2.39.0](https://github.com/giantswarm/external-dns-app/releases/tag/v2.39.0)
+### net-exporter [1.17.0](https://github.com/giantswarm/net-exporter/releases/tag/v1.17.0)
 
 #### Changed
-- Replace monitoring labels with ServiceMonitor ([#296](https://github.com/giantswarm/external-dns-app/pull/296)).
-- Update ATS to 0.4.1 and python deps ([#297](https://github.com/giantswarm/external-dns-app/pull/297)).
+- Add security context values to make chart comply to PodSecurityStandard restricted profile.
+
+
+
+### node-exporter [1.16.1](https://github.com/giantswarm/node-exporter-app/releases/tag/v1.16.1)
+
+#### Changed
+- Enable service monitor.
 
 
 
@@ -176,21 +193,6 @@ WARNING: this version requires Cilium to run because of the dependency on the Ci
 
 #### Changed
 - Add Max memory (default 500Mi) for VPA.
-
-
-
-### observability-bundle [0.7.5](https://github.com/giantswarm/observability-bundle/releases/tag/v0.7.5)
-
-#### Added
-- Add extraConfig priority support.
-
-
-
-### cilium-servicemonitors [0.1.2](https://github.com/giantswarm/cilium-servicemonitors-app/releases/tag/v0.1.2)
-
-#### Changed
-- Drop metrics with high cardinality.
-- Increase scrape interval to 60s.
 
 
 
