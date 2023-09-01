@@ -41,12 +41,12 @@ spec:
   - catalog: default
     name: chart-operator
     version: 2.35.0
-  - catalog: default-test
-    componentVersion: 1.13.0
+  - catalog: default
+    componentVersion: 1.13.6
     dependsOn:
     - aws-cloud-controller-manager
     name: cilium
-    version: 0.11.0-d7765d2468ddd9ba6cb8c50fbf468851568bb82e
+    version: 0.11.1
   - catalog: default
     componentVersion: 1.24.0
     dependsOn:
@@ -155,18 +155,16 @@ spec:
     version: 6.7.0
   - catalog: control-plane-test-catalog
     name: aws-operator
-    reference: 14.19.2-466c72e6cc11ad1a7dbbbd31a4156befe90f9b31
     releaseOperatorDeploy: true
-    version: 14.19.3-eni
+    version: 14.21.0
   - catalog: control-plane-catalog
     name: cert-operator
     releaseOperatorDeploy: true
     version: 3.0.1
-  - catalog: control-plane-test-catalog
+  - catalog: control-plane-catalog
     name: cluster-operator
-    reference: 5.7.1-eeedbe0f280c645ff5926dcd93ceea8cfd520689
     releaseOperatorDeploy: true
-    version: 5.7.2-dev
+    version: 5.8.0
   - catalog: control-plane-catalog
     name: containerlinux
     version: 3510.2.0

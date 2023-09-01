@@ -36,9 +36,9 @@ spec:                                                              spec:
     - vertical-pod-autoscaler-crd                               <
   - name: chart-operator                                             - name: chart-operator
     version: 2.35.0                                                    version: 2.35.0
-  - componentVersion: 1.13.0                                         - componentVersion: 1.13.0
-    name: cilium                                                       name: cilium
-    version: 0.10.0                                                    version: 0.10.0
+  - componentVersion: 1.13.0                                    <    - componentVersion: 1.13.6
+    name: cilium                                                <      name: cilium
+    version: 0.10.0                                             <      version: 0.11.1
     dependsOn:                                                  <
     - aws-cloud-controller-manager                              <
   - componentVersion: 1.24.0                                         - componentVersion: 1.24.0
@@ -133,16 +133,14 @@ spec:                                                              spec:
   - name: app-operator                                               - name: app-operator
     version: 6.7.0                                                     version: 6.7.0
   - name: aws-operator                                               - name: aws-operator
-                                                                >      reference: 14.17.1-patch2
     releaseOperatorDeploy: true                                        releaseOperatorDeploy: true
-    version: 14.17.1                                                   version: 14.17.1
-    reference: 14.17.1-patch2                                   <
+    version: 14.17.1                                            <      version: 14.21.0
   - name: cert-operator                                              - name: cert-operator
     releaseOperatorDeploy: true                                        releaseOperatorDeploy: true
     version: 3.0.1                                                     version: 3.0.1
   - name: cluster-operator                                           - name: cluster-operator
     releaseOperatorDeploy: true                                        releaseOperatorDeploy: true
-    version: 5.6.1                                                     version: 5.6.1
+    version: 5.6.1                                              <      version: 5.8.0
   - name: containerlinux                                             - name: containerlinux
     version: 3510.2.0                                                  version: 3510.2.0
   - name: etcd                                                       - name: etcd
