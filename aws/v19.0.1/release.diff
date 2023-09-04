@@ -51,7 +51,7 @@ spec:                                                              spec:
     - vertical-pod-autoscaler-crd                                      - vertical-pod-autoscaler-crd
   - componentVersion: 1.9.3                                          - componentVersion: 1.9.3
     name: coredns                                                      name: coredns
-    version: 1.17.1                                             |      version: 1.18.0
+    version: 1.17.1                                             |      version: 1.18.1
     dependsOn:                                                         dependsOn:
     - aws-cloud-controller-manager                                     - aws-cloud-controller-manager
     - cilium                                                           - cilium
