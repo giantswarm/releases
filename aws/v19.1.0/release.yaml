@@ -132,7 +132,7 @@ spec:
     - coredns
     - vertical-pod-autoscaler-crd
     name: security-bundle
-    version: 1.0.2
+    version: 0.16.0
     catalog: giantswarm
   - dependsOn:
     - aws-cloud-controller-manager
