@@ -1,5 +1,5 @@
 # Generated with:
-# /home/whites/workspace/devctl/devctl release create --overwrite --provider aws --base 19.0.0 --name 19.0.1 --app coredns@1.18.0 --app k8s-dns-node-cache-app@2.4.0
+# /home/whites/workspace/devctl/devctl release create --overwrite --provider aws --base 19.0.0 --name 19.0.1 --app coredns@1.18.1 --app k8s-dns-node-cache-app@2.4.0
 apiVersion: release.giantswarm.io/v1alpha1
 kind: Release
 metadata:
@@ -51,7 +51,7 @@ spec:
     - vertical-pod-autoscaler-crd
   - componentVersion: 1.9.3
     name: coredns
-    version: 1.18.0
+    version: 1.18.1
     dependsOn:
     - aws-cloud-controller-manager
     - cilium
