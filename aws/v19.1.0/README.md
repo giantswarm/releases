@@ -1,6 +1,6 @@
 # :zap: Giant Swarm Release v19.1.0 for AWS :zap:
 
-This is a maintainance release featuring latest 1.24 Kubernetes versions as well as components upgrades. This release also introduces new features which are described in next sections.
+This is a maintenance release featuring latest 1.24 Kubernetes versions as well as components upgrades. This release also introduces new features which are described in next sections.
 
 ***IAM Permissions Requirements***
 The minimal requirement for the IAM permissions is [Version 3.3.0](https://github.com/giantswarm/giantswarm-aws-account-prerequisites/blob/master/CHANGELOG.md#330---2023-05-11) of [giantswarm-aws-account-prerequisites](https://github.com/giantswarm/giantswarm-aws-account-prerequisites/) repository.
