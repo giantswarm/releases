@@ -126,6 +126,20 @@ spec:
     - prometheus-operator-crd
     name: irsa-servicemonitors
     version: 0.0.1
+  - dependsOn:
+    - aws-cloud-controller-manager
+    - cilium
+    - coredns
+    - vertical-pod-autoscaler-crd
+    name: security-bundle
+    version: 0.16.2
+  - dependsOn:
+    - aws-cloud-controller-manager
+    - cilium
+    - coredns
+    - vertical-pod-autoscaler-crd
+    name: k8s-audit-metrics
+    version: 0.5.3
   components:
   - name: app-operator
     version: 6.8.0
