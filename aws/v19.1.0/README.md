@@ -17,6 +17,8 @@ Feature can be enabled via an annotation `cilium.giantswarm.io/ipam-mode: eni` s
 
 This is the release preparing for the migration away from Pod Security Policies (PSP) in favor of Pod Security Standards (PSS) in Kubernetes 1.25. Our `security-bundle` is now installed by default, and will deploy `kyverno` and `restricted` level PSS policies in `audit` mode. These resources are provided in order to allow time to create exceptions for workloads which need them before the policies are changed to `enforce` in a future release. For more information about PSS please read our official [documentation](https://docs.giantswarm.io/advanced/security-policy-enforcement/). Please also take a look at the `kyverno` [documentation](https://docs.giantswarm.io/platform-overview/security/platform-security/#kyverno) to utilize fully its potential.
 
+> **WARNING:** If you are already running `kyverno` as Giant Swarm Managed App, the installation of `security-bundle` will fail. However the already existing `kyverno` deployment and its configuration can be adopted by the bundle after the upgrade is finished. Please talk to your Account Engineer if you have any questions.
+
 ## AWSMachineDeployment CR's annotation to change the Flatcar Release Version
 
 This feature allows customer to set an annotation on AWSMachineDeployment CR's to change the Flatcar Release Version. For now it only allows to set `alpha.giantswarm.io/flatcar-release-version: "3689.0.0"` or a higher. We have added this feautre to accomodate the issues with Cilium CNI high CPU usage on small clusters. This feature is solely to enable customers to run Flatcar `alpha` channel which consists of the `kernel 6` version that fixes the issue, while waiting for a `stable` Flatcar release.
@@ -26,8 +28,6 @@ Please read the detailed description of the designed behaviour of the annotation
 - when removing the annotation the node pool is updated and switches back to the default OS image which is coming from the AWS release
 - when upgrading the cluster to a new AWS release, the node pool uses the specific flatcar release from the annotation as long as you don't change by either setting it to a higher version or removing the annotation.
 
-
-> **WARNING:** If you are already running `kyverno` as Giant Swarm Managed App, the installation of `security-bundle` will fail. However the already existing `kyverno` deployment and its configuration can be adopted by the bundle after the upgrade is finished. Please talk to your Account Engineer if you have any questions.
 
 ## Change details
 
