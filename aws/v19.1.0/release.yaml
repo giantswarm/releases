@@ -132,14 +132,14 @@ spec:
     - coredns
     - vertical-pod-autoscaler-crd
     name: security-bundle
-    version: 0.16.2
+    version: 1.0.2
   - dependsOn:
     - aws-cloud-controller-manager
     - cilium
     - coredns
     - vertical-pod-autoscaler-crd
     name: k8s-audit-metrics
-    version: 0.5.3
+    version: 0.6.1
   components:
   - name: app-operator
     version: 6.8.0
