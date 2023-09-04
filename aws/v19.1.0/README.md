@@ -65,7 +65,7 @@ Please read the detailed description of the designed behaviour of the annotation
 - Consider new control-plane label.
 #### Changed
 - Propagate `global.podSecurityStandards.enforced` value set to `true` for PSS migration
-- Rename function for better readbility.
+- Rename function for better readability.
 
 
 ### etcd [3.5.9](https://github.com/etcd-io/etcd/releases/tag/v3.5.9)
