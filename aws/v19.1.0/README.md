@@ -35,7 +35,8 @@ Please read the detailed description of the designed behaviour of the annotation
 ### app-operator [6.8.0](https://github.com/giantswarm/app-operator/releases/tag/v6.8.0)
 
 #### Added
-- Add Service Monitor by default to make it complain with the latest monitoring improvements 
+
+- Add Service Monitor by default to make it compliant with the latest monitoring improvements 
 
 
 
