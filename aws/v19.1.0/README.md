@@ -24,7 +24,7 @@ This is the release preparing for the migration away from Pod Security Policies 
 This feature allows customers to set an annotation on AWSMachineDeployment CR's to change the Flatcar Release Version. For now it only allows setting `alpha.giantswarm.io/flatcar-release-version: "3689.0.0"` or a higher version. We have added this feature to accommodate the issues with Cilium CNI high CPU usage on small clusters. This feature is solely to enable customers to run the Flatcar `alpha` channel which consists of the `kernel 6` version that fixes the issue, while waiting for a `stable` Flatcar release.
 
 Please read the detailed description of the designed behaviour of the annotation:
-- when setting the annotation the TCNP Stack for the specific node pool is rolled and replaces the OS image
+- when setting the annotation, the TCNP CloudFormation Stack for the specific node pool is rolled and replaces the OS image
 - when removing the annotation the node pool is updated and switches back to the default OS image which is coming from the AWS release
 - when upgrading the cluster to a new AWS release, the node pool uses the specific flatcar release from the annotation as long as you don't change by either setting it to a higher version or removing the annotation.
 
