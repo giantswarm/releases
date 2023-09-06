@@ -11,7 +11,7 @@ Following our work on changing the CNI of the Giant Swarm Workload Clusters towa
 
 > **WARNING:** The Cilium AWS ENI mode can be *ONLY* enabled while upgrading from `18.4.2` to `19.1.0` release. From that point forward the Workload Clusters will be running in Cilium AWS ENI mode and cannot be switched back to our default Cilium that comes with `19.0.0`. Both the Cilium and Cilium AWS ENI mode will receive the same level of support going forward.
 
-Feature can be enabled via an annotation `cilium.giantswarm.io/ipam-mode: eni` set on the Cluster CR while on `18.4.2` release prior to `19.1.0` upgrade. When the upgrade is triggered, the undelying infrastructure will choose to continue with the [Cilium AWS ENI mode](https://docs.cilium.io/en/latest/network/concepts/ipam/eni/). This is meant for the users that do not want to migrate any of the underlying network infrastructure that has been linked with the Giant Swarm Workload Clusters. The network setup after the upgrade will be the same as while running `aws-cni` with kube-proxy.
+Feature can be enabled via an annotation `cilium.giantswarm.io/ipam-mode: eni` set on the Cluster CR while on `18.4.2` release prior to `19.1.0` upgrade. When the upgrade is triggered, the underlying infrastructure will choose to continue with the [Cilium AWS ENI mode](https://docs.cilium.io/en/latest/network/concepts/ipam/eni/). This is meant for the users that do not want to migrate any of the underlying network infrastructure that has been linked with the Giant Swarm Workload Clusters. The network setup after the upgrade will be the same as while running `aws-cni` with kube-proxy.
 
 ## Kyverno by default
 
