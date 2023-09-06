@@ -25,7 +25,7 @@ This feature allows customers to set an annotation on AWSMachineDeployment CR's 
 
 Please read the detailed description of the designed behaviour of the annotation:
 - when setting the annotation, the TCNP CloudFormation Stack for the specific node pool is rolled and replaces the OS image
-- when removing the annotation the node pool is updated and switches back to the default OS image which is coming from the AWS release
+- when removing the annotation, the node pool is updated and switches back to the default OS image which is coming from the AWS release
 - when upgrading the cluster to a new AWS release, the node pool uses the specific flatcar release from the annotation as long as you don't change by either setting it to a higher version or removing the annotation.
 
 
