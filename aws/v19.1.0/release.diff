@@ -167,20 +167,16 @@ spec:                                                              spec:
   - name: app-operator                                               - name: app-operator
     version: 6.7.0                                              |      version: 6.8.0
   - name: aws-operator                                               - name: aws-operator
-    releaseOperatorDeploy: true                                 <
-    version: 14.17.1                                            <
-    reference: 14.17.1-patch3                                          reference: 14.17.1-patch3
-                                                                >      releaseOperatorDeploy: true
-                                                                >      version: 14.21.0
+    releaseOperatorDeploy: true                                        releaseOperatorDeploy: true
+    version: 14.17.1                                            |      version: 14.21.0
+    reference: 14.17.1-patch3                                   <
   - name: cert-operator                                              - name: cert-operator
     releaseOperatorDeploy: true                                        releaseOperatorDeploy: true
     version: 3.0.1                                              |      version: 3.2.1
   - name: cluster-operator                                           - name: cluster-operator
-    releaseOperatorDeploy: true                                 <
-    version: 5.6.1                                              <
-    reference: 5.6.1-patch1                                            reference: 5.6.1-patch1
-                                                                >      releaseOperatorDeploy: true
-                                                                >      version: 5.8.0
+    releaseOperatorDeploy: true                                        releaseOperatorDeploy: true
+    version: 5.6.1                                              |      version: 5.8.0
+    reference: 5.6.1-patch1                                     <
   - name: containerlinux                                             - name: containerlinux
     version: 3510.2.0                                                  version: 3510.2.0
   - name: etcd                                                       - name: etcd
