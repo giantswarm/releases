@@ -1,6 +1,32 @@
 # :zap: Giant Swarm Release v19.1.0 for AWS :zap:
 
-<< Add description here >>
+This is a maintenance release featuring latest 1.24 Kubernetes versions as well as components upgrades. This release also introduces new features which are described in next sections.
+
+***IAM Permissions Requirements***
+The minimal requirement for the IAM permissions is [Version 3.3.0](https://github.com/giantswarm/giantswarm-aws-account-prerequisites/blob/master/CHANGELOG.md#330---2023-05-11) of [giantswarm-aws-account-prerequisites](https://github.com/giantswarm/giantswarm-aws-account-prerequisites/) repository.
+
+## Cilium AWS ENI mode
+
+Following our work on changing the CNI of the Giant Swarm Workload Clusters towards Cilium, we have added a possibility to migrate to the Cilium AWS ENI mode instead of plain Cilium setup.
+
+> **WARNING:** The Cilium AWS ENI mode can be *ONLY* enabled while upgrading from `18.4.2` to `19.1.0` release. From that point forward the Workload Clusters will be running in Cilium AWS ENI mode and cannot be switched back to our default Cilium that comes with `19.0.0`. Both the Cilium and Cilium AWS ENI mode will receive the same level of support going forward.
+
+Feature can be enabled via an annotation `cilium.giantswarm.io/ipam-mode: eni` set on the Cluster CR while on `18.4.2` release prior to `19.1.0` upgrade. When the upgrade is triggered, the underlying infrastructure will choose to continue with the [Cilium AWS ENI mode](https://docs.cilium.io/en/latest/network/concepts/ipam/eni/). This is meant for the users that do not want to migrate any of the underlying network infrastructure that has been linked with the Giant Swarm Workload Clusters. The network setup after the upgrade will be the same as while running `aws-cni` with kube-proxy.
+
+## Kyverno by default
+
+This release prepares for the migration away from Pod Security Policies (PSP) in favor of Pod Security Standards (PSS) in Kubernetes 1.25. Our `security-bundle` is now installed by default, and will deploy `kyverno` and `restricted` level PSS policies in `audit` mode. These resources are provided in order to allow time to create exceptions for workloads which need them before the policies are changed to `enforce` in a future release. For more information about PSS please read our official [documentation](https://docs.giantswarm.io/advanced/security-policy-enforcement/). Please also take a look at the `kyverno` [documentation](https://docs.giantswarm.io/platform-overview/security/platform-security/#kyverno) to fully utilize its potential.
+
+> **WARNING:** If you are already running `kyverno` as Giant Swarm Managed App, the installation of `security-bundle` will fail. However the already existing `kyverno` deployment and its configuration can be adopted by the bundle after the upgrade is finished. Please talk to your Account Engineer if you have any questions.
+
+## AWSMachineDeployment CR's annotation to change the Flatcar Release Version
+
+This feature allows customers to set an annotation on AWSMachineDeployment CR's to change the Flatcar Release Version. For now it only allows setting `alpha.giantswarm.io/flatcar-release-version: "3689.0.0"` or a higher version. We have added this feature to accommodate the issues with Cilium CNI high CPU usage on small clusters. This feature is solely to enable customers to run the Flatcar `alpha` channel which consists of the `kernel 6` version that fixes the issue, while waiting for a `stable` Flatcar release.
+
+The annotation behaves as follows:
+- when setting the annotation, the TCNP CloudFormation Stack for the specific node pool is rolled and replaces the OS image
+- when removing the annotation, the node pool is updated and switches back to the default OS image which is coming from the AWS release
+- when upgrading the cluster to a new AWS release, the node pool uses the specific flatcar release from the annotation as long as you don't change by either setting it to a higher version or removing the annotation.
 
 ## Change details
 
