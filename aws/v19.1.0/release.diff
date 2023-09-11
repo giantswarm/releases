@@ -6,7 +6,7 @@ metadata:                                                          metadata:
   annotations:                                                       annotations:
     giantswarm.io/docs: https://docs.giantswarm.io/reference/cp        giantswarm.io/docs: https://docs.giantswarm.io/reference/cp
   creationTimestamp: null                                            creationTimestamp: null
-  name: v19.0.1                                                 |    name: v19.1.0
+  name: v19.0.1                                                 |    name: v19.1.0-whites
 spec:                                                              spec:
   apps:                                                              apps:
   - componentVersion: 1.24.1                                         - componentVersion: 1.24.1
@@ -148,27 +148,12 @@ spec:                                                              spec:
     - prometheus-operator-crd                                          - prometheus-operator-crd
                                                                 >      name: irsa-servicemonitors
                                                                 >      version: 0.0.1
-                                                                >    - dependsOn:
-                                                                >      - aws-cloud-controller-manager
-                                                                >      - cilium
-                                                                >      - coredns
-                                                                >      - vertical-pod-autoscaler-crd
-                                                                >      name: security-bundle
-                                                                >      version: 0.16.2
-                                                                >      catalog: giantswarm
-                                                                >    - dependsOn:
-                                                                >      - aws-cloud-controller-manager
-                                                                >      - cilium
-                                                                >      - coredns
-                                                                >      - vertical-pod-autoscaler-crd
-                                                                >      name: k8s-audit-metrics
-                                                                >      version: 0.6.1
   components:                                                        components:
   - name: app-operator                                               - name: app-operator
     version: 6.7.0                                              |      version: 6.8.0
   - name: aws-operator                                               - name: aws-operator
     releaseOperatorDeploy: true                                        releaseOperatorDeploy: true
-    version: 14.17.1                                            |      version: 14.21.0
+    version: 14.17.1                                            |      version: 14.22.0
     reference: 14.17.1-patch3                                   <
   - name: cert-operator                                              - name: cert-operator
     releaseOperatorDeploy: true                                        releaseOperatorDeploy: true
@@ -178,12 +163,12 @@ spec:                                                              spec:
     version: 5.6.1                                              |      version: 5.8.0
     reference: 5.6.1-patch1                                     <
   - name: containerlinux                                             - name: containerlinux
-    version: 3510.2.0                                                  version: 3510.2.0
+    version: 3510.2.0                                           |      version: 3510.2.7
   - name: etcd                                                       - name: etcd
     version: 3.5.7                                              |      version: 3.5.9
   - name: kubernetes                                                 - name: kubernetes
     version: 1.24.13                                            |      version: 1.24.17
-  date: "2023-08-02T09:59:41Z"                                  |    date: "2023-09-11T06:19:34Z"
+  date: "2023-08-02T09:59:41Z"                                  |    date: "2023-09-11T09:45:05Z"
   state: active                                                      state: active
 status:                                                            status:
   inUse: false                                                       inUse: false

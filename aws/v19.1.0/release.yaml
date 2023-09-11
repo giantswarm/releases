@@ -1,12 +1,12 @@
 # Generated with:
-# /home/whites/workspace/devctl/devctl release create --provider aws --base 19.0.1 --name 19.1.0 --component kubernetes@1.24.17 --component containerlinux@3510.2.0 --overwrite
+# /home/whites/workspace/devctl/devctl release create --provider aws --base 19.0.1 --name 19.1.0 --component kubernetes@1.24.17 --component containerlinux@3510.2.7 --overwrite
 apiVersion: release.giantswarm.io/v1alpha1
 kind: Release
 metadata:
   annotations:
     giantswarm.io/docs: https://docs.giantswarm.io/reference/cp-k8s-api/releases.release.giantswarm.io/
   creationTimestamp: null
-  name: v19.1.0
+  name: v19.1.0-whites
 spec:
   apps:
   - componentVersion: 1.24.1
@@ -149,7 +149,7 @@ spec:
     version: 6.8.0
   - name: aws-operator
     releaseOperatorDeploy: true
-    version: 14.21.0
+    version: 14.22.0
   - name: cert-operator
     releaseOperatorDeploy: true
     version: 3.2.1
@@ -157,12 +157,12 @@ spec:
     releaseOperatorDeploy: true
     version: 5.8.0
   - name: containerlinux
-    version: 3510.2.0
+    version: 3510.2.7
   - name: etcd
     version: 3.5.9
   - name: kubernetes
     version: 1.24.17
-  date: "2023-09-11T06:19:34Z"
+  date: "2023-09-11T09:45:05Z"
   state: active
 status:
   inUse: false

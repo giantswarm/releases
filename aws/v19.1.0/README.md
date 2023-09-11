@@ -31,24 +31,6 @@ The annotation behaves as follows:
 ## Change details
 
 
-### cert-operator [3.2.1](https://github.com/giantswarm/cert-operator/releases/tag/v3.2.1)
-
-#### Fixed
-- Fix rule names of PolicyException.
-
-
-
-### cluster-operator [5.8.0](https://github.com/giantswarm/cluster-operator/releases/tag/v5.8.0)
-
-#### Added
-- Add ENI mode for Cilium on AWS.
-- Consider new control-plane label.
-#### Changed
-- Propagate `global.podSecurityStandards.enforced` value set to `true` for PSS migration
-- Rename function for better readbility.
-
-
-
 ### etcd [3.5.9](https://github.com/etcd-io/etcd/releases/tag/v3.5.9)
 
 #### etcd server
@@ -81,16 +63,82 @@ _Nothing has changed._
 
 
 
-### aws-operator [14.21.0](https://github.com/giantswarm/aws-operator/releases/tag/v14.21.0)
+### aws-operator [14.22.0](https://github.com/giantswarm/aws-operator/releases/tag/v14.22.0)
+
+#### Changed
+
+- Get AMI data from helm value rather than from hardcoded string in the code.
 
 
-
-
-### cert-manager [3.3.0](https://github.com/giantswarm/cert-manager-app/releases/tag/v3.3.0)
 
 ⚠️ Attention: Major release [3.0.0](#300---2023-07-26) contains breaking changes in user values! Please make sure you [read about the upgrade instructions](https://github.com/giantswarm/cert-manager-app/blob/main/docs/upgrading.md)! ⚠️
 #### Added
 - Add NetworkPolicies for controller and cainjector. ([#354](https://github.com/giantswarm/cert-manager-app/pull/354))
+
+#### Fixed
+- Fix rule names of PolicyException.
+
+
+
+### cluster-operator [5.8.0](https://github.com/giantswarm/cluster-operator/releases/tag/v5.8.0)
+
+#### Added
+- Add ENI mode for Cilium on AWS.
+- Consider new control-plane label.
+#### Changed
+- Propagate `global.podSecurityStandards.enforced` value set to `true` for PSS migration
+- Rename function for better readbility.
+
+
+
+### containerlinux [3510.2.7](https://www.flatcar-linux.org/releases/#release-3510.2.7)
+
+ _Changes since **Stable 3510.2.6**_
+ 
+ #### Security fixes:
+ 
+ - Linux ([CVE-2022-40982](https://nvd.nist.gov/vuln/detail/CVE-2022-40982), [CVE-2022-41804](https://nvd.nist.gov/vuln/detail/CVE-2022-41804), [CVE-2023-1206](https://nvd.nist.gov/vuln/detail/CVE-2023-1206), [CVE-2023-20569](https://nvd.nist.gov/vuln/detail/CVE-2023-20569), [CVE-2023-4004](https://nvd.nist.gov/vuln/detail/CVE-2023-4004), [CVE-2023-4147](https://nvd.nist.gov/vuln/detail/CVE-2023-4147), [CVE-2023-20569](https://nvd.nist.gov/vuln/detail/CVE-2023-20569), [CVE-2023-23908](https://nvd.nist.gov/vuln/detail/CVE-2023-23908))
+ 
+ #### Bug fixes:
+ 
+ - Fixed the restart of Systemd services when the main process is being killed by a SIGHUP signal ([flatcar#1157](https://github.com/flatcar/Flatcar/issues/1157))
+ 
+ #### Updates:
+ 
+ - Linux ([5.15.125](https://lwn.net/Articles/940801) (includes [5.15.124](https://lwn.net/Articles/940339), [5.15.123](https://lwn.net/Articles/939424)))
+
+
+### net-exporter [1.17.0](https://github.com/giantswarm/net-exporter/releases/tag/v1.17.0)
+
+#### Changed
+- Add security context values to make chart comply to PodSecurityStandard restricted profile.
+
+
+
+### node-exporter [1.17.1](https://github.com/giantswarm/node-exporter-app/releases/tag/v1.17.1)
+
+#### Changed
+- fix apparmor annotation
+
+
+
+### etcd-kubernetes-resources-count-exporter [1.4.0](https://github.com/giantswarm/etcd-kubernetes-resources-count-exporter/releases/tag/v1.4.0)
+
+#### Changed
+- Add Max memory (default 500Mi) for VPA.
+
+
+
+### cilium-servicemonitors [0.1.2](https://github.com/giantswarm/cilium-servicemonitors-app/releases/tag/v0.1.2)
+
+#### Changed
+- Drop metrics with high cardinality.
+- Increase scrape interval to 60s.
+
+
+
+### cert-exporter [2.6.0](https://github.com/giantswarm/cert-exporter/releases/tag/v2.6.0)
+
 
 
 
@@ -108,56 +156,6 @@ _Nothing has changed._
 #### Changed
 - Replace monitoring labels with ServiceMonitor ([#296](https://github.com/giantswarm/external-dns-app/pull/296)).
 - Update ATS to 0.4.1 and python deps ([#297](https://github.com/giantswarm/external-dns-app/pull/297)).
-
-
-
-### node-exporter [1.17.1](https://github.com/giantswarm/node-exporter-app/releases/tag/v1.17.1)
-
-#### Changed
-- fix apparmor annotation
-
-
-
-### observability-bundle [0.8.0](https://github.com/giantswarm/observability-bundle/releases/tag/v0.8.0)
-
-#### Changed
-- Upgrade `prometheus-agent` to 0.6.0.
-- Upgrade `prometheus-operator-app` and `prometheus-operator-crd` to 6.0.0.
-
-
-
-### cilium-servicemonitors [0.1.2](https://github.com/giantswarm/cilium-servicemonitors-app/releases/tag/v0.1.2)
-
-#### Changed
-- Drop metrics with high cardinality.
-- Increase scrape interval to 60s.
-
-
-
-### aws-ebs-csi-driver [2.25.0](https://github.com/giantswarm/aws-ebs-csi-driver-app/releases/tag/v2.25.0)
-
-#### Changed
-- Updated ebs-csi-driver to `v1.21.0` and updated sidecar images.
-
-
-
-### cert-exporter [2.6.0](https://github.com/giantswarm/cert-exporter/releases/tag/v2.6.0)
-
-
-
-
-### cluster-autoscaler [1.24.3](https://github.com/giantswarm/cluster-autoscaler-app/releases/tag/v1.24.3)
-
-#### Changed
-- Change ScaleDownUtilizationThreshold default from 0.5 to 0.7
-- Update cluster-autoscaler to version `1.24.3`.
-
-
-
-### net-exporter [1.17.0](https://github.com/giantswarm/net-exporter/releases/tag/v1.17.0)
-
-#### Changed
-- Add security context values to make chart comply to PodSecurityStandard restricted profile.
 
 
 
@@ -183,10 +181,34 @@ WARNING: this version requires Cilium to run because of the dependency on the Ci
 
 
 
-### etcd-kubernetes-resources-count-exporter [1.4.0](https://github.com/giantswarm/etcd-kubernetes-resources-count-exporter/releases/tag/v1.4.0)
+### observability-bundle [0.8.0](https://github.com/giantswarm/observability-bundle/releases/tag/v0.8.0)
 
 #### Changed
-- Add Max memory (default 500Mi) for VPA.
+- Upgrade `prometheus-agent` to 0.6.0.
+- Upgrade `prometheus-operator-app` and `prometheus-operator-crd` to 6.0.0.
+
+
+
+### aws-ebs-csi-driver [2.25.0](https://github.com/giantswarm/aws-ebs-csi-driver-app/releases/tag/v2.25.0)
+
+#### Changed
+- Updated ebs-csi-driver to `v1.21.0` and updated sidecar images.
+
+
+
+### cert-manager [3.3.0](https://github.com/giantswarm/cert-manager-app/releases/tag/v3.3.0)
+
+⚠️ Attention: Major release [3.0.0](#300---2023-07-26) contains breaking changes in user values! Please make yourself familiar with its changelog! ⚠️
+#### Added
+- Add NetworkPolicies for controller and cainjector. ([#354](https://github.com/giantswarm/cert-manager-app/pull/354))
+
+
+
+### cluster-autoscaler [1.24.3](https://github.com/giantswarm/cluster-autoscaler-app/releases/tag/v1.24.3)
+
+#### Changed
+- Change ScaleDownUtilizationThreshold default from 0.5 to 0.7
+- Update cluster-autoscaler to version `1.24.3`.
 
 
 
