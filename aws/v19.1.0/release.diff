@@ -6,7 +6,7 @@ metadata:                                                          metadata:
   annotations:                                                       annotations:
     giantswarm.io/docs: https://docs.giantswarm.io/reference/cp        giantswarm.io/docs: https://docs.giantswarm.io/reference/cp
   creationTimestamp: null                                            creationTimestamp: null
-  name: v19.0.1                                                 |    name: v19.1.0-whites
+  name: v19.0.1                                                 |    name: v19.1.0
 spec:                                                              spec:
   apps:                                                              apps:
   - componentVersion: 1.24.1                                         - componentVersion: 1.24.1
@@ -148,6 +148,21 @@ spec:                                                              spec:
     - prometheus-operator-crd                                          - prometheus-operator-crd
                                                                 >      name: irsa-servicemonitors
                                                                 >      version: 0.0.1
+                                                                >    - dependsOn:
+                                                                >      - aws-cloud-controller-manager
+                                                                >      - cilium
+                                                                >      - coredns
+                                                                >      - vertical-pod-autoscaler-crd
+                                                                >      name: security-bundle
+                                                                >      version: 0.16.2
+                                                                >      catalog: giantswarm
+                                                                >    - dependsOn:
+                                                                >      - aws-cloud-controller-manager
+                                                                >      - cilium
+                                                                >      - coredns
+                                                                >      - vertical-pod-autoscaler-crd
+                                                                >      name: k8s-audit-metrics
+                                                                >      version: 0.6.1
   components:                                                        components:
   - name: app-operator                                               - name: app-operator
     version: 6.7.0                                              |      version: 6.8.0
