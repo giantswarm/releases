@@ -88,7 +88,7 @@ _Nothing has changed._
 
 ### cert-manager [3.3.0](https://github.com/giantswarm/cert-manager-app/releases/tag/v3.3.0)
 
-⚠️ Attention: Major release [3.0.0](#300---2023-07-26) contains breaking changes in user values! Please make yourself familiar with its changelog! ⚠️
+⚠️ Attention: Major release [3.0.0](#300---2023-07-26) contains breaking changes in user values! Please make sure you [read about the upgrade instructions](https://github.com/giantswarm/cert-manager-app/blob/main/docs/upgrading.md)! ⚠️
 #### Added
 - Add NetworkPolicies for controller and cainjector. ([#354](https://github.com/giantswarm/cert-manager-app/pull/354))
 
