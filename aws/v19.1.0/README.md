@@ -259,8 +259,9 @@ WARNING: this version requires Cilium to run because of the dependency on the Ci
 
 
 
-### k8s-audit-metrics [0.6.1](https://github.com/giantswarm/k8s-audit-metrics/releases/tag/v0.6.1)
+### k8s-audit-metrics [0.7.0](https://github.com/giantswarm/k8s-audit-metrics/releases/tag/v0.7.0)
 
 #### Changed
 
-- Push to default app catalog.
+- Switched to kube-system namespace by default
+- Added Cilium Network Policy to scrape /metrics on port 8000
