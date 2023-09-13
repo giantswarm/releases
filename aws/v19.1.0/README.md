@@ -181,11 +181,19 @@ WARNING: this version requires Cilium to run because of the dependency on the Ci
 
 
 
-### observability-bundle [0.8.0](https://github.com/giantswarm/observability-bundle/releases/tag/v0.8.0)
+### observability-bundle [0.8.1](https://github.com/giantswarm/observability-bundle/releases/tag/v0.8.1)
+
+- Upgrade `prometheus-agent` to 0.6.2.
+  - Upgrade `prometheus` to 2.47.0.
+- Upgrade `prometheus-operator-app` and `prometheus-operator-crd` to 6.1.0.
+
+
+
+### cilium-servicemonitors [0.1.2](https://github.com/giantswarm/cilium-servicemonitors-app/releases/tag/v0.1.2)
 
 #### Changed
-- Upgrade `prometheus-agent` to 0.6.0.
-- Upgrade `prometheus-operator-app` and `prometheus-operator-crd` to 6.0.0.
+- Drop metrics with high cardinality.
+- Increase scrape interval to 60s.
 
 
 
@@ -196,19 +204,51 @@ WARNING: this version requires Cilium to run because of the dependency on the Ci
 
 
 
-### cert-manager [3.3.0](https://github.com/giantswarm/cert-manager-app/releases/tag/v3.3.0)
-
-⚠️ Attention: Major release [3.0.0](#300---2023-07-26) contains breaking changes in user values! Please make yourself familiar with its changelog! ⚠️
-#### Added
-- Add NetworkPolicies for controller and cainjector. ([#354](https://github.com/giantswarm/cert-manager-app/pull/354))
-
-
-
 ### cluster-autoscaler [1.24.3](https://github.com/giantswarm/cluster-autoscaler-app/releases/tag/v1.24.3)
 
 #### Changed
 - Change ScaleDownUtilizationThreshold default from 0.5 to 0.7
 - Update cluster-autoscaler to version `1.24.3`.
+
+
+
+### cilium [0.12.0](https://github.com/giantswarm/cilium-app/releases/tag/v0.12.0)
+
+#### Added
+- Support creating `CiliumNetworkPolicy` manifests that allow egress requests to DNS and proxy hosts
+#### Changed
+- Add missing conditional for PSP rendering of default-policies installer job
+
+
+
+### external-dns [2.39.0](https://github.com/giantswarm/external-dns-app/releases/tag/v2.39.0)
+
+#### Changed
+- Replace monitoring labels with ServiceMonitor ([#296](https://github.com/giantswarm/external-dns-app/pull/296)).
+- Update ATS to 0.4.1 and python deps ([#297](https://github.com/giantswarm/external-dns-app/pull/297)).
+
+
+
+### etcd-kubernetes-resources-count-exporter [1.4.0](https://github.com/giantswarm/etcd-kubernetes-resources-count-exporter/releases/tag/v1.4.0)
+
+#### Changed
+- Add Max memory (default 500Mi) for VPA.
+
+
+
+### cert-exporter [2.6.0](https://github.com/giantswarm/cert-exporter/releases/tag/v2.6.0)
+
+### Changed
+
+- Remove the `Exist` toleration from deployment. This allows the pod to be rescheduled on a drained node sometimes causing the drain of a node to fail and require a manual fix
+
+
+
+### cert-manager [3.3.0](https://github.com/giantswarm/cert-manager-app/releases/tag/v3.3.0)
+
+⚠️ Attention: Major release [3.0.0](#300---2023-07-26) contains breaking changes in user values! Please make yourself familiar with its changelog! ⚠️
+#### Added
+- Add NetworkPolicies for controller and cainjector. ([#354](https://github.com/giantswarm/cert-manager-app/pull/354))
 
 
 
