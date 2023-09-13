@@ -181,11 +181,9 @@ WARNING: this version requires Cilium to run because of the dependency on the Ci
 
 
 
-### observability-bundle [0.8.1](https://github.com/giantswarm/observability-bundle/releases/tag/v0.8.1)
+### observability-bundle [0.8.2](https://github.com/giantswarm/observability-bundle/releases/tag/v0.8.)
 
-- Upgrade `prometheus-agent` to 0.6.2.
-  - Upgrade `prometheus` to 2.47.0.
-- Upgrade `prometheus-operator-app` and `prometheus-operator-crd` to 6.1.0.
+- Upgrade promtail to 1.4.0.
 
 
 
