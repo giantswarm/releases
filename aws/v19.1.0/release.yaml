@@ -1,5 +1,5 @@
 # Generated with:
-# /home/whites/workspace/devctl/devctl release create --provider aws --base 19.0.1 --name 19.1.0 --component kubernetes@1.24.17 --component containerlinux@3510.2.7 --app security-bundle@0.16.2 --app k8s-audit-metrics@0.6.1 --overwrite
+# /home/whites/workspace/devctl/devctl release create --provider aws --base 19.0.1 --name 19.1.0 --component kubernetes@1.24.17 --component containerlinux@3510.2.7 --app security-bundle@0.17.0 --app k8s-audit-metrics@0.6.1 --overwrite
 apiVersion: release.giantswarm.io/v1alpha1
 kind: Release
 metadata:
@@ -135,7 +135,7 @@ spec:
     - coredns
     - vertical-pod-autoscaler-crd
     name: security-bundle
-    version: 0.16.2
+    version: 0.17.0
     catalog: giantswarm
   - dependsOn:
     - aws-cloud-controller-manager

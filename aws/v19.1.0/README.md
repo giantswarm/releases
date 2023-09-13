@@ -251,4 +251,18 @@ WARNING: this version requires Cilium to run because of the dependency on the Ci
 - Add NetworkPolicies for controller and cainjector. ([#354](https://github.com/giantswarm/cert-manager-app/pull/354))
 
 
+### security-bundle [0.17.0](https://github.com/giantswarm/security-bundle/releases/tag/v0.17.0)
 
+#### Added
+
+- Update to kyverno (app) upstream version 1.10.2. Note: This update includes breaking changes in the values structure, please check the migration docs before upgrading.
+- Update to trivy (app) version 0.8.3.
+- Update to falco (app) version 0.6.5.
+
+
+
+### k8s-audit-metrics [0.6.1](https://github.com/giantswarm/k8s-audit-metrics/releases/tag/v0.6.1)
+
+#### Changed
+
+- Push to default app catalog.
