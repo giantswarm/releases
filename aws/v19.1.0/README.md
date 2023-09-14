@@ -178,7 +178,7 @@ WARNING: this version requires Cilium to run because of the dependency on the Ci
 
 
 
-### observability-bundle [0.8.2](https://github.com/giantswarm/observability-bundle/releases/tag/v0.8.)
+### observability-bundle [0.8.2](https://github.com/giantswarm/observability-bundle/releases/tag/v0.8.2)
 
 - Upgrade promtail to 1.4.0.
 
