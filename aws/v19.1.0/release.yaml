@@ -60,6 +60,7 @@ spec:
     - aws-cloud-controller-manager
     - cilium
     - coredns
+    - prometheus-operator-crd
     - vertical-pod-autoscaler-crd
     name: external-dns
     version: 2.39.0
@@ -138,6 +139,7 @@ spec:
     - aws-cloud-controller-manager
     - cilium
     - coredns
+    - prometheus-operator-crd
     - vertical-pod-autoscaler-crd
     name: security-bundle
     version: 0.17.0
@@ -146,6 +148,7 @@ spec:
     - aws-cloud-controller-manager
     - cilium
     - coredns
+    - kyverno
     - vertical-pod-autoscaler-crd
     name: k8s-audit-metrics
     version: 0.7.0

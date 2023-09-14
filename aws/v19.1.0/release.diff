@@ -71,6 +71,7 @@ spec:                                                              spec:
     - aws-cloud-controller-manager                                     - aws-cloud-controller-manager
     - cilium                                                           - cilium
     - coredns                                                          - coredns
+                                                                >      - prometheus-operator-crd
     - vertical-pod-autoscaler-crd                                      - vertical-pod-autoscaler-crd
                                                                 >      name: external-dns
                                                                 >      version: 2.39.0
@@ -146,17 +147,18 @@ spec:                                                              spec:
   - name: cilium-servicemonitors                                |      name: prometheus-blackbox-exporter
     version: 0.1.1                                              |      version: 0.3.2
     dependsOn:                                                  |    - dependsOn:
-    - prometheus-operator-crd                                          - prometheus-operator-crd
-  - name: irsa-servicemonitors                                  |      name: cilium-servicemonitors
-    version: 0.0.1                                              |      version: 0.1.2
-    dependsOn:                                                  |    - dependsOn:
-    - prometheus-operator-crd                                          - prometheus-operator-crd
-                                                                >      name: irsa-servicemonitors
-                                                                >      version: 0.0.1
+                                                                >      - prometheus-operator-crd
+                                                                >      name: cilium-servicemonitors
+                                                                >      version: 0.1.2
                                                                 >    - dependsOn:
+    - prometheus-operator-crd                                          - prometheus-operator-crd
+  - name: irsa-servicemonitors                                  |      name: irsa-servicemonitors
+    version: 0.0.1                                                     version: 0.0.1
+    dependsOn:                                                  |    - dependsOn:
                                                                 >      - aws-cloud-controller-manager
                                                                 >      - cilium
                                                                 >      - coredns
+    - prometheus-operator-crd                                          - prometheus-operator-crd
                                                                 >      - vertical-pod-autoscaler-crd
                                                                 >      name: security-bundle
                                                                 >      version: 0.17.0
@@ -165,6 +167,7 @@ spec:                                                              spec:
                                                                 >      - aws-cloud-controller-manager
                                                                 >      - cilium
                                                                 >      - coredns
+                                                                >      - kyverno
                                                                 >      - vertical-pod-autoscaler-crd
                                                                 >      name: k8s-audit-metrics
                                                                 >      version: 0.7.0
