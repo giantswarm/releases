@@ -65,11 +65,17 @@ _Nothing has changed._
 
 ### aws-operator [14.22.0](https://github.com/giantswarm/aws-operator/releases/tag/v14.22.0)
 
+#### Added 
+- Allow newer flatcar releases for node pools as provided by AWS release.
+- Add sigs.k8s.io/cluster-api-provider-aws/role tag to all subnets as preparation for migration to CAPI.
+
 #### Changed
-
 - Get AMI data from helm value rather than from hardcoded string in the code.
+- Unmanage interfaces for CNI eth[1-9] on workers eth[2-9] on masters
+- *cilium eni mode* - Only run aws-node, calico and kube-proxy on old nodes during migration to cilium.
 
 
+    
 
 ### cluster-operator [5.8.0](https://github.com/giantswarm/cluster-operator/releases/tag/v5.8.0)
 
