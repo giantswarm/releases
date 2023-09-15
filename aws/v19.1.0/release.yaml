@@ -33,7 +33,7 @@ spec:
     - coredns
     - vertical-pod-autoscaler-crd
     name: cert-manager
-    version: 3.3.0
+    version: 2.24.1
   - name: chart-operator
     version: 2.35.0
   - componentVersion: 1.13.6

@@ -238,14 +238,6 @@ WARNING: this version requires Cilium to run because of the dependency on the Ci
 - Remove the `Exist` toleration from deployment. This allows the pod to be rescheduled on a drained node sometimes causing the drain of a node to fail and require a manual fix
 
 
-
-### cert-manager [3.3.0](https://github.com/giantswarm/cert-manager-app/releases/tag/v3.3.0)
-
-⚠️ Attention: Major release [3.0.0](#300---2023-07-26) contains breaking changes in user values! Please make yourself familiar with its changelog! ⚠️
-#### Added
-- Add NetworkPolicies for controller and cainjector. ([#354](https://github.com/giantswarm/cert-manager-app/pull/354))
-
-
 ### security-bundle [0.17.0](https://github.com/giantswarm/security-bundle/releases/tag/v0.17.0)
 
 #### Added

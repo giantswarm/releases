@@ -21,24 +21,23 @@ spec:                                                              spec:
     name: aws-ebs-csi-driver                                           name: aws-ebs-csi-driver
     version: 2.21.1                                             |      version: 2.25.0
     dependsOn:                                                  |    - dependsOn:
-    - vertical-pod-autoscaler-crd                               <
+    - vertical-pod-autoscaler-crd                               
   - name: cert-exporter                                         <
-    version: 2.5.1                                              <
+    version: 2.5.1                                              |      version: 2.6.0
+                                                                |    - componentVersion: 1.12.3
     dependsOn:                                                  <
     - aws-cloud-controller-manager                                     - aws-cloud-controller-manager
     - cilium                                                           - cilium
     - coredns                                                          - coredns
     - vertical-pod-autoscaler-crd                                      - vertical-pod-autoscaler-crd
-  - componentVersion: 1.8.2                                     |      name: cert-exporter
-    name: cert-manager                                          |      version: 2.6.0
-    version: 2.24.1                                             |    - componentVersion: 1.12.3
+  - componentVersion: 1.8.2                                     <
+    name: cert-manager                                          <
+    version: 2.24.1                                             <
     dependsOn:                                                         dependsOn:
     - aws-cloud-controller-manager                                     - aws-cloud-controller-manager
     - cilium                                                           - cilium
     - coredns                                                          - coredns
     - vertical-pod-autoscaler-crd                                      - vertical-pod-autoscaler-crd
-                                                                >      name: cert-manager
-                                                                >      version: 3.3.0
   - name: chart-operator                                             - name: chart-operator
     version: 2.35.0                                                    version: 2.35.0
   - componentVersion: 1.13.0                                    |    - componentVersion: 1.13.6
