@@ -119,11 +119,11 @@ _Nothing has changed._
 
 
 
-### etcd-kubernetes-resources-count-exporter [1.4.0](https://github.com/giantswarm/etcd-kubernetes-resources-count-exporter/releases/tag/v1.4.0)
+### etcd-kubernetes-resources-count-exporter [1.5.0](https://github.com/giantswarm/etcd-kubernetes-resources-count-exporter/releases/tag/v1.5.0)
 
 #### Changed
 - Add Max memory (default 500Mi) for VPA.
-
+- Set `priorityClassName` to the deployment to mitigate scheduling issues.
 
 
 ### cilium-servicemonitors [0.1.2](https://github.com/giantswarm/cilium-servicemonitors-app/releases/tag/v0.1.2)
@@ -156,11 +156,12 @@ _Nothing has changed._
 
 
 
-### vertical-pod-autoscaler [4.0.0](https://github.com/giantswarm/vertical-pod-autoscaler-app/releases/tag/v4.0.0)
+### vertical-pod-autoscaler [4.2.0](https://github.com/giantswarm/vertical-pod-autoscaler-app/releases/tag/v4.2.0)
 
 #### Changed
 WARNING: this version requires Cilium to run because of the dependency on the CiliumNetworkPolicy CRD
 - Upgrade dependency chart to 9.2.0.
+- In order to facilitate the migration from aws-cni to cilium we need to keep the standard network policies in place so that VPA can communicate with the k8s API while the clusters are being upgraded.
 - Adjusted the resource and limits to accomodate larger clusters by default
 - Adjusted the admission controller to give it more QPS against the API
 - Adjusted the updater to give it more QPS against the API
@@ -248,7 +249,11 @@ WARNING: this version requires Cilium to run because of the dependency on the Ci
 
 
 
-### k8s-audit-metrics [0.7.0](https://github.com/giantswarm/k8s-audit-metrics/releases/tag/v0.7.0)
+### k8s-audit-metrics [0.7.1](https://github.com/giantswarm/k8s-audit-metrics/releases/tag/v0.7.1)
+
+####
+
+- Removed /metrics checks in cilium network policy.
 
 #### Changed
 

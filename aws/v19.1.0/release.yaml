@@ -98,13 +98,13 @@ spec:
     - prometheus-operator-crd
     - vertical-pod-autoscaler-crd
     name: vertical-pod-autoscaler
-    version: 4.0.0
+    version: 4.2.0
   - name: vertical-pod-autoscaler-crd
     version: 2.0.1
   - dependsOn:
     - vertical-pod-autoscaler-crd
     name: etcd-kubernetes-resources-count-exporter
-    version: 1.4.0
+    version: 1.5.0
   - dependsOn:
     - aws-cloud-controller-manager
     - cilium
@@ -151,7 +151,7 @@ spec:
     - kyverno
     - vertical-pod-autoscaler-crd
     name: k8s-audit-metrics
-    version: 0.7.0
+    version: 0.7.1
   components:
   - name: app-operator
     version: 6.8.0
