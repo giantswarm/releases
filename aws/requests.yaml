@@ -8,7 +8,7 @@ releases:
   - name: app-operator
     version: ">= 6.6.3"
   - name: cert-manager
-    version: ">= 2.24.1"
+    version: ">= 2.24.1 < 3.0.0"
   - name: cilium-servicemonitors
     version: ">= 0.1.2"
   - name: aws-ebs-csi-driver
