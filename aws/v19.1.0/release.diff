@@ -29,16 +29,16 @@ spec:                                                              spec:
     - cilium                                                           - cilium
     - coredns                                                          - coredns
     - vertical-pod-autoscaler-crd                                      - vertical-pod-autoscaler-crd
-  - componentVersion: 1.8.2                                     |      name: cert-exporter
+  - componentVersion: 1.12.4                                    |      name: cert-exporter
     name: cert-manager                                          |      version: 2.6.0
-    version: 2.24.1                                             |    - componentVersion: 1.12.3
+    version: 2.25.0                                             |    - componentVersion: 1.12.4
     dependsOn:                                                         dependsOn:
     - aws-cloud-controller-manager                                     - aws-cloud-controller-manager
     - cilium                                                           - cilium
     - coredns                                                          - coredns
     - vertical-pod-autoscaler-crd                                      - vertical-pod-autoscaler-crd
                                                                 >      name: cert-manager
-                                                                >      version: 2.24.1
+                                                                >      version: 2.25.0
   - name: chart-operator                                             - name: chart-operator
     version: 2.35.0                                                    version: 2.35.0
   - componentVersion: 1.13.0                                    |    - componentVersion: 1.13.6
