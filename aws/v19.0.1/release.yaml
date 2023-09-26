@@ -26,9 +26,9 @@ spec:
     - cilium
     - coredns
     - vertical-pod-autoscaler-crd
-  - componentVersion: 1.8.2
+  - componentVersion: 1.12.4
     name: cert-manager
-    version: 2.24.1
+    version: 2.25.0
     dependsOn:
     - aws-cloud-controller-manager
     - cilium

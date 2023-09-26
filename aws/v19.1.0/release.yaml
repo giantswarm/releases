@@ -26,14 +26,14 @@ spec:
     - vertical-pod-autoscaler-crd
     name: cert-exporter
     version: 2.6.0
-  - componentVersion: 1.12.3
+  - componentVersion: 1.12.4
     dependsOn:
     - aws-cloud-controller-manager
     - cilium
     - coredns
     - vertical-pod-autoscaler-crd
     name: cert-manager
-    version: 2.24.1
+    version: 2.25.0
   - name: chart-operator
     version: 2.35.0
   - componentVersion: 1.13.6
