@@ -184,7 +184,7 @@ spec:                                                              spec:
   - name: cluster-operator                                           - name: cluster-operator
     releaseOperatorDeploy: true                                        releaseOperatorDeploy: true
     version: 5.6.1                                              |      version: 5.8.0
-    reference: 5.6.1-patch1                                     <
+    reference: 5.6.1-patch1                                     |      reference: 5.8.0-patch1
   - name: containerlinux                                             - name: containerlinux
     version: 3510.2.0                                           |      version: 3510.2.7
   - name: etcd                                                       - name: etcd
