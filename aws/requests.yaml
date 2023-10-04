@@ -1,4 +1,11 @@
 releases:
+- name: "> 19.1.0"
+  requests:
+    - name: chart-operator
+      version: ">= 3.0.0"
+    # chart-operator-extensions depends on the `ServiceMonitor` CRD and thus on `prometheus-operator-crd`
+    - name: chart-operator-extensions
+      version: ">= 1.1.1"
 - name: ">= 19.1.0 < 19.999.999"
   requests:
   - name: security-bundle
@@ -11,11 +18,6 @@ releases:
     version: ">= 2.25.0 < 3.0.0"
   - name: cilium-servicemonitors
     version: ">= 0.1.2"
-  - name: chart-operator
-    version: ">= 3.0.0"
-  # chart-operator-extensions depends on the `ServiceMonitor` CRD and thus on `prometheus-operator-crd`
-  - name: chart-operator-extensions
-    version: ">= 1.1.1"
   - name: aws-ebs-csi-driver
     version: ">= 2.25.0"
   - name: external-dns
