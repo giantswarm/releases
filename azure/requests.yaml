@@ -1,6 +1,11 @@
 releases:
 - name: "> 19.1.0 < 19.999.999"
   requests:
+  - name: chart-operator
+    version: ">= 3.0.0"
+  # chart-operator-extensions depends on the `ServiceMonitor` CRD and thus on `prometheus-operator-crd`
+  - name: chart-operator-extensions
+    version: ">= 1.1.1"
   - name: k8s-audit-metrics
     version: ">= 0.5.3"
   - name: vertical-pod-autoscaler
