@@ -3,16 +3,16 @@ releases:
   requests:
   - name: cert-manager
     version: "<= 3.4.0"
-    - name: chart-operator
-      version: ">= 3.0.0"
-    # chart-operator-extensions depends on the `ServiceMonitor` CRD and thus on `prometheus-operator-crd`
-    - name: chart-operator-extensions
-      version: ">= 1.1.1"
-    - name: security-bundle
-      version: ">= 0.18.0"
-    # Add psp disabling + PSS fixes
-    - name: metrics-server
-      version: ">= 2.3.0"
+  - name: chart-operator
+    version: ">= 3.0.0"
+  # chart-operator-extensions depends on the `ServiceMonitor` CRD and thus on `prometheus-operator-crd`
+  - name: chart-operator-extensions
+    version: ">= 1.1.1"
+  - name: security-bundle
+    version: ">= 0.18.0"
+  # Add psp disabling + PSS fixes
+  - name: metrics-server
+    version: ">= 2.3.0"
 - name: ">= 19.1.0 < 19.999.999"
   requests:
   - name: security-bundle
