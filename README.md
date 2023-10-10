@@ -12,6 +12,7 @@ to all Giant Swarm installations.
 ## AWS
 - v19
   - v19.1
+    - [v19.1.1](https://github.com/giantswarm/releases/tree/master/aws/v19.1.1)
     - [v19.1.0](https://github.com/giantswarm/releases/tree/master/aws/v19.1.0)
   - v19.0
     - [v19.0.1](https://github.com/giantswarm/releases/tree/master/aws/v19.0.1)
