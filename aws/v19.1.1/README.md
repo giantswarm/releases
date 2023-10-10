@@ -1,9 +1,8 @@
 # :zap: Giant Swarm Release v19.1.1 for AWS :zap:
 
-<< Add description here >>
+This is a patch release that provides new `security-bundle` version consisting of two new components in preparation for PSS migration. Please refer to the changelog below for further details.
 
 ## Change details
-
 
 ### security-bundle [0.18.0](https://github.com/giantswarm/security-bundle/releases/tag/v0.18.0)
 
