@@ -1,4 +1,8 @@
 releases:
+- name: ">= 19.2.0"
+  requests:
+  - name: cert-manager
+    version: "<= 3.4.0"
 - name: "> 19.1.1"
   requests:
     - name: chart-operator
