@@ -166,7 +166,6 @@ spec:
     releaseOperatorDeploy: true
     version: 3.2.1
   - name: cluster-operator
-    reference: 5.8.0-patch1
     releaseOperatorDeploy: true
     version: 5.9.0
   - name: containerlinux
