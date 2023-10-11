@@ -1,0 +1,1 @@
+**Workload cluster release v19.1.1 for AWS is available**. This is a patch release that provides a new `security-bundle` version introducing new components in preparation for PSS migration. Further details can be found in the [release notes](https://docs.giantswarm.io/changes/workload-cluster-releases-aws/releases/aws-v19.1.1/).

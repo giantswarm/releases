@@ -1,12 +1,12 @@
 # Generated with:
-# /home/whites/workspace/devctl/devctl release create --provider aws --base 19.0.1 --name 19.1.0 --component kubernetes@1.24.17 --component containerlinux@3510.2.7 --app security-bundle@0.17.0 --app k8s-audit-metrics@0.6.1 --overwrite
+# devctl release create --provider aws --base 19.1.0 --name 19.1.1 --overwrite --app security-bundle@0.18.0
 apiVersion: release.giantswarm.io/v1alpha1
 kind: Release
 metadata:
   annotations:
     giantswarm.io/docs: https://docs.giantswarm.io/reference/cp-k8s-api/releases.release.giantswarm.io/
   creationTimestamp: null
-  name: v19.1.0
+  name: v19.1.1
 spec:
   apps:
   - componentVersion: 1.24.1
@@ -135,15 +135,15 @@ spec:
     - prometheus-operator-crd
     name: irsa-servicemonitors
     version: 0.0.1
-  - dependsOn:
+  - catalog: giantswarm
+    dependsOn:
     - aws-cloud-controller-manager
     - cilium
     - coredns
     - prometheus-operator-crd
     - vertical-pod-autoscaler-crd
     name: security-bundle
-    version: 0.17.0
-    catalog: giantswarm
+    version: 0.18.0
   - dependsOn:
     - aws-cloud-controller-manager
     - cilium
@@ -162,17 +162,17 @@ spec:
     releaseOperatorDeploy: true
     version: 3.2.1
   - name: cluster-operator
+    reference: 5.8.0-patch1
     releaseOperatorDeploy: true
     version: 5.8.0
-    reference: 5.8.0-patch1
   - name: containerlinux
     version: 3510.2.7
   - name: etcd
     version: 3.5.9
   - name: kubernetes
     version: 1.24.17
-  date: "2023-09-13T06:20:40Z"
-  state: deprecated
+  date: "2023-10-10T10:22:01Z"
+  state: active
 status:
   inUse: false
   ready: false
