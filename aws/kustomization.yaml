@@ -11,5 +11,6 @@ resources:
 - v19.0.1
 - v19.1.0
 - v19.1.1
+- v19.2.0
 transformers:
 - releaseNotesTransformer.yaml
