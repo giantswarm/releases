@@ -157,11 +157,6 @@ _Changes compared to **Stable 3510.2.8**_
 
 
 
-### cert-manager [3.4.1](https://github.com/giantswarm/cert-manager-app/releases/tag/v3.4.1)
-
-
-
-
 ### chart-operator [3.0.0](https://github.com/giantswarm/chart-operator/releases/tag/v3.0.0)
 
 #### Removed
