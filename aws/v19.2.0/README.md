@@ -218,7 +218,7 @@ _Changes compared to **Stable 3510.2.8**_
 
 
 
-### metrics-server [2.4.0](https://github.com/giantswarm/metrics-server-app/releases/tag/v2.4.0)
+### metrics-server [2.4.1](https://github.com/giantswarm/metrics-server-app/releases/tag/v2.4.1)
 
 #### Added
 - Add possibility to configure `hostNetwork`.
