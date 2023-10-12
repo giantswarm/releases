@@ -1,6 +1,6 @@
 # :zap: Giant Swarm Release v19.2.0 for AWS :zap:
 
-<< Add description here >>
+This is a security release bringing newest stable Flatcar where most of recent CVEs have been adressed. Additionally functionality of Cilium ENI mode has been improved by fixing maximum pod calculations per node as well as VPC peerings.
 
 ## Change details
 
