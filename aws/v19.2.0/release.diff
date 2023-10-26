@@ -18,7 +18,7 @@ spec:                                                              spec:
     dependsOn:                                                         dependsOn:
     - vertical-pod-autoscaler-crd                                      - vertical-pod-autoscaler-crd
     name: aws-ebs-csi-driver                                           name: aws-ebs-csi-driver
-    version: 2.25.0                                                    version: 2.25.0
+    version: 2.27.0                                                    version: 2.27.0
   - dependsOn:                                                       - dependsOn:
     - aws-cloud-controller-manager                                     - aws-cloud-controller-manager
     - cilium                                                           - cilium
