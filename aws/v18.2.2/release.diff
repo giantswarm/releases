@@ -48,7 +48,7 @@ spec:                                                            spec:
   - name: vertical-pod-autoscaler-crd                              - name: vertical-pod-autoscaler-crd
     version: 1.0.1                                                   version: 1.0.1
   - name: etcd-kubernetes-resources-count-exporter                 - name: etcd-kubernetes-resources-count-exporter
-    version: 1.0.0                                                   version: 1.0.0
+    version: 1.8.0                                                   version: 1.8.0
   - name: observability-bundle                                     - name: observability-bundle
     version: 0.1.9                                                   version: 0.1.9
   components:                                                      components:
