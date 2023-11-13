@@ -223,13 +223,6 @@ WARNING: this version requires Cilium to run because of the dependency on the Ci
 
 
 
-### etcd-kubernetes-resources-count-exporter [1.4.0](https://github.com/giantswarm/etcd-kubernetes-resources-count-exporter/releases/tag/v1.4.0)
-
-#### Changed
-- Add Max memory (default 500Mi) for VPA.
-
-
-
 ### cert-exporter [2.6.0](https://github.com/giantswarm/cert-exporter/releases/tag/v2.6.0)
 
 ### Changed
