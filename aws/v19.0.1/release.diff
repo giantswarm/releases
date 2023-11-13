@@ -97,7 +97,7 @@ spec:                                                              spec:
   - name: vertical-pod-autoscaler-crd                                - name: vertical-pod-autoscaler-crd
     version: 2.0.1                                                     version: 2.0.1
   - name: etcd-kubernetes-resources-count-exporter                   - name: etcd-kubernetes-resources-count-exporter
-    version: 1..0                                                     version: 1.8.0
+    version: 1.8.0                                                     version: 1.8.0
     dependsOn:                                                         dependsOn:
     - vertical-pod-autoscaler-crd                                      - vertical-pod-autoscaler-crd
     - cilium                                                           - cilium
