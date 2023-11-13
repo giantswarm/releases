@@ -108,7 +108,7 @@ spec:
   - dependsOn:
     - vertical-pod-autoscaler-crd
     name: etcd-kubernetes-resources-count-exporter
-    version: 1.7.0
+    version: 1.8.0
   - dependsOn:
     - aws-cloud-controller-manager
     - cilium
