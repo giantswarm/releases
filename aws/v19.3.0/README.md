@@ -1,10 +1,14 @@
 # :zap: Giant Swarm Release v19.3.0 for AWS :zap:
 
-This is the release consisting of final step for the migration away from Pod Security Policies (PSP) and towards Pod Security Standards (PSS). Following the `observability-bundle` that was added as a default application in `19.1.0` release with `kyverno` in PSS `auditing` mode, it will now switch to PSS `enforce` mode. This means that all PSS and the Exceptions will be actively enforced and validated. From Giant Swarm side all applications deployed with this release will not include `PSPs`, instead the `PSS` are included. It is important to note that the `PSPs` still exists within this release and are still working in pararell with `PSS`, hence security of customer workloads is not affected.
+This release marks the final step for migration away from Pod Security Policies (PSP) in favor of Pod Security Standards (PSS). The `security-bundle` that was added as a default application in the `19.1.0` release with `kyverno` in PSS `audit` mode will now switch to `enforce` mode, meaning PSS policies will be actively enforced and any configured PolicyExceptions will be evaluated and applied.
+
+The `PodSecurityPolicy` type still exists in this release. However, PSPs have been removed from all Giant Swarm applications deployed with this release in preparation for the upcoming upgrade to the Kubernetes v1.25, where PSPs will no longer exist. Security policy for Giant Swarm applications is now enforced by PSS in order to ensure the security of these applications.
+
+Our docs offer additional information about [Pod Security Standards](https://docs.giantswarm.io/advanced/security-policy-enforcement/) as well as a [PSS migration guide](https://docs.giantswarm.io/advanced/security/security-policy-enforcement/cluster-admin-guide/) for cluster administrators.
 
 > **WARNING:** Before upgrading to this release, it is required to upgrade ALL Managed Applications provided by Giant Swarm to the latest version supporting PSS. Please reach out to your Account Engineer to validate the versions of applications that are required. 
 
-> **WARNING:** When customers upgrade to `19.3.0`, it is highly advised to migrate the workloads away from PSPs. Kubernetes `v1.25` removes the Pod Security Policies resources from the API, meaning that in following Giant Swarm release `v20` they will no longer exist on the clusters which can cause issues with customers' automations.
+> **WARNING:** After upgrading to `19.3.0`, it is highly advised to begin removal of all PSPs from the cluster. Kubernetes `v1.25` removes the Pod Security Policy resource from the API, meaning workloads (like Helm charts) which still contain PSPs will fail to install after the upcoming Giant Swarm `v20` release.
 
 ## Change details
 
