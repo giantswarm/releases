@@ -1,5 +1,5 @@
 # Generated with:
-# /home/whites/workspace/devctl/devctl release create --base 19.2.0 --name 19.3.0 --overwrite --component kubernetes@1.24.17 --provider aws --app cluster-autoscaler@1.24.3-gs3@1.24.3
+# /home/whites/workspace/devctl/devctl release create --base 19.2.0 --name 19.3.0 --overwrite --component kubernetes@1.24.17 --provider aws --app cluster-autoscaler@1.24.3-gs3@1.24.3 --app cert-manager@2.25.1@1.12.4 --app security-bundle@1.4.0
 apiVersion: release.giantswarm.io/v1alpha1
 kind: Release
 metadata:
@@ -35,7 +35,7 @@ spec:
     - prometheus-operator-crd
     - vertical-pod-autoscaler-crd
     name: cert-manager
-    version: 3.5.3
+    version: 2.25.1
   - name: chart-operator
     version: 3.1.0
   - dependsOn:
@@ -162,7 +162,7 @@ spec:
     version: 0.8.0
   components:
   - name: app-operator
-    version: 6.10.0
+    version: 6.10.1
   - name: aws-operator
     releaseOperatorDeploy: true
     version: 14.24.0
@@ -173,12 +173,12 @@ spec:
     releaseOperatorDeploy: true
     version: 5.10.0
   - name: containerlinux
-    version: 3602.2.1
+    version: 3602.2.2
   - name: etcd
     version: 3.5.10
   - name: kubernetes
     version: 1.24.17
-  date: "2023-11-21T06:53:01Z"
+  date: "2023-11-23T07:05:42Z"
   state: active
 status:
   inUse: false

@@ -33,7 +33,7 @@ spec:                                                              spec:
     - coredns                                                          - coredns
     - vertical-pod-autoscaler-crd                                      - vertical-pod-autoscaler-crd
     name: cert-manager                                                 name: cert-manager
-    version: 2.25.0                                             |      version: 3.5.3
+    version: 2.25.0                                             |      version: 2.25.1
   - name: chart-operator                                             - name: chart-operator
     version: 3.0.0                                              |      version: 3.1.0
   - name: chart-operator-extensions                             |    - dependsOn:
@@ -160,7 +160,7 @@ spec:                                                              spec:
     version: 0.7.1                                              |      version: 0.8.0
   components:                                                        components:
   - name: app-operator                                               - name: app-operator
-    version: 6.8.1                                              |      version: 6.10.0
+    version: 6.8.1                                              |      version: 6.10.1
   - name: aws-operator                                               - name: aws-operator
     releaseOperatorDeploy: true                                        releaseOperatorDeploy: true
     version: 14.23.0                                            |      version: 14.24.0
@@ -171,12 +171,12 @@ spec:                                                              spec:
     releaseOperatorDeploy: true                                        releaseOperatorDeploy: true
     version: 5.9.0                                              |      version: 5.10.0
   - name: containerlinux                                             - name: containerlinux
-    version: 3602.2.0                                           |      version: 3602.2.1
+    version: 3602.2.0                                           |      version: 3602.2.2
   - name: etcd                                                       - name: etcd
     version: 3.5.9                                              |      version: 3.5.10
   - name: kubernetes                                                 - name: kubernetes
     version: 1.24.17                                                   version: 1.24.17
-  date: "2023-10-11T08:27:27Z"                                  |    date: "2023-11-21T06:53:01Z"
+  date: "2023-10-11T08:27:27Z"                                  |    date: "2023-11-23T07:05:42Z"
   state: active                                                      state: active
 status:                                                            status:
   inUse: false                                                       inUse: false
