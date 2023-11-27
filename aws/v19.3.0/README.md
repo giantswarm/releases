@@ -13,13 +13,6 @@ Our docs offer additional information about [Pod Security Standards](https://doc
 ## Change details
 
 
-### app-operator [6.10.1](https://github.com/giantswarm/app-operator/releases/tag/v6.10.1)
-
-#### Fixed
-- Add policy exception so that controller can be deployed in bootstrap mode (uses host network)
-
-
-
 ### aws-operator [14.24.0](https://github.com/giantswarm/aws-operator/releases/tag/v14.24.0)
 
 #### Added
@@ -89,57 +82,10 @@ Our docs offer additional information about [Pod Security Standards](https://doc
 
 
 
-### coredns [1.19.1](https://github.com/giantswarm/coredns-app/releases/tag/v1.19.1)
-
-#### Changed
-- Build App with ABS.
-- Add basic tests with ATS.
-- ATS: Rework tests. ([#248](https://github.com/giantswarm/coredns-app/pull/248))
-- Chart: Fix usage of `name` & `namespace`. ([#249](https://github.com/giantswarm/coredns-app/pull/249))
-
-
-
-### observability-bundle [0.10.1](https://github.com/giantswarm/observability-bundle/releases/tag/v0.10.1)
+### app-operator [6.10.1](https://github.com/giantswarm/app-operator/releases/tag/v6.10.1)
 
 #### Fixed
-- Extend `prometheus-operator-app` timeout to avoid race condition with VPA causing the app to be stuck in `pending-install` state.
-
-
-
-### prometheus-blackbox-exporter [0.4.0](https://github.com/giantswarm/prometheus-blackbox-exporter/releases/tag/v0.4.0)
-
-#### Added
-- Add `global.podSecurityStandards.enforced` value for PSS migration.
-
-
-
-### k8s-audit-metrics [0.8.0](https://github.com/giantswarm/k8s-audit-metrics/releases/tag/v0.8.0)
-
-#### Changed
-- Replace condition for PSP CR installation.
-
-
-
-### aws-cloud-controller-manager [1.24.1-gs10](https://github.com/giantswarm/aws-cloud-controller-manager-app/releases/tag/v1.24.1-gs10)
-
-#### Fixed
-- Add required values for pss policies.
-#### Added
-- Add toggle mechanism for `PSPs`.
-
-
-
-### aws-ebs-csi-driver [2.28.0](https://github.com/giantswarm/aws-ebs-csi-driver-app/releases/tag/v2.28.0)
-
-#### Added
-- Add a job that removes a gp2 storage class for EKS.
-
-
-
-### cert-exporter [2.8.4](https://github.com/giantswarm/cert-exporter/releases/tag/v2.8.4)
-
-#### Fixed
-- Fix daemonset and deployment Kyverno PolicyException.
+- Add policy exception so that controller can be deployed in bootstrap mode (uses host network)
 
 
 
@@ -150,6 +96,16 @@ Our docs offer additional information about [Pod Security Standards](https://doc
 
 
 
+### coredns [1.19.1](https://github.com/giantswarm/coredns-app/releases/tag/v1.19.1)
+
+#### Changed
+- Build App with ABS.
+- Add basic tests with ATS.
+- ATS: Rework tests. ([#248](https://github.com/giantswarm/coredns-app/pull/248))
+- Chart: Fix usage of `name` & `namespace`. ([#249](https://github.com/giantswarm/coredns-app/pull/249))
+
+
+
 ### node-exporter [1.18.1](https://github.com/giantswarm/node-exporter-app/releases/tag/v1.18.1)
 
 #### Changed
@@ -157,16 +113,10 @@ Our docs offer additional information about [Pod Security Standards](https://doc
 
 
 
-### cert-manager [2.25.1](https://github.com/giantswarm/cert-manager-app/releases/tag/v2.25.1)
+### cert-exporter [2.8.4](https://github.com/giantswarm/cert-exporter/releases/tag/v2.8.4)
 
-- Added support for PSS resolving issue on upgrade to newer v3+ releases
-
-
-
-### vertical-pod-autoscaler [4.6.0](https://github.com/giantswarm/vertical-pod-autoscaler-app/releases/tag/v4.6.0)
-
-#### Changed
-- Revert docker image to `0.14.0`
+#### Fixed
+- Fix daemonset and deployment Kyverno PolicyException.
 
 
 
@@ -191,15 +141,65 @@ Our docs offer additional information about [Pod Security Standards](https://doc
 
 
 
-### cilium [0.18.0](https://github.com/giantswarm/cilium-app/releases/tag/v0.18.0)
+### cilium [0.17.0](https://github.com/giantswarm/cilium-app/releases/tag/v0.17.0)
 
 #### Changed
-- Upgrade cilium to `1.14.3`.
+- Generate cilium chart using our fork and `vendir`.
 
 
 
 ### cluster-autoscaler [1.24.3-gs3](https://github.com/giantswarm/cluster-autoscaler-app/releases/tag/v1.24.3-gs3)
 
 Not found
+
+
+### vertical-pod-autoscaler [4.6.0](https://github.com/giantswarm/vertical-pod-autoscaler-app/releases/tag/v4.6.0)
+
+#### Changed
+- Revert docker image to `0.14.0`
+
+
+
+### prometheus-blackbox-exporter [0.4.0](https://github.com/giantswarm/prometheus-blackbox-exporter/releases/tag/v0.4.0)
+
+#### Added
+- Add `global.podSecurityStandards.enforced` value for PSS migration.
+
+
+
+### aws-cloud-controller-manager [1.24.1-gs10](https://github.com/giantswarm/aws-cloud-controller-manager-app/releases/tag/v1.24.1-gs10)
+
+#### Fixed
+- Add required values for pss policies.
+#### Added
+- Add toggle mechanism for `PSPs`.
+
+
+
+### aws-ebs-csi-driver [2.28.0](https://github.com/giantswarm/aws-ebs-csi-driver-app/releases/tag/v2.28.0)
+
+#### Added
+- Add a job that removes a gp2 storage class for EKS.
+
+
+
+### cert-manager [2.25.1](https://github.com/giantswarm/cert-manager-app/releases/tag/v2.25.1)
+
+- Added support for PSS resolving issue on upgrade to newer v3+ releases
+
+
+
+### observability-bundle [0.10.1](https://github.com/giantswarm/observability-bundle/releases/tag/v0.10.1)
+
+#### Fixed
+- Extend `prometheus-operator-app` timeout to avoid race condition with VPA causing the app to be stuck in `pending-install` state.
+
+
+
+### k8s-audit-metrics [0.8.0](https://github.com/giantswarm/k8s-audit-metrics/releases/tag/v0.8.0)
+
+#### Changed
+- Replace condition for PSP CR installation.
+
 
 

@@ -1,5 +1,5 @@
 # Generated with:
-# /home/whites/workspace/devctl/devctl release create --base 19.2.0 --name 19.3.0 --overwrite --component kubernetes@1.24.17 --provider aws --app cluster-autoscaler@1.24.3-gs3@1.24.3 --app cert-manager@2.25.1@1.12.4 --app security-bundle@1.4.0
+# /home/whites/workspace/devctl/devctl release create --base 19.2.0 --name 19.3.0 --overwrite --component kubernetes@1.24.17 --provider aws --app cluster-autoscaler@1.24.3-gs3@1.24.3 --app cert-manager@2.25.1@1.12.4 --app security-bundle@1.4.0 --app cilium@0.17.0@1.13.6
 apiVersion: release.giantswarm.io/v1alpha1
 kind: Release
 metadata:
@@ -42,11 +42,11 @@ spec:
     - prometheus-operator-crd
     name: chart-operator-extensions
     version: 1.1.1
-  - componentVersion: 1.14.3
+  - componentVersion: 1.13.6
     dependsOn:
     - aws-cloud-controller-manager
     name: cilium
-    version: 0.18.0
+    version: 0.17.0
   - componentVersion: 1.24.3
     dependsOn:
     - aws-cloud-controller-manager
@@ -178,7 +178,7 @@ spec:
     version: 3.5.10
   - name: kubernetes
     version: 1.24.17
-  date: "2023-11-23T07:05:42Z"
+  date: "2023-11-27T07:37:49Z"
   state: active
 status:
   inUse: false
