@@ -150,7 +150,9 @@ Our docs offer additional information about [Pod Security Standards](https://doc
 
 ### cluster-autoscaler [1.24.3-gs3](https://github.com/giantswarm/cluster-autoscaler-app/releases/tag/v1.24.3-gs3)
 
-Not found
+#### Added
+
+- Kyverno policy exceptions for cluster-autoscaler.
 
 
 ### vertical-pod-autoscaler [4.6.0](https://github.com/giantswarm/vertical-pod-autoscaler-app/releases/tag/v4.6.0)
