@@ -35,7 +35,7 @@ spec:                                                              spec:
                                                                 >      - prometheus-operator-crd
     - vertical-pod-autoscaler-crd                                      - vertical-pod-autoscaler-crd
     name: cert-manager                                                 name: cert-manager
-    version: 2.25.0                                             |      version: 2.25.1
+    version: 2.25.0                                             |      version: 2.25.2
   - name: chart-operator                                             - name: chart-operator
     version: 3.0.0                                              |      version: 3.1.0
   - name: chart-operator-extensions                             |    - dependsOn:
