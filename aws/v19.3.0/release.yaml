@@ -165,7 +165,7 @@ spec:
     version: 6.10.1
   - name: aws-operator
     releaseOperatorDeploy: true
-    version: 14.24.0
+    version: 14.24.1
   - name: cert-operator
     releaseOperatorDeploy: true
     version: 3.2.1
