@@ -27,7 +27,6 @@ Our docs offer additional information about [Pod Security Standards](https://doc
 
 
 
-
 ### cluster-operator [5.10.0](https://github.com/giantswarm/cluster-operator/releases/tag/v5.10.0)
 
 #### Changed
