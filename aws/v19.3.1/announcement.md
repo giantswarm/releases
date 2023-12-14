@@ -1,0 +1,1 @@
+**Workload cluster release v19.3.1 for AWS is available**. This patch release addresses an error in the calculation of max pods per node when using Cilium in ENI IPAM mode. Further details can be found in the [release notes](https://docs.giantswarm.io/changes/workload-cluster-releases-aws/releases/aws-v19.3.1/).
