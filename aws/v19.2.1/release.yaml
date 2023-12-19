@@ -1,12 +1,12 @@
 # Generated with:
-# /home/whites/workspace/devctl/devctl release create --base 19.1.1 --name 19.2.0 --overwrite --component kubernetes@1.24.17 --provider aws --app chart-operator-extensions@1.1.1
+# devctl release create --base 19.2.0 --name 19.2.1 --overwrite --provider aws --component aws-operator@14.23.1
 apiVersion: release.giantswarm.io/v1alpha1
 kind: Release
 metadata:
   annotations:
     giantswarm.io/docs: https://docs.giantswarm.io/reference/cp-k8s-api/releases.release.giantswarm.io/
   creationTimestamp: null
-  name: v19.2.0
+  name: v19.2.1
 spec:
   apps:
   - componentVersion: 1.24.1
@@ -36,10 +36,10 @@ spec:
     version: 2.25.0
   - name: chart-operator
     version: 3.0.0
-  - name: chart-operator-extensions
-    version: 1.1.1
-    dependsOn:
+  - dependsOn:
     - prometheus-operator-crd
+    name: chart-operator-extensions
+    version: 1.1.1
   - componentVersion: 1.13.6
     dependsOn:
     - aws-cloud-controller-manager
@@ -161,7 +161,7 @@ spec:
     version: 6.8.1
   - name: aws-operator
     releaseOperatorDeploy: true
-    version: 14.23.0
+    version: 14.23.1
   - name: cert-operator
     releaseOperatorDeploy: true
     version: 3.2.1
@@ -174,8 +174,8 @@ spec:
     version: 3.5.9
   - name: kubernetes
     version: 1.24.17
-  date: "2023-10-11T08:27:27Z"
-  state: deprecated
+  date: "2023-12-14T08:50:24Z"
+  state: active
 status:
   inUse: false
   ready: false
