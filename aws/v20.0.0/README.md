@@ -5,6 +5,13 @@
 ## Change details
 
 
+### aws-operator [16.0.0](https://github.com/giantswarm/aws-operator/releases/tag/v16.0.0)
+
+#### Changed
+- Bump k8scc to v18 to enable k8s 1.25 support.
+
+
+
 ### kubernetes [1.25.9](https://github.com/kubernetes/kubernetes/releases/tag/v1.25.9)
 
 #### Feature
@@ -24,20 +31,6 @@ _Nothing has changed._
 - sigs.k8s.io/apiserver-network-proxy/konnectivity-client: v0.0.35 → v0.0.36
 #### Removed
 _Nothing has changed._
-
-
-
-### cilium [0.18.0](https://github.com/giantswarm/cilium-app/releases/tag/v0.18.0)
-
-#### Changed
-- Upgrade cilium to `1.14.3`.
-
-
-
-### cluster-autoscaler [1.25.1-gs2](https://github.com/giantswarm/cluster-autoscaler-app/releases/tag/v1.25.1-gs2)
-
-#### Fixed
-- Adjusted minimum allowed CPU and memory
 
 
 
@@ -62,6 +55,20 @@ _Nothing has changed._
 
 
 
+### k8s-dns-node-cache-app [2.6.0](https://github.com/giantswarm/k8s-dns-node-cache-app/releases/tag/v2.6.0)
+
+#### Changed
+- Configure `gsoci.azurecr.io` as the default container image registry.
+
+
+
+### prometheus-blackbox-exporter [0.4.1](https://github.com/giantswarm/prometheus-blackbox-exporter/releases/tag/v0.4.1)
+
+#### Changed
+- Configure `gsoci.azurecr.io` as the default container image registry.
+
+
+
 ### security-bundle [1.5.0](https://github.com/giantswarm/security-bundle/releases/tag/v1.5.0)
 
 #### Added
@@ -76,35 +83,7 @@ _Nothing has changed._
 
 
 
-### cert-exporter [2.9.0](https://github.com/giantswarm/cert-exporter/releases/tag/v2.9.0)
-
-#### Added
-- Add cert name to secret metric.
-
-
-
-### k8s-dns-node-cache-app [2.6.0](https://github.com/giantswarm/k8s-dns-node-cache-app/releases/tag/v2.6.0)
-
-#### Changed
-- Configure `gsoci.azurecr.io` as the default container image registry.
-
-
-
 ### aws-ebs-csi-driver [2.28.1](https://github.com/giantswarm/aws-ebs-csi-driver-app/releases/tag/v2.28.1)
-
-#### Changed
-- Configure `gsoci.azurecr.io` as the default container image registry.
-
-
-
-### prometheus-blackbox-exporter [0.4.1](https://github.com/giantswarm/prometheus-blackbox-exporter/releases/tag/v0.4.1)
-
-#### Changed
-- Configure `gsoci.azurecr.io` as the default container image registry.
-
-
-
-### node-exporter [1.18.2](https://github.com/giantswarm/node-exporter-app/releases/tag/v1.18.2)
 
 #### Changed
 - Configure `gsoci.azurecr.io` as the default container image registry.
@@ -118,6 +97,20 @@ _Nothing has changed._
 
 
 
+### cilium [0.18.0](https://github.com/giantswarm/cilium-app/releases/tag/v0.18.0)
+
+#### Changed
+- Upgrade cilium to `1.14.3`.
+
+
+
+### cluster-autoscaler [1.25.1-gs2](https://github.com/giantswarm/cluster-autoscaler-app/releases/tag/v1.25.1-gs2)
+
+#### Fixed
+- Adjusted minimum allowed CPU and memory
+
+
+
 ### coredns [1.21.0](https://github.com/giantswarm/coredns-app/releases/tag/v1.21.0)
 
 #### Changed
@@ -125,8 +118,29 @@ _Nothing has changed._
 
 
 
+### aws-cloud-controller-manager [1.25.14-gs1](https://github.com/giantswarm/aws-cloud-controller-manager-app/releases/tag/v1.25.14-gs1)
+
+#### Changed
+- Bump to upstream version 1.25.14.
+
+
+
+### cert-exporter [2.9.0](https://github.com/giantswarm/cert-exporter/releases/tag/v2.9.0)
+
+#### Added
+- Add cert name to secret metric.
+
+
+
 ### cert-manager [2.25.3](https://github.com/giantswarm/cert-manager-app/releases/tag/v2.25.3)
 
+
+
+
+### node-exporter [1.18.2](https://github.com/giantswarm/node-exporter-app/releases/tag/v1.18.2)
+
+#### Changed
+- Configure `gsoci.azurecr.io` as the default container image registry.
 
 
 
