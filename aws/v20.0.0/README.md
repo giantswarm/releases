@@ -34,41 +34,6 @@ _Nothing has changed._
 
 
 
-### metrics-server [2.4.2](https://github.com/giantswarm/metrics-server-app/releases/tag/v2.4.2)
-
-#### Changed
-- Configure `gsoci.azurecr.io` as the default container image registry.
-
-
-
-### observability-bundle [1.0.0](https://github.com/giantswarm/observability-bundle/releases/tag/v1.0.0)
-
-#### Changed
-- *!Breaking change*: Simplify configuration for the bundled apps. See our [upgrade guide](./docs/upgrade.md)
-  - Move all user configs from under `apps.<appName>.userConfig` from string to regular helm values to `userConfig.<appName>`
-  - Rename `prometheus-operator-app` to `kube-prometheus-stack`
-  - Rename `promtail-app` to `promtail`
-- Enforce `Cilium Network Policy` by default.
-- Enforce `Pod Security Standard` by default.
-- Upgrade `kube-prometheus-stack` to 8.1.1 and `prometheus-operator-crd` to 8.0.0
-- Upgrade `grafana-agent` to 0.3.2.
-
-
-
-### k8s-dns-node-cache-app [2.6.0](https://github.com/giantswarm/k8s-dns-node-cache-app/releases/tag/v2.6.0)
-
-#### Changed
-- Configure `gsoci.azurecr.io` as the default container image registry.
-
-
-
-### prometheus-blackbox-exporter [0.4.1](https://github.com/giantswarm/prometheus-blackbox-exporter/releases/tag/v0.4.1)
-
-#### Changed
-- Configure `gsoci.azurecr.io` as the default container image registry.
-
-
-
 ### security-bundle [1.5.0](https://github.com/giantswarm/security-bundle/releases/tag/v1.5.0)
 
 #### Added
@@ -83,10 +48,10 @@ _Nothing has changed._
 
 
 
-### aws-ebs-csi-driver [2.28.1](https://github.com/giantswarm/aws-ebs-csi-driver-app/releases/tag/v2.28.1)
+### cluster-autoscaler [1.25.1-gs2](https://github.com/giantswarm/cluster-autoscaler-app/releases/tag/v1.25.1-gs2)
 
-#### Changed
-- Configure `gsoci.azurecr.io` as the default container image registry.
+#### Fixed
+- Adjusted minimum allowed CPU and memory
 
 
 
@@ -94,20 +59,6 @@ _Nothing has changed._
 
 #### Changed
 - Configure `gsoci.azurecr.io` as the default container image registry.
-
-
-
-### cilium [0.18.0](https://github.com/giantswarm/cilium-app/releases/tag/v0.18.0)
-
-#### Changed
-- Upgrade cilium to `1.14.3`.
-
-
-
-### cluster-autoscaler [1.25.1-gs2](https://github.com/giantswarm/cluster-autoscaler-app/releases/tag/v1.25.1-gs2)
-
-#### Fixed
-- Adjusted minimum allowed CPU and memory
 
 
 
@@ -137,10 +88,67 @@ _Nothing has changed._
 
 
 
-### node-exporter [1.18.2](https://github.com/giantswarm/node-exporter-app/releases/tag/v1.18.2)
+### cilium [0.19.0](https://github.com/giantswarm/cilium-app/releases/tag/v0.19.0)
+
+#### Changed
+- Upgrade cilium to `1.14.5`.
+- Set default image registry to `gsoci.azurecr.io` in values.yaml.
+
+
+
+### metrics-server [2.4.2](https://github.com/giantswarm/metrics-server-app/releases/tag/v2.4.2)
 
 #### Changed
 - Configure `gsoci.azurecr.io` as the default container image registry.
+
+
+
+### node-exporter [1.19.0](https://github.com/giantswarm/node-exporter-app/releases/tag/v1.19.0)
+
+#### Added
+- Add VPA configuration to `node-exporter` app.
+
+
+
+### observability-bundle [1.0.0](https://github.com/giantswarm/observability-bundle/releases/tag/v1.0.0)
+
+#### Changed
+- *!Breaking change*: Simplify configuration for the bundled apps. See our [upgrade guide](./docs/upgrade.md)
+  - Move all user configs from under `apps.<appName>.userConfig` from string to regular helm values to `userConfig.<appName>`
+  - Rename `prometheus-operator-app` to `kube-prometheus-stack`
+  - Rename `promtail-app` to `promtail`
+- Enforce `Cilium Network Policy` by default.
+- Enforce `Pod Security Standard` by default.
+- Upgrade `kube-prometheus-stack` to 8.1.1 and `prometheus-operator-crd` to 8.0.0
+- Upgrade `grafana-agent` to 0.3.2.
+
+
+
+### prometheus-blackbox-exporter [0.4.1](https://github.com/giantswarm/prometheus-blackbox-exporter/releases/tag/v0.4.1)
+
+#### Changed
+- Configure `gsoci.azurecr.io` as the default container image registry.
+
+
+
+### aws-ebs-csi-driver [2.28.1](https://github.com/giantswarm/aws-ebs-csi-driver-app/releases/tag/v2.28.1)
+
+#### Changed
+- Configure `gsoci.azurecr.io` as the default container image registry.
+
+
+
+### k8s-dns-node-cache-app [2.6.0](https://github.com/giantswarm/k8s-dns-node-cache-app/releases/tag/v2.6.0)
+
+#### Changed
+- Configure `gsoci.azurecr.io` as the default container image registry.
+
+
+
+### vertical-pod-autoscaler-crd [3.0.0](https://github.com/giantswarm/vertical-pod-autoscaler-crd/releases/tag/v3.0.0)
+
+#### Changed
+- Synced VPA CRD for v1.0.0
 
 
 

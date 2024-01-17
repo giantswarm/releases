@@ -42,11 +42,11 @@ spec:                                                              spec:
     - prometheus-operator-crd                                          - prometheus-operator-crd
     name: chart-operator-extensions                                    name: chart-operator-extensions
     version: 1.1.1                                                     version: 1.1.1
-  - componentVersion: 1.13.6                                    |    - componentVersion: 1.14.3
+  - componentVersion: 1.13.6                                    |    - componentVersion: 1.14.5
     dependsOn:                                                         dependsOn:
     - aws-cloud-controller-manager                                     - aws-cloud-controller-manager
     name: cilium                                                       name: cilium
-    version: 0.17.0                                             |      version: 0.18.0
+    version: 0.17.0                                             |      version: 0.19.0
   - componentVersion: 1.24.3                                    |    - dependsOn:
     dependsOn:                                                  <
     - aws-cloud-controller-manager                                     - aws-cloud-controller-manager
@@ -95,7 +95,7 @@ spec:                                                              spec:
     - prometheus-operator-crd                                          - prometheus-operator-crd
     - vertical-pod-autoscaler-crd                                      - vertical-pod-autoscaler-crd
     name: node-exporter                                                name: node-exporter
-    version: 1.18.1                                             |      version: 1.18.2
+    version: 1.18.1                                             |      version: 1.19.0
   - componentVersion: 0.14.0                                         - componentVersion: 0.14.0
     dependsOn:                                                         dependsOn:
     - aws-cloud-controller-manager                                     - aws-cloud-controller-manager
@@ -106,7 +106,7 @@ spec:                                                              spec:
     name: vertical-pod-autoscaler                                      name: vertical-pod-autoscaler
     version: 4.6.0                                                     version: 4.6.0
   - name: vertical-pod-autoscaler-crd                                - name: vertical-pod-autoscaler-crd
-    version: 2.0.1                                                     version: 2.0.1
+    version: 2.0.1                                              |      version: 3.0.0
   - dependsOn:                                                       - dependsOn:
     - vertical-pod-autoscaler-crd                                      - vertical-pod-autoscaler-crd
     name: etcd-kubernetes-resources-count-exporter                     name: etcd-kubernetes-resources-count-exporter
@@ -178,7 +178,7 @@ spec:                                                              spec:
     version: 3.5.11                                                    version: 3.5.11
   - name: kubernetes                                                 - name: kubernetes
     version: 1.24.17                                            |      version: 1.25.9
-  date: "2023-12-14T07:18:20Z"                                  |    date: "2024-01-16T13:58:44Z"
+  date: "2023-12-14T07:18:20Z"                                  |    date: "2024-01-17T10:49:10Z"
   state: active                                                      state: active
 status:                                                            status:
   inUse: false                                                       inUse: false
