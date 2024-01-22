@@ -2,7 +2,7 @@ releases:
 - name: ">= 20.0.0"
   requests:
   - name: observability-bundle
-    version: ">= 1.0.0"
+    version: ">= 1.1.0"
 - name: ">= 19.3.0"
   requests:
   - name: security-bundle
