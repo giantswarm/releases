@@ -13,7 +13,7 @@ spec:
     dependsOn:
     - vertical-pod-autoscaler-crd
     name: aws-cloud-controller-manager
-    version: 1.25.14-gs1
+    version: 1.25.14-gs2
   - componentVersion: 1.21.0
     dependsOn:
     - vertical-pod-autoscaler-crd
@@ -27,7 +27,7 @@ spec:
     - vertical-pod-autoscaler-crd
     name: cert-exporter
     version: 2.9.0
-  - componentVersion: 1.12.4
+  - componentVersion: 1.13.3
     dependsOn:
     - aws-cloud-controller-manager
     - cilium
@@ -35,7 +35,7 @@ spec:
     - prometheus-operator-crd
     - vertical-pod-autoscaler-crd
     name: cert-manager
-    version: 2.25.3
+    version: 3.7.0
   - name: chart-operator
     version: 3.1.2
   - dependsOn:
@@ -46,7 +46,7 @@ spec:
     dependsOn:
     - aws-cloud-controller-manager
     name: cilium
-    version: 0.19.0
+    version: 0.19.2
   - dependsOn:
     - aws-cloud-controller-manager
     - cilium
@@ -95,7 +95,7 @@ spec:
     - vertical-pod-autoscaler-crd
     name: node-exporter
     version: 1.19.0
-  - componentVersion: 0.14.0
+  - componentVersion: 1.0.0
     dependsOn:
     - aws-cloud-controller-manager
     - cilium
@@ -103,19 +103,19 @@ spec:
     - prometheus-operator-crd
     - vertical-pod-autoscaler-crd
     name: vertical-pod-autoscaler
-    version: 4.6.0
+    version: 5.0.0
   - name: vertical-pod-autoscaler-crd
     version: 3.0.0
   - dependsOn:
     - vertical-pod-autoscaler-crd
     name: etcd-kubernetes-resources-count-exporter
-    version: 1.8.0
+    version: 1.9.0
   - dependsOn:
     - aws-cloud-controller-manager
     - cilium
     - coredns
     name: observability-bundle
-    version: 1.0.0
+    version: 1.1.0
   - dependsOn:
     - aws-cloud-controller-manager
     - cilium
@@ -172,12 +172,12 @@ spec:
     releaseOperatorDeploy: true
     version: 5.10.0
   - name: containerlinux
-    version: 3602.2.3
+    version: 3760.2.0
   - name: etcd
     version: 3.5.11
   - name: kubernetes
     version: 1.25.9
-  date: "2024-01-17T10:49:10Z"
+  date: "2024-01-24T09:06:36Z"
   state: active
 status:
   inUse: false
