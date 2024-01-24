@@ -13,7 +13,7 @@ releases:
   requests:
   - name: security-bundle
     version: ">= 0.18.0 < 1.0.0"
-- name: ">= 19.2.0"
+- name: ">= 19.2.0 < 19.999.999"
   requests:
   - name: cert-manager
     version: "< 3.0.0"
