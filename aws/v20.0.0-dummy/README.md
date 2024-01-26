@@ -1,4 +1,4 @@
-# :zap: Giant Swarm Release v20.0.0 for AWS :zap:
+# :zap: Giant Swarm Release v20.0.0-dummy for AWS :zap:
 
 << Add description here >>
 
