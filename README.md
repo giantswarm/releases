@@ -12,6 +12,7 @@ to all Giant Swarm installations.
 ## AWS
 - v20
   - v20.0
+    - [v20.0.0-dummy](https://github.com/giantswarm/releases/tree/master/aws/v20.0.0-dummy)
     - [v20.0.0](https://github.com/giantswarm/releases/tree/master/aws/v20.0.0)
 - v19
   - v19.3
