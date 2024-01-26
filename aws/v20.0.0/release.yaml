@@ -47,7 +47,7 @@ spec:
     dependsOn:
     - aws-cloud-controller-manager
     name: cilium
-    version: 0.19.2-279168337fb13380e1007716e3496549321ddf5b
+    version: 0.19.2
   - dependsOn:
     - aws-cloud-controller-manager
     - cilium
@@ -177,7 +177,7 @@ spec:
   - name: etcd
     version: 3.5.11
   - name: kubernetes
-    version: 1.25.16
+    version: 1.25.9
   date: "2024-01-24T09:06:36Z"
   state: active
 status:
