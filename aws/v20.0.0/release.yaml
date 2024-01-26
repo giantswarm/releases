@@ -47,7 +47,7 @@ spec:
     dependsOn:
     - aws-cloud-controller-manager
     name: cilium
-    version: 0.19.2-0356530053f1b87193780fb67ea19f420bc28e1f
+    version: 0.19.2-279168337fb13380e1007716e3496549321ddf5b
   - dependsOn:
     - aws-cloud-controller-manager
     - cilium
