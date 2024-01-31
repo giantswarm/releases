@@ -5,10 +5,17 @@
 ## Change details
 
 
-### aws-operator [16.0.0](https://github.com/giantswarm/aws-operator/releases/tag/v16.0.0)
+### app-operator [6.10.3](https://github.com/giantswarm/app-operator/releases/tag/v6.10.3)
 
-#### Changed
-- Bump k8scc to v18 to enable k8s 1.25 support.
+#### Fixed
+- Move pss values under the global property
+
+
+
+### aws-operator [15.0.1](https://github.com/giantswarm/aws-operator/releases/tag/v15.0.1)
+
+#### Fixed
+- Fix Route53 list hosted zones to avoid pagination issue.
 
 
 
@@ -237,6 +244,21 @@
 - ca-certificates ([3.96.1](https://firefox-source-docs.mozilla.org/security/nss/releases/nss_3_96_1.html) (includes [3.96](https://firefox-source-docs.mozilla.org/security/nss/releases/nss_3_96.html)))
 
 
+### etcd [3.5.12](https://github.com/etcd-io/etcd/releases/tag/v3.5.12)
+
+#### etcd server
+- Add [livez/readyz HTTP endpoints](https://github.com/etcd-io/etcd/pull/17039)
+- Fix [not validating database consistent index, and panicking on nil backend](https://github.com/etcd-io/etcd/pull/17151)
+- Document [`experimental-enable-lease-checkpoint-persist` flag in etcd help](https://github.com/etcd-io/etcd/pull/17190)
+- Fix [needlessly flocking snapshot files when deleting](https://github.com/etcd-io/etcd/pull/17206)
+- Add [digest for etcd base image](https://github.com/etcd-io/etcd/pull/17205)
+- Fix [delete inconsistencies in read buffer](https://github.com/etcd-io/etcd/pull/17230)
+#### Dependencies
+- Compile binaries using [go 1.20.13](https://github.com/etcd-io/etcd/pull/17275)
+- Upgrade [golang.org/x/crypto to v0.17+ to address CVE-2023-48795](https://github.com/etcd-io/etcd/pull/17346)
+
+
+
 ### kubernetes [1.25.9](https://github.com/kubernetes/kubernetes/releases/tag/v1.25.9)
 
 #### Feature
@@ -259,41 +281,6 @@ _Nothing has changed._
 
 
 
-### etcd-kubernetes-resources-count-exporter [1.9.0](https://github.com/giantswarm/etcd-kubernetes-resources-count-exporter/releases/tag/v1.9.0)
-
-#### Changed
-- Configure `gsoci.azurecr.io` as the default container image registry.
-
-
-
-### prometheus-blackbox-exporter [0.4.1](https://github.com/giantswarm/prometheus-blackbox-exporter/releases/tag/v0.4.1)
-
-#### Changed
-- Configure `gsoci.azurecr.io` as the default container image registry.
-
-
-
-### cert-exporter [2.9.0](https://github.com/giantswarm/cert-exporter/releases/tag/v2.9.0)
-
-#### Added
-- Add cert name to secret metric.
-
-
-
-### cert-manager [3.7.0](https://github.com/giantswarm/cert-manager-app/releases/tag/v3.7.0)
-
-#### Changed
-- Update to latest `helm chart` version to `v1.13.3`
-
-
-
-### coredns [1.21.0](https://github.com/giantswarm/coredns-app/releases/tag/v1.21.0)
-
-#### Changed
-- Configure `gsoci.azurecr.io` as the default container image registry.
-
-
-
 ### vertical-pod-autoscaler-crd [3.0.0](https://github.com/giantswarm/vertical-pod-autoscaler-crd/releases/tag/v3.0.0)
 
 #### Changed
@@ -301,7 +288,58 @@ _Nothing has changed._
 
 
 
+### aws-ebs-csi-driver [2.28.1](https://github.com/giantswarm/aws-ebs-csi-driver-app/releases/tag/v2.28.1)
+
+#### Changed
+- Configure `gsoci.azurecr.io` as the default container image registry.
+
+
+
+### node-exporter [1.19.0](https://github.com/giantswarm/node-exporter-app/releases/tag/v1.19.0)
+
+#### Added
+- Add VPA configuration to `node-exporter` app.
+
+
+
+### chart-operator-extensions [1.1.2](https://github.com/giantswarm/chart-operator-extensions/releases/tag/v1.1.2)
+
+#### Fixed
+- Move pss values under the global property
+
+
+
+### cert-manager [3.7.1](https://github.com/giantswarm/cert-manager-app/releases/tag/v3.7.1)
+
+#### Added
+- Added `acme-solvers-networkpolicy` `NetworkPolicy` namespace to `kube-system`
+
+
+
+### chart-operator [3.1.3](https://github.com/giantswarm/chart-operator/releases/tag/v3.1.3)
+
+#### Fixed
+- Move pss values under the global property
+#### Changed
+- Use base images from `gsoci.azurecr.io`
+
+
+
 ### aws-cloud-controller-manager [1.25.14-gs2](https://github.com/giantswarm/aws-cloud-controller-manager-app/releases/tag/v1.25.14-gs2)
+
+#### Changed
+- Configure `gsoci.azurecr.io` as the default container image registry.
+
+
+
+### cluster-autoscaler [1.25.1-gs2](https://github.com/giantswarm/cluster-autoscaler-app/releases/tag/v1.25.1-gs2)
+
+#### Fixed
+- Adjusted minimum allowed CPU and memory
+
+
+
+### coredns [1.21.0](https://github.com/giantswarm/coredns-app/releases/tag/v1.21.0)
 
 #### Changed
 - Configure `gsoci.azurecr.io` as the default container image registry.
@@ -324,38 +362,24 @@ _Nothing has changed._
 
 
 
-### k8s-dns-node-cache-app [2.6.0](https://github.com/giantswarm/k8s-dns-node-cache-app/releases/tag/v2.6.0)
+### etcd-kubernetes-resources-count-exporter [1.9.0](https://github.com/giantswarm/etcd-kubernetes-resources-count-exporter/releases/tag/v1.9.0)
 
 #### Changed
 - Configure `gsoci.azurecr.io` as the default container image registry.
 
 
 
-### security-bundle [1.5.0](https://github.com/giantswarm/security-bundle/releases/tag/v1.5.0)
+### observability-bundle [1.1.1](https://github.com/giantswarm/observability-bundle/releases/tag/v1.1.1)
+
+#### Changed
+- Upgrade `kube-prometheus-stack` to 8.1.3 (gsoci registry).
+
+
+
+### cert-exporter [2.9.0](https://github.com/giantswarm/cert-exporter/releases/tag/v2.9.0)
 
 #### Added
-- Add a `global.namespace` value for automatically setting all app namespaces.
-#### Changed
-- Update to exception-recommender (app) to v0.0.7.
-- Update to falco (app) to v0.7.1.
-- Update to jiralert (app) version v0.1.3.
-- Update to kyverno-policy-operator (app) version v0.0.6.
-- Update to starboard-exporter (app) version v0.7.7.
-- Update to trivy-operator (app) to v0.5.1.
-
-
-
-### aws-ebs-csi-driver [2.28.1](https://github.com/giantswarm/aws-ebs-csi-driver-app/releases/tag/v2.28.1)
-
-#### Changed
-- Configure `gsoci.azurecr.io` as the default container image registry.
-
-
-
-### chart-operator [3.1.2](https://github.com/giantswarm/chart-operator/releases/tag/v3.1.2)
-
-#### Changed
-- Configure `gsoci.azurecr.io` as the default container image registry.
+- Add cert name to secret metric.
 
 
 
@@ -366,27 +390,30 @@ _Nothing has changed._
 
 
 
-### cluster-autoscaler [1.25.1-gs2](https://github.com/giantswarm/cluster-autoscaler-app/releases/tag/v1.25.1-gs2)
-
-#### Fixed
-- Adjusted minimum allowed CPU and memory
-
-
-
-### node-exporter [1.19.0](https://github.com/giantswarm/node-exporter-app/releases/tag/v1.19.0)
-
-#### Added
-- Add VPA configuration to `node-exporter` app.
-
-
-
-### observability-bundle [1.1.0](https://github.com/giantswarm/observability-bundle/releases/tag/v1.1.0)
+### security-bundle [1.6.0](https://github.com/giantswarm/security-bundle/releases/tag/v1.6.0)
 
 #### Changed
-- Upgrade `promtail` to 1.5.0.
-- Upgrade `kube-prometheus-stack` to 8.1.2.
-- Upgrade `grafana-agent` to 0.4.0.
-- Upgrade `prometheus-agent` to 0.6.7.
+- Update to exception-recommender (app) to v0.1.0.
+- Update to falco (app) to v0.8.0.
+- Update to kyverno-policy-operator (app) version v0.0.7.
+- Update to kyverno (app) version v0.17.2.
+- Update to starboard-exporter (app) version v0.7.8.
+- Update to trivy-operator (app) to v0.7.0.
+- Update to trivy (app) to v0.10.0.
+
+
+
+### k8s-dns-node-cache-app [2.6.0](https://github.com/giantswarm/k8s-dns-node-cache-app/releases/tag/v2.6.0)
+
+#### Changed
+- Configure `gsoci.azurecr.io` as the default container image registry.
+
+
+
+### prometheus-blackbox-exporter [0.4.1](https://github.com/giantswarm/prometheus-blackbox-exporter/releases/tag/v0.4.1)
+
+#### Changed
+- Configure `gsoci.azurecr.io` as the default container image registry.
 
 
 
