@@ -5,6 +5,11 @@
 ## Change details
 
 
+### kubernetes [1.25.16](https://github.com/kubernetes/kubernetes/releases/tag/v1.25.16)
+
+
+
+
 ### app-operator [6.10.3](https://github.com/giantswarm/app-operator/releases/tag/v6.10.3)
 
 #### Fixed
@@ -259,39 +264,10 @@
 
 
 
-### kubernetes [1.25.9](https://github.com/kubernetes/kubernetes/releases/tag/v1.25.9)
+### chart-operator-extensions [1.1.2](https://github.com/giantswarm/chart-operator-extensions/releases/tag/v1.1.2)
 
-#### Feature
-- Kubernetes is now built with Go 1.19.8 ([#117131](https://github.com/kubernetes/kubernetes/pull/117131), [@xmudrii](https://github.com/xmudrii)) [SIG Release and Testing]
-#### Bug or Regression
-- Fix missing delete events on informer re-lists to ensure all delete events are correctly emitted and using the latest known object state, so that all event handlers and stores always reflect the actual apiserver state as best as possible ([#115900](https://github.com/kubernetes/kubernetes/pull/115900), [@odinuge](https://github.com/odinuge)) [SIG API Machinery]
-- Fix: Route controller should update routes with NodeIP changed ([#116361](https://github.com/kubernetes/kubernetes/pull/116361), [@lzhecheng](https://github.com/lzhecheng)) [SIG Cloud Provider]
-- Fixes a regression in the pod binding subresource to honor the `metadata.uid` precondition.
-  This allows kube-scheduler to ensure it is assigns node names to the same instances of pods it made scheduling decisions for. ([#116776](https://github.com/kubernetes/kubernetes/pull/116776), [@alculquicondor](https://github.com/alculquicondor)) [SIG API Machinery and Testing]
-- Kubelet: Fix fs quota monitoring on volumes ([#116794](https://github.com/kubernetes/kubernetes/pull/116794), [@pacoxu](https://github.com/pacoxu)) [SIG Storage]
-#### Other (Cleanup or Flake)
-- Service session affinity timeout tests are no longer required for Kubernetes network plugin conformance due to variations in existing implementations. New conformance tests will be developed to better express conformance in future releases. ([#112806](https://github.com/kubernetes/kubernetes/pull/112806), [@dcbw](https://github.com/dcbw)) [SIG Architecture, Network and Testing]
-#### Dependencies
-#### Added
-_Nothing has changed._
-#### Changed
-- sigs.k8s.io/apiserver-network-proxy/konnectivity-client: v0.0.35 → v0.0.36
-#### Removed
-_Nothing has changed._
-
-
-
-### vertical-pod-autoscaler-crd [3.0.0](https://github.com/giantswarm/vertical-pod-autoscaler-crd/releases/tag/v3.0.0)
-
-#### Changed
-- Synced VPA CRD for v1.0.0
-
-
-
-### aws-ebs-csi-driver [2.28.1](https://github.com/giantswarm/aws-ebs-csi-driver-app/releases/tag/v2.28.1)
-
-#### Changed
-- Configure `gsoci.azurecr.io` as the default container image registry.
+#### Fixed
+- Move pss values under the global property
 
 
 
@@ -302,30 +278,14 @@ _Nothing has changed._
 
 
 
-### chart-operator-extensions [1.1.2](https://github.com/giantswarm/chart-operator-extensions/releases/tag/v1.1.2)
+### k8s-dns-node-cache-app [2.6.0](https://github.com/giantswarm/k8s-dns-node-cache-app/releases/tag/v2.6.0)
 
-#### Fixed
-- Move pss values under the global property
-
-
-
-### cert-manager [3.7.1](https://github.com/giantswarm/cert-manager-app/releases/tag/v3.7.1)
-
-#### Added
-- Added `acme-solvers-networkpolicy` `NetworkPolicy` namespace to `kube-system`
-
-
-
-### chart-operator [3.1.3](https://github.com/giantswarm/chart-operator/releases/tag/v3.1.3)
-
-#### Fixed
-- Move pss values under the global property
 #### Changed
-- Use base images from `gsoci.azurecr.io`
+- Configure `gsoci.azurecr.io` as the default container image registry.
 
 
 
-### aws-cloud-controller-manager [1.25.14-gs2](https://github.com/giantswarm/aws-cloud-controller-manager-app/releases/tag/v1.25.14-gs2)
+### aws-ebs-csi-driver [2.28.1](https://github.com/giantswarm/aws-ebs-csi-driver-app/releases/tag/v2.28.1)
 
 #### Changed
 - Configure `gsoci.azurecr.io` as the default container image registry.
@@ -339,10 +299,46 @@ _Nothing has changed._
 
 
 
-### coredns [1.21.0](https://github.com/giantswarm/coredns-app/releases/tag/v1.21.0)
+### prometheus-blackbox-exporter [0.4.1](https://github.com/giantswarm/prometheus-blackbox-exporter/releases/tag/v0.4.1)
 
 #### Changed
 - Configure `gsoci.azurecr.io` as the default container image registry.
+
+
+
+### security-bundle [1.6.0](https://github.com/giantswarm/security-bundle/releases/tag/v1.6.0)
+
+#### Changed
+- Update to exception-recommender (app) to v0.1.0.
+- Update to falco (app) to v0.8.0.
+- Update to kyverno-policy-operator (app) version v0.0.7.
+- Update to kyverno (app) version v0.17.2.
+- Update to starboard-exporter (app) version v0.7.8.
+- Update to trivy-operator (app) to v0.7.0.
+- Update to trivy (app) to v0.10.0.
+
+
+
+### aws-cloud-controller-manager [1.25.14-gs2](https://github.com/giantswarm/aws-cloud-controller-manager-app/releases/tag/v1.25.14-gs2)
+
+#### Changed
+- Configure `gsoci.azurecr.io` as the default container image registry.
+
+
+
+### chart-operator [3.1.3](https://github.com/giantswarm/chart-operator/releases/tag/v3.1.3)
+
+#### Fixed
+- Move pss values under the global property
+#### Changed
+- Use base images from `gsoci.azurecr.io`
+
+
+
+### cilium [0.19.2](https://github.com/giantswarm/cilium-app/releases/tag/v0.19.2)
+
+#### Fixed
+- Replace `ToServices`/`ToPorts` combination in CiliumNetworkPolicy because of breakage in Cilium v1.14
 
 
 
@@ -353,12 +349,10 @@ _Nothing has changed._
 
 
 
-### vertical-pod-autoscaler [5.0.0](https://github.com/giantswarm/vertical-pod-autoscaler-app/releases/tag/v5.0.0)
+### vertical-pod-autoscaler-crd [3.0.0](https://github.com/giantswarm/vertical-pod-autoscaler-crd/releases/tag/v3.0.0)
 
 #### Changed
-- Change ImageRegistry to `gsoci.azurecr.io`.
-- Upgrade dependency chart to 9.6.0
-- Upgrade VPA components to 1.0.0
+- Synced VPA CRD for v1.0.0
 
 
 
@@ -383,37 +377,26 @@ _Nothing has changed._
 
 
 
-### cilium [0.19.2](https://github.com/giantswarm/cilium-app/releases/tag/v0.19.2)
+### cert-manager [3.7.1](https://github.com/giantswarm/cert-manager-app/releases/tag/v3.7.1)
 
-#### Fixed
-- Replace `ToServices`/`ToPorts` combination in CiliumNetworkPolicy because of breakage in Cilium v1.14
-
-
-
-### security-bundle [1.6.0](https://github.com/giantswarm/security-bundle/releases/tag/v1.6.0)
-
-#### Changed
-- Update to exception-recommender (app) to v0.1.0.
-- Update to falco (app) to v0.8.0.
-- Update to kyverno-policy-operator (app) version v0.0.7.
-- Update to kyverno (app) version v0.17.2.
-- Update to starboard-exporter (app) version v0.7.8.
-- Update to trivy-operator (app) to v0.7.0.
-- Update to trivy (app) to v0.10.0.
+#### Added
+- Added `acme-solvers-networkpolicy` `NetworkPolicy` namespace to `kube-system`
 
 
 
-### k8s-dns-node-cache-app [2.6.0](https://github.com/giantswarm/k8s-dns-node-cache-app/releases/tag/v2.6.0)
+### coredns [1.21.0](https://github.com/giantswarm/coredns-app/releases/tag/v1.21.0)
 
 #### Changed
 - Configure `gsoci.azurecr.io` as the default container image registry.
 
 
 
-### prometheus-blackbox-exporter [0.4.1](https://github.com/giantswarm/prometheus-blackbox-exporter/releases/tag/v0.4.1)
+### vertical-pod-autoscaler [5.0.0](https://github.com/giantswarm/vertical-pod-autoscaler-app/releases/tag/v5.0.0)
 
 #### Changed
-- Configure `gsoci.azurecr.io` as the default container image registry.
+- Change ImageRegistry to `gsoci.azurecr.io`.
+- Upgrade dependency chart to 9.6.0
+- Upgrade VPA components to 1.0.0
 
 
 
