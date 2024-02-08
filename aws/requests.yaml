@@ -3,13 +3,23 @@ releases:
   requests:
   - name: observability-bundle
     version: ">= 1.1.0"
+  - name: security-bundle
+    version: ">= 1.6.1"
+- name: ">= 19.3.2"
+  requests:
+  - name: security-bundle
+    version: ">= 1.6.1"
 - name: ">= 19.3.0"
   requests:
   - name: security-bundle
     version: ">= 1.3.0"
   - name: observability-bundle
     version: ">= 0.10.1"
-- name: ">= 19.2.0 < 19.3.0"
+- name: ">= 19.2.2 < 19.3.0"
+  requests:
+  - name: security-bundle
+    version: ">= 0.20.1 < 1.0.0"
+- name: ">= 19.2.0 < 19.2.2"
   requests:
   - name: security-bundle
     version: ">= 0.18.0 < 1.0.0"
