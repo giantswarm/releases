@@ -124,7 +124,7 @@ spec:
     - prometheus-operator-crd
     - vertical-pod-autoscaler-crd
     name: k8s-dns-node-cache-app
-    version: 2.6.0
+    version: 2.6.1
   - dependsOn:
     - aws-cloud-controller-manager
     - cilium

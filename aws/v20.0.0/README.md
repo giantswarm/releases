@@ -278,10 +278,11 @@
 
 
 
-### k8s-dns-node-cache-app [2.6.0](https://github.com/giantswarm/k8s-dns-node-cache-app/releases/tag/v2.6.0)
+### k8s-dns-node-cache-app [2.6.1](https://github.com/giantswarm/k8s-dns-node-cache-app/releases/tag/v2.6.1)
 
 #### Changed
 - Configure `gsoci.azurecr.io` as the default container image registry.
+- Revert force_tcp option from external DNS zone (#67).
 
 
 
