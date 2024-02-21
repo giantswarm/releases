@@ -116,7 +116,7 @@ spec:                                                              spec:
     - cilium                                                           - cilium
     - coredns                                                          - coredns
     name: observability-bundle                                         name: observability-bundle
-    version: 0.10.1                                             |      version: 1.1.1
+    version: 0.10.1                                             |      version: 1.2.3
   - dependsOn:                                                       - dependsOn:
     - aws-cloud-controller-manager                                     - aws-cloud-controller-manager
     - cilium                                                           - cilium
@@ -151,7 +151,7 @@ spec:                                                              spec:
     - prometheus-operator-crd                                          - prometheus-operator-crd
     - vertical-pod-autoscaler-crd                                      - vertical-pod-autoscaler-crd
     name: security-bundle                                              name: security-bundle
-    version: 1.4.2                                              |      version: 1.6.0
+    version: 1.4.2                                              |      version: 1.6.1
   - dependsOn:                                                       - dependsOn:
     - aws-cloud-controller-manager                                     - aws-cloud-controller-manager
     - cilium                                                           - cilium

@@ -306,7 +306,7 @@
 
 
 
-### security-bundle [1.6.0](https://github.com/giantswarm/security-bundle/releases/tag/v1.6.0)
+### security-bundle [1.6.0](https://github.com/giantswarm/security-bundle/releases/tag/v1.6.1)
 
 #### Changed
 - Update to exception-recommender (app) to v0.1.0.
@@ -316,7 +316,9 @@
 - Update to starboard-exporter (app) version v0.7.8.
 - Update to trivy-operator (app) to v0.7.0.
 - Update to trivy (app) to v0.10.0.
-
+- Update to kyverno (app) to v0.17.5.
+- Update to exception-recommender (app) to v0.1.1.
+- Update to trivy-operator (app) to v0.7.2.
 
 
 ### aws-cloud-controller-manager [1.25.14-gs2](https://github.com/giantswarm/aws-cloud-controller-manager-app/releases/tag/v1.25.14-gs2)
@@ -367,7 +369,12 @@
 
 #### Changed
 - Upgrade `kube-prometheus-stack` to 8.1.3 (gsoci registry).
-
+- Upgrade kube-prometheus-stack and prometheus-operator-crd to 9.0.0.
+- Add the global.podSecurityStandards.enforced value back to be able to work on CAPI WCs.
+- Add dependency on prometheus-operator-crd to all apps.
+- Upgrade promtail to 1.5.1.
+- Upgrade grafana-agent to 0.4.1.
+- upgrade prometheus-agent to 0.6.8.
 
 
 ### cert-exporter [2.9.0](https://github.com/giantswarm/cert-exporter/releases/tag/v2.9.0)
