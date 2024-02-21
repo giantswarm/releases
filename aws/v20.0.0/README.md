@@ -24,7 +24,7 @@
 
 
 
-### containerlinux [3760.2.0](https://www.flatcar-linux.org/releases/#release-3760.2.0)
+### containerlinux [3815.2.0](https://www.flatcar-linux.org/releases/#release-3815.2.0)
 
 ⚠️ From Alpha 3794.0.0 Torcx has been removed - please assert that you don’t rely on specific Torcx mechanism but now use systemd-sysext. See [here](https://www.flatcar.org/docs/latest/provisioning/sysext/) for more information.
 

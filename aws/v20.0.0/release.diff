@@ -174,7 +174,7 @@ spec:                                                              spec:
     releaseOperatorDeploy: true                                        releaseOperatorDeploy: true
     version: 5.10.0                                                    version: 5.10.0
   - name: containerlinux                                             - name: containerlinux
-    version: 3602.2.3                                           |      version: 3760.2.0
+    version: 3602.2.3                                           |      version: 3815.2.0
   - name: etcd                                                       - name: etcd
     version: 3.5.11                                             |      version: 3.5.12
   - name: kubernetes                                                 - name: kubernetes
