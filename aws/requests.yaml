@@ -5,7 +5,7 @@ releases:
     version: ">= 1.2.3"
   - name: security-bundle
     version: ">= 1.6.1"
-- name: ">= 19.3.2"
+- name: ">= 19.3.3"
   requests:
   - name: security-bundle
     version: ">= 1.6.1"
