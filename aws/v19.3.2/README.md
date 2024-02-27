@@ -1,6 +1,6 @@
 # :zap: Giant Swarm Release v19.3.2 for AWS :zap:
 
-<< Add description here >>
+This patch release introduces latest stable Flatcar release that includes important CVEs, especially the Leaky Vessels for the containerd version [CVE-2024-21626](https://nvd.nist.gov/vuln/detail/CVE-2024-21626).
 
 ## Change details
 
