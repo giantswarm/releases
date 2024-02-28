@@ -116,5 +116,22 @@ This patch release introduces latest stable Flatcar release that includes import
  - docker ([24.0.9](https://github.com/moby/moby/releases/tag/v24.0.9))
  - runc ([1.1.12](https://github.com/opencontainers/runc/releases/tag/v1.1.12))
 
+### security-bundle [v1.6.2](https://github.com/giantswarm/security-bundle/releases/tag/v1.6.2)
+
+#### Changes:
+
+- Introduces new upstream Kyverno [version v1.11](https://kyverno.io/blog/2023/11/16/kyverno-1.11-released/).
+- Introduces new `options` value to handle [App timeouts](https://docs.giantswarm.io/getting-started/app-platform/installation-configuration/).
+- Introduces new `global.namespace` value to install all apps in a different namespace.
+
+#### App updates
+
+- kyverno [v0.17.6](https://github.com/giantswarm/kyverno-app/releases/tag/v0.17.6)
+- kyverno-policy-operator [v0.0.7](https://github.com/giantswarm/kyverno-policy-operator/releases/tag/v0.0.7)
+- exception-recommender [v0.1.1](https://github.com/giantswarm/exception-recommender/releases/tag/v0.1.1)
+- trivy [v0.10.0](https://github.com/giantswarm/trivy-app/releases/tag/v0.10.0)
+- trivy-operator [v0.7.2](https://github.com/giantswarm/trivy-operator-app/releases/tag/v0.7.2)
+- starboard-exporter [v0.7.8](https://github.com/giantswarm/starboard-exporter/releases/tag/v0.7.8)
+- falco [v0.8.0](https://github.com/giantswarm/falco-app/releases/tag/v0.8.0)
 
 
