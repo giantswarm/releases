@@ -180,7 +180,7 @@ spec:
   - name: kubernetes
     version: 1.24.17
   date: "2023-12-14T07:18:20Z"
-  state: deprecated
+  state: active
 status:
   inUse: false
   ready: false
