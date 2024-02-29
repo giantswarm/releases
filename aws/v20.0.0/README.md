@@ -17,10 +17,10 @@
 
 
 
-### aws-operator [15.0.1](https://github.com/giantswarm/aws-operator/releases/tag/v15.0.1)
+### aws-operator [16.0.0](https://github.com/giantswarm/aws-operator/releases/tag/v16.0.0)
 
-#### Fixed
-- Fix Route53 list hosted zones to avoid pagination issue.
+#### Changed
+- Bump k8scc to v18 to enable k8s 1.25 support.
 
 
 
