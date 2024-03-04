@@ -17,11 +17,15 @@
 
 
 
-### aws-operator [16.0.0](https://github.com/giantswarm/aws-operator/releases/tag/v16.0.0)
+### aws-operator [16..0](https://github.com/giantswarm/aws-operator/releases/tag/v16.1.0)
 
 #### Changed
 - Bump k8scc to v18 to enable k8s 1.25 support.
+- Bump k8scc to avoid running etcd defrag on all masters at the same time.
 
+### Fixed
+
+- Handle karpenter nodes in node-termination-handler.
 
 
 ### containerlinux [3815.2.0](https://www.flatcar-linux.org/releases/#release-3815.2.0)
