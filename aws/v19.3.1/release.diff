@@ -166,6 +166,7 @@ spec:                                                              spec:
   - name: aws-operator                                               - name: aws-operator
     releaseOperatorDeploy: true                                        releaseOperatorDeploy: true
     version: 14.24.1                                            |      version: 15.0.0
+                                                                >      reference: 15.0.0-patch2
   - name: cert-operator                                              - name: cert-operator
     releaseOperatorDeploy: true                                        releaseOperatorDeploy: true
     version: 3.2.1                                                     version: 3.2.1
