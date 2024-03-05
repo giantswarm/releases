@@ -164,7 +164,7 @@ spec:                                                              spec:
   - name: app-operator                                               - name: app-operator
     version: 6.10.2                                                    version: 6.10.2
   - name: aws-operator                                               - name: aws-operator
-                                                                >      reference: 15.0.0-patch1
+                                                                >      reference: 15.0.0-patch2
     releaseOperatorDeploy: true                                        releaseOperatorDeploy: true
     version: 15.0.0                                                    version: 15.0.0
     reference: 15.0.0-patch1                                    <
