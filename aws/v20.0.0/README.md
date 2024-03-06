@@ -6,7 +6,7 @@ Please remember that the Pod Security Policies (PSP) are no longer supported in 
 
 This release will also be used as a base for the migration from `Giant Swarm Vintage` to `Cluster API for AWS` (CAPA). The migration will be scheduled as any other upgrade. We will be reaching out separately to each customer to present the plan as well as the CAPA benefits.
 
-> **WARNING:** After upgrading to `19.3.0`, it is highly advised to begin removal of all PSPs from the cluster. Kubernetes `v1.25` removes the Pod Security Policy resource from the API, meaning workloads (like Helm charts) which still contain PSPs will fail to install after the upcoming Giant Swarm `v20` release.
+> **WARNING:** After upgrading to `19.3.0`, it is highly advised to begin removal of all customer-managed PSPs from the cluster. Kubernetes `v1.25` removes the Pod Security Policy resource from the API, meaning workloads (like Helm charts) which still contain PSPs will fail to install after the Giant Swarm `v20` upgrade.
 
 > **WARNING:** `observability-bundle` will be upgraded to `v1.1.0`, which contains breaking changes to the configuration for the bundled apps. Please check our [upgrade guide](https://github.com/giantswarm/observability-bundle/blob/main/docs/upgrade.md) or reach out to your Account Engineer for more details.
 
