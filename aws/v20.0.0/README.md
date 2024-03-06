@@ -13,11 +13,6 @@ This release will also be used as a base for `Giant Swarm Vintage` to Giant Swar
 ## Change details
 
 
-### kubernetes [1.25.16](https://github.com/kubernetes/kubernetes/releases/tag/v1.25.16)
-
-
-
-
 ### app-operator [6.10.3](https://github.com/giantswarm/app-operator/releases/tag/v6.10.3)
 
 #### Fixed
@@ -427,4 +422,36 @@ This release will also be used as a base for `Giant Swarm Vintage` to Giant Swar
 - Upgrade VPA components to 1.0.0
 
 
+### kubernetes [1.25.16](https://github.com/kubernetes/kubernetes/releases/tag/v1.25.16)
 
+ - [What's New (Major Themes)](#whats-new-major-themes)
+    - [PodSecurityPolicy is Removed, Pod Security Admission graduates to Stable](#podsecuritypolicy-is-removed-pod-security-admission-graduates-to-stable)
+    - [Ephemeral Containers Graduate to Stable](#ephemeral-containers-graduate-to-stable)
+    - [Support for cgroups v2 Graduates to Stable](#support-for-cgroups-v2-graduates-to-stable)
+    - [Windows support improved](#windows-support-improved)
+    - [Moved container registry service from k8s.gcr.io to registry.k8s.io](#moved-container-registry-service-from-k8sgcrio-to-registryk8sio)
+    - [Promoted SeccompDefault to Beta](#promoted-seccompdefault-to-beta)
+    - [Promoted endPort in Network Policy to Stable](#promoted-endport-in-network-policy-to-stable)
+    - [Promoted Local Ephemeral Storage Capacity Isolation to Stable](#promoted-local-ephemeral-storage-capacity-isolation-to-stable)
+    - [Promoted core CSI Migration to Stable](#promoted-core-csi-migration-to-stable)
+    - [Promoted CSI Ephemeral Volume to Stable](#promoted-csi-ephemeral-volume-to-stable)
+    - [Promoted CRD Validation Expression Language to Beta](#promoted-crd-validation-expression-language-to-beta)
+    - [Promoted Server Side Unknown Field Validation to Beta](#promoted-server-side-unknown-field-validation-to-beta)
+    - [Introduced KMS v2](#introduced-kms-v2)
+    - [Kube-proxy images are now based on distroless images](#kube-proxy-images-are-now-based-on-distroless-images)
+  - [Known Issues](#known-issues)
+    - [LocalStorageCapacityIsolationFSQuotaMonitoring ConfigMap rendering failure](#localstoragecapacityisolationfsquotamonitoring-configmap-rendering-failure)
+  - [Urgent Upgrade Notes](#urgent-upgrade-notes)
+    - [(No, really, you MUST read this before you upgrade)](#no-really-you-must-read-this-before-you-upgrade)
+  - [Changes by Kind](#changes-by-kind-15)
+    - [Deprecation](#deprecation)
+    - [API Change](#api-change-4)
+    - [Feature](#feature-14)
+    - [Documentation](#documentation)
+    - [Failing Test](#failing-test)
+    - [Bug or Regression](#bug-or-regression-15)
+    - [Other (Cleanup or Flake)](#other-cleanup-or-flake-4)
+  - [Dependencies](#dependencies-16)
+    - [Added](#added-16)
+    - [Changed](#changed-16)
+    - [Removed](#removed-16)
