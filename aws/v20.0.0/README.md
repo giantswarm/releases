@@ -424,7 +424,7 @@ This release will also be used as a base for `Giant Swarm Vintage` to Giant Swar
 
 ### kubernetes [1.25.16](https://github.com/kubernetes/kubernetes/releases/tag/v1.25.16)
 
-> **WARNING:** Content generated with help of Chat GPT
+> **DISCLAIMER:** Summary of upstream Kubernetes release notes generated with the help of ChatGPT
 
 Kubernetes version 1.25 introduces numerous enhancements and features to improve the stability, scalability, and security of the platform. Some highlights include:
 
