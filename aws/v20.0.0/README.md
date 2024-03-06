@@ -88,19 +88,17 @@ This release will also be used as a base for `Giant Swarm Vintage` to Giant Swar
 
 
 
-### security-bundle [1.6.0](https://github.com/giantswarm/security-bundle/releases/tag/v1.6.1)
+### security-bundle [1.6.2](https://github.com/giantswarm/security-bundle/releases/tag/v1.6.2)
 
 #### Changed
-- Update to exception-recommender (app) to v0.1.0.
+- Update to exception-recommender (app) to v0.1.1.
 - Update to falco (app) to v0.8.0.
 - Update to kyverno-policy-operator (app) version v0.0.7.
-- Update to kyverno (app) version v0.17.2.
+- Update to kyverno (app) version v0.17.6.
 - Update to starboard-exporter (app) version v0.7.8.
-- Update to trivy-operator (app) to v0.7.0.
+- Update to trivy-operator (app) to v0.7.2.
 - Update to trivy (app) to v0.10.0.
 - Update to kyverno (app) to v0.17.5.
-- Update to exception-recommender (app) to v0.1.1.
-- Update to trivy-operator (app) to v0.7.2.
 
 
 ### aws-cloud-controller-manager [1.25.14-gs2](https://github.com/giantswarm/aws-cloud-controller-manager-app/releases/tag/v1.25.14-gs2)
