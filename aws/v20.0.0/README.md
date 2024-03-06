@@ -8,7 +8,7 @@ This release will also be used as a base for `Giant Swarm Vintage` to Giant Swar
 
 > **WARNING:** After upgrading to `19.3.0`, it is highly advised to begin removal of all PSPs from the cluster. Kubernetes `v1.25` removes the Pod Security Policy resource from the API, meaning workloads (like Helm charts) which still contain PSPs will fail to install after the upcoming Giant Swarm `v20` release.
 
-> **WARNING:** `Observability-bundle` will be upgraded to `v1.1.0` and it contains breaking changes by simplify configuration for the bundled apps. Please check our [upgrade guide](https://github.com/giantswarm/observability-bundle/blob/main/docs/upgrade.md) or reach out to your Account Engineer for more details.
+> **WARNING:** `observability-bundle` will be upgraded to `v1.1.0`, which contains breaking changes to the configuration for the bundled apps. Please check our [upgrade guide](https://github.com/giantswarm/observability-bundle/blob/main/docs/upgrade.md) or reach out to your Account Engineer for more details.
 
 ## Change details
 
