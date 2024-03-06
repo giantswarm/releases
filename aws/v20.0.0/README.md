@@ -4,7 +4,7 @@ The new major version is the first release supporting Kubernetes 1.25.
 
 Please remember that the Pod Security Policies (PSP) are no longer supported in this version and they have to be removed *BEFORE* the upgrade. From now on the Pod Security Standards (PSS) are the default for securing the clusters. Our docs offer additional information about [Pod Security Standards](https://docs.giantswarm.io/advanced/security-policy-enforcement/) as well as a [PSS migration guide](https://docs.giantswarm.io/advanced/security/security-policy-enforcement/cluster-admin-guide/) for cluster administrators.
 
-This release will also be used as a base for `Giant Swarm Vintage` to Giant Swarm adoption of `Cluster API for AWS` (CAPA) migration. The migration will be scheduled as any other upgrade. We will be reaching out separately to each customer to present the plan as well as the CAPA benefits.
+This release will also be used as a base for the migration from `Giant Swarm Vintage` to `Cluster API for AWS` (CAPA). The migration will be scheduled as any other upgrade. We will be reaching out separately to each customer to present the plan as well as the CAPA benefits.
 
 > **WARNING:** After upgrading to `19.3.0`, it is highly advised to begin removal of all PSPs from the cluster. Kubernetes `v1.25` removes the Pod Security Policy resource from the API, meaning workloads (like Helm charts) which still contain PSPs will fail to install after the upcoming Giant Swarm `v20` release.
 
