@@ -122,6 +122,8 @@ This release will also be used as a base for the migration from `Giant Swarm Vin
 #### Fixed
 - Replace `ToServices`/`ToPorts` combination in CiliumNetworkPolicy because of breakage in Cilium v1.14
 
+#### Changed
+- Upgrade cilium to 1.14.5.
 
 
 ### metrics-server [2.4.2](https://github.com/giantswarm/metrics-server-app/releases/tag/v2.4.2)
