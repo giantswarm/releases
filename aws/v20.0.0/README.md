@@ -8,7 +8,7 @@ This release will also be used as a base for the migration from `Giant Swarm Vin
 
 > **WARNING:** After upgrading to `19.3.0`, it is highly advised to begin removal of all customer-managed PSPs from the cluster. Kubernetes `v1.25` removes the Pod Security Policy resource from the API, meaning workloads (like Helm charts) which still contain PSPs will fail to install after the Giant Swarm `v20` upgrade.
 
-> **WARNING:** `observability-bundle` will be upgraded to `v1.1.0`, which contains breaking changes to the configuration for the bundled apps. Please check our [upgrade guide](https://github.com/giantswarm/observability-bundle/blob/main/docs/upgrade.md) or reach out to your Account Engineer for more details.
+> **WARNING:** `observability-bundle` will be upgraded to `v1.3.0`, which contains breaking changes to the configuration for the bundled apps. Please check our [upgrade guide](https://github.com/giantswarm/observability-bundle/blob/main/docs/upgrade.md) or reach out to your Account Engineer for more details.
 
 ## Change details
 
@@ -147,7 +147,7 @@ This release will also be used as a base for the migration from `Giant Swarm Vin
 
 
 
-### observability-bundle [1.1.1](https://github.com/giantswarm/observability-bundle/releases/tag/v1.1.1)
+### observability-bundle [1.3.0](https://github.com/giantswarm/observability-bundle/releases/tag/v1.3.0)
 
 #### Changed
 - *Breaking change*: Simplify configuration for the bundled apps. See our [upgrade guide](https://github.com/giantswarm/observability-bundle/blob/main/docs/upgrade.md)
@@ -155,24 +155,20 @@ This release will also be used as a base for the migration from `Giant Swarm Vin
   - Rename `prometheus-operator-app` to `kube-prometheus-stack`
   - Rename `promtail-app` to `promtail`
 
-- Upgrade `kube-prometheus-stack` to 8.1.3 (gsoci registry).
-- Upgrade kube-prometheus-stack and prometheus-operator-crd to 9.0.0.
+- Upgrade `kube-prometheus-stack` to 9.1.0.
+- Upgrade `prometheus-operator-crd` to 9.0.0.
 - Add the global.podSecurityStandards.enforced value back to be able to work on CAPI WCs.
 - Add dependency on prometheus-operator-crd to all apps.
-- Upgrade promtail to 1.5.1.
-- Upgrade grafana-agent to 0.4.1.
-- upgrade prometheus-agent to 0.6.8
+- Upgrade `promtail` to 1.5.1.
+- Upgrade `grafana-agent` to 0.4.1.
+- upgrade `prometheus-agent` to 0.6.9.
 - Enforce `Cilium Network Policy` by default.
 - Enforce `Pod Security Standard` by default.
-- Upgrade `kube-prometheus-stack` to 8.1.1 and `prometheus-operator-crd` to 8.0.0
-- Upgrade `grafana-agent` to 0.3.2.
-
 
 ### cert-exporter [2.9.0](https://github.com/giantswarm/cert-exporter/releases/tag/v2.9.0)
 
 #### Added
 - Add cert name to secret metric.
-
 
 
 ### cert-manager [3.7.1](https://github.com/giantswarm/cert-manager-app/releases/tag/v3.7.1)
@@ -181,12 +177,10 @@ This release will also be used as a base for the migration from `Giant Swarm Vin
 - Added `acme-solvers-networkpolicy` `NetworkPolicy` namespace to `kube-system`
 
 
-
 ### coredns [1.21.0](https://github.com/giantswarm/coredns-app/releases/tag/v1.21.0)
 
 #### Changed
 - Configure `gsoci.azurecr.io` as the default container image registry.
-
 
 
 ### vertical-pod-autoscaler [5.0.0](https://github.com/giantswarm/vertical-pod-autoscaler-app/releases/tag/v5.0.0)
