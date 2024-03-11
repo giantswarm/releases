@@ -432,20 +432,19 @@ Kubernetes version 1.25 introduces numerous enhancements and features to improve
   - *CSI Ephemeral Volume Support:Pod-level Temporary Storage:* Ideal for scratch space needed within the Pod's lifecycle (caches, build artifacts, etc.).
   - *Volume Data Stays Local:* Data is written to the host node's filesystem, not a persistent storage backend.
   - *CSI Drivers:* The specific implementation may vary depending on your CSI driver's capabilities.
-  - *Volume Expansion:Online Resizing: You can change volume size while Pods are still using them.
+  - *Volume Expansion:Online Resizing:* You can change volume size while Pods are still using them.
   - *Restrictions:* Not all storage providers may support this, and you may need to update your CSI drivers or storage classes.
 3. *Networking Deep Dive*
   - *Local Ephemeral Storage Capacity Isolation:Protects Node Resources:* Helps prevent Pods with ephemeral storage from overwhelming a node's storage capacity.
   - *Improved Node Stability:* Ensures critical system components and other workloads aren't starved for storage resources.
-4 *Additional Details*
+4. *Additional Details*
   - *cgroups v2 Support:Modern cgroups:* Improved resource accounting and control for container workloads, especially important in resource-constrained environments.
   - *Important Note:* You may need to make changes to your cluster configuration if you were customizing cgroup settings for version 1.
   - *CRD Validation:Enforce Data Quality:* Ensures the data stored in Custom Resources adheres to your defined rules (structure, ranges, etc.).
   - *Beta Status:* While useful, some limitations might exist, so carefully test and observe during use.
-
-*Important to Remember:*
-Experimental Features: Version 1.25 likely contains other experimental features. Proceed with caution if you choose to implement them in production.
-Tooling Impact Certain tools and integrations you use with your Kubernetes-as-a-Service might require updates to be compatible with the newer APIs and removals introduced in this version.
+5. *Important to Remember:*
+- *Experimental Features:* Version 1.25 likely contains other experimental features. Proceed with caution if you choose to implement them in production. 
+- *Tooling Impact:* Certain tools and integrations you use with your Kubernetes-as-a-Service might require updates to be compatible with the newer APIs and removals introduced in this version.
 
 These are just a few of the key highlights of Kubernetes 1.25. The release includes many other enhancements, bug fixes, and updates to existing features. 
 
