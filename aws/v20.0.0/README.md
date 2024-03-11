@@ -422,16 +422,30 @@ This release will also be used as a base for the migration from `Giant Swarm Vin
 
 Kubernetes version 1.25 introduces numerous enhancements and features to improve the stability, scalability, and security of the platform. Some highlights include:
 
-1. *Improved scalability:* Enhanced support for larger clusters and increased efficiency in managing resources, allowing for better scalability and performance.
-2. *Windows container support:* Continued improvements in Windows container support, with enhancements to Windows Server node stability and support for more container features.
-3. *IPv4/IPv6 dual-stack support:* Kubernetes now supports both IPv4 and IPv6 dual-stack networking, enabling more flexible networking configurations.
-4. *Volume snapshot enhancements:* Improved support for volume snapshots, including additional APIs and features to facilitate backup and restore operations.
-5. *PodSecurityPolicy deprecation:* PodSecurityPolicy, a feature used for managing security policies, is deprecated in favor of newer, more flexible alternatives like PodSecurity admission controllers.
-6. *EndpointSlice GA:* EndpointSlice, a resource for representing endpoints in large services, has graduated to general availability (GA) status, offering improved performance and scalability for large services.
-7. *Audit logging improvements:* Enhancements to audit logging, including additional details in audit events and improvements in audit log reliability and performance.
-8. *API server authorization improvements:* Improvements to API server authorization mechanisms, providing better security and access control for Kubernetes resources.
-9. *Updated kube-proxy:* The kube-proxy component has been updated with various improvements, including better support for load balancing and service discovery.
-10. *Performance and stability enhancements:* Numerous performance optimizations and stability improvements across various components of Kubernetes, addressing reported issues and enhancing overall reliability.
+1. *Security Deep Dive*
+- *Pod Security Admission (PSA):* PSA offers significant control and customization for security (Pod Security Polices are removed from the API):
+  - *Hierarchical Namespaces:* You can structure how policies are applied across your cluster's namespaces.
+  - *Three Levels of Enforcement:* Offers "enforce", "audit", and "warn" modes, giving you flexibility during migration and testing.
+  - *Flexible Policy Definition:* Policies are defined within Kubernetes itself, providing easier integration and management.
+  - *Migration Notes:* If you heavily rely on PSPs, investigate built-in replacement policies or consider developing custom PSA policies for complex requirements.
+2. *Storage Deep Dive*
+  - *CSI Ephemeral Volume Support:Pod-level Temporary Storage:* Ideal for scratch space needed within the Pod's lifecycle (caches, build artifacts, etc.).
+  - *Volume Data Stays Local:* Data is written to the host node's filesystem, not a persistent storage backend.
+  - *CSI Drivers:* The specific implementation may vary depending on your CSI driver's capabilities.
+  - *Volume Expansion:Online Resizing: You can change volume size while Pods are still using them.
+  - *Restrictions:* Not all storage providers may support this, and you may need to update your CSI drivers or storage classes.
+3. *Networking Deep Dive*
+  - *Local Ephemeral Storage Capacity Isolation:Protects Node Resources:* Helps prevent Pods with ephemeral storage from overwhelming a node's storage capacity.
+  - *Improved Node Stability:* Ensures critical system components and other workloads aren't starved for storage resources.
+4 *Additional Details*
+  - *cgroups v2 Support:Modern cgroups:* Improved resource accounting and control for container workloads, especially important in resource-constrained environments.
+  - *Important Note:* You may need to make changes to your cluster configuration if you were customizing cgroup settings for version 1.
+  - *CRD Validation:Enforce Data Quality:* Ensures the data stored in Custom Resources adheres to your defined rules (structure, ranges, etc.).
+  - *Beta Status:* While useful, some limitations might exist, so carefully test and observe during use.
+
+*Important to Remember:*
+Experimental Features: Version 1.25 likely contains other experimental features. Proceed with caution if you choose to implement them in production.
+Tooling Impact Certain tools and integrations you use with your Kubernetes-as-a-Service might require updates to be compatible with the newer APIs and removals introduced in this version.
 
 These are just a few of the key highlights of Kubernetes 1.25. The release includes many other enhancements, bug fixes, and updates to existing features. 
 
