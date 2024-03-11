@@ -177,7 +177,7 @@ spec:
     version: 3.5.12
   - name: kubernetes
     version: 1.25.16
-  date: "2024-02-01T07:39:11Z"
+  date: "2024-03-11T07:39:11Z"
   state: active
 status:
   inUse: false
