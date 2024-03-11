@@ -442,7 +442,7 @@ Kubernetes version 1.25 introduces numerous enhancements and features to improve
   - *Important Note:* You may need to make changes to your cluster configuration if you were customizing cgroup settings for version 1.
   - *CRD Validation:Enforce Data Quality:* Ensures the data stored in Custom Resources adheres to your defined rules (structure, ranges, etc.).
   - *Beta Status:* While useful, some limitations might exist, so carefully test and observe during use.
-5. *Important to Remember:*
+5. *Important to Remember*
 - *Experimental Features:* Version 1.25 likely contains other experimental features. Proceed with caution if you choose to implement them in production. 
 - *Tooling Impact:* Certain tools and integrations you use with your Kubernetes-as-a-Service might require updates to be compatible with the newer APIs and removals introduced in this version.
 
