@@ -116,7 +116,7 @@ spec:                                                              spec:
     - cilium                                                           - cilium
     - coredns                                                          - coredns
     name: observability-bundle                                         name: observability-bundle
-    version: 0.10.1                                             |      version: 1.3.0
+    version: 0.10.1                                             |      version: 1.3.2
   - dependsOn:                                                       - dependsOn:
     - aws-cloud-controller-manager                                     - aws-cloud-controller-manager
     - cilium                                                           - cilium
