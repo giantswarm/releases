@@ -1,4 +1,11 @@
 releases:
+- name: "> 20.0.0"
+  requests:
+  - name: observability-bundle
+    version: ">= 1.3.2"
+  # Do not forget to add prometheus-operator-crd to dependsOn
+  - name: etcd-kubernetes-resources-count-exporter
+    version: ">= 1.10.0"
 - name: ">= 20.0.0"
   requests:
   - name: observability-bundle
