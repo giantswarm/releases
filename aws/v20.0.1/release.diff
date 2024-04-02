@@ -19,6 +19,10 @@ spec:                                                              spec:
     - vertical-pod-autoscaler-crd                                      - vertical-pod-autoscaler-crd
     name: aws-ebs-csi-driver                                           name: aws-ebs-csi-driver
     version: 2.28.1                                             |      version: 2.30.0
+                                                                >    - dependsOn:
+                                                                >      - prometheus-operator-crd
+                                                                >      name: aws-ebs-csi-driver-servicemonitors
+                                                                >      version: 0.1.0
   - dependsOn:                                                       - dependsOn:
     - aws-cloud-controller-manager                                     - aws-cloud-controller-manager
     - cilium                                                           - cilium
@@ -164,7 +168,7 @@ spec:                                                              spec:
     version: 6.10.3                                                    version: 6.10.3
   - name: aws-operator                                               - name: aws-operator
     releaseOperatorDeploy: true                                        releaseOperatorDeploy: true
-    version: 16.1.0                                                    version: 16.1.0
+    version: 16.1.0                                             |      version: 16.1.1
   - name: cert-operator                                              - name: cert-operator
     releaseOperatorDeploy: true                                        releaseOperatorDeploy: true
     version: 3.2.1                                              |      version: 3.4.0
@@ -177,7 +181,7 @@ spec:                                                              spec:
     version: 3.5.12                                             |      version: 3.5.13
   - name: kubernetes                                                 - name: kubernetes
     version: 1.25.16                                                   version: 1.25.16
-  date: "2024-03-11T07:39:11Z"                                  |    date: "2024-04-02T12:36:49Z"
+  date: "2024-03-11T07:39:11Z"                                  |    date: "2024-04-02T13:04:46Z"
   state: active                                                      state: active
 status:                                                            status:
   inUse: false                                                       inUse: false

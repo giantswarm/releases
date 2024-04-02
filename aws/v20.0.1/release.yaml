@@ -166,11 +166,9 @@ spec:
   components:
   - name: app-operator
     version: 6.10.3
-  - catalog: control-plane-test-catalog
-    name: aws-operator
+  - name: aws-operator
     releaseOperatorDeploy: true
-    version: 16.1.1-dev
-    reference: 16.1.0-3fd844374d6087aca1799d8f1a5f8689dc82c0d7
+    version: 16.1.1
   - name: cert-operator
     releaseOperatorDeploy: true
     version: 3.4.0
@@ -183,7 +181,7 @@ spec:
     version: 3.5.13
   - name: kubernetes
     version: 1.25.16
-  date: "2024-04-02T12:36:49Z"
+  date: "2024-04-02T13:04:46Z"
   state: active
 status:
   inUse: false
