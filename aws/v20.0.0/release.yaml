@@ -108,9 +108,8 @@ spec:
     version: 3.0.0
   - dependsOn:
     - vertical-pod-autoscaler-crd
-    - prometheus-operator-crd
     name: etcd-kubernetes-resources-count-exporter
-    version: 1.10.0
+    version: 1.9.0
   - dependsOn:
     - aws-cloud-controller-manager
     - cilium
