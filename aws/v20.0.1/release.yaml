@@ -1,5 +1,5 @@
 # Generated with:
-# /home/whites/workspace/devctl/devctl release create --base 20.0.0 --name 20.0.1 --overwrite --provider aws --component kubernetes@1.25.16 --app cluster-autoscaler@1.25.3-gs2
+# /home/whites/workspace/devctl/devctl release create --base 20.0.0 --name 20.0.1 --overwrite --provider aws --component kubernetes@1.25.16 --app cluster-autoscaler@1.25.3-gs2 --app aws-ebs-csi-driver-servicemonitors@0.1.0
 apiVersion: release.giantswarm.io/v1alpha1
 kind: Release
 metadata:
@@ -18,7 +18,7 @@ spec:
     dependsOn:
     - vertical-pod-autoscaler-crd
     name: aws-ebs-csi-driver
-    version: 2.29.0
+    version: 2.30.0
   - dependsOn:
     - prometheus-operator-crd
     name: aws-ebs-csi-driver-servicemonitors
@@ -183,7 +183,7 @@ spec:
     version: 3.5.13
   - name: kubernetes
     version: 1.25.16
-  date: "2024-04-02T09:38:19Z"
+  date: "2024-04-02T12:36:49Z"
   state: active
 status:
   inUse: false

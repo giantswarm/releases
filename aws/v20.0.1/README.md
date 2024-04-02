@@ -60,10 +60,20 @@ _Changes since **Stable 3815.2.0**_
 
 
 
-### aws-ebs-csi-driver [2.29.0](https://github.com/giantswarm/aws-ebs-csi-driver-app/releases/tag/v2.29.0)
+### cluster-autoscaler [1.25.3-gs2](https://github.com/giantswarm/cluster-autoscaler-app/releases/tag/v1.25.3-gs2)
+
+#### Added
+- Add possibility to use egress proxy.
+#### Changed
+- Chart: Improve proxy settings. ([#249](https://github.com/giantswarm/cluster-autoscaler-app/pull/249))
+
+
+
+### aws-ebs-csi-driver [2.30.0](https://github.com/giantswarm/aws-ebs-csi-driver-app/releases/tag/v2.30.0)
 
 #### Removed
-- Remove legacy monitoring labels.
+- Remove unused service for controller.
+- Add `Port` definition for metrics port in controller.
 
 
 
@@ -76,22 +86,6 @@ _Changes since **Stable 3815.2.0**_
 
 
 
-### cluster-autoscaler [1.25.3-gs2](https://github.com/giantswarm/cluster-autoscaler-app/releases/tag/v1.25.3-gs2)
-
-#### Added
-- Add possibility to use egress proxy.
-#### Changed
-- Chart: Improve proxy settings. ([#249](https://github.com/giantswarm/cluster-autoscaler-app/pull/249))
-
-
-
-### chart-operator [3.2.1](https://github.com/giantswarm/chart-operator/releases/tag/v3.2.1)
-
-#### Fixed
-- Use separate rest configs for different Kubernetes clients.
-
-
-
 ### cilium [0.22.0](https://github.com/giantswarm/cilium-app/releases/tag/v0.22.0)
 
 #### Added
@@ -100,6 +94,31 @@ _Changes since **Stable 3815.2.0**_
 - Add safe-to-evict annotations to Hubble Relay and UI pods.
 - Enable deletion of extra network policies.
 - Update team label to `cabbage`
+
+
+
+### etcd-kubernetes-resources-count-exporter [1.10.0](https://github.com/giantswarm/etcd-kubernetes-resources-count-exporter/releases/tag/v1.10.0)
+
+#### Changed 
+- Set min VPA settings and adjust CPU and memory resources.
+- Use PodMonitor instead of legacy labels for monitoring.
+
+
+
+### k8s-audit-metrics [0.9.0](https://github.com/giantswarm/k8s-audit-metrics/releases/tag/v0.9.0)
+
+#### Added
+- Add team label in resources.
+- Use ServiceMonitor for monitoring.
+#### Changed
+- Configure `gsoci.azurecr.io` as the default container image registry.
+
+
+
+### chart-operator [3.2.1](https://github.com/giantswarm/chart-operator/releases/tag/v3.2.1)
+
+#### Fixed
+- Use separate rest configs for different Kubernetes clients.
 
 
 
@@ -142,24 +161,6 @@ _Changes since **Stable 3815.2.0**_
   - Chart: Remove useless CI values.
 - Chart: Rework chart. ([#269](https://github.com/giantswarm/vertical-pod-autoscaler-app/pull/269))
   - Chart: Remove global network policies.
-
-
-
-### etcd-kubernetes-resources-count-exporter [1.10.0](https://github.com/giantswarm/etcd-kubernetes-resources-count-exporter/releases/tag/v1.10.0)
-
-#### Changed 
-- Set min VPA settings and adjust CPU and memory resources.
-- Use PodMonitor instead of legacy labels for monitoring.
-
-
-
-### k8s-audit-metrics [0.9.0](https://github.com/giantswarm/k8s-audit-metrics/releases/tag/v0.9.0)
-
-#### Added
-- Add team label in resources.
-- Use ServiceMonitor for monitoring.
-#### Changed
-- Configure `gsoci.azurecr.io` as the default container image registry.
 
 
 
