@@ -140,9 +140,11 @@ This release will also be used as a base for the migration from `Giant Swarm Vin
 
 
 
-### etcd-kubernetes-resources-count-exporter [1.9.0](https://github.com/giantswarm/etcd-kubernetes-resources-count-exporter/releases/tag/v1.9.0)
+### etcd-kubernetes-resources-count-exporter [1.10.0](https://github.com/giantswarm/etcd-kubernetes-resources-count-exporter/releases/tag/v1.10.0)
 
 #### Changed
+- Set min VPA settings and adjust CPU and memory resources.
+- Use PodMonitor instead of legacy labels for monitoring.
 - Configure `gsoci.azurecr.io` as the default container image registry.
 
 

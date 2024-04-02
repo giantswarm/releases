@@ -2,9 +2,11 @@ releases:
 - name: ">= 20.0.0"
   requests:
   - name: observability-bundle
-    version: ">= 1.3.0"
+    version: ">= 1.3.2"
   - name: security-bundle
     version: ">= 1.6.1"
+  - name: etcd-kubernetes-resources-count-exporter
+    version: ">= 1.10.0"
 - name: ">= 19.3.3"
   requests:
   - name: security-bundle
