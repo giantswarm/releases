@@ -119,7 +119,7 @@ spec:                                                              spec:
     - cilium                                                           - cilium
     - coredns                                                          - coredns
     name: observability-bundle                                         name: observability-bundle
-    version: 1.3.2                                                     version: 1.3.2
+    version: 1.3.2                                              |      version: 1.3.3
   - dependsOn:                                                       - dependsOn:
     - aws-cloud-controller-manager                                     - aws-cloud-controller-manager
     - cilium                                                           - cilium
@@ -181,7 +181,7 @@ spec:                                                              spec:
     version: 3.5.12                                             |      version: 3.5.13
   - name: kubernetes                                                 - name: kubernetes
     version: 1.25.16                                                   version: 1.25.16
-  date: "2024-03-11T07:39:11Z"                                  |    date: "2024-04-02T13:04:46Z"
+  date: "2024-03-11T07:39:11Z"                                  |    date: "2024-04-03T11:01:44Z"
   state: active                                                      state: active
 status:                                                            status:
   inUse: false                                                       inUse: false
