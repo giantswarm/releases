@@ -151,7 +151,7 @@ spec:
     - prometheus-operator-crd
     - vertical-pod-autoscaler-crd
     name: security-bundle
-    version: 1.4.2
+    version: 1.6.3
   - dependsOn:
     - aws-cloud-controller-manager
     - cilium
