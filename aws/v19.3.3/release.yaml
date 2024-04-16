@@ -164,7 +164,6 @@ spec:
   - name: app-operator
     version: 6.10.2
   - name: aws-operator
-    reference: 15.0.0-patch2
     releaseOperatorDeploy: true
     version: 15.1.0
   - name: cert-operator
