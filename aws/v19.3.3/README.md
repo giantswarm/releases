@@ -2,6 +2,8 @@
 
 This is a patch release that fixes an issue with clusters running in IMDSv2 mode only. If you are not using IMDSv2 only mode, you can skip this release.
 
+As a reminder, enabling `IMDS v2` only support for the EC2 instances can be set via an annotation `alpha.aws.giantswarm.io/metadata-v2: required` on `AWSMachineDeployment` (for nodepools) and to `AWSControlPlane` (for control-plane nodes). The setting can be either configured before the upgrade or can be triggered to be effective with nodes rollout.
+
 ## Change details
 
 
