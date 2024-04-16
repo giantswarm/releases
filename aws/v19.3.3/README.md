@@ -1,6 +1,6 @@
 # :zap: Giant Swarm Release v19.3.3 for AWS :zap:
 
-<< Add description here >>
+This is a patch release that fixes an issue with clusters running in IMDSv2 mode only. If you are not using IMDSv2 only mode, you can skip this release.
 
 ## Change details
 
