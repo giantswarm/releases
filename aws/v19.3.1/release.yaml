@@ -174,6 +174,7 @@ spec:
   - name: cluster-operator
     releaseOperatorDeploy: true
     version: 5.10.0
+    reference: 5.10.0-patch1
   - name: containerlinux
     version: 3602.2.3
   - name: etcd
