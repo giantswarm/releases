@@ -168,7 +168,8 @@ spec:
     reference: 3.2.1-patch1
   - name: cluster-operator
     releaseOperatorDeploy: true
-    version: 5.9.0-patch1
+    version: 5.9.0
+    reference: 5.9.0-patch1
   - name: containerlinux
     version: 3602.2.0
   - name: etcd
