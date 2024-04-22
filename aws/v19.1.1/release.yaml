@@ -163,7 +163,7 @@ spec:
     version: 3.2.1
     reference: 3.2.1-patch1
   - name: cluster-operator
-    reference: 5.8.0-patch1
+    reference: 5.8.0-patch2
     releaseOperatorDeploy: true
     version: 5.8.0
   - name: containerlinux
