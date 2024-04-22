@@ -143,7 +143,7 @@ spec:
     - prometheus-operator-crd
     - vertical-pod-autoscaler-crd
     name: security-bundle
-    version: 0.19.2
+    version: 0.19.3
   - dependsOn:
     - aws-cloud-controller-manager
     - cilium
@@ -161,6 +161,7 @@ spec:
   - name: cert-operator
     releaseOperatorDeploy: true
     version: 3.2.1
+    reference: 3.2.1-patch1
   - name: cluster-operator
     reference: 5.8.0-patch1
     releaseOperatorDeploy: true
