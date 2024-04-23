@@ -141,6 +141,7 @@ spec:
   - name: cert-operator
     releaseOperatorDeploy: true
     version: 3.0.1
+    reference: 3.0.1-patch1
   - name: cluster-operator
     releaseOperatorDeploy: true
     version: 5.6.1
