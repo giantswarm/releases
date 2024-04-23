@@ -59,7 +59,6 @@ spec:
   - name: cluster-operator
     releaseOperatorDeploy: true
     version: 3.14.1
-    reference: 3.14.1-patch1
   - name: containerlinux
     version: 2905.2.6
   - name: etcd
