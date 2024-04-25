@@ -19,6 +19,10 @@ spec:
     - vertical-pod-autoscaler-crd
     name: aws-ebs-csi-driver
     version: 2.30.1
+  - name: aws-ebs-csi-driver-servicemonitors
+    version: 0.1.0
+    dependsOn:
+    - aws-ebs-csi-driver
   - dependsOn:
     - aws-cloud-controller-manager
     - cilium
@@ -166,11 +170,9 @@ spec:
     releaseOperatorDeploy: true
     version: 16.1.1
   - name: cert-operator
-    reference: 3.2.1-patch1
     releaseOperatorDeploy: true
     version: 3.4.0
   - name: cluster-operator
-    reference: 5.10.0-patch1
     releaseOperatorDeploy: true
     version: 5.11.0
   - name: containerlinux
