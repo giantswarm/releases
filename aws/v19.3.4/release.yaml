@@ -1,12 +1,12 @@
 # Generated with:
-# devctl release create --base 19.3.2 --name 19.3.3 --overwrite --provider aws --component aws-operator@15.1.0 --component containerlinux@3815.2.1
+# devctl release create --base 19.3.3 --name 19.3.4 --overwrite --provider aws --component containerlinux@3815.2.2
 apiVersion: release.giantswarm.io/v1alpha1
 kind: Release
 metadata:
   annotations:
     giantswarm.io/docs: https://docs.giantswarm.io/reference/cp-k8s-api/releases.release.giantswarm.io/
   creationTimestamp: null
-  name: v19.3.3
+  name: v19.3.4
 spec:
   apps:
   - componentVersion: 1.24.1
@@ -167,21 +167,21 @@ spec:
     releaseOperatorDeploy: true
     version: 15.1.0
   - name: cert-operator
+    reference: 3.2.1-patch1
     releaseOperatorDeploy: true
     version: 3.2.1
-    reference: 3.2.1-patch1
   - name: cluster-operator
+    reference: 5.10.0-patch1
     releaseOperatorDeploy: true
     version: 5.10.0
-    reference: 5.10.0-patch1
   - name: containerlinux
-    version: 3815.2.1
+    version: 3815.2.2
   - name: etcd
     version: 3.5.11
   - name: kubernetes
     version: 1.24.17
-  date: "2024-04-16T07:18:41Z"
-  state: deprecated
+  date: "2024-04-29T07:14:42Z"
+  state: active
 status:
   inUse: false
   ready: false
