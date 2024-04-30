@@ -174,7 +174,7 @@ spec:
     version: 3.4.0
   - name: cluster-operator
     releaseOperatorDeploy: true
-    version: 5.11.0
+    version: 5.11.1
   - name: containerlinux
     version: 3815.2.2
   - name: etcd
