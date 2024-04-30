@@ -1,6 +1,6 @@
 # :zap: Giant Swarm Release v20.1.0 for AWS :zap:
 
-This is a patch release featuring security updates for container linux and a fix for IMDSv2 only clusters.
+This release provides security updates for container linux and a fix for IMDSv2 only clusters.
 
 ## Change details
 
