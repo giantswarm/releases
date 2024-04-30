@@ -137,7 +137,7 @@ spec:
   - name: aws-operator
     releaseOperatorDeploy: true
     version: 14.17.1
-    reference: 14.17.1-patch3
+    reference: 14.17.1-patch4
   - name: cert-operator
     releaseOperatorDeploy: true
     version: 3.0.1
