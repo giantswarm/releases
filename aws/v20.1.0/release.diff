@@ -6,7 +6,7 @@ metadata:                                                          metadata:
   annotations:                                                       annotations:
     giantswarm.io/docs: https://docs.giantswarm.io/reference/cp        giantswarm.io/docs: https://docs.giantswarm.io/reference/cp
   creationTimestamp: null                                            creationTimestamp: null
-  name: v20.0.0                                                 |    name: v20.0.1
+  name: v20.0.0                                                 |    name: v20.1.0
 spec:                                                              spec:
   apps:                                                              apps:
   - componentVersion: 1.24.1                                         - componentVersion: 1.24.1

@@ -6,7 +6,7 @@ metadata:
   annotations:
     giantswarm.io/docs: https://docs.giantswarm.io/reference/cp-k8s-api/releases.release.giantswarm.io/
   creationTimestamp: null
-  name: v20.0.1
+  name: v20.1.0
 spec:
   apps:
   - componentVersion: 1.24.1
