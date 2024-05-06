@@ -134,6 +134,7 @@ spec:
   components:
   - name: app-operator
     version: 6.7.0
+    reference: 6.7.0-patch1
   - name: aws-operator
     releaseOperatorDeploy: true
     version: 14.17.1
