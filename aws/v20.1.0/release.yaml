@@ -107,9 +107,9 @@ spec:
     - prometheus-operator-crd
     - vertical-pod-autoscaler-crd
     name: vertical-pod-autoscaler
-    version: 5.2.1
+    version: 5.1.0
   - name: vertical-pod-autoscaler-crd
-    version: 3.1.0
+    version: 3.0.0
   - dependsOn:
     - vertical-pod-autoscaler-crd
     name: etcd-kubernetes-resources-count-exporter
