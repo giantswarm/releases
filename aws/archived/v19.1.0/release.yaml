@@ -1,52 +1,46 @@
 # Generated with:
-# devctl release create --base 19.3.1 --name 19.3.2 --overwrite --provider aws --component containerlinux@3815.2.0
+# /home/whites/workspace/devctl/devctl release create --provider aws --base 19.0.1 --name 19.1.0 --component kubernetes@1.24.17 --component containerlinux@3510.2.7 --app security-bundle@0.17.0 --app k8s-audit-metrics@0.6.1 --overwrite
 apiVersion: release.giantswarm.io/v1alpha1
 kind: Release
 metadata:
   annotations:
     giantswarm.io/docs: https://docs.giantswarm.io/reference/cp-k8s-api/releases.release.giantswarm.io/
   creationTimestamp: null
-  name: v19.3.2
+  name: v19.1.0
 spec:
   apps:
   - componentVersion: 1.24.1
     dependsOn:
     - vertical-pod-autoscaler-crd
     name: aws-cloud-controller-manager
-    version: 1.24.1-gs10
+    version: 1.24.1-gs9
   - componentVersion: 1.21.0
     dependsOn:
     - vertical-pod-autoscaler-crd
     name: aws-ebs-csi-driver
-    version: 2.28.0
+    version: 2.27.0
   - dependsOn:
     - aws-cloud-controller-manager
     - cilium
     - coredns
-    - prometheus-operator-crd
     - vertical-pod-autoscaler-crd
     name: cert-exporter
-    version: 2.8.4
+    version: 2.6.0
   - componentVersion: 1.12.4
     dependsOn:
     - aws-cloud-controller-manager
     - cilium
     - coredns
-    - prometheus-operator-crd
     - vertical-pod-autoscaler-crd
     name: cert-manager
-    version: 2.25.2
+    version: 2.25.0
   - name: chart-operator
-    version: 3.1.1
-  - dependsOn:
-    - prometheus-operator-crd
-    name: chart-operator-extensions
-    version: 1.1.1
+    version: 2.35.0
   - componentVersion: 1.13.6
     dependsOn:
     - aws-cloud-controller-manager
     name: cilium
-    version: 0.17.0
+    version: 0.12.0
   - componentVersion: 1.24.3
     dependsOn:
     - aws-cloud-controller-manager
@@ -54,13 +48,13 @@ spec:
     - coredns
     - vertical-pod-autoscaler-crd
     name: cluster-autoscaler
-    version: 1.24.3-gs4
-  - componentVersion: 1.11.1
+    version: 1.24.3
+  - componentVersion: 1.9.3
     dependsOn:
     - aws-cloud-controller-manager
     - cilium
     name: coredns
-    version: 1.20.0
+    version: 1.18.1
   - componentVersion: 0.11.0
     dependsOn:
     - aws-cloud-controller-manager
@@ -69,8 +63,8 @@ spec:
     - prometheus-operator-crd
     - vertical-pod-autoscaler-crd
     name: external-dns
-    version: 3.0.0
-  - componentVersion: 0.6.4
+    version: 2.39.0
+  - componentVersion: 0.6.1
     dependsOn:
     - aws-cloud-controller-manager
     - cilium
@@ -78,7 +72,7 @@ spec:
     - prometheus-operator-crd
     - vertical-pod-autoscaler-crd
     name: metrics-server
-    version: 2.4.1
+    version: 2.2.0
   - dependsOn:
     - aws-cloud-controller-manager
     - cilium
@@ -86,7 +80,7 @@ spec:
     - prometheus-operator-crd
     - vertical-pod-autoscaler-crd
     name: net-exporter
-    version: 1.18.2
+    version: 1.17.0
   - componentVersion: 1.3.1
     dependsOn:
     - aws-cloud-controller-manager
@@ -95,7 +89,7 @@ spec:
     - prometheus-operator-crd
     - vertical-pod-autoscaler-crd
     name: node-exporter
-    version: 1.18.1
+    version: 1.17.1
   - componentVersion: 0.14.0
     dependsOn:
     - aws-cloud-controller-manager
@@ -104,7 +98,7 @@ spec:
     - prometheus-operator-crd
     - vertical-pod-autoscaler-crd
     name: vertical-pod-autoscaler
-    version: 4.6.0
+    version: 4.2.0
   - name: vertical-pod-autoscaler-crd
     version: 2.0.1
   - dependsOn:
@@ -116,25 +110,23 @@ spec:
     - cilium
     - coredns
     name: observability-bundle
-    version: 0.10.1
+    version: 0.8.2
   - dependsOn:
     - aws-cloud-controller-manager
     - cilium
     - coredns
-    - kyverno
     - prometheus-operator-crd
     - vertical-pod-autoscaler-crd
     name: k8s-dns-node-cache-app
-    version: 2.5.0
+    version: 2.4.0
   - dependsOn:
     - aws-cloud-controller-manager
     - cilium
     - coredns
-    - kyverno
     - prometheus-operator-crd
     - vertical-pod-autoscaler-crd
     name: prometheus-blackbox-exporter
-    version: 0.4.0
+    version: 0.3.2
   - dependsOn:
     - prometheus-operator-crd
     name: cilium-servicemonitors
@@ -143,15 +135,15 @@ spec:
     - prometheus-operator-crd
     name: irsa-servicemonitors
     version: 0.0.1
-  - catalog: giantswarm
-    dependsOn:
+  - dependsOn:
     - aws-cloud-controller-manager
     - cilium
     - coredns
     - prometheus-operator-crd
     - vertical-pod-autoscaler-crd
     name: security-bundle
-    version: 1.6.2
+    version: 0.17.0
+    catalog: giantswarm
   - dependsOn:
     - aws-cloud-controller-manager
     - cilium
@@ -159,28 +151,30 @@ spec:
     - kyverno
     - vertical-pod-autoscaler-crd
     name: k8s-audit-metrics
-    version: 0.8.0
+    version: 0.7.1
   components:
   - name: app-operator
-    version: 6.10.2
+    version: 6.8.0
   - name: aws-operator
-    reference: 15.0.0-patch2
     releaseOperatorDeploy: true
-    version: 15.0.0
+    version: 14.22.0
+    reference: 14.22.0-patch1
   - name: cert-operator
     releaseOperatorDeploy: true
     version: 3.2.1
+    reference: 3.2.1-patch1
   - name: cluster-operator
     releaseOperatorDeploy: true
-    version: 5.10.0
+    version: 5.8.0
+    reference: 5.8.0-patch2
   - name: containerlinux
-    version: 3815.2.0
+    version: 3510.2.7
   - name: etcd
-    version: 3.5.11
+    version: 3.5.9
   - name: kubernetes
     version: 1.24.17
-  date: "2024-02-26T07:33:27Z"
-  state: active
+  date: "2023-09-13T06:20:40Z"
+  state: deprecated
 status:
   inUse: false
   ready: false

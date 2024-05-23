@@ -134,17 +134,19 @@ spec:
   components:
   - name: app-operator
     version: 6.7.0
+    reference: 6.7.0-patch1
   - name: aws-operator
     releaseOperatorDeploy: true
     version: 14.17.1
-    reference: 14.17.1-patch3
+    reference: 14.17.1-patch4
   - name: cert-operator
     releaseOperatorDeploy: true
     version: 3.0.1
+    reference: 3.0.1-patch1
   - name: cluster-operator
     releaseOperatorDeploy: true
     version: 5.6.1
-    reference: 5.6.1-patch1
+    reference: 5.6.1-patch2
   - name: containerlinux
     version: 3510.2.0
   - name: etcd
