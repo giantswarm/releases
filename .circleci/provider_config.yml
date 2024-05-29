@@ -77,6 +77,18 @@ workflows:
             # Trigger the job on merge to master.
             branches:
               only: master
+      - architect/push-to-app-collection:
+          context: architect
+          name: push-releases-to-capa-app-collection
+          app_catalog: releases
+          app_name: releases-capa
+          app_collection_repo: capa-app-collection
+          requires:
+          - push-releases-capa-to-releases-catalog
+          filters:
+            # Trigger the job on merge to master.
+            branches:
+              only: master
   azure:
     when: << pipeline.parameters.push-azure >>
     jobs:
