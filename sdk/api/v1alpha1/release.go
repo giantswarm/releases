@@ -27,10 +27,10 @@ type Release struct {
 
 type ReleaseSpec struct {
 	// Apps describes apps used in this release.
-	Apps []AppReleaseSpec `json:"apps"`
+	Apps []ReleaseSpecApp `json:"apps"`
 
 	// Components describes components used in this release.
-	Components []ComponentReleaseSpec `json:"components"`
+	Components []ReleaseSpecComponent `json:"components"`
 
 	// Date that the release became active.
 	Date *metav1.Time `json:"date"`
@@ -47,7 +47,7 @@ type ReleaseSpec struct {
 	Notice string `json:"notice,omitempty"`
 }
 
-type ComponentReleaseSpec struct {
+type ReleaseSpecComponent struct {
 	// Catalog specifies the name of the app catalog that this component belongs to.
 	Catalog string `json:"catalog,omitempty"`
 	// Name of the component.
@@ -60,7 +60,7 @@ type ComponentReleaseSpec struct {
 	Version string `json:"version"`
 }
 
-type AppReleaseSpec struct {
+type ReleaseSpecApp struct {
 	// Catalog specifies the name of the app catalog that this app belongs to.
 	Catalog string `json:"catalog,omitempty"`
 	// Version of the upstream component used in the app.
