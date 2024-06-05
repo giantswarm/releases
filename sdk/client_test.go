@@ -21,11 +21,17 @@ const (
 )
 
 var (
-	//go:embed testdata/capa/v25.0.0-demo.0/github_api_response.json
-	gitHubReleaseResponse string
+	//go:embed testdata/capa/github_list_api_response.json
+	listReleasesGitHubResponse string
+
+	//go:embed testdata/capa/v25.0.0-demo.0/github_get_api_response.json
+	v2500GitHubReleaseResponse string
 
 	//go:embed testdata/capa/v25.0.0-demo.0/release.yaml
-	releaseManifest string
+	v2500ReleaseManifest string
+
+	//go:embed testdata/capa/v25.1.0-demo.0/release.yaml
+	v2510ReleaseManifest string
 )
 
 var _ = Describe("Client", func() {
@@ -34,14 +40,24 @@ var _ = Describe("Client", func() {
 
 	BeforeEach(func() {
 		mux := http.NewServeMux()
+		mux.HandleFunc("/api/v3/repos/giantswarm/releases/releases", func(rw http.ResponseWriter, req *http.Request) {
+			// return GitHub response JSON
+			_, err := rw.Write([]byte(listReleasesGitHubResponse))
+			Expect(err).NotTo(HaveOccurred())
+		})
 		mux.HandleFunc("/api/v3/repos/giantswarm/releases/releases/tags/aws/v25.0.0-demo.0", func(rw http.ResponseWriter, req *http.Request) {
 			// return GitHub response JSON
-			_, err := rw.Write([]byte(gitHubReleaseResponse))
+			_, err := rw.Write([]byte(v2500GitHubReleaseResponse))
 			Expect(err).NotTo(HaveOccurred())
 		})
 		mux.HandleFunc("/giantswarm/releases/releases/download/aws/v25.0.0-demo.0/release.yaml", func(rw http.ResponseWriter, req *http.Request) {
 			// return release.yaml manifest
-			_, err := rw.Write([]byte(releaseManifest))
+			_, err := rw.Write([]byte(v2500ReleaseManifest))
+			Expect(err).NotTo(HaveOccurred())
+		})
+		mux.HandleFunc("/giantswarm/releases/releases/download/aws/v25.1.0-demo.0/release.yaml", func(rw http.ResponseWriter, req *http.Request) {
+			// return release.yaml manifest
+			_, err := rw.Write([]byte(v2510ReleaseManifest))
 			Expect(err).NotTo(HaveOccurred())
 		})
 
@@ -65,10 +81,10 @@ var _ = Describe("Client", func() {
 		Expect(err).NotTo(HaveOccurred())
 	})
 
-	It("Gets published release for the specified provider and release version", func() {
+	It("Gets release for the specified provider and release version", func() {
 		ctx := context.Background()
 		const releaseVersion = "v25.0.0-demo.0"
-		release, err := releasesClient.GetPublishedRelease(ctx, ProviderAws, releaseVersion) // Assuming GetRelease returns an error
+		release, err := releasesClient.GetRelease(ctx, ProviderAws, releaseVersion)
 		Expect(err).NotTo(HaveOccurred())
 
 		// Check resource name
@@ -118,6 +134,18 @@ var _ = Describe("Client", func() {
 		Expect(err).NotTo(HaveOccurred())
 		const expectedFlatcarVersion = "3815.2.2"
 		Expect(flatcarVersion).To(Equal(expectedFlatcarVersion))
+	})
+
+	It("Gets the latest release for the specified provider", func() {
+		ctx := context.Background()
+		release, err := releasesClient.GetLatestRelease(ctx, ProviderAws)
+		Expect(err).NotTo(HaveOccurred())
+
+		// Check release version
+		const expectedLatestReleaseVersion = "v25.1.0-demo.0"
+		resultReleaseVersion, err := release.GetVersion()
+		Expect(err).NotTo(HaveOccurred())
+		Expect(resultReleaseVersion).To(Equal(expectedLatestReleaseVersion))
 	})
 
 	AfterEach(func() {

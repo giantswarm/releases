@@ -61,7 +61,7 @@ func NewClientWithGitHubToken(gitHubToken string) *Client {
 	}
 }
 
-func (c *Client) GetPublishedRelease(ctx context.Context, provider Provider, releaseVersion string) (*Release, error) {
+func (c *Client) GetRelease(ctx context.Context, provider Provider, releaseVersion string) (*Release, error) {
 	// First we get GitHub release for the specified provider and release version.
 	releaseVersion = strings.TrimPrefix(releaseVersion, "v")
 	releaseTag := fmt.Sprintf("%s/v%s", provider, releaseVersion)
@@ -69,8 +69,50 @@ func (c *Client) GetPublishedRelease(ctx context.Context, provider Provider, rel
 	if err != nil {
 		return nil, microerror.Mask(err)
 	}
+	release, err := c.getReleaseResourceFromGitHubRelease(gitHubRelease)
+	if err != nil {
+		return nil, microerror.Mask(err)
+	}
 
-	// Then we get the GitHub release asset that contains release.yaml manifest file.
+	return release, nil
+}
+
+func (c *Client) GetLatestRelease(ctx context.Context, provider Provider) (*Release, error) {
+	const releasesPerRequest = 30
+	providerTagPrefix := fmt.Sprintf("%s/", provider)
+
+	var releaseList []*github.RepositoryRelease
+	var response *github.Response
+	var err error
+	hasMorePages := func(page int) bool {
+		return page != 0
+	}
+
+	for page := 1; hasMorePages(page); page = response.NextPage {
+		releaseList, response, err = c.gitHubClient.Repositories.ListReleases(ctx, GiantSwarmGitHubOrg, ReleasesRepo, &github.ListOptions{
+			Page:    page,
+			PerPage: releasesPerRequest,
+		})
+		if err != nil {
+			return nil, microerror.Mask(err)
+		}
+		for _, gitHubRelease := range releaseList {
+			releaseTag := gitHubRelease.GetTagName()
+			if strings.HasPrefix(releaseTag, providerTagPrefix) {
+				release, err := c.getReleaseResourceFromGitHubRelease(gitHubRelease)
+				if err != nil {
+					return nil, microerror.Mask(err)
+				}
+				return release, nil
+			}
+		}
+	}
+
+	return nil, microerror.Maskf(ReleaseNotFoundError, "Did not found any release for provider '%s'", provider)
+}
+
+func (c *Client) getReleaseResourceFromGitHubRelease(gitHubRelease *github.RepositoryRelease) (*Release, error) {
+	// We get the GitHub release asset that contains release.yaml manifest file.
 	var releaseManifestUrl string
 	for _, asset := range gitHubRelease.Assets {
 		if asset.GetName() == ReleaseManifestFileName {
@@ -84,6 +126,7 @@ func (c *Client) GetPublishedRelease(ctx context.Context, provider Provider, rel
 
 	// Now we download the release manifest by using the GitHub asset URL.
 	var response *http.Response
+	var err error
 	response, err = c.gitHubClient.Client().Get(releaseManifestUrl)
 	if err != nil {
 		return nil, microerror.Mask(err)
