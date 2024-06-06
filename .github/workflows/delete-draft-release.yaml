@@ -1,0 +1,30 @@
+name: Delete draft release
+
+on:
+  pull_request:
+    types: [closed]
+
+jobs:
+  delete_draft_release:
+    if: github.event_name == 'pull_request' && github.event.action == 'closed'
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: '0'
+    - name: Delete draft releases and tags
+      env:
+        GITHUB_TOKEN: "${{ secrets.TAYLORBOT_GITHUB_ACTION }}"
+      run: |
+        for aws_release_dir in capa/*; do
+          aws_release_version="$(basename $aws_release_dir)"
+          draft_tag_name="draft/aws/$aws_release_version"
+          draft_release=$(gh release --repo giantswarm/releases view "$draft_tag_name" --json "id,name,tagName,assets,isDraft,isPrerelease,url" 2>&1 || true)
+          if [ "$draft_release" = "release not found" ]; then
+            echo "Draft release not found for tag $draft_tag_name"
+          else
+            echo "Found existing draft release $draft_tag_name, will delete it."
+            gh release delete --repo giantswarm/releases "$draft_tag_name" --yes --cleanup-tag
+          fi
+        done
