@@ -1,0 +1,56 @@
+name: Create GitHub draft release
+
+on: [push,pull_request]
+
+jobs:
+  create_draft_release:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: '0'
+        fetch-tags: 'true'
+    - name: Set up git identity
+      run: |
+        git config --local user.email "dev@giantswarm.io"
+        git config --local user.name "taylorbot"
+    - name: Create or update draft release tags
+      run: |
+        for aws_release_dir in capa/*; do
+          aws_release_version="$(basename $aws_release_dir)"
+          echo "Found AWS release $aws_release_version"
+          draft_tag_name="draft/aws/$aws_release_version"
+          if [ $(git tag -l "$draft_tag_name") ]; then
+            echo "Found existing tag $draft_tag_name, will force-overwrite it"
+            git push origin ":refs/tags/$draft_tag_name"
+            git tag -fa "$draft_tag_name" -m "AWS draft release $aws_release_version"
+          else
+            echo "Tag $draft_tag_name not found, will create it"
+            git tag -a "$draft_tag_name" -m "AWS draft release $aws_release_version"
+          fi
+          git push origin "$draft_tag_name"
+        done
+    - name: Create or update draft releases
+      env:
+        GITHUB_TOKEN: "${{ secrets.TAYLORBOT_GITHUB_ACTION }}"
+      run: |
+        for aws_release_dir in capa/*; do
+          aws_release_version="$(basename $aws_release_dir)"
+          draft_tag_name="draft/aws/$aws_release_version"
+          draft_release=$(gh release --repo giantswarm/releases view "$draft_tag_name" --json "id,name,tagName,assets,isDraft,isPrerelease,url" 2>&1 || true)
+          if [ "$draft_release" = "release not found" ]; then
+            published_tag_name="aws/$aws_release_version"
+            published_release=$(gh release --repo giantswarm/releases view "$published_tag_name" --json "id,name,tagName,assets,isDraft,isPrerelease,url" 2>&1 || true)
+            if [ "$published_release" = "release not found" ]; then
+              echo "Didn't find a release for neither published tag $published_tag_name nor for tag $draft_tag_name. Will create a new draft release."
+              release_note="DO NOT USE FOR PRODUCTION PURPOSES. This draft release has been created automatically by GitHub action. It will be deleted when the PR is merged."
+              gh release create --repo giantswarm/releases --draft --verify-tag --title "Draft workload cluster release $aws_release_version for AWS" --notes "$release_note" "$draft_tag_name" "$aws_release_dir/release.yaml"
+            else
+              echo "Found a published release with tag $published_tag_name. Skipping draft release creation."
+            fi
+          else
+            echo "Found existing draft release $draft_tag_name, will update it."
+            gh release upload --repo giantswarm/releases --clobber "$draft_tag_name" "$aws_release_dir/release.yaml" 
+          fi
+        done
