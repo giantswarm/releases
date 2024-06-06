@@ -25,6 +25,10 @@ jobs:
       run: |
         git fetch --tags
         for aws_release_dir in capa/*; do
+          if [[ -f $aws_release_dir ]]; then
+            echo "Skipping file $aws_release_dir"
+            continue
+          fi
           aws_release_version="$(basename $aws_release_dir)"
           echo "Found AWS release $aws_release_version"
           draft_tag_name="draft/aws/$aws_release_version"
@@ -47,6 +51,10 @@ jobs:
         BRANCH: ${{ github.head_ref }}
       run: |
         for aws_release_dir in capa/*; do
+          if [[ -f $aws_release_dir ]]; then
+            echo "Skipping file $aws_release_dir"
+            continue
+          fi
           aws_release_version="$(basename $aws_release_dir)"
           draft_tag_name="draft/aws/$aws_release_version"
           draft_release=$(gh release --repo giantswarm/releases view "$draft_tag_name" --json "id,name,tagName,assets,isDraft,isPrerelease,url" 2>&1 || true)

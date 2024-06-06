@@ -18,6 +18,10 @@ jobs:
         GITHUB_TOKEN: "${{ secrets.TAYLORBOT_GITHUB_ACTION }}"
       run: |
         for aws_release_dir in capa/*; do
+          if [[ -f $aws_release_dir ]]; then
+            echo "Skipping file $aws_release_dir"
+            continue
+          fi
           aws_release_version="$(basename $aws_release_dir)"
           draft_tag_name="draft/aws/$aws_release_version"
           draft_release=$(gh release --repo giantswarm/releases view "$draft_tag_name" --json "id,name,tagName,assets,isDraft,isPrerelease,url" 2>&1 || true)
@@ -46,6 +50,10 @@ jobs:
       run: |
         git fetch --tags
         for aws_release_dir in capa/*; do
+          if [[ -f $aws_release_dir ]]; then
+            echo "Skipping file $aws_release_dir"
+            continue
+          fi
           aws_release_version="$(basename $aws_release_dir)"
           echo "Found AWS (CAPA) release $aws_release_version."
           tag_name="aws/$aws_release_version"
@@ -63,6 +71,10 @@ jobs:
         GITHUB_TOKEN: "${{ secrets.TAYLORBOT_GITHUB_ACTION }}"
       run: |
         for aws_release_dir in capa/*; do
+          if [[ -f $aws_release_dir ]]; then
+            echo "Skipping file $aws_release_dir"
+            continue
+          fi
           aws_release_version="$(basename $aws_release_dir)"
           tag_name="aws/$aws_release_version"
           github_release=$(gh release --repo giantswarm/releases view "$tag_name" --json "id,name,tagName,assets,isDraft,isPrerelease,url" 2>&1 || true)
