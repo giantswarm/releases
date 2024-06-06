@@ -46,11 +46,13 @@ jobs:
             published_release=$(gh release --repo giantswarm/releases view "$published_tag_name" --json "id,name,tagName,assets,isDraft,isPrerelease,url" 2>&1 || true)
             if [ "$published_release" = "release not found" ]; then
               echo "Didn't find a release for neither published tag $published_tag_name nor for tag $draft_tag_name. Will create a new draft release."
-              gh release create "$draft_tag_name" --repo giantswarm/releases --draft --verify-tag --title "Draft workload cluster release $aws_release_version for AWS" --notes "DO NOT USE FOR PRODUCTION PURPOSES. This draft release has been created automatically by GitHub action. It will be deleted when the PR is merged."
+              release_note="DO NOT USE FOR PRODUCTION PURPOSES. This draft release has been created automatically by GitHub action. It will be deleted when the PR is merged."
+              gh release create --repo giantswarm/releases --draft --verify-tag --title "Draft workload cluster release $aws_release_version for AWS" --notes "$release_note" "$draft_tag_name" "$aws_release_dir/release.yaml"
             else
               echo "Found a published release with tag $published_tag_name. Skipping draft release creation."
             fi
           else
             echo "Found existing draft release $draft_tag_name, will update it."
+            gh release upload --repo giantswarm/releases --clobber "$draft_tag_name" "$aws_release_dir/release.yaml" 
           fi
         done
