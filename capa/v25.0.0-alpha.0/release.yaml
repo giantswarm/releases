@@ -1,7 +1,7 @@
 apiVersion: release.giantswarm.io/v1alpha1
 kind: Release
 metadata:
-  name: aws-v25.0.0-alpha.1
+  name: aws-v25.0.0-alpha.0
 spec:
   apps:
   - name: aws-ebs-csi-driver
@@ -97,5 +97,5 @@ spec:
     version: 1.0.0
   - name: kubernetes
     version: 1.25.16
-  date: "2024-05-29T08:00:00Z"
+  date: "2024-06-06T12:00:00Z"
   state: active
