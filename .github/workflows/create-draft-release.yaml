@@ -1,6 +1,12 @@
 name: Create GitHub draft release
 
-on: [push,pull_request]
+on:
+  push:
+    branches:
+    - master
+  pull_request:
+    branches:
+    - master
 
 jobs:
   create_draft_release:
@@ -38,6 +44,7 @@ jobs:
     - name: Create or update draft releases
       env:
         GITHUB_TOKEN: "${{ secrets.TAYLORBOT_GITHUB_ACTION }}"
+        BRANCH: ${{ github.head_ref }}
       run: |
         for aws_release_dir in capa/*; do
           aws_release_version="$(basename $aws_release_dir)"
@@ -45,7 +52,7 @@ jobs:
           draft_release=$(gh release --repo giantswarm/releases view "$draft_tag_name" --json "id,name,tagName,assets,isDraft,isPrerelease,url" 2>&1 || true)
           current_commit="$(git rev-parse HEAD)"
           release_title="Draft workload cluster release $aws_release_version for AWS"
-          pr_number="$(gh pr view --json "number" --jq ".number")"
+          pr_number="$(gh pr view "$BRANCH" --json "number" --jq ".number")"
           release_note="DO NOT USE FOR PRODUCTION PURPOSES. See PR #${pr_number} for more details. This draft release has been created automatically by GitHub action. It will be deleted when the PR is merged."
           if [ "$draft_release" = "release not found" ]; then
             published_tag_name="aws/$aws_release_version"
