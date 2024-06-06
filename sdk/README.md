@@ -1,6 +1,9 @@
 # Releases SDK
 
-Releases SDK is a Go module for working with Giant Swarm releases.
+Releases SDK is a Go module for working with new Giant Swarm workload cluster releases.
+
+> Note: The SDK can be used only for the workload cluster releases for new product based on Cluster API project, so it
+> does not support working with the old vintage releases.
 
 ## 1. Using SDK
 

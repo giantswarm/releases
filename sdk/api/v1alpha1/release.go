@@ -1,6 +1,10 @@
 package v1alpha1
 
 import (
+	"fmt"
+	"strings"
+
+	"github.com/giantswarm/microerror"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
@@ -84,4 +88,87 @@ type ReleaseList struct {
 	metav1.TypeMeta `json:",inline"`
 	metav1.ListMeta `json:"metadata"`
 	Items           []Release `json:"items"`
+}
+
+func (r *Release) GetProvider() (Provider, error) {
+	provider, _, err := r.getResourceNameParts()
+	if err != nil {
+		return "", microerror.Mask(err)
+	}
+
+	return provider, nil
+}
+
+func (r *Release) GetVersion() (string, error) {
+	_, releaseVersion, err := r.getResourceNameParts()
+	if err != nil {
+		return "", microerror.Mask(err)
+	}
+
+	return releaseVersion, nil
+}
+
+func (r *Release) GetKubernetesVersion() (string, error) {
+	const kubernetesComponentName = "kubernetes"
+	kubernetesComponentSpec, ok := r.LookupComponentSpec(kubernetesComponentName)
+	if !ok {
+		return "", microerror.Maskf(ComponentNotFoundError, "Component '%s' not found in the Release resource %s.", kubernetesComponentName, r.Name)
+	}
+	return kubernetesComponentSpec.Version, nil
+}
+
+func (r *Release) GetFlatcarVersion() (string, error) {
+	const flatcarComponentName = "flatcar"
+	flatcarComponentSpec, ok := r.LookupComponentSpec(flatcarComponentName)
+	if !ok {
+		return "", microerror.Maskf(ComponentNotFoundError, "Component '%s' not found in the Release resource %s.", flatcarComponentName, r.Name)
+	}
+	return flatcarComponentSpec.Version, nil
+}
+
+func (r *Release) GetClusterAppVersion() (string, error) {
+	provider, err := r.GetProvider()
+	if err != nil {
+		return "", microerror.Mask(err)
+	}
+	var clusterAppName = fmt.Sprintf("cluster-%s", provider)
+	clusterAppComponentSpec, ok := r.LookupComponentSpec(clusterAppName)
+	if !ok {
+		return "", microerror.Maskf(ComponentNotFoundError, "Component '%s' not found in the Release resource %s.", clusterAppName, r.Name)
+	}
+	return clusterAppComponentSpec.Version, nil
+}
+
+func (r *Release) LookupAppSpec(appName string) (ReleaseSpecApp, bool) {
+	for _, app := range r.Spec.Apps {
+		if app.Name == appName {
+			return app, true
+		}
+	}
+
+	return ReleaseSpecApp{}, false
+}
+
+func (r *Release) LookupComponentSpec(appName string) (ReleaseSpecComponent, bool) {
+	for _, component := range r.Spec.Components {
+		if component.Name == appName {
+			return component, true
+		}
+	}
+
+	return ReleaseSpecComponent{}, false
+}
+
+func (r *Release) getResourceNameParts() (Provider, string, error) {
+	providerString, releaseVersion, ok := strings.Cut(r.Name, "-")
+	if !ok {
+		return "", "", microerror.Maskf(InvalidReleaseResourceNameError, "Release resource must be in format '{provider}-{version}', but '-' is not found in '%s'.", r.Name)
+	}
+	provider := Provider(providerString)
+
+	if !IsProviderSupported(provider) {
+		return "", "", microerror.Maskf(UnsupportedProviderError, "Provider '%s' is not supported. Supported providers are: %s.", provider, SupportedProviders)
+	}
+
+	return provider, releaseVersion, nil
 }
