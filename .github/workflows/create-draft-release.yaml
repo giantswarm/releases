@@ -51,7 +51,7 @@ jobs:
           draft_tag_name="draft/aws/$aws_release_version"
           draft_release=$(gh release --repo giantswarm/releases view "$draft_tag_name" --json "id,name,tagName,assets,isDraft,isPrerelease,url" 2>&1 || true)
           current_commit="$(git rev-parse HEAD)"
-          release_title="Draft workload cluster release $aws_release_version for AWS"
+          release_title="Draft workload cluster release $aws_release_version for AWS (CAPA)"
           pr_number="$(gh pr view "$BRANCH" --json "number" --jq ".number")"
           release_note="DO NOT USE FOR PRODUCTION PURPOSES. See PR #${pr_number} for more details. This draft release has been created automatically by GitHub action. It will be deleted when the PR is merged."
           if [ "$draft_release" = "release not found" ]; then
