@@ -12,6 +12,10 @@ jobs:
         fetch-depth: '0'
     - name: Check gh cli
       run: which gh
+    - name: Set up git identity
+      run: |
+        git config --local user.email "dev@giantswarm.io"
+        git config --local user.name "taylorbot"
     - name: Get new releases
       run: |
         for aws_release_dir in capa/*; do
