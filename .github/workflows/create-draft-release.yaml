@@ -40,10 +40,10 @@ jobs:
         for aws_release_dir in capa/*; do
           aws_release_version="$(basename $aws_release_dir)"
           draft_tag_name="draft/aws/$aws_release_version"
-          result=$(gh release --repo giantswarm/releases view "$draft_tag_name" --json "id,name,tagName,assets,isDraft,isPrerelease,url")
-          if [ $? -eq 0 ]; then
-            echo "Found existing draft release $draft_tag_name, will update it"
-          else
+          result=$(gh release --repo giantswarm/releases view "$draft_tag_name" --json "id,name,tagName,assets,isDraft,isPrerelease,url" 2>&1 || true)
+          if [ "$result" = "release not found" ]; then
             echo "Draft release $draft_tag_name not found, will create it"
+          else
+            echo "Found existing draft release $draft_tag_name, will update it"
           fi
         done
