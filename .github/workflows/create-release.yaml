@@ -68,10 +68,14 @@ jobs:
           github_release=$(gh release --repo giantswarm/releases view "$tag_name" --json "id,name,tagName,assets,isDraft,isPrerelease,url" 2>&1 || true)
           current_commit="$(git rev-parse HEAD)"
           release_title="Workload cluster release $aws_release_version for AWS (CAPA)"
-          release_note="DO NOT USE FOR PRODUCTION PURPOSES. This draft release has been created automatically by GitHub action. It will be deleted when the PR is merged."
+          release_note="This release has been created automatically by GitHub action. CI will be updated to have better release notes here."
           if [ "$github_release" = "release not found" ]; then
             echo "Didn't find a GitHub release for release version $aws_release_version and tag $tag_name. Creating a new release."
-            gh release create --repo giantswarm/releases --target "$current_commit" --title "$release_title" --notes "$release_note" "$tag_name" "$aws_release_dir/release.yaml"
+            if [[ $aws_release_version == *-* ]]; then
+              gh release create --repo giantswarm/releases --target "$current_commit" --title "$release_title" --notes "$release_note" "$tag_name" "$aws_release_dir/release.yaml" --prerelease
+            else
+              gh release create --repo giantswarm/releases --target "$current_commit" --title "$release_title" --notes "$release_note" "$tag_name" "$aws_release_dir/release.yaml"
+            fi
           else
             echo "Found existing GitHub release for release version $aws_release_version and tag $tag_name." 
           fi
