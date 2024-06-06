@@ -17,7 +17,7 @@ jobs:
       run: |
         git config --local user.email "dev@giantswarm.io"
         git config --local user.name "taylorbot"
-    - name: Get new releases
+    - name: Create or update draft release tags
       run: |
         for aws_release_dir in capa/*; do
           aws_release_version="$(basename $aws_release_dir)"
@@ -32,4 +32,18 @@ jobs:
             git tag -a "$draft_tag_name" -m "AWS draft release $aws_release_version"
           fi
           git push origin "$draft_tag_name"
+        done
+    - name: Create or update draft releases
+      env:
+        GITHUB_TOKEN: "${{ secrets.TAYLORBOT_GITHUB_ACTION }}"
+      run: |
+        for aws_release_dir in capa/*; do
+          aws_release_version="$(basename $aws_release_dir)"
+          draft_tag_name="draft/aws/$aws_release_version"
+          result=$(gh release --repo giantswarm/releases view "$draft_tag_name" --json "id,name,tagName,assets,isDraft,isPrerelease,url")
+          if [ $? -eq 0 ]; then
+            echo "Found existing draft release $draft_tag_name, will update it"
+          else
+            echo "Draft release $draft_tag_name not found, will create it"
+          fi
         done
