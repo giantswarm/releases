@@ -1,6 +1,6 @@
 name: Create draft release
 
-on: [pull_request]
+on: [push,pull_request]
 
 jobs:
   create_draft_release:
@@ -12,3 +12,11 @@ jobs:
         fetch-depth: '0'
     - name: Check gh cli
       run: which gh
+    - name: Get new releases
+      run: |
+        for aws_release_dir in capa/*; do
+          aws_release_version="$(basename $aws_release_dir)"
+          echo "Found AWS release $aws_release_version"
+          draft_tag_name="draft/aws/$aws_release_version"
+          echo "Creating tag $draft_tag_name"
+        done
