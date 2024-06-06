@@ -1,0 +1,14 @@
+name: Create draft release
+
+on: [pull_request]
+
+jobs:
+  create_draft_release:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: '0'
+    - name: Check gh cli
+      run: which gh
