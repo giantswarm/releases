@@ -39,38 +39,7 @@ var _ = Describe("Client", func() {
 	var releasesClient *Client
 
 	BeforeEach(func() {
-		mux := http.NewServeMux()
-		mux.HandleFunc("/api/v3/repos/giantswarm/releases/releases", func(rw http.ResponseWriter, req *http.Request) {
-			// return GitHub response JSON
-			_, err := rw.Write([]byte(listReleasesGitHubResponse))
-			Expect(err).NotTo(HaveOccurred())
-		})
-		mux.HandleFunc("/api/v3/repos/giantswarm/releases/releases/tags/aws/v25.0.0-demo.0", func(rw http.ResponseWriter, req *http.Request) {
-			// return GitHub response JSON
-			_, err := rw.Write([]byte(v2500GitHubReleaseResponse))
-			Expect(err).NotTo(HaveOccurred())
-		})
-		mux.HandleFunc("/giantswarm/releases/releases/download/aws/v25.0.0-demo.0/release.yaml", func(rw http.ResponseWriter, req *http.Request) {
-			// return release.yaml manifest
-			_, err := rw.Write([]byte(v2500ReleaseManifest))
-			Expect(err).NotTo(HaveOccurred())
-		})
-		mux.HandleFunc("/giantswarm/releases/releases/download/aws/v25.1.0-demo.0/release.yaml", func(rw http.ResponseWriter, req *http.Request) {
-			// return release.yaml manifest
-			_, err := rw.Write([]byte(v2510ReleaseManifest))
-			Expect(err).NotTo(HaveOccurred())
-		})
-
-		// create test server
-		server = httptest.NewUnstartedServer(mux)
-
-		// Add listeners on custom hostname and port
-		listener, err := net.Listen("tcp", gitHubApiHostNameAndPort)
-		Expect(err).NotTo(HaveOccurred())
-		err = server.Listener.Close()
-		Expect(err).NotTo(HaveOccurred())
-		server.Listener = listener
-		server.Start()
+		server = createAndStartTestServer()
 
 		// Now create Release client
 		httpTestClient := server.Client()
@@ -152,3 +121,39 @@ var _ = Describe("Client", func() {
 		server.Close()
 	})
 })
+
+func createAndStartTestServer() *httptest.Server {
+	mux := http.NewServeMux()
+	mux.HandleFunc("/api/v3/repos/giantswarm/releases/releases", func(rw http.ResponseWriter, req *http.Request) {
+		// return GitHub response JSON
+		_, err := rw.Write([]byte(listReleasesGitHubResponse))
+		Expect(err).NotTo(HaveOccurred())
+	})
+	mux.HandleFunc("/api/v3/repos/giantswarm/releases/releases/tags/aws/v25.0.0-demo.0", func(rw http.ResponseWriter, req *http.Request) {
+		// return GitHub response JSON
+		_, err := rw.Write([]byte(v2500GitHubReleaseResponse))
+		Expect(err).NotTo(HaveOccurred())
+	})
+	mux.HandleFunc("/giantswarm/releases/releases/download/aws/v25.0.0-demo.0/release.yaml", func(rw http.ResponseWriter, req *http.Request) {
+		// return release.yaml manifest
+		_, err := rw.Write([]byte(v2500ReleaseManifest))
+		Expect(err).NotTo(HaveOccurred())
+	})
+	mux.HandleFunc("/giantswarm/releases/releases/download/aws/v25.1.0-demo.0/release.yaml", func(rw http.ResponseWriter, req *http.Request) {
+		// return release.yaml manifest
+		_, err := rw.Write([]byte(v2510ReleaseManifest))
+		Expect(err).NotTo(HaveOccurred())
+	})
+
+	// create test server
+	server := httptest.NewUnstartedServer(mux)
+
+	// Add listeners on custom hostname and port
+	listener, err := net.Listen("tcp", gitHubApiHostNameAndPort)
+	Expect(err).NotTo(HaveOccurred())
+	err = server.Listener.Close()
+	Expect(err).NotTo(HaveOccurred())
+	server.Listener = listener
+	server.Start()
+	return server
+}

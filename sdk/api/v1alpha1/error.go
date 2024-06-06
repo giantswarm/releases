@@ -12,6 +12,10 @@ var UnsupportedProviderError = &microerror.Error{
 	Kind: "UnsupportedProviderError",
 }
 
+var AppNotFoundError = &microerror.Error{
+	Kind: "AppNotFoundError",
+}
+
 var ComponentNotFoundError = &microerror.Error{
 	Kind: "ReleaseComponentNotFoundError",
 }
