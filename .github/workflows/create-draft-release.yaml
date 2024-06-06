@@ -23,5 +23,7 @@ jobs:
             echo "Found existing tag $draft_tag_name, will force-overwrite it"
           else
             echo "Tag $draft_tag_name not found, will create it"
+            git tag -a "$draft_tag_name" -m "AWS draft release $aws_release_version"
+            git push origin "$draft_tag_name"
           fi
         done
