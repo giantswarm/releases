@@ -23,12 +23,13 @@ jobs:
           aws_release_version="$(basename $aws_release_dir)"
           echo "Found AWS release $aws_release_version"
           draft_tag_name="draft/aws/$aws_release_version"
-          echo "Creating tag $draft_tag_name"
           if [ $(git tag -l "$draft_tag_name") ]; then
             echo "Found existing tag $draft_tag_name, will force-overwrite it"
+            git push origin ":refs/tags/$draft_tag_name"
+            git tag -fa "$draft_tag_name" -m "AWS draft release $aws_release_version"
           else
             echo "Tag $draft_tag_name not found, will create it"
             git tag -a "$draft_tag_name" -m "AWS draft release $aws_release_version"
-            git push origin "$draft_tag_name"
           fi
+          git push origin "$draft_tag_name"
         done
