@@ -28,3 +28,51 @@ jobs:
             gh release delete --repo giantswarm/releases "$draft_tag_name" --yes --cleanup-tag
           fi
         done
+
+  create_release:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: '0'
+        fetch-tags: 'true'
+    - name: Set up git identity
+      run: |
+        git config --local user.email "dev@giantswarm.io"
+        git config --local user.name "taylorbot"
+    - name: Create new release tag
+      run: |
+        git fetch --tags
+        for aws_release_dir in capa/*; do
+          aws_release_version="$(basename $aws_release_dir)"
+          echo "Found AWS (CAPA) release $aws_release_version."
+          tag_name="aws/$aws_release_version"
+          if [ $(git tag -l "$tag_name") ]; then
+            echo "Found existing tag $tag_name for release version $aws_release_version, new tag is not needed."
+          else
+            echo "Tag $tag_name for release version $aws_release_version not found, will create it."
+            tag_message="Workload cluster release $aws_release_version for AWS"
+            git tag -a "$tag_name" -m "$tag_message"
+            git push origin "$tag_name"
+          fi
+        done
+    - name: Create new GitHub release
+      env:
+        GITHUB_TOKEN: "${{ secrets.TAYLORBOT_GITHUB_ACTION }}"
+      run: |
+        for aws_release_dir in capa/*; do
+          aws_release_version="$(basename $aws_release_dir)"
+          tag_name="aws/$aws_release_version"
+          github_release=$(gh release --repo giantswarm/releases view "$tag_name" --json "id,name,tagName,assets,isDraft,isPrerelease,url" 2>&1 || true)
+          current_commit="$(git rev-parse HEAD)"
+          release_title="Workload cluster release $aws_release_version for AWS (CAPA)"
+          release_note="DO NOT USE FOR PRODUCTION PURPOSES. This draft release has been created automatically by GitHub action. It will be deleted when the PR is merged."
+          if [ "$github_release" = "release not found" ]; then
+            echo "Didn't find a GitHub release for release version $aws_release_version and tag $tag_name. Creating a new release."
+            gh release create --repo giantswarm/releases --target "$current_commit" --title "$release_title" --notes "$release_note" "$tag_name" "$aws_release_dir/release.yaml"
+          else
+            echo "Found existing GitHub release for release version $aws_release_version and tag $tag_name." 
+          fi
+        done
