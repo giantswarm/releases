@@ -75,7 +75,7 @@ func (b *Builder) WithApp(name, version, catalog string, dependsOn []string) *Bu
 	return b
 }
 
-// WithPreReleasePrefix adds a custom prefix that is prepended to the pre-release suffix of the custom release version.
+// WithPreReleasePrefix sets a custom prefix that is prepended to the pre-release of the custom release version.
 func (b *Builder) WithPreReleasePrefix(prefix string) *Builder {
 	b.preRelease.prefix = prefix
 	return b
