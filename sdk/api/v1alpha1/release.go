@@ -169,6 +169,6 @@ func (r *Release) getResourceNameParts() (Provider, string, error) {
 	if !IsProviderSupported(provider) {
 		return "", "", microerror.Maskf(UnsupportedProviderError, "Provider '%s' is not supported. Supported providers are: %s.", provider, SupportedProviders)
 	}
-
+	releaseVersion = strings.TrimPrefix(releaseVersion, "v")
 	return provider, releaseVersion, nil
 }

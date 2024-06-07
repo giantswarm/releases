@@ -9,6 +9,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- `Client` gets Release resources from GitHub `giantswarm/releases` repo
+  - `GetRelease` func to get a Release resource for the specified provider and release version
+  - `GetLatestRelease` to get a Release resource for the latest release version for the specified provider
+- `Builder` builds Release resources for the new releases based on the existing releases, with functions:
+  - `WithClusterApp` to override `cluster-$provider` app,
+  - `WithApp` to override a default app,
+  - `WithPreReleasePrefix` to set a custom prefix that is prepended to the pre-release of the custom release version,
+  - `WithRandomPreRelease` to specify that custom release version will have a random pre-release with specified length.
+
 ## [0.1.0] - 2024-06-05
 
 ### Added

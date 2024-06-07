@@ -1,7 +1,7 @@
 apiVersion: release.giantswarm.io/v1alpha1
 kind: Release
 metadata:
-  name: aws-v25.0.0-demo.0
+  name: aws-25.0.0-demo.0
 spec:
   apps:
   - name: aws-ebs-csi-driver

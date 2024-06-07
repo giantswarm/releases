@@ -19,12 +19,6 @@ type Client struct {
 	gitHubClient *github.Client
 }
 
-func NewClient() *Client {
-	return &Client{
-		gitHubClient: github.NewClient(nil),
-	}
-}
-
 // NewClientWithHttpClient creates a new instance of Client with a specified http.Client.
 // It returns a pointer to Client and an error. If the httpClient is nil, it returns
 // an error of type InvalidConfigError indicating that gitHubClient must be specified.
@@ -41,6 +35,7 @@ func NewClientWithHttpClient(httpClient *http.Client) (*Client, error) {
 	}, nil
 }
 
+// NewClientWithGitHubClient creates a releases Client with the specified GitHub client.
 func NewClientWithGitHubClient(gitHubClient *github.Client) (*Client, error) {
 	if gitHubClient == nil {
 		return nil, microerror.Maskf(InvalidConfigError, "gitHubClient must be specified")
@@ -50,6 +45,8 @@ func NewClientWithGitHubClient(gitHubClient *github.Client) (*Client, error) {
 	}, nil
 }
 
+// NewClientWithGitHubToken creates a releases Client that is internally using a GitHub client which is created with the specified
+// GitHub token.
 func NewClientWithGitHubToken(gitHubToken string) *Client {
 	gitHubClient := github.NewClient(nil)
 	if gitHubToken != "" {
@@ -61,6 +58,8 @@ func NewClientWithGitHubToken(gitHubToken string) *Client {
 	}
 }
 
+// GetRelease returns a release with the specified release version for the specified provider. Specified release version
+// can contain the 'v' prefix, but it doesn't have to.
 func (c *Client) GetRelease(ctx context.Context, provider Provider, releaseVersion string) (*Release, error) {
 	// First we get GitHub release for the specified provider and release version.
 	releaseVersion = strings.TrimPrefix(releaseVersion, "v")
@@ -77,6 +76,7 @@ func (c *Client) GetRelease(ctx context.Context, provider Provider, releaseVersi
 	return release, nil
 }
 
+// GetLatestRelease returns the latest release for the specified provider.
 func (c *Client) GetLatestRelease(ctx context.Context, provider Provider) (*Release, error) {
 	const releasesPerRequest = 30
 	providerTagPrefix := fmt.Sprintf("%s/", provider)
