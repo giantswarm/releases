@@ -1,7 +1,7 @@
 apiVersion: release.giantswarm.io/v1alpha1
 kind: Release
 metadata:
-  name: aws-v25.0.0-alpha.0
+  name: aws-25.0.0-alpha.1
 spec:
   apps:
   - name: aws-ebs-csi-driver
@@ -90,12 +90,13 @@ spec:
     version: 0.9.0
   components:
   - name: cluster-aws
-    version: 0.76.1-b76af2c26f4224ffb0d718e940e232fac05c89a0
+    catalog: cluster-test
+    version: 0.77.0-1c28d9bbe20adf6055db97470dec1bb9618be2a0
   - name: flatcar
     version: 3815.2.2
   - name: flatcar-variant
     version: 1.0.0
   - name: kubernetes
     version: 1.25.16
-  date: "2024-06-06T12:00:00Z"
+  date: "2024-06-07T18:00:00Z"
   state: active
