@@ -52,7 +52,7 @@ var _ = Describe("Client", func() {
 
 	It("Gets release for the specified provider and release version", func() {
 		ctx := context.Background()
-		const releaseVersion = "v25.0.0-demo.0"
+		const releaseVersion = "25.0.0-demo.0"
 		release, err := releasesClient.GetRelease(ctx, ProviderAws, releaseVersion)
 		Expect(err).NotTo(HaveOccurred())
 
@@ -111,7 +111,7 @@ var _ = Describe("Client", func() {
 		Expect(err).NotTo(HaveOccurred())
 
 		// Check release version
-		const expectedLatestReleaseVersion = "v25.1.0-demo.0"
+		const expectedLatestReleaseVersion = "25.1.0-demo.0"
 		resultReleaseVersion, err := release.GetVersion()
 		Expect(err).NotTo(HaveOccurred())
 		Expect(resultReleaseVersion).To(Equal(expectedLatestReleaseVersion))

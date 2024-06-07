@@ -57,7 +57,7 @@ var _ = Describe("Builder", func() {
 		Expect(newReleaseVersion.Prerelease()).To(HaveLen(expectedPreReleaseLength))
 	})
 
-	It("Overrides cluster app and creates a new minor release without pre-release", func() {
+	It("Overrides cluster app and creates a new minor release with pre-release", func() {
 		// set a cluster app override where the pre-release is different
 		releasesBuilder = releasesBuilder.
 			WithClusterApp("0.77.0", "")
@@ -72,11 +72,11 @@ var _ = Describe("Builder", func() {
 		newReleaseVersion, err := semver.NewVersion(newReleaseVersionString)
 		Expect(err).NotTo(HaveOccurred())
 
-		// check the new release version, expected is 25.2.0
+		// check the new release version, expected is 25.2.0-<10-char pre-release suffix>
 		Expect(newReleaseVersion.Major()).To(Equal(uint64(25)))
 		Expect(newReleaseVersion.Minor()).To(Equal(uint64(2)))
 		Expect(newReleaseVersion.Patch()).To(Equal(uint64(0)))
-		Expect(newReleaseVersion.Prerelease()).To(BeEmpty())
+		Expect(newReleaseVersion.Prerelease()).To(HaveLen(10))
 	})
 
 	AfterEach(func() {
