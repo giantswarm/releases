@@ -18,6 +18,7 @@ const (
 	preReleaseHashLength = 10
 )
 
+// Builder builds custom Releases by overriding a base release with custom cluster app and default apps.
 type Builder struct {
 	client      *Client
 	provider    Provider
@@ -31,6 +32,8 @@ type Builder struct {
 	apps       []ReleaseSpecApp
 }
 
+// NewBuilder creates a new Builder with specified releases Client, provider and base release.
+// If a base release is an empty string it will use the latest available release for the provider.
 func NewBuilder(client *Client, provider Provider, baseRelease string) (*Builder, error) {
 	if client == nil {
 		return nil, microerror.Maskf(InvalidConfigError, "client must not be empty")
@@ -50,6 +53,7 @@ func NewBuilder(client *Client, provider Provider, baseRelease string) (*Builder
 	}, nil
 }
 
+// WithClusterApp overrides the cluster-<provider> app in the base release.
 func (b *Builder) WithClusterApp(version, catalog string) *Builder {
 	b.clusterApp = &ReleaseSpecComponent{
 		Name:    fmt.Sprintf("cluster-%s", b.provider),
@@ -59,6 +63,7 @@ func (b *Builder) WithClusterApp(version, catalog string) *Builder {
 	return b
 }
 
+// WithApp overrides the default app in the base release.
 func (b *Builder) WithApp(name, version, catalog string, dependsOn []string) *Builder {
 	app := ReleaseSpecApp{
 		Name:      name,
@@ -70,17 +75,21 @@ func (b *Builder) WithApp(name, version, catalog string, dependsOn []string) *Bu
 	return b
 }
 
+// WithPreReleasePrefix adds a custom prefix that is prepended to the pre-release suffix of the custom release version.
 func (b *Builder) WithPreReleasePrefix(prefix string) *Builder {
 	b.preRelease.prefix = prefix
 	return b
 }
 
+// WithRandomPreRelease specifies that custom release version will have a random pre-release with specified length. The
+// specified length does not include the length of the optionally specified pre-release prefix.
 func (b *Builder) WithRandomPreRelease(length int) *Builder {
 	b.preRelease.isRandom = true
 	b.preRelease.length = length
 	return b
 }
 
+// Build a custom release.
 func (b *Builder) Build(ctx context.Context) (*Release, error) {
 	var release *Release
 	var err error
