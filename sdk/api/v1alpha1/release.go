@@ -21,50 +21,71 @@ func (r ReleaseState) String() string {
 	return string(r)
 }
 
+// +kubebuilder:object:root=true
+// +kubebuilder:subresource:status
+// +kubebuilder:printcolumn:name="Kubernetes version",type=string,JSONPath=`.spec.components[?(@.name=="kubernetes")].version`,description="Kubernetes version in this release"
+// +kubebuilder:printcolumn:name="Flatcar version",type=string,JSONPath=`.spec.components[?(@.name=="flatcar")].version`,description="Flatcar version in this release"
+// +kubebuilder:printcolumn:name="Age",type=date,JSONPath=`.spec.date`,description="Time since release creation"
+// +kubebuilder:printcolumn:name="Release notes",type=string,JSONPath=`.metadata.annotations['giantswarm\.io/release-notes']`,priority=1,description="Release notes for this release"
+// +kubebuilder:resource:scope=Cluster,categories=common;giantswarm
+
 // Release is a Kubernetes resource (CR) representing a Giant Swarm workload cluster release.
 type Release struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata"`
-	Spec              ReleaseSpec   `json:"spec"`
-	Status            ReleaseStatus `json:"status"`
+	Spec              ReleaseSpec `json:"spec"`
+	// +kubebuilder:validation:Optional
+	Status ReleaseStatus `json:"status"`
 }
 
 type ReleaseSpec struct {
 	// Apps describes apps used in this release.
 	Apps []ReleaseSpecApp `json:"apps"`
 
+	// +kubebuilder:validation:MinItems=1
 	// Components describes components used in this release.
 	Components []ReleaseSpecComponent `json:"components"`
 
 	// Date that the release became active.
 	Date *metav1.Time `json:"date"`
 
+	// +kubebuilder:validation:Optional
+	// +nullable
 	// EndOfLifeDate is the date and time when support for a workload cluster using
 	// this release ends. This may not be set at the time of release creation
 	// and can be specified later.
 	EndOfLifeDate *metav1.Time `json:"endOfLifeDate,omitempty"`
 
+	// +kubebuilder:validation:Type=string
+	// +kubebuilder:validation:Pattern=`^(active|deprecated|wip|preview)$`
 	// State indicates the availability of the release: deprecated, active, or wip.
 	State ReleaseState `json:"state"`
 
+	// +kubebuilder:validation:Optional
 	// Notice outlines anything worth being aware of in this release.
 	Notice string `json:"notice,omitempty"`
 }
 
 type ReleaseSpecComponent struct {
+	// +kubebuilder:default=control-plane-catalog
 	// Catalog specifies the name of the app catalog that this component belongs to.
 	Catalog string `json:"catalog,omitempty"`
 	// Name of the component.
 	Name string `json:"name"`
+	// +kubebuilder:validation:Optional
 	// Reference is the component's version in the catalog (e.g. 1.2.3 or 1.2.3-abc8675309).
 	Reference string `json:"reference,omitempty"`
+	// +kubebuilder:validation:Optional
 	// ReleaseOperatorDeploy informs the release-operator that it should deploy the component.
 	ReleaseOperatorDeploy bool `json:"releaseOperatorDeploy,omitempty"`
+	// +kubebuilder:validation:Pattern=`^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?$`
 	// Version of the component.
 	Version string `json:"version"`
 }
 
 type ReleaseSpecApp struct {
+	// +kubebuilder:validation:Optional
+	// +kubebuilder:default=default
 	// Catalog specifies the name of the app catalog that this app belongs to.
 	Catalog string `json:"catalog,omitempty"`
 	// Version of the upstream component used in the app.
@@ -73,16 +94,22 @@ type ReleaseSpecApp struct {
 	DependsOn []string `json:"dependsOn,omitempty"`
 	// Name of the app.
 	Name string `json:"name"`
+	// +kubebuilder:validation:Pattern=`^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?$`
 	// Version of the app.
 	Version string `json:"version"`
 }
 
 type ReleaseStatus struct {
+	// +kubebuilder:validation:Optional
 	// Ready indicates if all components of the release have been deployed.
 	Ready bool `json:"ready"`
+
+	// +kubebuilder:validation:Optional
 	// InUse indicates whether a release is actually used by a cluster.
 	InUse bool `json:"inUse"`
 }
+
+// +kubebuilder:object:root=true
 
 type ReleaseList struct {
 	metav1.TypeMeta `json:",inline"`
