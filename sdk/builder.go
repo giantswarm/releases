@@ -10,6 +10,7 @@ import (
 
 	"github.com/Masterminds/semver/v3"
 	"github.com/giantswarm/microerror"
+	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 
 	. "github.com/giantswarm/releases/sdk/api/v1alpha1"
 )
@@ -188,8 +189,10 @@ func (b *Builder) Build(ctx context.Context) (*Release, error) {
 		}
 	}
 
-	// Finally, we update Release resource name
+	// Finally, we update Release resource name and release date
 	release.Name = fmt.Sprintf("%s-%s", b.provider, releaseVersion.String())
+	now := metav1.NewTime(time.Now())
+	release.Spec.Date = &now
 	return release, nil
 }
 
