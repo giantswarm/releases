@@ -8,6 +8,10 @@ spec:
     version: 2.30.1
     dependsOn:
     - cloud-provider-aws
+  - name: aws-ebs-csi-driver-servicemonitors
+    version: 0.1.0
+    dependsOn:
+    - cert-manager
   - name: aws-pod-identity-webhook
     version: 1.14.2
     dependsOn:
@@ -48,6 +52,10 @@ spec:
     version: 3.1.0
     dependsOn:
     - prometheus-operator-crd
+  - name: irsa-servicemonitors
+    version: 0.0.1
+    dependsOn:
+    - cert-manager
   - name: metrics-server
     version: 2.4.2
     dependsOn:
