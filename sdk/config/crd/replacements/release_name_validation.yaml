@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: release-name-validation
+  namespace: release-name-validation
+data:
+  pattern: '^(((aws|azure|vsphere|cloud-director|eks)-)|v)(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(-[\.0-9a-zA-Z]*)?$'
+  type: 'string'

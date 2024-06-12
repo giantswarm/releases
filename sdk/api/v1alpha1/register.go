@@ -1,3 +1,5 @@
+// +kubebuilder:object:generate=true
+// +groupName=release.giantswarm.io
 package v1alpha1
 
 import (

@@ -1,0 +1,21 @@
+resources:
+- bases/release.giantswarm.io_releases.yaml
+- replacements/release_name_validation.yaml
+
+replacements:
+- source:
+    version: v1
+    kind: ConfigMap
+    name: release-name-validation
+    namespace: release-name-validation
+    fieldPath: data
+  targets:
+  - select:
+      group: apiextensions.k8s.io
+      version: v1
+      kind: CustomResourceDefinition
+      name: releases.release.giantswarm.io
+    fieldPaths:
+    - spec.versions.0.schema.openAPIV3Schema.properties.metadata.properties.name
+    options:
+      create: true
