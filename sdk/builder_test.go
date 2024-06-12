@@ -3,6 +3,7 @@ package sdk
 import (
 	"context"
 	"net/http/httptest"
+	"time"
 
 	"github.com/Masterminds/semver/v3"
 	"github.com/google/go-github/v62/github"
@@ -137,6 +138,23 @@ var _ = Describe("Builder", func() {
 		Expect(newReleaseVersion.Minor()).To(Equal(uint64(1)))
 		Expect(newReleaseVersion.Patch()).To(Equal(uint64(1)))
 		Expect(newReleaseVersion.Prerelease()).To(HaveLen(10))
+	})
+
+	It("Creates a new release with release date set to now", func() {
+		// time before the release is created
+		timeBefore := time.Now()
+
+		// build the new release
+		newRelease, err := releasesBuilder.Build(context.Background())
+		Expect(err).NotTo(HaveOccurred())
+
+		// time after the release is created
+		timeAfter := time.Now()
+
+		// Check the new release time
+		Expect(newRelease.Spec.Date).NotTo(BeNil())
+		Expect(newRelease.Spec.Date.Time).To(BeTemporally(">=", timeBefore))
+		Expect(newRelease.Spec.Date.Time).To(BeTemporally("<=", timeAfter))
 	})
 
 	AfterEach(func() {
