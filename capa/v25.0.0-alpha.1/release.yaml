@@ -56,6 +56,8 @@ spec:
     version: 0.0.1
     dependsOn:
     - cert-manager
+  - name: k8s-audit-metrics
+    version: 0.9.0
   - name: metrics-server
     version: 2.4.2
     dependsOn:
@@ -89,6 +91,10 @@ spec:
     version: 2.6.1
     dependsOn:
     - kyverno
+  - name: prometheus-blackbox-exporter
+    version: 0.4.1
+    dependsOn:
+    - prometheus-operator-crd
   - name: security-bundle
     version: 1.6.5
     catalog: giantswarm
