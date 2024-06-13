@@ -3,5 +3,6 @@ commonAnnotations:
 resources:
 - v25.0.0-alpha.1
 - v25.0.0-alpha.2
+- v25.0.0-mntest.3
 transformers:
 - releaseNotesTransformer.yaml
