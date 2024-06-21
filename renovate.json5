@@ -9,7 +9,6 @@
             "paths": [
                 "capa/*-next/**"
             ],
-            "fileMatch": ["^capa/[^/]+-next/release.yaml$"],
             "baseBranches": ["next/capa/major"],
             "prCreation": "immediate",
             "automerge": {
