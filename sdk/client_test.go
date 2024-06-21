@@ -32,6 +32,18 @@ var (
 
 	//go:embed testdata/capa/v25.1.0-demo.0/release.yaml
 	v2510ReleaseManifest string
+
+	//go:embed testdata/capa/github_get_capa_for_git_default.json
+	capaDirectoryGitDefaultResponse string
+
+	//go:embed testdata/capa/github_get_capa_for_git_ref.json
+	capaDirectoryGitReferenceResponse string
+
+	//go:embed testdata/capa/v25.0.0/release_yaml_content_response.json
+	v25ReleaseManifestContentResponse string
+
+	//go:embed testdata/capa/v25.0.0-alpha.3/release_yaml_content_response.json
+	v25Alpha3ReleaseManifestContentResponse string
 )
 
 var _ = Describe("Client", func() {
@@ -117,6 +129,39 @@ var _ = Describe("Client", func() {
 		Expect(resultReleaseVersion).To(Equal(expectedLatestReleaseVersion))
 	})
 
+	It("Gets all releases for the specified provider and git reference", func() {
+		ctx := context.Background()
+		releases, err := releasesClient.GetReleasesForGitReference(ctx, ProviderAws, "add-capa-v25.0.0")
+		Expect(err).NotTo(HaveOccurred())
+
+		expectedReleases := []string{
+			"25.0.0-alpha.3",
+			"25.0.0",
+		}
+
+		for i, release := range releases {
+			resultReleaseVersion, err := release.GetVersion()
+			Expect(err).NotTo(HaveOccurred())
+			Expect(resultReleaseVersion).To(Equal(expectedReleases[i]))
+		}
+	})
+
+	It("Gets new releases for the specified provider and git reference", func() {
+		ctx := context.Background()
+		releases, err := releasesClient.GetNewReleasesForGitReference(ctx, ProviderAws, "add-capa-v25.0.0")
+		Expect(err).NotTo(HaveOccurred())
+
+		expectedReleases := []string{
+			"25.0.0",
+		}
+
+		for i, release := range releases {
+			resultReleaseVersion, err := release.GetVersion()
+			Expect(err).NotTo(HaveOccurred())
+			Expect(resultReleaseVersion).To(Equal(expectedReleases[i]))
+		}
+	})
+
 	AfterEach(func() {
 		server.Close()
 	})
@@ -142,6 +187,32 @@ func createAndStartTestServer() *httptest.Server {
 	mux.HandleFunc("/giantswarm/releases/releases/download/aws/v25.1.0-demo.0/release.yaml", func(rw http.ResponseWriter, req *http.Request) {
 		// return release.yaml manifest
 		_, err := rw.Write([]byte(v2510ReleaseManifest))
+		Expect(err).NotTo(HaveOccurred())
+	})
+	mux.HandleFunc("/api/v3/repos/giantswarm/releases/contents/capa", func(rw http.ResponseWriter, req *http.Request) {
+		// return GitHub response JSON
+		// Get the query parameters
+		queryParams := req.URL.Query()
+		// Retrieve specific query parameter
+		ref := queryParams.Get("ref")
+		var err error
+
+		switch ref {
+		case "add-capa-v25.0.0":
+			_, err = rw.Write([]byte(capaDirectoryGitReferenceResponse))
+		default:
+			_, err = rw.Write([]byte(capaDirectoryGitDefaultResponse))
+		}
+		Expect(err).NotTo(HaveOccurred())
+	})
+	mux.HandleFunc("/api/v3/repos/giantswarm/releases/contents/capa/v25.0.0/release.yaml", func(rw http.ResponseWriter, req *http.Request) {
+		// return GitHub response JSON
+		_, err := rw.Write([]byte(v25ReleaseManifestContentResponse))
+		Expect(err).NotTo(HaveOccurred())
+	})
+	mux.HandleFunc("/api/v3/repos/giantswarm/releases/contents/capa/v25.0.0-alpha.3/release.yaml", func(rw http.ResponseWriter, req *http.Request) {
+		// return GitHub response JSON
+		_, err := rw.Write([]byte(v25Alpha3ReleaseManifestContentResponse))
 		Expect(err).NotTo(HaveOccurred())
 	})
 

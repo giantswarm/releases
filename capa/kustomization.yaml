@@ -4,5 +4,6 @@ resources:
 - v25.0.0-alpha.1
 - v25.0.0-alpha.2
 - v25.0.0-alpha.3
+- v25.0.0
 transformers:
 - releaseNotesTransformer.yaml
