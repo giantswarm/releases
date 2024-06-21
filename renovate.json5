@@ -9,10 +9,14 @@
             "paths": [
                 "capa/*-next/**"
             ],
+            "fileMatch": ["^capa/[^/]+-next/release.yaml$"],
             "baseBranches": ["next/capa/major"],
-            "automerge": true,
-            "automergeType": "branch",
-            "requireBranchPolicyChecks": false
+            "prCreation": "immediate",
+            "automerge": {
+                "enabled": true,
+                "method": "squash",
+                "requireBranchPolicyChecks": true
+            }
         }
     ]
 }
