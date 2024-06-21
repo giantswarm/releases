@@ -38,12 +38,20 @@ jobs:
             git push --delete origin "$draft_tag_name"
             # Create new tag locally
             git tag -fa "$draft_tag_name" -m "AWS draft release $aws_release_version"
+            git push -f origin "$draft_tag_name"
           else
-            echo "Tag $draft_tag_name not found, will create it"
-            git tag -a "$draft_tag_name" -m "AWS (CAPA) draft release $aws_release_version"
+            echo "Tag $draft_tag_name not found"
+            
+            published_tag_name="aws/$aws_release_version"
+            published_release=$(gh release --repo giantswarm/releases view "$published_tag_name" --json "id,name,tagName,assets,isDraft,isPrerelease,url" 2>&1 || true)
+            if [ "$published_release" = "release not found" ]; then
+              echo "Didn't find a release for neither published tag $published_tag_name nor for tag $draft_tag_name. Will create a new draft tag."
+              git tag -a "$draft_tag_name" -m "AWS (CAPA) draft release $aws_release_version"
+              git push -f origin "$draft_tag_name"
+            else
+              echo "Found a published release with tag $published_tag_name. Skipping draft tag creation."
+            fi
           fi
-          # Finally push tag to origin
-          git push -f origin "$draft_tag_name"
         done
     - name: Create or update draft releases
       env:
