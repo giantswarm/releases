@@ -6,7 +6,7 @@
     "prBodyNotes": [],
     "packageRules": [
         {
-            "matchFileNames": ["^capa/[^/]+-next/release\\.yaml$"],
+            // "matchFileNames": ["^capa/[^/]+-next/release\\.yaml$"],
             "baseBranches": ["next/capa/major"],
             "prCreation": "immediate",
             "automerge": {
