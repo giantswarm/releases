@@ -4,7 +4,14 @@
         "github>giantswarm/renovate-presets:default.json5",
     ],
     "prBodyNotes": [],
-    "baseBranches": ["next/capa/major"],
-    "automerge": true,
-    "automergeType": "branch"
+    "packageRules": [
+        {
+            "paths": [
+                "capa/*-next/**"
+            ],
+            "baseBranches": ["next/capa/major"],
+            "automerge": true,
+            "automergeType": "branch"
+        }
+    ]
 }
