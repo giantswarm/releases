@@ -8,12 +8,9 @@ import (
 	"path"
 	"strings"
 
-	"github.com/Masterminds/semver/v3"
 	"github.com/giantswarm/microerror"
 	"github.com/google/go-github/v62/github"
 	"sigs.k8s.io/yaml"
-
-	. "github.com/giantswarm/releases/sdk/api/v1alpha1"
 )
 
 type Client struct {
@@ -77,6 +74,9 @@ func (c *Client) GetRelease(ctx context.Context, provider Provider, releaseVersi
 	return release, nil
 }
 
+// GetReleasesForGitReference returns all releases for the specified provider and from the specified git reference.
+//
+// Currently, the only supported provider is "aws". Git reference can be any commit, branch or tag.
 func (c *Client) GetReleasesForGitReference(ctx context.Context, provider Provider, gitReference string) ([]Release, error) {
 	providerDirectory, err := getProviderDirectory(provider)
 	if err != nil {
