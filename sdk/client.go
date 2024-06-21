@@ -8,12 +8,12 @@ import (
 	"path"
 	"strings"
 
+	"github.com/Masterminds/semver/v3"
+	"github.com/giantswarm/microerror"
+	"github.com/google/go-github/v62/github"
 	"sigs.k8s.io/yaml"
 
 	. "github.com/giantswarm/releases/sdk/api/v1alpha1"
-
-	"github.com/giantswarm/microerror"
-	"github.com/google/go-github/v62/github"
 )
 
 type Client struct {
@@ -75,6 +75,43 @@ func (c *Client) GetRelease(ctx context.Context, provider Provider, releaseVersi
 	}
 
 	return release, nil
+}
+
+func (c *Client) GetReleasesForGitReference(ctx context.Context, provider Provider, gitReference string) ([]Release, error) {
+	providerDirectory, err := getProviderDirectory(provider)
+	if err != nil {
+		return nil, microerror.Mask(err)
+	}
+	opts := &github.RepositoryContentGetOptions{
+		Ref: gitReference,
+	}
+	_, directoryContent, _, err := c.gitHubClient.Repositories.GetContents(ctx, GiantSwarmGitHubOrg, ReleasesRepo, providerDirectory, opts)
+	if err != nil {
+		return nil, microerror.Mask(err)
+	}
+
+	var releases []Release
+	for _, item := range directoryContent {
+		if item == nil || item.GetType() != "dir" {
+			continue
+		}
+		releaseDirectoryName := item.GetName()
+		if releaseDirectoryName == "" || releaseDirectoryName == archivedDirectory {
+			continue
+		}
+		_, err = semver.NewVersion(releaseDirectoryName)
+		if err != nil {
+			// directory name is not a valid semver version, so treating as unknown directory and skipping
+			continue
+		}
+		release, err := c.GetReleaseForGitReference(ctx, provider, releaseDirectoryName, gitReference)
+		if err != nil {
+			return nil, microerror.Mask(err)
+		}
+		releases = append(releases, *release)
+	}
+
+	return releases, nil
 }
 
 // GetReleaseForGitReference returns a release with the specified release version for the specified provider and from

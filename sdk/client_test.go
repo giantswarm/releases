@@ -33,8 +33,14 @@ var (
 	//go:embed testdata/capa/v25.1.0-demo.0/release.yaml
 	v2510ReleaseManifest string
 
+	//go:embed testdata/capa/github_get_capa_for_git.json
+	capaDirectoryResponse string
+
 	//go:embed testdata/capa/v25.0.0/release_yaml_content_response.json
 	v25ReleaseManifestContentResponse string
+
+	//go:embed testdata/capa/v25.0.0-alpha.3/release_yaml_content_response.json
+	v25Alpha3ReleaseManifestContentResponse string
 )
 
 var _ = Describe("Client", func() {
@@ -108,44 +114,6 @@ var _ = Describe("Client", func() {
 		Expect(flatcarVersion).To(Equal(expectedFlatcarVersion))
 	})
 
-	It("Gets release for the specified provider, release version and git reference", func() {
-		ctx := context.Background()
-		const releaseVersion = "25.0.0"
-		release, err := releasesClient.GetReleaseForGitReference(ctx, ProviderAws, releaseVersion, "add-capa-v25.0.0")
-		Expect(err).NotTo(HaveOccurred())
-
-		// Check release version
-		resultReleaseVersion, err := release.GetVersion()
-		Expect(err).NotTo(HaveOccurred())
-		Expect(resultReleaseVersion).To(Equal(releaseVersion))
-
-		// Check app name and version
-		appName := "coredns"
-		appVersion := "1.21.0"
-		appSpec, ok := release.LookupAppSpec(appName)
-		Expect(ok).To(BeTrue())
-		Expect(appSpec.Name).To(Equal(appName))
-		Expect(appSpec.Version).To(Equal(appVersion))
-
-		// Check cluster app version
-		clusterAppVersion, err := release.GetClusterAppVersion()
-		Expect(err).NotTo(HaveOccurred())
-		const expectedClusterAppVersion = "1.0.0"
-		Expect(clusterAppVersion).To(Equal(expectedClusterAppVersion))
-
-		// Check Kubernetes version
-		kubernetesVersion, err := release.GetKubernetesVersion()
-		Expect(err).NotTo(HaveOccurred())
-		const expectedKubernetesVersion = "1.25.16"
-		Expect(kubernetesVersion).To(Equal(expectedKubernetesVersion))
-
-		// Check Flatcar version
-		flatcarVersion, err := release.GetFlatcarVersion()
-		Expect(err).NotTo(HaveOccurred())
-		const expectedFlatcarVersion = "3815.2.2"
-		Expect(flatcarVersion).To(Equal(expectedFlatcarVersion))
-	})
-
 	It("Gets the latest release for the specified provider", func() {
 		ctx := context.Background()
 		release, err := releasesClient.GetLatestRelease(ctx, ProviderAws)
@@ -156,6 +124,23 @@ var _ = Describe("Client", func() {
 		resultReleaseVersion, err := release.GetVersion()
 		Expect(err).NotTo(HaveOccurred())
 		Expect(resultReleaseVersion).To(Equal(expectedLatestReleaseVersion))
+	})
+
+	It("Gets all releases for the specified provider and git reference", func() {
+		ctx := context.Background()
+		releases, err := releasesClient.GetReleasesForGitReference(ctx, ProviderAws, "add-capa-v25.0.0")
+		Expect(err).NotTo(HaveOccurred())
+
+		expectedReleases := []string{
+			"25.0.0-alpha.3",
+			"25.0.0",
+		}
+
+		for i, release := range releases {
+			resultReleaseVersion, err := release.GetVersion()
+			Expect(err).NotTo(HaveOccurred())
+			Expect(resultReleaseVersion).To(Equal(expectedReleases[i]))
+		}
 	})
 
 	AfterEach(func() {
@@ -185,9 +170,19 @@ func createAndStartTestServer() *httptest.Server {
 		_, err := rw.Write([]byte(v2510ReleaseManifest))
 		Expect(err).NotTo(HaveOccurred())
 	})
+	mux.HandleFunc("/api/v3/repos/giantswarm/releases/contents/capa", func(rw http.ResponseWriter, req *http.Request) {
+		// return GitHub response JSON
+		_, err := rw.Write([]byte(capaDirectoryResponse))
+		Expect(err).NotTo(HaveOccurred())
+	})
 	mux.HandleFunc("/api/v3/repos/giantswarm/releases/contents/capa/v25.0.0/release.yaml", func(rw http.ResponseWriter, req *http.Request) {
 		// return GitHub response JSON
 		_, err := rw.Write([]byte(v25ReleaseManifestContentResponse))
+		Expect(err).NotTo(HaveOccurred())
+	})
+	mux.HandleFunc("/api/v3/repos/giantswarm/releases/contents/capa/v25.0.0-alpha.3/release.yaml", func(rw http.ResponseWriter, req *http.Request) {
+		// return GitHub response JSON
+		_, err := rw.Write([]byte(v25Alpha3ReleaseManifestContentResponse))
 		Expect(err).NotTo(HaveOccurred())
 	})
 

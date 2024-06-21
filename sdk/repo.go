@@ -6,6 +6,10 @@ import (
 	. "github.com/giantswarm/releases/sdk/api/v1alpha1"
 )
 
+const (
+	archivedDirectory = "archived"
+)
+
 func getProviderDirectory(provider Provider) (string, error) {
 	switch provider {
 	case ProviderAws:
