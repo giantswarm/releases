@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - `GetReleasesForGitReference` returns all releases for the specified provider and from the specified git reference.
   - `GetReleaseForGitReference` returns a release with the specified release version for the specified provider and from
     the specified git reference.
+  - `GetNewReleasesForGitReference` returns newly added releases for the specified provider and from the specified git reference.
 
 ## [0.3.0] - 2024-06-12
 

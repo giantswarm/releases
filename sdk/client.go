@@ -8,9 +8,12 @@ import (
 	"path"
 	"strings"
 
+	"github.com/Masterminds/semver/v3"
 	"github.com/giantswarm/microerror"
 	"github.com/google/go-github/v62/github"
 	"sigs.k8s.io/yaml"
+
+	. "github.com/giantswarm/releases/sdk/api/v1alpha1"
 )
 
 type Client struct {
@@ -72,6 +75,64 @@ func (c *Client) GetRelease(ctx context.Context, provider Provider, releaseVersi
 	}
 
 	return release, nil
+}
+
+// GetNewReleasesForGitReference returns newly added releases for the specified provider and from the specified git
+// reference.
+//
+// Currently, the only supported provider is "aws". Git reference can be any commit, branch or tag.
+func (c *Client) GetNewReleasesForGitReference(ctx context.Context, provider Provider, gitReference string) ([]Release, error) {
+	providerDirectory, err := getProviderDirectory(provider)
+	if err != nil {
+		return nil, microerror.Mask(err)
+	}
+	_, directoryContentDefault, _, err := c.gitHubClient.Repositories.GetContents(ctx, GiantSwarmGitHubOrg, ReleasesRepo, providerDirectory, nil)
+	if err != nil {
+		return nil, microerror.Mask(err)
+	}
+	directoryContains := func(items []*github.RepositoryContent, dirName string) bool {
+		for _, item := range items {
+			if item != nil && item.GetType() == "dir" && item.GetName() == dirName {
+				return true
+			}
+		}
+		return false
+	}
+
+	opts := &github.RepositoryContentGetOptions{
+		Ref: gitReference,
+	}
+	_, directoryContentGitRef, _, err := c.gitHubClient.Repositories.GetContents(ctx, GiantSwarmGitHubOrg, ReleasesRepo, providerDirectory, opts)
+	if err != nil {
+		return nil, microerror.Mask(err)
+	}
+
+	var releases []Release
+	for _, item := range directoryContentGitRef {
+		if item == nil || item.GetType() != "dir" {
+			continue
+		}
+		releaseDirectoryName := item.GetName()
+		if releaseDirectoryName == "" || releaseDirectoryName == archivedDirectory {
+			continue
+		}
+		if directoryContains(directoryContentDefault, releaseDirectoryName) {
+			// this release is already included in the default branch
+			continue
+		}
+		_, err = semver.NewVersion(releaseDirectoryName)
+		if err != nil {
+			// directory name is not a valid semver version, so treating as unknown directory and skipping
+			continue
+		}
+		release, err := c.GetReleaseForGitReference(ctx, provider, releaseDirectoryName, gitReference)
+		if err != nil {
+			return nil, microerror.Mask(err)
+		}
+		releases = append(releases, *release)
+	}
+
+	return releases, nil
 }
 
 // GetReleasesForGitReference returns all releases for the specified provider and from the specified git reference.

@@ -1,0 +1,50 @@
+[
+    {
+        "name": "kustomization.yaml",
+        "path": "capa/kustomization.yaml",
+        "sha": "94632e6938d4b0558f44ae503ab9d27ba7660d64",
+        "size": 246,
+        "url": "https://api.github.com/repos/giantswarm/releases/contents/capa/kustomization.yaml",
+        "html_url": "https://github.com/giantswarm/releases/blob/add-capa-v25.0.0/capa/kustomization.yaml",
+        "git_url": "https://api.github.com/repos/giantswarm/releases/git/blobs/94632e6938d4b0558f44ae503ab9d27ba7660d64",
+        "download_url": "https://raw.githubusercontent.com/giantswarm/releases/add-capa-v25.0.0/capa/kustomization.yaml",
+        "type": "file",
+        "_links": {
+            "self": "https://api.github.com/repos/giantswarm/releases/contents/capa/kustomization.yaml",
+            "git": "https://api.github.com/repos/giantswarm/releases/git/blobs/94632e6938d4b0558f44ae503ab9d27ba7660d64",
+            "html": "https://github.com/giantswarm/releases/blob/add-capa-v25.0.0/capa/kustomization.yaml"
+        }
+    },
+    {
+        "name": "releaseNotesTransformer.yaml",
+        "path": "capa/releaseNotesTransformer.yaml",
+        "sha": "bf03d340e5c4aefa7da96bb36d45387bc6c4ebfa",
+        "size": 203,
+        "url": "https://api.github.com/repos/giantswarm/releases/contents/capa/releaseNotesTransformer.yaml",
+        "html_url": "https://github.com/giantswarm/releases/blob/add-capa-v25.0.0/capa/releaseNotesTransformer.yaml",
+        "git_url": "https://api.github.com/repos/giantswarm/releases/git/blobs/bf03d340e5c4aefa7da96bb36d45387bc6c4ebfa",
+        "download_url": "https://raw.githubusercontent.com/giantswarm/releases/add-capa-v25.0.0/capa/releaseNotesTransformer.yaml",
+        "type": "file",
+        "_links": {
+            "self": "https://api.github.com/repos/giantswarm/releases/contents/capa/releaseNotesTransformer.yaml",
+            "git": "https://api.github.com/repos/giantswarm/releases/git/blobs/bf03d340e5c4aefa7da96bb36d45387bc6c4ebfa",
+            "html": "https://github.com/giantswarm/releases/blob/add-capa-v25.0.0/capa/releaseNotesTransformer.yaml"
+        }
+    },
+    {
+        "name": "v25.0.0-alpha.3",
+        "path": "capa/v25.0.0-alpha.3",
+        "sha": "9991adcdbea991e6fd68bbf137722511942840ee",
+        "size": 0,
+        "url": "https://api.github.com/repos/giantswarm/releases/contents/capa/v25.0.0-alpha.3",
+        "html_url": "https://github.com/giantswarm/releases/tree/add-capa-v25.0.0/capa/v25.0.0-alpha.3",
+        "git_url": "https://api.github.com/repos/giantswarm/releases/git/trees/9991adcdbea991e6fd68bbf137722511942840ee",
+        "download_url": null,
+        "type": "dir",
+        "_links": {
+            "self": "https://api.github.com/repos/giantswarm/releases/contents/capa/v25.0.0-alpha.3",
+            "git": "https://api.github.com/repos/giantswarm/releases/git/trees/9991adcdbea991e6fd68bbf137722511942840ee",
+            "html": "https://github.com/giantswarm/releases/tree/add-capa-v25.0.0/capa/v25.0.0-alpha.3"
+        }
+    }
+]
