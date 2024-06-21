@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"path"
 	"strings"
 
 	"sigs.k8s.io/yaml"
@@ -69,6 +70,43 @@ func (c *Client) GetRelease(ctx context.Context, provider Provider, releaseVersi
 		return nil, microerror.Mask(err)
 	}
 	release, err := c.getReleaseResourceFromGitHubRelease(gitHubRelease)
+	if err != nil {
+		return nil, microerror.Mask(err)
+	}
+
+	return release, nil
+}
+
+// GetReleaseForGitReference returns a release with the specified release version for the specified provider and from
+// the specified git reference.
+//
+// Currently, the only supported provider is "aws". Release version can contain the 'v' prefix, but it doesn't have to.
+// Git reference can be any commit, branch or tag.
+func (c *Client) GetReleaseForGitReference(ctx context.Context, provider Provider, releaseVersion, gitReference string) (*Release, error) {
+	// First we get GitHub release for the specified provider and release version.
+	releaseVersion = strings.TrimPrefix(releaseVersion, "v")
+	providerDirectory, err := getProviderDirectory(provider)
+	if err != nil {
+		return nil, microerror.Mask(err)
+	}
+	releaseManifestPath := path.Join(providerDirectory, fmt.Sprintf("v%s", releaseVersion), ReleaseManifestFileName)
+	opts := &github.RepositoryContentGetOptions{
+		Ref: gitReference,
+	}
+	fileContentObject, _, _, err := c.gitHubClient.Repositories.GetContents(ctx, GiantSwarmGitHubOrg, ReleasesRepo, releaseManifestPath, opts)
+	if err != nil {
+		return nil, microerror.Mask(err)
+	}
+	fileContent, err := fileContentObject.GetContent()
+	if err != nil {
+		return nil, microerror.Mask(err)
+	}
+	if fileContent == "" {
+		return nil, microerror.Maskf(MissingReleaseManifestError, "release manifest contents not found at path '%s' for git reference '%s'", releaseManifestPath, gitReference)
+	}
+
+	release := &Release{}
+	err = yaml.Unmarshal([]byte(fileContent), release)
 	if err != nil {
 		return nil, microerror.Mask(err)
 	}
