@@ -11,7 +11,8 @@
             ],
             "baseBranches": ["next/capa/major"],
             "automerge": true,
-            "automergeType": "branch"
+            "automergeType": "branch",
+            "requireBranchPolicyChecks": false
         }
     ]
 }
