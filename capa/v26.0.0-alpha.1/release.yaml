@@ -1,7 +1,7 @@
 apiVersion: release.giantswarm.io/v1alpha1
 kind: Release
 metadata:
-  name: aws-26.0.0-next
+  name: aws-26.0.0-alpha.1
 spec:
   apps:
   - name: aws-ebs-csi-driver
@@ -29,7 +29,7 @@ spec:
   - name: cert-manager
     # used by renovate
     # repo: giantswarm/cert-manager-app
-    version: 3.7.6
+    version: 3.7.7
     dependsOn:
     - prometheus-operator-crd
   - name: chart-operator-extensions
@@ -37,7 +37,7 @@ spec:
     dependsOn:
     - prometheus-operator-crd
   - name: cilium
-    version: 0.24.0
+    version: 0.25.0
   - name: cilium-crossplane-resources
     version: 0.1.0
   - name: cilium-servicemonitors
@@ -73,7 +73,7 @@ spec:
     dependsOn:
     - kyverno
   - name: k8s-dns-node-cache
-    version: 2.6.2
+    version: 2.7.0
     dependsOn:
     - kyverno
   - name: metrics-server
@@ -81,7 +81,7 @@ spec:
     dependsOn:
     - kyverno
   - name: net-exporter
-    version: 1.19.0
+    version: 1.20.0
     dependsOn:
     - prometheus-operator-crd
   - name: network-policies
@@ -102,14 +102,14 @@ spec:
     dependsOn:
     - prometheus-operator-crd
   - name: security-bundle
-    version: 1.7.0
+    version: 1.7.1
     catalog: giantswarm
     dependsOn:
     - prometheus-operator-crd
   - name: teleport-kube-agent
-    version: 0.9.0
+    version: 0.9.1
   - name: vertical-pod-autoscaler
-    version: 5.2.2
+    version: 5.2.3
     dependsOn:
     - prometheus-operator-crd
   - name: vertical-pod-autoscaler-crd
