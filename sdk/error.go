@@ -8,6 +8,10 @@ var InvalidConfigError = &microerror.Error{
 	Kind: "InvalidConfigError",
 }
 
+var InvalidProviderError = &microerror.Error{
+	Kind: "InvalidProviderError",
+}
+
 var ReleaseNotFoundError = &microerror.Error{
 	Kind: "ReleaseNotFoundError",
 }
