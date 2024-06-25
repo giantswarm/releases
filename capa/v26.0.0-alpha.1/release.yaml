@@ -17,18 +17,12 @@ spec:
     dependsOn:
     - cert-manager
   - name: capi-node-labeler
-    # used by renovate
-    # repo: giantswarm/capi-node-labeler-app
     version: 0.5.0
   - name: cert-exporter
-    # used by renovate
-    # repo: giantswarm/cert-exporter
     version: 2.9.0
     dependsOn:
     - kyverno
   - name: cert-manager
-    # used by renovate
-    # repo: giantswarm/cert-manager-app
     version: 3.7.7
     dependsOn:
     - prometheus-operator-crd
