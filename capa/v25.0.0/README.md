@@ -96,6 +96,7 @@ Account Engineers will provide a detailed checklist to go over with customers pr
 - Add possibility to use egress proxy.
 
 #### Changed
+
 - Update cluster-autoscaler to version 1.27.3.
 - Change ScaleDownUtilizationThreshold default from 0.5 to 0.7
 - Replace condition for PSP CR installation.
