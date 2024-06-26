@@ -140,6 +140,7 @@ Account Engineers will provide a detailed checklist to go over with customers pr
 
 
 #### Changed
+
 - Update starboard-exporter (app) to v0.7.10.
 - Update kyverno (app) to v0.17.13.
 - Update trivy (app) to v0.12.0.
