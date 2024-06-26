@@ -16,7 +16,7 @@ Each existing customer using Giant Swarm Vintage product has been given a presen
 - Flexible network configuration
 - Automatic certificate renewal in place for worker nodes
 - Exposing more features based on the upstream implementations and contributions
-- [Karpetner](https://karpenter.sh/) solution integrated into the WC out of the box
+- [Karpenter](https://karpenter.sh/) solution integrated into workload clusters out of the box
 - More configurable registries with credentials and mirrors
 
 ## Important changes
