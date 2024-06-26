@@ -46,7 +46,7 @@ One of the many improvements is actually deprecation of the `k8s-initiator` appl
 This tool however was bringing a lot of freedom in terms of bash implementation that was ran in the tool itself. We have reviewed the use-cases that customers have implemented, exposed certain settings in CAPA and prepared a migration plan for those features as well as allowing any future customization. 
 The most important part for each customer is to prepare the `{cluster_name}-migration-configuration` yaml file, representing the `k8s-initiator` app features used, which will be consumed then by the `migration-cli` and be populated in Cluster charts for future usage.
 
-Account Engineers will provide a detailed checklist to go over with customers prior to migration.
+Your Account Engineer will provide you with a detailed checklist to go over prior to migration.
 
 ## New components with CAPA
 
