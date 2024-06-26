@@ -44,7 +44,7 @@ We have aimed to match the Vintage features as close as possible, introducing im
 
 One of the many improvements is actually deprecation of the `k8s-initiator` application, which was allowing to customize some parts of the kubernetes environment, catering for customer needs. 
 This tool however was bringing a lot of freedom in terms of bash implementation that was ran in the tool itself. We have reviewed the use-cases that customers have implemented, exposed certain settings in CAPA and prepared a migration plan for those features as well as allowing any future customization. 
-The most important part for each customer is to prepare the `{cluster_name}-migration-configuration` yaml file, representing the `k8s-initiator` app features used, which will be consumed then by the `migration-cli` and be populated in Cluster charts for future usage.
+The most important part for each customer is to prepare the `{cluster_name}-migration-configuration` YAML file, representing the `k8s-initiator` app features used, which will then be consumed by the `migration-cli` and be populated to Cluster charts for future usage.
 
 Your Account Engineer will provide you with a detailed checklist to go over prior to migration.
 
