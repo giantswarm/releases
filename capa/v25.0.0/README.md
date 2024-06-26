@@ -72,6 +72,7 @@ Your Account Engineer will provide you with a detailed checklist to go over prio
 ### cert-manager [3.7.6](https://github.com/giantswarm/cert-manager-app/releases/tag/v3.7.5)
 
 #### Added
+
 - Added Vertical Pod Autoscaler support for cainjector pods.
 
 ### cilium [0.24.0](https://github.com/giantswarm/cilium-app/releases/tag/v0.24.0)
