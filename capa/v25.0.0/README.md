@@ -76,6 +76,7 @@ Account Engineers will provide a detailed checklist to go over with customers pr
 ### cilium [0.24.0](https://github.com/giantswarm/cilium-app/releases/tag/v0.24.0)
 
 #### Added
+
 - Cilium ENI mode for CAPA becomes usable with these changes.
     - Add security group tag filter for pod network.
     - Select subnets from secondary VPC CIDRs.
