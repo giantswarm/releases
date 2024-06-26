@@ -61,7 +61,7 @@ Account Engineers will provide a detailed checklist to go over with customers pr
 ### (NEW) cilium-crossplane-resources [0.1.0](https://github.com/giantswarm/cilium-crossplane-resources/releases/tag/v0.1.0)
     
 
-## Change details with Vintage AWS 20.1.1
+## Change details compared to Vintage AWS 20.1.1
 
 ### cloud-provider-aws (formerly aws-cloud-controller-manager-app) [1.25.14-gs3](https://github.com/giantswarm/aws-cloud-controller-manager-app/releases/tag/v1.25.14-gs3)
 
