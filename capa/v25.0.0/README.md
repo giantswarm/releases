@@ -136,6 +136,7 @@ Account Engineers will provide a detailed checklist to go over with customers pr
 ### security-bundle [1.7.0](https://github.com/giantswarm/security-bundle/releases/tag/v1.7.0)
 
 #### Added
+
 - Add cloudnative-pg, edgedb, and reports-server apps (disabled).
 
 
