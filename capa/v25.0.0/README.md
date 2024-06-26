@@ -150,6 +150,7 @@ Account Engineers will provide a detailed checklist to go over with customers pr
 ### vertical-pod-autoscaler [5.2.2](https://github.com/giantswarm/vertical-pod-autoscaler-app/releases/tag/v5.2.2)
 
 #### Changed
+
 - Chart: Update Helm release vertical-pod-autoscaler to v9.8.0.
 - Chart: Update appVersion and README.md.
 - Chart: Update appVersion and README.md, VPA v1.1.2.
