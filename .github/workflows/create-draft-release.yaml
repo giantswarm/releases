@@ -44,7 +44,7 @@ jobs:
             published_release=$(gh release --repo giantswarm/releases view "$published_tag_name" --json "id,name,tagName,assets,isDraft,isPrerelease,url" 2>&1 || true)
             if [ "$published_release" = "release not found" ]; then
               echo "Didn't find a release for neither published tag $published_tag_name nor for tag $draft_tag_name. Will create a new draft tag."
-              git tag -a "$draft_tag_name" -m "${provider} (CAPx) draft release $release_version"
+              git tag -a "$draft_tag_name" -m "${provider} draft release $release_version"
               git push -f origin "$draft_tag_name"
             else
               echo "Found a published release with tag $published_tag_name. Skipping draft tag creation."
