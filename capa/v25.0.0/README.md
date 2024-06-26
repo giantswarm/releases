@@ -132,6 +132,7 @@ Account Engineers will provide a detailed checklist to go over with customers pr
 ### net-exporter [1.19.0](https://github.com/giantswarm/net-exporter/releases/tag/v1.19.0)
 
 #### Added
+
 - Add /blackbox endpoint.
 
 ### security-bundle [1.7.0](https://github.com/giantswarm/security-bundle/releases/tag/v1.7.0)
