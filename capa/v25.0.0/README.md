@@ -42,7 +42,7 @@ Prior to running the tool, a new Management Cluster based on the CAPA solution h
 As Giant Swarm manages the cloud infrastructure, there are no actions needed from customers for the migration itself. 
 We have aimed to match the Vintage features as close as possible, introducing improvements where needed. 
 
-One of the many improvements is actually deprecation of the `k8s-initiator` application, which was allowing to customize some parts of the kubernetes environment, catering for customer needs. 
+One of the many improvements is the deprecation of the `k8s-initiator` application, which allowed the customization of some parts of the Kubernetes environment, catering for customer needs. 
 This tool however brought a lot of freedom in terms of Bash implementation that was run in the tool itself. We reviewed the use-cases that customers have implemented, exposed certain settings in CAPA and prepared a migration plan for those features as well as allowing any future customization. 
 The most important part for each customer is to prepare the `{cluster_name}-migration-configuration` YAML file, representing the `k8s-initiator` app features used, which will then be consumed by the `migration-cli` and be populated to Cluster charts for future usage.
 
