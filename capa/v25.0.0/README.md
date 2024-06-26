@@ -40,7 +40,7 @@ The migration itself is a fully automated process ran by Giant Swarm engineers u
 Prior to running the tool, a new Management Cluster based on the CAPA solution has to be created in order to fully make use of the CAPI lifecycle management as well as infrastructure.
 
 As Giant Swarm manages the cloud infrastructure, there are no actions needed from customers for the migration itself. 
-We have aimed to match the Vintage features as closely as possible, introducing improvements where needed. 
+We have aimed to match the Vintage features as close as possible, introducing improvements where needed. 
 
 One of the many improvements is actually deprecation of the `k8s-initiator` application, which was allowing to customize some parts of the kubernetes environment, catering for customer needs. 
 This tool however was bringing a lot of freedom in terms of bash implementation that was ran in the tool itself. We have reviewed the use-cases that customers have implemented, exposed certain settings in CAPA and prepared a migration plan for those features as well as allowing any future customization. 
