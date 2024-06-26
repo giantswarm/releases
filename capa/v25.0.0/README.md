@@ -8,7 +8,7 @@ This is the first Giant Swarm supported CAPA release. It is available on CAPA Ma
 
 Each existing customer using Giant Swarm Vintage product has been given a presentation about CAPA benefits. We have gathered the most crucial high-level advantages in the list below to refresh your memory:
 
-- Easier cluster management, complete production ready clusters packaged as a helm chart, more gitops oriented approach
+- Easier cluster management, complete production ready clusters packaged as a Helm chart, more GitOps oriented approach
 - Better visibility of subresources, clear API
 - More transparent upgrades
 - Improved cluster configuration validation
