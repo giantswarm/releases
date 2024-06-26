@@ -8,5 +8,5 @@ Improves cert-manager CA injector on demanding clusters
 ### cert-manager [3.7.7](https://github.com/giantswarm/cert-manager-app/releases/tag/v3.7.7)
 
 #### Changed
-- Changed the way registry is being parsed in helm templates
+- Changed the way the registry is being parsed in helm templates
 - Enable VPA by default for CA injector
