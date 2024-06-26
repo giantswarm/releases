@@ -126,6 +126,7 @@ Account Engineers will provide a detailed checklist to go over with customers pr
 ### k8s-dns-node-cache [2.6.2](https://github.com/giantswarm/k8s-dns-node-cache-app/releases/tag/v2.6.2)
 
 #### Changed
+
 - Reduce CPU requests
 
 ### net-exporter [1.19.0](https://github.com/giantswarm/net-exporter/releases/tag/v1.19.0)
