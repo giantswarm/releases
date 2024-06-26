@@ -147,7 +147,6 @@ Account Engineers will provide a detailed checklist to go over with customers pr
 - Update trivy-operator (app) to v0.9.0.
 - Update cloudnative-pg (app) to v0.0.5.
 
-
 ### vertical-pod-autoscaler [5.2.2](https://github.com/giantswarm/vertical-pod-autoscaler-app/releases/tag/v5.2.2)
 
 #### Changed
