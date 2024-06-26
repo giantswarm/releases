@@ -1,8 +1,8 @@
 # :zap: Giant Swarm Release v25.0.0 for CAPA :zap:
 
-We are happy to announce first `Cluster API for AWS` (CAPA) release v25. 
+We are happy to announce our first `Cluster API for AWS` (CAPA) release v25. 
 
-This version is first Giant Swarm supported CAPA release. The release is available on CAPA Management Clusters and will be used as a first release to be upgraded to from the `Vintage` workload clusters.
+This is the first Giant Swarm supported CAPA release. It is available on CAPA Management Clusters and will be used as a first release to be upgraded to from `Vintage` workload clusters.
 
 ## CAPA benefits
 
