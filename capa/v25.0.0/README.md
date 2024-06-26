@@ -37,7 +37,7 @@ Besides the benefits listed above, we have also presented changes that are intro
 The migration itself is a fully automated process ran by Giant Swarm engineers using a `migration-cli` that handles all infrastructure as well as workload migrations. 
 *The experience in the migration process should be the same as in usual upgrade of the WC itself.*
 
-Prior to running the tool, new Management Cluster based on the CAPA solution has to be created in order to fully make use of the CAPI lifecycle management as well as infrastructure.
+Prior to running the tool, a new Management Cluster based on the CAPA solution has to be created in order to fully make use of the CAPI lifecycle management as well as infrastructure.
 
 As Giant Swarm manages the cloud infrastructure, there are no actions needed from customers for the migration itself. 
 We have aimed to match the Vintage features as closely as possible, introducing improvements where needed. 
