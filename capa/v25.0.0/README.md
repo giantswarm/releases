@@ -59,7 +59,6 @@ Your Account Engineer will provide you with a detailed checklist to go over prio
 ### (NEW) cluster-aws [1.0.0](https://github.com/giantswarm/cluster-aws/releases/tag/v1.0.0)
 
 ### (NEW) cilium-crossplane-resources [0.1.0](https://github.com/giantswarm/cilium-crossplane-resources/releases/tag/v0.1.0)
-    
 
 ## Change details compared to Vintage AWS 20.1.1
 
