@@ -162,4 +162,3 @@ Your Account Engineer will provide you with a detailed checklist to go over prio
 - Chart: Update Helm release vertical-pod-autoscaler to v9.8.0.
 - Chart: Update appVersion and README.md.
 - Chart: Update appVersion and README.md, VPA v1.1.2.
-
