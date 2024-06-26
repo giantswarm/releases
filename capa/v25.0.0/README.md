@@ -86,6 +86,7 @@ Your Account Engineer will provide you with a detailed checklist to go over prio
 ### cluster-autoscaler [1.27.3-gs9](https://github.com/giantswarm/cilium-app/releases/tag/v0.24.0)
 
 #### Added
+
 - Node Group Auto Discovery for CAPA MachinePools.
 - Add service account annotations as value.
 - Added service monitor.
