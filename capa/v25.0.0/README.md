@@ -117,6 +117,7 @@ Your Account Engineer will provide you with a detailed checklist to go over prio
 
 
 #### Removed
+
 - Values: Remove port & serviceType.
 - Helpers: Remove k8s-addon label.
 - RBAC: Remove PSP role & binding.
