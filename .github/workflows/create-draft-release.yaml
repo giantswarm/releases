@@ -64,6 +64,11 @@ jobs:
           provider=$(echo $provider_dir | cut -d'/' -f1)
           release_version="$(basename $provider_dir)"
           draft_tag_name="draft/${provider}/${release_version}"
+          # Check if release.yaml exists in the provider directory
+          if [ ! -f "$provider_dir/release.yaml" ]; then
+            echo "Skipping $provider_dir as release.yaml does not exist."
+            continue
+          fi
           draft_release=$(gh release --repo giantswarm/releases view "$draft_tag_name" --json "id,name,tagName,assets,isDraft,isPrerelease,url" 2>&1 || true)
           current_commit="$(git rev-parse HEAD)"
           release_title="Draft workload cluster release $release_version for ${provider}"
