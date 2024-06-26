@@ -118,5 +118,5 @@ spec:
     version: 1.0.0
   - name: kubernetes
     version: 1.26.15
-  date: "2024-06-20T18:00:00Z"
+  date: "2024-06-26T09:00:00Z"
   state: active
