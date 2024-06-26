@@ -23,34 +23,34 @@ jobs:
         git config --local user.name "taylorbot"
     - name: Create or update draft release tags
       run: |
-       git fetch --tags
-        for provider_dir in capa/* azure/*; do
-          if [[ -f $provider_dir ]]; then
-            echo "Skipping file $provider_dir"
-            continue
-          fi
-          provider=$(echo $provider_dir | cut -d'/' -f1)
-          release_version="$(basename $provider_dir)"
-          echo "Found release $release_version for provider $provider"
-          draft_tag_name="draft/${provider}/${release_version}"
-          if [ $(git tag -l "$draft_tag_name") ]; then
-            echo "Found existing tag $draft_tag_name, will force-overwrite it"
-            git push --delete origin "$draft_tag_name"
-            git tag -fa "$draft_tag_name" -m "${provider} draft release $release_version"
-            git push -f origin "$draft_tag_name"
-          else
-            echo "Tag $draft_tag_name not found"
-            published_tag_name="${provider}/${release_version}"
-            published_release=$(gh release --repo giantswarm/releases view "$published_tag_name" --json "id,name,tagName,assets,isDraft,isPrerelease,url" 2>&1 || true)
-            if [ "$published_release" = "release not found" ]; then
-              echo "Didn't find a release for neither published tag $published_tag_name nor for tag $draft_tag_name. Will create a new draft tag."
-              git tag -a "$draft_tag_name" -m "${provider} draft release $release_version"
+        git fetch --tags
+          for provider_dir in capa/* azure/*; do
+            if [[ -f $provider_dir ]]; then
+              echo "Skipping file $provider_dir"
+              continue
+            fi
+            provider=$(echo $provider_dir | cut -d'/' -f1)
+            release_version="$(basename $provider_dir)"
+            echo "Found release $release_version for provider $provider"
+            draft_tag_name="draft/${provider}/${release_version}"
+            if [ $(git tag -l "$draft_tag_name") ]; then
+              echo "Found existing tag $draft_tag_name, will force-overwrite it"
+              git push --delete origin "$draft_tag_name"
+              git tag -fa "$draft_tag_name" -m "${provider} draft release $release_version"
               git push -f origin "$draft_tag_name"
             else
-              echo "Found a published release with tag $published_tag_name. Skipping draft tag creation."
+              echo "Tag $draft_tag_name not found"
+              published_tag_name="${provider}/${release_version}"
+              published_release=$(gh release --repo giantswarm/releases view "$published_tag_name" --json "id,name,tagName,assets,isDraft,isPrerelease,url" 2>&1 || true)
+              if [ "$published_release" = "release not found" ]; then
+                echo "Didn't find a release for neither published tag $published_tag_name nor for tag $draft_tag_name. Will create a new draft tag."
+                git tag -a "$draft_tag_name" -m "${provider} draft release $release_version"
+                git push -f origin "$draft_tag_name"
+              else
+                echo "Found a published release with tag $published_tag_name. Skipping draft tag creation."
+              fi
             fi
-          fi
-        done
+          done
     - name: Create or update draft releases
       env:
         GITHUB_TOKEN: "${{ secrets.TAYLORBOT_GITHUB_ACTION }}"
