@@ -66,6 +66,7 @@ Your Account Engineer will provide you with a detailed checklist to go over prio
 ### cloud-provider-aws (formerly aws-cloud-controller-manager-app) [1.25.14-gs3](https://github.com/giantswarm/aws-cloud-controller-manager-app/releases/tag/v1.25.14-gs3)
 
 #### Changed
+
 - Reduce minimum CPU and memory requests.
 
 ### cert-manager [3.7.6](https://github.com/giantswarm/cert-manager-app/releases/tag/v3.7.5)
