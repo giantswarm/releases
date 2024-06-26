@@ -23,7 +23,7 @@ Each existing customer using Giant Swarm Vintage product has been given a presen
 
 Besides the benefits listed above, we have also presented changes that are introduced with CAPA. Here is the summary of most important points:
 
-- Flat DNS structure - Bringing more flexibility into workload clusters management across regions. Old and new DNS are both available during and after migration, while new DNS needs to be used after migration. We will synchronize with customers for the old DNS phase out after the migrations per management cluster.
+- Flat DNS structure - Bringing more flexibility into workload cluster management across regions. Old and new DNS are both available during and after migration, while new DNS needs to be used after migration. We will synchronize with customers for the old DNS phase out after the migrations per management cluster.
 - Only public DNS zone is supported - Private hosted zones are no longer created, however both zones (public and private) will be available during and after the migration. We will work together to eventually remove the private zones with each customer. Ingresses that depend on the cluster base domain will have to be updated after the migration.
 - Cluster apps moved to `org-` namespaces - This change will allow to simplify RBAC and enable GitOps managed clusters to be created with a pre-defined set of applications.
 - One set of controllers - On contrary to Vintage, where each release had a set of independent operators, the CAPA solution will manage all releases with single set of controllers. This will result in smaller set of components running on the management clusters, hence lowering costs of operations as well as speeding up any required hotfixes.
