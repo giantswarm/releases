@@ -25,7 +25,7 @@ jobs:
       run: |
         git fetch --tags
         for aws_release_dir in capa/*; do
-          if [[ $aws_release_dir == archived ]]; then
+          if [[ $aws_release_dir == "capa/archived" || $aws_release_dir == "archived" ]]; then
             echo "Skipping archived directory $aws_release_dir"
             continue
           fi
@@ -63,7 +63,7 @@ jobs:
         BRANCH: ${{ github.head_ref }}
       run: |
         for aws_release_dir in capa/*; do
-          if [[ $aws_release_dir == archived ]]; then
+          if [[ $aws_release_dir == "capa/archived" || $aws_release_dir == "archived" ]]; then
             echo "Skipping archived directory $aws_release_dir"
             continue
           fi
