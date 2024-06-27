@@ -148,8 +148,12 @@ func findReleases(provider string, archived bool) ([]v1alpha1.Release, error) {
 		if err != nil {
 			return nil, microerror.Mask(err)
 		}
-		// Ignore release directory check from CAPZ (azure) and CAPA (capa) directories because releases begin with "capa-" and "azure-""
-		if releaseDirectory.Name() != release.Name && (strings.Contains(releaseDirectory.Name(), "azure") || strings.Contains(releaseDirectory.Name(), "capa")) {
+		if strings.Contains(release.Name, "azure") {
+			parts := strings.Split(release.Name, "-")
+			release.Name = parts[len(parts)-1] //
+		}
+
+		if releaseDirectory.Name() != release.Name {
 			return nil, fmt.Errorf("%s release %s is in directory %s which doesn't match its name", provider, release.Name, releaseDirectory)
 		}
 		releases = append(releases, release)
