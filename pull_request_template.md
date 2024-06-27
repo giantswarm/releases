@@ -11,3 +11,11 @@ Ping @sig-product for review of release notes.
 - [ ] Roadmap issue created
 - [ ] Release uses latest stable Flatcar
 - [ ] Release uses latest Kubernetes patch version
+
+### Triggering e2e tests
+
+To trigger the E2E test for each new Release added in this PR add a comment with the following:
+
+`/run releases-test-suites`
+
+For more details see the [README.md](/README.md#running-tests-against-prs)
