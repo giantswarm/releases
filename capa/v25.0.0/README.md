@@ -117,7 +117,6 @@ Your Account Engineer will provide you with a detailed checklist to go over prio
 - Improve proxy settings
 - Reduce minimum CPU and memory requests.
 
-
 #### Removed
 
 - Values: Remove port & serviceType.
