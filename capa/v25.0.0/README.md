@@ -32,7 +32,6 @@ Besides the benefits listed above, we have also presented changes that are intro
 - Node pool defaults are changed - With CAPA by default, if not explicitly configured, node pools will now share a single subnet. Migrated Vintage clusters will not be affected. With that change the node limit will be determined by cluster VPC size, where additional VPC CIDRs can be added. On the contrary to Vintage, CAPA also allows to configure and deploy node pools together with the cluster object by default.
 - [Teleport](https://docs.giantswarm.io/vintage/platform-overview/security/cluster-security/cluster-access/#admin-access-via-teleport) - Giant Swarm will now utilize `Teleport` for Kubernetes API and direct node access. It helps to strengthen security and simplifies compliance with regulations and network topology. This service is only available to Giant Swarm engineers, while customers can obtain audit logs for any operations and logins performed by Giant Swarm support.
 
-
 ## Vintage to CAPA Migration
 
 The migration itself is a fully automated process ran by Giant Swarm engineers using a `migration-cli` that handles all infrastructure as well as workload migrations. 
