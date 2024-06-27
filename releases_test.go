@@ -150,7 +150,7 @@ func findReleases(provider string, archived bool) ([]v1alpha1.Release, error) {
 		}
 		if strings.Contains(release.Name, "azure") {
 			parts := strings.Split(release.Name, "-")
-			release.Name = parts[len(parts)-1] //
+			release.Name = "v" + parts[len(parts)-1] //
 		}
 
 		if releaseDirectory.Name() != release.Name {
