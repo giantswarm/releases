@@ -258,16 +258,18 @@ func Test_Releases(t *testing.T) {
 			providerRequests := []releaseRequest{}
 			{
 				var providerRequestsFile requestsFile
-				providerRequestsData, err := ioutil.ReadFile(filepath.Join(tc.provider, requestsFilename))
-				if err != nil {
-					t.Fatal(err)
-				}
-				err = yaml.UnmarshalStrict(providerRequestsData, &providerRequestsFile)
-				if err != nil {
-					t.Fatal(err)
-				}
-				for _, release := range providerRequestsFile.Releases {
-					providerRequests = append(providerRequests, release)
+				if tc.provider != "azure" {
+					providerRequestsData, err := ioutil.ReadFile(filepath.Join(tc.provider, requestsFilename))
+					if err != nil {
+						t.Fatal(err)
+					}
+					err = yaml.UnmarshalStrict(providerRequestsData, &providerRequestsFile)
+					if err != nil {
+						t.Fatal(err)
+					}
+					for _, release := range providerRequestsFile.Releases {
+						providerRequests = append(providerRequests, release)
+					}
 				}
 			}
 

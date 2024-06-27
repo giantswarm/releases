@@ -102,7 +102,7 @@ workflows:
           name: push-releases-to-azure-app-collection
           app_catalog: releases
           app_name: releases-azure
-          app_collection_repo: azure-app-collection
+          app_collection_repo: capz-app-collection
           requires:
             - push-releases-azure-to-releases-catalog
           filters:
