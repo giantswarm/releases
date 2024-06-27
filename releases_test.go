@@ -148,7 +148,7 @@ func findReleases(provider string, archived bool) ([]v1alpha1.Release, error) {
 		if err != nil {
 			return nil, microerror.Mask(err)
 		}
-		if strings.Contains(release.Name, "azure") {
+		if strings.Contains(release.Name, "azure") || strings.Contains(release.Name, "capa") {
 			parts := strings.Split(release.Name, "-")
 			release.Name = "v" + parts[len(parts)-1] //
 		}
@@ -227,8 +227,12 @@ func Test_Releases(t *testing.T) {
 			name:     "case 2: azure releases are valid",
 		},
 		{
+			provider: "capa",
+			name:     "case 3: capa releases are valid",
+		},
+		{
 			provider: "kvm",
-			name:     "case 3: kvm releases are valid",
+			name:     "case 4: kvm releases are valid",
 		},
 	}
 
