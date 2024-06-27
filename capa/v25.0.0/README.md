@@ -34,10 +34,10 @@ Besides the benefits listed above, we have also presented changes that are intro
 ## Vintage to CAPA Migration
 
 The migration itself is a fully automated process ran by Giant Swarm engineers using a `migration-cli` that handles all infrastructure as well as workload migrations.
-*The experience in the migration process itself should be the same as in an usual upgrade of the workload cluster, where the nodes rollout takes place.*
+***The experience in the migration process itself should be the same as in an usual upgrade of the workload cluster, where the nodes rollout takes place.***
 
 Prior to running the tool, a new Management Cluster based on the CAPA solution has to be created in order to fully make use of the CAPI lifecycle management as well as infrastructure.
-*CAPA clusters are bringing new structure for Workload Cluster definition in terms of Custom Resources. Hence for the period of workload cluster migration, any customer automation manging the cluster such as GitOps has to be disabled. After the migration, customers will have to adopt the new structure and adjust forementioned automations.*
+***CAPA clusters are bringing new structure for Workload Cluster definition in terms of Custom Resources. Hence for the period of workload cluster migration, any customer automation manging the cluster such as GitOps has to be disabled. After the migration, customers will have to adopt the new structure and adjust forementioned automations.***
 
 As Giant Swarm manages the cloud infrastructure, there are no actions needed from customers for the migration itself. 
 We have aimed to match the Vintage features as close as possible, introducing improvements where needed. 
