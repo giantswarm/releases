@@ -148,7 +148,7 @@ func findReleases(provider string, archived bool) ([]v1alpha1.Release, error) {
 		if err != nil {
 			return nil, microerror.Mask(err)
 		}
-		if strings.Contains(release.Name, "azure") || strings.Contains(release.Name, "capa") {
+		if strings.Contains(release.Name, "azure") || strings.Contains(release.Name, "aws") {
 			parts := strings.Split(release.Name, "-")
 			release.Name = "v" + parts[len(parts)-1] //
 		}
