@@ -147,7 +147,6 @@ Your Account Engineer will provide you with a detailed checklist to go over prio
 
 - Add cloudnative-pg, edgedb, and reports-server apps (disabled).
 
-
 #### Changed
 
 - Update starboard-exporter (app) to v0.7.10.
