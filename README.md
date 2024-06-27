@@ -34,7 +34,7 @@ to all Giant Swarm installations.
     - [v19.0.1](https://github.com/giantswarm/releases/tree/master/aws/v19.0.1)
     - [v19.0.0](https://github.com/giantswarm/releases/tree/master/aws/v19.0.0)
     - [v19.0.0-beta1](https://github.com/giantswarm/releases/tree/master/aws/archived/v19.0.0-beta1)
-    - [v19.0.0-alpha1](https://github.com/giantswarm/releases/tree/master/aws/archived/v19.0.0-alpha1) 
+    - [v19.0.0-alpha1](https://github.com/giantswarm/releases/tree/master/aws/archived/v19.0.0-alpha1)
 - v18
   - v18.0
     - [v18.4.2](https://github.com/giantswarm/releases/tree/master/aws/v18.4.2)
@@ -240,7 +240,7 @@ to all Giant Swarm installations.
   - v18.0
     - [v18.0.1](https://github.com/giantswarm/releases/tree/master/azure/archived/v18.0.1)
     - [v18.0.0](https://github.com/giantswarm/releases/tree/master/azure/archived/v18.0.0)
- 
+
 - v17
   - v17.2
     - [v17.2.0](https://github.com/giantswarm/releases/tree/master/azure/archived/v17.2.0)
@@ -422,3 +422,16 @@ to all Giant Swarm installations.
     - [v8.1.0](https://github.com/giantswarm/releases/tree/master/kvm/archived/v8.1.0)
   - v8.0
     - [v8.0.0](https://github.com/giantswarm/releases/tree/master/kvm/archived/v8.0.0)
+
+# Running tests against PRs
+
+To trigger the E2E test for each new Release added in a PR add a comment with the following:
+
+`/run releases-test-suites`
+
+This will automatically trigger tests for all new releases detected in the PR and will run them against the appropriate `standard` test suite for the provider.
+
+If you need to run tests for a specific Release (from the PR) or a different test suite you can do so with the two following, optional parameters:
+
+* `TARGET_SUITES` - a comma separated list of test suites to trigger (e.g. `./providers/capa/standard`)
+* `TARGET_RELEASES` - a comma separates list of Releases to trigger from the PR (e.g. `aws-25.0.0-example.1`)
