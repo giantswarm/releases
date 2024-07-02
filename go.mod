@@ -4,7 +4,7 @@ go 1.17
 
 require (
 	github.com/blang/semver/v4 v4.0.0
-	github.com/giantswarm/microerror v0.4.0
+	github.com/giantswarm/microerror v0.4.1
 	github.com/giantswarm/release-operator/v3 v3.2.0
 	github.com/giantswarm/versionbundle v0.2.0
 	sigs.k8s.io/kustomize/kustomize/v3 v3.10.0
