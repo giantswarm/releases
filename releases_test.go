@@ -148,6 +148,11 @@ func findReleases(provider string, archived bool) ([]v1alpha1.Release, error) {
 		if err != nil {
 			return nil, microerror.Mask(err)
 		}
+		if strings.Contains(release.Name, "azure") || strings.Contains(release.Name, "aws") {
+			parts := strings.Split(release.Name, "-")
+			release.Name = "v" + parts[len(parts)-1] //
+		}
+
 		if releaseDirectory.Name() != release.Name {
 			return nil, fmt.Errorf("%s release %s is in directory %s which doesn't match its name", provider, release.Name, releaseDirectory)
 		}
@@ -222,8 +227,12 @@ func Test_Releases(t *testing.T) {
 			name:     "case 2: azure releases are valid",
 		},
 		{
+			provider: "capa",
+			name:     "case 3: capa releases are valid",
+		},
+		{
 			provider: "kvm",
-			name:     "case 3: kvm releases are valid",
+			name:     "case 4: kvm releases are valid",
 		},
 	}
 
@@ -258,18 +267,16 @@ func Test_Releases(t *testing.T) {
 			providerRequests := []releaseRequest{}
 			{
 				var providerRequestsFile requestsFile
-				if tc.provider != "azure" {
-					providerRequestsData, err := ioutil.ReadFile(filepath.Join(tc.provider, requestsFilename))
-					if err != nil {
-						t.Fatal(err)
-					}
-					err = yaml.UnmarshalStrict(providerRequestsData, &providerRequestsFile)
-					if err != nil {
-						t.Fatal(err)
-					}
-					for _, release := range providerRequestsFile.Releases {
-						providerRequests = append(providerRequests, release)
-					}
+				providerRequestsData, err := ioutil.ReadFile(filepath.Join(tc.provider, requestsFilename))
+				if err != nil {
+					t.Fatal(err)
+				}
+				err = yaml.UnmarshalStrict(providerRequestsData, &providerRequestsFile)
+				if err != nil {
+					t.Fatal(err)
+				}
+				for _, release := range providerRequestsFile.Releases {
+					providerRequests = append(providerRequests, release)
 				}
 			}
 
