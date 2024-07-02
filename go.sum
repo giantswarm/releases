@@ -251,6 +251,8 @@ github.com/giantswarm/to v0.3.0/go.mod h1:RTRtw+Dyk6YqoiNBOGLO981BqhibtVwogdaFIM
 github.com/giantswarm/valuemodifier v0.3.1/go.mod h1:cdzb3R4extcJeqCfjZQMa8kR2nkB2n9ifFzQnIbZdXk=
 github.com/giantswarm/versionbundle v0.2.0 h1:6EP3+9uO/9z1xu7g4pHNUyENxE+Ix1bc5aFpUMPz5Yg=
 github.com/giantswarm/versionbundle v0.2.0/go.mod h1:n7GOlSXpX9TpP3EsYhErCjskN++c7uYHEEfV81NCH7s=
+github.com/giantswarm/versionbundle v0.3.0 h1:LhX2i314wiS3xXhAH35jauv4Z3ae4wdwQelN9kIVyLk=
+github.com/giantswarm/versionbundle v0.3.0/go.mod h1:zxTDitk/SfCvx/TbvouwPWW0hNGSdPDyGXXX3xm27Ik=
 github.com/gin-contrib/sse v0.0.0-20190301062529-5545eab6dad3/go.mod h1:VJ0WA2NBN22VlZ2dKZQPAPnyWw5XTlK1KymzLKsr59s=
 github.com/gin-gonic/gin v1.4.0/go.mod h1:OW2EZn3DO8Ln9oIKOvM++LBO+5UPHJJDH72/q/3rZdM=
 github.com/gliderlabs/ssh v0.2.2/go.mod h1:U7qILu1NlMHj9FlMhZLlkCdDnU1DBEAqr0aevW3Awn0=
