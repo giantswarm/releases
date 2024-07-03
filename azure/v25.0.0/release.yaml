@@ -108,8 +108,8 @@ spec:
     version: 3.1.0
   components:
   - name: cluster-azure
-    catalog: cluster-test
-    version: 0.14.2-622924d6e9cc3a1fb9b899da1567aed5ca23ae53
+    catalog: cluster
+    version: 0.15.0
   - name: flatcar
     version: 3815.2.4
   - name: flatcar-variant
