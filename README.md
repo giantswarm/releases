@@ -436,9 +436,11 @@ To trigger the E2E test for each new Release added in a PR add a comment with th
 
 `/run releases-test-suites`
 
-This will automatically trigger tests for all new releases detected in the PR and will run them against the appropriate `standard` test suite for the provider.
+This will automatically trigger tests for all new releases detected in the PR and will run them against the appropriate `standard` and `upgrade` test suites for the provider.
 
 If you need to run tests for a specific Release (from the PR) or a different test suite you can do so with the two following, optional parameters:
 
 * `TARGET_SUITES` - a comma separated list of test suites to trigger (e.g. `./providers/capa/standard`)
 * `TARGET_RELEASES` - a comma separates list of Releases to trigger from the PR (e.g. `aws-25.0.0-example.1`)
+
+The `upgrade` tests will first install a cluster using the latest previously published release and then upgrade to using the release found in the PR. If you need to override the starting Release version (to test upgrading from an earlier release) you can do so by setting the `PREVIOUS_RELEASE` parameter on the trigger comment (e.g. `/run releases-test-suites PREVIOUS_RELEASE=aws-v25.0.0`)
