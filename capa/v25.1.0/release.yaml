@@ -23,7 +23,7 @@ spec:
     dependsOn:
     - kyverno
   - name: cert-manager
-    version: 3.7.6
+    version: 3.7.7 # aligning with Vintage, fixing bugs
     dependsOn:
     - prometheus-operator-crd
   - name: chart-operator-extensions
@@ -31,7 +31,7 @@ spec:
     dependsOn:
     - prometheus-operator-crd
   - name: cilium
-    version: 0.24.0
+    version: 0.25.1 # as per Cabbage request fixing bugs
   - name: cilium-crossplane-resources
     version: 0.1.0
   - name: cilium-servicemonitors
@@ -115,7 +115,7 @@ spec:
     catalog: cluster
     version: 1.1.0
   - name: flatcar
-    version: 3815.2.2
+    version: 3815.2.5 # CVEs OpenSSH fixed
   - name: flatcar-variant
     version: 1.0.0
   - name: kubernetes
