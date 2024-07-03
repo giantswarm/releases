@@ -109,9 +109,9 @@ spec:
   components:
   - name: cluster-azure
     catalog: cluster-test
-    version: 0.15.0
+    version: 0.14.2-622924d6e9cc3a1fb9b899da1567aed5ca23ae53
   - name: flatcar
-    version: 3815.2.0
+    version: 3815.2.4
   - name: flatcar-variant
     version: 1.0.0
   - name: kubernetes
