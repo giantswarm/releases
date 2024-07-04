@@ -1,6 +1,6 @@
 # :zap: Giant Swarm Release v20.1.3 for AWS :zap:
 
-<< Add description here >>
+This is a security release featuring latest version of Flatcar Container Linux with major CVE fix for OpenSSH [CVE-2024-6387](https://nvd.nist.gov/vuln/detail/CVE-2024-6387). Upgrade to this release will result in nodes rollout.
 
 ## Change details
 
