@@ -1,6 +1,6 @@
 # :zap: Giant Swarm Release v19.3.5 for AWS :zap:
 
-This is a security release upgrading Flatcar with major CVE fix for OpenSSH [CVE-2024-6387](https://nvd.nist.gov/vuln/detail/CVE-2024-6387). Upgrade to this release will result in nodes rollout.
+This is a security release featuring latest version of Flatcar Container Linux with major CVE fix for OpenSSH [CVE-2024-6387](https://nvd.nist.gov/vuln/detail/CVE-2024-6387). Upgrade to this release will result in nodes rollout.
 
 ## Change details
 
