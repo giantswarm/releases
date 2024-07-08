@@ -43,7 +43,7 @@ spec:
     dependsOn:
     - vertical-pod-autoscaler-crd
   - name: cluster-autoscaler
-    version: 1.27.3-gs9
+    version: 1.27.3-gs10
     dependsOn:
     - kyverno
   - name: coredns
