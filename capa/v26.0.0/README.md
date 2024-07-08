@@ -4,3 +4,4 @@
 
 - Kubernetes version change from 1.25.16 to 1.26.15
 - cloud-provider-aws (formerly aws-cloud-controller-manager-app) from 1.25.14-gs3 to 1.26.11-gs.alpha.1
+- cluster-autoscaler from 1.27.3-gs9 to 1.27.3-gs10
