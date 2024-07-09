@@ -58,10 +58,8 @@ spec:
     version: 3.1.0
     dependsOn:
     - prometheus-operator-crd
-  - name: giantswarm-cluster-suite
-    version: 0.1.0
   - name: irsa-servicemonitors
-    version: 0.1.0
+    version: 0.0.1
     dependsOn:
     - cert-manager
   - name: k8s-audit-metrics
@@ -94,11 +92,11 @@ spec:
     dependsOn:
     - coredns
   - name: prometheus-blackbox-exporter
-    version: 0.4.2
+    version: 0.4.1
     dependsOn:
     - prometheus-operator-crd
   - name: security-bundle
-    version: 1.7.1
+    version: 1.7.0
     catalog: giantswarm
     dependsOn:
     - prometheus-operator-crd
