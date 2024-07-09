@@ -6,12 +6,14 @@
     "prBodyNotes": [],
     "packageRules": [
         {
-            "paths": [
-                "capa/*-next/**"
-            ],
+            // "matchFileNames": ["^capa/[^/]+-next/release\\.yaml$"],
             "baseBranches": ["next/capa/major"],
-            "automerge": true,
-            "automergeType": "branch"
+            "prCreation": "immediate",
+            "automerge": {
+                "enabled": true,
+                "method": "squash",
+                "requireBranchPolicyChecks": false
+            }
         }
     ]
 }
