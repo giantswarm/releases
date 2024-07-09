@@ -23,7 +23,7 @@ spec:
     dependsOn:
     - kyverno
   - name: cert-manager
-    version: 3.7.7 # aligning with Vintage, fixing bugs
+    version: 3.7.9 # aligning with Vintage, fixing bugs
     dependsOn:
     - prometheus-operator-crd
   - name: chart-operator-extensions
