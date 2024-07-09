@@ -13,5 +13,3 @@ Fixes an issue with cert-manager acme-http01-solver-image argument and improves 
 
 #### Update
 - Improves container security by setting `runAsGroup` and `runAsUser` greater than zero for all deployments.
-
-
