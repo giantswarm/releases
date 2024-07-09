@@ -1,6 +1,6 @@
 # :zap: Giant Swarm Release v20.1.4 for AWS :zap:
 
-Fixes an issue with cert-manager acme-http01-solver-image argument and improves container security.
+This patch release fixes an issue with cert-manager acme-http01-solver-image argument and improves container security.
 
 ## Change details
 
