@@ -23,7 +23,7 @@ spec:
     dependsOn:
     - kyverno
   - name: cert-manager
-    version: 3.7.7
+    version: 3.7.6
     dependsOn:
     - prometheus-operator-crd
   - name: chart-operator-extensions
@@ -31,7 +31,7 @@ spec:
     dependsOn:
     - prometheus-operator-crd
   - name: cilium
-    version: 0.25.1
+    version: 0.24.0
   - name: cilium-crossplane-resources
     version: 0.1.0
   - name: cilium-servicemonitors
@@ -39,7 +39,7 @@ spec:
     dependsOn:
     - prometheus-operator-crd
   - name: cloud-provider-aws
-    version: 1.27.6-gs.alpha.1
+    version: v1.27.7-gs1
     dependsOn:
     - vertical-pod-autoscaler-crd
   - name: cluster-autoscaler
@@ -118,5 +118,5 @@ spec:
     version: 1.0.0
   - name: kubernetes
     version: 1.27.14
-  date: "2024-07-04T09:00:00Z"
+  date: "2024-07-09T09:00:00Z"
   state: active
