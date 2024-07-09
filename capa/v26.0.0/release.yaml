@@ -39,7 +39,7 @@ spec:
     dependsOn:
     - prometheus-operator-crd
   - name: cloud-provider-aws
-    version: 1.26.11-gs.alpha.1
+    version: 1.26.11-gs1
     dependsOn:
     - vertical-pod-autoscaler-crd
   - name: cluster-autoscaler
