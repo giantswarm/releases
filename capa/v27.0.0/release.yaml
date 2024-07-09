@@ -1,7 +1,7 @@
 apiVersion: release.giantswarm.io/v1alpha1
 kind: Release
 metadata:
-  name: aws-27.0.0-alpha.1
+  name: aws-27.0.0
 spec:
   apps:
   - name: aws-ebs-csi-driver
@@ -39,7 +39,7 @@ spec:
     dependsOn:
     - prometheus-operator-crd
   - name: cloud-provider-aws
-    version: v1.27.7-gs1
+    version: 1.27.7-gs1
     dependsOn:
     - vertical-pod-autoscaler-crd
   - name: cluster-autoscaler
@@ -118,5 +118,5 @@ spec:
     version: 1.0.0
   - name: kubernetes
     version: 1.27.14
-  date: "2024-07-09T09:00:00Z"
+  date: "2024-07-09T12:00:00Z"
   state: active
