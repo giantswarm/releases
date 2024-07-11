@@ -13,8 +13,8 @@ import (
 )
 
 type Release struct {
-	Version          string `yaml:"version"`
-	IsDeprecated     bool   `yaml:"isDeprecated"`
+	Version          string `json:"version"`
+	IsDeprecated     bool   `json:"isDeprecated"`
 	ReleaseTimestamp string `json:"releaseTimestamp"`
 	ChangelogUrl     string `json:"changelogUrl"`
 	IsStable         bool   `json:"isStable"`
