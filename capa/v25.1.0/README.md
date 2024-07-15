@@ -4,14 +4,17 @@ This release updates the components, keeping them upto date with Vintage AWS v20
 
 ## Change details compared to CAPA 25.0.0
 
-### cluster-aws [1.0.1]()
+### cluster-aws [1.1.0](https://github.com/giantswarm/cluster-aws/releases/tag/v1.1.0)
+
+### Fixed
+- Fixed China IRSA suffix
 
 #### Added
 - Add the Management Cluster name as a tag to the AWS resources created by CAPA.
 - Add the node pool name as a tag to the AWS resources associated with the node pool.
 
 #### Changed
-- Update cluster chart to 0.33.1
+- Update cluster chart to 0.35.0
 
 
 ### cert-manager [3.7.9](https://github.com/giantswarm/cert-manager-app/releases/tag/v3.7.9)
