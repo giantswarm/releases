@@ -17,14 +17,14 @@ jobs:
       env:
         GITHUB_TOKEN: "${{ secrets.TAYLORBOT_GITHUB_ACTION }}"
       run: |
-        for provider_dir in capa/* azure/*; do
+        for provider_dir in capa/v* azure/v*; do
           provider=""
           if [[ $provider_dir == capa/* ]]; then
             provider="aws"
           elif [[ $provider_dir == azure/* ]]; then
             provider="azure"
           fi
-          if [[ -f $provider_dir || -z $provider ]]; then
+          if [[ ! -f $provider_dir/release.yaml || -z $provider ]]; then
             echo "Skipping file or unknown provider $provider_dir"
             continue
           fi
@@ -55,14 +55,14 @@ jobs:
     - name: Create new release tag
       run: |
         git fetch --tags
-        for provider_dir in capa/* capz/*; do
+        for provider_dir in capa/v* azure/v*; do
           provider=""
           if [[ $provider_dir == capa/* ]]; then
             provider="aws"
           elif [[ $provider_dir == azure/* ]]; then
             provider="azure"
           fi
-          if [[ -f $provider_dir || -z $provider ]]; then
+          if [[ ! -f $provider_dir/release.yaml || -z $provider ]]; then
             echo "Skipping file or unknown provider $provider_dir"
             continue
           fi
@@ -82,14 +82,14 @@ jobs:
       env:
         GITHUB_TOKEN: "${{ secrets.TAYLORBOT_GITHUB_ACTION }}"
       run: |
-        for provider_dir in capa/* azure/*; do
+        for provider_dir in capa/v* azure/v*; do
           provider=""
           if [[ $provider_dir == capa/* ]]; then
             provider="aws"
           elif [[ $provider_dir == azure/* ]]; then
             provider="azure"
           fi
-          if [[ -f $provider_dir || -z $provider ]]; then
+          if [[ ! -f $provider_dir/release.yaml || -z $provider ]]; then
             echo "Skipping file or unknown provider $provider_dir"
             continue
           fi
