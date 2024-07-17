@@ -10,6 +10,9 @@ merged to the `master` branch, workload cluster releases get automatically deplo
 to all Giant Swarm installations.
 
 ## AWS
+- v29
+  - v29.0
+    - [v29.0.0](https://github.com/giantswarm/releases/tree/master/capa/v29.0.0)
 - v28
   - v28.0
     - [v28.0.0](https://github.com/giantswarm/releases/tree/master/capa/v28.0.0)
