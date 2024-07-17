@@ -10,6 +10,9 @@ merged to the `master` branch, workload cluster releases get automatically deplo
 to all Giant Swarm installations.
 
 ## AWS
+- v29
+  - v29.0
+    - [v29.0.0](https://github.com/giantswarm/releases/tree/master/capa/v29.0.0)
 - v28
   - v28.0
     - [v28.0.0](https://github.com/giantswarm/releases/tree/master/capa/v28.0.0)
@@ -479,7 +482,7 @@ The workload cluster E2E tests are enforced by our pr-gatekeeper to ensure they 
 
 To trigger the CNCF Conformance tests for a new Release added in a PR add a comment with something similar to the following:
 
-`/run conformance-tests RELEASE_VERSION=v28.0.0 PROVIDER=capa`
+`/run conformance-tests RELEASE_VERSION=v29.0.0 PROVIDER=capa`
 
 The following parameters are required:
 
