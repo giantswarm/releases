@@ -56,9 +56,6 @@ spec:
     version: 3.1.0
     dependsOn:
     - prometheus-operator-crd
-  - name: giantswarm-cluster-suite
-    catalog: default
-    version: 0.1.1
   - name: irsa-servicemonitors
     version: 0.1.0
     dependsOn:
