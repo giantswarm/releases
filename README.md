@@ -12,6 +12,7 @@ to all Giant Swarm installations.
 ## AWS
 - v20
   - v20.1
+    - [v20.1.4](https://github.com/giantswarm/releases/tree/master/aws/v20.1.4)
     - [v20.1.3](https://github.com/giantswarm/releases/tree/master/aws/v20.1.3)
     - [v20.1.2](https://github.com/giantswarm/releases/tree/master/aws/v20.1.2)
     - [v20.1.1](https://github.com/giantswarm/releases/tree/master/aws/v20.1.1)
@@ -427,7 +428,9 @@ to all Giant Swarm installations.
 
 # Running tests against PRs
 
-To trigger the E2E test for each new Release added in a PR add a comment with the following:
+## Workload Cluster End-to-End Tests
+
+To trigger the Workload Cluster End-to-End tests for each new Release added in a PR add a comment with the following:
 
 `/run releases-test-suites`
 
@@ -439,3 +442,22 @@ If you need to run tests for a specific Release (from the PR) or a different tes
 * `TARGET_RELEASES` - a comma separates list of Releases to trigger from the PR (e.g. `aws-25.0.0-example.1`)
 
 The `upgrade` tests will first install a cluster using the latest previously published release and then upgrade to using the release found in the PR. If you need to override the starting Release version (to test upgrading from an earlier release) you can do so by setting the `PREVIOUS_RELEASE` parameter on the trigger comment (e.g. `/run releases-test-suites PREVIOUS_RELEASE=aws-v25.0.0`)
+
+The workload cluster E2E tests are enforced by our pr-gatekeeper to ensure they are passing before PRs are allowed to be merged.
+
+## Conformance Tests
+
+To trigger the CNCF Conformance tests for a new Release added in a PR add a comment with something similar to the following:
+
+`/run conformance-tests RELEASE_VERSION=v28.0.0 PROVIDER=capa`
+
+The following parameters are required:
+
+* `RELEASE_VERSION` - the version of the Release to test from the PR
+* `PROVIDER` - the name of the provider the release is for
+
+Please note that these tests take roughly 2 hours to run so best to only run once all other changes are ready.
+
+Currently the conformance tests can only run against a single Release. If you have more than one Release to test in your PR you can comment multiple times with the parameters changed but be aware that only a single GitHub check will be added to the PR so you will need to manually confirm each has passed in Tekton.
+
+Currently the conformance tests are not enforced by our pr-gatekeeper.

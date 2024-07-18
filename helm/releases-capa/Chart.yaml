@@ -5,4 +5,5 @@ appVersion: master
 description: Giant Swarm releases for AWS (CAPA).
 home: https://github.com/giantswarm/releases
 annotations:
+  application.giantswarm.io/team: "phoenix"
   config.giantswarm.io/version: 1.x.x
