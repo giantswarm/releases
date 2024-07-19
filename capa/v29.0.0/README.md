@@ -7,6 +7,7 @@
 - Kubernetes from 1.28.11 to 1.29.7
 - cloud-provider-aws (formerly aws-cloud-controller-manager-app) from 1.28.6-gs1 to 1.29.3-gs1
 - cluster-autoscaler from 1.28.5-gs1 to 1.29.3-gs1
+- security-bundle from 1.7.0 to 1.8.0
 
 ### cilium [v0.25.1](https://github.com/giantswarm/cilium-app/releases/tag/v0.25.1)
 
@@ -36,3 +37,14 @@
 - Update k8s modules to v0.30.2. 
 - Update quay.io/giantswarm/alpine Docker tag to v3.20.1.
 - Add node and app labels in ServiceMonitor.
+
+### security-bundle [v1.7.0...v1.8.0](https://github.com/giantswarm/security-bundle/compare/v1.7.0...v1.8.0)
+
+#### Added
+
+- Add `kyverno-crds` app to handle Kyverno CRD install.
+
+#### Changed
+
+- Update `kyverno` (app) to v0.17.15. This version disables the CRD install job in favor of `kyverno-crds` App.
+- Update `starboard-exporter` (app) to v0.7.11.

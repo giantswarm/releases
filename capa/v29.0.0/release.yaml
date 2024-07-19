@@ -21,7 +21,7 @@ spec:
   - name: cert-exporter
     version: 2.9.0
     dependsOn:
-    - kyverno
+    - kyverno-crds
   - name: cert-manager
     version: 3.7.6
     dependsOn:
@@ -45,7 +45,7 @@ spec:
   - name: cluster-autoscaler
     version: 1.29.3-gs1
     dependsOn:
-    - kyverno
+    - kyverno-crds
   - name: coredns
     version: 1.21.0
     dependsOn:
@@ -53,7 +53,7 @@ spec:
   - name: etcd-k8s-res-count-exporter
     version: 1.10.0
     dependsOn:
-    - kyverno
+    - kyverno-crds
   - name: external-dns
     version: 3.1.0
     dependsOn:
@@ -65,15 +65,15 @@ spec:
   - name: k8s-audit-metrics
     version: 0.9.0
     dependsOn:
-    - kyverno
+    - kyverno-crds
   - name: k8s-dns-node-cache
     version: 2.8.1
     dependsOn:
-    - kyverno
+    - kyverno-crds
   - name: metrics-server
     version: 2.4.2
     dependsOn:
-    - kyverno
+    - kyverno-crds
   - name: net-exporter
     version: 1.21.0
     dependsOn:
@@ -86,7 +86,7 @@ spec:
   - name: node-exporter
     version: 1.19.0
     dependsOn:
-    - kyverno
+    - kyverno-crds
   - name: observability-bundle
     version: 1.3.4
     dependsOn:
@@ -96,7 +96,7 @@ spec:
     dependsOn:
     - prometheus-operator-crd
   - name: security-bundle
-    version: 1.7.0
+    version: 1.8.0
     catalog: giantswarm
     dependsOn:
     - prometheus-operator-crd
