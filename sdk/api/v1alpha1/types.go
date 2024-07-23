@@ -7,6 +7,7 @@ import (
 const (
 	// ProviderAws represents the new AWS provider which is implemented with Cluster API.
 	ProviderAws Provider = "aws"
+
 	// ProviderAzure represents the new Azure provider which is implemented with Cluster API.
 	ProviderAzure Provider = "azure"
 )
