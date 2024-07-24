@@ -470,7 +470,7 @@ The workload cluster E2E tests are enforced by our pr-gatekeeper to ensure they 
 
 To trigger the CNCF Conformance tests for a new Release added in a PR add a comment with something similar to the following:
 
-`/run conformance-tests RELEASE_VERSION=v28.0.0 PROVIDER=capa`
+`/run conformance-tests RELEASE_VERSION=v29.0.0 PROVIDER=capa`
 
 The following parameters are required:
 
