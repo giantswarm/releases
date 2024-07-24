@@ -1,6 +1,6 @@
 # :zap: Giant Swarm Release v25.1.0 for CAPA :zap:
 
-This release updates the components, keeping them upto date with Vintage AWS v20.1.x series. Several improvements for Vintage to CAPA migration have also been included.
+This release updates the components, keeping them up to date with Vintage AWS v20.1.x series. Several improvements for Vintage to CAPA migration have also been included.
 
 ## Change details compared to CAPA 25.0.0
 
