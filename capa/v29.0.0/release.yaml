@@ -67,7 +67,7 @@ spec:
     dependsOn:
     - kyverno
   - name: k8s-dns-node-cache
-    version: 2.6.2
+    version: 2.8.1
     dependsOn:
     - kyverno
   - name: metrics-server
@@ -75,7 +75,7 @@ spec:
     dependsOn:
     - kyverno
   - name: net-exporter
-    version: 1.19.0
+    version: 1.21.0
     dependsOn:
     - prometheus-operator-crd
   - name: network-policies
