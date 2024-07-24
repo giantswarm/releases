@@ -1,4 +1,4 @@
-# :zap: Giant Swarm Release v25.0.0 for CAPZ :zap:
+# :zap: Giant Swarm Release v25.0.0 for Azure :zap:
 
 We are happy to announce our first release for Cluster API for Azure (CAPZ) that uses the new releases framework.
 
