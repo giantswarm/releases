@@ -10,14 +10,14 @@
 
 ### cilium [v0.25.1](https://github.com/giantswarm/cilium-app/releases/tag/v0.25.1)
 
-#### Changed 
+#### Changed
 
 - Fix regression setting Policy BPF Max map `policyMapMax` back to 65536 from 16384.
 - Upgrade cilium to v1.15.6.
 
 ### k8s-dns-node-cache [v2.8.1](https://github.com/giantswarm/k8s-dns-node-cache-app/releases/tag/v2.8.1)
 
-### Changed
+#### Changed
 
 - Reduce security exceptions.
   - Enable readOnly FS moving config to emptyDir volume.
@@ -29,7 +29,7 @@
 
 ### net-exporter [v1.21.0](https://github.com/giantswarm/net-exporter/releases/tag/v1.21.0)
 
-### Changed 
+#### Changed
 
 - Enable readOnlyRootFilesystem in securityContext.
 - Update module google.golang.org/grpc to v1.65.0. 
