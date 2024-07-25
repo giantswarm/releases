@@ -15,11 +15,11 @@ spec:
     - azure-cloud-controller-manager
     - azure-cloud-node-manager
   - name: azure-cloud-controller-manager
-    version: 1.26.21-gs1
+    version: 1.26.22-gs1
     dependsOn:
     - vertical-pod-autoscaler-crd
   - name: azure-cloud-node-manager
-    version: 1.26.21-gs1
+    version: 1.26.22-gs1
     dependsOn:
     - vertical-pod-autoscaler-crd
   - name: capi-node-labeler
