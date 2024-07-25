@@ -5,40 +5,6 @@ on:
     types: [closed]
 
 jobs:
-  delete_draft_release:
-    if: github.event_name == 'pull_request' && github.event.action == 'closed'
-    runs-on: ubuntu-latest
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
-      with:
-        fetch-depth: '0'
-    - name: Delete draft releases and tags
-      env:
-        GITHUB_TOKEN: "${{ secrets.TAYLORBOT_GITHUB_ACTION }}"
-      run: |
-        for provider_dir in capa/v* azure/v*; do
-          provider=""
-          if [[ $provider_dir == capa/* ]]; then
-            provider="aws"
-          elif [[ $provider_dir == azure/* ]]; then
-            provider="azure"
-          fi
-          if [[ ! -f $provider_dir/release.yaml || -z $provider ]]; then
-            echo "Skipping file or unknown provider $provider_dir"
-            continue
-          fi
-          release_version="$(basename $provider_dir)"
-          draft_tag_name="draft/$provider/$release_version"
-          draft_release=$(gh release --repo giantswarm/releases view "$draft_tag_name" --json "id,name,tagName,assets,isDraft,isPrerelease,url" 2>&1 || true)
-          if [ "$draft_release" = "release not found" ]; then
-            echo "Draft release not found for tag $draft_tag_name"
-          else
-            echo "Found existing draft release $draft_tag_name, will delete it."
-            gh release delete --repo giantswarm/releases "$draft_tag_name" --yes --cleanup-tag
-          fi
-        done
-
   create_release:
     if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
