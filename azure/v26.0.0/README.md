@@ -4,5 +4,5 @@
 
 - Kubernetes version change from 1.25.16 to 1.26.15
 - azure-cloud-controller-manager from 1.24.18-gs6 to 1.26.22-gs1
-- azure-cloud-node-manager from 1.24.18-gs6 to 1.26.22-gs1
+- azure-cloud-node-manager from 1.24.18-gs6 to 1.26.22-gs2
 - cluster-azure from v0.17.0 to v0.18.0

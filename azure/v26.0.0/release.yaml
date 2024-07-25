@@ -19,7 +19,7 @@ spec:
     dependsOn:
     - vertical-pod-autoscaler-crd
   - name: azure-cloud-node-manager
-    version: 1.26.22-gs1
+    version: 1.26.22-gs2
     dependsOn:
     - vertical-pod-autoscaler-crd
   - name: capi-node-labeler
@@ -109,7 +109,7 @@ spec:
   components:
   - name: cluster-azure
     catalog: cluster
-    version: 0.17.0
+    version: 0.18.0
   - name: flatcar
     version: 3815.2.4
   - name: flatcar-variant
