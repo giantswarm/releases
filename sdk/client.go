@@ -6,6 +6,7 @@ import (
 	"io"
 	"net/http"
 	"path"
+	"slices"
 	"strings"
 
 	"github.com/Masterminds/semver/v3"
@@ -80,7 +81,7 @@ func (c *Client) GetRelease(ctx context.Context, provider Provider, releaseVersi
 // GetNewReleasesForGitReference returns newly added releases for the specified provider and from the specified git
 // reference.
 //
-// Currently, the only supported provider is "aws". Git reference can be any commit, branch or tag.
+// Currently, the supported providers are "aws" and "azure". Git reference can be any commit, branch or tag.
 func (c *Client) GetNewReleasesForGitReference(ctx context.Context, provider Provider, gitReference string) ([]Release, error) {
 	providerDirectory, err := getProviderDirectory(provider)
 	if err != nil {
@@ -137,7 +138,7 @@ func (c *Client) GetNewReleasesForGitReference(ctx context.Context, provider Pro
 
 // GetReleasesForGitReference returns all releases for the specified provider and from the specified git reference.
 //
-// Currently, the only supported provider is "aws". Git reference can be any commit, branch or tag.
+// Currently, the supported providers are "aws" and "azure". Git reference can be any commit, branch or tag.
 func (c *Client) GetReleasesForGitReference(ctx context.Context, provider Provider, gitReference string) ([]Release, error) {
 	providerDirectory, err := getProviderDirectory(provider)
 	if err != nil {
@@ -178,7 +179,7 @@ func (c *Client) GetReleasesForGitReference(ctx context.Context, provider Provid
 // GetReleaseForGitReference returns a release with the specified release version for the specified provider and from
 // the specified git reference.
 //
-// Currently, the only supported provider is "aws". Release version can contain the 'v' prefix, but it doesn't have to.
+// Currently, the supported providers are "aws" and "azure". Release version can contain the 'v' prefix, but it doesn't have to.
 // Git reference can be any commit, branch or tag.
 func (c *Client) GetReleaseForGitReference(ctx context.Context, provider Provider, releaseVersion, gitReference string) (*Release, error) {
 	// First we get GitHub release for the specified provider and release version.
@@ -214,37 +215,44 @@ func (c *Client) GetReleaseForGitReference(ctx context.Context, provider Provide
 
 // GetLatestRelease returns the latest release for the specified provider.
 func (c *Client) GetLatestRelease(ctx context.Context, provider Provider) (*Release, error) {
-	const releasesPerRequest = 30
-	providerTagPrefix := fmt.Sprintf("%s/", provider)
-
-	var releaseList []*github.RepositoryRelease
-	var response *github.Response
-	var err error
-	hasMorePages := func(page int) bool {
-		return page != 0
+	allActiveReleases, err := c.GetReleasesForGitReference(ctx, provider, ReleasesRepoDefaultBranch)
+	if err != nil {
+		return nil, microerror.Mask(err)
+	}
+	if len(allActiveReleases) == 0 {
+		return nil, microerror.Maskf(ReleaseNotFoundError, "Did not found any release for provider '%s'", provider)
 	}
 
-	for page := 1; hasMorePages(page); page = response.NextPage {
-		releaseList, response, err = c.gitHubClient.Repositories.ListReleases(ctx, GiantSwarmGitHubOrg, ReleasesRepo, &github.ListOptions{
-			Page:    page,
-			PerPage: releasesPerRequest,
-		})
+	var sortErr error
+	slices.SortFunc[[]Release](allActiveReleases, func(r1, r2 Release) int {
+		r1VersionString, err := r1.GetVersion()
 		if err != nil {
-			return nil, microerror.Mask(err)
+			sortErr = err
+			return 0
 		}
-		for _, gitHubRelease := range releaseList {
-			releaseTag := gitHubRelease.GetTagName()
-			if strings.HasPrefix(releaseTag, providerTagPrefix) {
-				release, err := c.getReleaseResourceFromGitHubRelease(gitHubRelease)
-				if err != nil {
-					return nil, microerror.Mask(err)
-				}
-				return release, nil
-			}
+		r1Version, err := semver.NewVersion(r1VersionString)
+		if err != nil {
+			sortErr = err
+			return 0
 		}
+		r2VersionString, err := r2.GetVersion()
+		if err != nil {
+			sortErr = err
+			return 0
+		}
+		r2Version, err := semver.NewVersion(r2VersionString)
+		if err != nil {
+			sortErr = err
+			return 0
+		}
+		return r1Version.Compare(r2Version)
+	})
+	if sortErr != nil {
+		return nil, microerror.Mask(sortErr)
 	}
 
-	return nil, microerror.Maskf(ReleaseNotFoundError, "Did not found any release for provider '%s'", provider)
+	latestRelease := allActiveReleases[len(allActiveReleases)-1]
+	return &latestRelease, nil
 }
 
 func (c *Client) getReleaseResourceFromGitHubRelease(gitHubRelease *github.RepositoryRelease) (*Release, error) {

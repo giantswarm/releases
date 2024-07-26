@@ -9,6 +9,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Fix `GetLatestRelease` to correctly return the latest release according to semver, and not the latest published GitHub
+  release. The function now searches for the latest release in the releases GitHub repo and not in GitHub releases.
+
 ## [0.5.1] - 2024-07-23
 
 ### Fixed

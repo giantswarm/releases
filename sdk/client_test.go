@@ -123,7 +123,7 @@ var _ = Describe("Client", func() {
 		Expect(err).NotTo(HaveOccurred())
 
 		// Check release version
-		const expectedLatestReleaseVersion = "25.1.0-demo.0"
+		const expectedLatestReleaseVersion = "25.0.0"
 		resultReleaseVersion, err := release.GetVersion()
 		Expect(err).NotTo(HaveOccurred())
 		Expect(resultReleaseVersion).To(Equal(expectedLatestReleaseVersion))
@@ -199,6 +199,8 @@ func createAndStartTestServer() *httptest.Server {
 
 		switch ref {
 		case "add-capa-v25.0.0":
+			fallthrough
+		case ReleasesRepoDefaultBranch:
 			_, err = rw.Write([]byte(capaDirectoryGitReferenceResponse))
 		default:
 			_, err = rw.Write([]byte(capaDirectoryGitDefaultResponse))
