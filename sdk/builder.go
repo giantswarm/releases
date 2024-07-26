@@ -245,12 +245,14 @@ func (b *Builder) buildPreReleaseString() (string, error) {
 	}
 
 	// check if cluster app has a pre-release
-	clusterAppPreReleaseString, err := versionStringHasPreReleaseString(b.clusterApp.Version)
-	if err != nil {
-		return "", microerror.Mask(err)
-	}
-	if clusterAppPreReleaseString {
-		return preReleaseBuildFunc(), nil
+	if b.clusterApp != nil {
+		clusterAppPreReleaseString, err := versionStringHasPreReleaseString(b.clusterApp.Version)
+		if err != nil {
+			return "", microerror.Mask(err)
+		}
+		if clusterAppPreReleaseString {
+			return preReleaseBuildFunc(), nil
+		}
 	}
 
 	// check if apps have a pre-release
