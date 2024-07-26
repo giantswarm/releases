@@ -36,7 +36,7 @@ var _ = Describe("Builder", func() {
 		// set a cluster app override where the pre-release is different
 		const preReleasePrefix = "test"
 		releasesBuilder = releasesBuilder.
-			WithClusterApp("0.76.1-efdaba18e6e9866d62f3214f3d898b21c21e8b48", "").
+			WithClusterApp("1.0.0-efdaba18e6e9866d62f3214f3d898b21c21e8b48", "").
 			WithPreReleasePrefix(preReleasePrefix)
 
 		// build the new release
@@ -50,9 +50,9 @@ var _ = Describe("Builder", func() {
 		newReleaseVersion, err := semver.NewVersion(newReleaseVersionString)
 		Expect(err).NotTo(HaveOccurred())
 
-		// check the new release version, expected is 25.1.1-<pre-release>
+		// check the new release version, expected is 25.0.1-<pre-release>
 		Expect(newReleaseVersion.Major()).To(Equal(uint64(25)))
-		Expect(newReleaseVersion.Minor()).To(Equal(uint64(1)))
+		Expect(newReleaseVersion.Minor()).To(Equal(uint64(0)))
 		Expect(newReleaseVersion.Patch()).To(Equal(uint64(1)))
 		Expect(newReleaseVersion.Prerelease()).To(HavePrefix("%s.", preReleasePrefix))
 		Expect(newReleaseVersion.Prerelease()).To(HaveLen(expectedPreReleaseLength))
@@ -61,7 +61,7 @@ var _ = Describe("Builder", func() {
 	It("Overrides cluster app and creates a new minor release with pre-release", func() {
 		// set a cluster app override where the pre-release is different
 		releasesBuilder = releasesBuilder.
-			WithClusterApp("0.77.0", "")
+			WithClusterApp("1.1.0", "")
 
 		// build the new release
 		newRelease, err := releasesBuilder.Build(context.Background())
@@ -75,22 +75,22 @@ var _ = Describe("Builder", func() {
 
 		// Check the new release version.
 		//
-		// Since the builder will use the latest release, which is v25.1.0-demo.0, it is expected that the custom
+		// Since the builder will use the latest release, which is v25.0.0, it is expected that the custom
 		// release version has a minor bump (because we are building a newer release with a new cluster-aws minor
-		// version), so the new release version is 25.2.0-<random 10-char pre-release suffix>.
+		// version), so the new release version is 25.1.0.
 		//
-		// New release also has a pre-release because the base release is a pre-release.
+		// New release also doesn't have a pre-release because the base release doesn't have it.
 		Expect(newReleaseVersion.Major()).To(Equal(uint64(25)))
-		Expect(newReleaseVersion.Minor()).To(Equal(uint64(2)))
+		Expect(newReleaseVersion.Minor()).To(Equal(uint64(1)))
 		Expect(newReleaseVersion.Patch()).To(Equal(uint64(0)))
-		Expect(newReleaseVersion.Prerelease()).To(HaveLen(10))
+		Expect(newReleaseVersion.Prerelease()).To(BeEmpty())
 	})
 
 	It("Overrides cluster app and creates a new minor release with random pre-release", func() {
 		// set a cluster app override where the pre-release is different
 		const preReleaseLength = 10
 		releasesBuilder = releasesBuilder.
-			WithClusterApp("0.77.0", "").
+			WithClusterApp("1.1.0", "").
 			WithRandomPreRelease(preReleaseLength)
 
 		// build the new release
@@ -105,13 +105,13 @@ var _ = Describe("Builder", func() {
 
 		// Check the new release version.
 		//
-		// Since the builder will use the latest release, which is v25.1.0-demo.0, it is expected that the custom
+		// Since the builder will use the latest release, which is v25.0.0, it is expected that the custom
 		// release version has a minor bump (because we are building a newer release with a new cluster-aws minor
-		// version), so the new release version is 25.2.0-<random 10-char pre-release suffix>.
+		// version), so the new release version is 25.1.0-<random 10-char pre-release suffix>.
 		//
-		// New release also has a pre-release because the base release is a pre-release.
+		// New release also has a random pre-release with the specified length.
 		Expect(newReleaseVersion.Major()).To(Equal(uint64(25)))
-		Expect(newReleaseVersion.Minor()).To(Equal(uint64(2)))
+		Expect(newReleaseVersion.Minor()).To(Equal(uint64(1)))
 		Expect(newReleaseVersion.Patch()).To(Equal(uint64(0)))
 		Expect(newReleaseVersion.Prerelease()).To(HaveLen(preReleaseLength))
 	})
@@ -131,11 +131,13 @@ var _ = Describe("Builder", func() {
 		newReleaseVersion, err := semver.NewVersion(newReleaseVersionString)
 		Expect(err).NotTo(HaveOccurred())
 
-		// Check the new release version. Since the builder will use the latest release, which is v25.1.0-demo.0,
+		// Check the new release version. Since the builder will use the latest release, which is v25.0.0,
 		// expected is custom release version has a patch bump (because we are building a newer release),
-		// so the new release version is 25.1.1-<random 10-char pre-release suffix>.
+		// so the new release version is 25.0.1-<random 10-char pre-release suffix>.
+		//
+		// New release also has a random pre-release with the specified length.
 		Expect(newReleaseVersion.Major()).To(Equal(uint64(25)))
-		Expect(newReleaseVersion.Minor()).To(Equal(uint64(1)))
+		Expect(newReleaseVersion.Minor()).To(Equal(uint64(0)))
 		Expect(newReleaseVersion.Patch()).To(Equal(uint64(1)))
 		Expect(newReleaseVersion.Prerelease()).To(HaveLen(10))
 	})
