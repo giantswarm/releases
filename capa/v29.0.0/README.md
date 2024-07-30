@@ -31,6 +31,7 @@
 - k8s-dns-node-cache from v2.6.2 to v2.8.1
 - net-exporter from v1.19.0 to v1.21.0
 - prometheus-blackbox-exporter from v0.4.1 to v0.4.2
+- security-bundle from v1.7.0 to v1.8.0
 - teleport-kube-agent from v0.9.0 to v0.9.2
 - vertical-pod-autoscaler from v5.2.2 to v5.2.4
 
@@ -99,6 +100,17 @@
 #### Changed
 
 - Remove duplicated team label.
+
+### security-bundle [v1.7.0...v1.8.0](https://github.com/giantswarm/security-bundle/compare/v1.7.0...v1.8.0)
+
+#### Added
+
+- Add `kyverno-crds` app to handle Kyverno CRD install.
+
+#### Changed
+
+- Update `kyverno` (app) to v0.17.15. This version disables the CRD install job in favor of `kyverno-crds` App.
+- Update `starboard-exporter` (app) to v0.7.11.
 
 ### teleport-kube-agent [v0.9.0...v0.9.2](https://github.com/giantswarm/teleport-kube-agent-app/compare/v0.9.0...v0.9.2)
 
