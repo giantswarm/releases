@@ -1,6 +1,6 @@
 # :zap: Giant Swarm Release v27.1.0 for CAPA :zap:
 
-This release updates the apps and components, keeping them up to date with the latest v26 release. It also brings improvements for the container registry usage.
+This release updates the apps and components, keeping them up to date with the latest v25 and v26 releases. It also brings improvements for the container registry usage.
 
 ## Change details compared to CAPA 27.0.0
 
