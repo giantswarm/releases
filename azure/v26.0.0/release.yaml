@@ -5,7 +5,7 @@ metadata:
 spec:
   apps:
   - name: azuredisk-csi-driver
-    version: 1.30.2-gs1
+    version: 1.30.2-gs2
     dependsOn:
     - azure-cloud-controller-manager
     - azure-cloud-node-manager
