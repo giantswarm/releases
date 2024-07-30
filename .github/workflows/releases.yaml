@@ -1,0 +1,97 @@
+name: Releases
+
+on:
+  push:
+    branches:
+      - main
+      - master
+    paths:
+      - "*/v*.*.*/release.yaml"
+
+jobs:
+  get-releases:
+    name: Get releases
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Get releases
+        id: get-releases
+        # TODO: Replace specific providers in glob with * as soon as it matches all of them anyway.
+        run: echo releases="$(jq --null-input --args '$ARGS.positional' --compact-output -- {azure,capa}/v*.*.*)" >> "${GITHUB_OUTPUT}"
+
+    outputs:
+      releases: ${{ steps.get-releases.outputs.releases }}
+
+  create-release:
+    name: Create release
+    runs-on: ubuntu-latest
+    needs: get-releases
+
+    strategy:
+      matrix:
+        release: ${{ fromJSON(needs.get-releases.outputs.releases) }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Get provider & version
+        id: get-provider-version
+        env:
+          release: ${{ matrix.release }}
+        run: |
+          # Get provider & version.
+          provider="${release%/v*.*.*}"
+          version="${release#${provider}/}"
+
+          # Map provider.
+          # TODO: Remove once `capa` gets renamed to `aws`.
+          case "${provider}" in
+            capa)
+              provider="aws"
+              ;;
+          esac
+
+          # Store provider & version.
+          echo provider="${provider}" >> "${GITHUB_OUTPUT}"
+          echo version="${version}" >> "${GITHUB_OUTPUT}"
+
+      - name: Get release
+        id: get-release
+        env:
+          GH_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+          provider: ${{ steps.get-provider-version.outputs.provider }}
+          version: ${{ steps.get-provider-version.outputs.version }}
+        run: |
+          # Define tag.
+          tag="${provider}/${version}"
+
+          # Determine exists.
+          [ "$(gh release view "${tag}" --json id)" ] && exists=true || exists=false
+
+          # Store tag & exists.
+          echo tag="${tag}" >> "${GITHUB_OUTPUT}"
+          echo exists="${exists}" >> "${GITHUB_OUTPUT}"
+
+      - name: Create release
+        if: ${{ ! fromJSON(steps.get-release.outputs.exists) }}
+        env:
+          GH_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+          release: ${{ matrix.release }}
+          provider: ${{ steps.get-provider-version.outputs.provider }}
+          version: ${{ steps.get-provider-version.outputs.version }}
+          tag: ${{ steps.get-release.outputs.tag }}
+        run: |
+          # Define title, notes & files.
+          title="Workload cluster release ${version} for ${provider}"
+          notes="This release was automatically created by GitHub Actions."
+          files=("${release}/release.yaml")
+
+          # Determine pre-release.
+          [[ "${version}" == v*.*.*-* ]] && prerelease="--prerelease" || prerelease=""
+
+          # Create release.
+          gh release create --target "${GITHUB_REF_NAME}" "${tag}" --title "${title}" --notes "${notes}" ${files[@]} ${prerelease}
