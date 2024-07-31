@@ -88,9 +88,13 @@ spec:
     dependsOn:
     - kyverno-crds
   - name: observability-bundle
-    version: 1.3.4
+    version: 1.5.2
     dependsOn:
     - coredns
+  - name: observability-policies
+    version: 0.0.1
+    dependsOn:
+    - kyverno-crds
   - name: prometheus-blackbox-exporter
     version: 0.4.2
     dependsOn:

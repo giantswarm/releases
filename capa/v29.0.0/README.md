@@ -30,6 +30,8 @@
 - k8s-audit-metrics from v0.9.0 to v0.10.0
 - k8s-dns-node-cache from v2.6.2 to v2.8.1
 - net-exporter from v1.19.0 to v1.21.0
+- observability-bundle from v1.3.4 to v1.5.2
+- observability-policies v0.0.1
 - prometheus-blackbox-exporter from v0.4.1 to v0.4.2
 - security-bundle from v1.7.0 to v1.8.0
 - teleport-kube-agent from v0.9.0 to v0.9.2
@@ -94,6 +96,37 @@
 - Update k8s modules to v0.30.2 (#375).
 - Update quay.io/giantswarm/alpine Docker tag to v3.20.1 (#372).
 - Add `node` and `app` labels in ServiceMonitor.
+
+### observability-bundle [v1.3.4...v1.5.2](https://github.com/giantswarm/observability-bundle/compare/v1.3.4...v1.5.2)
+
+#### Added
+
+- Add `alloy` v0.3.0 as `alloy-logs`
+
+#### Changed
+
+- Fix CNP issues (allow traffic from pods in kube-system to nginx-ingress-controller)
+  - Upgrade `grafana-agent` to 0.4.5.
+  - Upgrade `alloy` to 0.3.1.
+  - Upgrade `promtail` to 1.5.4.
+- Upgrade `prometheus-operator-crd` to 11.0.1.
+- prometheus-operator will not check promql syntax for prometheusRules that are labelled `application.giantswarm.io/prometheus-rule-kind: loki`
+- Upgrade `kube-prometheus-stack` to 11.0.0 and `prometheus-operator-crd` to 11.0.0. This upgrade mainly consists in:
+  - kube-prometheus-stack dependency chart upgraded from [56.21.2](https://github.com/prometheus-community/helm-charts/releases/tag/kube-prometheus-stack-56.21.2) to [61.0.0](https://github.com/prometheus-community/helm-charts/releases/tag/kube-prometheus-stack-61.0.0)
+  - prometheus upgrade from 2.50.1 to [2.53.0](https://github.com/prometheus-community/helm-charts/releases/tag/prometheus-25.22.0)
+  - thanos ruler upgrade from 0.34.1 to [0.35.1](https://github.com/thanos-io/thanos/releases/tag/v0.35.1)
+  - kube-state-metrics from 2.10.0 to 2.12.0
+  - prometheus-operator from 0.71.2 [0.75.0](https://github.com/prometheus-operator/prometheus-operator/releases/tag/v0.75.0) - adding remoteWrite.proxyFromEnvironment and Scrape Class support
+  - prometheus-node-exporter upgraded from 1.8.0 to [1.8.1](https://github.com/prometheus/node_exporter/releases/tag/v1.8.1)
+- Upgrade `grafana-agent` from 0.4.3 to 0.4.4
+  - This version enables the override the grafana agent `CiliumNetworkPolicy` egress and ingress sections.
+
+### observability-policies [v0.0.1](https://github.com/giantswarm/observability-policies-app/releases/v0.0.1)
+
+#### Added
+
+- Add a ClusterPolicy to prevent prometheus-operator CRDs deletion.
+- Create `observability-policies` app to deploy Kyverno Observability Policies into clusters.
 
 ### prometheus-blackbox-exporter [v0.4.1...v0.4.2](https://github.com/giantswarm/prometheus-blackbox-exporter-app/compare/v0.4.1...v0.4.2)
 
