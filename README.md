@@ -25,7 +25,9 @@ to all Giant Swarm installations.
   - v25.0
     - [v25.0.0](https://github.com/giantswarm/releases/tree/master/capa/v25.0.0)
   - v25.1.0
-    - [v25.1.0](https://github.com/giantswarm/releases/tree/master/capa/v25.1.0) 
+    - [v25.1.0](https://github.com/giantswarm/releases/tree/master/capa/v25.1.0)
+  - v25.2.0
+    - [v25.2.0](https://github.com/giantswarm/releases/tree/master/capa/v25.2.0)
 - v20
   - v20.1
     - [v20.1.4](https://github.com/giantswarm/releases/tree/master/aws/v20.1.4)
