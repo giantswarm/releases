@@ -252,6 +252,10 @@ to all Giant Swarm installations.
 
 ## Azure
 
+- v27
+  - v27.0
+    - [v27.0.0](https://github.com/giantswarm/releases/tree/master/azure/v27.0.0)
+
 - v26
   - v26.0
     - [v26.0.0](https://github.com/giantswarm/releases/tree/master/azure/v26.0.0)
