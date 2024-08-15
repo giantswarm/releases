@@ -3,6 +3,8 @@ releases:
   requests:
   - name: cert-exporter
     version: ">= 2.9.2"
+  - name: security-bundle
+    version: ">= 1.8.1"
 - name: "< 30.0.0"
   requests:
   - name: cilium
