@@ -58,18 +58,18 @@ to all Giant Swarm installations.
     - [v19.3.0](https://github.com/giantswarm/releases/tree/master/aws/archived/v19.3.0)
   - v19.2
     - [v19.2.1](https://github.com/giantswarm/releases/tree/master/aws/v19.2.1)
-    - [v19.2.0](https://github.com/giantswarm/releases/tree/master/aws/v19.2.0)
+    - [v19.2.0](https://github.com/giantswarm/releases/tree/master/aws/archived/v19.2.0)
   - v19.1
     - [v19.1.1](https://github.com/giantswarm/releases/tree/master/aws/archived/v19.1.1)
     - [v19.1.0](https://github.com/giantswarm/releases/tree/master/aws/archived/v19.1.0)
   - v19.0
-    - [v19.0.1](https://github.com/giantswarm/releases/tree/master/aws/v19.0.1)
-    - [v19.0.0](https://github.com/giantswarm/releases/tree/master/aws/v19.0.0)
+    - [v19.0.1](https://github.com/giantswarm/releases/tree/master/aws/archived/v19.0.1)
+    - [v19.0.0](https://github.com/giantswarm/releases/tree/master/aws/archived/v19.0.0)
     - [v19.0.0-beta1](https://github.com/giantswarm/releases/tree/master/aws/archived/v19.0.0-beta1)
     - [v19.0.0-alpha1](https://github.com/giantswarm/releases/tree/master/aws/archived/v19.0.0-alpha1)
 - v18
   - v18.0
-    - [v18.4.2](https://github.com/giantswarm/releases/tree/master/aws/v18.4.2)
+    - [v18.4.2](https://github.com/giantswarm/releases/tree/master/aws/archived/v18.4.2)
     - [v18.4.1](https://github.com/giantswarm/releases/tree/master/aws/archived/v18.4.1)
     - [v18.4.0](https://github.com/giantswarm/releases/tree/master/aws/archived/v18.4.0)
     - [v18.3.1](https://github.com/giantswarm/releases/tree/master/aws/archived/v18.3.1)
@@ -108,7 +108,7 @@ to all Giant Swarm installations.
 - v16
   - v16.5
     - [v16.5.2](https://github.com/giantswarm/releases/tree/master/aws/archived/v16.5.2)
-    - [v16.5.1](https://github.com/giantswarm/releases/tree/master/aws/v16.5.1)
+    - [v16.5.1](https://github.com/giantswarm/releases/tree/master/aws/archived/v16.5.1)
     - [v16.5.0](https://github.com/giantswarm/releases/tree/master/aws/archived/v16.5.0)
   - v16.4
     - [v16.4.2](https://github.com/giantswarm/releases/tree/master/aws/archived/v16.4.2)
