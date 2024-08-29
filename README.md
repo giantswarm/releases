@@ -11,6 +11,10 @@ to all Giant Swarm installations.
 
 ## AWS
 
+- v30
+  - v30.0
+    - [v30.0.0](https://github.com/giantswarm/releases/tree/master/capa/v30.0.0)
+
 - v29
   - v29.1
     - [v29.1.0](https://github.com/giantswarm/releases/tree/master/capa/v29.1.0)
