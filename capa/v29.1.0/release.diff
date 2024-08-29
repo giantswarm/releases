@@ -33,6 +33,7 @@ spec:									spec:
   - name: cilium							  - name: cilium
     version: 0.25.1							    version: 0.25.1
   - name: cilium-crossplane-resources					  - name: cilium-crossplane-resources
+								>           catalog: cluster
     version: 0.1.0							    version: 0.1.0
   - name: cilium-servicemonitors					  - name: cilium-servicemonitors
     version: 0.1.2							    version: 0.1.2
@@ -79,8 +80,9 @@ spec:									spec:
     dependsOn:								    dependsOn:
     - prometheus-operator-crd						    - prometheus-operator-crd
   - name: network-policies						  - name: network-policies
-    version: 0.1.1							    version: 0.1.1
+    version: 0.1.1						<
     catalog: cluster							    catalog: cluster
+								>           version: 0.1.1
     dependsOn:								    dependsOn:
     - cilium								    - cilium
   - name: node-exporter							  - name: node-exporter
@@ -100,8 +102,9 @@ spec:									spec:
     dependsOn:								    dependsOn:
     - prometheus-operator-crd						    - prometheus-operator-crd
   - name: security-bundle						  - name: security-bundle
-    version: 1.8.0						|           version: 1.8.1
+    version: 1.8.0						<
     catalog: giantswarm							    catalog: giantswarm
+								>           version: 1.8.1
     dependsOn:								    dependsOn:
     - prometheus-operator-crd						    - prometheus-operator-crd
   - name: teleport-kube-agent						  - name: teleport-kube-agent
