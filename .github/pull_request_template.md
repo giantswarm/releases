@@ -21,6 +21,6 @@ To trigger the E2E test for each new Release added in this PR, add a comment wit
 
 If you want to trigger conformance tests, you can do so by adding a comment similar to the following:
 
-`/run conformance-tests PROVIDER=capa RELEASE_VERSION=v29.0.0`
+`/run conformance-tests PROVIDER=capa RELEASE_VERSION=29.1.0`
 
 For more details see the [README.md](/README.md#running-tests-against-prs).
