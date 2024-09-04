@@ -2,18 +2,5 @@
     "extends": [
         // Base config - https://github.com/giantswarm/renovate-presets/blob/main/default.json5
         "github>giantswarm/renovate-presets:default.json5",
-    ],
-    "prBodyNotes": [],
-    "packageRules": [
-        {
-            // "matchFileNames": ["^capa/[^/]+-next/release\\.yaml$"],
-            "baseBranches": ["next/capa/major"],
-            "prCreation": "immediate",
-            "automerge": {
-                "enabled": true,
-                "method": "squash",
-                "requireBranchPolicyChecks": false
-            }
-        }
     ]
 }
