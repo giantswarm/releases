@@ -42,9 +42,9 @@ jobs:
       - run:
           name: Kustomize helm chart
           command: |
-            export XDG_CONFIG_HOME=$(pwd)
+            export KUSTOMIZE_PLUGIN_HOME=$PWD/kustomize/plugin
             mkdir -p helm/releases-<<parameters.provider>>/templates
-            kustomize build --enable_alpha_plugins ./<<parameters.provider>> > helm/releases-<<parameters.provider>>/templates/releases.yaml
+            kustomize build --enable-alpha-plugins ./<<parameters.provider>> > helm/releases-<<parameters.provider>>/templates/releases.yaml
       - persist_to_workspace:
           root: .
           paths:
