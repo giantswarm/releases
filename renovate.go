@@ -9,7 +9,7 @@ import (
 	"strings"
 
 	"github.com/giantswarm/release-operator/v4/api/v1alpha1"
-	"gopkg.in/yaml.v2"
+	"gopkg.in/yaml.v3"
 )
 
 type Release struct {
