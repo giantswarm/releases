@@ -2,4 +2,4 @@
 
 package main
 
-import _ "sigs.k8s.io/kustomize/kustomize/v3"
+import _ "sigs.k8s.io/kustomize/kustomize/v5"
