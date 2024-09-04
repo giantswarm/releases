@@ -8,7 +8,7 @@ import (
 	"regexp"
 	"strings"
 
-	"github.com/giantswarm/release-operator/v3/api/v1alpha1"
+	"github.com/giantswarm/release-operator/v4/api/v1alpha1"
 	"gopkg.in/yaml.v2"
 )
 

@@ -9,7 +9,7 @@ import (
 
 	"github.com/blang/semver/v4"
 	"github.com/giantswarm/microerror"
-	"github.com/giantswarm/release-operator/v3/api/v1alpha1"
+	"github.com/giantswarm/release-operator/v4/api/v1alpha1"
 	"github.com/giantswarm/versionbundle"
 	"sigs.k8s.io/yaml"
 )
