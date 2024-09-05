@@ -85,13 +85,25 @@ jobs:
           version: ${{ steps.get-provider-version.outputs.version }}
           tag: ${{ steps.get-release.outputs.tag }}
         run: |
-          # Define title, notes & files.
-          title="Workload cluster release ${version} for ${provider}"
-          notes="This release was automatically created by GitHub Actions."
+          # Map title.
+          case "${provider}" in
+            aws)
+              title="AWS ${version}"
+              ;;
+            azure)
+              title="Azure ${version}"
+              ;;
+            *)
+              title="${provider} ${version}"
+              ;;
+          esac
+
+          # Define notes & files.
+          notes="${release}/README.md"
           files=("${release}/release.yaml")
 
           # Determine pre-release.
           [[ "${version}" == v*.*.*-* ]] && prerelease="--prerelease" || prerelease=""
 
           # Create release.
-          gh release create --target "${GITHUB_REF_NAME}" "${tag}" --title "${title}" --notes "${notes}" ${files[@]} ${prerelease}
+          gh release create --target "${GITHUB_REF_NAME}" "${tag}" --title "${title}" --notes-file "${notes}" ${files[@]} ${prerelease}
