@@ -1,4 +1,4 @@
-# :zap: Giant Swarm Release v29.0.1 for Azure :zap:
+# :zap: Giant Swarm Release v29.1.0 for Azure :zap:
 
 ## Changes compared to v29.0.0
 
