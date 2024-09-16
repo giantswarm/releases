@@ -11,7 +11,7 @@ import (
 
 	"github.com/Masterminds/semver/v3"
 	"github.com/giantswarm/microerror"
-	"github.com/google/go-github/v64/github"
+	"github.com/google/go-github/v65/github"
 	"sigs.k8s.io/yaml"
 
 	. "github.com/giantswarm/releases/sdk/api/v1alpha1"
