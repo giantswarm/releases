@@ -6,7 +6,7 @@
 
 - coredns from v1.21.0 to v1.22.0
 - cert-exporter from v2.9.1 to v2.9.2
-- observability-bundle from v1.5.1 to v1.6.1
+- observability-bundle from v1.5.3 to v1.6.1
 
 ### coredns [1.22.0](https://github.com/giantswarm/coredns-app/releases/tag/v1.22.0)
 
