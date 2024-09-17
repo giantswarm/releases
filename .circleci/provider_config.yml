@@ -2,7 +2,7 @@
 version: 2.1
 
 orbs:
-  architect: giantswarm/architect@5.8.0
+  architect: giantswarm/architect@dev:abb402b23cf2cb82d9e12ba5a168fe2e8b86c5be
 
 parameters:
   push-aws:
