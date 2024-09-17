@@ -4,7 +4,7 @@ apiVersion: release.giantswarm.io/v1alpha1
 kind: Release
 metadata:
   creationTimestamp: null
-  name: v25.1.1
+  name: aws-25.1.1
 spec:
   apps:
   - dependsOn:
