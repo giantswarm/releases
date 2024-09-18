@@ -114,7 +114,7 @@ spec:
   components:
   - catalog: cluster-test
     name: cluster-aws
-    version: 2.1.0-ad1571df5d47455b16359b9fbed78991f66817a9
+    version: 2.1.0-0cf9f6bf591fbe68afaeddc7f659699c92d3cddb
   - name: flatcar
     version: 3815.2.5
   - name: flatcar-variant
