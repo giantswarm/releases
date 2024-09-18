@@ -112,7 +112,7 @@ spec:
   - name: vertical-pod-autoscaler-crd
     version: 3.1.0
   components:
-  - catalog: cluster
+  - catalog: cluster-test
     name: cluster-aws
     version: 2.1.0-ad1571df5d47455b16359b9fbed78991f66817a9
   - name: flatcar
