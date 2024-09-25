@@ -106,7 +106,10 @@ spec:
     dependsOn:
     - prometheus-operator-crd
   - name: teleport-kube-agent
-    version: 0.10.2
+    # Define catalog, e.g. `default-test`, here.
+    catalog: default-test
+    # Define version, e.g. `0.10.2-6fa41fa6717236f1b9a1f20425f21be08174d1b2`, here.
+    version: 0.10.2-6fa41fa6717236f1b9a1f20425f21be08174d1b2
   - name: vertical-pod-autoscaler
     version: 5.3.0
     dependsOn:
