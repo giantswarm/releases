@@ -107,7 +107,7 @@ spec:
     - prometheus-operator-crd
   - name: teleport-kube-agent
     catalog: default-test
-    version: 0.10.2-8fad220578bee2472bb332efbfc73d198599b1e9
+    version: 0.10.2-784f0922be6798e7556f9c709971ecf0636847ae
   - name: vertical-pod-autoscaler
     version: 5.2.4
     dependsOn:
