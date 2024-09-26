@@ -34,6 +34,13 @@
       "releaseTimestamp": "2024-08-13 12:00:00 +0000 UTC",
       "changelogUrl": "https://github.com/giantswarm/releases/blob/master/azure/v29.0.0/README.md",
       "isStable": true
+    },
+    {
+      "version": "30.0.0",
+      "isDeprecated": false,
+      "releaseTimestamp": "2024-09-03 18:00:00 +0000 UTC",
+      "changelogUrl": "https://github.com/giantswarm/releases/blob/master/azure/v30.0.0/README.md",
+      "isStable": true
     }
   ],
   "sourceUrl": "https://github.com/giantswarm/releases",
