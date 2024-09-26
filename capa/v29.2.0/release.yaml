@@ -109,7 +109,7 @@ spec:
     # Define catalog, e.g. `default-test`, here.
     catalog: default-test
     # Define version, e.g. `0.10.2-6fa41fa6717236f1b9a1f20425f21be08174d1b2`, here.
-    version: 0.9.2-6220f861be95d1cbabcfeff32cbd0a70db905d43
+    version: 0.10.2-8fad220578bee2472bb332efbfc73d198599b1e9
   - name: vertical-pod-autoscaler
     version: 5.3.0
     dependsOn:
