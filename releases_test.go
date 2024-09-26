@@ -8,6 +8,7 @@ import (
 	"testing"
 
 	"github.com/blang/semver/v4"
+	"github.com/davecgh/go-spew/spew"
 	"github.com/giantswarm/microerror"
 	"github.com/giantswarm/release-operator/v4/api/v1alpha1"
 	"github.com/giantswarm/versionbundle"
@@ -148,13 +149,13 @@ func findReleases(provider string, archived bool) ([]v1alpha1.Release, error) {
 		if err != nil {
 			return nil, microerror.Mask(err)
 		}
-		if strings.Contains(release.Name, "azure") || strings.Contains(release.Name, "aws") {
+		if strings.Contains(release.Name, "azure") || strings.Contains(release.Name, "aws") || strings.Contains(release.Name, "vsphere") {
 			parts := strings.Split(release.Name, "-")
 			release.Name = "v" + parts[len(parts)-1] //
 		}
 
 		if releaseDirectory.Name() != release.Name {
-			return nil, fmt.Errorf("%s release %s is in directory %s which doesn't match its name", provider, release.Name, releaseDirectory)
+			return nil, fmt.Errorf("%s release %s is in directory %v which doesn't match its name", provider, release.Name, spew.Sprint(releaseDirectory))
 		}
 		releases = append(releases, release)
 	}
