@@ -234,6 +234,10 @@ func Test_Releases(t *testing.T) {
 			provider: "kvm",
 			name:     "case 4: kvm releases are valid",
 		},
+		{
+			provider: "vsphere",
+			name:     "case 5: vsphere releases are valid",
+		},
 	}
 
 	// Load the README so we can check links for each release.
