@@ -11,7 +11,7 @@
 
 - cert-exporter from v2.9.1 to v2.9.2
 - node-exporter from v1.19.0 to v1.20.0
-- observability-bundle from v1.5.2 to v1.6.1
+- observability-bundle from v1.5.2 to v1.6.2
 - security-bundle from v1.8.0 to v1.8.1
 
 ### cert-exporter [v2.9.1...v2.9.2](https://github.com/giantswarm/cert-exporter/compare/v2.9.1...v2.9.2)
@@ -26,7 +26,7 @@
 
 - Synced with upstream chart v4.38.0 (node-exporter 1.8.2).
 
-### observability-bundle [v1.5.2...v1.6.1](https://github.com/giantswarm/observability-bundle/compare/v1.5.2...v1.6.1)
+### observability-bundle [v1.5.2...v1.6.2](https://github.com/giantswarm/observability-bundle/compare/v1.5.2...v1.6.2)
 
 #### Added
 

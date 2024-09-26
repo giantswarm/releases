@@ -90,7 +90,7 @@ spec:									spec:
     dependsOn:								    dependsOn:
     - kyverno-crds							    - kyverno-crds
   - name: observability-bundle						  - name: observability-bundle
-    version: 1.5.2						|           version: 1.6.1
+    version: 1.5.2						|           version: 1.6.2
     dependsOn:								    dependsOn:
     - coredns								    - coredns
   - name: observability-policies					  - name: observability-policies
