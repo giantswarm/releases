@@ -4,7 +4,6 @@
 
 ## Change details
 
-
 ### cilium [0.25.1](https://github.com/giantswarm/cilium-app/releases/tag/v0.25.1)
 
 #### Changed
