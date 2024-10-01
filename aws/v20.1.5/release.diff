@@ -45,8 +45,8 @@ spec:                                                            spec:
     - prometheus-operator-crd                                        - prometheus-operator-crd
     name: chart-operator-extensions                                  name: chart-operator-extensions
     version: 1.1.2                                                   version: 1.1.2
-  - componentVersion: 1.15.1                                   |   - dependsOn:
-    dependsOn:                                                 < 
+  - componentVersion: 1.15.1                                   |   - componentVersion: 1.15.6
+    dependsOn:                                                       dependsOn:
     - aws-cloud-controller-manager                                   - aws-cloud-controller-manager
     name: cilium                                                     name: cilium
     version: 0.22.0                                            |     version: 0.25.1
