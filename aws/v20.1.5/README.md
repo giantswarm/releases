@@ -16,5 +16,3 @@
 Cilium ENI mode for CAPA becomes usable with these changes:
 - Add security group tag filter for pod network
 - Select subnets from secondary VPC CIDRs
-
-
