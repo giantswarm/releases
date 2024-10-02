@@ -1,6 +1,6 @@
 # :zap: Giant Swarm Release v20.1.5 for AWS :zap:
 
-<< Add description here >>
+Upgrade Cilium to enhance performance when managing a large number of network policies within the cluster.
 
 ## Change details
 
