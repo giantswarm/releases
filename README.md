@@ -12,12 +12,18 @@ to all Giant Swarm installations.
 ## AWS
 
 - v29
+  - v29.3
+    - [v29.3.0](https://github.com/giantswarm/releases/tree/master/capa/v29.3.0)
+  - v29.2
+    - [v29.2.0](https://github.com/giantswarm/releases/tree/master/capa/v29.2.0)
   - v29.1
     - [v29.1.0](https://github.com/giantswarm/releases/tree/master/capa/v29.1.0)
   - v29.0
     - [v29.0.0](https://github.com/giantswarm/releases/tree/master/capa/archived/v29.0.0)
 
 - v28
+  - v28.2
+    - [v28.2.0](https://github.com/giantswarm/releases/tree/master/capa/v28.2.0)
   - v28.1
     - [v28.1.2](https://github.com/giantswarm/releases/tree/master/capa/v28.1.2)
     - [v28.1.1](https://github.com/giantswarm/releases/tree/master/capa/v28.1.1)
@@ -27,6 +33,8 @@ to all Giant Swarm installations.
     - [v28.0.0](https://github.com/giantswarm/releases/tree/master/capa/archived/v28.0.0)
 
 - v27
+  - v27.2
+    - [v27.2.0](https://github.com/giantswarm/releases/tree/master/capa/v27.2.0)
   - v27.1
     - [v27.1.1](https://github.com/giantswarm/releases/tree/master/capa/v27.1.1)
     - [v27.1.0](https://github.com/giantswarm/releases/tree/master/capa/v27.1.0)
@@ -52,6 +60,7 @@ to all Giant Swarm installations.
 
 - v20
   - v20.1
+    - [v20.1.5](https://github.com/giantswarm/releases/tree/master/aws/v20.1.5)
     - [v20.1.4](https://github.com/giantswarm/releases/tree/master/aws/v20.1.4)
     - [v20.1.3](https://github.com/giantswarm/releases/tree/master/aws/v20.1.3)
     - [v20.1.2](https://github.com/giantswarm/releases/tree/master/aws/v20.1.2)
@@ -280,6 +289,10 @@ to all Giant Swarm installations.
 ## Azure
 
 - v29
+  - v29.2
+    - [v29.2.0](https://github.com/giantswarm/releases/tree/master/azure/v29.2.0)
+  - v29.1
+    - [v29.1.0](https://github.com/giantswarm/releases/tree/master/azure/v29.1.0)
   - v29.0
     - [v29.0.0](https://github.com/giantswarm/releases/tree/master/azure/v29.0.0)
 

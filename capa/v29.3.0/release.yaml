@@ -1,7 +1,7 @@
 apiVersion: release.giantswarm.io/v1alpha1
 kind: Release
 metadata:
-  name: aws-29.1.0
+  name: aws-29.3.0
 spec:
   apps:
   - name: aws-ebs-csi-driver
@@ -13,7 +13,7 @@ spec:
     dependsOn:
     - prometheus-operator-crd
   - name: aws-pod-identity-webhook
-    version: 1.16.0
+    version: 1.17.0
     dependsOn:
     - cert-manager
   - name: capi-node-labeler
@@ -48,7 +48,7 @@ spec:
     dependsOn:
     - kyverno-crds
   - name: coredns
-    version: 1.21.0
+    version: 1.22.0
     dependsOn:
     - cilium
   - name: etcd-k8s-res-count-exporter
@@ -89,7 +89,7 @@ spec:
     dependsOn:
     - kyverno-crds
   - name: observability-bundle
-    version: 1.6.1
+    version: 1.6.2
     dependsOn:
     - coredns
   - name: observability-policies
@@ -102,26 +102,26 @@ spec:
     - prometheus-operator-crd
   - name: security-bundle
     catalog: giantswarm
-    version: 1.8.1
+    version: 1.8.2
     dependsOn:
     - prometheus-operator-crd
   - name: teleport-kube-agent
-    version: 0.9.2
+    version: 0.10.3
   - name: vertical-pod-autoscaler
-    version: 5.2.4
+    version: 5.3.0
     dependsOn:
     - prometheus-operator-crd
   - name: vertical-pod-autoscaler-crd
-    version: 3.1.0
+    version: 3.1.1
   components:
   - name: cluster-aws
     catalog: cluster
-    version: 2.0.0
+    version: 2.2.0
   - name: flatcar
-    version: 3975.2.0
+    version: 3975.2.1
   - name: kubernetes
-    version: 1.29.8
+    version: 1.29.9
   - name: os-tooling
-    version: 1.18.1
-  date: "2024-08-26T12:00:00Z"
-  state: deprecated
+    version: 1.20.0
+  date: "2024-09-30T12:00:00Z"
+  state: active

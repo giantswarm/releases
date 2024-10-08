@@ -1,7 +1,7 @@
 apiVersion: release.giantswarm.io/v1alpha1				apiVersion: release.giantswarm.io/v1alpha1
 kind: Release								kind: Release
 metadata:								metadata:
-  name: aws-29.0.0						|         name: aws-29.1.0
+  name: aws-29.1.0						|         name: aws-29.2.0
 spec:									spec:
   apps:									  apps:
   - name: aws-ebs-csi-driver						  - name: aws-ebs-csi-driver
@@ -13,13 +13,13 @@ spec:									spec:
     dependsOn:								    dependsOn:
     - prometheus-operator-crd						    - prometheus-operator-crd
   - name: aws-pod-identity-webhook					  - name: aws-pod-identity-webhook
-    version: 1.16.0							    version: 1.16.0
+    version: 1.16.0						|           version: 1.17.0
     dependsOn:								    dependsOn:
     - cert-manager							    - cert-manager
   - name: capi-node-labeler						  - name: capi-node-labeler
     version: 0.5.0							    version: 0.5.0
   - name: cert-exporter							  - name: cert-exporter
-    version: 2.9.1						|           version: 2.9.2
+    version: 2.9.2							    version: 2.9.2
     dependsOn:								    dependsOn:
     - kyverno-crds							    - kyverno-crds
   - name: cert-manager							  - name: cert-manager
@@ -33,7 +33,7 @@ spec:									spec:
   - name: cilium							  - name: cilium
     version: 0.25.1							    version: 0.25.1
   - name: cilium-crossplane-resources					  - name: cilium-crossplane-resources
-								>           catalog: cluster
+    catalog: cluster							    catalog: cluster
     version: 0.1.0							    version: 0.1.0
   - name: cilium-servicemonitors					  - name: cilium-servicemonitors
     version: 0.1.2							    version: 0.1.2
@@ -48,7 +48,7 @@ spec:									spec:
     dependsOn:								    dependsOn:
     - kyverno-crds							    - kyverno-crds
   - name: coredns							  - name: coredns
-    version: 1.21.0							    version: 1.21.0
+    version: 1.21.0						|           version: 1.22.0
     dependsOn:								    dependsOn:
     - cilium								    - cilium
   - name: etcd-k8s-res-count-exporter					  - name: etcd-k8s-res-count-exporter
@@ -80,17 +80,16 @@ spec:									spec:
     dependsOn:								    dependsOn:
     - prometheus-operator-crd						    - prometheus-operator-crd
   - name: network-policies						  - name: network-policies
-    version: 0.1.1						<
     catalog: cluster							    catalog: cluster
-								>           version: 0.1.1
+    version: 0.1.1							    version: 0.1.1
     dependsOn:								    dependsOn:
     - cilium								    - cilium
   - name: node-exporter							  - name: node-exporter
-    version: 1.19.0						|           version: 1.20.0
+    version: 1.20.0							    version: 1.20.0
     dependsOn:								    dependsOn:
     - kyverno-crds							    - kyverno-crds
   - name: observability-bundle						  - name: observability-bundle
-    version: 1.5.2						|           version: 1.6.1
+    version: 1.6.1						|           version: 1.6.2
     dependsOn:								    dependsOn:
     - coredns								    - coredns
   - name: observability-policies					  - name: observability-policies
@@ -102,28 +101,27 @@ spec:									spec:
     dependsOn:								    dependsOn:
     - prometheus-operator-crd						    - prometheus-operator-crd
   - name: security-bundle						  - name: security-bundle
-    version: 1.8.0						<
     catalog: giantswarm							    catalog: giantswarm
-								>           version: 1.8.1
+    version: 1.8.1						|           version: 1.8.2
     dependsOn:								    dependsOn:
     - prometheus-operator-crd						    - prometheus-operator-crd
   - name: teleport-kube-agent						  - name: teleport-kube-agent
-    version: 0.9.2							    version: 0.9.2
+    version: 0.9.2						|           version: 0.10.3
   - name: vertical-pod-autoscaler					  - name: vertical-pod-autoscaler
-    version: 5.2.4							    version: 5.2.4
+    version: 5.2.4						|           version: 5.3.0
     dependsOn:								    dependsOn:
     - prometheus-operator-crd						    - prometheus-operator-crd
   - name: vertical-pod-autoscaler-crd					  - name: vertical-pod-autoscaler-crd
-    version: 3.1.0							    version: 3.1.0
+    version: 3.1.0						|           version: 3.1.1
   components:								  components:
   - name: cluster-aws							  - name: cluster-aws
     catalog: cluster							    catalog: cluster
-    version: 2.0.0							    version: 2.0.0
+    version: 2.0.0						|           version: 2.2.0
   - name: flatcar							  - name: flatcar
-    version: 3815.2.5						|           version: 3975.2.0
+    version: 3975.2.0						|           version: 3975.2.1
   - name: kubernetes							  - name: kubernetes
-    version: 1.29.7						|           version: 1.29.8
+    version: 1.29.8						|           version: 1.29.9
   - name: os-tooling							  - name: os-tooling
-    version: 1.15.0						|           version: 1.18.1
-  date: "2024-08-07T12:00:00Z"					|         date: "2024-08-26T12:00:00Z"
+    version: 1.18.1						|           version: 1.19.1
+  date: "2024-08-26T12:00:00Z"					|         date: "2024-09-24T18:00:00Z"
   state: deprecated							  state: deprecated
