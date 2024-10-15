@@ -1,4 +1,4 @@
-# :zap: Giant Swarm Release v25.1.2 for  :zap:
+# :zap: Giant Swarm Release v25.1.2 for CAPA :zap:
 
 This release allows to have different node pools with different configuration to support legacy cgroupsv1.
 
