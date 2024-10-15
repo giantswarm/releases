@@ -6,7 +6,7 @@ This release allows to have different node pools with different configuration to
 
 ### Components
 
-- cluster-aws from v1.1.1 to v1.1.3
+- cluster-aws from v1.1.2 to v1.1.3
 
 ### cluster-aws [v1.1.2...v1.1.3](https://github.com/giantswarm/cluster-aws/compare/v1.1.2...v1.1.3)
 
