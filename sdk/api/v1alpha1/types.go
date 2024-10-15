@@ -13,12 +13,18 @@ const (
 
 	// ProviderVsphere represents the new Vsphere provider which is implemented with Cluster API.
 	ProviderVsphere Provider = "vsphere"
+
+	// ProviderCloudDirector represents the new VCD provider which is implemented with Cluster API.
+	ProviderCloudDirector Provider = "cloud-director"
 )
 
 var SupportedProviders = []Provider{
 	ProviderAws,
 	ProviderAzure,
 	ProviderVsphere,
+
+	// Not yet supported:
+	// ProviderCloudDirector,
 }
 
 type Provider string
