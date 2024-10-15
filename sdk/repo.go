@@ -16,6 +16,8 @@ func getProviderDirectory(provider Provider) (string, error) {
 		return "capa", nil
 	case ProviderAzure:
 		return "azure", nil
+	case ProviderVsphere:
+		return "vsphere", nil
 	}
 
 	return "", microerror.Maskf(InvalidProviderError, "unknown provider: %s", provider)
