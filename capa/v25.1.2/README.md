@@ -2,7 +2,13 @@
 
 This release allows to have different node pools with different configuration to support legacy cgroupsv1.
 
-### cluster-aws [1.1.3](https://github.com/giantswarm/cluster-aws/releases/tag/v1.1.3)
+## Changes compared to v25.1.1
+
+### Components
+
+- cluster-aws from v1.1.1 to v1.1.3
+
+### cluster-aws [v1.1.2...v1.1.3](https://github.com/giantswarm/cluster-aws/compare/v1.1.2...v1.1.3)
 
 #### Changed
 
