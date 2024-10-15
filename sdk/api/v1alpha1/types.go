@@ -10,11 +10,15 @@ const (
 
 	// ProviderAzure represents the new Azure provider which is implemented with Cluster API.
 	ProviderAzure Provider = "azure"
+
+	// ProviderVsphere represents the new Vsphere provider which is implemented with Cluster API.
+	ProviderVsphere Provider = "vsphere"
 )
 
 var SupportedProviders = []Provider{
 	ProviderAws,
 	ProviderAzure,
+	ProviderVsphere,
 }
 
 type Provider string
