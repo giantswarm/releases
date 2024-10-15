@@ -9,6 +9,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Add Azure provider to the list of supported providers.
+
+## [0.6.0] - 2024-07-26
+
 ### Changed
 
 - Fix `GetLatestRelease` to correctly return the latest release according to semver, and not the latest published GitHub
