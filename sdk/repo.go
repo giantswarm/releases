@@ -12,11 +12,15 @@ const (
 
 func getProviderDirectory(provider Provider) (string, error) {
 	switch provider {
+	case "":
+		return "", microerror.Maskf(InvalidProviderError, "no provider supplied")
+
+	// Providers that use a different path name to their provider name
 	case ProviderAws:
 		return "capa", nil
-	case ProviderAzure:
-		return "azure", nil
-	}
 
-	return "", microerror.Maskf(InvalidProviderError, "unknown provider: %s", provider)
+	// By default, the value of the provider is used as the path
+	default:
+		return string(provider), nil
+	}
 }
