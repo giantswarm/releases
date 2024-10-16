@@ -93,6 +93,9 @@ jobs:
             azure)
               title="Azure ${version}"
               ;;
+            vsphere)
+              title="vSphere ${version}"
+              ;;
             *)
               title="${provider} ${version}"
               ;;
