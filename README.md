@@ -518,6 +518,12 @@ to all Giant Swarm installations.
   - v8.0
     - [v8.0.0](https://github.com/giantswarm/releases/tree/master/kvm/archived/v8.0.0)
 
+## Vsphere
+
+- v27
+  - v27.0
+    - [v27.0.0](https://github.com/giantswarm/releases/tree/master/vsphere/v27.0.0)
+
 # Running tests against PRs
 
 ## Workload Cluster End-to-End Tests

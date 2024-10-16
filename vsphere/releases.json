@@ -1,0 +1,14 @@
+{
+  "releases": [
+    {
+      "version": "27.0.0",
+      "isDeprecated": false,
+      "releaseTimestamp": "2024-09-26 12:00:00 +0000 UTC",
+      "changelogUrl": "https://github.com/giantswarm/releases/blob/master/vsphere/v27.0.0/README.md",
+      "isStable": true
+    }
+  ],
+  "sourceUrl": "https://github.com/giantswarm/releases",
+  "changelogUrl": "https://github.com/giantswarm/releases/blob/main/README.md",
+  "homepage": "https://giantswarm.io"
+}
