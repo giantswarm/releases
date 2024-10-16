@@ -17,6 +17,9 @@ parameters:
   push-capa:
     type: boolean
     default: false
+  push-vsphere:
+    type: boolean
+    default: false
 
 jobs:
   render:
@@ -163,6 +166,36 @@ workflows:
         app_collection_repo: capa-app-collection
         requires:
         - push-releases-capa-to-releases-catalog
+        filters:
+          # Trigger the job on merge to master.
+          branches:
+            only: master
+
+  vsphere:
+    when: << pipeline.parameters.push-vsphere >>
+    jobs:
+    - render:
+        name: render-vsphere
+        provider: vsphere
+    - architect/push-to-app-catalog:
+        context: architect
+        name: push-releases-vsphere-to-releases-catalog
+        app_catalog: releases-catalog
+        app_catalog_test: releases-test-catalog
+        attach_workspace: true
+        chart: releases-vsphere
+        explicit_allow_chart_name_mismatch: true
+        on_tag: false
+        requires:
+        - render-vsphere
+    - architect/push-to-app-collection:
+        context: architect
+        name: push-releases-to-vsphere-app-collection
+        app_catalog: releases
+        app_name: releases-vsphere
+        app_collection_repo: vsphere-app-collection
+        requires:
+        - push-releases-vsphere-to-releases-catalog
         filters:
           # Trigger the job on merge to master.
           branches:
