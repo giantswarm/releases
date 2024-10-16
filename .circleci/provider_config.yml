@@ -170,7 +170,6 @@ workflows:
           # Trigger the job on merge to master.
           branches:
             only: master
-
   vsphere:
     when: << pipeline.parameters.push-vsphere >>
     jobs:
