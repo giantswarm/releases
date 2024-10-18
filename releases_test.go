@@ -148,8 +148,8 @@ func findReleases(provider string, archived bool) ([]v1alpha1.Release, error) {
 		}
 
 		// Handle CAPI release naming
-		if provider == "vsphere" {
-			release.Name = "v" + release.Name
+		if provider == "vsphere" || provider == "azure" || provider == "capa" {
+			release.Name = "v" + strings.TrimPrefix(release.Name, "v")
 		}
 
 		if strings.Contains(release.Name, "azure") || strings.Contains(release.Name, "aws") || strings.Contains(release.Name, "vsphere") {
