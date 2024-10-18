@@ -528,6 +528,9 @@ to all Giant Swarm installations.
 
 ## Vsphere
 
+- v28
+  - v28.0
+    - [v28.0.0](https://github.com/giantswarm/releases/tree/master/vsphere/v28.0.0)
 - v27
   - v27.0
     - [v27.0.0](https://github.com/giantswarm/releases/tree/master/vsphere/v27.0.0)
