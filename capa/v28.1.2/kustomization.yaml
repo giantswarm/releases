@@ -1,2 +1,14 @@
 resources:
 - release.yaml
+
+replacements:
+- source:
+    kind: Release
+    fieldPath: metadata.name
+  targets:
+  - select:
+      kind: Release
+    fieldPaths:
+      - metadata.annotations.[giantswarm.io/release-notes]
+    options:
+      create: true
