@@ -1,5 +1,6 @@
 commonAnnotations:
   giantswarm.io/docs: https://docs.giantswarm.io/ui-api/management-api/crd/releases.release.giantswarm.io/
+
 resources:
 - v25.0.0
 - v25.1.0
@@ -22,5 +23,23 @@ resources:
 - v29.1.0
 - v29.2.0
 - v29.3.0
+
 transformers:
-- releaseNotesTransformer.yaml
+- |
+  apiVersion: builtin
+  kind: PrefixSuffixTransformer
+  metadata:
+    name: namePrefixer
+  prefix: "aws-"
+  fieldSpecs:
+  - kind: Release
+    path: metadata/name
+- |
+  apiVersion: builtin
+  kind: PrefixSuffixTransformer
+  metadata:
+    name: releaseNotesPrefixer
+  prefix: "https://github.com/giantswarm/releases/tree/master/capa/v"
+  fieldSpecs:
+  - kind: Release
+    path: metadata/annotations/giantswarm.io\/release-notes

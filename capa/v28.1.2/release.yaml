@@ -1,7 +1,7 @@
 apiVersion: release.giantswarm.io/v1alpha1
 kind: Release
 metadata:
-  name: aws-28.1.2
+  name: 28.1.2
 spec:
   apps:
   - name: aws-ebs-csi-driver

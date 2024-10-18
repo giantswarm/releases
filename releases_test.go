@@ -12,14 +12,11 @@ import (
 	"github.com/giantswarm/microerror"
 	"github.com/giantswarm/release-operator/v4/api/v1alpha1"
 	"github.com/giantswarm/versionbundle"
+	"sigs.k8s.io/kustomize/api/types"
 	"sigs.k8s.io/yaml"
 )
 
-type kustomizationFile struct {
-	CommonAnnotations map[string]string `yaml:"commonAnnotations"`
-	Resources         []string          `yaml:"resources"`
-	Transformers      []string          `yaml:"transformers"`
-}
+type kustomizationFile types.Kustomization
 
 // requestException represents a single release exception to a request.
 type requestException struct {
@@ -149,6 +146,12 @@ func findReleases(provider string, archived bool) ([]v1alpha1.Release, error) {
 		if err != nil {
 			return nil, microerror.Mask(err)
 		}
+
+		// Handle CAPI release naming
+		if provider == "vsphere" || provider == "azure" || provider == "capa" {
+			release.Name = "v" + strings.TrimPrefix(release.Name, "v")
+		}
+
 		if strings.Contains(release.Name, "azure") || strings.Contains(release.Name, "aws") || strings.Contains(release.Name, "vsphere") {
 			parts := strings.Split(release.Name, "-")
 			release.Name = "v" + parts[len(parts)-1] //

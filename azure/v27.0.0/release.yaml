@@ -1,7 +1,7 @@
 apiVersion: release.giantswarm.io/v1alpha1
 kind: Release
 metadata:
-  name: azure-27.0.0
+  name: 27.0.0
 spec:
   apps:
   - name: azure-cloud-controller-manager

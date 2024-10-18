@@ -1,6 +1,0 @@
-apiVersion: giantswarm.io/v1
-kind: releaseNotesURLAnnotationTransformer
-metadata:
-  name: vsphereReleaseNotesURLAnnotationTransformer
-# provider annotationKey
-argsOneLiner: vsphere giantswarm.io/release-notes

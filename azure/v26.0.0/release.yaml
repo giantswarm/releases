@@ -1,7 +1,7 @@
 apiVersion: release.giantswarm.io/v1alpha1
 kind: Release
 metadata:
-  name: azure-26.0.0
+  name: 26.0.0
 spec:
   apps:
   - name: azuredisk-csi-driver
