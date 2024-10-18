@@ -4,17 +4,18 @@ go 1.23.2
 
 require (
 	github.com/blang/semver/v4 v4.0.0
+	github.com/davecgh/go-spew v1.1.2-0.20180830191138-d8f796af33cc
 	github.com/giantswarm/microerror v0.4.1
 	github.com/giantswarm/release-operator/v4 v4.2.0
 	github.com/giantswarm/versionbundle v1.1.0
 	gopkg.in/yaml.v3 v3.0.1
+	sigs.k8s.io/kustomize/api v0.18.0
 	sigs.k8s.io/kustomize/kustomize/v5 v5.5.0
 	sigs.k8s.io/yaml v1.4.0
 )
 
 require (
 	github.com/coreos/go-semver v0.3.1 // indirect
-	github.com/davecgh/go-spew v1.1.2-0.20180830191138-d8f796af33cc // indirect
 	github.com/giantswarm/k8smetadata v0.24.0 // indirect
 	github.com/giantswarm/micrologger v1.1.1 // indirect
 	github.com/go-errors/errors v1.4.2 // indirect
@@ -56,7 +57,6 @@ require (
 	k8s.io/kube-openapi v0.0.0-20231129212854-f0671cc7e66a // indirect
 	k8s.io/utils v0.0.0-20231127182322-b307cd553661 // indirect
 	sigs.k8s.io/json v0.0.0-20221116044647-bc3834ca7abd // indirect
-	sigs.k8s.io/kustomize/api v0.18.0 // indirect
 	sigs.k8s.io/kustomize/cmd/config v0.15.0 // indirect
 	sigs.k8s.io/kustomize/kyaml v0.18.1 // indirect
 	sigs.k8s.io/structured-merge-diff/v4 v4.4.1 // indirect
