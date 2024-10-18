@@ -12,23 +12,3 @@ replacements:
       - metadata.annotations.[giantswarm.io/release-notes]
     options:
       create: true
-
-transformers:
-- |
-  apiVersion: builtin
-  kind: PrefixSuffixTransformer
-  metadata:
-    name: namePrefixer
-  prefix: "aws-"
-  fieldSpecs:
-  - kind: Release
-    path: metadata/name
-- |
-  apiVersion: builtin
-  kind: PrefixSuffixTransformer
-  metadata:
-    name: releaseNotesPrefixer
-  prefix: "https://github.com/giantswarm/releases/tree/master/capa/v"
-  fieldSpecs:
-  - kind: Release
-    path: metadata/annotations/giantswarm.io\/release-notes
