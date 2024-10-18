@@ -1,2 +1,34 @@
 resources:
 - release.yaml
+
+replacements:
+- source:
+    kind: Release
+    fieldPath: metadata.name
+  targets:
+  - select:
+      kind: Release
+    fieldPaths:
+      - metadata.annotations.[giantswarm.io/release-notes]
+    options:
+      create: true
+
+transformers:
+- |
+  apiVersion: builtin
+  kind: PrefixSuffixTransformer
+  metadata:
+    name: namePrefixer
+  prefix: "azure-"
+  fieldSpecs:
+  - kind: Release
+    path: metadata/name
+- |
+  apiVersion: builtin
+  kind: PrefixSuffixTransformer
+  metadata:
+    name: releaseNotesPrefixer
+  prefix: "https://github.com/giantswarm/releases/tree/master/azure/v"
+  fieldSpecs:
+  - kind: Release
+    path: metadata/annotations/giantswarm.io\/release-notes
