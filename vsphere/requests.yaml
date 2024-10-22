@@ -1,1 +1,15 @@
 releases:
+- name: "< 30.0.0"
+  requests:
+  - name: cilium
+    version: "< 0.26.0"
+- name: "> 29.1.0"
+  requests:
+  - name: observability-bundle
+    version: ">= 1.6.2"
+  - name: security-bundle
+    version: ">= 1.8.2"
+- name: "> 29.0.0"
+  requests:
+  - name: cert-exporter
+    version: ">= 2.9.2"
