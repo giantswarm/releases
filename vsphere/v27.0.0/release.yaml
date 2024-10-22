@@ -4,8 +4,6 @@ metadata:
   name: vsphere-27.0.0
 spec:
   apps:
-  - name: cloud-provider-vsphere
-    version: 1.11.0
   - name: capi-node-labeler
     version: 0.5.0
   - name: cert-exporter
@@ -26,6 +24,10 @@ spec:
     version: 0.1.2
     dependsOn:
     - prometheus-operator-crd
+  - name: cloud-provider-vsphere
+    version: 1.11.0
+    dependsOn:
+    - cilium
   - name: coredns
     version: 1.21.0
     dependsOn:
@@ -55,8 +57,8 @@ spec:
     dependsOn:
     - prometheus-operator-crd
   - name: network-policies
-    version: 0.1.1
     catalog: cluster
+    version: 0.1.1
     dependsOn:
     - cilium
   - name: node-exporter
@@ -76,8 +78,8 @@ spec:
     dependsOn:
     - prometheus-operator-crd
   - name: security-bundle
-    version: 1.8.0
     catalog: giantswarm
+    version: 1.8.0
     dependsOn:
     - prometheus-operator-crd
   - name: teleport-kube-agent

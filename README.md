@@ -526,11 +526,12 @@ to all Giant Swarm installations.
   - v8.0
     - [v8.0.0](https://github.com/giantswarm/releases/tree/master/kvm/archived/v8.0.0)
 
-## Vsphere
+## vSphere
 
 - v28
   - v28.0
     - [v28.0.0](https://github.com/giantswarm/releases/tree/master/vsphere/v28.0.0)
+
 - v27
   - v27.0
     - [v27.0.0](https://github.com/giantswarm/releases/tree/master/vsphere/v27.0.0)
