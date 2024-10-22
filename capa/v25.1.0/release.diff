@@ -1,7 +1,7 @@
 apiVersion: release.giantswarm.io/v1alpha1				apiVersion: release.giantswarm.io/v1alpha1
 kind: Release								kind: Release
 metadata:								metadata:
-  name: aws-28.1.0						|         name: aws-28.1.1
+  name: aws-25.0.0						|         name: aws-25.1.0
 spec:									spec:
   apps:									  apps:
   - name: aws-ebs-csi-driver						  - name: aws-ebs-csi-driver
@@ -23,7 +23,7 @@ spec:									spec:
     dependsOn:								    dependsOn:
     - kyverno								    - kyverno
   - name: cert-manager							  - name: cert-manager
-    version: 3.7.9							    version: 3.7.9
+    version: 3.7.6						|           version: 3.7.9 # aligning with Vintage, fixing bugs
     dependsOn:								    dependsOn:
     - prometheus-operator-crd						    - prometheus-operator-crd
   - name: chart-operator-extensions					  - name: chart-operator-extensions
@@ -31,7 +31,7 @@ spec:									spec:
     dependsOn:								    dependsOn:
     - prometheus-operator-crd						    - prometheus-operator-crd
   - name: cilium							  - name: cilium
-    version: 0.25.1							    version: 0.25.1
+    version: 0.24.0						|           version: 0.25.1 # as per Cabbage request fixing bugs
   - name: cilium-crossplane-resources					  - name: cilium-crossplane-resources
     version: 0.1.0							    version: 0.1.0
   - name: cilium-servicemonitors					  - name: cilium-servicemonitors
@@ -39,11 +39,11 @@ spec:									spec:
     dependsOn:								    dependsOn:
     - prometheus-operator-crd						    - prometheus-operator-crd
   - name: cloud-provider-aws						  - name: cloud-provider-aws
-    version: 1.28.6-gs1							    version: 1.28.6-gs1
+    version: 1.25.14-gs3						    version: 1.25.14-gs3
     dependsOn:								    dependsOn:
     - vertical-pod-autoscaler-crd					    - vertical-pod-autoscaler-crd
   - name: cluster-autoscaler						  - name: cluster-autoscaler
-    version: 1.28.5-gs1							    version: 1.28.5-gs1
+    version: 1.27.3-gs9							    version: 1.27.3-gs9
     dependsOn:								    dependsOn:
     - kyverno								    - kyverno
   - name: coredns							  - name: coredns
@@ -96,7 +96,7 @@ spec:									spec:
     dependsOn:								    dependsOn:
     - prometheus-operator-crd						    - prometheus-operator-crd
   - name: security-bundle						  - name: security-bundle
-    version: 1.7.0						|           version: 1.7.2
+    version: 1.7.0							    version: 1.7.0
     catalog: giantswarm							    catalog: giantswarm
     dependsOn:								    dependsOn:
     - prometheus-operator-crd						    - prometheus-operator-crd
@@ -111,12 +111,12 @@ spec:									spec:
   components:								  components:
   - name: cluster-aws							  - name: cluster-aws
     catalog: cluster							    catalog: cluster
-    version: 1.3.0							    version: 1.3.0
+    version: 1.0.0						|           version: 1.1.0
   - name: flatcar							  - name: flatcar
-    version: 3815.2.5							    version: 3815.2.5
+    version: 3815.2.2						|           version: 3815.2.5 # CVEs OpenSSH fixed
   - name: flatcar-variant						  - name: flatcar-variant
     version: 1.0.0							    version: 1.0.0
   - name: kubernetes							  - name: kubernetes
-    version: 1.28.11							    version: 1.28.11
-  date: "2024-07-30T11:00:00Z"					|         date: "2024-08-26T12:00:00Z"
-  state: deprecated						|         state: active
+    version: 1.25.16							    version: 1.25.16
+  date: "2024-06-20T18:00:00Z"					|         date: "2024-07-03T18:00:00Z"
+  state: deprecated							  state: deprecated
