@@ -9,7 +9,7 @@ resources:
 
 commonAnnotations:
   giantswarm.io/docs: https://docs.giantswarm.io/use-the-api/management-api/crd/releases.release.giantswarm.io
-  helm.sh/resource-policy: keep
+  helm.sh/resource-policy: ""
 
 transformers:
 - |
