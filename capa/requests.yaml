@@ -1,8 +1,4 @@
 releases:
-- name: ">= 30.0.0"
-  requests:
-  - name: security-bundle
-    version: ">= 1.9.0"
 - name: "< 30.0.0"
   requests:
   - name: cilium
@@ -11,6 +7,8 @@ releases:
   requests:
   - name: observability-bundle
     version: ">= 1.8.0"
+  - name: security-bundle
+    version: ">= 1.9.0"
 - name: "> 29.1.0"
   requests:
   - name: observability-bundle
