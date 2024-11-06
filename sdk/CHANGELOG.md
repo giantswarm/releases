@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Enable Cloud Director provider.
+
 ## [0.8.0] - 2024-10-15
 
 ### Added
