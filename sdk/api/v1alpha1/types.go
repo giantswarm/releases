@@ -22,9 +22,7 @@ var SupportedProviders = []Provider{
 	ProviderAws,
 	ProviderAzure,
 	ProviderVsphere,
-
-	// Not yet supported:
-	// ProviderCloudDirector,
+	ProviderCloudDirector,
 }
 
 type Provider string
