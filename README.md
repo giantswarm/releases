@@ -542,6 +542,12 @@ to all Giant Swarm installations.
     - [v27.0.1](https://github.com/giantswarm/releases/tree/master/vsphere/v27.0.1)
     - [v27.0.0](https://github.com/giantswarm/releases/tree/master/vsphere/v27.0.0)
 
+## VMware Cloud Director
+
+- v27
+  - v27.0
+    - [v27.0.0](https://github.com/giantswarm/releases/tree/master/cloud-director/v27.0.0)
+
 # Running tests against PRs
 
 ## Workload Cluster End-to-End Tests
