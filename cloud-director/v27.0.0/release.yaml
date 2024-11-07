@@ -1,7 +1,7 @@
 apiVersion: release.giantswarm.io/v1alpha1
 kind: Release
 metadata:
-  name: cloud-director-27.0.0-nick
+  name: cloud-director-27.0.0
 spec:
   apps:
   - name: capi-node-labeler
