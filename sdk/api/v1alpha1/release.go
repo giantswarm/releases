@@ -187,15 +187,20 @@ func (r *Release) LookupComponentSpec(appName string) (ReleaseSpecComponent, boo
 }
 
 func (r *Release) getResourceNameParts() (Provider, string, error) {
-	providerString, releaseVersion, ok := strings.Cut(r.Name, "-")
-	if !ok {
+	lastHyphenIndex := strings.LastIndex(r.Name, "-")
+	if lastHyphenIndex == -1 {
 		return "", "", microerror.Maskf(InvalidReleaseResourceNameError, "Release resource must be in format '{provider}-{version}', but '-' is not found in '%s'.", r.Name)
 	}
+
+	providerString := r.Name[:lastHyphenIndex]
+	releaseVersion := r.Name[lastHyphenIndex+1:]
+
 	provider := Provider(providerString)
 
 	if !IsProviderSupported(provider) {
 		return "", "", microerror.Maskf(UnsupportedProviderError, "Provider '%s' is not supported. Supported providers are: %s.", provider, SupportedProviders)
 	}
+
 	releaseVersion = strings.TrimPrefix(releaseVersion, "v")
 	return provider, releaseVersion, nil
 }
