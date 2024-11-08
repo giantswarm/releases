@@ -35,7 +35,7 @@ type GiantSwarmRelease struct {
 }
 
 func main() {
-	directories := []string{"capa", "azure", "vsphere"}
+	directories := []string{"capa", "azure", "vsphere", "cloud-director"}
 	for _, dir := range directories {
 		releases := Releases{
 			SourceUrl:    "https://github.com/giantswarm/releases",
