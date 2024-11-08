@@ -8,7 +8,7 @@ replacements:
     fieldPath: metadata.name
     options:
       delimiter: "-"
-      index: 1
+      index: 2
   targets:
   - select:
       group: release.giantswarm.io
