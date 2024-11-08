@@ -24,8 +24,8 @@ spec:
     version: 0.1.2
     dependsOn:
     - prometheus-operator-crd
-  - name: cloud-provider-vsphere
-    version: 1.11.0
+  - name: cloud-provider-cloud-director
+    version: 0.3.1
     dependsOn:
     - cilium
   - name: coredns
