@@ -8,6 +8,7 @@ replacements:
     fieldPath: metadata.name
     options:
       delimiter: "-"
+      # Need to target index 2 here as `cloud-director` itself already contains a hyphen.
       index: 2
   targets:
   - select:
