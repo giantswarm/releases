@@ -1,7 +1,7 @@
 apiVersion: release.giantswarm.io/v1alpha1
 kind: Release
 metadata:
-  name: vsphere-29.0.0-wealdy
+  name: vsphere-99.0.0
 spec:
   apps:
   - name: capi-node-labeler

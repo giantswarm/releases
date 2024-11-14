@@ -532,7 +532,7 @@ to all Giant Swarm installations.
 - v29
   - v29.0
     - [v29.0.0](https://github.com/giantswarm/releases/tree/master/vsphere/v29.0.0)
-    - [v29.0.0-wealdy](https://github.com/giantswarm/releases/tree/master/vsphere/v29.0.0-wealdy)
+    - [v99.0.0](https://github.com/giantswarm/releases/tree/master/vsphere/v99.0.0)
 
 - v28
   - v28.0
