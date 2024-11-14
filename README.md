@@ -1,7 +1,7 @@
 [![CircleCI](https://dl.circleci.com/status-badge/img/gh/giantswarm/releases/tree/master.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/giantswarm/releases/tree/master)
 
 # Giant Swarm Workload Cluster Releases
-
+test
 This repository contains workload cluster release notes and changelogs.
 
 Workload cluster releases can be in
