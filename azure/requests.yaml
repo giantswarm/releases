@@ -7,6 +7,10 @@ releases:
   requests:
   - name: cilium
     version: "< 0.26.0"
+- name: ">= 29.4.0"
+  requests:
+  - name: coredns
+    version: ">= 1.23.0"
 - name: ">= 29.3.0"
   requests:
   - name: observability-bundle
