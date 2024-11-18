@@ -11,6 +11,8 @@ releases:
   requests:
   - name: coredns
     version: ">= 1.23.0"
+  - name: observability-bundle
+    version: ">= 1.9.0"
 - name: ">= 29.3.0"
   requests:
   - name: observability-bundle
