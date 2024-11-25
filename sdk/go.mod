@@ -7,7 +7,7 @@ require (
 	github.com/giantswarm/microerror v0.4.1
 	github.com/google/go-github/v66 v66.0.0
 	github.com/onsi/ginkgo/v2 v2.22.0
-	github.com/onsi/gomega v1.35.1
+	github.com/onsi/gomega v1.36.0
 	github.com/stretchr/testify v1.10.0
 	k8s.io/apimachinery v0.31.3
 	sigs.k8s.io/yaml v1.4.0
