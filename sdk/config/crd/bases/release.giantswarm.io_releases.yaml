@@ -30,6 +30,10 @@ spec:
       jsonPath: .spec.date
       name: Age
       type: date
+    - description: State of this release
+      jsonPath: .spec.state
+      name: State
+      type: string
     - description: Release notes for this release
       jsonPath: .metadata.annotations['giantswarm\.io/release-notes']
       name: Release notes
