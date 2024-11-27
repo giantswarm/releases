@@ -21,7 +21,7 @@ jobs:
       - name: Get releases
         id: get-releases
         # TODO: Replace specific providers in glob with * as soon as it matches all of them anyway.
-        run: echo releases="$(jq --null-input --args '$ARGS.positional' --compact-output -- {azure,capa,vsphere}/v*.*.*)" >> "${GITHUB_OUTPUT}"
+        run: echo releases="$(jq --null-input --args '$ARGS.positional' --compact-output -- {azure,capa,cloud-director,vsphere}/v*.*.*)" >> "${GITHUB_OUTPUT}"
 
     outputs:
       releases: ${{ steps.get-releases.outputs.releases }}
@@ -93,6 +93,9 @@ jobs:
               ;;
             azure)
               title="Azure ${version}"
+              ;;
+            cloud-director)
+              title="VMware Cloud Director ${version}"
               ;;
             vsphere)
               title="vSphere ${version}"
