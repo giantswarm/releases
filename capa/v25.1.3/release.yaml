@@ -113,7 +113,7 @@ spec:
   components:
   - name: cluster-aws
     catalog: cluster-test
-    version: 1.1.4-4d62fff20e3436bf746974beddb9dc35c8611539
+    version: 1.1.4-10fe30c6bbfae1e170278492a84e6752359c3eb9
   - name: flatcar
     version: 3815.2.5 # CVEs OpenSSH fixed
   - name: flatcar-variant
