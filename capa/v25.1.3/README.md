@@ -18,15 +18,14 @@ Details can be found in the [node pools documentation](https://docs.giantswarm.i
 
 ### Apps
 
-- aws-nth-bundle v1.1.1
+- aws-nth-bundle v1.2.0
 - cert-exporter from v2.9.0 to v2.9.3
 
-### aws-nth-bundle [v1.1.1](https://github.com/giantswarm/aws-nth-bundle/releases/tag/v1.1.1)
+### aws-nth-bundle [v1.2.0](https://github.com/giantswarm/aws-nth-bundle/releases/tag/v1.2.0)
 
-#### Changed
+#### Added
 
-- Add dependency for servicemonitors
-- Move to default catalog
+- Send spot instance interruption and instance state change events to SQS queue so that aws-node-termination-handler can react to them
 
 ### cert-exporter [v2.9.0...v2.9.3](https://github.com/giantswarm/cert-exporter/compare/v2.9.0...v2.9.3)
 
