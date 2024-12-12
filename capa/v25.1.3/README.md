@@ -8,9 +8,9 @@ Details can be found in the [node pools documentation](https://docs.giantswarm.i
 
 ### Components
 
-- cluster-aws from v1.1.3 to v1.1.4
+- cluster-aws from v1.1.3 to v1.1.5
 
-### cluster-aws [v1.1.3...v1.1.4](https://github.com/giantswarm/cluster-aws/compare/v1.1.3...v1.1.4)
+### cluster-aws [v1.1.3...v1.1.5](https://github.com/giantswarm/cluster-aws/compare/v1.1.3...v1.1.5)
 
 #### Added
 
