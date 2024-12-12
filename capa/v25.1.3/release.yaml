@@ -112,13 +112,13 @@ spec:
     version: 3.1.0
   components:
   - name: cluster-aws
-    catalog: cluster-test
-    version: 1.1.4-10fe30c6bbfae1e170278492a84e6752359c3eb9
+    catalog: cluster
+    version: 1.1.5
   - name: flatcar
     version: 3815.2.5 # CVEs OpenSSH fixed
   - name: flatcar-variant
     version: 1.0.0
   - name: kubernetes
     version: 1.25.16
-  date: "2024-12-10T12:00:00Z"
+  date: "2024-12-12T12:00:00Z"
   state: active
