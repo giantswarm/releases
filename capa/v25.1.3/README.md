@@ -14,6 +14,7 @@ Details can be found in the [node pools documentation](https://docs.giantswarm.i
 
 #### Added
 
+- Make ASG lifecycle hook heartbeat timeout configurable
 - Add aws-node-termination-handler bundle
 
 ### Apps
