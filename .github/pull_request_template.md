@@ -19,6 +19,18 @@ To trigger the E2E test for each new Release added in this PR, add a comment wit
 
 `/run releases-test-suites`
 
+If your release is a new _patch_ release for an older major release, you need to specify the previous release for use in upgrade tests, for example for `25.1.2` (exists) to `25.1.3` (added in your PR):
+
+`/run releases-test-suites PREVIOUS_RELEASE=25.1.2`
+
+If your release is a new _minor_ release for an older major release, e.g. `25.3.0` (exists) to `25.4.0` (added in your PR), it works the same way:
+
+`/run releases-test-suites PREVIOUS_RELEASE=25.3.0`
+
+You can also limit which tests are run:
+
+`/run releases-test-suites TARGET_SUITES=./providers/capa/standard`
+
 If you want to trigger conformance tests, you can do so by adding a comment similar to the following:
 
 `/run conformance-tests PROVIDER=capa RELEASE_VERSION=29.1.0`
