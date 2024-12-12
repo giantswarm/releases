@@ -1,0 +1,129 @@
+apiVersion: release.giantswarm.io/v1alpha1
+kind: Release
+metadata:
+  name: aws-29.5.0
+spec:
+  apps:
+  - name: aws-ebs-csi-driver
+    version: 2.30.1
+    dependsOn:
+    - cloud-provider-aws
+  - name: aws-ebs-csi-driver-servicemonitors
+    version: 0.1.0
+    dependsOn:
+    - prometheus-operator-crd
+  - name: aws-nth-bundle
+    version: 1.2.0
+  - name: aws-pod-identity-webhook
+    version: 1.17.0
+    dependsOn:
+    - cert-manager
+  - name: capi-node-labeler
+    version: 0.5.0
+  - name: cert-exporter
+    version: 2.9.3
+    dependsOn:
+    - kyverno-crds
+  - name: cert-manager
+    version: 3.8.2
+    dependsOn:
+    - prometheus-operator-crd
+  - name: chart-operator-extensions
+    version: 1.1.2
+    dependsOn:
+    - prometheus-operator-crd
+  - name: cilium
+    version: 0.25.1
+  - name: cilium-crossplane-resources
+    catalog: cluster
+    version: 0.1.0
+  - name: cilium-servicemonitors
+    version: 0.1.2
+    dependsOn:
+    - prometheus-operator-crd
+  - name: cloud-provider-aws
+    version: 1.29.3-gs1
+    dependsOn:
+    - vertical-pod-autoscaler-crd
+  - name: cluster-autoscaler
+    version: 1.29.3-gs1
+    dependsOn:
+    - kyverno-crds
+  - name: coredns
+    version: 1.23.0
+    dependsOn:
+    - cilium
+  - name: etcd-k8s-res-count-exporter
+    version: 1.10.0
+    dependsOn:
+    - kyverno-crds
+  - name: external-dns
+    version: 3.1.0
+    dependsOn:
+    - prometheus-operator-crd
+  - name: irsa-servicemonitors
+    version: 0.1.0
+    dependsOn:
+    - prometheus-operator-crd
+  - name: k8s-audit-metrics
+    version: 0.10.0
+    dependsOn:
+    - kyverno-crds
+  - name: k8s-dns-node-cache
+    version: 2.8.1
+    dependsOn:
+    - kyverno-crds
+  - name: metrics-server
+    version: 2.4.2
+    dependsOn:
+    - kyverno-crds
+  - name: net-exporter
+    version: 1.21.0
+    dependsOn:
+    - prometheus-operator-crd
+  - name: network-policies
+    catalog: cluster
+    version: 0.1.1
+    dependsOn:
+    - cilium
+  - name: node-exporter
+    version: 1.20.0
+    dependsOn:
+    - kyverno-crds
+  - name: observability-bundle
+    version: 1.9.0
+    dependsOn:
+    - coredns
+  - name: observability-policies
+    version: 0.0.1
+    dependsOn:
+    - kyverno-crds
+  - name: prometheus-blackbox-exporter
+    version: 0.4.2
+    dependsOn:
+    - prometheus-operator-crd
+  - name: security-bundle
+    catalog: giantswarm
+    version: 1.8.2
+    dependsOn:
+    - prometheus-operator-crd
+  - name: teleport-kube-agent
+    version: 0.10.3
+  - name: vertical-pod-autoscaler
+    version: 5.3.0
+    dependsOn:
+    - prometheus-operator-crd
+  - name: vertical-pod-autoscaler-crd
+    version: 3.1.1
+  components:
+  - name: cluster-aws
+    catalog: cluster
+    version: 2.5.0
+  - name: flatcar
+    version: 3975.2.2
+  - name: kubernetes
+    version: 1.29.12
+  - name: os-tooling
+    version: 1.21.1
+  date: "2024-12-12T12:00:00Z"
+  state: active
