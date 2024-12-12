@@ -31,7 +31,7 @@
     {
       "version": "25.1.3",
       "isDeprecated": false,
-      "releaseTimestamp": "2024-12-10 12:00:00 +0000 UTC",
+      "releaseTimestamp": "2024-12-12 12:00:00 +0000 UTC",
       "changelogUrl": "https://github.com/giantswarm/releases/blob/master/capa/v25.1.3/README.md",
       "isStable": true
     },
