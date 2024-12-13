@@ -25,6 +25,8 @@ to all Giant Swarm installations.
     - [v29.0.0](https://github.com/giantswarm/releases/tree/master/capa/archived/v29.0.0)
 
 - v28
+  - v28.4
+    - [v28.4.0](https://github.com/giantswarm/releases/tree/master/capa/v28.4.0)
   - v28.3
     - [v28.3.0](https://github.com/giantswarm/releases/tree/master/capa/v28.3.0)
   - v28.2
