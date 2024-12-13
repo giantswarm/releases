@@ -3,6 +3,8 @@ releases:
   requests:
   - name: security-bundle
     version: ">= 1.9.1"
+  - name: aws-ebs-csi-driver
+    version: ">= 3.0.0"
 - name: "< 30.0.0"
   requests:
   - name: cilium
