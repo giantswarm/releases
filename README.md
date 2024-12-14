@@ -543,6 +543,8 @@ to all Giant Swarm installations.
 ## vSphere
 
 - v29
+  - v29.2
+    - [v29.2.0](https://github.com/giantswarm/releases/tree/master/vsphere/v29.2.0)
   - v29.1
     - [v29.1.0](https://github.com/giantswarm/releases/tree/master/vsphere/v29.1.0)
   - v29.0
