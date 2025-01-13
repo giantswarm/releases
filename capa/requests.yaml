@@ -5,7 +5,7 @@ releases:
     version: ">= 1.9.1"
   - name: aws-ebs-csi-driver
     version: ">= 3.0.0"
-- name: "< 30.0.0"
+- name: "< 29.6.0"
   requests:
   - name: cilium
     version: "< 0.26.0"

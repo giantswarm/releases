@@ -3,7 +3,7 @@ releases:
   requests:
   - name: security-bundle
     version: ">= 1.9.1"
-- name: "< 30.0.0"
+- name: "< 29.5.0"
   requests:
   - name: cilium
     version: "< 0.26.0"
