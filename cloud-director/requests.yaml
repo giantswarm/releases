@@ -3,6 +3,12 @@ releases:
   requests:
   - name: security-bundle
     version: ">= 1.9.1"
+  - name: os-tooling
+    version: ">= 1.22.1"
+- name: ">= 29.3.0"
+  requests:
+  - name: os-tooling
+    version: ">= 1.22.1"
 - name: "< 29.3.0"
   requests:
   - name: cilium
