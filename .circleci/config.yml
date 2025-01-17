@@ -24,7 +24,6 @@ workflows:
           name: filter
           mapping: |
             aws/.* push-aws true
-            kvm/.* push-kvm true
           base-revision: master
           config-path: .circleci/provider_config.yml
           requires:
