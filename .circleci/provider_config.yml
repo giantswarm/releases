@@ -8,9 +8,6 @@ parameters:
   push-aws:
     type: boolean
     default: false
-  push-kvm:
-    type: boolean
-    default: false
 
 jobs:
   render:
@@ -70,36 +67,6 @@ workflows:
           app_collection_repo: aws-app-collection
           requires:
             - push-releases-aws-to-releases-catalog
-          filters:
-            # Trigger the job on merge to master.
-            branches:
-              only: master
-
-  kvm:
-    when: << pipeline.parameters.push-kvm >>
-    jobs:
-      - render:
-          name: render-kvm
-          provider: kvm
-      - architect/push-to-app-catalog:
-          context: architect
-          name: push-releases-kvm-to-releases-catalog
-          app_catalog: releases-catalog
-          app_catalog_test: releases-test-catalog
-          attach_workspace: true
-          chart: releases-kvm
-          explicit_allow_chart_name_mismatch: true
-          on_tag: false
-          requires:
-            - render-kvm
-      - architect/push-to-app-collection:
-          context: architect
-          name: push-releases-to-kvm-app-collection
-          app_catalog: releases
-          app_name: releases-kvm
-          app_collection_repo: kvm-app-collection
-          requires:
-            - push-releases-kvm-to-releases-catalog
           filters:
             # Trigger the job on merge to master.
             branches:
