@@ -1,8 +1,0 @@
-apiVersion: v1
-name: releases-kvm
-version: [[ .Version ]]
-appVersion: master
-description: Giant Swarm releases for kvm.
-home: https://github.com/giantswarm/releases
-annotations:
-  config.giantswarm.io/version: 1.x.x
