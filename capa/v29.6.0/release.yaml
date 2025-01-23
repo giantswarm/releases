@@ -1,5 +1,5 @@
 # Generated with:
-# devctl release create --provider aws --name 29.6.0 --base 29.5.0 --component cluster-aws@2.5.0 --app aws-nth-bundle@1.2.0
+# devctl release create --provider aws --name 29.6.0 --base 29.5.0 --component cluster-aws@2.5.0 --app aws-nth-bundle@1.2.0 TODO RE-RUN WITH REAL VERSIONS
 apiVersion: release.giantswarm.io/v1alpha1
 kind: Release
 metadata:
@@ -16,7 +16,8 @@ spec:
     name: aws-ebs-csi-driver-servicemonitors
     version: 0.1.0
   - name: aws-nth-bundle
-    version: 1.2.0
+    version: 1.2.0-2da626ef1c0001aa4f1f38d4c9732f16bedd8a6b
+    catalog: default-test
   - dependsOn:
     - cert-manager
     name: aws-pod-identity-webhook
@@ -119,9 +120,9 @@ spec:
   - name: vertical-pod-autoscaler-crd
     version: 3.1.1
   components:
-  - catalog: cluster
+  - catalog: cluster-test
     name: cluster-aws
-    version: 2.5.0
+    version: 2.5.0-102625f683c3f518988ac5ec29801b9c7e382c7a
   - name: flatcar
     version: 3975.2.2
   - name: kubernetes
