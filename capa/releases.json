@@ -199,7 +199,7 @@
     {
       "version": "29.6.0",
       "isDeprecated": false,
-      "releaseTimestamp": "2025-01-23T17:01:12+01:00",
+      "releaseTimestamp": "2025-01-23T17:08:14+01:00",
       "changelogUrl": "https://github.com/giantswarm/releases/blob/master/aws/v29.6.0/README.md",
       "isStable": true
     }

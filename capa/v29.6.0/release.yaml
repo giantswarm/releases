@@ -1,5 +1,5 @@
 # Generated with:
-# devctl release create --provider aws --name 29.6.0 --base 29.5.0 --component cluster-aws@2.6.0 --app aws-nth-bundle@1.2.1 --app cilium@0.30.0 --component os-tooling@1.22.1 --app security-bundle@1.9.1
+# devctl release create --provider aws --name 29.6.0 --base 29.5.0 --component cluster-aws@2.6.0 --app aws-nth-bundle@1.2.1 --app cilium@0.25.2 --component os-tooling@1.22.1 --app security-bundle@1.9.1
 apiVersion: release.giantswarm.io/v1alpha1
 kind: Release
 metadata:
@@ -36,7 +36,7 @@ spec:
     name: chart-operator-extensions
     version: 1.1.2
   - name: cilium
-    version: 0.30.0
+    version: 0.25.2
   - catalog: cluster
     name: cilium-crossplane-resources
     version: 0.1.0
@@ -128,7 +128,7 @@ spec:
     version: 1.29.12
   - name: os-tooling
     version: 1.22.1
-  date: "2025-01-23T16:01:12Z"
+  date: "2025-01-23T16:08:14Z"
   state: active
 status:
   inUse: false

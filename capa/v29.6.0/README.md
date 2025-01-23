@@ -39,7 +39,7 @@
 
 
 
-* cilium from 0.25.1 to [0.30.0](https://github.com/giantswarm/cilium-app/compare/v0.25.1...v0.30.0)
+* cilium from 0.25.1 to [0.25.2](https://github.com/giantswarm/cilium-app/compare/v0.25.1...v0.25.2)
 
 
 
@@ -59,21 +59,11 @@
 
 
 
-### cilium [0.30.0](https://github.com/giantswarm/cilium-app/compare/v0.25.1...v0.30.0)
+### cilium [0.25.2](https://github.com/giantswarm/cilium-app/compare/v0.25.1...v0.25.2)
 
 #### Changed
 
-- Upgrade Cilium to [v1.16.5](https://github.com/cilium/cilium/releases/tag/v1.16.5).
-- Revert back to upstream default of using image digests for container images.
-- Upgrade Cilium to [v1.16.3](https://github.com/cilium/cilium/releases/tag/v1.16.3).
-- Move provider specific custom CNI configuration to subchart.
-- Upgrade Cilium to [v1.16.1](https://github.com/cilium/cilium/releases/tag/v1.16.1).
-- Upgrade Cilium to [v1.16.0](https://github.com/cilium/cilium/releases/tag/v1.16.0).
-- Disable digest in all images.
-- Improve security defaults for:
-- Hubble UI
-- Hubble Relay
-- Cilium Operator
+- Upgrade cilium to [v1.15.13](https://github.com/cilium/cilium/releases/tag/v1.15.13).
 
 
 
