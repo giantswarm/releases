@@ -18,7 +18,7 @@ spec:                                                              spec:
                                                                 >      name: aws-ebs-csi-driver-servicemonitors
                                                                 >      version: 0.1.0
   - name: aws-nth-bundle                                             - name: aws-nth-bundle
-    version: 1.2.0                                                     version: 1.2.0
+    version: 1.2.0                                              |      version: 1.2.1
   - name: aws-pod-identity-webhook                              |    - dependsOn:
     version: 1.17.0                                             <  
     dependsOn:                                                  <  
@@ -44,7 +44,7 @@ spec:                                                              spec:
     dependsOn:                                                  <  
     - prometheus-operator-crd                                   <  
   - name: cilium                                                     - name: cilium
-    version: 0.25.1                                                    version: 0.25.1
+    version: 0.25.1                                             |      version: 0.30.0
   - name: cilium-crossplane-resources                           |    - catalog: cluster
     catalog: cluster                                            |      name: cilium-crossplane-resources
     version: 0.1.0                                                     version: 0.1.0
@@ -124,8 +124,8 @@ spec:                                                              spec:
     dependsOn:                                                         dependsOn:
     - prometheus-operator-crd                                          - prometheus-operator-crd
   - name: security-bundle                                       |      name: security-bundle
-    catalog: giantswarm                                         <  
-    version: 1.8.2                                                     version: 1.8.2
+    catalog: giantswarm                                         |      version: 1.9.1
+    version: 1.8.2                                              <  
     dependsOn:                                                  <  
     - prometheus-operator-crd                                   <  
   - name: teleport-kube-agent                                        - name: teleport-kube-agent
@@ -141,14 +141,14 @@ spec:                                                              spec:
   components:                                                        components:
   - name: cluster-aws                                           |    - catalog: cluster
     catalog: cluster                                            |      name: cluster-aws
-    version: 2.5.0                                                     version: 2.5.0
+    version: 2.5.0                                              |      version: 2.6.0
   - name: flatcar                                                    - name: flatcar
     version: 3975.2.2                                                  version: 3975.2.2
   - name: kubernetes                                                 - name: kubernetes
     version: 1.29.12                                                   version: 1.29.12
   - name: os-tooling                                                 - name: os-tooling
-    version: 1.21.1                                                    version: 1.21.1
-  date: "2024-12-12T12:00:00Z"                                  |    date: "2025-01-23T11:08:55Z"
+    version: 1.21.1                                             |      version: 1.22.1
+  date: "2024-12-12T12:00:00Z"                                  |    date: "2025-01-23T16:01:12Z"
   state: active                                                      state: active
                                                                 >  status:
                                                                 >    inUse: false

@@ -1,5 +1,5 @@
 # Generated with:
-# devctl release create --provider aws --name 29.6.0 --base 29.5.0 --component cluster-aws@2.5.0 --app aws-nth-bundle@1.2.0 TODO RE-RUN WITH REAL VERSIONS
+# devctl release create --provider aws --name 29.6.0 --base 29.5.0 --component cluster-aws@2.6.0 --app aws-nth-bundle@1.2.1 --app cilium@0.30.0 --component os-tooling@1.22.1 --app security-bundle@1.9.1
 apiVersion: release.giantswarm.io/v1alpha1
 kind: Release
 metadata:
@@ -16,8 +16,7 @@ spec:
     name: aws-ebs-csi-driver-servicemonitors
     version: 0.1.0
   - name: aws-nth-bundle
-    version: 1.2.0-2da626ef1c0001aa4f1f38d4c9732f16bedd8a6b
-    catalog: default-test
+    version: 1.2.1
   - dependsOn:
     - cert-manager
     name: aws-pod-identity-webhook
@@ -37,7 +36,7 @@ spec:
     name: chart-operator-extensions
     version: 1.1.2
   - name: cilium
-    version: 0.25.1
+    version: 0.30.0
   - catalog: cluster
     name: cilium-crossplane-resources
     version: 0.1.0
@@ -110,7 +109,7 @@ spec:
     dependsOn:
     - prometheus-operator-crd
     name: security-bundle
-    version: 1.8.2
+    version: 1.9.1
   - name: teleport-kube-agent
     version: 0.10.3
   - dependsOn:
@@ -120,16 +119,16 @@ spec:
   - name: vertical-pod-autoscaler-crd
     version: 3.1.1
   components:
-  - catalog: cluster-test
+  - catalog: cluster
     name: cluster-aws
-    version: 2.5.0-102625f683c3f518988ac5ec29801b9c7e382c7a
+    version: 2.6.0
   - name: flatcar
     version: 3975.2.2
   - name: kubernetes
     version: 1.29.12
   - name: os-tooling
-    version: 1.21.1
-  date: "2025-01-23T11:08:55Z"
+    version: 1.22.1
+  date: "2025-01-23T16:01:12Z"
   state: active
 status:
   inUse: false
