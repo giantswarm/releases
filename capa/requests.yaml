@@ -31,3 +31,5 @@ releases:
   requests:
   - name: cert-exporter
     version: ">= 2.9.2"
+  - name: cilium
+    version: ">= 0.25.2 < 0.25.99"
