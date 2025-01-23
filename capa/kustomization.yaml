@@ -27,6 +27,7 @@ resources:
 - v29.3.0
 - v29.4.0
 - v29.5.0
+- v29.6.0
 
 commonAnnotations:
   giantswarm.io/docs: https://docs.giantswarm.io/use-the-api/management-api/crd/releases.release.giantswarm.io
