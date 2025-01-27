@@ -8,6 +8,27 @@
 
 
 
+* cluster-aws from 1.3.5 to [1.3.6](https://github.com/giantswarm/cluster-aws/compare/v1.3.5...v1.3.6)
+
+
+
+
+
+
+### cluster-aws [1.3.6](https://github.com/giantswarm/cluster-aws/compare/v1.3.5...v1.3.6)
+
+#### Changed
+
+- Chart: Reduce default etcd volume size to 50 GB.
+- Explicitly set Ignition user data storage type to S3 bucket objects for machine pools
+- Use reduced IAM permissions on worker nodes instance profile. This can be toggled back with `global.providerSpecific.reducedInstanceProfileIamPermissionsForWorkers`.
+
+#### Fixed
+
+- Explicitly set aws-node-termination-handler queue region so crash-loops are avoided, allowing faster startup
+
+
+
 
 
 ### Apps

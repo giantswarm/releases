@@ -164,7 +164,7 @@
     {
       "version": "28.5.0",
       "isDeprecated": false,
-      "releaseTimestamp": "2025-01-23T17:35:31+01:00",
+      "releaseTimestamp": "2025-01-27T17:14:16+01:00",
       "changelogUrl": "https://github.com/giantswarm/releases/blob/master/aws/v28.5.0/README.md",
       "isStable": true
     },
