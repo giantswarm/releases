@@ -312,6 +312,8 @@ to all Giant Swarm installations.
 ## Azure
 
 - v29
+  - v29.5
+    - [v29.5.0](https://github.com/giantswarm/releases/tree/master/azure/v29.5.0)
   - v29.4
     - [v29.4.0](https://github.com/giantswarm/releases/tree/master/azure/v29.4.0)
   - v29.3
