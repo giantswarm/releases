@@ -9,6 +9,8 @@ releases:
   requests:
   - name: aws-pod-identity-webhook
     version: ">= 1.18.0"
+  - name: cloud-provider-aws
+    version: ">= v1.31.0"
   - name: cilium
     version: ">= 0.25.2 < 0.26.0"
   - name: os-tooling
