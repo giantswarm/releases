@@ -48,6 +48,13 @@
       "releaseTimestamp": "2024-12-12 12:00:00 +0000 UTC",
       "changelogUrl": "https://github.com/giantswarm/releases/blob/master/vsphere/v29.2.0/README.md",
       "isStable": true
+    },
+    {
+      "version": "29.3.0",
+      "isDeprecated": false,
+      "releaseTimestamp": "2025-01-27 18:00:00 +0000 UTC",
+      "changelogUrl": "https://github.com/giantswarm/releases/blob/master/vsphere/v29.3.0/README.md",
+      "isStable": true
     }
   ],
   "sourceUrl": "https://github.com/giantswarm/releases",
