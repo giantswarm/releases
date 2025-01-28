@@ -1,0 +1,13 @@
+4c4
+<   name: vsphere-29.2.0
+---
+>   name: vsphere-100.0.0
+28c28,29
+<     version: 1.11.0
+---
+>     version: 1.11.0-b0b0f54fd99cb3ded177fc1e12a87b9ea85a0090
+>     catalog: default-test
+103c104
+<   date: "2024-12-12T12:00:00Z"
+---
+>   date: "2025-01-28T12:00:00Z"

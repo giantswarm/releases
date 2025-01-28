@@ -552,6 +552,10 @@ to all Giant Swarm installations.
 
 ## vSphere
 
+- v100
+  - v100.0
+    - [v100.0.0](https://github.com/giantswarm/releases/tree/master/vsphere/v100.0.0)
+
 - v29
   - v29.2
     - [v29.2.0](https://github.com/giantswarm/releases/tree/master/vsphere/v29.2.0)
