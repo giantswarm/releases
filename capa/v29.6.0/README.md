@@ -1,6 +1,6 @@
 # :zap: Giant Swarm Release v29.6.0 for CAPA :zap:
 
-Most notable change in this release is the reduction of IAM permissions on the worker nodes instance profile, aiming at improving the general security of the clusters. Additional changes include reducing the size of the ETCD volume to 50GB targetting costs saving initiatives, as well as improvements for the `node-termination-handler` application for smoother upgrades and operations. Several components such as Flatcar or Kubernetes have also been updates to the latest available versions.
+Most notable change in this release is the reduction of IAM permissions on the worker nodes instance profile, aiming at improving the general security of the clusters. Additional changes include reducing the size of the ETCD volume to 50GB targetting costs saving initiatives, as well as improvements for the `node-termination-handler` application for smoother upgrades and operations. Several components such as Flatcar or Kubernetes have also been updated to the latest available versions.
 
 ## Changes compared to v29.5.0
 
