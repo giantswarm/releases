@@ -25,7 +25,7 @@ spec:
     dependsOn:
     - prometheus-operator-crd
   - name: cloud-provider-vsphere
-    version: 1.11.0-b0b0f54fd99cb3ded177fc1e12a87b9ea85a0090
+    version: 1.11.0-f6050885bc8fea05d219ffbebc99b106aa1d756d
     catalog: default-test
     dependsOn:
     - cilium
