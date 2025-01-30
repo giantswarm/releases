@@ -94,7 +94,7 @@ spec:
   components:
   - name: cluster-vsphere
     catalog: cluster
-    version: 0.68.0
+    version: 0.68.1
   - name: flatcar
     version: 3975.2.2
   - name: kubernetes
