@@ -575,6 +575,8 @@ to all Giant Swarm installations.
 ## VMware Cloud Director
 
 - v29
+  - v29.3
+    - [v29.3.0](https://github.com/giantswarm/releases/tree/master/cloud-director/v29.3.0)
   - v29.2
     - [v29.2.0](https://github.com/giantswarm/releases/tree/master/cloud-director/v29.2.0)
   - v29.1
