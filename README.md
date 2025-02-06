@@ -587,6 +587,7 @@ to all Giant Swarm installations.
   - v29.2
     - [v29.2.0](https://github.com/giantswarm/releases/tree/master/cloud-director/v29.2.0)
   - v29.1
+    - [v29.1.1](https://github.com/giantswarm/releases/tree/master/cloud-director/v29.1.1)
     - [v29.1.0](https://github.com/giantswarm/releases/tree/master/cloud-director/v29.1.0)
   - v29.0
     - [v29.0.1](https://github.com/giantswarm/releases/tree/master/cloud-director/v29.0.1)
