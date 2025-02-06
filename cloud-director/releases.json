@@ -15,10 +15,10 @@
       "isStable": true
     },
     {
-      "version": "28.0.0",
+      "version": "28.0.1",
       "isDeprecated": false,
-      "releaseTimestamp": "2024-11-13 12:00:00 +0000 UTC",
-      "changelogUrl": "https://github.com/giantswarm/releases/blob/master/cloud-director/v28.0.0/README.md",
+      "releaseTimestamp": "2025-02-06 12:00:00 +0000 UTC",
+      "changelogUrl": "https://github.com/giantswarm/releases/blob/master/cloud-director/v28.0.1/README.md",
       "isStable": true
     },
     {
