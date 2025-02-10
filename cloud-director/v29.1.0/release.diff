@@ -100,5 +100,5 @@ spec:									spec:
     version: 1.29.10							    version: 1.29.10
   - name: os-tooling							  - name: os-tooling
     version: 1.20.1							    version: 1.20.1
-  date: "2024-11-15T12:00:00Z"						  date: "2024-11-15T12:00:00Z"
-  state: deprecated							  state: active
+  date: "2024-11-15T12:00:00Z"					|         date: "2024-11-25T12:00:00Z"
+  state: deprecated						|         state: active
