@@ -7,7 +7,7 @@ toolchain go1.24.0
 require (
 	github.com/Masterminds/semver/v3 v3.3.1
 	github.com/giantswarm/microerror v0.4.1
-	github.com/google/go-github/v69 v69.0.0
+	github.com/google/go-github/v69 v69.1.0
 	github.com/onsi/ginkgo/v2 v2.22.2
 	github.com/onsi/gomega v1.36.2
 	k8s.io/apimachinery v0.32.1
