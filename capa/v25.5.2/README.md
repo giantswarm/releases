@@ -1,4 +1,4 @@
-# :zap: Giant Swarm Release v25.5.1 for CAPA :zap:
+# :zap: Giant Swarm Release v25.5.2 for CAPA :zap:
 
 ## Changes compared to v25.5.1
 
