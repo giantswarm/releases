@@ -9,6 +9,8 @@ different states, namely `active`, `deprecated` and `wip`. With pull requests
 merged to the `master` branch, workload cluster releases get automatically deployed
 to all Giant Swarm installations.
 
+I just need a PR.
+
 ## AWS
 
 - v30
