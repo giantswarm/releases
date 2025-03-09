@@ -42,6 +42,7 @@ resources:
 - v29.5.0
 - v29.6.0
 - v29.6.1
+- v29.6.2
 - v30.0.0
 
 commonAnnotations:
