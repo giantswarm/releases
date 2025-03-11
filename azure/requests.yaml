@@ -3,10 +3,10 @@ releases:
   requests:
   - name: os-tooling
     version: ">= 1.24.0"
-- name: ">= 30.0.0"
+- name: "30.x.x"
   requests:
   - name: cilium
-    version: ">= 0.26.0"
+    version: "0.31.x"
 - name: ">= 29.5.0"
   requests:
   - name: cilium
