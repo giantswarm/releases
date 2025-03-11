@@ -1,4 +1,8 @@
 releases:
+- name: "31.x.x"
+  requests:
+  - name: cilium
+    version: ">= 0.32.0"
 - name: ">= 30.1.0"
   requests:
   - name: os-tooling
