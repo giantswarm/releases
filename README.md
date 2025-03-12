@@ -119,7 +119,7 @@ to all Giant Swarm installations.
 
 - v19
   - v19.3
-    - [v19.3.5](https://github.com/giantswarm/releases/tree/master/aws/v19.3.5)
+    - [v19.3.5](https://github.com/giantswarm/releases/tree/master/aws/archived/v19.3.5)
     - [v19.3.4](https://github.com/giantswarm/releases/tree/master/aws/archived/v19.3.4)
     - [v19.3.3](https://github.com/giantswarm/releases/tree/master/aws/archived/v19.3.3)
     - [v19.3.2](https://github.com/giantswarm/releases/tree/master/aws/archived/v19.3.2)
