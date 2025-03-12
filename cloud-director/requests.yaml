@@ -7,6 +7,8 @@ releases:
   requests:
   - name: os-tooling
     version: ">= 1.24.0"
+  - name: security-bundle
+    version: ">= 1.10.0"
 - name: ">= 30.0.0 < 31.0.0"
   requests:
   - name: cilium
