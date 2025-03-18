@@ -5,9 +5,9 @@ metadata:
 spec:
   apps:
   - name: capi-node-labeler
-    version: 1.0.1
+    version: 1.0.2
   - name: cert-exporter
-    version: 2.9.4
+    version: 2.9.5
     dependsOn:
     - kyverno-crds
   - name: cert-manager
@@ -19,7 +19,7 @@ spec:
     dependsOn:
     - prometheus-operator-crd
   - name: cilium
-    version: 0.31.0
+    version: 0.31.1
   - name: cilium-servicemonitors
     version: 0.1.2
     dependsOn:
@@ -37,11 +37,11 @@ spec:
     dependsOn:
     - vertical-pod-autoscaler-crd
   - name: etcd-defrag
-    version: 1.0.1
+    version: 1.0.2
     dependsOn:
     - kyverno-crds
   - name: etcd-k8s-res-count-exporter
-    version: 1.10.1
+    version: 1.10.3
     dependsOn:
     - kyverno-crds
   - name: external-dns
@@ -49,7 +49,7 @@ spec:
     dependsOn:
     - prometheus-operator-crd
   - name: k8s-audit-metrics
-    version: 0.10.1
+    version: 0.10.2
     dependsOn:
     - kyverno-crds
   - name: k8s-dns-node-cache
@@ -69,7 +69,7 @@ spec:
     dependsOn:
     - kyverno-crds
   - name: net-exporter
-    version: 1.21.0
+    version: 1.22.0
     dependsOn:
     - prometheus-operator-crd
   - name: network-policies
@@ -78,11 +78,11 @@ spec:
     dependsOn:
     - cilium
   - name: node-exporter
-    version: 1.20.1
+    version: 1.20.2
     dependsOn:
     - kyverno-crds
   - name: observability-bundle
-    version: 1.9.0
+    version: 1.11.0
     dependsOn:
     - coredns
   - name: observability-policies
@@ -95,11 +95,11 @@ spec:
     - prometheus-operator-crd
   - name: security-bundle
     catalog: giantswarm
-    version: 1.9.1
+    version: 1.10.0
     dependsOn:
     - prometheus-operator-crd
   - name: teleport-kube-agent
-    version: 0.10.3
+    version: 0.10.4
   - name: vertical-pod-autoscaler
     version: 5.4.0
     dependsOn:
@@ -117,8 +117,8 @@ spec:
   - name: flatcar
     version: 4152.2.1
   - name: kubernetes
-    version: 1.30.10
+    version: 1.30.11
   - name: os-tooling
-    version: 1.23.1
-  date: "2025-03-17T12:00:00Z"
+    version: 1.24.0
+  date: "2025-03-18T12:00:00Z"
   state: active
