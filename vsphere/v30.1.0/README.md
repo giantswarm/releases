@@ -42,6 +42,12 @@
 - teleport-kube-agent from v0.10.3 to v0.10.4
 - vsphere-csi-driver added at v3.4.2
 
+### capi-node-labeler [v1.0.1...v1.0.2](https://github.com/giantswarm/capi-node-labeler-app/compare/v1.0.1...v1.0.2)
+
+#### Changed
+
+- Go: Update dependencies.
+
 ### cert-exporter [v2.9.4...v2.9.5](https://github.com/giantswarm/cert-exporter/compare/v2.9.4...v2.9.5)
 
 #### Changed
