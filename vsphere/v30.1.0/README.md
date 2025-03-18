@@ -4,11 +4,11 @@
 
 ### Components
 
-- cluster-vsphere from v0.69.0 to v1.0.0
+- cluster-vsphere from v0.69.0 to v1.1.0
 - Kubernetes from v1.30.10 to [v1.30.11](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.30.md)
 - os-tooling from v1.23.1 to v1.24.0
 
-### cluster-vsphere [v0.69.0...v1.0.0](https://github.com/giantswarm/cluster-vsphere/compare/v0.69.0...v1.0.0)
+### cluster-vsphere [v0.69.0...v1.1.0](https://github.com/giantswarm/cluster-vsphere/compare/v0.69.0...v1.1.0)
 
 #### Added
 
@@ -16,6 +16,7 @@
 
 #### Changed
 
+- Chart: Update `cluster` to v2.2.0.
 - Split cloud provider app into separate HelmReleases.
 
 ### os-tooling [v1.23.1...v1.24.0](https://github.com/giantswarm/capi-image-builder/compare/v1.23.1...v1.24.0)

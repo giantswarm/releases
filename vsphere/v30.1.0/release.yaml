@@ -113,7 +113,7 @@ spec:
   components:
   - name: cluster-vsphere
     catalog: cluster-test
-    version: 1.0.0-5fa2e52498eaede78e5c3977cd6c339ba92ec176
+    version: 1.0.0-be7bf400e85db8b9db216a3f6deac529f5a17d20
   - name: flatcar
     version: 4152.2.1
   - name: kubernetes
