@@ -574,6 +574,8 @@ to all Giant Swarm installations.
 ## vSphere
 
 - v30
+  - v30.1
+    - [v30.1.0](https://github.com/giantswarm/releases/tree/master/vsphere/v30.1.0)
   - v30.0
     - [v30.0.0](https://github.com/giantswarm/releases/tree/master/vsphere/v30.0.0)
 
