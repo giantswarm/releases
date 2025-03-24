@@ -88,6 +88,7 @@ to all Giant Swarm installations.
 
 - v25
   - v25.5
+    - [v25.5.3](https://github.com/giantswarm/releases/tree/master/capa/v25.5.3)
     - [v25.5.2](https://github.com/giantswarm/releases/tree/master/capa/v25.5.2)
     - [v25.5.1](https://github.com/giantswarm/releases/tree/master/capa/v25.5.1)
     - [v25.5.0](https://github.com/giantswarm/releases/tree/master/capa/v25.5.0)
