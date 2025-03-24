@@ -73,6 +73,7 @@ to all Giant Swarm installations.
 
 - v26
   - v26.4
+    - [v26.4.3](https://github.com/giantswarm/releases/tree/master/capa/v26.4.3)
     - [v26.4.2](https://github.com/giantswarm/releases/tree/master/capa/v26.4.2)
     - [v26.4.1](https://github.com/giantswarm/releases/tree/master/capa/v26.4.1)
     - [v26.4.0](https://github.com/giantswarm/releases/tree/master/capa/v26.4.0)
