@@ -5,7 +5,7 @@ on:
     paths:
       - '*/*/release.yaml'
       - '*/archived/**'
-      - '.github/workflows/check-release-archive.yml'
+      - '.github/workflows/archive-releases.yml'
 
 jobs:
   check-release-archive:
