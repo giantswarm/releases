@@ -13,7 +13,14 @@ fi
 DEFAULT_BRANCH=$(git remote show origin | grep 'HEAD branch' | cut -d' ' -f5)
 echo "Using default branch: $DEFAULT_BRANCH"
 git fetch origin $DEFAULT_BRANCH
-renamed_files=$(git diff --name-status origin/$DEFAULT_BRANCH...HEAD | grep "^R")
+
+# Get renamed files
+renamed_files=$(git diff --name-status origin/$DEFAULT_BRANCH...HEAD | grep "^R" || echo "")
+
+if [[ -z "$renamed_files" ]]; then
+  echo "No renamed files found in this PR. Nothing to check."
+  exit 0
+fi
 
 # Array to store active releases (still in use)
 declare -a active_releases
