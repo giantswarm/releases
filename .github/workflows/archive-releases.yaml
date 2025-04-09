@@ -7,7 +7,6 @@ on:
       - '*/v*/*'
       - '*/archived/**'
       - '.github/workflows/archive-releases.yaml'
-  workflow_dispatch:
 
 jobs:
   check-release-archive:
