@@ -2,10 +2,12 @@ name: Check Release Archive Safety
 
 on:
   pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
     paths:
-      - '*/*/release.yaml'
+      - '*/v*/*'
       - '*/archived/**'
-      - '.github/workflows/archive-releases.yml'
+      - '.github/workflows/archive-releases.yaml'
+  workflow_dispatch:
 
 jobs:
   check-release-archive:
