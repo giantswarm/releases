@@ -22,9 +22,6 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y jq curl
       
-      - name: Set script permissions
-        run: chmod +x ./tools/check-release-archive.sh
-      
       - name: Check if releases being archived are safe
         run: ./tools/check-release-archive.sh "${{ secrets.GRAFANA_API_KEY }}"
         env:
