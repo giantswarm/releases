@@ -41,7 +41,3 @@ releases:
   requests:
   - name: cert-exporter
     version: ">= 2.9.2"
-- name: "> 30.1.0"
-  requests:
-  - name: cert-manager-crossplane-resources
-    version: ">= 0.0.7"
