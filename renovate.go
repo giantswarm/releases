@@ -56,7 +56,7 @@ func main() {
 					continue
 				}
 
-				data, err := os.ReadFile(releaseFile)
+				data, err := os.ReadFile(releaseFile) // nolint:gosec
 				if err != nil {
 					continue
 				}
@@ -91,7 +91,7 @@ func main() {
 			return
 		}
 
-		if err := os.WriteFile(fmt.Sprintf("%s/releases.json", dir), jsonData, 0644); err != nil {
+		if err := os.WriteFile(fmt.Sprintf("%s/releases.json", dir), jsonData, 0644); err != nil { // nolint:gosec
 			fmt.Printf("Error writing JSON to file: %v\n", err)
 		}
 	}

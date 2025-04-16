@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"io/ioutil"
+	"os"
 	"path/filepath"
 	"strings"
 	"testing"
@@ -130,7 +130,7 @@ func findReleases(provider string, archived bool) ([]v1alpha1.Release, error) {
 	if archived {
 		path = filepath.Join(provider, "archived")
 	}
-	releaseDirectories, err := ioutil.ReadDir(path)
+	releaseDirectories, err := os.ReadDir(path)
 	if err != nil {
 		return nil, microerror.Mask(err)
 	}
@@ -140,7 +140,7 @@ func findReleases(provider string, archived bool) ([]v1alpha1.Release, error) {
 			continue
 		}
 		releaseFile := filepath.Join(path, releaseDirectory.Name(), releaseFilename)
-		data, err := ioutil.ReadFile(releaseFile)
+		data, err := os.ReadFile(releaseFile) // nolint:gosec
 		if err != nil {
 			return nil, microerror.Mask(err)
 		}
@@ -244,7 +244,7 @@ func Test_Releases(t *testing.T) {
 	// Load the README so we can check links for each release.
 	var readmeContent string
 	{
-		readmeContentBytes, err := ioutil.ReadFile(readmeFilename)
+		readmeContentBytes, err := os.ReadFile(readmeFilename)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -256,7 +256,7 @@ func Test_Releases(t *testing.T) {
 			providerResources := map[string]bool{}
 			{
 				var providerKustomization kustomizationFile
-				providerKustomizationData, err := ioutil.ReadFile(filepath.Join(tc.provider, kustomizationFilename))
+				providerKustomizationData, err := os.ReadFile(filepath.Join(tc.provider, kustomizationFilename))
 				if err != nil {
 					t.Fatal(err)
 				}
@@ -272,7 +272,7 @@ func Test_Releases(t *testing.T) {
 			providerRequests := []releaseRequest{}
 			{
 				var providerRequestsFile requestsFile
-				providerRequestsData, err := ioutil.ReadFile(filepath.Join(tc.provider, requestsFilename))
+				providerRequestsData, err := os.ReadFile(filepath.Join(tc.provider, requestsFilename))
 				if err != nil {
 					t.Fatal(err)
 				}
@@ -280,9 +280,7 @@ func Test_Releases(t *testing.T) {
 				if err != nil {
 					t.Fatal(err)
 				}
-				for _, release := range providerRequestsFile.Releases {
-					providerRequests = append(providerRequests, release)
-				}
+				providerRequests = append(providerRequests, providerRequestsFile.Releases...)
 			}
 
 			releases, err := findReleases(tc.provider, false)
@@ -302,12 +300,14 @@ func Test_Releases(t *testing.T) {
 			for _, release := range releases {
 				// Check that the release-specific kustomization.yaml file points to the release manifest.
 				{
-					releaseKustomizationData, err := ioutil.ReadFile(filepath.Join(tc.provider, release.Name, kustomizationFilename))
+					releaseKustomizationData, err := os.ReadFile(filepath.Join(tc.provider, release.Name, kustomizationFilename))
 					if err != nil {
 						t.Errorf("missing file for %s release %s: %s", tc.provider, release.Name, err)
 					}
 					var releaseKustomization kustomizationFile
-					err = yaml.UnmarshalStrict(releaseKustomizationData, &releaseKustomization)
+					if err := yaml.Unmarshal(releaseKustomizationData, &releaseKustomization); err != nil {
+						t.Errorf("failed to unmarshal kustomization data for %s release %s: %s", tc.provider, release.Name, err)
+					}
 					if len(releaseKustomization.Resources) != 1 || releaseKustomization.Resources[0] != releaseFilename {
 						t.Errorf("%s for %s release %s should contain only one resource, \"%s\"", kustomizationFilename, tc.provider, release.Name, releaseFilename)
 					}
@@ -315,7 +315,7 @@ func Test_Releases(t *testing.T) {
 
 				// Check that the version in the first line of the release notes is correct.
 				{
-					releaseNotesData, err := ioutil.ReadFile(filepath.Join(tc.provider, release.Name, readmeFilename))
+					releaseNotesData, err := os.ReadFile(filepath.Join(tc.provider, release.Name, readmeFilename))
 					if err != nil {
 						t.Errorf("missing file for %s release %s: %s", tc.provider, release.Name, err)
 					}
@@ -363,7 +363,7 @@ func Test_Releases(t *testing.T) {
 
 					if len(unsatisfiedRequests) > 0 {
 						msg := fmt.Sprintf("Release %s does not meet the requested version requirements:\n%s", release.Name, strings.Join(unsatisfiedRequests, ",\n"))
-						t.Errorf(msg)
+						t.Error(msg)
 					}
 				}
 
