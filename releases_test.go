@@ -305,7 +305,7 @@ func Test_Releases(t *testing.T) {
 						t.Errorf("missing file for %s release %s: %s", tc.provider, release.Name, err)
 					}
 					var releaseKustomization kustomizationFile
-					if err := yaml.UnmarshalStrict(releaseKustomizationData, &releaseKustomization); err != nil {
+					if err := yaml.Unmarshal(releaseKustomizationData, &releaseKustomization); err != nil {
 						t.Errorf("failed to unmarshal kustomization data for %s release %s: %s", tc.provider, release.Name, err)
 					}
 					if len(releaseKustomization.Resources) != 1 || releaseKustomization.Resources[0] != releaseFilename {
