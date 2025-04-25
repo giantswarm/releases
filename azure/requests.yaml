@@ -3,8 +3,6 @@ releases:
   requests:
   - name: cilium
     version: ">= 0.32.0"
-  - name: cert-manager-crossplane-resources
-    version: ">= 0.1.0"
 - name: ">= 30.1.0"
   requests:
   - name: os-tooling
