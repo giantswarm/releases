@@ -360,19 +360,19 @@ to all Giant Swarm installations.
 
 - v28
   - v28.0
-    - [v28.0.0](https://github.com/giantswarm/releases/tree/master/azure/v28.0.0)
+    - [v28.0.0](https://github.com/giantswarm/releases/tree/master/azure/archived/v28.0.0)
 
 - v27
   - v27.0
-    - [v27.0.0](https://github.com/giantswarm/releases/tree/master/azure/v27.0.0)
+    - [v27.0.0](https://github.com/giantswarm/releases/tree/master/azure/archived/v27.0.0)
 
 - v26
   - v26.0
-    - [v26.0.0](https://github.com/giantswarm/releases/tree/master/azure/v26.0.0)
+    - [v26.0.0](https://github.com/giantswarm/releases/tree/master/azure/archived/v26.0.0)
 
 - v25
   - v25.0
-    - [v25.0.0](https://github.com/giantswarm/releases/tree/master/azure/v25.0.0)
+    - [v25.0.0](https://github.com/giantswarm/releases/tree/master/azure/archived/v25.0.0)
 
 - v20
   - v20.0
@@ -589,23 +589,23 @@ to all Giant Swarm installations.
 
 - v29
   - v29.3
-    - [v29.3.0](https://github.com/giantswarm/releases/tree/master/vsphere/v29.3.0)
+    - [v29.3.0](https://github.com/giantswarm/releases/tree/master/vsphere/archived/v29.3.0)
   - v29.2
-    - [v29.2.0](https://github.com/giantswarm/releases/tree/master/vsphere/v29.2.0)
+    - [v29.2.0](https://github.com/giantswarm/releases/tree/master/vsphere/archived/v29.2.0)
   - v29.1
-    - [v29.1.0](https://github.com/giantswarm/releases/tree/master/vsphere/v29.1.0)
+    - [v29.1.0](https://github.com/giantswarm/releases/tree/master/vsphere/archived/v29.1.0)
   - v29.0
-    - [v29.0.0](https://github.com/giantswarm/releases/tree/master/vsphere/v29.0.0)
+    - [v29.0.0](https://github.com/giantswarm/releases/tree/master/vsphere/archived/v29.0.0)
 
 - v28
   - v28.0
-    - [v28.0.1](https://github.com/giantswarm/releases/tree/master/vsphere/v28.0.1)
-    - [v28.0.0](https://github.com/giantswarm/releases/tree/master/vsphere/v28.0.0)
+    - [v28.0.1](https://github.com/giantswarm/releases/tree/master/vsphere/archived/v28.0.1)
+    - [v28.0.0](https://github.com/giantswarm/releases/tree/master/vsphere/archived/v28.0.0)
 
 - v27
   - v27.0
-    - [v27.0.1](https://github.com/giantswarm/releases/tree/master/vsphere/v27.0.1)
-    - [v27.0.0](https://github.com/giantswarm/releases/tree/master/vsphere/v27.0.0)
+    - [v27.0.1](https://github.com/giantswarm/releases/tree/master/vsphere/archived/v27.0.1)
+    - [v27.0.0](https://github.com/giantswarm/releases/tree/master/vsphere/archived/v27.0.0)
 
 ## VMware Cloud Director
 
@@ -621,23 +621,23 @@ to all Giant Swarm installations.
     - [v29.3.1](https://github.com/giantswarm/releases/tree/master/cloud-director/v29.3.1)
     - [v29.3.0](https://github.com/giantswarm/releases/tree/master/cloud-director/v29.3.0)
   - v29.2
-    - [v29.2.1](https://github.com/giantswarm/releases/tree/master/cloud-director/v29.2.1)
-    - [v29.2.0](https://github.com/giantswarm/releases/tree/master/cloud-director/v29.2.0)
+    - [v29.2.1](https://github.com/giantswarm/releases/tree/master/cloud-director/archived/v29.2.1)
+    - [v29.2.0](https://github.com/giantswarm/releases/tree/master/cloud-director/archived/v29.2.0)
   - v29.1
-    - [v29.1.1](https://github.com/giantswarm/releases/tree/master/cloud-director/v29.1.1)
-    - [v29.1.0](https://github.com/giantswarm/releases/tree/master/cloud-director/v29.1.0)
+    - [v29.1.1](https://github.com/giantswarm/releases/tree/master/cloud-director/archived/v29.1.1)
+    - [v29.1.0](https://github.com/giantswarm/releases/tree/master/cloud-director/archived/v29.1.0)
   - v29.0
-    - [v29.0.1](https://github.com/giantswarm/releases/tree/master/cloud-director/v29.0.1)
-    - [v29.0.0](https://github.com/giantswarm/releases/tree/master/cloud-director/v29.0.0)
+    - [v29.0.1](https://github.com/giantswarm/releases/tree/master/cloud-director/archived/v29.0.1)
+    - [v29.0.0](https://github.com/giantswarm/releases/tree/master/cloud-director/archived/v29.0.0)
 
 - v28
   - v28.0
-    - [v28.0.1](https://github.com/giantswarm/releases/tree/master/cloud-director/v28.0.1)
-    - [v28.0.0](https://github.com/giantswarm/releases/tree/master/cloud-director/v28.0.0)
+    - [v28.0.1](https://github.com/giantswarm/releases/tree/master/cloud-director/archived/v28.0.1)
+    - [v28.0.0](https://github.com/giantswarm/releases/tree/master/cloud-director/archived/v28.0.0)
 
 - v27
   - v27.0
-    - [v27.0.0](https://github.com/giantswarm/releases/tree/master/cloud-director/v27.0.0)
+    - [v27.0.0](https://github.com/giantswarm/releases/tree/master/cloud-director/archived/v27.0.0)
 
 # Running tests against PRs
 

@@ -1,62 +1,6 @@
 {
   "releases": [
     {
-      "version": "27.0.0",
-      "isDeprecated": true,
-      "releaseTimestamp": "2024-08-12 12:00:00 +0000 UTC",
-      "changelogUrl": "https://github.com/giantswarm/releases/blob/master/vsphere/v27.0.0/README.md",
-      "isStable": true
-    },
-    {
-      "version": "27.0.1",
-      "isDeprecated": false,
-      "releaseTimestamp": "2024-10-23 12:00:00 +0000 UTC",
-      "changelogUrl": "https://github.com/giantswarm/releases/blob/master/vsphere/v27.0.1/README.md",
-      "isStable": true
-    },
-    {
-      "version": "28.0.0",
-      "isDeprecated": true,
-      "releaseTimestamp": "2024-10-18 12:00:00 +0000 UTC",
-      "changelogUrl": "https://github.com/giantswarm/releases/blob/master/vsphere/v28.0.0/README.md",
-      "isStable": true
-    },
-    {
-      "version": "28.0.1",
-      "isDeprecated": false,
-      "releaseTimestamp": "2024-10-23 12:00:00 +0000 UTC",
-      "changelogUrl": "https://github.com/giantswarm/releases/blob/master/vsphere/v28.0.1/README.md",
-      "isStable": true
-    },
-    {
-      "version": "29.0.0",
-      "isDeprecated": true,
-      "releaseTimestamp": "2024-10-23 12:00:00 +0000 UTC",
-      "changelogUrl": "https://github.com/giantswarm/releases/blob/master/vsphere/v29.0.0/README.md",
-      "isStable": true
-    },
-    {
-      "version": "29.1.0",
-      "isDeprecated": false,
-      "releaseTimestamp": "2024-11-13 12:00:00 +0000 UTC",
-      "changelogUrl": "https://github.com/giantswarm/releases/blob/master/vsphere/v29.1.0/README.md",
-      "isStable": true
-    },
-    {
-      "version": "29.2.0",
-      "isDeprecated": false,
-      "releaseTimestamp": "2024-12-12 12:00:00 +0000 UTC",
-      "changelogUrl": "https://github.com/giantswarm/releases/blob/master/vsphere/v29.2.0/README.md",
-      "isStable": true
-    },
-    {
-      "version": "29.3.0",
-      "isDeprecated": false,
-      "releaseTimestamp": "2025-01-27 18:00:00 +0000 UTC",
-      "changelogUrl": "https://github.com/giantswarm/releases/blob/master/vsphere/v29.3.0/README.md",
-      "isStable": true
-    },
-    {
       "version": "30.0.0",
       "isDeprecated": false,
       "releaseTimestamp": "2025-03-03 12:00:00 +0000 UTC",
