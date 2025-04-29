@@ -1,0 +1,159 @@
+                                                                >  # Generated with:
+                                                                >  # devctl release create --name 30.1.1 --provider aws --base 30.
+apiVersion: release.giantswarm.io/v1alpha1                         apiVersion: release.giantswarm.io/v1alpha1
+kind: Release                                                      kind: Release
+metadata:                                                          metadata:
+  name: aws-30.1.0                                              |    creationTimestamp: null
+                                                                >    name: aws-30.1.1
+spec:                                                              spec:
+  apps:                                                              apps:
+  - name: aws-ebs-csi-driver                                    |    - dependsOn:
+    version: 3.0.5                                              <
+    dependsOn:                                                  <
+    - cloud-provider-aws                                               - cloud-provider-aws
+  - name: aws-ebs-csi-driver-servicemonitors                    |      name: aws-ebs-csi-driver
+    version: 0.1.0                                              |      version: 3.0.5
+    dependsOn:                                                  |    - dependsOn:
+    - prometheus-operator-crd                                          - prometheus-operator-crd
+                                                                >      name: aws-ebs-csi-driver-servicemonitors
+                                                                >      version: 0.1.0
+  - name: aws-nth-bundle                                             - name: aws-nth-bundle
+    version: 1.2.1                                                     version: 1.2.1
+  - name: aws-pod-identity-webhook                              |    - dependsOn:
+    version: 1.19.1                                             <
+    dependsOn:                                                  <
+    - cert-manager                                                     - cert-manager
+                                                                >      name: aws-pod-identity-webhook
+                                                                >      version: 1.19.1
+  - name: capi-node-labeler                                          - name: capi-node-labeler
+    version: 1.0.2                                                     version: 1.0.2
+  - name: cert-exporter                                         |    - dependsOn:
+    version: 2.9.5                                              <
+    dependsOn:                                                  <
+    - kyverno-crds                                                     - kyverno-crds
+  - name: cert-manager                                          |      name: cert-exporter
+                                                                >      version: 2.9.5
+                                                                >    - dependsOn:
+                                                                >      - prometheus-operator-crd
+                                                                >      name: cert-manager
+    version: 3.9.0                                                     version: 3.9.0
+    dependsOn:                                                  |    - dependsOn:
+    - prometheus-operator-crd                                          - prometheus-operator-crd
+  - name: chart-operator-extensions                             |      name: chart-operator-extensions
+    version: 1.1.2                                                     version: 1.1.2
+    dependsOn:                                                  <
+    - prometheus-operator-crd                                   <
+  - name: cilium                                                     - name: cilium
+    version: 0.31.1                                                    version: 0.31.1
+  - name: cilium-crossplane-resources                           |    - catalog: cluster
+    catalog: cluster                                            |      name: cilium-crossplane-resources
+    version: 0.2.0                                                     version: 0.2.0
+  - name: cilium-servicemonitors                                |    - dependsOn:
+    version: 0.1.2                                              <
+    dependsOn:                                                  <
+    - prometheus-operator-crd                                          - prometheus-operator-crd
+  - name: cloud-provider-aws                                    |      name: cilium-servicemonitors
+    version: 1.30.8-gs1                                         |      version: 0.1.2
+    dependsOn:                                                  |    - dependsOn:
+    - vertical-pod-autoscaler-crd                                      - vertical-pod-autoscaler-crd
+  - name: cluster-autoscaler                                    |      name: cloud-provider-aws
+    version: 1.30.4-gs1                                         |      version: 1.30.8-gs1
+    dependsOn:                                                  |    - dependsOn:
+    - kyverno-crds                                                     - kyverno-crds
+  - name: coredns                                               |      name: cluster-autoscaler
+    version: 1.24.0                                             |      version: 1.30.4-gs1
+    dependsOn:                                                  |    - dependsOn:
+    - cilium                                                           - cilium
+  - name: coredns-extensions                                    |      name: coredns
+    version: 0.1.2                                              |      version: 1.24.0
+    dependsOn:                                                  |    - dependsOn:
+    - vertical-pod-autoscaler-crd                                      - vertical-pod-autoscaler-crd
+  - name: etcd-defrag                                           |      name: coredns-extensions
+                                                                >      version: 0.1.2
+                                                                >    - dependsOn:
+                                                                >      - kyverno-crds
+                                                                >      name: etcd-defrag
+    version: 1.0.2                                                     version: 1.0.2
+    dependsOn:                                                  |    - dependsOn:
+    - kyverno-crds                                                     - kyverno-crds
+  - name: etcd-k8s-res-count-exporter                           |      name: etcd-k8s-res-count-exporter
+    version: 1.10.3                                                    version: 1.10.3
+    dependsOn:                                                  |    - dependsOn:
+    - kyverno-crds                                              |      - prometheus-operator-crd
+  - name: external-dns                                          |      name: external-dns
+    version: 3.2.0                                                     version: 3.2.0
+    dependsOn:                                                  |    - dependsOn:
+    - prometheus-operator-crd                                          - prometheus-operator-crd
+  - name: irsa-servicemonitors                                  |      name: irsa-servicemonitors
+    version: 0.1.0                                                     version: 0.1.0
+    dependsOn:                                                  |    - dependsOn:
+    - prometheus-operator-crd                                   |      - kyverno-crds
+  - name: k8s-audit-metrics                                     |      name: k8s-audit-metrics
+    version: 0.10.2                                                    version: 0.10.2
+    dependsOn:                                                  |    - dependsOn:
+    - kyverno-crds                                                     - kyverno-crds
+  - name: k8s-dns-node-cache                                    |      name: k8s-dns-node-cache
+    version: 2.8.1                                                     version: 2.8.1
+    dependsOn:                                                  |    - dependsOn:
+    - kyverno-crds                                                     - kyverno-crds
+  - name: metrics-server                                        |      name: metrics-server
+    version: 2.6.0                                                     version: 2.6.0
+    dependsOn:                                                  |    - dependsOn:
+    - kyverno-crds                                              <
+  - name: net-exporter                                          <
+    version: 1.22.0                                             <
+    dependsOn:                                                  <
+    - prometheus-operator-crd                                          - prometheus-operator-crd
+  - name: network-policies                                      |      name: net-exporter
+    catalog: cluster                                            |      version: 1.22.0
+    version: 0.1.1                                              |    - catalog: cluster
+    dependsOn:                                                         dependsOn:
+    - cilium                                                           - cilium
+  - name: node-exporter                                         |      name: network-policies
+    version: 1.20.2                                             |      version: 0.1.1
+    dependsOn:                                                  |    - dependsOn:
+    - kyverno-crds                                                     - kyverno-crds
+  - name: observability-bundle                                  |      name: node-exporter
+    version: 1.11.0                                             |      version: 1.20.2
+    dependsOn:                                                  |    - dependsOn:
+    - coredns                                                          - coredns
+  - name: observability-policies                                |      name: observability-bundle
+    version: 0.0.1                                              |      version: 1.11.0
+    dependsOn:                                                  |    - dependsOn:
+    - kyverno-crds                                                     - kyverno-crds
+  - name: prometheus-blackbox-exporter                          |      name: observability-policies
+    version: 0.5.0                                              |      version: 0.0.1
+    dependsOn:                                                  |    - dependsOn:
+    - prometheus-operator-crd                                          - prometheus-operator-crd
+  - name: security-bundle                                       |      name: prometheus-blackbox-exporter
+    catalog: giantswarm                                         |      version: 0.5.0
+    version: 1.10.0                                             |    - catalog: giantswarm
+    dependsOn:                                                         dependsOn:
+    - prometheus-operator-crd                                          - prometheus-operator-crd
+                                                                >      name: security-bundle
+                                                                >      version: 1.10.1
+  - name: teleport-kube-agent                                        - name: teleport-kube-agent
+    version: 0.10.4                                                    version: 0.10.4
+  - name: vertical-pod-autoscaler                               |    - dependsOn:
+    version: 5.4.0                                              <
+    dependsOn:                                                  <
+    - prometheus-operator-crd                                          - prometheus-operator-crd
+                                                                >      name: vertical-pod-autoscaler
+                                                                >      version: 5.4.0
+  - name: vertical-pod-autoscaler-crd                                - name: vertical-pod-autoscaler-crd
+    version: 3.2.0                                                     version: 3.2.0
+  components:                                                        components:
+  - name: cluster-aws                                           |    - catalog: cluster
+    catalog: cluster                                            |      name: cluster-aws
+    version: 3.2.1                                                     version: 3.2.1
+  - name: flatcar                                                    - name: flatcar
+    version: 4152.2.1                                                  version: 4152.2.1
+  - name: kubernetes                                                 - name: kubernetes
+    version: 1.30.11                                                   version: 1.30.11
+  - name: os-tooling                                                 - name: os-tooling
+    version: 1.24.0                                                    version: 1.24.0
+  date: "2025-03-18T12:00:00Z"                                  |    date: "2025-04-29T20:50:46Z"
+  state: active                                                      state: active
+                                                                >  status:
+                                                                >    inUse: false
+                                                                >    ready: false
