@@ -12,6 +12,7 @@ Ping @sig-product for review of release notes.
 - [ ] Roadmap issue created
 - [ ] Release uses latest stable Flatcar
 - [ ] Release uses latest Kubernetes patch version
+- [ ] Release uses latest supported version of all default apps
 
 ### Triggering E2E tests
 
