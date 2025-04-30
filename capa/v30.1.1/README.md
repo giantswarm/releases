@@ -1,5 +1,7 @@
 # :zap: Giant Swarm Release v30.1.1 for CAPA :zap:
 
+This release reverts removal of `PolicyExceptions` v2alpha1 API version for smoother transition for any customer and GS workloads. The deprecated API version of `v2alpha1` will be fully removed in next major release.
+
 ## Changes compared to v30.1.0
 
 ### Apps
