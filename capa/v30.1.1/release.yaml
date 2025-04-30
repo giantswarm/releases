@@ -118,16 +118,12 @@ spec:
     - prometheus-operator-crd
     name: security-bundle
     version: 1.10.1
-    dependsOn:
-    - prometheus-operator-crd
   - name: teleport-kube-agent
     version: 0.10.4
   - dependsOn:
     - prometheus-operator-crd
     name: vertical-pod-autoscaler
     version: 5.4.0
-    dependsOn:
-    - prometheus-operator-crd
   - name: vertical-pod-autoscaler-crd
     version: 3.2.0
   components:
