@@ -1,6 +1,7 @@
 resources:
 - v30.0.0
 - v30.1.0
+- v30.1.1
 
 commonAnnotations:
   giantswarm.io/docs: https://docs.giantswarm.io/use-the-api/management-api/crd/releases.release.giantswarm.io

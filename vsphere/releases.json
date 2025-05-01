@@ -13,6 +13,13 @@
       "releaseTimestamp": "2025-03-18 12:00:00 +0000 UTC",
       "changelogUrl": "https://github.com/giantswarm/releases/blob/master/vsphere/v30.1.0/README.md",
       "isStable": true
+    },
+    {
+      "version": "30.1.1",
+      "isDeprecated": false,
+      "releaseTimestamp": "2025-05-01 12:00:00 +0000 UTC",
+      "changelogUrl": "https://github.com/giantswarm/releases/blob/master/vsphere/v30.1.1/README.md",
+      "isStable": true
     }
   ],
   "sourceUrl": "https://github.com/giantswarm/releases",
