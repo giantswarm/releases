@@ -613,6 +613,7 @@ to all Giant Swarm installations.
 
 - v30
   - v30.1
+    - [v30.1.1](https://github.com/giantswarm/releases/tree/master/cloud-director/v30.1.1)
     - [v30.1.0](https://github.com/giantswarm/releases/tree/master/cloud-director/v30.1.0)
   - v30.0
     - [v30.0.0](https://github.com/giantswarm/releases/tree/master/cloud-director/v30.0.0)
