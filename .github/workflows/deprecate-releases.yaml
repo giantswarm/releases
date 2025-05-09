@@ -1,0 +1,218 @@
+name: Deprecate Outdated Releases
+
+on:
+  # Run weekly on Monday morning
+  schedule:
+    - cron: "0 6 * * 1" # Every Monday at 6:00 AM UTC
+
+  # Allow manual triggering
+  workflow_dispatch:
+  # For testing only
+  push:
+    paths:
+      - ".github/workflows/deprecate-releases.yaml"
+
+jobs:
+  find-releases:
+    runs-on: ubuntu-latest
+    outputs:
+      providers: ${{ steps.find-providers.outputs.providers }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Find providers with releases
+        id: find-providers
+        run: |
+          PROVIDERS=$(find . -maxdepth 1 -type d -name "azure" -o -name "capa" -o -name "vsphere" -o -name "cloud-director" | sed 's|./||' | jq -R -s -c 'split("\n") | map(select(length > 0))')
+          echo "providers=$PROVIDERS" >> $GITHUB_OUTPUT
+
+  deprecate-releases:
+    needs: find-releases
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        provider: ${{ fromJson(needs.find-releases.outputs.providers) }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Set up Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: "1.24"
+
+      - name: Set provider display name
+        id: provider-name
+        run: |
+          PROVIDER="${{ matrix.provider }}"
+          case "$PROVIDER" in
+            capa)
+              echo "display_name=CAPA" >> $GITHUB_OUTPUT
+              ;;
+            azure)
+              echo "display_name=CAPZ" >> $GITHUB_OUTPUT
+              ;;
+            vsphere)
+              echo "display_name=CAPV" >> $GITHUB_OUTPUT
+              ;;
+            cloud-director)
+              echo "display_name=CAPVCD" >> $GITHUB_OUTPUT
+              ;;
+            *)
+              echo "display_name=${PROVIDER^^}" >> $GITHUB_OUTPUT
+              ;;
+          esac
+
+      - name: Build deprecation tool in temporary directory
+        run: |
+          mkdir -p /tmp/deprecate-build
+          cd /tmp/deprecate-build
+
+          # Initialize a temporary Go module
+          go mod init temp-deprecate-releases
+          go get github.com/Masterminds/semver/v3
+          go get github.com/giantswarm/release-operator/v4@latest
+          go get sigs.k8s.io/yaml@latest
+
+          cp $GITHUB_WORKSPACE/tools/deprecate-release.go main.go
+
+          go build -o deprecate-releases .
+
+          cp deprecate-releases $GITHUB_WORKSPACE/
+          cd $GITHUB_WORKSPACE
+
+      - name: Run deprecation tool
+        id: deprecation
+        run: |
+          ./deprecate-releases -provider ${{ matrix.provider }} -verbose -grafana-api-key="${{ secrets.GRAFANA_API_KEY }}"
+        env:
+          GRAFANA_API_KEY: ${{ secrets.GRAFANA_API_KEY }}
+
+      # Update releases.json for each provider
+      - name: Update releases.json
+        run: |
+          RELEASES_JSON="${{ matrix.provider }}/releases.json"
+          if [ -f "$RELEASES_JSON" ]; then
+            echo "Updating deprecation status in $RELEASES_JSON"
+
+            # Create a temporary file to store the updated JSON
+            TMP_JSON=$(mktemp)
+
+            # For each changed release.yaml file, update the corresponding entry in releases.json
+            for file in $(git diff --name-only | grep -E ".*release\.yaml$"); do
+              # Extract version from directory name
+              dir=$(dirname "$file")
+              version=$(basename "$dir" | sed 's/^v//')
+
+              echo "Checking if $version needs to be marked as deprecated in releases.json"
+
+              # Check if this release is now deprecated
+              if grep -q "state: deprecated" "$file"; then
+                echo "Marking version $version as deprecated in releases.json"
+
+                # Use jq to update the isDeprecated flag for this version
+                jq --arg ver "$version" '.releases |= map(if .version == $ver then .isDeprecated = true else . end)' "$RELEASES_JSON" > "$TMP_JSON"
+                mv "$TMP_JSON" "$RELEASES_JSON"
+              fi
+            done
+          fi
+
+      # Better approach to clean up unwanted changes
+      - name: Keep only release files changes
+        run: |
+          # Remove the binary
+          rm -f deprecate-releases
+
+          # Identify changed files that are not release-related
+          for file in $(git diff --name-only); do
+            # Keep only release.yaml files and releases.json
+            if [[ ! "$file" =~ .*release\.yaml$ ]] && [[ ! "$file" =~ .*releases\.json$ ]]; then
+              git checkout -- "$file"
+              echo "Reset changes to: $file"
+            fi
+          done
+
+      - name: Prepare changed files list
+        id: changed-files
+        run: |
+          # Get changed release.yaml files
+          RELEASE_YAML_FILES=$(git diff --name-only | grep -E ".*release\.yaml$" || echo "")
+
+          # Get changed releases.json file
+          RELEASES_JSON_FILE=$(git diff --name-only | grep -E ".*releases\.json$" || echo "")
+
+          if [[ -n "$RELEASE_YAML_FILES" || -n "$RELEASES_JSON_FILE" ]]; then
+            echo "files<<EOF" >> $GITHUB_OUTPUT
+
+            # First list the releases.json file if changed
+            if [[ -n "$RELEASES_JSON_FILE" ]]; then
+              echo "### Modified Configuration" >> $GITHUB_OUTPUT
+              echo "- \`$RELEASES_JSON_FILE\` - Updated deprecated status" >> $GITHUB_OUTPUT
+              echo "" >> $GITHUB_OUTPUT
+            fi
+
+            # Then create a table of releases grouped by major version
+            if [[ -n "$RELEASE_YAML_FILES" ]]; then
+              echo "### Deprecated Releases" >> $GITHUB_OUTPUT
+              echo "" >> $GITHUB_OUTPUT
+
+              # Extract versions and sort them
+              VERSIONS=$(echo "$RELEASE_YAML_FILES" | sed -E 's|.*/v([0-9]+\.[0-9]+\.[0-9]+.*)/release.yaml|\1|' | sort -V)
+
+              # Extract major versions and make them unique
+              MAJOR_VERSIONS=$(echo "$VERSIONS" | sed -E 's|^([0-9]+)\..*|\1|' | sort -n | uniq)
+
+              # Start the markdown table
+              echo "| Major Version | Deprecated Releases |" >> $GITHUB_OUTPUT
+              echo "|---------------|---------------------|" >> $GITHUB_OUTPUT
+
+              # For each major version, add a row with all its releases
+              for major in $MAJOR_VERSIONS; do
+                # Get all versions for this major version
+                MAJOR_RELEASES=$(echo "$VERSIONS" | grep -E "^${major}\." | sed 's/^/v/')
+                # Format releases as a comma-separated list
+                RELEASES_LIST=$(echo "$MAJOR_RELEASES" | paste -sd "," - | sed 's/,/, /g')
+                # Add a row to the table
+                echo "| v${major} | ${RELEASES_LIST} |" >> $GITHUB_OUTPUT
+              done
+            fi
+
+            echo "EOF" >> $GITHUB_OUTPUT
+            echo "has_changes=true" >> $GITHUB_OUTPUT
+          else
+            echo "No release files were changed"
+            echo "has_changes=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Create Pull Request
+        if: ${{ steps.changed-files.outputs.has_changes == 'true' }}
+        uses: peter-evans/create-pull-request@v5
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: "${{ steps.provider-name.outputs.display_name }}: Deprecate outdated releases"
+          title: "${{ steps.provider-name.outputs.display_name }}: Deprecate outdated releases"
+          draft: true
+          body: |
+            This PR automatically marks outdated releases for ${{ steps.provider-name.outputs.display_name }} as deprecated according to the following rules:
+
+            - For each major version, only the latest release is kept active; all previous releases are deprecated
+            - We keep the three most recent major versions; all older major versions are deprecated
+            - Releases that are still in use by clusters remain active regardless of version
+
+            ${{ steps.changed-files.outputs.files }}
+
+            ## Verify in Grafana
+
+            You can check which releases are currently in use in the [CAPI Releases Dashboard](https://giantswarm.grafana.net/d/be9a0bh8mbwn4e/capi-releases?orgId=1&from=now-6h&to=now&timezone=browser&var-installation=$__all&var-provider=${{ matrix.provider }}&var-repo=${{ matrix.provider }}&var-release_version=$__all&var-customer=$__all).
+          branch: auto-deprecate-${{ matrix.provider }}-releases
+          base: master
+          labels: |
+            release-maintenance
+            automated
+          reviewers: |
+            njuettner
