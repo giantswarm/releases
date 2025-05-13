@@ -12,7 +12,6 @@ on:
       - "master"
       - "main"
     paths:
-      - ".github/workflows/deprecate-releases.yaml"
       - "azure/**"
       - "capa/**"
       - "cloud-director/**"
