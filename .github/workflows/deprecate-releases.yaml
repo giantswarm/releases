@@ -9,8 +9,14 @@ on:
   workflow_dispatch:
   # For testing only
   push:
+    branches:
+    - "master"
+    - "main"
     paths:
-      - ".github/workflows/deprecate-releases.yaml"
+      - "azure/**"
+      - "capa/**"
+      - "cloud-director/**"
+      - "vsphere/**"
 
 jobs:
   find-releases:
