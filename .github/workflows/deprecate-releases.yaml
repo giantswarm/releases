@@ -205,15 +205,9 @@ jobs:
           body: |
             This PR automatically marks outdated releases for ${{ steps.provider-name.outputs.display_name }} as deprecated according to the following rules:
 
-            **A release is kept active if it meets any of the following criteria:**
-
-            1.  **Currently In Use**:
-
-            2.  **Latest of Supported Major Versions**:
-
-            3.  **Required for Upgrade Path**:
-
-            **All other previously active releases are deprecated.**
+            - Currently In Use
+            - Latest of Supported Major Versions
+            - Required for Upgrade Path
 
             ${{ steps.changed-files.outputs.files }}
 
