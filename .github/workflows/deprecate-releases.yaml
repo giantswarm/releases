@@ -7,11 +7,10 @@ on:
 
   # Allow manual triggering
   workflow_dispatch:
-  # For testing only
   push:
     branches:
-    - "master"
-    - "main"
+      - "master"
+      - "main"
     paths:
       - "azure/**"
       - "capa/**"
@@ -74,20 +73,11 @@ jobs:
               ;;
           esac
 
-      - name: Build deprecation tool in temporary directory
+      - name: Build deprecation tool
         run: |
-          mkdir -p /tmp/deprecate-build
-          cd /tmp/deprecate-build
-
-          # Initialize a temporary Go module
-          go mod init temp-deprecate-releases
-          go get github.com/Masterminds/semver/v3
-          go get github.com/giantswarm/release-operator/v4@latest
-          go get sigs.k8s.io/yaml@latest
-
-          cp $GITHUB_WORKSPACE/tools/deprecate-release.go main.go
-
-          go build -o deprecate-releases .
+          cd tools
+          go mod tidy
+          go build -o deprecate-releases tools/deprecate-release.go
 
           cp deprecate-releases $GITHUB_WORKSPACE/
           cd $GITHUB_WORKSPACE
@@ -197,12 +187,11 @@ jobs:
 
       - name: Create Pull Request
         if: ${{ steps.changed-files.outputs.has_changes == 'true' }}
-        uses: peter-evans/create-pull-request@v5
+        uses: peter-evans/create-pull-request@271a8d0340265f705b14b6d32b9829c1cb33d45e
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           commit-message: "${{ steps.provider-name.outputs.display_name }}: Deprecate outdated releases"
           title: "${{ steps.provider-name.outputs.display_name }}: Deprecate outdated releases"
-          draft: true
           body: |
             ## Automated Release Deprecation for ${{ steps.provider-name.outputs.display_name }}
 
@@ -223,5 +212,3 @@ jobs:
           labels: |
             release-maintenance
             automated
-          reviewers: |
-            njuettner
