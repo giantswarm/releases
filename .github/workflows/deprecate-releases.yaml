@@ -11,6 +11,7 @@ on:
     branches:
       - "master"
       - "main"
+      - "release-deprecation"
     paths:
       - ".github/workflows/deprecate-releases.yaml"
       - "azure/**"
