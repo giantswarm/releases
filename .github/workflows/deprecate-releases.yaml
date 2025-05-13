@@ -140,50 +140,45 @@ jobs:
       - name: Prepare changed files list
         id: changed-files
         run: |
-          # Get changed release.yaml files
-          RELEASE_YAML_FILES=$(git diff --name-only | grep -E ".*release\.yaml$" || echo "")
+          # Get changed release.yaml files (these are the ones that were deprecated)
+          DEPRECATED_RELEASE_YAML_FILES=$(git diff --name-only | grep -E ".*release\.yaml$" || echo "")
 
           # Get changed releases.json file
           RELEASES_JSON_FILE=$(git diff --name-only | grep -E ".*releases\.json$" || echo "")
 
-          if [[ -n "$RELEASE_YAML_FILES" || -n "$RELEASES_JSON_FILE" ]]; then
-            echo "files<<EOF" >> $GITHUB_OUTPUT
+          if [[ -n "$DEPRECATED_RELEASE_YAML_FILES" || -n "$RELEASES_JSON_FILE" ]]; then
+            # Use a different output variable name to avoid confusion with the old structure
+            echo "pr_body_changed_files_section<<EOF" >> $GITHUB_OUTPUT
 
-            # First list the releases.json file if changed
             if [[ -n "$RELEASES_JSON_FILE" ]]; then
               echo "### Modified Configuration" >> $GITHUB_OUTPUT
-              echo "- \`$RELEASES_JSON_FILE\` - Updated deprecated status" >> $GITHUB_OUTPUT
+              echo "- \`$RELEASES_JSON_FILE\` - Updated deprecated status for relevant versions." >> $GITHUB_OUTPUT
               echo "" >> $GITHUB_OUTPUT
             fi
 
-            # Then create a table of releases grouped by major version
-            if [[ -n "$RELEASE_YAML_FILES" ]]; then
-              echo "### Deprecated Releases" >> $GITHUB_OUTPUT
+            if [[ -n "$DEPRECATED_RELEASE_YAML_FILES" ]]; then
+              echo "### Releases Deprecated in this PR" >> $GITHUB_OUTPUT
               echo "" >> $GITHUB_OUTPUT
 
-              VERSIONS=$(echo "$RELEASE_YAML_FILES" | sed -E 's|.*/v([0-9]+\.[0-9]+\.[0-9]+.*)/release.yaml|\1|' | sort -V)
+              # Extract versions from the DEPRECATED files and sort them
+              DEPRECATED_VERSIONS=$(echo "$DEPRECATED_RELEASE_YAML_FILES" | sed -E 's|.*/v([0-9]+\.[0-9]+\.[0-9]+.*)/release.yaml|\1|' | sort -V)
 
-              MAJOR_VERSIONS=$(echo "$VERSIONS" | sed -E 's|^([0-9]+)\..*|\1|' | sort -n | uniq)
+              # Extract major versions from the DEPRECATED files and make them unique
+              MAJOR_VERSIONS_WITH_DEPRECATIONS=$(echo "$DEPRECATED_VERSIONS" | sed -E 's|^([0-9]+)\..*|\1|' | sort -n | uniq)
 
-              echo "| Major Version | Deprecated Releases | Latest Release (kept active) |" >> $GITHUB_OUTPUT
-              echo "|---------------|---------------------|----------------------------|" >> $GITHUB_OUTPUT
+              echo "| Major Version | Releases Deprecated by this PR |" >> $GITHUB_OUTPUT
+              echo "|---------------|--------------------------------|" >> $GITHUB_OUTPUT
 
-              # For each major version, add a row with all its releases
-              for major in $MAJOR_VERSIONS; do
-                MAJOR_RELEASES=$(echo "$VERSIONS" | grep -E "^${major}\.")
+              for major in $MAJOR_VERSIONS_WITH_DEPRECATIONS; do
+                # Get all deprecated versions for this major version from the diff
+                DEPRECATED_IN_MAJOR_FROM_DIFF=$(echo "$DEPRECATED_VERSIONS" | grep -E "^${major}\." | sed 's/^/v/')
 
-                LATEST_RELEASE=$(echo "$MAJOR_RELEASES" | sort -V | tail -n 1)
-                LATEST_RELEASE="v${LATEST_RELEASE}"
-
-                DEPRECATED_RELEASES=$(echo "$MAJOR_RELEASES" | grep -v "$LATEST_RELEASE" | sed 's/^/v/')
-
-                if [[ -n "$DEPRECATED_RELEASES" ]]; then
-                  RELEASES_LIST=$(echo "$DEPRECATED_RELEASES" | paste -sd "," - | sed 's/,/, /g')
-                else
-                  RELEASES_LIST="None"
+                DEPRECATED_LIST_STR="N/A" # Should not happen if major is in MAJOR_VERSIONS_WITH_DEPRECATIONS
+                if [[ -n "$DEPRECATED_IN_MAJOR_FROM_DIFF" ]]; then
+                  DEPRECATED_LIST_STR=$(echo "$DEPRECATED_IN_MAJOR_FROM_DIFF" | paste -sd "," - | sed 's/,/, /g')
                 fi
 
-                echo "| v${major} | ${RELEASES_LIST} | ${LATEST_RELEASE} |" >> $GITHUB_OUTPUT
+                echo "| v${major}         | ${DEPRECATED_LIST_STR}              |" >> $GITHUB_OUTPUT
               done
             fi
 
@@ -204,13 +199,14 @@ jobs:
           draft: true
           body: |
             This PR automatically marks outdated releases for ${{ steps.provider-name.outputs.display_name }} as deprecated.
+
             A release is kept active if it meets any of the following criteria:
 
             - Currently in use
             - Latest of supported major versions
             - Required for upgrade path
 
-            ${{ steps.changed-files.outputs.files }}
+            ${{ steps.changed-files.outputs.pr_body_changed_files_section }}
 
             ## Verify in Grafana
 
