@@ -62,8 +62,7 @@ func main() {
 
 	if grafanaAPIKey == "" {
 		log.Fatalf("Error: Grafana API key is required for usage checks, but none was provided. " +
-			"Please set the GRAFANA_API_KEY environment variable or provide it via configuration. " +
-			"To explicitly disable usage checks, use the --skip-usage-checks flag (or equivalent configuration).")
+			"Please set the GRAFANA_API_KEY environment variable or provide it via configuration. ")
 	}
 
 	releases, err := findReleases(providerPath, verbose)
