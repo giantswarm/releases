@@ -44,13 +44,11 @@ func main() {
 	var providerPath string
 	var dryRun bool
 	var verbose bool
-	var skipUsageCheck bool
 	var grafanaAPIKey string
 
 	flag.StringVar(&providerPath, "provider", "", "Path to the provider directory (required)")
 	flag.BoolVar(&dryRun, "dry-run", false, "Run in dry-run mode without making changes")
 	flag.BoolVar(&verbose, "verbose", false, "Enable verbose logging")
-	flag.BoolVar(&skipUsageCheck, "skip-usage-check", false, "Skip checking if releases are in use")
 	flag.StringVar(&grafanaAPIKey, "grafana-api-key", os.Getenv("GRAFANA_API_KEY"), "Grafana API key for checking release usage")
 	flag.Parse()
 
@@ -62,9 +60,10 @@ func main() {
 		log.Fatalf("Provider directory %s does not exist", providerPath)
 	}
 
-	if !skipUsageCheck && grafanaAPIKey == "" {
-		log.Printf("Warning: No Grafana API key provided. Usage checks will be skipped.")
-		skipUsageCheck = true
+	if grafanaAPIKey == "" {
+		log.Fatalf("Error: Grafana API key is required for usage checks, but none was provided. " +
+			"Please set the GRAFANA_API_KEY environment variable or provide it via configuration. " +
+			"To explicitly disable usage checks, use the --skip-usage-checks flag (or equivalent configuration).")
 	}
 
 	releases, err := findReleases(providerPath, verbose)
@@ -77,9 +76,7 @@ func main() {
 		return
 	}
 
-	if !skipUsageCheck {
-		checkReleasesInUse(releases, grafanaAPIKey, filepath.Base(providerPath), verbose)
-	}
+	checkReleasesInUse(releases, grafanaAPIKey, filepath.Base(providerPath), verbose)
 
 	if verbose {
 		log.Printf("Found %d total releases", len(releases))
@@ -97,7 +94,7 @@ func main() {
 		log.Printf("%d active, %d deprecated, %d in use", activeCount, len(releases)-activeCount, inUseCount)
 	}
 
-	deprecatedReleases, keptReleases := deprecateReleases(releases, skipUsageCheck, verbose)
+	deprecatedReleases, keptReleases := deprecateReleases(releases, verbose)
 
 	if len(deprecatedReleases) == 0 {
 		log.Println("No releases needed to be deprecated")
@@ -311,7 +308,7 @@ func findReleases(providerPath string, verbose bool) ([]*ReleaseInfo, error) {
 }
 
 // deprecateReleases applies the deprecation rules to the releases
-func deprecateReleases(releases []*ReleaseInfo, skipUsageCheck bool, verbose bool) ([]*ReleaseInfo, []*ReleaseInfo) {
+func deprecateReleases(releases []*ReleaseInfo, verbose bool) ([]*ReleaseInfo, []*ReleaseInfo) {
 	var activeReleases []*ReleaseInfo
 	var deprecatedReleases = make([]*ReleaseInfo, 0)
 	var keptReleases = make([]*ReleaseInfo, 0)
@@ -337,15 +334,13 @@ func deprecateReleases(releases []*ReleaseInfo, skipUsageCheck bool, verbose boo
 
 	// Identify all releases explicitly in use
 	inUseReleasePaths := make(map[string]bool)
-	if !skipUsageCheck {
-		for _, r := range activeReleases {
-			if r.InUse {
-				if verbose {
-					log.Printf("Marking %s to keep (in use by customer)", filepath.Base(r.Path))
-				}
-				keptReleases = append(keptReleases, r)
-				inUseReleasePaths[r.Path] = true
+	for _, r := range activeReleases {
+		if r.InUse {
+			if verbose {
+				log.Printf("Marking %s to keep (in use by customer)", filepath.Base(r.Path))
 			}
+			keptReleases = append(keptReleases, r)
+			inUseReleasePaths[r.Path] = true
 		}
 	}
 
@@ -389,32 +384,30 @@ func deprecateReleases(releases []*ReleaseInfo, skipUsageCheck bool, verbose boo
 	}
 
 	// Keep latest of majors for upgrade paths from any in-use versions
-	if !skipUsageCheck {
-		oldestMajorInUse := uint64(0)
-		foundOldestMajorInUse := false
+	oldestMajorInUse := uint64(0)
+	foundOldestMajorInUse := false
 
-		for _, r := range keptReleases {
-			major := r.Version.Major()
-			if !foundOldestMajorInUse || major < oldestMajorInUse {
-				oldestMajorInUse = major
-				foundOldestMajorInUse = true
-			}
+	for _, r := range keptReleases {
+		major := r.Version.Major()
+		if !foundOldestMajorInUse || major < oldestMajorInUse {
+			oldestMajorInUse = major
+			foundOldestMajorInUse = true
 		}
+	}
 
-		if foundOldestMajorInUse {
-			if verbose {
-				log.Printf("Oldest major version with an in-use release: v%d. Ensuring upgrade path from there.", oldestMajorInUse)
-			}
-			// Ensure all majors from oldest in use up to the newest available major have their latest kept
-			for _, major := range allMajorNumbers {
-				if major >= oldestMajorInUse {
-					if !majorsToKeepLatest[major] {
-						if verbose {
-							log.Printf("Marking latest of v%d to keep (part of upgrade path from v%d)", major, oldestMajorInUse)
-						}
+	if foundOldestMajorInUse {
+		if verbose {
+			log.Printf("Oldest major version with an in-use release: v%d. Ensuring upgrade path from there.", oldestMajorInUse)
+		}
+		// Ensure all majors from oldest in use up to the newest available major have their latest kept
+		for _, major := range allMajorNumbers {
+			if major >= oldestMajorInUse {
+				if !majorsToKeepLatest[major] {
+					if verbose {
+						log.Printf("Marking latest of v%d to keep (part of upgrade path from v%d)", major, oldestMajorInUse)
 					}
-					majorsToKeepLatest[major] = true
 				}
+				majorsToKeepLatest[major] = true
 			}
 		}
 	}
