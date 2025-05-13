@@ -161,24 +161,29 @@ jobs:
               echo "### Deprecated Releases" >> $GITHUB_OUTPUT
               echo "" >> $GITHUB_OUTPUT
 
-              # Extract versions and sort them
               VERSIONS=$(echo "$RELEASE_YAML_FILES" | sed -E 's|.*/v([0-9]+\.[0-9]+\.[0-9]+.*)/release.yaml|\1|' | sort -V)
 
-              # Extract major versions and make them unique
               MAJOR_VERSIONS=$(echo "$VERSIONS" | sed -E 's|^([0-9]+)\..*|\1|' | sort -n | uniq)
 
-              # Start the markdown table
-              echo "| Major Version | Deprecated Releases |" >> $GITHUB_OUTPUT
-              echo "|---------------|---------------------|" >> $GITHUB_OUTPUT
+              echo "| Major Version | Deprecated Releases | Latest Release (kept active) |" >> $GITHUB_OUTPUT
+              echo "|---------------|---------------------|----------------------------|" >> $GITHUB_OUTPUT
 
               # For each major version, add a row with all its releases
               for major in $MAJOR_VERSIONS; do
-                # Get all versions for this major version
-                MAJOR_RELEASES=$(echo "$VERSIONS" | grep -E "^${major}\." | sed 's/^/v/')
-                # Format releases as a comma-separated list
-                RELEASES_LIST=$(echo "$MAJOR_RELEASES" | paste -sd "," - | sed 's/,/, /g')
-                # Add a row to the table
-                echo "| v${major} | ${RELEASES_LIST} |" >> $GITHUB_OUTPUT
+                MAJOR_RELEASES=$(echo "$VERSIONS" | grep -E "^${major}\.")
+
+                LATEST_RELEASE=$(echo "$MAJOR_RELEASES" | sort -V | tail -n 1)
+                LATEST_RELEASE="v${LATEST_RELEASE}"
+
+                DEPRECATED_RELEASES=$(echo "$MAJOR_RELEASES" | grep -v "$LATEST_RELEASE" | sed 's/^/v/')
+
+                if [[ -n "$DEPRECATED_RELEASES" ]]; then
+                  RELEASES_LIST=$(echo "$DEPRECATED_RELEASES" | paste -sd "," - | sed 's/,/, /g')
+                else
+                  RELEASES_LIST="None"
+                fi
+
+                echo "| v${major} | ${RELEASES_LIST} | ${LATEST_RELEASE} |" >> $GITHUB_OUTPUT
               done
             fi
 
@@ -200,9 +205,15 @@ jobs:
           body: |
             This PR automatically marks outdated releases for ${{ steps.provider-name.outputs.display_name }} as deprecated according to the following rules:
 
-            - For each major version, only the latest release is kept active; all previous releases are deprecated
-            - We keep the three most recent major versions; all older major versions are deprecated
-            - Releases that are still in use by clusters remain active regardless of version
+            **A release is kept active if it meets any of the following criteria:**
+
+            1.  **Currently In Use**:
+
+            2.  **Latest of Supported Major Versions**:
+
+            3.  **Required for Upgrade Path**:
+
+            **All other previously active releases are deprecated.**
 
             ${{ steps.changed-files.outputs.files }}
 
