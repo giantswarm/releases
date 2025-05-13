@@ -198,7 +198,7 @@ jobs:
           title: "${{ steps.provider-name.outputs.display_name }}: Deprecate outdated releases"
           draft: true
           body: |
-            🎯 **Automated Release Deprecation for ${{ steps.provider-name.outputs.display_name }}**
+            ## Automated Release Deprecation for ${{ steps.provider-name.outputs.display_name }}
 
             This PR automatically marks outdated releases for ${{ steps.provider-name.outputs.display_name }} as deprecated.
             A release is kept active if it meets any of the following criteria:
