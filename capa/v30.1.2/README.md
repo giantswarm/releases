@@ -7,6 +7,7 @@ This release reconfigures the Cilium HelmRelease to avoid disruptions during clu
 ### Apps
 
 - cluster-aws from v3.2.1 to v3.2.2
+- cilium from v0.31.1 to v0.31.3
 
 ### cluster-aws [v3.2.1...v3.2.2](https://github.com/giantswarm/cluster-aws/compare/v3.2.1...v3.2.2)
 
@@ -20,4 +21,10 @@ This release reconfigures the Cilium HelmRelease to avoid disruptions during clu
 
 - Make HelmRelease options configurable per app.
 - Set Cilium HelmRelease timeout to 1hs and disable remediation.
+
+### cilium [v0.31.1...v0.31.3](https://github.com/giantswarm/cilium-app/compare/v0.31.1...v0.31.3)
+
+#### Changed
+
+- Upgrade Cilium to v1.16.9.
 
