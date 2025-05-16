@@ -1,19 +1,23 @@
-# :zap: Giant Swarm Release v30.1.1 for CAPA :zap:
+# :zap: Giant Swarm Release v30.1.2 for CAPA :zap:
 
-This release reverts removal of `PolicyExceptions` v2alpha1 API version for smoother transition for any customer and GS workloads. The deprecated API version of `v2alpha1` will be fully removed in next major release.
+This release reconfigures the Cilium HelmRelease to avoid disruptions during cluster upgrades.
 
 ## Changes compared to v30.1.0
 
 ### Apps
 
-- security-bundle from v1.10.0 to v1.10.1
+- cluster-aws from v3.2.1 to v3.2.2
 
-### security-bundle [v1.10.0...v1.10.1](https://github.com/giantswarm/security-bundle/compare/v1.10.0...v1.10.1)
-
-#### Important
-
-**Note:** Kyverno `PolicyExceptions` (API group `kyverno.io`) versions `v2alpha1` and `v2beta1` are deprecated and will be removed in the next Kyverno minor release (v1.14). Please update all Kyverno PolicyExceptions to `v2`. No action is required for Giant Swarm Policy API `PolicyExceptions` (API group `policy.giantswarm.io`), which are handled automatically.
+### cluster-aws [v3.2.1...v3.2.2](https://github.com/giantswarm/cluster-aws/compare/v3.2.1...v3.2.2)
 
 #### Changed
 
-- Update `kyverno-crds` (app) to v1.13.1.
+- Chart: Update cluster to v2.2.1.
+
+### cluster [v2.2.0...v2.2.1](https://github.com/giantswarm/cluster/compare/v2.2.0...v2.2.1)
+
+#### Changed
+
+- Make HelmRelease options configurable per app.
+- Set Cilium HelmRelease timeout to 1hs and disable remediation.
+

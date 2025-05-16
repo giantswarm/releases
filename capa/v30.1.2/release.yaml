@@ -1,7 +1,7 @@
 apiVersion: release.giantswarm.io/v1alpha1
 kind: Release
 metadata:
-  name: aws-30.1.1
+  name: aws-30.1.2
 spec:
   apps:
   - name: aws-ebs-csi-driver
@@ -126,12 +126,12 @@ spec:
   components:
   - name: cluster-aws
     catalog: cluster
-    version: 3.2.1
+    version: 3.2.2
   - name: flatcar
     version: 4152.2.1
   - name: kubernetes
     version: 1.30.11
   - name: os-tooling
     version: 1.24.0
-  date: "2025-04-29T18:00:00Z"
+  date: "2025-05-16T09:00:00Z"
   state: active
