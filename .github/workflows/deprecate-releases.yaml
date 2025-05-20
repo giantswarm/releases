@@ -189,7 +189,7 @@ jobs:
 
       - name: Create Pull Request
         if: ${{ steps.changed-files.outputs.has_changes == 'true' }}
-        uses: peter-evans/create-pull-request@f689536846d983d7c4f399cd9b789c38c963aaca
+        uses: peter-evans/create-pull-request@6658b293f01239e9f0bd7469979ab4a9023b65ad
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           commit-message: "${{ steps.provider-name.outputs.display_name }}: Deprecate outdated releases"
