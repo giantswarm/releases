@@ -33,7 +33,7 @@ spec:
     dependsOn:
     - prometheus-operator-crd
   - name: cilium
-    version: 0.31.3
+    version: 0.31.4
   - name: cilium-crossplane-resources
     catalog: cluster
     version: 0.2.0

@@ -16,10 +16,10 @@ This release reconfigures the Cilium HelmRelease to avoid disruptions during clu
 
 ### Apps
 
-- cilium from v0.31.1 to v0.31.3
+- cilium from v0.31.1 to v0.31.4
 
-### cilium [v0.31.1...v0.31.3](https://github.com/giantswarm/cilium-app/compare/v0.31.1...v0.31.3)
+### cilium [v0.31.1...v0.31.4](https://github.com/giantswarm/cilium-app/compare/v0.31.1...v0.31.4)
 
 #### Changed
 
-- Upgrade Cilium to [v1.16.9](https://github.com/cilium/cilium/releases/tag/v1.16.9).
+- Upgrade Cilium to [v1.16.10](https://github.com/cilium/cilium/releases/tag/v1.16.10).
