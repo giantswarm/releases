@@ -119,4 +119,4 @@ spec:									spec:
   - name: kubernetes							  - name: kubernetes
     version: 1.26.15							    version: 1.26.15
   date: "2024-07-30T09:00:00Z"					|         date: "2024-09-19T12:00:00Z"
-  state: active								  state: active
+  state: deprecated							  state: deprecated

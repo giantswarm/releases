@@ -121,4 +121,4 @@ spec:									spec:
   date: "2024-09-19T12:00:00Z"					|         - name: os-tooling
 								>           version: 1.20.0
 								>         date: "2024-09-30T12:00:00Z"
-  state: active								  state: active
+  state: deprecated							  state: deprecated
