@@ -80,7 +80,7 @@ spec:									spec:
     dependsOn:								    dependsOn:
     - prometheus-operator-crd						    - prometheus-operator-crd
   - name: network-policies						  - name: network-policies
-    version: 0.1.1						<
+    version: 0.1.1						<       
     catalog: cluster							    catalog: cluster
 								>           version: 0.1.1
     dependsOn:								    dependsOn:
@@ -102,7 +102,7 @@ spec:									spec:
     dependsOn:								    dependsOn:
     - prometheus-operator-crd						    - prometheus-operator-crd
   - name: security-bundle						  - name: security-bundle
-    version: 1.8.0						<
+    version: 1.8.0						<       
     catalog: giantswarm							    catalog: giantswarm
 								>           version: 1.8.1
     dependsOn:								    dependsOn:
