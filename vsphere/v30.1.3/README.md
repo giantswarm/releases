@@ -1,4 +1,4 @@
-# :zap: Giant Swarm Release v30.1.2 for vSphere :zap:
+# :zap: Giant Swarm Release v30.1.3 for vSphere :zap:
 
 This release re-enables metrics ingestion of Cilium.
 
