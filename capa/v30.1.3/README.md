@@ -7,6 +7,7 @@ This release re-enables metrics ingestion of Cilium.
 ### Apps
 
 - cilium from v0.31.4 to v0.31.5
+- cilium-servicemonitors from v0.1.2 to v0.1.3
 
 ### cilium [v0.31.4...v0.31.5](https://github.com/giantswarm/cilium-app/compare/v0.31.4...v0.31.5)
 
