@@ -479,7 +479,8 @@ func deprecateReleases(releases []*ReleaseInfo, verbose bool) ([]*ReleaseInfo, [
 // updateReleaseDiffState modifies the corresponding .diff file to reflect
 // the new deprecated state for the current release (right side)
 // and the actual state of the previous release (left side).
-// It also handles transforming "no-pipe" state lines into "pipe" format.
+// It also handles transforming "no-pipe" state lines into "pipe" format
+// *if a state change is necessary*.
 func updateReleaseDiffState(
 	releaseInfoCurrent *ReleaseInfo,
 	releasesByName map[string]*ReleaseInfo,
@@ -502,7 +503,7 @@ func updateReleaseDiffState(
 
 	if len(originalDiffContent) == 0 {
 		if verbose {
-			log.Printf("VERBOSE: Diff file %s is empty, skipping update.", diffFilePath)
+			log.Printf("Diff file %s is empty, skipping update.", diffFilePath)
 		}
 		return nil
 	}
@@ -550,15 +551,13 @@ func updateReleaseDiffState(
 		lineNumber++
 		line := scanner.Text()
 		processedLine := line
-		// lineModifiedThisIteration is now only used within the "pipe" block explicitly
-		// For "no-pipe", if it matches, it's always considered a modification for reformatting.
 
 		if verbose {
 			log.Printf("Scanning diff file %s, Line %d: [%s]", diffFilePath, lineNumber, line)
 		}
 
 		if pipeMatches := stateLineWithPipeRegex.FindStringSubmatch(line); len(pipeMatches) == 3 {
-			lineModifiedThisIteration := false // Specific to this piped line
+			lineModifiedThisIteration := false
 			if verbose {
 				log.Printf("Line %d for %s MATCHED by stateLineWithPipeRegex.", lineNumber, diffFilePath)
 			}
@@ -568,7 +567,6 @@ func updateReleaseDiffState(
 			finalLeftPart := leftPartOriginal
 			finalRightPart := rightPartOriginal
 
-			// --- Process Left Part (Previous Release) ---
 			if previousReleaseStateKnown {
 				targetLeftStateString := string(previousReleaseActualState)
 				if subMatchesLeft := stateValueCaptureRegex.FindStringSubmatch(leftPartOriginal); len(subMatchesLeft) == 3 {
@@ -577,21 +575,20 @@ func updateReleaseDiffState(
 						finalLeftPart = stateValueCaptureRegex.ReplaceAllString(leftPartOriginal, "${1}"+targetLeftStateString)
 						lineModifiedThisIteration = true
 						if verbose {
-							log.Printf("Left part target state '%s', current in diff '%s'. MODIFIED.", targetLeftStateString, currentValLeft)
+							log.Printf("(Pipe) Left part target state '%s', current in diff '%s'. MODIFIED.", targetLeftStateString, currentValLeft)
 						}
 					} else {
 						if verbose {
-							log.Printf("Left part target state '%s', current in diff '%s'. No change needed.", targetLeftStateString, currentValLeft)
+							log.Printf("(Pipe) Left part target state '%s', current in diff '%s'. No change needed.", targetLeftStateString, currentValLeft)
 						}
 					}
 				} else {
 					if verbose {
-						log.Printf("Could not parse 'state: value' from left part: [%s]", leftPartOriginal)
+						log.Printf("(Pipe) Could not parse 'state: value' from left part: [%s]", leftPartOriginal)
 					}
 				}
 			}
 
-			// --- Process Right Part (Current Release) ---
 			targetRightStateString := string(v1alpha1.StateDeprecated)
 			if subMatchesRight := stateValueCaptureRegex.FindStringSubmatch(rightPartOriginal); len(subMatchesRight) == 3 {
 				currentValRight := subMatchesRight[2]
@@ -599,29 +596,28 @@ func updateReleaseDiffState(
 					finalRightPart = stateValueCaptureRegex.ReplaceAllString(rightPartOriginal, "${1}"+targetRightStateString)
 					lineModifiedThisIteration = true
 					if verbose {
-						log.Printf("Right part target state '%s', current in diff '%s'. MODIFIED.", targetRightStateString, currentValRight)
+						log.Printf("(Pipe) Right part target state '%s', current in diff '%s'. MODIFIED.", targetRightStateString, currentValRight)
 					}
 				} else {
 					if verbose {
-						log.Printf("Right part target state '%s', current in diff '%s'. No change needed.", targetRightStateString, currentValRight)
+						log.Printf("(Pipe) Right part target state '%s', current in diff '%s'. No change needed.", targetRightStateString, currentValRight)
 					}
 				}
 			} else {
 				if verbose {
-					log.Printf("Could not parse 'state: value' from right part: [%s]", rightPartOriginal)
+					log.Printf("(Pipe) Could not parse 'state: value' from right part: [%s]", rightPartOriginal)
 				}
 			}
 
-			if lineModifiedThisIteration { // If either left or right side was changed
+			if lineModifiedThisIteration {
 				processedLine = finalLeftPart + "|" + finalRightPart
-				modifiedInDiff = true // Global flag for the file
+				modifiedInDiff = true
 				if verbose {
-					log.Printf("Diff line modification PROPOSED for %s (line %d):\n    Old: %s\n    New: %s", diffFilePath, lineNumber, line, processedLine)
+					log.Printf("(Pipe) Diff line modification PROPOSED for %s (line %d):\n    Old: %s\n    New: %s", diffFilePath, lineNumber, line, processedLine)
 				}
 			}
 
 		} else if noPipeMatches := stateLineNoPipeRegex.FindStringSubmatch(line); len(noPipeMatches) == 5 {
-			// This block is for "no-pipe" lines like "state: val1 ... val2"
 			// noPipeMatches: [0]Full, [1]Prefix ("  state: "), [2]Val1, [3]MiddlePart, [4]Val2
 			if verbose {
 				log.Printf("Line %d for %s PRELIMINARY MATCH by stateLineNoPipeRegex (5 groups).", lineNumber, diffFilePath)
@@ -632,43 +628,45 @@ func updateReleaseDiffState(
 			}
 
 			indentAndPrefix := noPipeMatches[1]
+			val1FromDiff := noPipeMatches[2]
+			val2FromDiff := noPipeMatches[4] // Assuming Val2 is the one corresponding to the current release
 
-			leftStateToWrite := noPipeMatches[2]
+			targetLeftState := val1FromDiff // Default to what's in the diff
 			if previousReleaseStateKnown {
-				leftStateToWrite = string(previousReleaseActualState)
-				if verbose && leftStateToWrite != noPipeMatches[2] {
-					log.Printf("Left state will be set to actual previous state: '%s' (was '%s' in diff line's Val1).", leftStateToWrite, noPipeMatches[2])
-				} else if verbose {
-					log.Printf("Left state confirmed/set from actual previous state: '%s'.", leftStateToWrite)
+				targetLeftState = string(previousReleaseActualState)
+			}
+			targetRightState := string(v1alpha1.StateDeprecated)
+
+			// Only reformat and change if the target states are different from what's parsed,
+			// OR if the values parsed from the diff (val1FromDiff, val2FromDiff) are not identical
+			// (which implies it might be a malformed line that needs fixing to pipe format anyway if it was intended to be two distinct values).
+			// The primary driver for reformatting a "no-pipe" line should be a change in state values.
+			if targetLeftState != val1FromDiff || targetRightState != val2FromDiff {
+				if verbose {
+					log.Printf("(No-Pipe) State change detected. Val1InDiff: %s, TargetLeft: %s. Val2InDiff: %s, TargetRight: %s. REFORMATTING.",
+						val1FromDiff, targetLeftState, val2FromDiff, targetRightState)
+				}
+
+				leftSideString := indentAndPrefix + targetLeftState
+				rightSideString := "state: " + targetRightState
+				const leftPartTargetWidth = 40
+				paddingLength := leftPartTargetWidth - len(leftSideString)
+				if paddingLength < 1 {
+					paddingLength = 1
+				}
+				padding := strings.Repeat(" ", paddingLength)
+				rightLeadingSpaces := "         "
+
+				processedLine = leftSideString + padding + "|" + rightLeadingSpaces + rightSideString
+				modifiedInDiff = true
+				if verbose {
+					log.Printf("(No-Pipe) Line %d REFORMATTED to pipe format:\n    Old: %s\n    New: %s", lineNumber, line, processedLine)
 				}
 			} else {
 				if verbose {
-					log.Printf("Previous release state unknown from map, using parsed Val1 ('%s') for left side.", noPipeMatches[2])
+					log.Printf("(No-Pipe) Line %d: Parsed values ('%s', '%s') match target states ('%s', '%s'). No reformatting needed.",
+						lineNumber, val1FromDiff, val2FromDiff, targetLeftState, targetRightState)
 				}
-			}
-			rightStateToWrite := string(v1alpha1.StateDeprecated)
-			if verbose && rightStateToWrite != noPipeMatches[4] {
-				log.Printf("Right state will be set to deprecated: '%s' (was '%s' in diff line's Val2).", rightStateToWrite, noPipeMatches[4])
-			} else if verbose {
-				log.Printf("Right state confirmed/set to deprecated: '%s'.", rightStateToWrite)
-			}
-
-			leftSideString := indentAndPrefix + leftStateToWrite
-			rightSideString := "state: " + rightStateToWrite
-			const leftPartTargetWidth = 40
-			paddingLength := leftPartTargetWidth - len(leftSideString)
-			if paddingLength < 1 {
-				paddingLength = 1
-			}
-			padding := strings.Repeat(" ", paddingLength)
-			rightLeadingSpaces := "         "
-
-			processedLine = leftSideString + padding + "|" + rightLeadingSpaces + rightSideString
-
-			// If stateLineNoPipeRegex matches, we are *always* reformatting and thus modifying the line.
-			modifiedInDiff = true // Set the global flag
-			if verbose {
-				log.Printf("Line %d REFORMATTED to pipe format:\n    Old: %s\n    New: %s", lineNumber, line, processedLine)
 			}
 
 		} else {
@@ -679,10 +677,10 @@ func updateReleaseDiffState(
 				log.Printf("FindStringSubmatch on line [%s] returned %d elements (expected 5 for a structural match).", line, len(attemptedNoPipeMatches))
 				if len(attemptedNoPipeMatches) > 0 {
 					for i, m := range attemptedNoPipeMatches {
-						log.Printf("Submatch[%d]: [%s]", i, m)
+						log.Printf("  Submatch[%d]: [%s]", i, m)
 					}
 				} else {
-					log.Printf("No submatches found by stateLineNoPipeRegex.")
+					log.Printf("  No submatches found by stateLineNoPipeRegex.")
 				}
 			}
 		}
@@ -693,11 +691,11 @@ func updateReleaseDiffState(
 		return fmt.Errorf("error scanning diff file %s: %w", diffFilePath, err)
 	}
 
-	if modifiedInDiff { // Check the global flag
+	if modifiedInDiff {
 		log.Printf("Would update state line(s) in diff file: %s", diffFilePath)
 		if dryRun {
 			if verbose {
-				log.Printf("Skipping actual write to diff file %s", diffFilePath)
+				log.Printf("Dry run: Skipping actual write to diff file %s", diffFilePath)
 			}
 			return nil
 		}
