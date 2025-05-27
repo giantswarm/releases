@@ -14,3 +14,11 @@ This release re-enables metrics ingestion of Cilium.
 
 - Reenable Cilium agent metrics.
 
+### cilium-servicemonitors [v0.1.2...v0.1.3](https://github.com/giantswarm/cilium-servicemonitors-app/compare/v0.1.2...v0.1.3)
+
+#### Changed
+
+- Change ownership from `phoenix` to `cabbage`.
+- Use the app-build-suite.
+
+
