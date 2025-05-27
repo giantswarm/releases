@@ -21,5 +21,3 @@ This release re-enables metrics ingestion of Cilium.
 
 - Change ownership from `phoenix` to `cabbage`.
 - Use the app-build-suite.
-
-
