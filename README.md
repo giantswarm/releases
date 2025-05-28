@@ -619,16 +619,16 @@ to all Giant Swarm installations.
   - v30.1
     - [v30.1.3](https://github.com/giantswarm/releases/tree/master/cloud-director/v30.1.3)
     - [v30.1.2](https://github.com/giantswarm/releases/tree/master/cloud-director/v30.1.2)
-    - [v30.1.1](https://github.com/giantswarm/releases/tree/master/cloud-director/v30.1.1)
+    - [v30.1.1](https://github.com/giantswarm/releases/tree/master/cloud-director/archived/v30.1.1)
     - [v30.1.0](https://github.com/giantswarm/releases/tree/master/cloud-director/v30.1.0)
   - v30.0
-    - [v30.0.0](https://github.com/giantswarm/releases/tree/master/cloud-director/v30.0.0)
+    - [v30.0.0](https://github.com/giantswarm/releases/tree/master/cloud-director/archived/v30.0.0)
 
 - v29
   - v29.3
     - [v29.3.2](https://github.com/giantswarm/releases/tree/master/cloud-director/v29.3.2)
-    - [v29.3.1](https://github.com/giantswarm/releases/tree/master/cloud-director/v29.3.1)
-    - [v29.3.0](https://github.com/giantswarm/releases/tree/master/cloud-director/v29.3.0)
+    - [v29.3.1](https://github.com/giantswarm/releases/tree/master/cloud-director/archived/v29.3.1)
+    - [v29.3.0](https://github.com/giantswarm/releases/tree/master/cloud-director/archived/v29.3.0)
   - v29.2
     - [v29.2.1](https://github.com/giantswarm/releases/tree/master/cloud-director/archived/v29.2.1)
     - [v29.2.0](https://github.com/giantswarm/releases/tree/master/cloud-director/archived/v29.2.0)
