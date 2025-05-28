@@ -1,4 +1,4 @@
-**Workload cluster release v30.1.2 for vSphere is available**.
+**Workload cluster release v30.1.3 for vSphere is available**.
 
 This release re-enables metrics ingestion of Cilium.
 
