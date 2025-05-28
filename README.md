@@ -23,39 +23,39 @@ to all Giant Swarm installations.
 - v29
   - v29.6
     - [v29.6.3](https://github.com/giantswarm/releases/tree/master/capa/v29.6.3)
-    - [v29.6.2](https://github.com/giantswarm/releases/tree/master/capa/v29.6.2)
-    - [v29.6.1](https://github.com/giantswarm/releases/tree/master/capa/v29.6.1)
+    - [v29.6.2](https://github.com/giantswarm/releases/tree/master/capa/archived/v29.6.2)
+    - [v29.6.1](https://github.com/giantswarm/releases/tree/master/capa/archived/v29.6.1)
     - [v29.6.0](https://github.com/giantswarm/releases/tree/master/capa/v29.6.0)
   - v29.5
     - [v29.5.0](https://github.com/giantswarm/releases/tree/master/capa/v29.5.0)
   - v29.4
-    - [v29.4.0](https://github.com/giantswarm/releases/tree/master/capa/v29.4.0)
+    - [v29.4.0](https://github.com/giantswarm/releases/tree/master/capa/archived/v29.4.0)
   - v29.3
     - [v29.3.1](https://github.com/giantswarm/releases/tree/master/capa/archived/v29.3.1)
-    - [v29.3.0](https://github.com/giantswarm/releases/tree/master/capa/v29.3.0)
+    - [v29.3.0](https://github.com/giantswarm/releases/tree/master/capa/archived/v29.3.0)
   - v29.2
-    - [v29.2.0](https://github.com/giantswarm/releases/tree/master/capa/v29.2.0)
+    - [v29.2.0](https://github.com/giantswarm/releases/tree/master/capa/archived/v29.2.0)
   - v29.1
-    - [v29.1.0](https://github.com/giantswarm/releases/tree/master/capa/v29.1.0)
+    - [v29.1.0](https://github.com/giantswarm/releases/tree/master/capa/archived/v29.1.0)
   - v29.0
     - [v29.0.0](https://github.com/giantswarm/releases/tree/master/capa/archived/v29.0.0)
 
 - v28
   - v28.5
     - [v28.5.4](https://github.com/giantswarm/releases/tree/master/capa/v28.5.4)
-    - [v28.5.3](https://github.com/giantswarm/releases/tree/master/capa/v28.5.3)
-    - [v28.5.2](https://github.com/giantswarm/releases/tree/master/capa/v28.5.2)
-    - [v28.5.1](https://github.com/giantswarm/releases/tree/master/capa/v28.5.1)
-    - [v28.5.0](https://github.com/giantswarm/releases/tree/master/capa/v28.5.0)
+    - [v28.5.3](https://github.com/giantswarm/releases/tree/master/capa/archived/v28.5.3)
+    - [v28.5.2](https://github.com/giantswarm/releases/tree/master/capa/archived/v28.5.2)
+    - [v28.5.1](https://github.com/giantswarm/releases/tree/master/capa/archived/v28.5.1)
+    - [v28.5.0](https://github.com/giantswarm/releases/tree/master/capa/archived/v28.5.0)
   - v28.4
-    - [v28.4.0](https://github.com/giantswarm/releases/tree/master/capa/v28.4.0)
+    - [v28.4.0](https://github.com/giantswarm/releases/tree/master/capa/archived/v28.4.0)
   - v28.3
-    - [v28.3.0](https://github.com/giantswarm/releases/tree/master/capa/v28.3.0)
+    - [v28.3.0](https://github.com/giantswarm/releases/tree/master/capa/archived/v28.3.0)
   - v28.2
-    - [v28.2.0](https://github.com/giantswarm/releases/tree/master/capa/v28.2.0)
+    - [v28.2.0](https://github.com/giantswarm/releases/tree/master/capa/archived/v28.2.0)
   - v28.1
-    - [v28.1.2](https://github.com/giantswarm/releases/tree/master/capa/v28.1.2)
-    - [v28.1.1](https://github.com/giantswarm/releases/tree/master/capa/v28.1.1)
+    - [v28.1.2](https://github.com/giantswarm/releases/tree/master/capa/archived/v28.1.2)
+    - [v28.1.1](https://github.com/giantswarm/releases/tree/master/capa/archived/v28.1.1)
     - [v28.1.0](https://github.com/giantswarm/releases/tree/master/capa/archived/v28.1.0)
   - v28.0
     - [v28.0.1](https://github.com/giantswarm/releases/tree/master/capa/archived/v28.0.1)
@@ -64,18 +64,18 @@ to all Giant Swarm installations.
 - v27
   - v27.5
     - [v27.5.3](https://github.com/giantswarm/releases/tree/master/capa/v27.5.3)
-    - [v27.5.2](https://github.com/giantswarm/releases/tree/master/capa/v27.5.2)
-    - [v27.5.1](https://github.com/giantswarm/releases/tree/master/capa/v27.5.1)
-    - [v27.5.0](https://github.com/giantswarm/releases/tree/master/capa/v27.5.0)
+    - [v27.5.2](https://github.com/giantswarm/releases/tree/master/capa/archived/v27.5.2)
+    - [v27.5.1](https://github.com/giantswarm/releases/tree/master/capa/archived/v27.5.1)
+    - [v27.5.0](https://github.com/giantswarm/releases/tree/master/capa/archived/v27.5.0)
   - v27.4
-    - [v27.4.0](https://github.com/giantswarm/releases/tree/master/capa/v27.4.0)
+    - [v27.4.0](https://github.com/giantswarm/releases/tree/master/capa/archived/v27.4.0)
   - v27.3
-    - [v27.3.0](https://github.com/giantswarm/releases/tree/master/capa/v27.3.0)
+    - [v27.3.0](https://github.com/giantswarm/releases/tree/master/capa/archived/v27.3.0)
   - v27.2
-    - [v27.2.0](https://github.com/giantswarm/releases/tree/master/capa/v27.2.0)
+    - [v27.2.0](https://github.com/giantswarm/releases/tree/master/capa/archived/v27.2.0)
   - v27.1
-    - [v27.1.1](https://github.com/giantswarm/releases/tree/master/capa/v27.1.1)
-    - [v27.1.0](https://github.com/giantswarm/releases/tree/master/capa/v27.1.0)
+    - [v27.1.1](https://github.com/giantswarm/releases/tree/master/capa/archived/v27.1.1)
+    - [v27.1.0](https://github.com/giantswarm/releases/tree/master/capa/archived/v27.1.0)
   - v27.0
     - [v27.0.0](https://github.com/giantswarm/releases/tree/master/capa/archived/v27.0.0)
 
@@ -83,39 +83,39 @@ to all Giant Swarm installations.
   - v26.4
     - [v26.4.3](https://github.com/giantswarm/releases/tree/master/capa/v26.4.3)
     - [v26.4.2](https://github.com/giantswarm/releases/tree/master/capa/v26.4.2)
-    - [v26.4.1](https://github.com/giantswarm/releases/tree/master/capa/v26.4.1)
-    - [v26.4.0](https://github.com/giantswarm/releases/tree/master/capa/v26.4.0)
+    - [v26.4.1](https://github.com/giantswarm/releases/tree/master/capa/archived/v26.4.1)
+    - [v26.4.0](https://github.com/giantswarm/releases/tree/master/capa/archived/v26.4.0)
   - v26.3
-    - [v26.3.0](https://github.com/giantswarm/releases/tree/master/capa/v26.3.0)
+    - [v26.3.0](https://github.com/giantswarm/releases/tree/master/capa/archived/v26.3.0)
   - v26.2
-    - [v26.2.0](https://github.com/giantswarm/releases/tree/master/capa/v26.2.0)
+    - [v26.2.0](https://github.com/giantswarm/releases/tree/master/capa/archived/v26.2.0)
   - v26.1
-    - [v26.1.1](https://github.com/giantswarm/releases/tree/master/capa/v26.1.1)
-    - [v26.1.0](https://github.com/giantswarm/releases/tree/master/capa/v26.1.0)
+    - [v26.1.1](https://github.com/giantswarm/releases/tree/master/capa/archived/v26.1.1)
+    - [v26.1.0](https://github.com/giantswarm/releases/tree/master/capa/archived/v26.1.0)
   - v26.0
     - [v26.0.0](https://github.com/giantswarm/releases/tree/master/capa/archived/v26.0.0)
 
 - v25
   - v25.5
     - [v25.5.4](https://github.com/giantswarm/releases/tree/master/capa/v25.5.4)
-    - [v25.5.3](https://github.com/giantswarm/releases/tree/master/capa/v25.5.3)
-    - [v25.5.2](https://github.com/giantswarm/releases/tree/master/capa/v25.5.2)
-    - [v25.5.1](https://github.com/giantswarm/releases/tree/master/capa/v25.5.1)
-    - [v25.5.0](https://github.com/giantswarm/releases/tree/master/capa/v25.5.0)
+    - [v25.5.3](https://github.com/giantswarm/releases/tree/master/capa/archived/v25.5.3)
+    - [v25.5.2](https://github.com/giantswarm/releases/tree/master/capa/archived/v25.5.2)
+    - [v25.5.1](https://github.com/giantswarm/releases/tree/master/capa/archived/v25.5.1)
+    - [v25.5.0](https://github.com/giantswarm/releases/tree/master/capa/archived/v25.5.0)
   - v25.4
-    - [v25.4.0](https://github.com/giantswarm/releases/tree/master/capa/v25.4.0)
+    - [v25.4.0](https://github.com/giantswarm/releases/tree/master/capa/archived/v25.4.0)
   - v25.3
-    - [v25.3.0](https://github.com/giantswarm/releases/tree/master/capa/v25.3.0)
+    - [v25.3.0](https://github.com/giantswarm/releases/tree/master/capa/archived/v25.3.0)
   - v25.2
-    - [v25.2.1](https://github.com/giantswarm/releases/tree/master/capa/v25.2.1)
-    - [v25.2.0](https://github.com/giantswarm/releases/tree/master/capa/v25.2.0)
+    - [v25.2.1](https://github.com/giantswarm/releases/tree/master/capa/archived/v25.2.1)
+    - [v25.2.0](https://github.com/giantswarm/releases/tree/master/capa/archived/v25.2.0)
   - v25.1
-    - [v25.1.3](https://github.com/giantswarm/releases/tree/master/capa/v25.1.3)
-    - [v25.1.2](https://github.com/giantswarm/releases/tree/master/capa/v25.1.2)
-    - [v25.1.1](https://github.com/giantswarm/releases/tree/master/capa/v25.1.1)
-    - [v25.1.0](https://github.com/giantswarm/releases/tree/master/capa/v25.1.0)
+    - [v25.1.3](https://github.com/giantswarm/releases/tree/master/capa/archived/v25.1.3)
+    - [v25.1.2](https://github.com/giantswarm/releases/tree/master/capa/archived/v25.1.2)
+    - [v25.1.1](https://github.com/giantswarm/releases/tree/master/capa/archived/v25.1.1)
+    - [v25.1.0](https://github.com/giantswarm/releases/tree/master/capa/archived/v25.1.0)
   - v25.0
-    - [v25.0.0](https://github.com/giantswarm/releases/tree/master/capa/v25.0.0)
+    - [v25.0.0](https://github.com/giantswarm/releases/tree/master/capa/archived/v25.0.0)
 
 - v20
   - v20.1
