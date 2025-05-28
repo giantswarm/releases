@@ -1,38 +1,10 @@
 {
   "releases": [
     {
-      "version": "29.0.0",
-      "isDeprecated": true,
-      "releaseTimestamp": "2024-08-13 12:00:00 +0000 UTC",
-      "changelogUrl": "https://github.com/giantswarm/releases/blob/master/azure/v29.0.0/README.md",
-      "isStable": true
-    },
-    {
-      "version": "29.1.0",
-      "isDeprecated": true,
-      "releaseTimestamp": "2024-09-24 18:00:00 +0000 UTC",
-      "changelogUrl": "https://github.com/giantswarm/releases/blob/master/azure/v29.1.0/README.md",
-      "isStable": true
-    },
-    {
-      "version": "29.2.0",
-      "isDeprecated": true,
-      "releaseTimestamp": "2024-09-30 12:00:00 +0000 UTC",
-      "changelogUrl": "https://github.com/giantswarm/releases/blob/master/azure/v29.2.0/README.md",
-      "isStable": true
-    },
-    {
       "version": "29.3.0",
       "isDeprecated": false,
       "releaseTimestamp": "2024-11-13 12:00:00 +0000 UTC",
       "changelogUrl": "https://github.com/giantswarm/releases/blob/master/azure/v29.3.0/README.md",
-      "isStable": true
-    },
-    {
-      "version": "29.4.0",
-      "isDeprecated": true,
-      "releaseTimestamp": "2024-12-12 12:00:00 +0000 UTC",
-      "changelogUrl": "https://github.com/giantswarm/releases/blob/master/azure/v29.4.0/README.md",
       "isStable": true
     },
     {
