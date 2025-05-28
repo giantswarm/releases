@@ -19,8 +19,6 @@ This release re-enables metrics ingestion of Cilium.
 
 #### Changed
 
+- Fix home URL in chart metadata
 - Change ownership from `phoenix` to `cabbage`.
 - Use the app-build-suite.
-
-
-
