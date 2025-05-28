@@ -1,28 +1,265 @@
-name: Check Release Archive Safety
+name: Archive Deprecated Releases
 
 on:
-  pull_request:
-    types: [opened, synchronize, reopened, ready_for_review]
+  schedule:
+    - cron: "0 10 * * 1" # Every Monday at 10:00 AM UTC
+  push:
+    branches:
+      - "master"
+      - "main"
+      - "3qrf" # testing purpose, ignore
     paths:
-      - '*/v*/*'
-      - '*/archived/**'
-      - '.github/workflows/archive-releases.yaml'
+      - ".github/workflows/archive-releases.yaml"
+      - "azure/**"
+      - "capa/**"
+      - "cloud-director/**"
+      - "vsphere/**"
+  workflow_dispatch:
 
 jobs:
-  check-release-archive:
+  find-providers:
+    name: Find Provider Directories
     runs-on: ubuntu-latest
+    outputs:
+      providers: ${{ steps.find-providers.outputs.providers }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-      
-      - name: Install dependencies
+      - name: Find providers with releases
+        id: find-providers
         run: |
-          sudo apt-get update
-          sudo apt-get install -y jq curl
-      
-      - name: Check if releases being archived are safe
-        run: ./tools/check-release-archive.sh "${{ secrets.GRAFANA_API_KEY }}"
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PROVIDERS=$(find . -maxdepth 1 -type d \( -name "azure" -o -name "capa" -o -name "vsphere" -o -name "cloud-director" \) | sed 's|./||' | sort)
+
+          if [ -z "$PROVIDERS" ]; then
+            echo "WARNING: No provider directories found"
+            echo "providers=[]" >> $GITHUB_OUTPUT
+            exit 0
+          fi
+
+          echo "Found $(echo "$PROVIDERS" | wc -l) provider directories: $PROVIDERS"
+          PROVIDERS_JSON=$(echo "$PROVIDERS" | jq -R -s -c 'split("\n") | map(select(length > 0))')
+          echo "providers=$PROVIDERS_JSON" >> $GITHUB_OUTPUT
+
+  archive-providers:
+    name: Archive Provider Releases
+    needs: find-providers
+    runs-on: ubuntu-latest
+    if: ${{ needs.find-providers.outputs.providers != '[]' }}
+    strategy:
+      matrix:
+        provider: ${{ fromJson(needs.find-providers.outputs.providers) }}
+      fail-fast: false
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set Provider Display Name
+        id: provider-name
+        run: |
+          PROVIDER="${{ matrix.provider }}"
+          case "$PROVIDER" in
+            "azure")
+              DISPLAY_NAME="CAPZ"
+              ;;
+            "cloud-director")
+              DISPLAY_NAME="CAPVCD"
+              ;;
+            "vsphere")
+              DISPLAY_NAME="CAPV"
+              ;;
+            "capa")
+              DISPLAY_NAME="CAPA"
+              ;;
+            *)
+              DISPLAY_NAME=$(echo "$PROVIDER" | tr '[:lower:]' '[:upper:]')
+              ;;
+          esac
+          echo "display_name=$DISPLAY_NAME" >> $GITHUB_OUTPUT
+
+      - name: Archive Deprecated Releases for ${{ matrix.provider }}
+        id: archive_script
+        run: |
+          set -eo pipefail
+
+          MOVED_RELEASES_NAMES_THIS_RUN=""
+          PROVIDER_ROOT_DIR="${{ matrix.provider }}"
+
+          echo "INFO: Processing provider directory: $PROVIDER_ROOT_DIR"
+
+          if [ ! -d "$PROVIDER_ROOT_DIR" ]; then
+            echo "ERROR: Provider directory $PROVIDER_ROOT_DIR not found!"
+            echo "has_archived_releases=false" >> $GITHUB_OUTPUT
+            echo "archived_releases_pr_body_section=" >> $GITHUB_OUTPUT
+            exit 1
+          fi
+
+          MOVED_RELEASES_TEMP_FILE=$(mktemp)
+          trap 'rm -f "$MOVED_RELEASES_TEMP_FILE"' EXIT
+
+          find "$PROVIDER_ROOT_DIR" -maxdepth 1 -mindepth 1 -type d -name 'v*.*.*' -print0 | sort -z | while IFS= read -r -d $'\0' release_dir_path; do
+            RELEASE_YAML_PATH="$release_dir_path/release.yaml"
+            RELEASE_NAME=$(basename "$release_dir_path")
+
+            if [ ! -f "$RELEASE_YAML_PATH" ]; then
+              echo "WARNING: No release.yaml found in $release_dir_path. Skipping."
+              continue
+            fi
+
+            if grep -q -E "^\s*state:\s*deprecated\s*$" "$RELEASE_YAML_PATH"; then
+              echo "INFO: Release $RELEASE_NAME is deprecated"
+              ARCHIVE_PARENT_DIR="$PROVIDER_ROOT_DIR/archived"
+              ARCHIVED_RELEASE_FULL_PATH="$ARCHIVE_PARENT_DIR/$RELEASE_NAME"
+
+              if [ ! -d "$ARCHIVE_PARENT_DIR" ]; then
+                mkdir -p "$ARCHIVE_PARENT_DIR"
+              fi
+
+              if [ -d "$ARCHIVED_RELEASE_FULL_PATH" ]; then
+                echo "INFO: Release $RELEASE_NAME already archived. Skipping."
+              else
+                echo "INFO: Moving $RELEASE_NAME to archived directory"
+                if ! git mv "$release_dir_path" "$ARCHIVED_RELEASE_FULL_PATH"; then
+                  echo "ERROR: Failed to move $release_dir_path"
+                  exit 1
+                fi
+                echo "$RELEASE_NAME" >> "$MOVED_RELEASES_TEMP_FILE"
+              fi
+            fi
+          done
+
+          if [ -s "$MOVED_RELEASES_TEMP_FILE" ]; then
+            MOVED_RELEASES_NAMES_THIS_RUN=$(sort -V "$MOVED_RELEASES_TEMP_FILE" | paste -sd ',' -)
+            echo "INFO: Moved releases: $MOVED_RELEASES_NAMES_THIS_RUN"
+          else
+            echo "INFO: No releases moved"
+            MOVED_RELEASES_NAMES_THIS_RUN=""
+          fi
+
+          if [ -n "$MOVED_RELEASES_NAMES_THIS_RUN" ]; then
+            KUSTOMIZATION_FILE="$PROVIDER_ROOT_DIR/kustomization.yaml"
+            if [ -f "$KUSTOMIZATION_FILE" ]; then
+              echo "INFO: Updating $KUSTOMIZATION_FILE"
+              ORIG_KUSTOMIZATION_CONTENT=$(cat "$KUSTOMIZATION_FILE")
+              NEW_KUSTOMIZATION_CONTENT="$ORIG_KUSTOMIZATION_CONTENT"
+
+              TEMP_SED_SCRIPT_KUSTOMIZATION=$(mktemp)
+              trap 'rm -f "$TEMP_SED_SCRIPT_KUSTOMIZATION"' EXIT
+
+              echo "$MOVED_RELEASES_NAMES_THIS_RUN" | tr ',' '\n' | while read archived_release_name; do
+                echo "/^\s*-\s*${archived_release_name}\s*$/d" >> "$TEMP_SED_SCRIPT_KUSTOMIZATION"
+              done
+
+              if [ -s "$TEMP_SED_SCRIPT_KUSTOMIZATION" ]; then
+                NEW_KUSTOMIZATION_CONTENT=$(echo "$ORIG_KUSTOMIZATION_CONTENT" | sed -f "$TEMP_SED_SCRIPT_KUSTOMIZATION")
+
+                if [ $? -ne 0 ]; then
+                  echo "ERROR: Failed to process kustomization.yaml"
+                  exit 1
+                fi
+              fi
+
+              if [ "$NEW_KUSTOMIZATION_CONTENT" != "$ORIG_KUSTOMIZATION_CONTENT" ]; then
+                echo "$NEW_KUSTOMIZATION_CONTENT" > "$KUSTOMIZATION_FILE"
+                git add "$KUSTOMIZATION_FILE"
+                echo "INFO: $KUSTOMIZATION_FILE updated and staged."
+              else
+                echo "INFO: No changes made to $KUSTOMIZATION_FILE."
+              fi
+            else
+              echo "WARNING: $KUSTOMIZATION_FILE not found for provider ${{ matrix.provider }}."
+            fi
+
+            README_FILE="README.md"
+            if [ -f "$README_FILE" ]; then
+              echo "INFO: Updating $README_FILE"
+              ORIG_README_CONTENT=$(cat "$README_FILE")
+              NEW_README_CONTENT="$ORIG_README_CONTENT"
+
+              TEMP_SED_SCRIPT_README=$(mktemp)
+              trap 'rm -f "$TEMP_SED_SCRIPT_README"' EXIT
+
+              echo "$MOVED_RELEASES_NAMES_THIS_RUN" | tr ',' '\n' | while read archived_release_name; do
+                PROVIDER_PATH_SEGMENT="${{ matrix.provider }}"
+
+                # Update GitHub links in README.md
+                OLD_GITHUB_PATH="tree/master/${PROVIDER_PATH_SEGMENT}/${archived_release_name}"
+                NEW_GITHUB_PATH="tree/master/${PROVIDER_PATH_SEGMENT}/archived/${archived_release_name}"
+                echo "s#${OLD_GITHUB_PATH}#${NEW_GITHUB_PATH}#g" >> "$TEMP_SED_SCRIPT_README"
+              done
+
+              if [ -s "$TEMP_SED_SCRIPT_README" ]; then
+                NEW_README_CONTENT=$(echo "$ORIG_README_CONTENT" | sed -f "$TEMP_SED_SCRIPT_README")
+
+                if [ $? -ne 0 ]; then
+                  echo "ERROR: Failed to process README.md with sed"
+                  exit 1
+                fi
+              fi
+
+              if [ "$NEW_README_CONTENT" != "$ORIG_README_CONTENT" ]; then
+                echo "$NEW_README_CONTENT" > "$README_FILE"
+                git add "$README_FILE"
+                echo "INFO: $README_FILE updated and staged."
+              else
+                echo "INFO: No changes made to $README_FILE."
+              fi
+            else
+              echo "WARNING: $README_FILE not found."
+            fi
+          fi
+
+          MOVED_ANY_RELEASE_OVERALL=false
+          if git diff --staged --quiet --exit-code; then
+            MOVED_ANY_RELEASE_OVERALL=false
+            echo "INFO: No changes were staged for commit."
+          else
+            MOVED_ANY_RELEASE_OVERALL=true
+            echo "INFO: Changes were staged for commit."
+            git diff --staged --name-status | sort
+          fi
+
+          if [ "$MOVED_ANY_RELEASE_OVERALL" = true ]; then
+            echo "has_archived_releases=true" >> $GITHUB_OUTPUT
+            if [ -n "$MOVED_RELEASES_NAMES_THIS_RUN" ]; then
+              PR_BODY_SECTION="${PR_BODY_SECTION}| Major Version | Releases Archived |\n"
+              PR_BODY_SECTION="${PR_BODY_SECTION}|---------------|-------------------|\n"
+              SORTED_ARCHIVED_VERSIONS=$(echo "$MOVED_RELEASES_NAMES_THIS_RUN" | tr ',' '\n' | sed 's/^v//' | sort -V)
+              MAJOR_VERSIONS_WITH_ARCHIVES=$(echo "$SORTED_ARCHIVED_VERSIONS" | sed -E 's|^([0-9]+)\..*|\1|' | sort -n | uniq)
+              for major in $MAJOR_VERSIONS_WITH_ARCHIVES; do
+                ARCHIVED_IN_MAJOR=$(echo "$SORTED_ARCHIVED_VERSIONS" | grep -E "^${major}\." | sed 's/^/v/' | paste -sd "," - | sed 's/,/, /g')
+                if [ -n "$ARCHIVED_IN_MAJOR" ]; then
+                   PR_BODY_SECTION="${PR_BODY_SECTION}| v${major}         | ${ARCHIVED_IN_MAJOR}              |\n"
+                fi
+              done
+            fi
+
+            EOF_MARKER="END_OF_PR_BODY_SECTION_$(date +%s%N)"
+            echo "archived_releases_pr_body_section<<$EOF_MARKER" >> $GITHUB_OUTPUT
+            echo -e "$PR_BODY_SECTION" >> $GITHUB_OUTPUT
+            echo "$EOF_MARKER" >> $GITHUB_OUTPUT
+          else
+            echo "has_archived_releases=false" >> $GITHUB_OUTPUT
+            echo "archived_releases_pr_body_section=" >> $GITHUB_OUTPUT
+          fi
+        shell: bash
+
+      - name: Create Pull Request
+        if: steps.archive_script.outputs.has_archived_releases == 'true'
+        uses: peter-evans/create-pull-request@6658b293f01239e9f0bd7469979ab4a9023b65ad
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: "Automated: Archive deprecated ${{ steps.provider-name.outputs.display_name }} releases"
+          title: "${{ steps.provider-name.outputs.display_name }}: Archive deprecated releases"
+          body: |
+            ## Automated Release Archiving for ${{ steps.provider-name.outputs.display_name }}
+
+            Archived releases are moved from `${{ matrix.provider }}/<version>` to `${{ matrix.provider }}/archived/<version>`.
+
+            ${{ steps.archive_script.outputs.archived_releases_pr_body_section }}
+
+          branch: auto-archive-${{ matrix.provider }}-releases
+          base: master
+          labels: |
+            release-maintenance
+            automated
+          delete-branch: true
