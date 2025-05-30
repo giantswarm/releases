@@ -1,0 +1,19 @@
+resources:
+- release.yaml
+
+replacements:
+- source:
+    group: release.giantswarm.io
+    kind: Release
+    fieldPath: metadata.name
+    options:
+      delimiter: "-"
+      index: 2
+  targets:
+  - select:
+      group: release.giantswarm.io
+      kind: Release
+    fieldPaths:
+    - metadata.annotations.[giantswarm.io/release-notes]
+    options:
+      create: true
