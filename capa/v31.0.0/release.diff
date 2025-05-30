@@ -29,7 +29,6 @@ spec:                                                              spec:
     dependsOn:                                                         dependsOn:
     - prometheus-operator-crd                                          - prometheus-operator-crd
                                                                 >    - name: cert-manager-crossplane-resources
-                                                                >      catalog: cluster
                                                                 >      version: 0.1.0
   - name: chart-operator-extensions                                  - name: chart-operator-extensions
     version: 1.1.2                                                     version: 1.1.2
