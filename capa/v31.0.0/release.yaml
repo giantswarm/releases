@@ -28,12 +28,14 @@ spec:
     version: 3.9.1
     dependsOn:
     - prometheus-operator-crd
+  - name: cert-manager-crossplane-resources
+    version: 0.1.0
   - name: chart-operator-extensions
     version: 1.1.2
     dependsOn:
     - prometheus-operator-crd
   - name: cilium
-    version: 0.31.5
+    version: 1.1.1
   - name: cilium-crossplane-resources
     catalog: cluster
     version: 0.2.1
@@ -133,5 +135,5 @@ spec:
     version: 1.31.9
   - name: os-tooling
     version: 1.26.1
-  date: "2025-05-30T11:14:06Z"
+  date: "2025-05-30T12:05:53Z"
   state: active

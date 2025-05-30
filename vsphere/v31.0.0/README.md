@@ -15,28 +15,20 @@
 #### Changed
 
 - Chart: Update `cluster` to v2.3.0.
-- Update `kube-vip` to `0.9.1`.
-- Update `kube-vip` to `0.9.0`.
 
 ### Apps
 
-- vertical-pod-autoscaler from 5.4.0 to 5.5.0
 - cert-manager from 3.9.0 to 3.9.1
+- cilium from 0.31.5 to 1.1.1
+- coredns from 1.24.0 to 1.25.0
 - etcd-defrag from 1.0.2 to 1.0.4
 - observability-bundle from 1.11.0 to 1.14.1
-- security-bundle from 1.10.1 to 1.11.0
-- vertical-pod-autoscaler-crd from 3.2.0 to 3.3.0
-- coredns from 1.24.0 to 1.25.0
 - observability-policies from 0.0.1 to 0.0.2
+- security-bundle from 1.10.1 to 1.11.0
 - teleport-kube-agent from 0.10.4 to 0.10.5
+- vertical-pod-autoscaler from 5.4.0 to 5.5.0
+- vertical-pod-autoscaler-crd from 3.2.0 to 3.3.0
 
-
-### vertical-pod-autoscaler [v5.4.0...v5.5.0](https://github.com/giantswarm/vertical-pod-autoscaler-app/compare/v5.4.0...v5.5.0)
-
-#### Changed
-
-- Chart: Update Helm release vertical-pod-autoscaler to v10.1.0. ([#350](https://github.com/giantswarm/vertical-pod-autoscaler-app/pull/350))
-- Chart: Update Helm release vertical-pod-autoscaler to v10.2.0. ([#351](https://github.com/giantswarm/vertical-pod-autoscaler-app/pull/351))
 
 ### cert-manager [v3.9.0...v3.9.1](https://github.com/giantswarm/cert-manager-app/compare/v3.9.0...v3.9.1)
 
@@ -44,6 +36,19 @@
 
 - Added Vertical Pod Autoscaler support for `controller` pods.
 - Added renovate configutarion
+
+### cilium [v0.31.5...v1.1.1](https://github.com/giantswarm/cilium-app/compare/v0.31.5...v1.1.1)
+
+#### Changed
+
+- Upgrade Cilium to [v1.17.4](https://github.com/cilium/cilium/releases/tag/v1.17.4).
+- Cilium v1.17.4 disables kubernetes api connectivity check for liveness probes. (Upstream PR: https://github.com/cilium/cilium/pull/38703)
+
+### coredns [v1.24.0...v1.25.0](https://github.com/giantswarm/coredns-app/compare/v1.24.0...v1.25.0)
+
+#### Changed
+
+- Update `coredns` image to [1.12.1](https://github.com/coredns/coredns/releases/tag/v1.12.1).
 
 ### etcd-defrag [v1.0.2...v1.0.4](https://github.com/giantswarm/etcd-defrag-app/compare/v1.0.2...v1.0.4)
 
@@ -57,6 +62,13 @@
 
 - Reconfigure Flux-related part of the KSM to use wildcards instead of hardcoded versions.
 - Rename Flux-related metrics produced by the KSM.
+
+### observability-policies [v0.0.1...v0.0.2](https://github.com/giantswarm/observability-policies-app/compare/v0.0.1...v0.0.2)
+
+#### Changed
+
+- Add Cluster Role to allow latest Kyverno versions to work (https://github.com/giantswarm/giantswarm/issues/33416)
+- Switch `.Values.disabled` to `.Values.enabled` to follow best practices.
 
 ### security-bundle [v1.10.1...v1.11.0](https://github.com/giantswarm/security-bundle/compare/v1.10.1...v1.11.0)
 
@@ -72,27 +84,21 @@
 - Update `kyverno-policy-operator` (app) to v0.0.11.
 - Update `cloudnative-pg` (app) to v0.0.9.
 
-### vertical-pod-autoscaler-crd [v3.2.0...v3.3.0](https://github.com/giantswarm/vertical-pod-autoscaler-crd/compare/v3.2.0...v3.3.0)
-
-#### Changed
-
-- Chart: Sync to upstream. ([#140](https://github.com/giantswarm/vertical-pod-autoscaler-crd/pull/140))
-
-### coredns [v1.24.0...v1.25.0](https://github.com/giantswarm/coredns-app/compare/v1.24.0...v1.25.0)
-
-#### Changed
-
-- Update `coredns` image to [1.12.1](https://github.com/coredns/coredns/releases/tag/v1.12.1).
-
-### observability-policies [v0.0.1...v0.0.2](https://github.com/giantswarm/observability-policies-app/compare/v0.0.1...v0.0.2)
-
-#### Changed
-
-- Add Cluster Role to allow latest Kyverno versions to work (https://github.com/giantswarm/giantswarm/issues/33416)
-- Switch `.Values.disabled` to `.Values.enabled` to follow best practices.
-
 ### teleport-kube-agent [v0.10.4...v0.10.5](https://github.com/giantswarm/teleport-kube-agent-app/compare/v0.10.4...v0.10.5)
 
 #### Added
 
 - Set Home URL in chart metadata.
+
+### vertical-pod-autoscaler [v5.4.0...v5.5.0](https://github.com/giantswarm/vertical-pod-autoscaler-app/compare/v5.4.0...v5.5.0)
+
+#### Changed
+
+- Chart: Update Helm release vertical-pod-autoscaler to v10.1.0. ([#350](https://github.com/giantswarm/vertical-pod-autoscaler-app/pull/350))
+- Chart: Update Helm release vertical-pod-autoscaler to v10.2.0. ([#351](https://github.com/giantswarm/vertical-pod-autoscaler-app/pull/351))
+
+### vertical-pod-autoscaler-crd [v3.2.0...v3.3.0](https://github.com/giantswarm/vertical-pod-autoscaler-crd/compare/v3.2.0...v3.3.0)
+
+#### Changed
+
+- Chart: Sync to upstream. ([#140](https://github.com/giantswarm/vertical-pod-autoscaler-crd/pull/140))
