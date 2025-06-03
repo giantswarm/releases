@@ -14,12 +14,13 @@
 - Added cert-manager-crossplane-resources 0.1.0
 
 - cert-manager from 3.9.0 to 3.9.1
-- cilium from 0.31.5 to 1.1.1
+- cilium from 0.31.5 to 1.2.0
 - cilium-crossplane-resources from 0.2.0 to 0.2.1
 - cluster-autoscaler from 1.30.4-gs1 to 1.31.2-gs1
 - coredns from 1.24.0 to 1.25.0
 - etcd-defrag from 1.0.2 to 1.0.4
-- observability-bundle from 1.11.0 to 1.14.1
+- net-exporter from 1.22.0 to 1.23.0
+- observability-bundle from 1.11.0 to 1.16.0
 - observability-policies from 0.0.1 to 0.0.2
 - security-bundle from 1.10.1 to 1.11.0
 - teleport-kube-agent from 0.10.4 to 0.10.5
@@ -34,22 +35,33 @@
 - Added Vertical Pod Autoscaler support for `controller` pods.
 - Added renovate configutarion
 
-### cert-manager-crossplane-resources [v0.0.7...v0.1.0]https://github.com/giantswarm/cert-manager-crossplane-resources/compare/v0.0.7...v0.1.0)
+### cert-manager-crossplane-resources 0.1.0
 
 #### Added
 
 - Added support for `Azure`
+- Included the `giantswarm.io/cluster` label
 
 #### Changed
 
 - Restructured Chart to support multiple cloud providers
 
-### cilium [v0.31.5...v1.1.1](https://github.com/giantswarm/cilium-app/compare/v0.31.5...v1.1.1)
+### cilium [v0.31.5...v1.2.0](https://github.com/giantswarm/cilium-app/compare/v0.31.5...v1.2.0)
 
 #### Changed
 
+- Re-enable Cilium agent and operator metrics port.
+- Add resource requests and limits to Hubble UI and Relay.
+- Add resource requests and limits to Cilium Operator.
 - Upgrade Cilium to [v1.17.4](https://github.com/cilium/cilium/releases/tag/v1.17.4).
 - Cilium v1.17.4 disables kubernetes api connectivity check for liveness probes. (Upstream PR: https://github.com/cilium/cilium/pull/38703)
+- Upgrade Cilium to [v1.17.3](https://github.com/cilium/cilium/releases/tag/v1.17.3).
+- Upgrade Cilium to [v1.17.2](https://github.com/cilium/cilium/releases/tag/v1.17.2).
+- Remove cleanup kube-proxy patch.
+- Identity computation label exclusion list regular expressions. Remove `controller-uid`, since this is excluded by default now.
+- Upgrade Cilium to [v1.17.0](https://github.com/cilium/cilium/releases/tag/v1.17.0).
+- Use upstream default value for `prometheus.metrics`.
+- Enable Envoy Proxy in standalone DaemonSet.
 
 ### cilium-crossplane-resources [v0.2.0...v0.2.1](https://github.com/giantswarm/cilium-crossplane-resources/compare/v0.2.0...v0.2.1)
 
@@ -62,6 +74,7 @@
 #### Added
 
 - Add additional labels to ignore during ASG balancing check
+- Support adding additional labels to the `PodMonitor` resource via the `podMonitor.additionalLabels` value.
 
 #### Changed
 
@@ -78,13 +91,38 @@
 #### Changed
 
 - Chart: Update dependency ahrtr/etcd-defrag to v0.27.0. ([#29](https://github.com/giantswarm/etcd-defrag-app/pull/29))
+- Chart: Update dependency ahrtr/etcd-defrag to v0.26.0. ([#22](https://github.com/giantswarm/etcd-defrag-app/pull/22))
 
-### observability-bundle [v1.11.0...v1.14.1](https://github.com/giantswarm/observability-bundle/compare/v1.11.0...v1.14.1)
+### net-exporter [v1.22.0...v1.23.0](https://github.com/giantswarm/net-exporter/compare/v1.22.0...v1.23.0)
 
 #### Changed
 
+- Check for errors when closing connections.
+- Switch from Endpoints to EndpointSlices for neighbors discovery.
+
+### observability-bundle [v1.11.0...v1.16.0](https://github.com/giantswarm/observability-bundle/compare/v1.11.0...v1.16.0)
+
+#### Added
+
+- Add support for enabling pre-configured custom resources in KSM
+- Add metrics containing labels for Crossplane resources
+
+#### Changed
+
+- Upgrade alloy-app from 0.10.0 to 0.11.0
+  - This bumps the version of Alloy from 1.8.3 to 1.9.0
+- Upgrade `alloy-app` from 0.9.0 to 0.10.0
+  - This bumps the version of Alloy from 1.7.1 to 1.8.3
 - Reconfigure Flux-related part of the KSM to use wildcards instead of hardcoded versions.
 - Rename Flux-related metrics produced by the KSM.
+- Upgrade `kube-prometheus-stack` to 72.3.0
+  - Bumps prometheus-operator to 0.82.0
+  - Bumps prometheus-operator CRDs to 0.82.0
+- Upgrade `kube-prometheus-stack` to 72.3.0
+  - Bumps prometheus-operator to 0.82.0
+- Upgrade `kube-prometheus-stack` from 69.5.1 to 70.1.1
+  - Bumps prometheus-operator to 0.81.0
+  - Bumps prometheus to 3.2.1
 
 ### observability-policies [v0.0.1...v0.0.2](https://github.com/giantswarm/observability-policies-app/compare/v0.0.1...v0.0.2)
 
@@ -119,9 +157,11 @@
 
 - Chart: Update Helm release vertical-pod-autoscaler to v10.1.0. ([#350](https://github.com/giantswarm/vertical-pod-autoscaler-app/pull/350))
 - Chart: Update Helm release vertical-pod-autoscaler to v10.2.0. ([#351](https://github.com/giantswarm/vertical-pod-autoscaler-app/pull/351))
+- Chart: Update Helm release vertical-pod-autoscaler to v10.0.1. ([#346](https://github.com/giantswarm/vertical-pod-autoscaler-app/pull/346))
 
 ### vertical-pod-autoscaler-crd [v3.2.0...v3.3.0](https://github.com/giantswarm/vertical-pod-autoscaler-crd/compare/v3.2.0...v3.3.0)
 
 #### Changed
 
 - Chart: Sync to upstream. ([#140](https://github.com/giantswarm/vertical-pod-autoscaler-crd/pull/140))
+- Chart: Sync to upstream. ([#136](https://github.com/giantswarm/vertical-pod-autoscaler-crd/pull/136))

@@ -29,14 +29,13 @@ spec:
     dependsOn:
     - prometheus-operator-crd
   - name: cert-manager-crossplane-resources
-    catalog: cluster
     version: 0.1.0
   - name: chart-operator-extensions
     version: 1.1.2
     dependsOn:
     - prometheus-operator-crd
   - name: cilium
-    version: 1.1.1
+    version: 1.2.0
   - name: cilium-crossplane-resources
     catalog: cluster
     version: 0.2.1
@@ -89,7 +88,7 @@ spec:
     dependsOn:
     - kyverno-crds
   - name: net-exporter
-    version: 1.22.0
+    version: 1.23.0
     dependsOn:
     - prometheus-operator-crd
   - name: network-policies
@@ -102,7 +101,7 @@ spec:
     dependsOn:
     - kyverno-crds
   - name: observability-bundle
-    version: 1.14.1
+    version: 1.16.0
     dependsOn:
     - coredns
   - name: observability-policies
@@ -136,5 +135,5 @@ spec:
     version: 1.31.9
   - name: os-tooling
     version: 1.26.1
-  date: "2025-05-30T12:05:53Z"
+  date: "2025-06-03T09:09:10Z"
   state: active

@@ -35,7 +35,7 @@ spec:                                                              spec:
     dependsOn:                                                         dependsOn:
     - prometheus-operator-crd                                          - prometheus-operator-crd
   - name: cilium                                                     - name: cilium
-    version: 0.31.5                                             |      version: 1.1.1
+    version: 0.31.5                                             |      version: 1.2.0
   - name: cilium-crossplane-resources                                - name: cilium-crossplane-resources
     catalog: cluster                                                   catalog: cluster
     version: 0.2.0                                              |      version: 0.2.1
@@ -88,7 +88,7 @@ spec:                                                              spec:
     dependsOn:                                                         dependsOn:
     - kyverno-crds                                                     - kyverno-crds
   - name: net-exporter                                               - name: net-exporter
-    version: 1.22.0                                                    version: 1.22.0
+    version: 1.22.0                                             |      version: 1.23.0
     dependsOn:                                                         dependsOn:
     - prometheus-operator-crd                                          - prometheus-operator-crd
   - name: network-policies                                           - name: network-policies
@@ -101,7 +101,7 @@ spec:                                                              spec:
     dependsOn:                                                         dependsOn:
     - kyverno-crds                                                     - kyverno-crds
   - name: observability-bundle                                       - name: observability-bundle
-    version: 1.11.0                                             |      version: 1.14.1
+    version: 1.11.0                                             |      version: 1.16.0
     dependsOn:                                                         dependsOn:
     - coredns                                                          - coredns
   - name: observability-policies                                     - name: observability-policies
@@ -135,5 +135,5 @@ spec:                                                              spec:
     version: 1.30.11                                            |      version: 1.31.9
   - name: os-tooling                                                 - name: os-tooling
     version: 1.24.0                                             |      version: 1.26.1
-  date: "2025-05-27T09:00:00Z"                                  |    date: "2025-05-30T12:05:53Z"
+  date: "2025-05-27T09:00:00Z"                                  |    date: "2025-06-03T09:09:10Z"
   state: active                                                      state: active
