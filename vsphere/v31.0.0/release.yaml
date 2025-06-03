@@ -5,9 +5,9 @@ metadata:
 spec:
   apps:
   - name: capi-node-labeler
-    version: 1.0.2
+    version: 1.1.0
   - name: cert-exporter
-    version: 2.9.5
+    version: 2.9.6
     dependsOn:
     - kyverno-crds
   - name: cert-manager
@@ -41,7 +41,7 @@ spec:
     dependsOn:
     - kyverno-crds
   - name: etcd-k8s-res-count-exporter
-    version: 1.10.3
+    version: 1.10.4
     dependsOn:
     - kyverno-crds
   - name: external-dns
@@ -49,7 +49,7 @@ spec:
     dependsOn:
     - prometheus-operator-crd
   - name: k8s-audit-metrics
-    version: 0.10.2
+    version: 0.10.3
     dependsOn:
     - kyverno-crds
   - name: k8s-dns-node-cache
@@ -78,11 +78,11 @@ spec:
     dependsOn:
     - cilium
   - name: node-exporter
-    version: 1.20.2
+    version: 1.20.3
     dependsOn:
     - kyverno-crds
   - name: observability-bundle
-    version: 1.16.0
+    version: 1.16.1
     dependsOn:
     - coredns
   - name: observability-policies
@@ -120,5 +120,5 @@ spec:
     version: 1.31.9
   - name: os-tooling
     version: 1.26.1
-  date: "2025-06-03T09:17:39Z"
+  date: "2025-06-03T13:11:09Z"
   state: active
