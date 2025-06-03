@@ -66,6 +66,11 @@ jobs:
       - name: Install dependencies
         run: sudo apt-get update && sudo apt-get install -y jq curl
 
+      - name: Configure Git
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
       - name: Set Provider Display Name
         id: provider-name
         run: |
@@ -128,7 +133,7 @@ jobs:
               # Use the existing validation script to check if it's safe
               echo "INFO: Checking if $PROVIDER/$VERSION is safe to archive..."
               
-              # Create a temporary git state that simulates the move to test safety
+              # Create archive directory if it doesn't exist
               ARCHIVE_PARENT_DIR="$PROVIDER_ROOT_DIR/archived"
               ARCHIVED_RELEASE_FULL_PATH="$ARCHIVE_PARENT_DIR/$RELEASE_NAME"
               
@@ -139,18 +144,28 @@ jobs:
               if [ -d "$ARCHIVED_RELEASE_FULL_PATH" ]; then
                 echo "INFO: Release $RELEASE_NAME already archived. Skipping."
               else
-                # Simulate the move to test if it's safe
-                cp -r "$release_dir_path" "$ARCHIVED_RELEASE_FULL_PATH"
-                git add "$ARCHIVED_RELEASE_FULL_PATH"
-                git rm -r --cached "$release_dir_path" >/dev/null 2>&1 || true
+                # Create a temporary branch to simulate the move for validation
+                TEMP_BRANCH="temp-validate-archive-$(date +%s%N)"
+                CURRENT_BRANCH=$(git branch --show-current)
                 
-                # Run the safety check
+                # Create and switch to temporary branch
+                git checkout -b "$TEMP_BRANCH"
+                
+                # Ensure archived directory exists
+                git add "$ARCHIVE_PARENT_DIR" 2>/dev/null || true
+                
+                # Perform the move on the temporary branch
+                git mv "$release_dir_path" "$ARCHIVED_RELEASE_FULL_PATH"
+                git add "$ARCHIVED_RELEASE_FULL_PATH"
+                git commit -m "Temporary: Test move of $RELEASE_NAME to archived"
+                
+                # Run the safety check (this will compare temp branch with origin/main)
                 if ./tools/check-release-archive.sh "${{ secrets.GRAFANA_API_KEY }}"; then
-                  echo "INFO: Release $RELEASE_NAME is safe to archive. Moving to archived directory."
+                  echo "INFO: Release $RELEASE_NAME is safe to archive."
                   
-                  # Reset the simulated state
-                  git reset HEAD >/dev/null 2>&1 || true
-                  rm -rf "$ARCHIVED_RELEASE_FULL_PATH"
+                  # Switch back to original branch
+                  git checkout "$CURRENT_BRANCH"
+                  git branch -D "$TEMP_BRANCH"
                   
                   # Actually perform the move
                   if ! git mv "$release_dir_path" "$ARCHIVED_RELEASE_FULL_PATH"; then
@@ -161,9 +176,9 @@ jobs:
                 else
                   echo "WARNING: Release $RELEASE_NAME is still in use and cannot be archived. Skipping."
                   
-                  # Reset the simulated state
-                  git reset HEAD >/dev/null 2>&1 || true
-                  rm -rf "$ARCHIVED_RELEASE_FULL_PATH"
+                  # Switch back to original branch and clean up
+                  git checkout "$CURRENT_BRANCH"
+                  git branch -D "$TEMP_BRANCH"
                 fi
               fi
             fi
