@@ -1,3 +1,11 @@
+# This workflow automatically archives deprecated releases on a schedule
+# or when manually triggered. It includes validation to ensure that
+# deprecated releases are not archived if they are still actively in use.
+#
+# The workflow consists of two main jobs:
+# 1. find-providers: Discovers provider directories with releases
+# 2. archive-providers: Archives deprecated releases (with integrated safety checks)
+
 name: Archive Deprecated Releases
 
 on:
@@ -52,6 +60,11 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      
+      - name: Install dependencies
+        run: sudo apt-get update && sudo apt-get install -y jq curl
 
       - name: Set Provider Display Name
         id: provider-name
@@ -107,9 +120,18 @@ jobs:
 
             if grep -q -E "^\s*state:\s*deprecated\s*$" "$RELEASE_YAML_PATH"; then
               echo "INFO: Release $RELEASE_NAME is deprecated"
+              
+              # Check if this release is safe to archive using Grafana metrics
+              VERSION=$(echo "$RELEASE_NAME" | sed 's/^v//')
+              PROVIDER="${{ matrix.provider }}"
+              
+              # Use the existing validation script to check if it's safe
+              echo "INFO: Checking if $PROVIDER/$VERSION is safe to archive..."
+              
+              # Create a temporary git state that simulates the move to test safety
               ARCHIVE_PARENT_DIR="$PROVIDER_ROOT_DIR/archived"
               ARCHIVED_RELEASE_FULL_PATH="$ARCHIVE_PARENT_DIR/$RELEASE_NAME"
-
+              
               if [ ! -d "$ARCHIVE_PARENT_DIR" ]; then
                 mkdir -p "$ARCHIVE_PARENT_DIR"
               fi
@@ -117,12 +139,32 @@ jobs:
               if [ -d "$ARCHIVED_RELEASE_FULL_PATH" ]; then
                 echo "INFO: Release $RELEASE_NAME already archived. Skipping."
               else
-                echo "INFO: Moving $RELEASE_NAME to archived directory"
-                if ! git mv "$release_dir_path" "$ARCHIVED_RELEASE_FULL_PATH"; then
-                  echo "ERROR: Failed to move $release_dir_path"
-                  exit 1
+                # Simulate the move to test if it's safe
+                cp -r "$release_dir_path" "$ARCHIVED_RELEASE_FULL_PATH"
+                git add "$ARCHIVED_RELEASE_FULL_PATH"
+                git rm -r --cached "$release_dir_path" >/dev/null 2>&1 || true
+                
+                # Run the safety check
+                if ./tools/check-release-archive.sh "${{ secrets.GRAFANA_API_KEY }}"; then
+                  echo "INFO: Release $RELEASE_NAME is safe to archive. Moving to archived directory."
+                  
+                  # Reset the simulated state
+                  git reset HEAD >/dev/null 2>&1 || true
+                  rm -rf "$ARCHIVED_RELEASE_FULL_PATH"
+                  
+                  # Actually perform the move
+                  if ! git mv "$release_dir_path" "$ARCHIVED_RELEASE_FULL_PATH"; then
+                    echo "ERROR: Failed to move $release_dir_path"
+                    exit 1
+                  fi
+                  echo "$RELEASE_NAME" >> "$MOVED_RELEASES_TEMP_FILE"
+                else
+                  echo "WARNING: Release $RELEASE_NAME is still in use and cannot be archived. Skipping."
+                  
+                  # Reset the simulated state
+                  git reset HEAD >/dev/null 2>&1 || true
+                  rm -rf "$ARCHIVED_RELEASE_FULL_PATH"
                 fi
-                echo "$RELEASE_NAME" >> "$MOVED_RELEASES_TEMP_FILE"
               fi
             fi
           done
@@ -242,6 +284,9 @@ jobs:
             echo "archived_releases_pr_body_section=" >> $GITHUB_OUTPUT
           fi
         shell: bash
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GRAFANA_API_KEY: ${{ secrets.GRAFANA_API_KEY }}
 
       - name: Create Pull Request
         if: steps.archive_script.outputs.has_archived_releases == 'true'
