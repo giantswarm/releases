@@ -12,7 +12,6 @@
 ### Apps
 
 - Added cert-manager-crossplane-resources 0.1.0
-
 - capi-node-labeler from 1.0.2 to 1.1.0
 - cert-exporter from 2.9.5 to 2.9.6
 - cert-manager from 3.9.0 to 3.9.1
@@ -26,7 +25,7 @@
 - k8s-audit-metrics from 0.10.2 to 0.10.3
 - net-exporter from 1.22.0 to 1.23.0
 - node-exporter from 1.20.2 to 1.20.3
-- observability-bundle from 1.11.0 to 1.16.1
+- observability-bundle from 1.11.0 to 2.0.0
 - observability-policies from 0.0.1 to 0.0.2
 - security-bundle from 1.10.1 to 1.11.0
 - teleport-kube-agent from 0.10.4 to 0.10.5
@@ -147,7 +146,7 @@
 
 - Go: Update dependencies.
 
-### observability-bundle [v1.11.0...v1.16.1](https://github.com/giantswarm/observability-bundle/compare/v1.11.0...v1.16.1)
+### observability-bundle [v1.11.0...v2.0.0](https://github.com/giantswarm/observability-bundle/compare/v1.11.0...v2.0.0)
 
 #### Added
 
@@ -156,10 +155,10 @@
 
 #### Changed
 
-- Upgrade alloy-app from 0.10.0 to 0.11.0
-  - This bumps the version of Alloy from 1.8.3 to 1.9.0
+- Upgrade `alloy-app` from 0.10.0 to 0.11.0
+  - This bumps the version of `Alloy` from 1.8.3 to 1.9.0
 - Upgrade `alloy-app` from 0.9.0 to 0.10.0
-  - This bumps the version of Alloy from 1.7.1 to 1.8.3
+  - This bumps the version of `Alloy` from 1.7.1 to 1.8.3
 - Reconfigure Flux-related part of the KSM to use wildcards instead of hardcoded versions.
 - Rename Flux-related metrics produced by the KSM.
 - Upgrade `kube-prometheus-stack` to 72.3.0
@@ -174,6 +173,14 @@
 #### Fixed
 
 - Fix catalog for alloy apps as it is now pushed to the default catalog.
+
+### Removed
+
+- Clean up old and deprecated telemetry collectors:
+  - `promtail`
+  - `grafana-agent`
+  - `promtheus-agent`
+- Disable PodSecurityPolicies by default as PodSecurityPolicies are deprecated and removed in Kubernetes v1.25+ clusters
 
 ### observability-policies [v0.0.1...v0.0.2](https://github.com/giantswarm/observability-policies-app/compare/v0.0.1...v0.0.2)
 

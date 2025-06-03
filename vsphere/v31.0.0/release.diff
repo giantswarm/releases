@@ -82,7 +82,7 @@ spec:                                                              spec:
     dependsOn:                                                         dependsOn:
     - kyverno-crds                                                     - kyverno-crds
   - name: observability-bundle                                       - name: observability-bundle
-    version: 1.11.0                                             |      version: 1.16.1
+    version: 1.11.0                                             |      version: 2.0.0
     dependsOn:                                                         dependsOn:
     - coredns                                                          - coredns
   - name: observability-policies                                     - name: observability-policies
@@ -120,5 +120,5 @@ spec:                                                              spec:
     version: 1.30.11                                            |      version: 1.31.9
   - name: os-tooling                                                 - name: os-tooling
     version: 1.24.0                                             |      version: 1.26.1
-  date: "2025-05-27T12:00:00Z"                                  |    date: "2025-06-03T13:11:09Z"
+  date: "2025-05-27T12:00:00Z"                                  |    date: "2025-06-03T14:58:17Z"
   state: active                                                      state: active
