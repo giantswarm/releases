@@ -74,7 +74,7 @@
 
 - Removed dependabot configuration
 
-### cert-manager-crossplane-resources 0.1.0
+### cert-manager-crossplane-resources [v0.1.0](https://github.com/giantswarm/cert-manager-crossplane-resources/releases/tag/v0.1.0)
 
 #### Added
 
