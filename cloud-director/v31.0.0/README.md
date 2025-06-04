@@ -1,4 +1,4 @@
-# :zap: Giant Swarm Release v31.0.0 for VMWare Cloud Director :zap:
+# :zap: Giant Swarm Release v31.0.0 for VMware Cloud Director :zap:
 
 << Add description here >>
 
@@ -6,30 +6,39 @@
 
 ### Components
 
-- Flatcar from 4152.2.1 to [4152.2.3](https://www.flatcar-linux.org/releases/#release-4152.2.3)
+- cluster-cloud-director from v0.66.1 to v0.67.0
+- Flatcar from v4152.2.1 to [v4152.2.3](https://www.flatcar-linux.org/releases/#release-4152.2.3)
 - Kubernetes from v1.30.11 to [v1.31.9](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.31.md#v1.31.9)
+- os-tooling from v1.24.0 to v1.26.1
+
+### cluster-cloud-director [v0.66.1...v0.67.0](https://github.com/giantswarm/cluster-cloud-director/compare/v0.66.1...v0.67.0)
+
+#### Changed
+
+- Chart: Update `cluster` to v2.3.0.
+- Chart: Update `cluster` to v2.4.0.
 
 ### Apps
 
-- capi-node-labeler from 1.0.2 to 1.1.0
-- cert-exporter from 2.9.5 to 2.9.6
-- cert-manager from 3.9.0 to 3.9.1
-- cilium from 0.31.5 to 1.2.0
-- coredns from 1.24.0 to 1.25.0
-- etcd-defrag from 1.0.2 to 1.0.4
-- etcd-k8s-res-count-exporter from 1.10.3 to 1.10.4
-- k8s-audit-metrics from 0.10.2 to 0.10.3
-- net-exporter from 1.22.0 to 1.23.0
-- node-exporter from 1.20.2 to 1.20.3
-- observability-bundle from 1.11.0 to 2.0.0
-- observability-policies from 0.0.1 to 0.0.2
-- security-bundle from 1.10.1 to 1.11.0
-- teleport-kube-agent from 0.10.4 to 0.10.5
-- vertical-pod-autoscaler from 5.4.0 to 5.5.0
-- vertical-pod-autoscaler-crd from 3.2.0 to 3.3.0
+- capi-node-labeler from v1.0.2 to v1.1.0
+- cert-exporter from v2.9.5 to v2.9.6
+- cert-manager from v3.9.0 to v3.9.1
+- cilium from v0.31.5 to v1.2.0
+- coredns from v1.24.0 to v1.25.0
+- etcd-defrag from v1.0.2 to v1.0.4
+- etcd-k8s-res-count-exporter from v1.10.3 to v1.10.4
+- k8s-audit-metrics from v0.10.2 to v0.10.3
+- net-exporter from v1.22.0 to v1.23.0
+- node-exporter from v1.20.2 to v1.20.3
+- observability-bundle from v1.11.0 to v2.0.0
+- observability-policies from v0.0.1 to v0.0.2
+- security-bundle from v1.10.1 to v1.11.0
+- teleport-kube-agent from v0.10.4 to v0.10.5
+- vertical-pod-autoscaler from v5.4.0 to v5.5.0
+- vertical-pod-autoscaler-crd from v3.2.0 to v3.3.0
 
 
-### capi-node-labeler [v1.0.2...v1.1.0](https://github.com/giantswarm/capi-node-labeler/compare/v1.0.2...v1.1.0)
+### capi-node-labeler [v1.0.2...v1.1.0](https://github.com/giantswarm/capi-node-labeler-app/compare/v1.0.2...v1.1.0)
 
 #### Changed
 
@@ -50,6 +59,10 @@
 
 - Added Vertical Pod Autoscaler support for `controller` pods.
 - Added renovate configutarion
+
+#### Removed
+
+- Removed dependabot configuration
 
 ### cilium [v0.31.5...v1.2.0](https://github.com/giantswarm/cilium-app/compare/v0.31.5...v1.2.0)
 
@@ -136,7 +149,7 @@
 
 - Fix catalog for alloy apps as it is now pushed to the default catalog.
 
-### Removed
+#### Removed
 
 - Clean up old and deprecated telemetry collectors:
   - `promtail`
@@ -166,10 +179,6 @@
 - Update `cloudnative-pg` (app) to v0.0.9.
 
 ### teleport-kube-agent [v0.10.4...v0.10.5](https://github.com/giantswarm/teleport-kube-agent-app/compare/v0.10.4...v0.10.5)
-
-#### Added
-
-- Set Home URL in chart metadata.
 
 ### vertical-pod-autoscaler [v5.4.0...v5.5.0](https://github.com/giantswarm/vertical-pod-autoscaler-app/compare/v5.4.0...v5.5.0)
 

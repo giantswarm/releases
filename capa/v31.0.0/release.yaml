@@ -29,6 +29,7 @@ spec:
     dependsOn:
     - prometheus-operator-crd
   - name: cert-manager-crossplane-resources
+    catalog: cluster
     version: 0.1.0
   - name: chart-operator-extensions
     version: 1.1.2
@@ -128,12 +129,12 @@ spec:
   components:
   - name: cluster-aws
     catalog: cluster
-    version: 3.2.2
+    version: 3.3.0
   - name: flatcar
     version: 4152.2.3
   - name: kubernetes
     version: 1.31.9
   - name: os-tooling
     version: 1.26.1
-  date: "2025-06-03T14:57:40Z"
+  date: "2025-06-04T15:53:26Z"
   state: active

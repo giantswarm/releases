@@ -6,34 +6,49 @@
 
 ### Components
 
-- Flatcar from 4152.2.1 to [4152.2.3](https://www.flatcar-linux.org/releases/#release-4152.2.3)
+- cluster-aws from v3.2.2 to v3.3.0
+- Flatcar from v4152.2.1 to [v4152.2.3](https://www.flatcar-linux.org/releases/#release-4152.2.3)
 - Kubernetes from v1.30.11 to [v1.31.9](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.31.md#v1.31.9)
+- os-tooling from v1.24.0 to v1.26.1
+
+### cluster-aws [v3.2.2...v3.3.0](https://github.com/giantswarm/cluster-aws/compare/v3.2.2...v3.3.0)
+
+#### Added
+
+- Add `cert-manager-crossplane-resources` App in private clusters so `DNS01` `clusterIssuer`.
+- Add configuration for `DNS01` `clusterIssuer` deployed by `cert-manager-app` in private clusters.
+- Apply startup taint `ebs.csi.aws.com/agent-not-ready` for AWS EBS CSI driver on worker nodes.
+
+#### Changed
+
+- Configure HelmReleases to retry indefinitely when installation or upgrade fails by setting retries: -1.
+- Chart: Update `cluster` to v2.4.0.
 
 ### Apps
 
-- Added cert-manager-crossplane-resources 0.1.0
-- capi-node-labeler from 1.0.2 to 1.1.0
-- cert-exporter from 2.9.5 to 2.9.6
-- cert-manager from 3.9.0 to 3.9.1
-- cilium from 0.31.5 to 1.2.0
-- cilium-crossplane-resources from 0.2.0 to 0.2.1
-- cloud-provider-aws from 1.30.8-gs1 to 1.31.5-gs1
-- cluster-autoscaler from 1.30.4-gs1 to 1.31.2-gs2
-- coredns from 1.24.0 to 1.25.0
-- etcd-defrag from 1.0.2 to 1.0.4
-- etcd-k8s-res-count-exporter from 1.10.3 to 1.10.4
-- k8s-audit-metrics from 0.10.2 to 0.10.3
-- net-exporter from 1.22.0 to 1.23.0
-- node-exporter from 1.20.2 to 1.20.3
-- observability-bundle from 1.11.0 to 2.0.0
-- observability-policies from 0.0.1 to 0.0.2
-- security-bundle from 1.10.1 to 1.11.0
-- teleport-kube-agent from 0.10.4 to 0.10.5
-- vertical-pod-autoscaler from 5.4.0 to 5.5.0
-- vertical-pod-autoscaler-crd from 3.2.0 to 3.3.0
+- Added cert-manager-crossplane-resources v0.1.0
+- capi-node-labeler from v1.0.2 to v1.1.0
+- cert-exporter from v2.9.5 to v2.9.6
+- cert-manager from v3.9.0 to v3.9.1
+- cilium from v0.31.5 to v1.2.0
+- cilium-crossplane-resources from v0.2.0 to v0.2.1
+- cloud-provider-aws from v1.30.8-gs1 to v1.31.5-gs1
+- cluster-autoscaler from v1.30.4-gs1 to v1.31.2-gs2
+- coredns from v1.24.0 to v1.25.0
+- etcd-defrag from v1.0.2 to v1.0.4
+- etcd-k8s-res-count-exporter from v1.10.3 to v1.10.4
+- k8s-audit-metrics from v0.10.2 to v0.10.3
+- net-exporter from v1.22.0 to v1.23.0
+- node-exporter from v1.20.2 to v1.20.3
+- observability-bundle from v1.11.0 to v2.0.0
+- observability-policies from v0.0.1 to v0.0.2
+- security-bundle from v1.10.1 to v1.11.0
+- teleport-kube-agent from v0.10.4 to v0.10.5
+- vertical-pod-autoscaler from v5.4.0 to v5.5.0
+- vertical-pod-autoscaler-crd from v3.2.0 to v3.3.0
 
 
-### capi-node-labeler [v1.0.2...v1.1.0](https://github.com/giantswarm/capi-node-labeler/compare/v1.0.2...v1.1.0)
+### capi-node-labeler [v1.0.2...v1.1.0](https://github.com/giantswarm/capi-node-labeler-app/compare/v1.0.2...v1.1.0)
 
 #### Changed
 
@@ -54,6 +69,10 @@
 
 - Added Vertical Pod Autoscaler support for `controller` pods.
 - Added renovate configutarion
+
+#### Removed
+
+- Removed dependabot configuration
 
 ### cert-manager-crossplane-resources 0.1.0
 
@@ -104,7 +123,8 @@
 
 #### Changed
 
-- Chart: Update to upstream v1.31.2.
+- Chart: Use v1.31.2.
+- Chart: Update to upstream v1.31.2. ([#325](https://github.com/giantswarm/cluster-autoscaler-app/pull/325))
 
 ### coredns [v1.24.0...v1.25.0](https://github.com/giantswarm/coredns-app/compare/v1.24.0...v1.25.0)
 
@@ -174,7 +194,7 @@
 
 - Fix catalog for alloy apps as it is now pushed to the default catalog.
 
-### Removed
+#### Removed
 
 - Clean up old and deprecated telemetry collectors:
   - `promtail`

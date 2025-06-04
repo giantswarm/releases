@@ -6,39 +6,41 @@
 
 ### Components
 
-- cluster-vsphere from v1.1.1 to v1.3.0
-- Flatcar from 4152.2.1 to [4152.2.3](https://www.flatcar-linux.org/releases/#release-4152.2.3)
+- cluster-vsphere from v1.1.1 to v1.4.0
+- Flatcar from v4152.2.1 to [v4152.2.3](https://www.flatcar-linux.org/releases/#release-4152.2.3)
 - Kubernetes from v1.30.11 to [v1.31.9](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.31.md#v1.31.9)
+- os-tooling from v1.24.0 to v1.26.1
 
-### cluster-vsphere [v1.1.1...v1.3.0](https://github.com/giantswarm/cluster-vsphere/compare/v1.1.1...v1.3.0)
+### cluster-vsphere [v1.1.1...v1.4.0](https://github.com/giantswarm/cluster-vsphere/compare/v1.1.1...v1.4.0)
 
 #### Changed
 
+- Chart: update `cluster` to v2.4.0.
 - Chart: Update `cluster` to v2.3.0.
 - Update `kube-vip` to `0.9.1`.
 - Update `kube-vip` to `0.9.0`.
 
 ### Apps
 
-- capi-node-labeler from 1.0.2 to 1.1.0
-- cert-exporter from 2.9.5 to 2.9.6
-- cert-manager from 3.9.0 to 3.9.1
-- cilium from 0.31.5 to 1.2.0
-- coredns from 1.24.0 to 1.25.0
-- etcd-defrag from 1.0.2 to 1.0.4
-- etcd-k8s-res-count-exporter from 1.10.3 to 1.10.4
-- k8s-audit-metrics from 0.10.2 to 0.10.3
-- net-exporter from 1.22.0 to 1.23.0
-- node-exporter from 1.20.2 to 1.20.3
-- observability-bundle from 1.11.0 to 2.0.0
-- observability-policies from 0.0.1 to 0.0.2
-- security-bundle from 1.10.1 to 1.11.0
-- teleport-kube-agent from 0.10.4 to 0.10.5
-- vertical-pod-autoscaler from 5.4.0 to 5.5.0
-- vertical-pod-autoscaler-crd from 3.2.0 to 3.3.0
+- capi-node-labeler from v1.0.2 to v1.1.0
+- cert-exporter from v2.9.5 to v2.9.6
+- cert-manager from v3.9.0 to v3.9.1
+- cilium from v0.31.5 to v1.2.0
+- coredns from v1.24.0 to v1.25.0
+- etcd-defrag from v1.0.2 to v1.0.4
+- etcd-k8s-res-count-exporter from v1.10.3 to v1.10.4
+- k8s-audit-metrics from v0.10.2 to v0.10.3
+- net-exporter from v1.22.0 to v1.23.0
+- node-exporter from v1.20.2 to v1.20.3
+- observability-bundle from v1.11.0 to v2.0.0
+- observability-policies from v0.0.1 to v0.0.2
+- security-bundle from v1.10.1 to v1.11.0
+- teleport-kube-agent from v0.10.4 to v0.10.5
+- vertical-pod-autoscaler from v5.4.0 to v5.5.0
+- vertical-pod-autoscaler-crd from v3.2.0 to v3.3.0
 
 
-### capi-node-labeler [v1.0.2...v1.1.0](https://github.com/giantswarm/capi-node-labeler/compare/v1.0.2...v1.1.0)
+### capi-node-labeler [v1.0.2...v1.1.0](https://github.com/giantswarm/capi-node-labeler-app/compare/v1.0.2...v1.1.0)
 
 #### Changed
 
@@ -59,6 +61,10 @@
 
 - Added Vertical Pod Autoscaler support for `controller` pods.
 - Added renovate configutarion
+
+#### Removed
+
+- Removed dependabot configuration
 
 ### cilium [v0.31.5...v1.2.0](https://github.com/giantswarm/cilium-app/compare/v0.31.5...v1.2.0)
 
@@ -145,7 +151,7 @@
 
 - Fix catalog for alloy apps as it is now pushed to the default catalog.
 
-### Removed
+#### Removed
 
 - Clean up old and deprecated telemetry collectors:
   - `promtail`

@@ -7,6 +7,7 @@ replacements:
     kind: Release
     fieldPath: metadata.name
     options:
+      # Need to target index 2 here as `cloud-director` itself already contains a hyphen.
       delimiter: "-"
       index: 2
   targets:
