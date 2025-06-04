@@ -136,7 +136,6 @@ jobs:
               # Create archive directory if it doesn't exist
               ARCHIVE_PARENT_DIR="$PROVIDER_ROOT_DIR/archived"
               ARCHIVED_RELEASE_FULL_PATH="$ARCHIVE_PARENT_DIR/$RELEASE_NAME"
-              
               if [ ! -d "$ARCHIVE_PARENT_DIR" ]; then
                 mkdir -p "$ARCHIVE_PARENT_DIR"
               fi
