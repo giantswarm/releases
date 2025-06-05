@@ -178,7 +178,7 @@
 - Update `kyverno-policy-operator` (app) to v0.0.11.
 - Update `cloudnative-pg` (app) to v0.0.9.
 
-### Notes
+#### Notes
 
 **Note:** Kyverno `PolicyExceptions` (API group `kyverno.io`) versions `v2alpha1` and `v2beta1` are deprecated and will be removed in the next Kyverno minor release (v1.14). Please update all Kyverno PolicyExceptions to `v2`. No action is required for Giant Swarm Policy API `PolicyExceptions` (API group `policy.giantswarm.io`), which are handled automatically.
 
