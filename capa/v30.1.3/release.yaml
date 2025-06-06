@@ -1,9 +1,23 @@
 apiVersion: release.giantswarm.io/v1alpha1
 kind: Release
 metadata:
-  name: vsphere-30.1.2
+  name: aws-30.1.3
 spec:
   apps:
+  - name: aws-ebs-csi-driver
+    version: 3.0.5
+    dependsOn:
+    - cloud-provider-aws
+  - name: aws-ebs-csi-driver-servicemonitors
+    version: 0.1.0
+    dependsOn:
+    - prometheus-operator-crd
+  - name: aws-nth-bundle
+    version: 1.2.1
+  - name: aws-pod-identity-webhook
+    version: 1.19.1
+    dependsOn:
+    - cert-manager
   - name: capi-node-labeler
     version: 1.0.2
   - name: cert-exporter
@@ -19,15 +33,22 @@ spec:
     dependsOn:
     - prometheus-operator-crd
   - name: cilium
-    version: 0.31.4
+    version: 0.31.5
+  - name: cilium-crossplane-resources
+    catalog: cluster
+    version: 0.2.0
   - name: cilium-servicemonitors
-    version: 0.1.2
+    version: 0.1.3
     dependsOn:
     - prometheus-operator-crd
-  - name: cloud-provider-vsphere
-    version: 2.0.1
+  - name: cloud-provider-aws
+    version: 1.30.8-gs1
     dependsOn:
-    - cilium
+    - vertical-pod-autoscaler-crd
+  - name: cluster-autoscaler
+    version: 1.30.4-gs1
+    dependsOn:
+    - kyverno-crds
   - name: coredns
     version: 1.24.0
     dependsOn:
@@ -48,6 +69,10 @@ spec:
     version: 3.2.0
     dependsOn:
     - prometheus-operator-crd
+  - name: irsa-servicemonitors
+    version: 0.1.0
+    dependsOn:
+    - prometheus-operator-crd
   - name: k8s-audit-metrics
     version: 0.10.2
     dependsOn:
@@ -56,14 +81,6 @@ spec:
     version: 2.8.1
     dependsOn:
     - kyverno-crds
-  - name: kube-vip
-    version: 0.2.0
-    dependsOn:
-    - cilium
-  - name: kube-vip-cloud-provider
-    version: 0.3.0
-    dependsOn:
-    - cilium
   - name: metrics-server
     version: 2.6.0
     dependsOn:
@@ -106,19 +123,15 @@ spec:
     - prometheus-operator-crd
   - name: vertical-pod-autoscaler-crd
     version: 3.2.0
-  - name: vsphere-csi-driver
-    version: 3.4.2
-    dependsOn:
-    - cilium
   components:
-  - name: cluster-vsphere
+  - name: cluster-aws
     catalog: cluster
-    version: 1.1.1
+    version: 3.2.2
   - name: flatcar
     version: 4152.2.1
   - name: kubernetes
     version: 1.30.11
   - name: os-tooling
     version: 1.24.0
-  date: "2025-05-21T12:00:00Z"
+  date: "2025-05-27T09:00:00Z"
   state: active

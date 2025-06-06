@@ -1,7 +1,7 @@
 apiVersion: release.giantswarm.io/v1alpha1				apiVersion: release.giantswarm.io/v1alpha1
 kind: Release								kind: Release
 metadata:								metadata:
-  name: vsphere-30.1.1						|         name: vsphere-30.1.2
+  name: cloud-director-30.1.2					|         name: cloud-director-30.1.3
 spec:									spec:
   apps:									  apps:
   - name: capi-node-labeler						  - name: capi-node-labeler
@@ -19,13 +19,13 @@ spec:									spec:
     dependsOn:								    dependsOn:
     - prometheus-operator-crd						    - prometheus-operator-crd
   - name: cilium							  - name: cilium
-    version: 0.31.1						|           version: 0.31.4
+    version: 0.31.4						|           version: 0.31.5
   - name: cilium-servicemonitors					  - name: cilium-servicemonitors
-    version: 0.1.2							    version: 0.1.2
+    version: 0.1.2						|           version: 0.1.3
     dependsOn:								    dependsOn:
     - prometheus-operator-crd						    - prometheus-operator-crd
-  - name: cloud-provider-vsphere					  - name: cloud-provider-vsphere
-    version: 2.0.1							    version: 2.0.1
+  - name: cloud-provider-cloud-director					  - name: cloud-provider-cloud-director
+    version: 0.5.0							    version: 0.5.0
     dependsOn:								    dependsOn:
     - cilium								    - cilium
   - name: coredns							  - name: coredns
@@ -56,14 +56,6 @@ spec:									spec:
     version: 2.8.1							    version: 2.8.1
     dependsOn:								    dependsOn:
     - kyverno-crds							    - kyverno-crds
-  - name: kube-vip							  - name: kube-vip
-    version: 0.2.0							    version: 0.2.0
-    dependsOn:								    dependsOn:
-    - cilium								    - cilium
-  - name: kube-vip-cloud-provider					  - name: kube-vip-cloud-provider
-    version: 0.3.0							    version: 0.3.0
-    dependsOn:								    dependsOn:
-    - cilium								    - cilium
   - name: metrics-server						  - name: metrics-server
     version: 2.6.0							    version: 2.6.0
     dependsOn:								    dependsOn:
@@ -106,19 +98,15 @@ spec:									spec:
     - prometheus-operator-crd						    - prometheus-operator-crd
   - name: vertical-pod-autoscaler-crd					  - name: vertical-pod-autoscaler-crd
     version: 3.2.0							    version: 3.2.0
-  - name: vsphere-csi-driver						  - name: vsphere-csi-driver
-    version: 3.4.2							    version: 3.4.2
-    dependsOn:								    dependsOn:
-    - cilium								    - cilium
   components:								  components:
-  - name: cluster-vsphere						  - name: cluster-vsphere
+  - name: cluster-cloud-director					  - name: cluster-cloud-director
     catalog: cluster							    catalog: cluster
-    version: 1.1.0						|           version: 1.1.1
+    version: 0.66.1							    version: 0.66.1
   - name: flatcar							  - name: flatcar
     version: 4152.2.1							    version: 4152.2.1
   - name: kubernetes							  - name: kubernetes
     version: 1.30.11							    version: 1.30.11
   - name: os-tooling							  - name: os-tooling
     version: 1.24.0							    version: 1.24.0
-  date: "2025-05-01T12:00:00Z"					|         date: "2025-05-21T12:00:00Z"
+  date: "2025-05-22T12:00:00Z"					|         date: "2025-05-27T12:00:00Z"
   state: deprecated						|         state: active

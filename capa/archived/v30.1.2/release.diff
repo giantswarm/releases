@@ -1,9 +1,23 @@
 apiVersion: release.giantswarm.io/v1alpha1				apiVersion: release.giantswarm.io/v1alpha1
 kind: Release								kind: Release
 metadata:								metadata:
-  name: cloud-director-30.1.1					|         name: cloud-director-30.1.2
+  name: aws-30.1.1						|         name: aws-30.1.2
 spec:									spec:
   apps:									  apps:
+  - name: aws-ebs-csi-driver						  - name: aws-ebs-csi-driver
+    version: 3.0.5							    version: 3.0.5
+    dependsOn:								    dependsOn:
+    - cloud-provider-aws						    - cloud-provider-aws
+  - name: aws-ebs-csi-driver-servicemonitors				  - name: aws-ebs-csi-driver-servicemonitors
+    version: 0.1.0							    version: 0.1.0
+    dependsOn:								    dependsOn:
+    - prometheus-operator-crd						    - prometheus-operator-crd
+  - name: aws-nth-bundle						  - name: aws-nth-bundle
+    version: 1.2.1							    version: 1.2.1
+  - name: aws-pod-identity-webhook					  - name: aws-pod-identity-webhook
+    version: 1.19.1							    version: 1.19.1
+    dependsOn:								    dependsOn:
+    - cert-manager							    - cert-manager
   - name: capi-node-labeler						  - name: capi-node-labeler
     version: 1.0.2							    version: 1.0.2
   - name: cert-exporter							  - name: cert-exporter
@@ -20,14 +34,21 @@ spec:									spec:
     - prometheus-operator-crd						    - prometheus-operator-crd
   - name: cilium							  - name: cilium
     version: 0.31.1						|           version: 0.31.4
+  - name: cilium-crossplane-resources					  - name: cilium-crossplane-resources
+    catalog: cluster							    catalog: cluster
+    version: 0.2.0							    version: 0.2.0
   - name: cilium-servicemonitors					  - name: cilium-servicemonitors
     version: 0.1.2							    version: 0.1.2
     dependsOn:								    dependsOn:
     - prometheus-operator-crd						    - prometheus-operator-crd
-  - name: cloud-provider-cloud-director					  - name: cloud-provider-cloud-director
-    version: 0.5.0							    version: 0.5.0
+  - name: cloud-provider-aws						  - name: cloud-provider-aws
+    version: 1.30.8-gs1							    version: 1.30.8-gs1
     dependsOn:								    dependsOn:
-    - cilium								    - cilium
+    - vertical-pod-autoscaler-crd					    - vertical-pod-autoscaler-crd
+  - name: cluster-autoscaler						  - name: cluster-autoscaler
+    version: 1.30.4-gs1							    version: 1.30.4-gs1
+    dependsOn:								    dependsOn:
+    - kyverno-crds							    - kyverno-crds
   - name: coredns							  - name: coredns
     version: 1.24.0							    version: 1.24.0
     dependsOn:								    dependsOn:
@@ -46,6 +67,10 @@ spec:									spec:
     - kyverno-crds							    - kyverno-crds
   - name: external-dns							  - name: external-dns
     version: 3.2.0							    version: 3.2.0
+    dependsOn:								    dependsOn:
+    - prometheus-operator-crd						    - prometheus-operator-crd
+  - name: irsa-servicemonitors						  - name: irsa-servicemonitors
+    version: 0.1.0							    version: 0.1.0
     dependsOn:								    dependsOn:
     - prometheus-operator-crd						    - prometheus-operator-crd
   - name: k8s-audit-metrics						  - name: k8s-audit-metrics
@@ -99,14 +124,14 @@ spec:									spec:
   - name: vertical-pod-autoscaler-crd					  - name: vertical-pod-autoscaler-crd
     version: 3.2.0							    version: 3.2.0
   components:								  components:
-  - name: cluster-cloud-director					  - name: cluster-cloud-director
+  - name: cluster-aws							  - name: cluster-aws
     catalog: cluster							    catalog: cluster
-    version: 0.66.0						|           version: 0.66.1
+    version: 3.2.1						|           version: 3.2.2
   - name: flatcar							  - name: flatcar
     version: 4152.2.1							    version: 4152.2.1
   - name: kubernetes							  - name: kubernetes
     version: 1.30.11							    version: 1.30.11
   - name: os-tooling							  - name: os-tooling
     version: 1.24.0							    version: 1.24.0
-  date: "2025-05-01T12:00:00Z"					|         date: "2025-05-22T12:00:00Z"
-  state: deprecated						|         state: active
+  date: "2025-04-29T18:00:00Z"					|         date: "2025-05-16T09:00:00Z"
+  state: active							|         state: deprecated
