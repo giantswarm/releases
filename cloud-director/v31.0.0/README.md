@@ -184,6 +184,10 @@
 
 ### teleport-kube-agent [v0.10.4...v0.10.5](https://github.com/giantswarm/teleport-kube-agent-app/compare/v0.10.4...v0.10.5)
 
+#### Added
+
+- Set Home URL in chart metadata.
+
 ### vertical-pod-autoscaler [v5.4.0...v5.5.0](https://github.com/giantswarm/vertical-pod-autoscaler-app/compare/v5.4.0...v5.5.0)
 
 #### Changed
