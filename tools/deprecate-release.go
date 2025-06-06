@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bufio"
 	"bytes"
 	"encoding/json"
 	"flag"
@@ -10,6 +11,7 @@ import (
 	"net/http"
 	"os"
 	"path/filepath"
+	"regexp"
 	"sort"
 	"strings"
 	"time"
@@ -75,6 +77,13 @@ func main() {
 		return
 	}
 
+	releasesByName := make(map[string]*ReleaseInfo)
+	for _, releaseInfo := range releases {
+		if releaseInfo.Release != nil {
+			releasesByName[releaseInfo.Release.ObjectMeta.Name] = releaseInfo
+		}
+	}
+
 	checkReleasesInUse(releases, grafanaAPIKey, filepath.Base(providerPath), verbose)
 
 	if verbose {
@@ -119,6 +128,12 @@ func main() {
 		log.Printf("Would deprecate: %s", filePath)
 
 		if dryRun {
+			if verbose {
+				log.Printf("Dry run: Simulating diff update for %s", releaseInfo.Path)
+			}
+			if err := updateReleaseDiffState(releaseInfo, releasesByName, verbose, dryRun); err != nil {
+				log.Printf("Error during dry-run diff processing for %s: %v", releaseInfo.Path, err)
+			}
 			continue
 		}
 
@@ -135,6 +150,9 @@ func main() {
 			if err := os.WriteFile(filePath, []byte(newContent), 0644); err != nil {
 				log.Printf("Error writing file %s: %v", filePath, err)
 			} else {
+				if err := updateReleaseDiffState(releaseInfo, releasesByName, verbose, dryRun); err != nil {
+					log.Printf("Error updating diff file for %s: %v", releaseInfo.Path, err)
+				}
 				log.Printf("Deprecated: %s", filePath)
 			}
 		} else {
@@ -456,4 +474,255 @@ func deprecateReleases(releases []*ReleaseInfo, verbose bool) ([]*ReleaseInfo, [
 	}
 
 	return deprecatedReleases, finalKeptReleases
+}
+
+// updateReleaseDiffState modifies the corresponding .diff file to reflect
+// the new deprecated state for the current release (right side)
+// and the actual state of the previous release (left side).
+// It also handles transforming "no-pipe" state lines into "pipe" format
+// *if a state change is necessary*.
+func updateReleaseDiffState(
+	releaseInfoCurrent *ReleaseInfo,
+	releasesByName map[string]*ReleaseInfo,
+	verbose bool,
+	dryRun bool,
+) error {
+	releaseDirPath := releaseInfoCurrent.Path
+	diffFilePath := filepath.Join(releaseDirPath, "release.diff")
+
+	originalDiffContent, err := os.ReadFile(diffFilePath)
+	if err != nil {
+		if os.IsNotExist(err) {
+			if verbose {
+				log.Printf("Diff file %s does not exist, skipping update.", diffFilePath)
+			}
+			return nil
+		}
+		return fmt.Errorf("failed to read diff file %s: %w", diffFilePath, err)
+	}
+
+	if len(originalDiffContent) == 0 {
+		if verbose {
+			log.Printf("Diff file %s is empty, skipping update.", diffFilePath)
+		}
+		return nil
+	}
+
+	var processedLines []string
+	var modifiedInDiff bool // Flag to track if any line in the file was changed
+
+	metaNameRegex := regexp.MustCompile(`^\s*name:\s*(\S+)\s*\|\s*name:\s*(\S+)\s*$`)
+	stateLineWithPipeRegex := regexp.MustCompile(`^(\s*state:\s*\S+\s*)\|(\s*state:\s*\S+\s*)$`)
+	stateLineNoPipeRegex := regexp.MustCompile(`^(\s*state:\s*)(\S+)(.*?)(\S+)\s*$`)
+	stateValueCaptureRegex := regexp.MustCompile(`(state:\s*)(\S+)`)
+
+	var previousReleaseNameFromDiff string
+	var previousReleaseActualState v1alpha1.ReleaseState
+	previousReleaseStateKnown := false
+
+	// --- Pre-scan diff to find the name of the previous release ---
+	tempScanner := bufio.NewScanner(bytes.NewReader(originalDiffContent))
+	for tempScanner.Scan() {
+		line := tempScanner.Text()
+		if matches := metaNameRegex.FindStringSubmatch(line); len(matches) == 3 {
+			previousReleaseNameFromDiff = matches[1]
+			if prevRelInfo, ok := releasesByName[previousReleaseNameFromDiff]; ok && prevRelInfo.Release != nil {
+				previousReleaseActualState = prevRelInfo.Release.Spec.State
+				previousReleaseStateKnown = true
+				if verbose {
+					log.Printf("Pre-scan: Previous release from diff is '%s', its actual state is '%s'.", previousReleaseNameFromDiff, previousReleaseActualState)
+				}
+			} else {
+				if verbose {
+					log.Printf("Pre-scan: Previous release '%s' (from diff) not found in release map or has no parsed release data.", previousReleaseNameFromDiff)
+				}
+			}
+			break
+		}
+	}
+	if !previousReleaseStateKnown && verbose {
+		log.Printf("Pre-scan: Could not determine previous release name/state from diff's metadata.name line.")
+	}
+	// --- End pre-scan ---
+
+	scanner := bufio.NewScanner(bytes.NewReader(originalDiffContent))
+	lineNumber := 0
+	for scanner.Scan() {
+		lineNumber++
+		line := scanner.Text()
+		processedLine := line
+
+		if verbose {
+			log.Printf("Scanning diff file %s, Line %d: [%s]", diffFilePath, lineNumber, line)
+		}
+
+		if pipeMatches := stateLineWithPipeRegex.FindStringSubmatch(line); len(pipeMatches) == 3 {
+			lineModifiedThisIteration := false
+			if verbose {
+				log.Printf("Line %d for %s MATCHED by stateLineWithPipeRegex.", lineNumber, diffFilePath)
+			}
+			leftPartOriginal := pipeMatches[1]
+			rightPartOriginal := pipeMatches[2]
+
+			finalLeftPart := leftPartOriginal
+			finalRightPart := rightPartOriginal
+
+			if previousReleaseStateKnown {
+				targetLeftStateString := string(previousReleaseActualState)
+				if subMatchesLeft := stateValueCaptureRegex.FindStringSubmatch(leftPartOriginal); len(subMatchesLeft) == 3 {
+					currentValLeft := subMatchesLeft[2]
+					if currentValLeft != targetLeftStateString {
+						finalLeftPart = stateValueCaptureRegex.ReplaceAllString(leftPartOriginal, "${1}"+targetLeftStateString)
+						lineModifiedThisIteration = true
+						if verbose {
+							log.Printf("(Pipe) Left part target state '%s', current in diff '%s'. MODIFIED.", targetLeftStateString, currentValLeft)
+						}
+					} else {
+						if verbose {
+							log.Printf("(Pipe) Left part target state '%s', current in diff '%s'. No change needed.", targetLeftStateString, currentValLeft)
+						}
+					}
+				} else {
+					if verbose {
+						log.Printf("(Pipe) Could not parse 'state: value' from left part: [%s]", leftPartOriginal)
+					}
+				}
+			}
+
+			targetRightStateString := string(v1alpha1.StateDeprecated)
+			if subMatchesRight := stateValueCaptureRegex.FindStringSubmatch(rightPartOriginal); len(subMatchesRight) == 3 {
+				currentValRight := subMatchesRight[2]
+				if currentValRight != targetRightStateString {
+					finalRightPart = stateValueCaptureRegex.ReplaceAllString(rightPartOriginal, "${1}"+targetRightStateString)
+					lineModifiedThisIteration = true
+					if verbose {
+						log.Printf("(Pipe) Right part target state '%s', current in diff '%s'. MODIFIED.", targetRightStateString, currentValRight)
+					}
+				} else {
+					if verbose {
+						log.Printf("(Pipe) Right part target state '%s', current in diff '%s'. No change needed.", targetRightStateString, currentValRight)
+					}
+				}
+			} else {
+				if verbose {
+					log.Printf("(Pipe) Could not parse 'state: value' from right part: [%s]", rightPartOriginal)
+				}
+			}
+
+			if lineModifiedThisIteration {
+				processedLine = finalLeftPart + "|" + finalRightPart
+				modifiedInDiff = true
+				if verbose {
+					log.Printf("(Pipe) Diff line modification PROPOSED for %s (line %d):\n    Old: %s\n    New: %s", diffFilePath, lineNumber, line, processedLine)
+				}
+			}
+
+		} else if noPipeMatches := stateLineNoPipeRegex.FindStringSubmatch(line); len(noPipeMatches) == 5 {
+			// noPipeMatches: [0]Full, [1]Prefix ("  state: "), [2]Val1, [3]MiddlePart, [4]Val2
+			if verbose {
+				log.Printf("Line %d for %s PRELIMINARY MATCH by stateLineNoPipeRegex (5 groups).", lineNumber, diffFilePath)
+				log.Printf("Group 1 (Prefix): [%s]", noPipeMatches[1])
+				log.Printf("Group 2 (Val1 from diff):   [%s]", noPipeMatches[2])
+				log.Printf("Group 3 (Middle): [%s]", noPipeMatches[3])
+				log.Printf("Group 4 (Val2 from diff):   [%s]", noPipeMatches[4])
+			}
+
+			indentAndPrefix := noPipeMatches[1]
+			val1FromDiff := noPipeMatches[2]
+			val2FromDiff := noPipeMatches[4] // Assuming Val2 is the one corresponding to the current release
+
+			targetLeftState := val1FromDiff // Default to what's in the diff
+			if previousReleaseStateKnown {
+				targetLeftState = string(previousReleaseActualState)
+			}
+			targetRightState := string(v1alpha1.StateDeprecated)
+
+			// Only reformat and change if the target states are different from what's parsed,
+			// OR if the values parsed from the diff (val1FromDiff, val2FromDiff) are not identical
+			// (which implies it might be a malformed line that needs fixing to pipe format anyway if it was intended to be two distinct values).
+			// The primary driver for reformatting a "no-pipe" line should be a change in state values.
+			if targetLeftState != val1FromDiff || targetRightState != val2FromDiff {
+				if verbose {
+					log.Printf("(No-Pipe) State change detected. Val1InDiff: %s, TargetLeft: %s. Val2InDiff: %s, TargetRight: %s. REFORMATTING.",
+						val1FromDiff, targetLeftState, val2FromDiff, targetRightState)
+				}
+
+				leftSideString := indentAndPrefix + targetLeftState
+				rightSideString := "state: " + targetRightState
+				const leftPartTargetWidth = 40
+				paddingLength := leftPartTargetWidth - len(leftSideString)
+				if paddingLength < 1 {
+					paddingLength = 1
+				}
+				padding := strings.Repeat(" ", paddingLength)
+				rightLeadingSpaces := "         "
+
+				processedLine = leftSideString + padding + "|" + rightLeadingSpaces + rightSideString
+				modifiedInDiff = true
+				if verbose {
+					log.Printf("(No-Pipe) Line %d REFORMATTED to pipe format:\n    Old: %s\n    New: %s", lineNumber, line, processedLine)
+				}
+			} else {
+				if verbose {
+					log.Printf("(No-Pipe) Line %d: Parsed values ('%s', '%s') match target states ('%s', '%s'). No reformatting needed.",
+						lineNumber, val1FromDiff, val2FromDiff, targetLeftState, targetRightState)
+				}
+			}
+
+		} else {
+			if verbose && strings.Contains(line, "state:") {
+				log.Printf("Line %d for %s containing 'state:' DID NOT MATCH stateLineWithPipeRegex.", lineNumber, diffFilePath)
+				attemptedNoPipeMatches := stateLineNoPipeRegex.FindStringSubmatch(line)
+				log.Printf("For stateLineNoPipeRegex (pattern: `%s`):", stateLineNoPipeRegex.String())
+				log.Printf("FindStringSubmatch on line [%s] returned %d elements (expected 5 for a structural match).", line, len(attemptedNoPipeMatches))
+				if len(attemptedNoPipeMatches) > 0 {
+					for i, m := range attemptedNoPipeMatches {
+						log.Printf("  Submatch[%d]: [%s]", i, m)
+					}
+				} else {
+					log.Printf("  No submatches found by stateLineNoPipeRegex.")
+				}
+			}
+		}
+		processedLines = append(processedLines, processedLine)
+	}
+
+	if err := scanner.Err(); err != nil {
+		return fmt.Errorf("error scanning diff file %s: %w", diffFilePath, err)
+	}
+
+	if modifiedInDiff {
+		log.Printf("Would update state line(s) in diff file: %s", diffFilePath)
+		if dryRun {
+			if verbose {
+				log.Printf("Dry run: Skipping actual write to diff file %s", diffFilePath)
+			}
+			return nil
+		}
+
+		newDiffContentStr := strings.Join(processedLines, "\n")
+		originalEndsWithNewline := len(originalDiffContent) > 0 && originalDiffContent[len(originalDiffContent)-1] == '\n'
+		if len(newDiffContentStr) > 0 {
+			currentEndsWithNewline := newDiffContentStr[len(newDiffContentStr)-1] == '\n'
+			if originalEndsWithNewline && !currentEndsWithNewline {
+				newDiffContentStr += "\n"
+			} else if !originalEndsWithNewline && currentEndsWithNewline {
+				newDiffContentStr = newDiffContentStr[:len(newDiffContentStr)-1]
+			}
+		} else if originalEndsWithNewline {
+			newDiffContentStr = "\n"
+		}
+
+		if err := os.WriteFile(diffFilePath, []byte(newDiffContentStr), 0644); err != nil {
+			return fmt.Errorf("failed to write modified diff file %s: %w", diffFilePath, err)
+		}
+		log.Printf("Updated state line(s) in diff file: %s", diffFilePath)
+	} else {
+		if verbose {
+			log.Printf("No 'state' line update was ultimately needed or performed for diff file %s based on detailed line processing.", diffFilePath)
+		} else if !dryRun {
+			log.Printf("No 'state' line update needed for diff file %s", diffFilePath)
+		}
+	}
+	return nil
 }
