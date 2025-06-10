@@ -22,14 +22,14 @@
 
 ### Apps
 
-- capi-node-labeler from v1.0.2 to v1.1.0
-- cert-exporter from v2.9.5 to v2.9.6
+- capi-node-labeler from v1.0.2 to v1.1.1
+- cert-exporter from v2.9.5 to v2.9.7
 - cert-manager from v3.9.0 to v3.9.1
 - cilium from v0.31.5 to v1.2.0
 - coredns from v1.24.0 to v1.25.0
-- etcd-defrag from v1.0.2 to v1.0.4
-- etcd-k8s-res-count-exporter from v1.10.3 to v1.10.4
-- k8s-audit-metrics from v0.10.2 to v0.10.3
+- etcd-defrag from v1.0.2 to v1.0.5
+- etcd-k8s-res-count-exporter from v1.10.3 to v1.10.5
+- k8s-audit-metrics from v0.10.2 to v0.10.4
 - net-exporter from v1.22.0 to v1.23.0
 - node-exporter from v1.20.2 to v1.20.3
 - observability-bundle from v1.11.0 to v2.0.0
@@ -40,18 +40,20 @@
 - vertical-pod-autoscaler-crd from v3.2.0 to v3.3.0
 
 
-### capi-node-labeler [v1.0.2...v1.1.0](https://github.com/giantswarm/capi-node-labeler-app/compare/v1.0.2...v1.1.0)
+### capi-node-labeler [v1.0.2...v1.1.1](https://github.com/giantswarm/capi-node-labeler-app/compare/v1.0.2...v1.1.1)
 
 #### Changed
 
+- Go: Update dependencies.
 - Improve Control Plane node detection.
 - Taint Control Plane nodes if not already tainted.
 - Go: Update dependencies.
 
-### cert-exporter [v2.9.5...v2.9.6](https://github.com/giantswarm/cert-exporter/compare/v2.9.5...v2.9.6)
+### cert-exporter [v2.9.5...v2.9.7](https://github.com/giantswarm/cert-exporter/compare/v2.9.5...v2.9.7)
 
 #### Changed
 
+- Go: Update dependencies.
 - Fix linting issues.
 - Go: Update dependencies.
 
@@ -89,21 +91,30 @@
 
 - Update `coredns` image to [1.12.1](https://github.com/coredns/coredns/releases/tag/v1.12.1).
 
-### etcd-defrag [v1.0.2...v1.0.4](https://github.com/giantswarm/etcd-defrag-app/compare/v1.0.2...v1.0.4)
+### etcd-defrag [v1.0.2...v1.0.5](https://github.com/giantswarm/etcd-defrag-app/compare/v1.0.2...v1.0.5)
 
 #### Changed
 
+- Chart: Update dependency ahrtr/etcd-defrag to v0.28.0. ([#34](https://github.com/giantswarm/etcd-defrag-app/pull/34))
 - Chart: Update dependency ahrtr/etcd-defrag to v0.27.0. ([#29](https://github.com/giantswarm/etcd-defrag-app/pull/29))
 - Chart: Update dependency ahrtr/etcd-defrag to v0.26.0. ([#22](https://github.com/giantswarm/etcd-defrag-app/pull/22))
 
-### etcd-k8s-res-count-exporter [v1.10.3...v1.10.4](https://github.com/giantswarm/etcd-kubernetes-resources-count-exporter/compare/v1.10.3...v1.10.4)
+### etcd-k8s-res-count-exporter [v1.10.3...v1.10.5](https://github.com/giantswarm/etcd-kubernetes-resources-count-exporter/compare/v1.10.3...v1.10.5)
+
+#### Changed
+
+- Go: Update dependencies.
 
 #### Fixed
 
 - Fix linting issues.
 - Go: Update dependencies.
 
-### k8s-audit-metrics [v0.10.2...v0.10.3](https://github.com/giantswarm/k8s-audit-metrics/compare/v0.10.2...v0.10.3)
+### k8s-audit-metrics [v0.10.2...v0.10.4](https://github.com/giantswarm/k8s-audit-metrics/compare/v0.10.2...v0.10.4)
+
+#### Changed
+
+- Go: Update dependencies.
 
 #### Fixed
 

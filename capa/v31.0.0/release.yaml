@@ -19,9 +19,9 @@ spec:
     dependsOn:
     - cert-manager
   - name: capi-node-labeler
-    version: 1.1.0
+    version: 1.1.1
   - name: cert-exporter
-    version: 2.9.6
+    version: 2.9.7
     dependsOn:
     - kyverno-crds
   - name: cert-manager
@@ -61,11 +61,11 @@ spec:
     dependsOn:
     - vertical-pod-autoscaler-crd
   - name: etcd-defrag
-    version: 1.0.4
+    version: 1.0.5
     dependsOn:
     - kyverno-crds
   - name: etcd-k8s-res-count-exporter
-    version: 1.10.4
+    version: 1.10.5
     dependsOn:
     - kyverno-crds
   - name: external-dns
@@ -77,7 +77,7 @@ spec:
     dependsOn:
     - prometheus-operator-crd
   - name: k8s-audit-metrics
-    version: 0.10.3
+    version: 0.10.4
     dependsOn:
     - kyverno-crds
   - name: k8s-dns-node-cache
@@ -136,5 +136,5 @@ spec:
     version: 1.31.9
   - name: os-tooling
     version: 1.26.1
-  date: "2025-06-04T15:53:26Z"
+  date: "2025-06-10T08:34:11Z"
   state: active
