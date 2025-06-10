@@ -25,7 +25,7 @@
 - capi-node-labeler from v1.0.2 to v1.1.1
 - cert-exporter from v2.9.5 to v2.9.7
 - cert-manager from v3.9.0 to v3.9.1
-- cilium from v0.31.5 to v1.2.0
+- cilium from v0.31.5 to v1.2.1
 - coredns from v1.24.0 to v1.25.0
 - etcd-defrag from v1.0.2 to v1.0.5
 - etcd-k8s-res-count-exporter from v1.10.3 to v1.10.5
@@ -68,10 +68,11 @@
 
 - Removed dependabot configuration
 
-### cilium [v0.31.5...v1.2.0](https://github.com/giantswarm/cilium-app/compare/v0.31.5...v1.2.0)
+### cilium [v0.31.5...v1.2.1](https://github.com/giantswarm/cilium-app/compare/v0.31.5...v1.2.1)
 
 #### Changed
 
+- Enable conntrack accounting in Cilium agent by default.
 - Re-enable Cilium agent and operator metrics port.
 - Add resource requests and limits to Hubble UI and Relay.
 - Add resource requests and limits to Cilium Operator.
