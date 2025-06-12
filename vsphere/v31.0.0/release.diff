@@ -120,5 +120,5 @@ spec:                                                              spec:
     version: 1.30.11                                            |      version: 1.31.9
   - name: os-tooling                                                 - name: os-tooling
     version: 1.24.0                                             |      version: 1.26.1
-  date: "2025-05-27T12:00:00Z"                                  |    date: "2025-06-12T14:20:42Z"
+  date: "2025-05-27T12:00:00Z"                                  |    date: "2025-06-12T15:03:55Z"
   state: active                                                      state: active

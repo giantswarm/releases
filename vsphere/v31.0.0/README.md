@@ -215,5 +215,6 @@
 
 #### Changed
 
+- Chart: Sync to upstream. ([#146](https://github.com/giantswarm/vertical-pod-autoscaler-crd/pull/146))
 - Chart: Sync to upstream. ([#140](https://github.com/giantswarm/vertical-pod-autoscaler-crd/pull/140))
 - Chart: Sync to upstream. ([#136](https://github.com/giantswarm/vertical-pod-autoscaler-crd/pull/136))
