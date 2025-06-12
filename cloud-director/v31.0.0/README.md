@@ -34,8 +34,8 @@
 - observability-policies from v0.0.1 to v0.0.2
 - security-bundle from v1.10.1 to v1.11.0
 - teleport-kube-agent from v0.10.4 to v0.10.5
-- vertical-pod-autoscaler from v5.4.0 to v5.5.0
-- vertical-pod-autoscaler-crd from v3.2.0 to v3.3.0
+- vertical-pod-autoscaler from v5.4.0 to v5.5.1
+- vertical-pod-autoscaler-crd from v3.2.0 to v3.3.1
 
 
 ### capi-node-labeler [v1.0.2...v1.1.1](https://github.com/giantswarm/capi-node-labeler-app/compare/v1.0.2...v1.1.1)
@@ -200,15 +200,16 @@
 
 - Set Home URL in chart metadata.
 
-### vertical-pod-autoscaler [v5.4.0...v5.5.0](https://github.com/giantswarm/vertical-pod-autoscaler-app/compare/v5.4.0...v5.5.0)
+### vertical-pod-autoscaler [v5.4.0...v5.5.1](https://github.com/giantswarm/vertical-pod-autoscaler-app/compare/v5.4.0...v5.5.1)
 
 #### Changed
 
+- Chart: Update Helm release vertical-pod-autoscaler to v10.2.1. ([#355](https://github.com/giantswarm/vertical-pod-autoscaler-app/pull/355))
 - Chart: Update Helm release vertical-pod-autoscaler to v10.1.0. ([#350](https://github.com/giantswarm/vertical-pod-autoscaler-app/pull/350))
 - Chart: Update Helm release vertical-pod-autoscaler to v10.2.0. ([#351](https://github.com/giantswarm/vertical-pod-autoscaler-app/pull/351))
 - Chart: Update Helm release vertical-pod-autoscaler to v10.0.1. ([#346](https://github.com/giantswarm/vertical-pod-autoscaler-app/pull/346))
 
-### vertical-pod-autoscaler-crd [v3.2.0...v3.3.0](https://github.com/giantswarm/vertical-pod-autoscaler-crd/compare/v3.2.0...v3.3.0)
+### vertical-pod-autoscaler-crd [v3.2.0...v3.3.1](https://github.com/giantswarm/vertical-pod-autoscaler-crd/compare/v3.2.0...v3.3.1)
 
 #### Changed
 

@@ -120,11 +120,11 @@ spec:                                                              spec:
   - name: teleport-kube-agent                                        - name: teleport-kube-agent
     version: 0.10.4                                             |      version: 0.10.5
   - name: vertical-pod-autoscaler                                    - name: vertical-pod-autoscaler
-    version: 5.4.0                                              |      version: 5.5.0
+    version: 5.4.0                                              |      version: 5.5.1
     dependsOn:                                                         dependsOn:
     - prometheus-operator-crd                                          - prometheus-operator-crd
   - name: vertical-pod-autoscaler-crd                                - name: vertical-pod-autoscaler-crd
-    version: 3.2.0                                              |      version: 3.3.0
+    version: 3.2.0                                              |      version: 3.3.1
   components:                                                        components:
   - name: cluster-aws                                                - name: cluster-aws
     catalog: cluster                                                   catalog: cluster
@@ -135,5 +135,5 @@ spec:                                                              spec:
     version: 1.30.11                                            |      version: 1.31.9
   - name: os-tooling                                                 - name: os-tooling
     version: 1.24.0                                             |      version: 1.26.1
-  date: "2025-05-27T09:00:00Z"                                  |    date: "2025-06-10T12:08:35Z"
+  date: "2025-05-27T09:00:00Z"                                  |    date: "2025-06-12T14:20:12Z"
   state: active                                                      state: active

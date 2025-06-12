@@ -93,11 +93,11 @@ spec:
   - name: teleport-kube-agent
     version: 0.10.5
   - name: vertical-pod-autoscaler
-    version: 5.5.0
+    version: 5.5.1
     dependsOn:
     - prometheus-operator-crd
   - name: vertical-pod-autoscaler-crd
-    version: 3.3.0
+    version: 3.3.1
   components:
   - name: cluster-cloud-director
     catalog: cluster
@@ -108,5 +108,5 @@ spec:
     version: 1.31.9
   - name: os-tooling
     version: 1.26.1
-  date: "2025-06-10T12:09:16Z"
+  date: "2025-06-12T14:19:09Z"
   state: active
