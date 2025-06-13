@@ -33,6 +33,8 @@
 ### Apps
 
 - Added cert-manager-crossplane-resources v0.1.0
+- Added karpenter-bundle v2.0.0
+- Added karpenter-nodepools v0.1.0
 - capi-node-labeler from v1.0.2 to v1.1.1
 - cert-exporter from v2.9.5 to v2.9.7
 - cert-manager from v3.9.0 to v3.9.1
@@ -170,6 +172,29 @@
 
 - Fix linting issues.
 - Go: Update dependencies.
+
+### karpenter-bundle [v2.0.0](https://github.com/giantswarm/karpenter-bundle/releases/tag/v2.0.0)
+
+#### Added
+
+- First release
+
+#### Changed
+
+- Add karpenter-app dependency on karpenter-crossplane-resources app.
+- Bump karpenter to `v1.5.0`.
+- Bump karpenter-app to `v0.14.0`.
+- Update `karpenter-capa-taint-remover` to allow scheduling on all taints.
+- Update `karpenter-crossplane-resources` app version to add support for vintage OIDC issuer on migrated clusters
+- Update karpenter to update flowschema API
+- Update interruption queue settings
+- Update SQS Policy URL
+
+### karpenter-nodepools [v0.1.0](https://github.com/giantswarm/karpenter-nodepools/releases/tag/v0.1.0)
+
+### Changed
+
+- changed: app.giantswarm.io label group was changed to application.giantswarm.io
 
 ### net-exporter [v1.22.0...v1.23.0](https://github.com/giantswarm/net-exporter/compare/v1.22.0...v1.23.0)
 
