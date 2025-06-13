@@ -87,7 +87,7 @@
     {
       "version": "31.0.0",
       "isDeprecated": false,
-      "releaseTimestamp": "2025-06-12T15:05:00+02:00",
+      "releaseTimestamp": "2025-06-13T09:34:12+02:00",
       "changelogUrl": "https://github.com/giantswarm/releases/blob/master/capa/v31.0.0/README.md",
       "isStable": true
     }

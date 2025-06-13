@@ -6,21 +6,27 @@
 
 ### Components
 
-- cluster-aws from v3.2.2 to v3.3.0
+- cluster-aws from v3.2.2 to v3.4.0
 - Flatcar from v4152.2.1 to [v4152.2.3](https://www.flatcar-linux.org/releases/#release-4152.2.3)
 - Kubernetes from v1.30.11 to [v1.31.9](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.31.md#v1.31.9)
 - os-tooling from v1.24.0 to v1.26.1
 
-### cluster-aws [v3.2.2...v3.3.0](https://github.com/giantswarm/cluster-aws/compare/v3.2.2...v3.3.0)
+### cluster-aws [v3.2.2...v3.4.0](https://github.com/giantswarm/cluster-aws/compare/v3.2.2...v3.4.0)
 
 #### Added
 
+- Adopt IRSA infrastructure with Crossplane. It can be disabled to use IRSA Operator.
+- Support multiple VPC CIDRs
+- Add `karpenter` support
+  - Expose new values to configure karpenter node pools.
+  - Deploy `karpenter` app when `karpenter` node pools are configured.
 - Add `cert-manager-crossplane-resources` App in private clusters so `DNS01` `clusterIssuer`.
 - Add configuration for `DNS01` `clusterIssuer` deployed by `cert-manager-app` in private clusters.
 - Apply startup taint `ebs.csi.aws.com/agent-not-ready` for AWS EBS CSI driver on worker nodes.
 
 #### Changed
 
+- Reduce IMDS Response Hop Limit to 2 if pod networking is in ENI mode to increase security.
 - Configure HelmReleases to retry indefinitely when installation or upgrade fails by setting retries: -1.
 - Chart: Update `cluster` to v2.4.0.
 
