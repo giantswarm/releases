@@ -192,9 +192,9 @@
 
 ### karpenter-nodepools [v0.1.0](https://github.com/giantswarm/karpenter-nodepools/releases/tag/v0.1.0)
 
-### Changed
+#### Changed
 
-- changed: app.giantswarm.io label group was changed to application.giantswarm.io
+- changed: `app.giantswarm.io` label group was changed to `application.giantswarm.io`
 
 ### net-exporter [v1.22.0...v1.23.0](https://github.com/giantswarm/net-exporter/compare/v1.22.0...v1.23.0)
 

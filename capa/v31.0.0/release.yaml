@@ -86,8 +86,12 @@ spec:
     - kyverno-crds
   - name: karpenter-bundle
     version: 2.0.0
+    dependsOn:
+    - kyverno-crds
   - name: karpenter-nodepools
     version: 0.1.0
+    dependsOn:
+    - karpenter
   - name: metrics-server
     version: 2.6.0
     dependsOn:
