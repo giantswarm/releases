@@ -1,6 +1,6 @@
 # :zap: Giant Swarm Release v31.0.0 for CAPA :zap:
 
-This release contains initial support for karpenter node pools. This support is still under development, and there is a known issue when deleting clusters. During cluster deletion, there is a race condition, and there may be EC2 instances left behind, blocking the cluster deletion. If that's the case, these instances need to be terminated manually. These instances are tagged with karpenter.sh/nodepool: $nodePoolName
+This release contains initial support for Karpenter node pools. This support is still under development, and there is a known issue when deleting clusters. During cluster deletion, there is a race condition, and there may be EC2 instances left behind, blocking the cluster deletion. If that's the case, these instances need to be terminated manually. These instances are tagged with `karpenter.sh/nodepool: $nodePoolName`.
 
 ## Changes compared to v30.1.3
 
