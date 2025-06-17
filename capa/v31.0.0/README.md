@@ -1,7 +1,7 @@
 # :zap: Giant Swarm Release v31.0.0 for CAPA :zap:
 
 This release along with k8s and application upgrades also brings several new features for the product. Node Pools have been extended with [new Karpenter type](https://github.com/giantswarm/cluster-aws/blob/main/helm/cluster-aws/values.schema.json#L151), integrating the solution fully with the Giant Swarm cluster lifecycle instead of a Managed Application. Karpenter application will now be deployed as a part of the Giant Swarm clusters out of the box if configured. 
-Additionally, we have extended the Cluster configuration with supporting multiple VPC CIDRs under `global.connectivity.network.vpcCidr`, please read the [schema documentation](https://github.com/giantswarm/cluster-aws/blob/main/helm/cluster-aws/README.md) for more details. 
+Additionally, we have extended the Cluster configuration to support multiple VPC CIDRs under `global.connectivity.network.vpcCidr`, please read the [schema documentation](https://github.com/giantswarm/cluster-aws/blob/main/helm/cluster-aws/README.md) for more details. 
 Finally we are slowly introducing changes to `IAM roles for service accounts` (IRSA) management on GS side, where the infrastructure required will be fully managed by Crossplane instead of `irsa-operator` and `capa-iam-operator`. There is no impact for customers, but the change will allow Giant Swarm to pair the IAM permissions for required applications with their actual releases and deployments, moving away from single operators implementing all the roles. The Karpenter application will be the first one to use it.
 
 For any questions regarding new features or their usage, please reach out to Giant Swarm.
