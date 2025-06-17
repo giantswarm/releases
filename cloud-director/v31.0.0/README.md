@@ -1,7 +1,5 @@
 # :zap: Giant Swarm Release v31.0.0 for VMware Cloud Director :zap:
 
-<< Add description here >>
-
 ## Changes compared to v30.1.3
 
 ### Components
