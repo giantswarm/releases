@@ -1,4 +1,8 @@
 releases:
+- name: ">= 31.1.0"
+  requests:
+  - name: k8s-dns-node-cache
+    version: ">= 2.9.0"
 - name: ">= 31.0.0"
   requests:
   - name: cilium
