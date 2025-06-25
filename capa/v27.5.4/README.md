@@ -13,5 +13,3 @@ Upgrade cluster-aws to handle IMDS Hop Limit.
 #### Changed
 
 - Reduce IMDS Response Hop Limit to 2 if pod networking is in ENI mode to increase security.
-
-### Apps
