@@ -1,4 +1,8 @@
 releases:
+- name: "< 32.0.0"
+  requests:
+  - name: flatcar
+    version: "< 4230.2.0"
 - name: ">= 31.0.0"
   requests:
   - name: cilium
