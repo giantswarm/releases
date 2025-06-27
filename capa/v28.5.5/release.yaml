@@ -117,7 +117,7 @@ spec:
   - name: flatcar
     version: 3815.2.5
   - name: kubernetes
-    version: 1.28.15
+    version: 1.28.14
   - name: os-tooling
     version: 1.20.1
   date: "2025-06-27T09:08:48Z"
