@@ -69,7 +69,7 @@ to all Giant Swarm installations.
 - v27
   - v27.5
     - [v27.5.4](https://github.com/giantswarm/releases/tree/master/capa/v27.5.4)
-    - [v27.5.3](https://github.com/giantswarm/releases/tree/master/capa/v27.5.3)
+    - [v27.5.3](https://github.com/giantswarm/releases/tree/master/capa/archived/v27.5.3)
     - [v27.5.2](https://github.com/giantswarm/releases/tree/master/capa/archived/v27.5.2)
     - [v27.5.1](https://github.com/giantswarm/releases/tree/master/capa/archived/v27.5.1)
     - [v27.5.0](https://github.com/giantswarm/releases/tree/master/capa/archived/v27.5.0)
