@@ -159,6 +159,7 @@ func main() {
 			log.Printf("No 'state: active' found in %s", filePath)
 		}
 	}
+
 }
 
 // checkReleasesInUse queries Grafana for all active releases
@@ -362,17 +363,34 @@ func deprecateReleases(releases []*ReleaseInfo, verbose bool) ([]*ReleaseInfo, [
 	}
 
 	// Group by major, find latest in each major
+	// Use ALL releases (not just active) to ensure complete upgrade paths
 	majorGrouped := make(map[uint64][]*ReleaseInfo)
 	latestInMajor := make(map[uint64]*ReleaseInfo)
+	latestActiveinMajor := make(map[uint64]*ReleaseInfo) // Track latest active separately
 	var allMajorNumbers []uint64
 
+	// First pass: find latest release in each major (including deprecated)
+	for _, r := range releases {
+		major := r.Version.Major()
+		if _, exists := latestInMajor[major]; !exists || r.Version.GreaterThan(latestInMajor[major].Version) {
+			latestInMajor[major] = r
+		}
+		if isActive(r.Release) {
+			if latestActive, exists := latestActiveinMajor[major]; !exists || r.Version.GreaterThan(latestActive.Version) {
+				latestActiveinMajor[major] = r
+			}
+		}
+	}
+
+	// Build list of all major numbers
+	for major := range latestInMajor {
+		allMajorNumbers = append(allMajorNumbers, major)
+	}
+
+	// Group active releases by major
 	for _, r := range activeReleases {
 		major := r.Version.Major()
 		majorGrouped[major] = append(majorGrouped[major], r)
-		if _, exists := latestInMajor[major]; !exists {
-			latestInMajor[major] = r
-			allMajorNumbers = append(allMajorNumbers, major)
-		}
 	}
 
 	// Sort majors: oldest to newest
@@ -401,20 +419,31 @@ func deprecateReleases(releases []*ReleaseInfo, verbose bool) ([]*ReleaseInfo, [
 	}
 
 	// Keep latest of majors for upgrade paths from any in-use versions
+	// Check ALL releases (both active and deprecated) that are in use
 	oldestMajorInUse := uint64(0)
 	foundOldestMajorInUse := false
+	majorsWithInUseReleases := make(map[uint64]bool)
 
-	for _, r := range keptReleases {
-		major := r.Version.Major()
-		if !foundOldestMajorInUse || major < oldestMajorInUse {
-			oldestMajorInUse = major
-			foundOldestMajorInUse = true
+	for _, r := range releases {
+		if r.InUse {
+			major := r.Version.Major()
+			majorsWithInUseReleases[major] = true
+			if !foundOldestMajorInUse || major < oldestMajorInUse {
+				oldestMajorInUse = major
+				foundOldestMajorInUse = true
+			}
 		}
 	}
 
 	if foundOldestMajorInUse {
 		if verbose {
 			log.Printf("Oldest major version with an in-use release: v%d. Ensuring upgrade path from there.", oldestMajorInUse)
+			majorsList := make([]uint64, 0, len(majorsWithInUseReleases))
+			for major := range majorsWithInUseReleases {
+				majorsList = append(majorsList, major)
+			}
+			sort.Slice(majorsList, func(i, j int) bool { return majorsList[i] < majorsList[j] })
+			log.Printf("Major versions with in-use releases: %v", majorsList)
 		}
 		// Ensure all majors from oldest in use up to the newest available major have their latest kept
 		for _, major := range allMajorNumbers {
@@ -427,33 +456,94 @@ func deprecateReleases(releases []*ReleaseInfo, verbose bool) ([]*ReleaseInfo, [
 				majorsToKeepLatest[major] = true
 			}
 		}
+
+		// Additionally, ensure that any major version with in-use releases has its latest kept
+		// This is crucial for upgrade paths from deprecated but still in-use releases
+		for major := range majorsWithInUseReleases {
+			if _, exists := latestInMajor[major]; exists {
+				if !majorsToKeepLatest[major] {
+					if verbose {
+						log.Printf("Marking latest of v%d to keep (has in-use releases)", major)
+					}
+				}
+				majorsToKeepLatest[major] = true
+			}
+		}
+	} else {
+		// Fallback: When Grafana API fails, ensure upgrade path continuity
+		// If we're keeping releases from recent majors, ensure we can upgrade from older majors
+		if len(allMajorNumbers) > 0 && len(majorsToKeepLatest) > 0 {
+			// Find oldest major we're keeping by default (latest 3)
+			oldestKeptMajor := uint64(0)
+			for major := range majorsToKeepLatest {
+				if oldestKeptMajor == 0 || major < oldestKeptMajor {
+					oldestKeptMajor = major
+				}
+			}
+
+			// Find oldest available major
+			oldestAvailableMajor := allMajorNumbers[0]
+			for _, major := range allMajorNumbers {
+				if major < oldestAvailableMajor {
+					oldestAvailableMajor = major
+				}
+			}
+
+			if verbose {
+				log.Printf("API failed - using fallback upgrade path logic. Oldest available: v%d, oldest kept: v%d", oldestAvailableMajor, oldestKeptMajor)
+			}
+
+			// Ensure upgrade path from oldest available to oldest kept
+			for _, major := range allMajorNumbers {
+				if major >= oldestAvailableMajor && major <= oldestKeptMajor {
+					if !majorsToKeepLatest[major] {
+						if verbose {
+							log.Printf("Marking latest of v%d to keep (upgrade path continuity fallback)", major)
+						}
+					}
+					majorsToKeepLatest[major] = true
+				}
+			}
+		}
 	}
 
 	for major, keep := range majorsToKeepLatest {
 		if keep {
-			latest := latestInMajor[major]
+			// Prefer latest active release in this major, but use overall latest if no active release exists
+			var releaseToKeep *ReleaseInfo
+			if latestActive, hasActive := latestActiveinMajor[major]; hasActive {
+				releaseToKeep = latestActive
+			} else {
+				// No active release in this major, need to reactivate the latest deprecated one
+				releaseToKeep = latestInMajor[major]
+				if verbose {
+					log.Printf("Need to reactivate %s (latest in v%d major, required for upgrade path)", filepath.Base(releaseToKeep.Path), major)
+				}
+			}
+
 			isAlreadyKept := false
 			for _, kr := range keptReleases {
-				if kr.Path == latest.Path {
+				if kr.Path == releaseToKeep.Path {
 					isAlreadyKept = true
 					break
 				}
 			}
 			if !isAlreadyKept {
 				if verbose {
-					log.Printf("Marking %s to keep (latest of a required major v%d)", filepath.Base(latest.Path), major)
+					log.Printf("Marking %s to keep (latest of a required major v%d)", filepath.Base(releaseToKeep.Path), major)
 				}
-				keptReleases = append(keptReleases, latest)
+				keptReleases = append(keptReleases, releaseToKeep)
 			}
 		}
 	}
 
-	// Any active release not in keptReleases is deprecated
+	// Build list of releases to keep active and releases to deprecate
 	keptPaths := make(map[string]bool)
 	for _, r := range keptReleases {
 		keptPaths[r.Path] = true
 	}
 
+	// Check active releases - deprecate those not in kept list
 	for _, r := range activeReleases {
 		if !keptPaths[r.Path] {
 			if verbose {
