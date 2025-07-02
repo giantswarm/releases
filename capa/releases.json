@@ -29,13 +29,6 @@
       "isStable": true
     },
     {
-      "version": "27.5.3",
-      "isDeprecated": true,
-      "releaseTimestamp": "2025-03-19 12:00:00 +0000 UTC",
-      "changelogUrl": "https://github.com/giantswarm/releases/blob/master/capa/v27.5.3/README.md",
-      "isStable": true
-    },
-    {
       "version": "27.5.4",
       "isDeprecated": false,
       "releaseTimestamp": "2025-06-25T10:36:51+02:00",
