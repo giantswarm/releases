@@ -5,12 +5,12 @@ releases:
     version: "< 4230.2.0"
 - name: ">= 31.1.0"
   requests:
+  - name: aws-nth-bundle
+    version: ">= 1.2.2"
   - name: coredns
     version: ">= 1.26.0"
   - name: k8s-dns-node-cache
     version: ">= 2.9.0"
-  - name: aws-nth-bundle
-    version: ">= 1.2.2"
 - name: ">= 31.0.0"
   requests:
   - name: cert-manager-crossplane-resources
