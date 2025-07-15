@@ -125,6 +125,14 @@ jobs:
 
             if grep -q -E "^\s*state:\s*deprecated\s*$" "$RELEASE_YAML_PATH"; then
               echo "INFO: Release $RELEASE_NAME is deprecated"
+
+              ARCHIVE_PARENT_DIR="$PROVIDER_ROOT_DIR/archived"
+              ARCHIVED_RELEASE_FULL_PATH="$ARCHIVE_PARENT_DIR/$RELEASE_NAME"
+
+              if [ -d "$ARCHIVED_RELEASE_FULL_PATH" ]; then
+                echo "INFO: Release $RELEASE_NAME is already archived. Skipping."
+                continue
+              fi
               
               # Check if this release is safe to archive using Grafana metrics
               VERSION=$(echo "$RELEASE_NAME" | sed 's/^v//')
@@ -134,56 +142,42 @@ jobs:
               echo "INFO: Checking if $PROVIDER/$VERSION is safe to archive..."
               
               # Create archive directory if it doesn't exist
-              ARCHIVE_PARENT_DIR="$PROVIDER_ROOT_DIR/archived"
-              ARCHIVED_RELEASE_FULL_PATH="$ARCHIVE_PARENT_DIR/$RELEASE_NAME"
               if [ ! -d "$ARCHIVE_PARENT_DIR" ]; then
                 mkdir -p "$ARCHIVE_PARENT_DIR"
               fi
-
-              if [ -d "$ARCHIVED_RELEASE_FULL_PATH" ]; then
-                echo "INFO: Release $RELEASE_NAME already archived. Skipping."
+              
+              # Create a temporary branch to simulate the move for validation
+              TEMP_BRANCH="temp-validate-archive-$(date +%s%N)"
+              CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
+              
+              # Create and switch to temporary branch
+              git checkout -b "$TEMP_BRANCH"
+              
+              # Perform the move on the temporary branch
+              git mv "$release_dir_path" "$ARCHIVED_RELEASE_FULL_PATH"
+              git commit -m "Temporary: Test move of $RELEASE_NAME to archived"
+              
+              # Run the safety check (this will compare temp branch with origin/main)
+              if ./tools/check-release-archive.sh "${{ secrets.GRAFANA_API_KEY }}"; then
+                echo "INFO: Release $RELEASE_NAME is safe to archive."
+                echo "$RELEASE_NAME" >> "$MOVED_RELEASES_TEMP_FILE"
               else
-                # Create a temporary branch to simulate the move for validation
-                TEMP_BRANCH="temp-validate-archive-$(date +%s%N)"
-                CURRENT_BRANCH=$(git branch --show-current)
-                
-                # Create and switch to temporary branch
-                git checkout -b "$TEMP_BRANCH"
-                
-                # Ensure archived directory exists
-                git add "$ARCHIVE_PARENT_DIR" 2>/dev/null || true
-                
-                # Perform the move on the temporary branch
-                git mv "$release_dir_path" "$ARCHIVED_RELEASE_FULL_PATH"
-                git add "$ARCHIVED_RELEASE_FULL_PATH"
-                git commit -m "Temporary: Test move of $RELEASE_NAME to archived"
-                
-                # Run the safety check (this will compare temp branch with origin/main)
-                if ./tools/check-release-archive.sh "${{ secrets.GRAFANA_API_KEY }}"; then
-                  echo "INFO: Release $RELEASE_NAME is safe to archive."
-                  
-                  # Switch back to original branch
-                  git checkout "$CURRENT_BRANCH"
-                  git branch -D "$TEMP_BRANCH"
-                  
-                  # Actually perform the move
-                  if ! git mv "$release_dir_path" "$ARCHIVED_RELEASE_FULL_PATH"; then
-                    echo "ERROR: Failed to move $release_dir_path"
-                    exit 1
-                  fi
-                  echo "$RELEASE_NAME" >> "$MOVED_RELEASES_TEMP_FILE"
-                else
-                  echo "WARNING: Release $RELEASE_NAME is still in use and cannot be archived. Skipping."
-                  
-                  # Switch back to original branch and clean up
-                  git checkout "$CURRENT_BRANCH"
-                  git branch -D "$TEMP_BRANCH"
-                fi
+                echo "WARNING: Release $RELEASE_NAME is still in use and cannot be archived. Skipping."
               fi
+              
+              # Switch back to original branch and clean up
+              git checkout "$CURRENT_BRANCH"
+              git branch -D "$TEMP_BRANCH"
             fi
           done
 
           if [ -s "$MOVED_RELEASES_TEMP_FILE" ]; then
+            echo "INFO: Moving all safe-to-archive releases..."
+            ARCHIVE_PARENT_DIR="$PROVIDER_ROOT_DIR/archived"
+            cat "$MOVED_RELEASES_TEMP_FILE" | while read -r release_to_move; do
+              echo "INFO: Moving $release_to_move"
+              git mv "$PROVIDER_ROOT_DIR/$release_to_move" "$ARCHIVE_PARENT_DIR/$release_to_move"
+            done
             MOVED_RELEASES_NAMES_THIS_RUN=$(sort -V "$MOVED_RELEASES_TEMP_FILE" | paste -sd ',' -)
             echo "INFO: Moved releases: $MOVED_RELEASES_NAMES_THIS_RUN"
           else
