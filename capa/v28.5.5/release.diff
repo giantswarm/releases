@@ -81,7 +81,7 @@ spec:                                                              spec:
     dependsOn:                                                         dependsOn:
     - prometheus-operator-crd                                          - prometheus-operator-crd
   - name: network-policies                                           - name: network-policies
-    version: 0.1.1                                              <  
+    version: 0.1.1                                              <
     catalog: cluster                                                   catalog: cluster
                                                                 >      version: 0.1.1
     dependsOn:                                                         dependsOn:
@@ -99,7 +99,7 @@ spec:                                                              spec:
     dependsOn:                                                         dependsOn:
     - prometheus-operator-crd                                          - prometheus-operator-crd
   - name: security-bundle                                            - name: security-bundle
-    version: 1.7.2                                              <  
+    version: 1.7.2                                              <
     catalog: giantswarm                                                catalog: giantswarm
                                                                 >      version: 1.7.2
     dependsOn:                                                         dependsOn:
@@ -123,4 +123,4 @@ spec:                                                              spec:
   - name: os-tooling                                                 - name: os-tooling
     version: 1.20.1                                                    version: 1.20.1
   date: "2025-03-19T12:00:00Z"                                  |    date: "2025-06-27T09:08:48Z"
-  state: active                                                      state: active
+  state: deprecated                                             |    state: active
