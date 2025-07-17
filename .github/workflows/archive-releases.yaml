@@ -298,7 +298,7 @@ jobs:
 
       - name: Create Pull Request
         if: steps.archive_script.outputs.has_archived_releases == 'true'
-        uses: peter-evans/create-pull-request@e5a03b409aae444ebc2a01147c555f89034030b6
+        uses: peter-evans/create-pull-request@1cef63c140c1e04e1078f259777f4c0ce0b74194
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           commit-message: "Automated: Archive deprecated ${{ steps.provider-name.outputs.display_name }} releases"
