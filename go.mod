@@ -9,7 +9,7 @@ require (
 	github.com/giantswarm/release-operator/v4 v4.2.1
 	github.com/giantswarm/versionbundle v1.1.0
 	sigs.k8s.io/kustomize/kustomize/v5 v5.7.1
-	sigs.k8s.io/yaml v1.5.0
+	sigs.k8s.io/yaml v1.6.0
 )
 
 require (
