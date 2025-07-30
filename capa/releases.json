@@ -2,7 +2,7 @@
   "releases": [
     {
       "version": "25.5.4",
-      "isDeprecated": false,
+      "isDeprecated": true,
       "releaseTimestamp": "2025-04-07 12:00:00 +0000 UTC",
       "changelogUrl": "https://github.com/giantswarm/releases/blob/master/capa/v25.5.4/README.md",
       "isStable": true
