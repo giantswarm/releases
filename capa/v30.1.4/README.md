@@ -1,6 +1,6 @@
 # :zap: Giant Swarm Release v30.1.4 for CAPA :zap:
 
-This release backports cluster-aws fix for reducing IMDS Response Hop Limit to 2 if pod networking is in ENI mode to increase security.
+This release backports a fix for reducing IMDS Response Hop Limit to 2 if pod networking is in ENI mode to increase security. For clusters in ENI mode, all nodes are rolled when upgrading to this release.
 
 ## Changes compared to v30.1.3
 
