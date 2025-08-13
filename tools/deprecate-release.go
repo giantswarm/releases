@@ -270,56 +270,103 @@ func isActive(release *v1alpha1.Release) bool {
 }
 
 // findReleases locates all release directories and parses their version info
+// it scans both active releases and archived releases to ensure complete upgrade path analysis
 func findReleases(providerPath string, verbose bool) ([]*ReleaseInfo, error) {
 	var releases []*ReleaseInfo
 
-	entries, err := os.ReadDir(providerPath)
-	if err != nil {
-		return nil, fmt.Errorf("failed to read provider directory: %w", err)
+	// Scan helper function for releases
+	scanDirectory := func(baseDir string, isArchived bool) error {
+		entries, err := os.ReadDir(baseDir)
+		if err != nil {
+			if os.IsNotExist(err) {
+				if verbose {
+					log.Printf("Directory %s does not exist, skipping", baseDir)
+				}
+				return nil
+			}
+			return fmt.Errorf("failed to read directory %s: %w", baseDir, err)
+		}
+
+		for _, entry := range entries {
+			if !entry.IsDir() {
+				continue
+			}
+
+			dirName := entry.Name()
+			versionStr := strings.TrimPrefix(dirName, "v")
+
+			version, err := semver.NewVersion(versionStr)
+			if err != nil {
+				if verbose {
+					archiveStatus := ""
+					if isArchived {
+						archiveStatus = " (archived)"
+					}
+					log.Printf("Skipping directory %s%s: not a valid semver", dirName, archiveStatus)
+				}
+				continue
+			}
+
+			yamlPath := filepath.Join(baseDir, dirName, "release.yaml")
+			if _, err := os.Stat(yamlPath); os.IsNotExist(err) {
+				if verbose {
+					archiveStatus := ""
+					if isArchived {
+						archiveStatus = " (archived)"
+					}
+					log.Printf("Skipping directory %s%s: no release.yaml found", dirName, archiveStatus)
+				}
+				continue
+			}
+
+			data, err := os.ReadFile(yamlPath)
+			if err != nil {
+				log.Printf("Error reading %s: %v", yamlPath, err)
+				continue
+			}
+
+			var release v1alpha1.Release
+			if err := yaml.Unmarshal(data, &release); err != nil {
+				log.Printf("Error parsing YAML in %s: %v", yamlPath, err)
+				continue
+			}
+
+			releases = append(releases, &ReleaseInfo{
+				Path:    filepath.Join(baseDir, dirName),
+				Version: version,
+				Release: &release,
+				InUse:   false,
+			})
+
+			if verbose && isArchived {
+				log.Printf("Found archived release: %s", dirName)
+			}
+		}
+		return nil
 	}
 
-	for _, entry := range entries {
-		if !entry.IsDir() {
-			continue
-		}
+	// Scan active releases in provider directory
+	if err := scanDirectory(providerPath, false); err != nil {
+		return nil, err
+	}
 
-		dirName := entry.Name()
-		versionStr := strings.TrimPrefix(dirName, "v")
+	// Scan archived releases if archive directory exists
+	archivedPath := filepath.Join(providerPath, "archived")
+	if err := scanDirectory(archivedPath, true); err != nil {
+		return nil, err
+	}
 
-		version, err := semver.NewVersion(versionStr)
-		if err != nil {
-			if verbose {
-				log.Printf("Skipping directory %s: not a valid semver", dirName)
+	if verbose {
+		activeCount := 0
+		archivedCount := 0
+		for _, r := range releases {
+			if strings.Contains(r.Path, "/archived/") {
+				archivedCount++
+			} else {
+				activeCount++
 			}
-			continue
 		}
-
-		yamlPath := filepath.Join(providerPath, dirName, "release.yaml")
-		if _, err := os.Stat(yamlPath); os.IsNotExist(err) {
-			if verbose {
-				log.Printf("Skipping directory %s: no release.yaml found", dirName)
-			}
-			continue
-		}
-
-		data, err := os.ReadFile(yamlPath)
-		if err != nil {
-			log.Printf("Error reading %s: %v", yamlPath, err)
-			continue
-		}
-
-		var release v1alpha1.Release
-		if err := yaml.Unmarshal(data, &release); err != nil {
-			log.Printf("Error parsing YAML in %s: %v", yamlPath, err)
-			continue
-		}
-
-		releases = append(releases, &ReleaseInfo{
-			Path:    filepath.Join(providerPath, dirName),
-			Version: version,
-			Release: &release,
-			InUse:   false,
-		})
+		log.Printf("Found %d active and %d archived releases in %s", activeCount, archivedCount, providerPath)
 	}
 
 	return releases, nil
