@@ -2,6 +2,8 @@
 
 # Giant Swarm Workload Cluster Releases
 
+I need a PR for testing CAPI Controller updates.
+
 This repository contains workload cluster release notes and changelogs.
 
 Workload cluster releases can be in
