@@ -36,7 +36,7 @@ spec:
     dependsOn:
     - prometheus-operator-crd
   - name: cilium
-    version: 1.2.2-a16c05bd116bc5d9428c7ab26c18949a9361f46c
+    version: 1.2.2-504bdfd611995c9b6588dafa2279c26a41983f8c
     catalog: default-test
   - name: cilium-crossplane-resources
     catalog: cluster
