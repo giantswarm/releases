@@ -595,6 +595,10 @@ to all Giant Swarm installations.
 
 ## vSphere
 
+- v32
+  - v32.0
+    - [v32.0.0](https://github.com/giantswarm/releases/tree/master/vsphere/v32.0.0)
+
 - v31
   - v31.1
     - [v31.1.0](https://github.com/giantswarm/releases/tree/master/vsphere/v31.1.0)
@@ -631,6 +635,10 @@ to all Giant Swarm installations.
     - [v27.0.0](https://github.com/giantswarm/releases/tree/master/vsphere/archived/v27.0.0)
 
 ## VMware Cloud Director
+
+- v32
+  - v32.0
+    - [v32.0.0](https://github.com/giantswarm/releases/tree/master/cloud-director/v32.0.0)
 
 - v31
   - v31.1
