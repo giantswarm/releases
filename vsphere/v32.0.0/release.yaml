@@ -82,7 +82,7 @@ spec:
     dependsOn:
     - kyverno-crds
   - name: observability-bundle
-    version: 2.0.0
+    version: 2.1.0
     dependsOn:
     - coredns
   - name: observability-policies
@@ -113,12 +113,12 @@ spec:
   components:
   - name: cluster-vsphere
     catalog: cluster
-    version: 1.5.0
+    version: 1.5.1
   - name: flatcar
     version: 4230.2.2
   - name: kubernetes
     version: 1.32.8
   - name: os-tooling
     version: 1.26.1
-  date: "2025-08-20T12:08:34Z"
+  date: "2025-08-22T09:41:09Z"
   state: active
