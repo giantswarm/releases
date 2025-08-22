@@ -13,6 +13,13 @@
       "releaseTimestamp": "2025-01-27 18:00:00 +0000 UTC",
       "changelogUrl": "https://github.com/giantswarm/releases/blob/master/azure/v29.5.0/README.md",
       "isStable": true
+    },
+    {
+      "version": "29.5.1",
+      "isDeprecated": false,
+      "releaseTimestamp": "2025-08-21 12:00:00 +0000 UTC",
+      "changelogUrl": "https://github.com/giantswarm/releases/blob/master/azure/v29.5.1/README.md",
+      "isStable": true
     }
   ],
   "sourceUrl": "https://github.com/giantswarm/releases",
