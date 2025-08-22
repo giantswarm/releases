@@ -6,7 +6,7 @@ require (
 	github.com/Masterminds/semver/v3 v3.4.0
 	github.com/giantswarm/microerror v0.4.1
 	github.com/google/go-github/v74 v74.0.0
-	github.com/onsi/ginkgo/v2 v2.25.0
+	github.com/onsi/ginkgo/v2 v2.25.1
 	github.com/onsi/gomega v1.38.0
 	k8s.io/apimachinery v0.33.4
 	sigs.k8s.io/yaml v1.6.0
