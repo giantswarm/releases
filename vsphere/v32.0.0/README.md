@@ -6,13 +6,21 @@
 
 ### Components
 
+- cluster-vsphere from v1.5.0 to v1.5.1
 - Flatcar from v4152.2.3 to [v4230.2.2](https://www.flatcar-linux.org/releases/#release-4230.2.2)
 - Kubernetes from v1.31.11 to [v1.32.8](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.32.md#v1.32.8)
+
+### cluster-vsphere [v1.5.0...v1.5.1](https://github.com/giantswarm/cluster-vsphere/compare/v1.5.0...v1.5.1)
+
+#### Changed
+
+- Chart: Update `cluster` to v2.5.1.
 
 ### Apps
 
 - coredns from v1.26.0 to v1.27.0
 - etcd-defrag from v1.0.6 to v1.0.7
+- observability-bundle from v2.0.0 to v2.1.0
 - vertical-pod-autoscaler from v5.5.1 to v6.0.0
 - vertical-pod-autoscaler-crd from v3.3.1 to v4.0.0
 
@@ -29,6 +37,16 @@
 #### Changed
 
 - Chart: Update dependency ahrtr/etcd-defrag to v0.30.0. ([#46](https://github.com/giantswarm/etcd-defrag-app/pull/46))
+
+### observability-bundle [v2.0.0...v2.1.0](https://github.com/giantswarm/observability-bundle/compare/v2.0.0...v2.1.0)
+
+#### Changed
+
+- Upgrade `kube-prometheus-stack` to 76.4.0
+  - Bumps prometheus-operator and CRDs to 0.84.1
+  - Bumps prometheus to 3.5.0
+- Update alloy-app to 0.12.1
+  - Bumps alloy to 1.10.1
 
 ### vertical-pod-autoscaler [v5.5.1...v6.0.0](https://github.com/giantswarm/vertical-pod-autoscaler-app/compare/v5.5.1...v6.0.0)
 
