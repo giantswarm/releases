@@ -360,6 +360,10 @@ to all Giant Swarm installations.
 
 ## Azure
 
+- v30
+  - v30.1
+    - [v30.1.4](https://github.com/giantswarm/releases/tree/master/azure/v30.1.4)
+
 - v29
   - v29.5
     - [v29.5.1](https://github.com/giantswarm/releases/tree/master/azure/v29.5.1)
