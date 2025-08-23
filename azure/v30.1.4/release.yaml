@@ -5,11 +5,11 @@ metadata:
 spec:
   apps:
   - name: azure-cloud-controller-manager
-    version: 1.29.8-gs1
+    version: 1.30.14-gs1
     dependsOn:
     - vertical-pod-autoscaler-crd
   - name: azure-cloud-node-manager
-    version: 1.29.8-gs1
+    version: 1.30.14-gs1
     dependsOn:
     - vertical-pod-autoscaler-crd
   - name: azuredisk-csi-driver
@@ -122,5 +122,5 @@ spec:
     version: 1.30.11
   - name: os-tooling
     version: 1.24.0
-  date: "2025-08-23T10:41:52Z"
+  date: "2025-08-23T10:45:56Z"
   state: active

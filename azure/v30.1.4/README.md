@@ -198,6 +198,8 @@
 
 - Added coredns-extensions v0.1.2
 - Added etcd-defrag v1.0.2
+- azure-cloud-controller-manager from v1.29.8-gs1 to v1.30.14-gs1
+- azure-cloud-node-manager from v1.29.8-gs1 to v1.30.14-gs1
 - capi-node-labeler from v0.5.0 to v1.0.2
 - cert-exporter from v2.9.3 to v2.9.5
 - cert-manager from v3.8.2 to v3.9.0
@@ -216,6 +218,30 @@
 - vertical-pod-autoscaler from v5.3.1 to v5.4.0
 - vertical-pod-autoscaler-crd from v3.1.2 to v3.2.0
 
+
+### azure-cloud-controller-manager [v1.29.8-gs1...v1.30.14-gs1](https://github.com/giantswarm/azure-cloud-controller-manager-app/compare/v1.29.8-gs1...v1.30.14-gs1)
+
+#### Added
+
+- Add Annotations and labels for use of azure workload identity.
+
+#### Changed
+
+- Chart: Update to upstream v1.30.14. ([#110](https://github.com/giantswarm/azure-cloud-controller-manager-app/pull/110))
+- Chart: Update to upstream v1.30.13. ([#103](https://github.com/giantswarm/azure-cloud-controller-manager-app/pull/103))
+- Chart: Update to upstream v1.30.6. ([#87](https://github.com/giantswarm/azure-cloud-controller-manager-app/pull/87))
+
+### azure-cloud-node-manager [v1.29.8-gs1...v1.30.14-gs1](https://github.com/giantswarm/azure-cloud-node-manager-app/compare/v1.29.8-gs1...v1.30.14-gs1)
+
+#### Added
+
+- Add Annotations and labels for use of azure workload identity.
+
+#### Changed
+
+- Chart: Update to upstream v1.30.14. ([#100](https://github.com/giantswarm/azure-cloud-node-manager-app/pull/100))
+- Chart: Update to upstream v1.30.13. ([#93](https://github.com/giantswarm/azure-cloud-node-manager-app/pull/93))
+- Chart: Update to upstream v1.30.6. ([#77](https://github.com/giantswarm/azure-cloud-node-manager-app/pull/77))
 
 ### capi-node-labeler [v0.5.0...v1.0.2](https://github.com/giantswarm/capi-node-labeler-app/compare/v0.5.0...v1.0.2)
 
