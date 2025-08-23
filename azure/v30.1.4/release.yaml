@@ -48,8 +48,12 @@ spec:
     - cilium
   - name: coredns-extensions
     version: 0.1.2
+    dependsOn:
+    - vertical-pod-autoscaler-crd
   - name: etcd-defrag
     version: 1.0.2
+    dependsOn:
+    - kyverno-crds
   - name: etcd-k8s-res-count-exporter
     version: 1.10.3
     dependsOn:
@@ -118,5 +122,5 @@ spec:
     version: 1.30.11
   - name: os-tooling
     version: 1.24.0
-  date: "2025-08-22T15:06:33Z"
+  date: "2025-08-23T10:41:52Z"
   state: active
