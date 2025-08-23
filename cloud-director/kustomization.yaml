@@ -4,6 +4,7 @@ resources:
 - v29.3.2
 - v30.1.0
 - v30.1.3
+- v30.1.4
 - v31.1.0
 transformers:
 - |
