@@ -114,8 +114,8 @@ spec:                                                            spec:
     version: 3.1.2                                             |     version: 3.2.0
   components:                                                      components:
   - name: cluster-azure                                            - name: cluster-azure
-    catalog: cluster                                                 catalog: cluster
-    version: 1.6.1                                             |     version: 2.1.1
+    catalog: cluster                                           |     catalog: cluster-test
+    version: 1.6.1                                             |     version: 2.1.1-1c2d596165f99e4de11beb7ce82f60b2eef64b9e
   - name: flatcar                                                  - name: flatcar
     version: 4081.2.1                                          |     version: 4152.2.1
   - name: kubernetes                                               - name: kubernetes
