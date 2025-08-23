@@ -1,7 +1,5 @@
 # :zap: Giant Swarm Release v30.1.4 for Azure :zap:
 
-<< Add description here >>
-
 ## Changes compared to v29.5.1
 
 ### Components
