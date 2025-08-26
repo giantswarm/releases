@@ -19,12 +19,20 @@
 
 ### Apps
 
+- cilium from v1.2.2 to v1.2.3
 - coredns from v1.26.0 to v1.27.0
 - etcd-defrag from v1.0.6 to v1.0.7
 - observability-bundle from v2.0.0 to v2.1.0
 - vertical-pod-autoscaler from v5.5.1 to v6.0.0
 - vertical-pod-autoscaler-crd from v3.3.1 to v4.0.0
 
+
+### cilium [v1.2.2...v1.2.3](https://github.com/giantswarm/cilium-app/compare/v1.2.2...v1.2.3)
+
+#### Changed
+
+- Improve the k8s service host autodiscovery mechanism
+- Upgrade Cilium to [v1.17.7](https://github.com/cilium/cilium/releases/tag/v1.17.7).
 
 ### coredns [v1.26.0...v1.27.0](https://github.com/giantswarm/coredns-app/compare/v1.26.0...v1.27.0)
 
