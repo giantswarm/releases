@@ -36,7 +36,7 @@ spec:                                                              spec:
     dependsOn:                                                         dependsOn:
     - prometheus-operator-crd                                          - prometheus-operator-crd
   - name: cilium                                                     - name: cilium
-    version: 1.2.2                                                     version: 1.2.2
+    version: 1.2.2                                              |      version: 1.2.3
   - name: cilium-crossplane-resources                                - name: cilium-crossplane-resources
     catalog: cluster                                                   catalog: cluster
     version: 0.2.1                                                     version: 0.2.1
@@ -89,11 +89,11 @@ spec:                                                              spec:
     version: 2.1.0                                                     version: 2.1.0
     dependsOn:                                                         dependsOn:
     - kyverno-crds                                                     - kyverno-crds
-  - name: karpenter-nodepools                                        - name: karpenter-nodepools
-    catalog: giantswarm                                                catalog: giantswarm
-    version: 0.2.0                                                     version: 0.2.0
-    dependsOn:                                                         dependsOn:
-    - karpenter                                                        - karpenter
+  - name: karpenter-nodepools
+    catalog: giantswarm
+    version: 0.2.0
+    dependsOn:
+    - karpenter
   - name: metrics-server                                             - name: metrics-server
     version: 2.6.0                                                     version: 2.6.0
     dependsOn:                                                         dependsOn:
@@ -139,12 +139,12 @@ spec:                                                              spec:
   components:                                                        components:
   - name: cluster-aws                                                - name: cluster-aws
     catalog: cluster                                                   catalog: cluster
-    version: 3.6.1                                              |      version: 3.7.0
+    version: 3.6.1                                              |      version: 4.0.0
   - name: flatcar                                                    - name: flatcar
     version: 4152.2.3                                           |      version: 4230.2.2
   - name: kubernetes                                                 - name: kubernetes
     version: 1.31.11                                            |      version: 1.32.8
   - name: os-tooling                                                 - name: os-tooling
     version: 1.26.1                                                    version: 1.26.1
-  date: "2025-08-21T18:17:23Z"                                  |    date: "2025-08-26T11:03:46Z"
+  date: "2025-08-21T18:17:23Z"                                  |    date: "2025-08-26T16:29:42Z"
   state: active                                                      state: active
