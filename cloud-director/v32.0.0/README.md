@@ -2,19 +2,19 @@
 
 << Add description here >>
 
-## Changes compared to v31.1.0
+## Changes compared to v31.1.1
 
 ### Components
 
-- cluster-cloud-director from v0.68.0 to v0.68.1
+- cluster-cloud-director from v0.68.1 to v0.69.0
 - Flatcar from v4152.2.3 to [v4230.2.2](https://www.flatcar-linux.org/releases/#release-4230.2.2)
 - Kubernetes from v1.31.11 to [v1.32.8](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.32.md#v1.32.8)
 
-### cluster-cloud-director [v0.68.0...v0.68.1](https://github.com/giantswarm/cluster-cloud-director/compare/v0.68.0...v0.68.1)
+### cluster-cloud-director [v0.68.1...v0.69.0](https://github.com/giantswarm/cluster-cloud-director/compare/v0.68.1...v0.69.0)
 
 #### Changed
 
-- Chart: Update `cluster` to v2.5.1.
+- Chart: Update `cluster` to v2.6.1.
 
 ### Apps
 

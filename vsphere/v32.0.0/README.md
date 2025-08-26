@@ -2,19 +2,20 @@
 
 << Add description here >>
 
-## Changes compared to v31.1.0
+## Changes compared to v31.1.1
 
 ### Components
 
-- cluster-vsphere from v1.5.0 to v1.5.1
+- cluster-vsphere from v1.5.1 to v1.6.0
 - Flatcar from v4152.2.3 to [v4230.2.2](https://www.flatcar-linux.org/releases/#release-4230.2.2)
 - Kubernetes from v1.31.11 to [v1.32.8](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.32.md#v1.32.8)
 
-### cluster-vsphere [v1.5.0...v1.5.1](https://github.com/giantswarm/cluster-vsphere/compare/v1.5.0...v1.5.1)
+### cluster-vsphere [v1.5.1...v1.6.0](https://github.com/giantswarm/cluster-vsphere/compare/v1.5.1...v1.6.0)
 
 #### Changed
 
-- Chart: Update `cluster` to v2.5.1.
+- Update `kube-vip` static pod manifest to `v1.0.0`.
+- Chart: Update `cluster` to v2.6.1.
 
 ### Apps
 
