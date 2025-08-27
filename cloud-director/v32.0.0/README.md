@@ -18,13 +18,30 @@
 
 ### Apps
 
+- capi-node-labeler from v1.1.2 to v1.1.3
+- cert-exporter from v2.9.8 to v2.9.9
 - cilium from v1.2.2 to v1.2.3
 - coredns from v1.26.0 to v1.27.0
 - etcd-defrag from v1.0.6 to v1.0.7
+- etcd-k8s-res-count-exporter from v1.10.6 to v1.10.7
+- k8s-audit-metrics from v0.10.5 to v0.10.6
+- node-exporter from v1.20.4 to v1.20.5
 - observability-bundle from v2.0.0 to v2.1.0
 - vertical-pod-autoscaler from v5.5.1 to v6.0.0
 - vertical-pod-autoscaler-crd from v3.3.1 to v4.0.0
 
+
+### capi-node-labeler [v1.1.2...v1.1.3](https://github.com/giantswarm/capi-node-labeler-app/compare/v1.1.2...v1.1.3)
+
+#### Changed
+
+- Go: Update dependencies.
+
+### cert-exporter [v2.9.8...v2.9.9](https://github.com/giantswarm/cert-exporter/compare/v2.9.8...v2.9.9)
+
+#### Changed
+
+- Go: Update dependencies.
 
 ### cilium [v1.2.2...v1.2.3](https://github.com/giantswarm/cilium-app/compare/v1.2.2...v1.2.3)
 
@@ -45,6 +62,24 @@
 #### Changed
 
 - Chart: Update dependency ahrtr/etcd-defrag to v0.30.0. ([#46](https://github.com/giantswarm/etcd-defrag-app/pull/46))
+
+### etcd-k8s-res-count-exporter [v1.10.6...v1.10.7](https://github.com/giantswarm/etcd-kubernetes-resources-count-exporter/compare/v1.10.6...v1.10.7)
+
+#### Changed
+
+- Go: Update dependencies.
+
+### k8s-audit-metrics [v0.10.5...v0.10.6](https://github.com/giantswarm/k8s-audit-metrics/compare/v0.10.5...v0.10.6)
+
+#### Changed
+
+- Go: Update dependencies.
+
+### node-exporter [v1.20.4...v1.20.5](https://github.com/giantswarm/node-exporter-app/compare/v1.20.4...v1.20.5)
+
+#### Changed
+
+- Go: Update dependencies.
 
 ### observability-bundle [v2.0.0...v2.1.0](https://github.com/giantswarm/observability-bundle/compare/v2.0.0...v2.1.0)
 
