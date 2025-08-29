@@ -364,6 +364,10 @@ to all Giant Swarm installations.
 
 ## Azure
 
+- v30
+  - v30.1
+    - [v30.1.4](https://github.com/giantswarm/releases/tree/master/azure/v30.1.4)
+
 - v29
   - v29.5
     - [v29.5.1](https://github.com/giantswarm/releases/tree/master/azure/v29.5.1)
@@ -662,7 +666,7 @@ to all Giant Swarm installations.
     - [v30.1.3](https://github.com/giantswarm/releases/tree/master/cloud-director/archived/v30.1.3)
     - [v30.1.2](https://github.com/giantswarm/releases/tree/master/cloud-director/archived/v30.1.2)
     - [v30.1.1](https://github.com/giantswarm/releases/tree/master/cloud-director/archived/v30.1.1)
-    - [v30.1.0](https://github.com/giantswarm/releases/tree/master/cloud-director/v30.1.0)
+    - [v30.1.0](https://github.com/giantswarm/releases/tree/master/cloud-director/archived/v30.1.0)
   - v30.0
     - [v30.0.0](https://github.com/giantswarm/releases/tree/master/cloud-director/archived/v30.0.0)
 
