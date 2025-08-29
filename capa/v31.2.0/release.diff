@@ -141,10 +141,10 @@ spec:                                                              spec:
     catalog: cluster                                                   catalog: cluster
     version: 3.6.1                                              |      version: 4.0.0
   - name: flatcar                                                    - name: flatcar
-    version: 4152.2.3                                           |      version: 4230.2.2
+    version: 4152.2.3                                                  version: 4152.2.3
   - name: kubernetes                                                 - name: kubernetes
     version: 1.31.11                                            |      version: 1.31.12
   - name: os-tooling                                                 - name: os-tooling
     version: 1.26.1                                                    version: 1.26.1
-  date: "2025-08-21T18:17:23Z"                                  |    date: "2025-08-29T10:53:20Z"
+  date: "2025-08-21T18:17:23Z"                                  |    date: "2025-08-29T10:58:39Z"
   state: active                                                      state: active
