@@ -45,11 +45,11 @@ spec:
     dependsOn:
     - prometheus-operator-crd
   - name: cloud-provider-aws
-    version: 1.32.3-gs1
+    version: 1.31.5-gs1
     dependsOn:
     - vertical-pod-autoscaler-crd
   - name: cluster-autoscaler
-    version: 1.32.2-gs1
+    version: 1.31.3-gs1
     dependsOn:
     - kyverno-crds
   - name: coredns
@@ -139,7 +139,7 @@ spec:
   components:
   - name: cluster-aws
     catalog: cluster
-    version: 4.0.0
+    version: 3.6.1
   - name: flatcar
     version: 4152.2.3
   - name: kubernetes
