@@ -6,9 +6,11 @@
 
 ### Components
 
-- cluster-aws from v3.6.1 to v4.0.0
+- cluster-aws from v3.6.1 to v4.0.1
+- Flatcar from v4152.2.3 to [v4230.2.2](https://www.flatcar-linux.org/releases/#release-4230.2.2)
+- Kubernetes from v1.31.11 to [v1.31.12](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.31.md#v1.31.12)
 
-### cluster-aws [v3.6.1...v4.0.0](https://github.com/giantswarm/cluster-aws/compare/v3.6.1...v4.0.0)
+### cluster-aws [v3.6.1...v4.0.1](https://github.com/giantswarm/cluster-aws/compare/v3.6.1...v4.0.1)
 
 #### Added
 
@@ -20,6 +22,7 @@
 
 #### Changed
 
+- Chart: Update `cluster` to v2.6.2.
 - Chart: Update `cluster` to v2.6.1.
 
 #### Removed
@@ -30,15 +33,16 @@
 
 - capi-node-labeler from v1.1.2 to v1.1.3
 - cert-exporter from v2.9.8 to v2.9.9
-- cilium from v1.2.2 to v1.2.3
-- cloud-provider-aws from v1.31.5-gs1 to v1.32.3-gs1
-- cluster-autoscaler from v1.31.3-gs1 to v1.32.2-gs1
+- cert-manager from v3.9.1 to v3.9.2
+- cilium from v1.2.2 to v1.3.0
 - coredns from v1.26.0 to v1.27.0
 - etcd-defrag from v1.0.6 to v1.0.7
 - etcd-k8s-res-count-exporter from v1.10.6 to v1.10.7
 - k8s-audit-metrics from v0.10.5 to v0.10.6
+- k8s-dns-node-cache from v2.9.0 to v2.9.1
+- metrics-server from v2.6.0 to v2.7.0
 - node-exporter from v1.20.4 to v1.20.5
-- observability-bundle from v2.0.0 to v2.1.0
+- observability-bundle from v2.0.0 to v2.2.0
 - vertical-pod-autoscaler from v5.5.1 to v6.0.0
 - vertical-pod-autoscaler-crd from v3.3.1 to v4.0.0
 
@@ -55,24 +59,19 @@
 
 - Go: Update dependencies.
 
-### cilium [v1.2.2...v1.2.3](https://github.com/giantswarm/cilium-app/compare/v1.2.2...v1.2.3)
+### cert-manager [v3.9.1...v3.9.2](https://github.com/giantswarm/cert-manager-app/compare/v3.9.1...v3.9.2)
 
 #### Changed
 
+- Add `alloy` ingress rules for cainjector metrics ingestion.
+
+### cilium [v1.2.2...v1.3.0](https://github.com/giantswarm/cilium-app/compare/v1.2.2...v1.3.0)
+
+#### Changed
+
+- Upgrade Cilium to [v1.18.1](https://github.com/cilium/cilium/releases/tag/v1.18.1).
 - Improve the k8s service host autodiscovery mechanism
 - Upgrade Cilium to [v1.17.7](https://github.com/cilium/cilium/releases/tag/v1.17.7).
-
-### cloud-provider-aws [v1.31.5-gs1...v1.32.3-gs1](https://github.com/giantswarm/aws-cloud-controller-manager-app/compare/v1.31.5-gs1...v1.32.3-gs1)
-
-#### Changed
-
-- Chart: Update to upstream v1.32.3.
-
-### cluster-autoscaler [v1.31.3-gs1...v1.32.2-gs1](https://github.com/giantswarm/cluster-autoscaler-app/compare/v1.31.3-gs1...v1.32.2-gs1)
-
-#### Changed
-
-- Chart: Update to upstream v1.32.2.
 
 ### coredns [v1.26.0...v1.27.0](https://github.com/giantswarm/coredns-app/compare/v1.26.0...v1.27.0)
 
@@ -99,16 +98,31 @@
 
 - Go: Update dependencies.
 
+### k8s-dns-node-cache [v2.9.0...v2.9.1](https://github.com/giantswarm/k8s-dns-node-cache-app/compare/v2.9.0...v2.9.1)
+
+#### Changed
+
+- Update PolicyException apiVersion to v2.
+
+### metrics-server [v2.6.0...v2.7.0](https://github.com/giantswarm/metrics-server-app/compare/v2.6.0...v2.7.0)
+
+#### Changed
+
+- Chart: Update PolicyExceptions to v2.
+
 ### node-exporter [v1.20.4...v1.20.5](https://github.com/giantswarm/node-exporter-app/compare/v1.20.4...v1.20.5)
 
 #### Changed
 
 - Go: Update dependencies.
 
-### observability-bundle [v2.0.0...v2.1.0](https://github.com/giantswarm/observability-bundle/compare/v2.0.0...v2.1.0)
+### observability-bundle [v2.0.0...v2.2.0](https://github.com/giantswarm/observability-bundle/compare/v2.0.0...v2.2.0)
 
 #### Changed
 
+- Upgrade `kube-prometheus-stack` to 77.0.1
+  - Bumps prometheus-operator and CRDs to 0.85.0
+- Update alloy-app to 0.13.0
 - Upgrade `kube-prometheus-stack` to 76.4.0
   - Bumps prometheus-operator and CRDs to 0.84.1
   - Bumps prometheus to 3.5.0
