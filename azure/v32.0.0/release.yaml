@@ -51,7 +51,7 @@ spec:
     dependsOn:
     - vertical-pod-autoscaler-crd
   - name: etcd-defrag
-    version: 1.0.7
+    version: 1.0.8
     dependsOn:
     - kyverno-crds
   - name: etcd-k8s-res-count-exporter
@@ -122,5 +122,5 @@ spec:
     version: 1.32.8
   - name: os-tooling
     version: 1.26.1
-  date: "2025-09-04T13:07:59Z"
+  date: "2025-09-04T22:48:08Z"
   state: active

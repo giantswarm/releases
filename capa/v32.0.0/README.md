@@ -38,7 +38,7 @@
 - cloud-provider-aws from v1.31.5-gs1 to v1.32.3-gs1
 - cluster-autoscaler from v1.31.3-gs1 to v1.32.2-gs1
 - coredns from v1.26.0 to v1.27.0
-- etcd-defrag from v1.0.6 to v1.0.7
+- etcd-defrag from v1.0.6 to v1.0.8
 - etcd-k8s-res-count-exporter from v1.10.6 to v1.10.7
 - k8s-audit-metrics from v0.10.5 to v0.10.6
 - k8s-dns-node-cache from v2.9.0 to v2.9.1
@@ -94,10 +94,11 @@
 - Updated E2E tests to use apptest-framework v1.14.0
 - Update `coredns` image to [1.12.3](https://github.com/coredns/coredns/releases/tag/v1.12.3).
 
-### etcd-defrag [v1.0.6...v1.0.7](https://github.com/giantswarm/etcd-defrag-app/compare/v1.0.6...v1.0.7)
+### etcd-defrag [v1.0.6...v1.0.8](https://github.com/giantswarm/etcd-defrag-app/compare/v1.0.6...v1.0.8)
 
 #### Changed
 
+- Chart: Update dependency ahrtr/etcd-defrag to v0.31.0. ([#52](https://github.com/giantswarm/etcd-defrag-app/pull/52))
 - Chart: Update dependency ahrtr/etcd-defrag to v0.30.0. ([#46](https://github.com/giantswarm/etcd-defrag-app/pull/46))
 
 ### etcd-k8s-res-count-exporter [v1.10.6...v1.10.7](https://github.com/giantswarm/etcd-kubernetes-resources-count-exporter/compare/v1.10.6...v1.10.7)
