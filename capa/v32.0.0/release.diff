@@ -86,7 +86,7 @@ spec:                                                              spec:
     - kyverno-crds                                                     - kyverno-crds
   - name: karpenter-bundle                                           - name: karpenter-bundle
     catalog: giantswarm                                                catalog: giantswarm
-    version: 2.1.0                                                     version: 2.1.0
+    version: 2.1.0                                              |      version: 2.2.0
     dependsOn:                                                         dependsOn:
     - kyverno-crds                                                     - kyverno-crds
   - name: karpenter-nodepools                                   <

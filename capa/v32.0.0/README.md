@@ -40,6 +40,7 @@
 - coredns from v1.26.0 to v1.27.0
 - etcd-defrag from v1.0.6 to v1.0.8
 - etcd-k8s-res-count-exporter from v1.10.6 to v1.10.7
+- karpenter-bundle from v2.1.0 to v2.2.0
 - k8s-audit-metrics from v0.10.5 to v0.10.6
 - k8s-dns-node-cache from v2.9.0 to v2.9.1
 - metrics-server from v2.6.0 to v2.7.0
@@ -106,6 +107,14 @@
 #### Changed
 
 - Go: Update dependencies.
+
+### karpenter-bundle [v2.1.0...v2.2.0](https://github.com/giantswarm/karpenter-bundle/compare/v2.1.0...v2.2.0)
+
+#### Changed
+
+- Change karpenter to it's own namespace.
+- Bump karpenter to v1.6.3.
+- Allow changing karpenter app versions.
 
 ### k8s-audit-metrics [v0.10.5...v0.10.6](https://github.com/giantswarm/k8s-audit-metrics/compare/v0.10.5...v0.10.6)
 

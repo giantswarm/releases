@@ -86,7 +86,7 @@ spec:
     - kyverno-crds
   - name: karpenter-bundle
     catalog: giantswarm
-    version: 2.1.0
+    version: 2.2.0
     dependsOn:
     - kyverno-crds
   - name: metrics-server
