@@ -222,6 +222,10 @@ jobs:
               --provider $provider \
               --bumpall --overwrite -y --output markdown 2>&1 | tee -a $LOG_FILE
           done
+        env:
+          OPSCTL_GITHUB_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+          GH_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+
       - name: Create Pull Request
         id: create_pr
         if: steps.check_pr.outputs.PR_EXISTS == 'false' && steps.k8s_check.outputs.VERSION_EXISTS == 'true'
