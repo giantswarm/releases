@@ -120,3 +120,10 @@ if [ -n "$GITHUB_OUTPUT" ]; then
   echo "LATEST_RELEASE=${LATEST_RELEASE}" >> $GITHUB_OUTPUT
   echo "NEXT_RELEASE=${NEXT_RELEASE}" >> $GITHUB_OUTPUT
 fi
+
+# Set output for GitHub Actions
+if [ -n "${GITHUB_OUTPUT-}" ]; then
+    echo "version=${NEXT_RELEASE}" >> "$GITHUB_OUTPUT"
+    echo "base=${LATEST_RELEASE}" >> "$GITHUB_OUTPUT"
+    echo "provider_acronym=${PROVIDER_ACRONYM}" >> "$GITHUB_OUTPUT"
+fi
