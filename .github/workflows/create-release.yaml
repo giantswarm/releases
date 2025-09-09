@@ -226,6 +226,13 @@ jobs:
           OPSCTL_GITHUB_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
           GH_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
 
+      - name: Update README.md
+        if: steps.check_pr.outputs.PR_EXISTS == 'false' && steps.k8s_check.outputs.VERSION_EXISTS == 'true'
+        run: |
+          for provider in aws azure vsphere capa cloud-director; do
+            ./tools/update-readme.sh "$provider" "${{ steps.versioning.outputs.NEXT_RELEASE }}"
+          done
+
       - name: Create Pull Request
         id: create_pr
         if: steps.check_pr.outputs.PR_EXISTS == 'false' && steps.k8s_check.outputs.VERSION_EXISTS == 'true'
