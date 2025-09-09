@@ -47,6 +47,9 @@ jobs:
         with:
           ref: ${{ steps.get_branch.outputs.result }}
 
+      - name: Install GitHub CLI
+        run: sudo apt-get update && sudo apt-get install -y gh
+
       - name: Parse command arguments
         id: parse_args
         run: |
@@ -73,15 +76,15 @@ jobs:
             echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
           fi
           
-      - name: Set up Go
-        uses: actions/setup-go@v5
-        with:
-          go-version: "1.25"
-
-      - name: Install devctl
+      - name: Install devctl from release binary
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          LATEST_DEVCTL=$(gh release view --repo giantswarm/devctl --json tagName --jq '.tagName')
-          go install github.com/giantswarm/devctl@${LATEST_DEVCTL}
+          LATEST_DEVCTL_TAG=$(gh release view --repo giantswarm/devctl --json tagName --jq '.tagName')
+          ASSET_NAME="devctl-${LATEST_DEVCTL_TAG}-linux-amd64.tar.gz"
+          gh release download --repo giantswarm/devctl "$LATEST_DEVCTL_TAG" --pattern "$ASSET_NAME"
+          tar -xzf "$ASSET_NAME"
+          sudo mv devctl /usr/local/bin/devctl
 
       - name: Recreate release files
         run: |
