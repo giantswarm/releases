@@ -111,7 +111,7 @@ jobs:
             --base ${{ steps.versioning.outputs.LATEST_RELEASE }} \
             --name ${{ steps.versioning.outputs.NEXT_RELEASE }} \
             --provider ${{ matrix.provider }} \
-            --bumpall --overwrite -y 2>&1 | tee /tmp/release_output.log
+            --bumpall --overwrite -y --output markdown 2>&1 | tee /tmp/release_output.log
       - name: Read log file to env
         if: steps.check_pr.outputs.PR_EXISTS == 'false' && steps.create_pr.outputs.pull-request-number
         run: |
@@ -246,7 +246,7 @@ jobs:
               --base $BASE_VERSION \
               --name ${{ steps.versioning.outputs.NEXT_RELEASE }} \
               --provider $provider \
-              --bumpall --overwrite -y 2>&1 | tee -a $LOG_FILE
+              --bumpall --overwrite -y --output markdown 2>&1 | tee -a $LOG_FILE
           done
       - name: Read log file to env
         if: steps.check_pr.outputs.PR_EXISTS == 'false' && steps.k8s_check.outputs.VERSION_EXISTS == 'true' && steps.create_pr.outputs.pull-request-number
