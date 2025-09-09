@@ -157,9 +157,9 @@ jobs:
 
             ---
 
-            **Note:** To update the release files, comment \`/update\` on this PR.
+            **Note:** To update the release files, comment \`/update-release\` on this PR.
             You can also provide arguments directly to \`devctl\`, for example:
-            \`/update --component flatcar@1.2.3\`
+            \`/update-release --component flatcar@1.2.3\`
           branch: "release-${{ steps.versioning.outputs.NEXT_RELEASE }}-${{ matrix.provider }}"
           draft: true
       - name: Add warning comment
@@ -293,9 +293,9 @@ jobs:
 
             ---
 
-            **Note:** To update the release files, comment \`/update\` on this PR.
+            **Note:** To update the release files, comment \`/update-release\` on this PR.
             You can also provide arguments directly to \`devctl\`, for example:
-            \`/update --component flatcar@1.2.3\`
+            \`/update-release --component flatcar@1.2.3\`
           branch: "release-${{ steps.versioning.outputs.NEXT_RELEASE }}"
           draft: true
       - name: Add warning comment

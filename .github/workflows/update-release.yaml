@@ -9,7 +9,7 @@ jobs:
     name: Update release files
     if: |
       github.event.issue.pull_request &&
-      startsWith(github.event.comment.body, '/update')
+      startsWith(github.event.comment.body, '/update-release')
     runs-on: ubuntu-latest
     env:
       OPSCTL_GITHUB_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
@@ -58,7 +58,7 @@ jobs:
         run: |
           COMMENT_BODY="${{ github.event.comment.body }}"
           # Remove the command part and trim leading/trailing whitespace
-          ARGS=$(echo "$COMMENT_BODY" | sed 's|/update||g')
+          ARGS=$(echo "$COMMENT_BODY" | sed 's|^/update-release||' | xargs)
           echo "DEVCTL_ARGS=$ARGS" >> $GITHUB_OUTPUT
 
       - name: Parse branch name
