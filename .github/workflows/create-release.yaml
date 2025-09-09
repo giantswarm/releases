@@ -12,34 +12,57 @@ on:
         required: true
         default: 'aws'
       version:
-        description: 'Optional: Specify an exact version to create (e.g., v30.5.2 for a backport).'
+        description: 'Specific version to create (e.g. v30.0.1). Overrides release_type.'
         required: false
+        type: string
   schedule:
     - cron: '0 8 1 * *' # Run at 08:00 on the first day of every month
 
 jobs:
   dispatcher:
+    name: "Dispatcher"
     runs-on: ubuntu-latest
     outputs:
-      release_type: ${{ steps.vars.outputs.release_type }}
-      version_override: ${{ github.event.inputs.version }}
-      provider_matrix: ${{ steps.vars.outputs.provider_matrix }}
+      release_type: ${{ steps.dispatcher.outputs.release_type }}
+      provider_matrix: ${{ steps.dispatcher.outputs.provider_matrix }}
+      is_manual: ${{ steps.dispatcher.outputs.is_manual }}
+      version_override: ${{ steps.dispatcher.outputs.version_override }}
     steps:
-      - id: vars
+      - name: Determine release type and providers
+        id: dispatcher
         run: |
-          release_type_input="${{ github.event.inputs.release_type }}"
-          if [[ "${{ github.event_name }}" == "schedule" ]]; then
-            MONTH=$(date +'%m')
-            if (( 10#${MONTH} % 3 == 1 )); then
-              echo "release_type=major" >> $GITHUB_OUTPUT
+          RELEASE_TYPE=""
+          # Determine release type from triggers
+          if [[ "${{ github.event_name }}" == 'workflow_dispatch' ]]; then
+            echo "is_manual=true" >> "$GITHUB_OUTPUT"
+            if [[ "${{ github.event.inputs.version }}" != '' ]]; then
+              echo "version_override=${{ github.event.inputs.version }}" >> "$GITHUB_OUTPUT"
+              if [[ "${{ github.event.inputs.version }}" =~ \.[0-9]+\.[0-9]+$ ]]; then
+                RELEASE_TYPE="patch"
+              else
+                RELEASE_TYPE="minor"
+              fi
             else
-              echo "release_type=minor" >> $GITHUB_OUTPUT
+              RELEASE_TYPE="${{ github.event.inputs.release_type }}"
             fi
-            echo 'provider_matrix=["aws", "azure", "vsphere", "cloud-director"]' >> $GITHUB_OUTPUT
+          elif [[ "${{ github.event_name }}" == 'schedule' ]]; then
+            MONTH=$(date +'%m')
+            # Major release on the first month of each quarter (Jan, Apr, Jul, Oct)
+            if (( 10#${MONTH} % 3 == 1 )); then
+              RELEASE_TYPE="major"
+            else
+              RELEASE_TYPE="minor"
+            fi
+          fi
+          echo "release_type=${RELEASE_TYPE}" >> "$GITHUB_OUTPUT"
+
+          # Determine provider matrix
+          if [[ "${{ github.event_name }}" == 'workflow_dispatch' && "${{ github.event.inputs.provider }}" != '' ]]; then
+            PROVIDER_JSON=$(echo '${{ github.event.inputs.provider }}' | jq -R 'split(",")' | jq -c '.')
+            echo "provider_matrix=${PROVIDER_JSON}" >> "$GITHUB_OUTPUT"
           else
-            echo "release_type=${release_type_input}" >> $GITHUB_OUTPUT
-            PROVIDER_INPUT="${{ github.event.inputs.provider }}"
-            echo "provider_matrix=[\"$PROVIDER_INPUT\"]" >> $GITHUB_OUTPUT
+            # Default for scheduled runs
+            echo "provider_matrix=[\"aws\",\"azure\",\"capa\",\"cloud-director\",\"kvm\",\"vsphere\"]" >> "$GITHUB_OUTPUT"
           fi
 
   minor_patch_release:
@@ -217,14 +240,27 @@ jobs:
           set -o pipefail
           LOG_FILE="/tmp/release_output.log"
           touch $LOG_FILE
-          for provider in aws azure vsphere cloud-director; do
+          PROVIDER_LIST=$(echo '${{ toJSON(needs.dispatcher.outputs.provider_matrix) }}' | jq -r '.[]')
+          for provider in $PROVIDER_LIST; do
             echo "--- Creating release for $provider ---"
             BASE_VERSION=$(./tools/determine-next-release.sh $provider major ${{ steps.versioning.outputs.version_override }} | grep 'Base release:' | awk '{print $3}')
-            devctl release create \
-              --base $BASE_VERSION \
-              --name ${{ steps.versioning.outputs.NEXT_RELEASE }} \
-              --provider $provider \
-              --bumpall --overwrite -y --output markdown --changes-only 2>&1 | tee -a $LOG_FILE
+            
+            n=0
+            until [ "$n" -ge 3 ]
+            do
+              devctl release create \
+                --base $BASE_VERSION \
+                --name ${{ steps.versioning.outputs.NEXT_RELEASE }} \
+                --provider $provider \
+                --bumpall --overwrite -y --output markdown --changes-only 2>&1 | tee -a $LOG_FILE && break
+              n=$((n+1))
+              if [ "$n" -ge 3 ]; then
+                  echo "The command has failed 3 times in a row. Aborting."
+                  exit 1
+              fi
+              echo "Command failed. Retrying in 15 seconds..."
+              sleep 15
+            done
           done
         env:
           OPSCTL_GITHUB_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
@@ -233,8 +269,10 @@ jobs:
       - name: Update README.md
         if: steps.check_pr.outputs.PR_EXISTS == 'false' && steps.k8s_check.outputs.VERSION_EXISTS == 'true'
         run: |
-          for provider in aws azure vsphere capa cloud-director; do
+          PROVIDER_LIST=$(echo '${{ toJSON(needs.dispatcher.outputs.provider_matrix) }}' | jq -r '.[]')
+          for provider in $PROVIDER_LIST; do
             ./tools/update-readme.sh "$provider" "${{ steps.versioning.outputs.NEXT_RELEASE }}"
+            echo "Successfully updated README.md with ${{ steps.versioning.outputs.NEXT_RELEASE }} for $provider"
           done
 
       - name: Create Pull Request
