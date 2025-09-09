@@ -23,9 +23,7 @@ jobs:
     outputs:
       release_type: ${{ steps.vars.outputs.release_type }}
       version_override: ${{ github.event.inputs.version }}
-      is_manual: ${{ github.event_name == 'workflow_dispatch' }}
-      provider: ${{ github.event.inputs.provider }}
-
+      provider_matrix: ${{ steps.vars.outputs.provider_matrix }}
     steps:
       - id: vars
         run: |
@@ -37,17 +35,20 @@ jobs:
             else
               echo "release_type=minor" >> $GITHUB_OUTPUT
             fi
+            echo 'provider_matrix=["aws", "azure", "vsphere", "cloud-director"]' >> $GITHUB_OUTPUT
           else
             echo "release_type=${release_type_input}" >> $GITHUB_OUTPUT
+            PROVIDER_INPUT="${{ github.event.inputs.provider }}"
+            echo "provider_matrix=[\"$PROVIDER_INPUT\"]" >> $GITHUB_OUTPUT
           fi
 
   minor_patch_release:
     needs: dispatcher
-    if: (needs.dispatcher.outputs.release_type != 'major') && (!needs.dispatcher.outputs.is_manual || (needs.dispatcher.outputs.is_manual && matrix.provider == needs.dispatcher.outputs.provider))
+    if: needs.dispatcher.outputs.release_type != 'major'
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        provider: [aws, azure, vsphere, cloud-director]
+        provider: ${{ fromJSON(needs.dispatcher.outputs.provider_matrix) }}
     env:
       OPSCTL_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
