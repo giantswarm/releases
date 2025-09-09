@@ -270,8 +270,24 @@ jobs:
           export OPSCTL_GITHUB_TOKEN=${{ secrets.TAYLORBOT_GITHUB_ACTION }}
           LOG_FILE="/tmp/release_output.log"
           touch $LOG_FILE
+          first_provider=true
           for provider in ${{ needs.dispatcher.outputs.provider_list }}; do
             echo "--- Creating release for $provider ---"
+
+            # Add a separator before each provider except the first one
+            if [ "$first_provider" = true ]; then
+              first_provider=false
+            else
+              echo "" >> $LOG_FILE
+              echo "---" >> $LOG_FILE
+              echo "" >> $LOG_FILE
+            fi
+            
+            # Capitalize provider name for the heading
+            PROVIDER_UPPER=$(echo "$provider" | awk '{print toupper($0)}')
+            echo "## Changes for ${PROVIDER_UPPER}" >> $LOG_FILE
+            echo "" >> $LOG_FILE
+
             BASE_VERSION=$(./tools/determine-next-release.sh "$provider" "major" "${{ needs.dispatcher.outputs.version_override }}" | grep '^base=' | cut -d'=' -f2)
 
             n=0
