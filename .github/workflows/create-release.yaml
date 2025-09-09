@@ -134,7 +134,6 @@ jobs:
         id: check_pr
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          BRANCH_NAME: release-${{ steps.versioning.outputs.NEXT_RELEASE }}-${{ matrix.provider }}
         run: |
           if gh pr list --head "$BRANCH_NAME" --json number --limit 1 | grep -q "number"; then
             echo "PR for branch $BRANCH_NAME already exists. Skipping provider ${{ matrix.provider }}."
@@ -249,6 +248,8 @@ jobs:
 
       - name: Check for existing PR
         id: check_pr
+        env:
+          GH_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
         run: |
           PR_EXISTS=$(gh pr list --repo "$GITHUB_REPOSITORY" --head "release-${{ steps.determine_next_release.outputs.version }}" --json number --jq '.[0].number')
           if [ -z "$PR_EXISTS" ]; then
@@ -388,6 +389,8 @@ jobs:
 
       - name: Check for existing PR
         id: check_pr
+        env:
+          GH_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
         run: |
           PR_EXISTS=$(gh pr list --repo "$GITHUB_REPOSITORY" --head "release-${{ steps.determine_next_release.outputs.version }}-${{ matrix.provider }}" --json number --jq '.[0].number')
           if [ -z "$PR_EXISTS" ]; then
