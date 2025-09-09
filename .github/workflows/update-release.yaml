@@ -120,13 +120,16 @@ jobs:
           fi
 
       - name: Commit and push changes
+        id: create_pr
         uses: peter-evans/create-pull-request@v6
         with:
           token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
           commit-message: "chore: Recreate release files"
           branch: ${{ steps.get_branch.outputs.result }}
-          # By not providing a title/body, the action will commit to the existing branch.
-          
+          base: master
+          title: "Update release files"
+          body: "This PR was updated by a comment."
+          assignees: ${{ github.actor }}
       - name: Add success reaction
         uses: actions/github-script@v7
         with:
