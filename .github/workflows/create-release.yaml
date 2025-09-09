@@ -240,18 +240,21 @@ jobs:
           set -o pipefail
           LOG_FILE="/tmp/release_output.log"
           touch $LOG_FILE
-          PROVIDER_LIST=$(echo '${{ toJSON(needs.dispatcher.outputs.provider_matrix) }}' | jq -r '.[]')
+          # Convert the JSON array from the dispatcher into a space-separated list for the loop
+          PROVIDER_LIST=$(echo '${{ toJSON(needs.dispatcher.outputs.provider_matrix) }}' | jq -r '. | @sh')
+
           for provider in $PROVIDER_LIST; do
+            # The jq output is shell-escaped, so we need to eval it.
+            provider=$(eval echo $provider)
             echo "--- Creating release for $provider ---"
-            BASE_VERSION=$(./tools/determine-next-release.sh $provider major ${{ steps.versioning.outputs.version_override }} | grep 'Base release:' | awk '{print $3}')
             
             n=0
             until [ "$n" -ge 3 ]
             do
               devctl release create \
-                --base $BASE_VERSION \
-                --name ${{ steps.versioning.outputs.NEXT_RELEASE }} \
-                --provider $provider \
+                --base "${{ steps.versioning.outputs.LATEST_RELEASE }}" \
+                --name "${{ steps.versioning.outputs.NEXT_RELEASE }}" \
+                --provider "$provider" \
                 --bumpall --overwrite -y --output markdown --changes-only 2>&1 | tee -a $LOG_FILE && break
               n=$((n+1))
               if [ "$n" -ge 3 ]; then
@@ -269,8 +272,9 @@ jobs:
       - name: Update README.md
         if: steps.check_pr.outputs.PR_EXISTS == 'false' && steps.k8s_check.outputs.VERSION_EXISTS == 'true'
         run: |
-          PROVIDER_LIST=$(echo '${{ toJSON(needs.dispatcher.outputs.provider_matrix) }}' | jq -r '.[]')
+          PROVIDER_LIST=$(echo '${{ toJSON(needs.dispatcher.outputs.provider_matrix) }}' | jq -r '. | @sh')
           for provider in $PROVIDER_LIST; do
+            provider=$(eval echo $provider)
             ./tools/update-readme.sh "$provider" "${{ steps.versioning.outputs.NEXT_RELEASE }}"
             echo "Successfully updated README.md with ${{ steps.versioning.outputs.NEXT_RELEASE }} for $provider"
           done
