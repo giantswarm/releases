@@ -11,6 +11,9 @@ jobs:
       github.event.issue.pull_request &&
       startsWith(github.event.comment.body, '/update-release')
     runs-on: ubuntu-latest
+    env:
+      OPSCTL_GITHUB_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+      GH_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
     permissions:
       contents: write
       pull-requests: write
@@ -113,6 +116,9 @@ jobs:
               --provider $PROVIDER \
               --bumpall --overwrite -y ${{ steps.parse_args.outputs.DEVCTL_ARGS }} --output markdown --changes-only 2>&1 | tee /tmp/release_output.log
           fi
+        env:
+          OPSCTL_GITHUB_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+          GH_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
 
       - name: Commit and push changes
         run: |
