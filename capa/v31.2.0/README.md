@@ -7,7 +7,7 @@
 ### Components
 
 - cluster-aws from v3.6.2 to v4.0.1
-- Kubernetes from v1.31.11 to [v1.34.0](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.34.md#v1.34.0)
+- Kubernetes from v1.31.11 to [v1.31.12](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.31.md#v1.31.12)
 
 ### cluster-aws [v3.6.2...v4.0.1](https://github.com/giantswarm/cluster-aws/compare/v3.6.2...v4.0.1)
 
