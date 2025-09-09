@@ -147,7 +147,7 @@ jobs:
               issue_number: ${{ steps.create_pr.outputs.pull-request-number }},
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: `### devctl output\n\n${output.replace(/`/g, '\\`')}`
+              body: `### Changes:\n\n${output.replace(/`/g, '\\`')}`
             });
 
       - name: Trigger e2e tests
@@ -263,7 +263,7 @@ jobs:
               issue_number: ${{ steps.create_pr.outputs.pull-request-number }},
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: `### devctl output\n\n${output.replace(/`/g, '\\`')}`
+              body: `### Changes:\n\n${output.replace(/`/g, '\\`')}`
             });
 
       - name: Trigger e2e tests
