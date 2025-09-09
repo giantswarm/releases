@@ -23,6 +23,9 @@ case $PROVIDER in
   azure)
     HEADING_SEARCH_STRING="## Azure"
     ;;
+  capa)
+    HEADING_SEARCH_STRING="## AWS"
+    ;;
   vsphere)
     HEADING_SEARCH_STRING="## vSphere"
     ;;
