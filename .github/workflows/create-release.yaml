@@ -59,7 +59,9 @@ jobs:
         with:
           go-version: "1.25"
       - name: Install devctl
-        run: go install github.com/giantswarm/devctl@latest
+        run: |
+          LATEST_DEVCTL=$(gh release view --repo giantswarm/devctl --json tagName --jq '.tagName')
+          go install github.com/giantswarm/devctl@${LATEST_DEVCTL}
       - name: Set provider display name for title
         id: provider_name
         run: |
@@ -135,7 +137,6 @@ jobs:
             `/update-release --component flatcar@1.2.3`
           branch: "release-${{ steps.versioning.outputs.NEXT_RELEASE }}-${{ matrix.provider }}"
           draft: true
-          team-reviewers: team-tenet
       - name: Add warning comment
         if: steps.check_pr.outputs.PR_EXISTS == 'false' && steps.check_warnings.outputs.WARNINGS_FOUND == 'true'
         uses: actions/github-script@v7
@@ -175,7 +176,9 @@ jobs:
         with:
           go-version: "1.25"
       - name: Install devctl
-        run: go install github.com/giantswarm/devctl@latest
+        run: |
+          LATEST_DEVCTL=$(gh release view --repo giantswarm/devctl --json tagName --jq '.tagName')
+          go install github.com/giantswarm/devctl@${LATEST_DEVCTL}
       - name: Determine next release version
         id: versioning
         run: |
@@ -241,7 +244,6 @@ jobs:
             `/update-release --component flatcar@1.2.3`
           branch: "release-${{ steps.versioning.outputs.NEXT_RELEASE }}"
           draft: true
-          team-reviewers: team-tenet
       - name: Add warning comment
         if: steps.check_pr.outputs.PR_EXISTS == 'false' && steps.k8s_check.outputs.VERSION_EXISTS == 'true' && steps.check_warnings.outputs.WARNINGS_FOUND == 'true'
         uses: actions/github-script@v7

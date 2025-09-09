@@ -78,7 +78,9 @@ jobs:
           go-version: "1.25"
 
       - name: Install devctl
-        run: go install github.com/giantswarm/devctl@latest
+        run: |
+          LATEST_DEVCTL=$(gh release view --repo giantswarm/devctl --json tagName --jq '.tagName')
+          go install github.com/giantswarm/devctl@${LATEST_DEVCTL}
 
       - name: Recreate release files
         run: |
