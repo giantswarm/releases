@@ -12,8 +12,8 @@ jobs:
       (github.actor == github.event.issue.user.login || contains(fromJson('["MEMBER", "OWNER", "COLLABORATOR"]'), github.event.author_association))
     runs-on: ubuntu-latest
     env:
-      OPSCTL_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      OPSCTL_GITHUB_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+      GH_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
 
     steps:
       - name: Add reaction to comment
@@ -80,12 +80,13 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
+          mkdir -p /tmp/devctl_install && cd /tmp/devctl_install
           LATEST_DEVCTL_TAG=$(gh release view --repo giantswarm/devctl --json tagName --jq '.tagName')
           ASSET_NAME="devctl-${LATEST_DEVCTL_TAG}-linux-amd64.tar.gz"
           gh release download --repo giantswarm/devctl "$LATEST_DEVCTL_TAG" --pattern "$ASSET_NAME"
           tar -xzf "$ASSET_NAME"
-          # The extracted file is inside a directory, so we find it and move it.
           find . -name "devctl" -type f -exec sudo mv {} /usr/local/bin/devctl \;
+          cd -
 
       - name: Recreate release files
         run: |
