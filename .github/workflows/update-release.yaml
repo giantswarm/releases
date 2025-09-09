@@ -1,4 +1,4 @@
-name: Update Release on Comment
+name: Update Release PR (Comment Trigger)
 
 on:
   issue_comment:
