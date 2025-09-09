@@ -84,7 +84,8 @@ jobs:
           ASSET_NAME="devctl-${LATEST_DEVCTL_TAG}-linux-amd64.tar.gz"
           gh release download --repo giantswarm/devctl "$LATEST_DEVCTL_TAG" --pattern "$ASSET_NAME"
           tar -xzf "$ASSET_NAME"
-          sudo mv devctl /usr/local/bin/devctl
+          # The extracted file is inside a directory, so we find it and move it.
+          find . -name "devctl" -type f -exec sudo mv {} /usr/local/bin/devctl \;
 
       - name: Recreate release files
         run: |
