@@ -110,6 +110,10 @@ jobs:
             --name ${{ steps.versioning.outputs.NEXT_RELEASE }} \
             --provider ${{ matrix.provider }} \
             --bumpall --overwrite -y --output markdown --changes-only 2>&1 | tee /tmp/release_output.log
+      - name: Update README.md
+        id: update_readme
+        run: |
+          ./tools/update-readme.sh "${{ matrix.provider }}" "${{ steps.versioning.outputs.NEXT_RELEASE }}"
       - name: Create Pull Request
         id: create_pr
         if: steps.check_pr.outputs.PR_EXISTS == 'false'
