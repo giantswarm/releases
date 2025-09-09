@@ -267,6 +267,7 @@ jobs:
           GH_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
         run: |
           set -o pipefail
+          export OPSCTL_GITHUB_TOKEN=${{ secrets.TAYLORBOT_GITHUB_ACTION }}
           LOG_FILE="/tmp/release_output.log"
           touch $LOG_FILE
           for provider in ${{ needs.dispatcher.outputs.provider_list }}; do
