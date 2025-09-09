@@ -51,6 +51,7 @@ jobs:
         provider: ${{ fromJSON(needs.dispatcher.outputs.provider_matrix) }}
     env:
       OPSCTL_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - name: Check out code
         uses: actions/checkout@v4
@@ -168,6 +169,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       OPSCTL_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - name: Check out code
         uses: actions/checkout@v4

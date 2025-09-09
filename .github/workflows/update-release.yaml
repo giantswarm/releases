@@ -13,6 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       OPSCTL_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     steps:
       - name: Add reaction to comment
