@@ -109,7 +109,7 @@ jobs:
             --base ${{ steps.versioning.outputs.LATEST_RELEASE }} \
             --name ${{ steps.versioning.outputs.NEXT_RELEASE }} \
             --provider ${{ matrix.provider }} \
-            --bumpall --overwrite -y --output markdown 2>&1 | tee /tmp/release_output.log
+            --bumpall --overwrite -y --output markdown --changes-only 2>&1 | tee /tmp/release_output.log
       - name: Create Pull Request
         id: create_pr
         if: steps.check_pr.outputs.PR_EXISTS == 'false'
@@ -220,7 +220,7 @@ jobs:
               --base $BASE_VERSION \
               --name ${{ steps.versioning.outputs.NEXT_RELEASE }} \
               --provider $provider \
-              --bumpall --overwrite -y --output markdown 2>&1 | tee -a $LOG_FILE
+              --bumpall --overwrite -y --output markdown --changes-only 2>&1 | tee -a $LOG_FILE
           done
         env:
           OPSCTL_GITHUB_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}

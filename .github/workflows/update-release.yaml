@@ -103,7 +103,7 @@ jobs:
                 --base $BASE_VERSION \
                 --name ${{ steps.parse_branch.outputs.VERSION }} \
                 --provider $provider \
-                --bumpall --overwrite -y ${{ steps.parse_args.outputs.DEVCTL_ARGS }} --output markdown --changes-only 2>&1 | tee -a $LOG_FILE
+                --bumpall --overwrite -y ${{ steps.parse_args.outputs.DEVCTL_ARGS }} --output markdown --requested-only 2>&1 | tee -a $LOG_FILE
             done
           else
             # Minor/patch release for a single provider
@@ -114,7 +114,7 @@ jobs:
               --base $BASE_VERSION \
               --name $VERSION \
               --provider $PROVIDER \
-              --bumpall --overwrite -y ${{ steps.parse_args.outputs.DEVCTL_ARGS }} --output markdown --changes-only 2>&1 | tee /tmp/release_output.log
+              --bumpall --overwrite -y ${{ steps.parse_args.outputs.DEVCTL_ARGS }} --output markdown --requested-only 2>&1 | tee /tmp/release_output.log
           fi
         env:
           OPSCTL_GITHUB_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
