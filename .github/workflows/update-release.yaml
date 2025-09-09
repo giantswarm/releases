@@ -46,7 +46,7 @@ jobs:
             return pr.data.head.ref;
 
       - name: Checkout PR branch
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           ref: ${{ steps.get_branch.outputs.result }}
 

@@ -54,7 +54,7 @@ jobs:
       GH_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
     steps:
       - name: Check out code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
       - name: Install devctl from release binary
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -196,7 +196,7 @@ jobs:
       GH_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
     steps:
       - name: Check out code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
       - name: Install devctl from release binary
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
