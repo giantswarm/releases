@@ -110,15 +110,29 @@ jobs:
             --base ${{ steps.versioning.outputs.LATEST_RELEASE }} \
             --name ${{ steps.versioning.outputs.NEXT_RELEASE }} \
             --provider ${{ matrix.provider }} \
-            --bumpall --overwrite -y 2>&1 | tee release_output.log
+            --bumpall --overwrite -y 2>&1 | tee /tmp/release_output.log
+      - name: Post devctl output as a comment
+        if: steps.check_pr.outputs.PR_EXISTS == 'false'
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const fs = require('fs');
+            const output = fs.readFileSync('/tmp/release_output.log', 'utf8');
+            github.rest.issues.createComment({
+              issue_number: ${{ steps.create_pr.outputs.pull-request-number }},
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `### devctl output\n\n\`\`\`\n${output}\n\`\`\``
+            });
       - name: Check for warnings
         if: steps.check_pr.outputs.PR_EXISTS == 'false'
         id: check_warnings
         run: |
-          if grep -q "Warning:" release_output.log; then
+          if grep -q "Warning:" /tmp/release_output.log; then
             echo "WARNINGS_FOUND=true" >> $GITHUB_OUTPUT
             echo "WARNING_DETAILS<<EOF" >> $GITHUB_OUTPUT
-            grep "Warning:" release_output.log >> $GITHUB_OUTPUT
+            grep "Warning:" /tmp/release_output.log >> $GITHUB_OUTPUT
             echo "EOF" >> $GITHUB_OUTPUT
           else
             echo "WARNINGS_FOUND=false" >> $GITHUB_OUTPUT
@@ -215,23 +229,39 @@ jobs:
       - name: Create release files for all providers
         if: steps.check_pr.outputs.PR_EXISTS == 'false' && steps.k8s_check.outputs.VERSION_EXISTS == 'true'
         run: |
+          LOG_FILE="/tmp/release_output.log"
+          touch $LOG_FILE
           for provider in aws azure vsphere cloud-director; do
             echo "--- Creating release for $provider ---"
-            BASE_VERSION=$(./tools/determine-next-release.sh $provider major ${{ needs.dispatcher.outputs.version_override }} | grep 'Base release:' | awk '{print $3}')
+            BASE_VERSION=$(./tools/determine-next-release.sh $provider major ${{ steps.versioning.outputs.version_override }} | grep 'Base release:' | awk '{print $3}')
             devctl release create \
               --base $BASE_VERSION \
               --name ${{ steps.versioning.outputs.NEXT_RELEASE }} \
               --provider $provider \
-              --bumpall --overwrite -y 2>&1 | tee -a release_output.log
+              --bumpall --overwrite -y 2>&1 | tee -a $LOG_FILE
           done
+      - name: Post devctl output as a comment
+        if: steps.check_pr.outputs.PR_EXISTS == 'false' && steps.k8s_check.outputs.VERSION_EXISTS == 'true'
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const fs = require('fs');
+            const output = fs.readFileSync('/tmp/release_output.log', 'utf8');
+            github.rest.issues.createComment({
+              issue_number: ${{ steps.create_pr.outputs.pull-request-number }},
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `### devctl output\n\n\`\`\`\n${output}\n\`\`\``
+            });
       - name: Check for warnings
         if: steps.check_pr.outputs.PR_EXISTS == 'false' && steps.k8s_check.outputs.VERSION_EXISTS == 'true'
         id: check_warnings
         run: |
-          if grep -q "Warning:" release_output.log; then
+          if grep -q "Warning:" /tmp/release_output.log; then
             echo "WARNINGS_FOUND=true" >> $GITHUB_OUTPUT
             echo "WARNING_DETAILS<<EOF" >> $GITHUB_OUTPUT
-            grep "Warning:" release_output.log >> $GITHUB_OUTPUT
+            grep "Warning:" /tmp/release_output.log >> $GITHUB_OUTPUT
             echo "EOF" >> $GITHUB_OUTPUT
           else
             echo "WARNINGS_FOUND=false" >> $GITHUB_OUTPUT

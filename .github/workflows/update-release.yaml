@@ -92,6 +92,8 @@ jobs:
         run: |
           if [[ "${{ steps.parse_branch.outputs.IS_MAJOR }}" == "true" ]]; then
             # Major release: loop through all providers
+            LOG_FILE="/tmp/release_output.log"
+            touch $LOG_FILE
             for provider in aws azure vsphere cloud-director; do
               echo "--- Recreating release for $provider ---"
               BASE_VERSION=$(./tools/determine-next-release.sh $provider major ${{ steps.parse_branch.outputs.VERSION }} | grep 'Base release:' | awk '{print $3}')
@@ -99,7 +101,7 @@ jobs:
                 --base $BASE_VERSION \
                 --name ${{ steps.parse_branch.outputs.VERSION }} \
                 --provider $provider \
-                --bumpall --overwrite -y ${{ steps.parse_args.outputs.DEVCTL_ARGS }}
+                --bumpall --overwrite -y ${{ steps.parse_args.outputs.DEVCTL_ARGS }} 2>&1 | tee -a $LOG_FILE
             done
           else
             # Minor/patch release for a single provider
@@ -110,7 +112,7 @@ jobs:
               --base $BASE_VERSION \
               --name $VERSION \
               --provider $PROVIDER \
-              --bumpall --overwrite -y ${{ steps.parse_args.outputs.DEVCTL_ARGS }}
+              --bumpall --overwrite -y ${{ steps.parse_args.outputs.DEVCTL_ARGS }} 2>&1 | tee /tmp/release_output.log
           fi
 
       - name: Commit and push changes
@@ -132,3 +134,16 @@ jobs:
               comment_id: ${{ github.event.comment.id }},
               content: '+1'
             })
+      - name: Post devctl output as a comment
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const fs = require('fs');
+            const output = fs.readFileSync('/tmp/release_output.log', 'utf8');
+            github.rest.issues.createComment({
+              issue_number: ${{ github.event.issue.number }},
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `### devctl output (re-run)\n\n\`\`\`\n${output}\n\`\`\``
+            });
