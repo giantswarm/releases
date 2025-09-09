@@ -120,14 +120,18 @@ jobs:
           fi
 
       - name: Commit and push changes
-        id: create_pr
-        uses: peter-evans/create-pull-request@v6
-        with:
-          token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
-          commit-message: "chore: Recreate release files"
-          branch: ${{ steps.get_branch.outputs.result }}
-          # By not providing a title, body, or base, the action will commit
-          # to the existing branch and update the associated PR automatically.
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add .
+          if git diff --staged --quiet; then
+            echo "No changes to commit."
+          else
+            git commit -m "chore: Update release files via comment"
+            git push
+          fi
+        env:
+          GITHUB_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
 
       - name: Add success reaction
         uses: actions/github-script@v7
