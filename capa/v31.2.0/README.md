@@ -6,11 +6,10 @@
 
 ### Components
 
-- cluster-aws from v3.6.2 to v4.0.2
-- Flatcar from v4152.2.3 to [v4230.2.2](https://www.flatcar-linux.org/releases/#release-4230.2.2)
-- Kubernetes from v1.31.11 to [v1.31.12](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.31.md#v1.31.12)
+- cluster-aws from v3.6.2 to v4.0.1
+- Kubernetes from v1.31.11 to [v1.34.0](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.34.md#v1.34.0)
 
-### cluster-aws [v3.6.2...v4.0.2](https://github.com/giantswarm/cluster-aws/compare/v3.6.2...v4.0.2)
+### cluster-aws [v3.6.2...v4.0.1](https://github.com/giantswarm/cluster-aws/compare/v3.6.2...v4.0.1)
 
 #### Added
 
@@ -25,10 +24,6 @@
 - Chart: Update `cluster` to v2.6.2.
 - Chart: Update `cluster` to v2.6.1.
 
-#### Fixed
-
-- Add `cluster` chart nodepool fields to the schema.
-
 #### Removed
 
 - Remove Helm chart that creates karpenter node pools, because they will be created by a kubernetes controller running in the management cluster.
@@ -39,6 +34,8 @@
 - cert-exporter from v2.9.8 to v2.9.9
 - cert-manager from v3.9.1 to v3.9.2
 - cilium from v1.2.2 to v1.3.0
+- cloud-provider-aws from v1.31.5-gs1 to v1.32.4
+- cluster-autoscaler from v1.31.3-gs1 to v1.32.2-gs1
 - coredns from v1.26.0 to v1.27.0
 - etcd-defrag from v1.0.6 to v1.0.8
 - etcd-k8s-res-count-exporter from v1.10.6 to v1.10.7
@@ -77,6 +74,20 @@
 - Upgrade Cilium to [v1.18.1](https://github.com/cilium/cilium/releases/tag/v1.18.1).
 - Improve the k8s service host autodiscovery mechanism
 - Upgrade Cilium to [v1.17.7](https://github.com/cilium/cilium/releases/tag/v1.17.7).
+
+### cloud-provider-aws [v1.31.5-gs1...v1.32.4](https://github.com/giantswarm/aws-cloud-controller-manager-app/compare/v1.31.5-gs1...v1.32.4)
+
+#### Changed
+
+- Chart: Update to upstream v1.32.4
+- Switch to semver-compatible release name
+- Chart: Update to upstream v1.32.3.
+
+### cluster-autoscaler [v1.31.3-gs1...v1.32.2-gs1](https://github.com/giantswarm/cluster-autoscaler-app/compare/v1.31.3-gs1...v1.32.2-gs1)
+
+#### Changed
+
+- Chart: Update to upstream v1.32.2.
 
 ### coredns [v1.26.0...v1.27.0](https://github.com/giantswarm/coredns-app/compare/v1.26.0...v1.27.0)
 
