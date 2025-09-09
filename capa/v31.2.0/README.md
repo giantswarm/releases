@@ -6,11 +6,11 @@
 
 ### Components
 
-- cluster-aws from v3.6.2 to v4.0.2
-- Flatcar from v4152.2.3 to [v4230.2.2](https://www.flatcar-linux.org/releases/#release-4230.2.2)
+- cluster-aws from v3.6.2 to v4.0.1
+- Flatcar from v4152.2.3 to [v4230.2.1](https://www.flatcar-linux.org/releases/#release-4230.2.1)
 - Kubernetes from v1.31.11 to [v1.31.12](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.31.md#v1.31.12)
 
-### cluster-aws [v3.6.2...v4.0.2](https://github.com/giantswarm/cluster-aws/compare/v3.6.2...v4.0.2)
+### cluster-aws [v3.6.2...v4.0.1](https://github.com/giantswarm/cluster-aws/compare/v3.6.2...v4.0.1)
 
 #### Added
 
@@ -24,10 +24,6 @@
 
 - Chart: Update `cluster` to v2.6.2.
 - Chart: Update `cluster` to v2.6.1.
-
-#### Fixed
-
-- Add `cluster` chart nodepool fields to the schema.
 
 #### Removed
 
