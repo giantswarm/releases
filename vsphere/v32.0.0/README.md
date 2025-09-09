@@ -1,6 +1,6 @@
 # :zap: Giant Swarm Release v32.0.0 for vSphere :zap:
 
-<< Add description here >>
+> **WARNING:** With Flatcar 4230.2.0, cgroups v1 backwards compatibility has been removed. This means that enabling legacy cgroups v1 is no longer supported and nodes still using them will fail to update.
 
 ## Changes compared to v31.1.1
 
