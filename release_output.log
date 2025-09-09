@@ -1,0 +1,7 @@
+Error: unknown flag: --bumpall
+panic: {"kind":"unknown","annotation":"unknown flag: --bumpall","stack":[{"file":"/home/runner/go/pkg/mod/github.com/giantswarm/devctl@v1.0.0/main.go","line":52}]}
+	
+
+goroutine 1 [running]:
+main.main()
+	/home/runner/go/pkg/mod/github.com/giantswarm/devctl@v1.0.0/main.go:18 +0x79
