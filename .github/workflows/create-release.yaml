@@ -272,7 +272,7 @@ jobs:
           touch $LOG_FILE
           for provider in ${{ needs.dispatcher.outputs.provider_list }}; do
             echo "--- Creating release for $provider ---"
-            BASE_VERSION=$(./tools/determine-next-release.sh "$provider" "major" "${{ needs.dispatcher.outputs.version_override }}" | grep 'base:' | awk '{print $2}')
+            BASE_VERSION=$(./tools/determine-next-release.sh "$provider" "major" "${{ needs.dispatcher.outputs.version_override }}" | grep '^base=' | cut -d'=' -f2)
 
             n=0
             until [ "$n" -ge 3 ]

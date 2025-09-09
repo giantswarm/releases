@@ -127,3 +127,8 @@ if [ -n "${GITHUB_OUTPUT-}" ]; then
     echo "base=${LATEST_RELEASE}" >> "$GITHUB_OUTPUT"
     echo "provider_acronym=${PROVIDER_ACRONYM}" >> "$GITHUB_OUTPUT"
 fi
+
+# Print for local use and piping
+echo "version=${NEXT_RELEASE}"
+echo "base=${LATEST_RELEASE}"
+echo "provider_acronym=${PROVIDER_ACRONYM}"
