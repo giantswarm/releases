@@ -241,6 +241,8 @@ jobs:
         id: k8s_check
         # This check is only relevant for major releases that are not manual backports.
         if: needs.dispatcher.outputs.release_type == 'major' && needs.dispatcher.outputs.version_override == ''
+        env:
+          GH_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
         run: |
           chmod +x ./tools/check-new-k8s-version-exists.sh
           ./tools/check-new-k8s-version-exists.sh "${{ steps.determine_next_release.outputs.version }}"
@@ -378,6 +380,8 @@ jobs:
         id: k8s_check
         # This check is only relevant for major releases that are not manual backports.
         if: needs.dispatcher.outputs.release_type == 'major' && needs.dispatcher.outputs.version_override == ''
+        env:
+          GH_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
         run: |
           chmod +x ./tools/check-new-k8s-version-exists.sh
           ./tools/check-new-k8s-version-exists.sh "${{ steps.determine_next_release.outputs.version }}"
