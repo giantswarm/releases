@@ -90,6 +90,7 @@ jobs:
 
       - name: Recreate release files
         run: |
+          set -o pipefail
           if [[ "${{ steps.parse_branch.outputs.IS_MAJOR }}" == "true" ]]; then
             # Major release: loop through all providers
             LOG_FILE="/tmp/release_output.log"
@@ -145,5 +146,5 @@ jobs:
               issue_number: ${{ github.event.issue.number }},
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: `### devctl output (re-run)\n\n\`\`\`\n${output}\n\`\`\``
+              body: `### devctl output\n\n\`\`\`\n${output.replace(/`/g, '\\`')}\n\`\`\``
             });

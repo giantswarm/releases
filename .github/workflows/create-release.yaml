@@ -106,6 +106,7 @@ jobs:
         if: steps.check_pr.outputs.PR_EXISTS == 'false'
         id: create_release
         run: |
+          set -o pipefail
           devctl release create \
             --base ${{ steps.versioning.outputs.LATEST_RELEASE }} \
             --name ${{ steps.versioning.outputs.NEXT_RELEASE }} \
@@ -229,6 +230,7 @@ jobs:
       - name: Create release files for all providers
         if: steps.check_pr.outputs.PR_EXISTS == 'false' && steps.k8s_check.outputs.VERSION_EXISTS == 'true'
         run: |
+          set -o pipefail
           LOG_FILE="/tmp/release_output.log"
           touch $LOG_FILE
           for provider in aws azure vsphere cloud-director; do
