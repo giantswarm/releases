@@ -69,9 +69,25 @@ jobs:
             echo "provider_list=aws azure capa cloud-director kvm vsphere" >> "$GITHUB_OUTPUT"
           fi
 
-  minor_patch_release:
+  preflight_check:
+    name: "Pre-flight Check"
     needs: dispatcher
-    if: needs.dispatcher.outputs.release_type != 'major'
+    if: needs.dispatcher.outputs.release_type == 'major'
+    runs-on: ubuntu-latest
+    outputs:
+      alignment: ${{ steps.check.outputs.alignment }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check major version alignment
+        id: check
+        run: |
+          chmod +x ./tools/check-major-version-alignment.sh
+          ./tools/check-major-version-alignment.sh ${{ needs.dispatcher.outputs.provider_list }}
+
+  minor_patch_release:
+    name: "Minor/Patch Release"
+    needs: dispatcher
+    if: needs.dispatcher.outputs.release_type == 'minor' || needs.dispatcher.outputs.release_type == 'patch'
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -194,65 +210,70 @@ jobs:
               body: '/run releases-test-suites'
             })
 
-  major_release:
-    needs: dispatcher
-    if: needs.dispatcher.outputs.release_type == 'major'
+  # This is the job for creating a single, consolidated PR for a major release when all providers are aligned.
+  major_release_consolidated:
+    name: "Major Release (Consolidated)"
+    needs: [dispatcher, preflight_check]
+    if: needs.dispatcher.outputs.release_type == 'major' && needs.preflight_check.outputs.alignment == 'aligned'
     runs-on: ubuntu-latest
-    env:
-      OPSCTL_GITHUB_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
-      GH_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
     steps:
-      - name: Check out code
-        uses: actions/checkout@v5
-      - name: Install devctl from release binary
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - uses: actions/checkout@v4
+      - name: Determine next release version
+        id: determine_next_release
         run: |
-          mkdir -p /tmp/devctl_install && cd /tmp/devctl_install
+          ./tools/determine-next-release.sh "" ${{ needs.dispatcher.outputs.release_type }} ${{ needs.dispatcher.outputs.version_override }}
+
+      - name: Install devctl from release binary
+        id: install_devctl
+        run: |
+          mkdir -p /tmp/devctl_install
+          cd /tmp/devctl_install
           LATEST_DEVCTL_TAG=$(gh release view --repo giantswarm/devctl --json tagName --jq '.tagName')
           ASSET_NAME="devctl-${LATEST_DEVCTL_TAG}-linux-amd64.tar.gz"
           gh release download --repo giantswarm/devctl "$LATEST_DEVCTL_TAG" --pattern "$ASSET_NAME"
           tar -xzf "$ASSET_NAME"
           find . -name "devctl" -type f -exec sudo mv {} /usr/local/bin/devctl \;
           cd -
-      - name: Determine next release version
-        id: versioning
+
+      - name: Check for new upstream Kubernetes version
+        id: k8s_check
+        # This check is only relevant for major releases that are not manual backports.
+        if: needs.dispatcher.outputs.release_type == 'major' && needs.dispatcher.outputs.version_override == ''
         run: |
-          ./tools/determine-next-release.sh "" ${{ needs.dispatcher.outputs.release_type }} ${{ needs.dispatcher.outputs.version_override }}
+          chmod +x ./tools/check-new-k8s-version-exists.sh
+          ./tools/check-new-k8s-version-exists.sh "${{ steps.determine_next_release.outputs.version }}"
+
       - name: Check for existing PR
         id: check_pr
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          BRANCH_NAME: release-${{ steps.versioning.outputs.NEXT_RELEASE }}
         run: |
-          if gh pr list --head "$BRANCH_NAME" --json number --limit 1 | grep -q "number"; then
-            echo "PR for branch $BRANCH_NAME already exists. Skipping job."
-            echo "PR_EXISTS=true" >> $GITHUB_OUTPUT
+          PR_EXISTS=$(gh pr list --repo "$GITHUB_REPOSITORY" --head "release-${{ steps.determine_next_release.outputs.version }}" --json number --jq '.[0].number')
+          if [ -z "$PR_EXISTS" ]; then
+            echo "PR_EXISTS=false" >> "$GITHUB_OUTPUT"
           else
-            echo "No existing PR found for branch $BRANCH_NAME. Proceeding."
-            echo "PR_EXISTS=false" >> $GITHUB_OUTPUT
+            echo "PR_EXISTS=true" >> "$GITHUB_OUTPUT"
+            echo "An open PR for this release already exists. Skipping."
           fi
-      - name: Check if new Kubernetes version exists
-        if: steps.check_pr.outputs.PR_EXISTS == 'false'
-        id: k8s_check
+
+      - name: Create release files and get output
+        id: create_release
+        if: steps.check_pr.outputs.PR_EXISTS == 'false' && (needs.dispatcher.outputs.release_type != 'major' || steps.k8s_check.outputs.VERSION_EXISTS == 'true')
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: ./tools/check-new-k8s-version-exists.sh ${{ steps.versioning.outputs.NEXT_RELEASE }}
-      - name: Create release files for all providers
-        if: steps.check_pr.outputs.PR_EXISTS == 'false' && steps.k8s_check.outputs.VERSION_EXISTS == 'true'
+          OPSCTL_GITHUB_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+          GH_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
         run: |
           set -o pipefail
           LOG_FILE="/tmp/release_output.log"
           touch $LOG_FILE
           for provider in ${{ needs.dispatcher.outputs.provider_list }}; do
             echo "--- Creating release for $provider ---"
-            
+            BASE_VERSION=$(./tools/determine-next-release.sh "$provider" "major" "${{ needs.dispatcher.outputs.version_override }}" | grep 'base:' | awk '{print $2}')
+
             n=0
             until [ "$n" -ge 3 ]
             do
               devctl release create \
-                --base "${{ steps.versioning.outputs.LATEST_RELEASE }}" \
-                --name "${{ steps.versioning.outputs.NEXT_RELEASE }}" \
+                --base "$BASE_VERSION" \
+                --name "${{ steps.determine_next_release.outputs.version }}" \
                 --provider "$provider" \
                 --bumpall --overwrite -y --output markdown --changes-only 2>&1 | tee -a $LOG_FILE && break
               n=$((n+1))
@@ -264,55 +285,47 @@ jobs:
               sleep 15
             done
           done
-        env:
-          OPSCTL_GITHUB_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
-          GH_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+        
+          LOG_CONTENT=$(cat /tmp/release_output.log)
+          echo "LOG_CONTENT<<EOF" >> "$GITHUB_ENV"
+          echo "$LOG_CONTENT" >> "$GITHUB_ENV"
+          echo "EOF" >> "$GITHUB_ENV"
 
       - name: Update README.md
-        if: steps.check_pr.outputs.PR_EXISTS == 'false' && steps.k8s_check.outputs.VERSION_EXISTS == 'true'
+        id: update_readme
+        if: steps.check_pr.outputs.PR_EXISTS == 'false' && (needs.dispatcher.outputs.release_type != 'major' || steps.k8s_check.outputs.VERSION_EXISTS == 'true')
         run: |
           for provider in ${{ needs.dispatcher.outputs.provider_list }}; do
-            ./tools/update-readme.sh "$provider" "${{ steps.versioning.outputs.NEXT_RELEASE }}"
-            echo "Successfully updated README.md with ${{ steps.versioning.outputs.NEXT_RELEASE }} for $provider"
+            ./tools/update-readme.sh "$provider" "${{ steps.determine_next_release.outputs.version }}"
+            echo "Successfully updated README.md with ${{ steps.determine_next_release.outputs.version }} for $provider"
           done
 
       - name: Create Pull Request
         id: create_pr
-        if: steps.check_pr.outputs.PR_EXISTS == 'false' && steps.k8s_check.outputs.VERSION_EXISTS == 'true'
-        uses: peter-evans/create-pull-request@v7
+        if: steps.check_pr.outputs.PR_EXISTS == 'false' && (needs.dispatcher.outputs.release_type != 'major' || steps.k8s_check.outputs.VERSION_EXISTS == 'true')
+        uses: peter-evans/create-pull-request@v6
         with:
           token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
-          commit-message: "CAPI: Release ${{ steps.versioning.outputs.NEXT_RELEASE }}"
-          title: "CAPI: Release ${{ steps.versioning.outputs.NEXT_RELEASE }}."
+          title: "CAPI: Release ${{ steps.determine_next_release.outputs.version }}"
           body: |
-            This PR was automatically created and contains the new major release for all CAPI providers.
+            This PR creates the new CAPI release `${{ steps.determine_next_release.outputs.version }}`.
 
-            ---
-
-            **Note:** To update the release files, comment `/update-release` on this PR.
-            You can also provide arguments directly to `devctl`, for example:
-            `/update-release --component flatcar@1.2.3`
-            `/update-release --app aws-ebs-csi-driver@3.0.5`
-          branch: "release-${{ steps.versioning.outputs.NEXT_RELEASE }}"
+            To update the release files in this PR, comment `/update-release [args]`.
+            For example: `/update-release --component flatcar@4152.2.3 --app aws-ebs-csi-driver@3.0.5`
+          branch: "release-${{ steps.determine_next_release.outputs.version }}"
           draft: true
-      - name: Read log file to env
-        if: steps.check_pr.outputs.PR_EXISTS == 'false' && steps.k8s_check.outputs.VERSION_EXISTS == 'true' && steps.create_pr.outputs.pull-request-number
-        run: |
-          log_content=$(cat /tmp/release_output.log)
-          echo "LOG_CONTENT<<EOF" >> $GITHUB_ENV
-          echo "${log_content}" >> $GITHUB_ENV
-          echo "EOF" >> $GITHUB_ENV
-      - name: Post devctl output as a comment
-        if: steps.check_pr.outputs.PR_EXISTS == 'false' && steps.k8s_check.outputs.VERSION_EXISTS == 'true' && steps.create_pr.outputs.pull-request-number
-        uses: actions/github-script@v8
+
+      - name: Add comment to PR with devctl output
+        if: steps.create_pr.outputs.pull-request-number && steps.create_pr.outputs.pull-request-number != ''
+        uses: actions/github-script@v7
         with:
           github-token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
           script: |
-            const output = process.env.LOG_CONTENT;
+            const output = `${{ env.LOG_CONTENT }}`;
             github.rest.issues.createComment({
-              issue_number: ${{ steps.create_pr.outputs.pull-request-number }},
               owner: context.repo.owner,
               repo: context.repo.repo,
+              issue_number: ${{ steps.create_pr.outputs.pull-request-number }},
               body: `### Changes:\n\n${output.replace(/`/g, '\\`')}`
             });
 
@@ -328,3 +341,104 @@ jobs:
               repo: context.repo.repo,
               body: '/run releases-test-suites'
             })
+
+  # This is the job for creating individual PRs for a major release when providers are not aligned.
+  major_release_individual:
+    name: "Major Release (Individual)"
+    needs: [dispatcher, preflight_check]
+    if: needs.dispatcher.outputs.release_type == 'major' && needs.preflight_check.outputs.alignment == 'misaligned'
+    strategy:
+      matrix:
+        provider: ${{ fromJSON(needs.dispatcher.outputs.provider_matrix) }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Determine next release version
+        id: determine_next_release
+        run: |
+          ./tools/determine-next-release.sh "${{ matrix.provider }}" ${{ needs.dispatcher.outputs.release_type }} ${{ needs.dispatcher.outputs.version_override }}
+
+      - name: Install devctl from release binary
+        id: install_devctl
+        run: |
+          mkdir -p /tmp/devctl_install
+          cd /tmp/devctl_install
+          LATEST_DEVCTL_TAG=$(gh release view --repo giantswarm/devctl --json tagName --jq '.tagName')
+          ASSET_NAME="devctl-${LATEST_DEVCTL_TAG}-linux-amd64.tar.gz"
+          gh release download --repo giantswarm/devctl "$LATEST_DEVCTL_TAG" --pattern "$ASSET_NAME"
+          tar -xzf "$ASSET_NAME"
+          find . -name "devctl" -type f -exec sudo mv {} /usr/local/bin/devctl \;
+          cd -
+
+      - name: Check for new upstream Kubernetes version
+        id: k8s_check
+        # This check is only relevant for major releases that are not manual backports.
+        if: needs.dispatcher.outputs.release_type == 'major' && needs.dispatcher.outputs.version_override == ''
+        run: |
+          chmod +x ./tools/check-new-k8s-version-exists.sh
+          ./tools/check-new-k8s-version-exists.sh "${{ steps.determine_next_release.outputs.version }}"
+
+      - name: Check for existing PR
+        id: check_pr
+        run: |
+          PR_EXISTS=$(gh pr list --repo "$GITHUB_REPOSITORY" --head "release-${{ steps.determine_next_release.outputs.version }}-${{ matrix.provider }}" --json number --jq '.[0].number')
+          if [ -z "$PR_EXISTS" ]; then
+            echo "PR_EXISTS=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "PR_EXISTS=true" >> "$GITHUB_OUTPUT"
+            echo "An open PR for this release already exists. Skipping."
+          fi
+
+      - name: Create release files and get output
+        id: create_release
+        if: steps.check_pr.outputs.PR_EXISTS == 'false' && (needs.dispatcher.outputs.release_type != 'major' || steps.k8s_check.outputs.VERSION_EXISTS == 'true')
+        env:
+          OPSCTL_GITHUB_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+          GH_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+        run: |
+          set -o pipefail
+          devctl release create \
+            --base "${{ steps.determine_next_release.outputs.base }}" \
+            --name "${{ steps.determine_next_release.outputs.version }}" \
+            --provider "${{ matrix.provider }}" \
+            --bumpall --overwrite -y --output markdown --changes-only 2>&1 | tee /tmp/release_output.log
+          
+          LOG_CONTENT=$(cat /tmp/release_output.log)
+          echo "LOG_CONTENT<<EOF" >> "$GITHUB_ENV"
+          echo "$LOG_CONTENT" >> "$GITHUB_ENV"
+          echo "EOF" >> "$GITHUB_ENV"
+
+      - name: Update README.md
+        id: update_readme
+        if: steps.check_pr.outputs.PR_EXISTS == 'false' && (needs.dispatcher.outputs.release_type != 'major' || steps.k8s_check.outputs.VERSION_EXISTS == 'true')
+        run: |
+          ./tools/update-readme.sh "${{ matrix.provider }}" "${{ steps.determine_next_release.outputs.version }}"
+
+      - name: Create Pull Request
+        id: create_pr
+        if: steps.check_pr.outputs.PR_EXISTS == 'false' && (needs.dispatcher.outputs.release_type != 'major' || steps.k8s_check.outputs.VERSION_EXISTS == 'true')
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+          title: "${{ steps.determine_next_release.outputs.provider_acronym }}: Release ${{ steps.determine_next_release.outputs.version }}"
+          body: |
+            This PR creates the new release `${{ steps.determine_next_release.outputs.version }}` for ${{ matrix.provider }}.
+
+            To update the release files in this PR, comment `/update-release [args]`.
+            For example: `/update-release --component flatcar@4152.2.3 --app aws-ebs-csi-driver@3.0.5`
+          branch: "release-${{ steps.determine_next_release.outputs.version }}-${{ matrix.provider }}"
+          draft: true
+
+      - name: Add comment to PR with devctl output
+        if: steps.create_pr.outputs.pull-request-number && steps.create_pr.outputs.pull-request-number != ''
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+          script: |
+            const output = `${{ env.LOG_CONTENT }}`;
+            github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: ${{ steps.create_pr.outputs.pull-request-number }},
+              body: `### Changes:\n\n${output.replace(/`/g, '\\`')}`
+            });
