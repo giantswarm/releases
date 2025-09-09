@@ -11,15 +11,12 @@ jobs:
       github.event.issue.pull_request &&
       startsWith(github.event.comment.body, '/update-release')
     runs-on: ubuntu-latest
-    env:
-      OPSCTL_GITHUB_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
-      GH_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
     permissions:
       contents: write
       pull-requests: write
 
     steps:
-      - name: Add reaction to comment
+      - name: Add in-progress reaction
         uses: actions/github-script@v7
         with:
           github-token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
@@ -50,8 +47,18 @@ jobs:
         with:
           ref: ${{ steps.get_branch.outputs.result }}
 
-      - name: Install GitHub CLI
-        run: sudo apt-get update && sudo apt-get install -y gh
+      - name: Install devctl from release binary
+        run: |
+          mkdir -p /tmp/devctl_install
+          cd /tmp/devctl_install
+          LATEST_DEVCTL_TAG=$(gh release view --repo giantswarm/devctl --json tagName --jq '.tagName')
+          ASSET_NAME="devctl-${LATEST_DEVCTL_TAG}-linux-amd64.tar.gz"
+          gh release download --repo giantswarm/devctl "$LATEST_DEVCTL_TAG" --pattern "$ASSET_NAME"
+          tar -xzf "$ASSET_NAME"
+          find . -name "devctl" -type f -exec sudo mv {} /usr/local/bin/devctl \;
+          cd -
+        env:
+          GH_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
 
       - name: Parse command arguments
         id: parse_args
@@ -79,18 +86,6 @@ jobs:
             echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
           fi
           
-      - name: Install devctl from release binary
-        env:
-          GH_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
-        run: |
-          mkdir -p /tmp/devctl_install && cd /tmp/devctl_install
-          LATEST_DEVCTL_TAG=$(gh release view --repo giantswarm/devctl --json tagName --jq '.tagName')
-          ASSET_NAME="devctl-${LATEST_DEVCTL_TAG}-linux-amd64.tar.gz"
-          gh release download --repo giantswarm/devctl "$LATEST_DEVCTL_TAG" --pattern "$ASSET_NAME"
-          tar -xzf "$ASSET_NAME"
-          find . -name "devctl" -type f -exec sudo mv {} /usr/local/bin/devctl \;
-          cd -
-
       - name: Recreate release files
         run: |
           set -o pipefail
@@ -105,7 +100,7 @@ jobs:
                 --base $BASE_VERSION \
                 --name ${{ steps.parse_branch.outputs.VERSION }} \
                 --provider $provider \
-                --bumpall --overwrite -y ${{ steps.parse_args.outputs.DEVCTL_ARGS }} --output markdown 2>&1 | tee -a $LOG_FILE
+                --bumpall --overwrite -y ${{ steps.parse_args.outputs.DEVCTL_ARGS }} --output markdown --changes-only 2>&1 | tee -a $LOG_FILE
             done
           else
             # Minor/patch release for a single provider
@@ -116,7 +111,7 @@ jobs:
               --base $BASE_VERSION \
               --name $VERSION \
               --provider $PROVIDER \
-              --bumpall --overwrite -y ${{ steps.parse_args.outputs.DEVCTL_ARGS }} --output markdown 2>&1 | tee /tmp/release_output.log
+              --bumpall --overwrite -y ${{ steps.parse_args.outputs.DEVCTL_ARGS }} --output markdown --changes-only 2>&1 | tee /tmp/release_output.log
           fi
 
       - name: Commit and push changes
@@ -161,5 +156,5 @@ jobs:
               issue_number: ${{ github.event.issue.number }},
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: `### devctl output\n\n\`\`\`\n${output.replace(/`/g, '\\`')}\n\`\`\``
+              body: `### devctl output\n\n${output.replace(/`/g, '\\`')}`
             });

@@ -5,26 +5,42 @@ PROVIDER=$1
 RELEASE_TYPE=$2
 VERSION_OVERRIDE=$3
 
-if [ -z "$PROVIDER" ] || [ -z "$RELEASE_TYPE" ]; then
+if [ -z "$RELEASE_TYPE" ]; then
   echo "Usage: $0 <provider> <release_type> [version_override]"
+  echo "Note: <provider> can be an empty string \"\" for major releases to scan all providers."
   exit 1
 fi
 
-PROVIDER_DIR="./${PROVIDER}"
-if [ "$PROVIDER" == "aws" ]; then
-  PROVIDER_DIR="./capa"
+ALL_RELEASES=""
+
+if [ -z "$PROVIDER" ]; then
+  # Scan all provider directories to find the absolute latest release
+  if [ "$RELEASE_TYPE" != "major" ]; then
+    echo "Error: An empty provider is only allowed for 'major' release types."
+    exit 1
+  fi
+  PROVIDER_DIRS=$(find . -maxdepth 1 -type d -name "v*" -exec basename {} \; | xargs -I {} find ./{} -maxdepth 1 -type d -name "v*" 2>/dev/null)
+  PROVIDER_DIRS=$(ls -d */ | grep -v -E '^(announcements|app|helm|sdk|tools|archived)$')
+  ALL_RELEASES=$(for dir in $PROVIDER_DIRS; do
+      ls -d "${dir}"v* 2>/dev/null | grep -o 'v[0-9]\+\.[0-9]\+\.[0-9]\+'
+  done | sort -V)
+else
+  PROVIDER_DIR="./${PROVIDER}"
+  if [ "$PROVIDER" == "aws" ]; then
+    PROVIDER_DIR="./capa"
+  fi
+
+  if [ ! -d "$PROVIDER_DIR" ]; then
+    echo "Provider directory not found: $PROVIDER_DIR"
+    exit 1
+  fi
+  # Get a sorted list of all releases for the provider
+  ALL_RELEASES=$(ls -d ${PROVIDER_DIR}/v* 2>/dev/null | grep -o 'v[0-9]\+\.[0-9]\+\.[0-9]\+' | sort -V)
 fi
 
-if [ ! -d "$PROVIDER_DIR" ]; then
-  echo "Provider directory not found: $PROVIDER_DIR"
-  exit 1
-fi
-
-# Get a sorted list of all releases for the provider
-ALL_RELEASES=$(ls -d ${PROVIDER_DIR}/v* | grep -o 'v[0-9]\+\.[0-9]\+\.[0-9]\+' | sort -V)
 
 if [ -z "$ALL_RELEASES" ]; then
-  echo "No releases found for provider $PROVIDER"
+  echo "No releases found."
   exit 1
 fi
 
