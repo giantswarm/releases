@@ -1,0 +1,15 @@
+No explicit kubernetes component specified by user. Attempting auto-detection based on release name pattern...
+Auto-detected and added component: kubernetes@1.31.12
+No explicit cloud-provider-aws component specified by user. Attempting auto-detection based on release name pattern...
+Auto-detected and added app: cloud-provider-aws@1.31.5-gs1
+No explicit cluster-autoscaler component specified by user. Attempting auto-detection based on release name pattern...
+Auto-detected and added app: cluster-autoscaler@1.31.3-gs1
+Requested automated bumping of all components and apps.
+Error: GET https://api.github.com/repos/giantswarm/capi-image-builder/releases/latest: 404 Not Found []
+	github.com/giantswarm/devctl/v7/pkg/release/bumpall.go:494
+	github.com/giantswarm/devctl/v7/pkg/release/bumpall.go:447
+	github.com/giantswarm/devctl/v7/pkg/release/bumpall.go:77
+	github.com/giantswarm/devctl/v7/pkg/release/create.go:145
+	github.com/giantswarm/devctl/v7/cmd/release/create/runner.go:45
+	github.com/giantswarm/devctl/v7/cmd/release/create/runner.go:34
+	github.com/giantswarm/devctl/v7/main.go:50
