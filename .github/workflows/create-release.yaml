@@ -1,0 +1,267 @@
+name: Create New Release PR
+
+on:
+  workflow_dispatch:
+    inputs:
+      release_type:
+        description: 'Type of release (major, minor, patch). Used if a specific version is not provided.'
+        required: true
+        default: 'minor'
+      provider:
+        description: 'Provider (aws, azure, cloud-director or vsphere)'
+        required: true
+        default: 'aws'
+      version:
+        description: 'Optional: Specify an exact version to create (e.g., v30.5.2 for a backport).'
+        required: false
+  schedule:
+    - cron: '0 8 1 * *' # Run at 08:00 on the first day of every month
+
+jobs:
+  dispatcher:
+    runs-on: ubuntu-latest
+    outputs:
+      release_type: ${{ steps.vars.outputs.release_type }}
+      version_override: ${{ github.event.inputs.version }}
+      is_manual: ${{ github.event_name == 'workflow_dispatch' }}
+      provider: ${{ github.event.inputs.provider }}
+
+    steps:
+      - id: vars
+        run: |
+          release_type_input="${{ github.event.inputs.release_type }}"
+          if [[ "${{ github.event_name }}" == "schedule" ]]; then
+            MONTH=$(date +'%m')
+            if (( 10#${MONTH} % 3 == 1 )); then
+              echo "release_type=major" >> $GITHUB_OUTPUT
+            else
+              echo "release_type=minor" >> $GITHUB_OUTPUT
+            fi
+          else
+            echo "release_type=${release_type_input}" >> $GITHUB_OUTPUT
+          fi
+
+  minor_patch_release:
+    needs: dispatcher
+    if: (needs.dispatcher.outputs.release_type != 'major') && (!needs.dispatcher.outputs.is_manual || (needs.dispatcher.outputs.is_manual && matrix.provider == needs.dispatcher.outputs.provider))
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        provider: [aws, azure, vsphere, cloud-director]
+    env:
+      OPSCTL_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: "1.25"
+      - name: Install devctl
+        run: go install github.com/giantswarm/devctl@latest
+      - name: Set provider display name for title
+        id: provider_name
+        run: |
+          provider="${{ matrix.provider }}"
+          name=""
+          if [[ "$provider" == "aws" ]]; then
+            name="CAPA"
+          elif [[ "$provider" == "azure" ]]; then
+            name="CAPZ"
+          elif [[ "$provider" == "vsphere" ]]; then
+            name="CAPV"
+          elif [[ "$provider" == "cloud-director" ]]; then
+            name="CAPVCD"
+          else
+            name=$(echo "$provider" | tr 'a-z' 'A-Z')
+          fi
+          echo "NAME=$name" >> $GITHUB_OUTPUT
+      - name: Determine next release version
+        id: versioning
+        run: |
+          ./tools/determine-next-release.sh ${{ matrix.provider }} ${{ needs.dispatcher.outputs.release_type }} ${{ needs.dispatcher.outputs.version_override }}
+      - name: Install GitHub CLI
+        run: sudo apt-get update && sudo apt-get install -y gh
+      - name: Check for existing PR
+        id: check_pr
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BRANCH_NAME: release-${{ steps.versioning.outputs.NEXT_RELEASE }}-${{ matrix.provider }}
+        run: |
+          if gh pr list --head "$BRANCH_NAME" --json number --limit 1 | grep -q "number"; then
+            echo "PR for branch $BRANCH_NAME already exists. Skipping provider ${{ matrix.provider }}."
+            echo "PR_EXISTS=true" >> $GITHUB_OUTPUT
+          else
+            echo "No existing PR found for branch $BRANCH_NAME. Proceeding."
+            echo "PR_EXISTS=false" >> $GITHUB_OUTPUT
+          fi
+      - name: Create new release
+        if: steps.check_pr.outputs.PR_EXISTS == 'false'
+        id: create_release
+        run: |
+          devctl release create \
+            --base ${{ steps.versioning.outputs.LATEST_RELEASE }} \
+            --name ${{ steps.versioning.outputs.NEXT_RELEASE }} \
+            --provider ${{ matrix.provider }} \
+            --bumpall --overwrite -y 2>&1 | tee release_output.log
+      - name: Check for warnings
+        if: steps.check_pr.outputs.PR_EXISTS == 'false'
+        id: check_warnings
+        run: |
+          if grep -q "Warning:" release_output.log; then
+            echo "WARNINGS_FOUND=true" >> $GITHUB_OUTPUT
+            echo "WARNING_DETAILS<<EOF" >> $GITHUB_OUTPUT
+            grep "Warning:" release_output.log >> $GITHUB_OUTPUT
+            echo "EOF" >> $GITHUB_OUTPUT
+          else
+            echo "WARNINGS_FOUND=false" >> $GITHUB_OUTPUT
+          fi
+      - name: Create Pull Request
+        if: steps.check_pr.outputs.PR_EXISTS == 'false'
+        id: create_pr
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: "feat: Create ${{ steps.versioning.outputs.NEXT_RELEASE }} for ${{ matrix.provider }}"
+          title: "${{ steps.provider_name.outputs.NAME }}: Release ${{ steps.versioning.outputs.NEXT_RELEASE }}."
+          body: |
+            This PR was automatically created. It creates `${{ steps.versioning.outputs.NEXT_RELEASE }}` for `${{ matrix.provider }}`.
+
+            ---
+
+            **Note:** To update the release files, comment `/update-release` on this PR.
+            You can also provide arguments directly to `devctl`, for example:
+            `/update-release --component flatcar@1.2.3`
+          branch: "release-${{ steps.versioning.outputs.NEXT_RELEASE }}-${{ matrix.provider }}"
+          draft: true
+          team-reviewers: team-tenet
+      - name: Add warning comment
+        if: steps.check_pr.outputs.PR_EXISTS == 'false' && steps.check_warnings.outputs.WARNINGS_FOUND == 'true'
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            github.rest.issues.createComment({
+              issue_number: ${{ steps.create_pr.outputs.pull-request-number }},
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: '### :warning: Pinned Application Warnings\n\nThe following warnings were found:\n\n```\n${{ steps.check_warnings.outputs.WARNING_DETAILS }}\n```\n\n@giantswarm/team-tenet please review.'
+            })
+      - name: Trigger e2e tests
+        if: steps.check_pr.outputs.PR_EXISTS == 'false'
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            github.rest.issues.createComment({
+              issue_number: ${{ steps.create_pr.outputs.pull-request-number }},
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: '/run releases-test-suites'
+            })
+
+  major_release:
+    needs: dispatcher
+    if: needs.dispatcher.outputs.release_type == 'major'
+    runs-on: ubuntu-latest
+    env:
+      OPSCTL_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: "1.25"
+      - name: Install devctl
+        run: go install github.com/giantswarm/devctl@latest
+      - name: Determine next release version
+        id: versioning
+        run: |
+          ./tools/determine-next-release.sh aws major ${{ needs.dispatcher.outputs.version_override }}
+      - name: Check for existing PR
+        id: check_pr
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BRANCH_NAME: release-${{ steps.versioning.outputs.NEXT_RELEASE }}
+        run: |
+          if gh pr list --head "$BRANCH_NAME" --json number --limit 1 | grep -q "number"; then
+            echo "PR for branch $BRANCH_NAME already exists. Skipping job."
+            echo "PR_EXISTS=true" >> $GITHUB_OUTPUT
+          else
+            echo "No existing PR found for branch $BRANCH_NAME. Proceeding."
+            echo "PR_EXISTS=false" >> $GITHUB_OUTPUT
+          fi
+      - name: Check if new Kubernetes version exists
+        if: steps.check_pr.outputs.PR_EXISTS == 'false'
+        id: k8s_check
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: ./tools/check-new-k8s-version-exists.sh ${{ steps.versioning.outputs.NEXT_RELEASE }}
+      - name: Create release files for all providers
+        if: steps.check_pr.outputs.PR_EXISTS == 'false' && steps.k8s_check.outputs.VERSION_EXISTS == 'true'
+        run: |
+          for provider in aws azure vsphere cloud-director; do
+            echo "--- Creating release for $provider ---"
+            BASE_VERSION=$(./tools/determine-next-release.sh $provider major ${{ needs.dispatcher.outputs.version_override }} | grep 'Base release:' | awk '{print $3}')
+            devctl release create \
+              --base $BASE_VERSION \
+              --name ${{ steps.versioning.outputs.NEXT_RELEASE }} \
+              --provider $provider \
+              --bumpall --overwrite -y 2>&1 | tee -a release_output.log
+          done
+      - name: Check for warnings
+        if: steps.check_pr.outputs.PR_EXISTS == 'false' && steps.k8s_check.outputs.VERSION_EXISTS == 'true'
+        id: check_warnings
+        run: |
+          if grep -q "Warning:" release_output.log; then
+            echo "WARNINGS_FOUND=true" >> $GITHUB_OUTPUT
+            echo "WARNING_DETAILS<<EOF" >> $GITHUB_OUTPUT
+            grep "Warning:" release_output.log >> $GITHUB_OUTPUT
+            echo "EOF" >> $GITHUB_OUTPUT
+          else
+            echo "WARNINGS_FOUND=false" >> $GITHUB_OUTPUT
+          fi
+      - name: Create Pull Request
+        if: steps.check_pr.outputs.PR_EXISTS == 'false' && steps.k8s_check.outputs.VERSION_EXISTS == 'true'
+        id: create_pr
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: "CAPI: Release ${{ steps.versioning.outputs.NEXT_RELEASE }}"
+          title: "CAPI: Release ${{ steps.versioning.outputs.NEXT_RELEASE }}."
+          body: |
+            This PR was automatically created and contains the new major release for all CAPI providers.
+
+            ---
+
+            **Note:** To update the release files, comment `/update-release` on this PR.
+            You can also provide arguments directly to `devctl`, for example:
+            `/update-release --component flatcar@1.2.3`
+          branch: "release-${{ steps.versioning.outputs.NEXT_RELEASE }}"
+          draft: true
+          team-reviewers: team-tenet
+      - name: Add warning comment
+        if: steps.check_pr.outputs.PR_EXISTS == 'false' && steps.k8s_check.outputs.VERSION_EXISTS == 'true' && steps.check_warnings.outputs.WARNINGS_FOUND == 'true'
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            github.rest.issues.createComment({
+              issue_number: ${{ steps.create_pr.outputs.pull-request-number }},
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: '### :warning: Pinned Application Warnings\n\nThe following warnings were found:\n\n```\n${{ steps.check_warnings.outputs.WARNING_DETAILS }}\n```\n\n@giantswarm/team-tenet please review.'
+            })
+      - name: Trigger e2e tests
+        if: steps.check_pr.outputs.PR_EXISTS == 'false' && steps.k8s_check.outputs.VERSION_EXISTS == 'true'
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            github.rest.issues.createComment({
+              issue_number: ${{ steps.create_pr.outputs.pull-request-number }},
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: '/run releases-test-suites'
+            })
