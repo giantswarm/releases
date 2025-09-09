@@ -123,7 +123,7 @@ jobs:
         if: steps.check_pr.outputs.PR_EXISTS == 'false' && steps.create_pr.outputs.pull-request-number
         uses: actions/github-script@v7
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          github-token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
           script: |
             const output = process.env.LOG_CONTENT;
             github.rest.issues.createComment({
@@ -149,24 +149,24 @@ jobs:
         id: create_pr
         uses: peter-evans/create-pull-request@v6
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
           commit-message: "feat: Create ${{ steps.versioning.outputs.NEXT_RELEASE }} for ${{ matrix.provider }}"
           title: "${{ steps.provider_name.outputs.NAME }}: Release ${{ steps.versioning.outputs.NEXT_RELEASE }}."
           body: |
-            This PR was automatically created. It creates `${{ steps.versioning.outputs.NEXT_RELEASE }}` for `${{ matrix.provider }}`.
+            This PR was automatically created. It creates \`${{ steps.versioning.outputs.NEXT_RELEASE }}\` for \`${{ matrix.provider }}\`.
 
             ---
 
-            **Note:** To update the release files, comment `/update-release` on this PR.
-            You can also provide arguments directly to `devctl`, for example:
-            `/update-release --component flatcar@1.2.3`
+            **Note:** To update the release files, comment \`/update\` on this PR.
+            You can also provide arguments directly to \`devctl\`, for example:
+            \`/update --component flatcar@1.2.3\`
           branch: "release-${{ steps.versioning.outputs.NEXT_RELEASE }}-${{ matrix.provider }}"
           draft: true
       - name: Add warning comment
         if: steps.check_pr.outputs.PR_EXISTS == 'false' && steps.check_warnings.outputs.WARNINGS_FOUND == 'true' && steps.create_pr.outputs.pull-request-number
         uses: actions/github-script@v7
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          github-token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
           script: |
             github.rest.issues.createComment({
               issue_number: ${{ steps.create_pr.outputs.pull-request-number }},
@@ -178,7 +178,7 @@ jobs:
         if: steps.check_pr.outputs.PR_EXISTS == 'false' && steps.create_pr.outputs.pull-request-number
         uses: actions/github-script@v7
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          github-token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
           script: |
             github.rest.issues.createComment({
               issue_number: ${{ steps.create_pr.outputs.pull-request-number }},
@@ -259,7 +259,7 @@ jobs:
         if: steps.check_pr.outputs.PR_EXISTS == 'false' && steps.k8s_check.outputs.VERSION_EXISTS == 'true' && steps.create_pr.outputs.pull-request-number
         uses: actions/github-script@v7
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          github-token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
           script: |
             const output = process.env.LOG_CONTENT;
             github.rest.issues.createComment({
@@ -285,7 +285,7 @@ jobs:
         id: create_pr
         uses: peter-evans/create-pull-request@v6
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
           commit-message: "CAPI: Release ${{ steps.versioning.outputs.NEXT_RELEASE }}"
           title: "CAPI: Release ${{ steps.versioning.outputs.NEXT_RELEASE }}."
           body: |
@@ -293,16 +293,16 @@ jobs:
 
             ---
 
-            **Note:** To update the release files, comment `/update-release` on this PR.
-            You can also provide arguments directly to `devctl`, for example:
-            `/update-release --component flatcar@1.2.3`
+            **Note:** To update the release files, comment \`/update\` on this PR.
+            You can also provide arguments directly to \`devctl\`, for example:
+            \`/update --component flatcar@1.2.3\`
           branch: "release-${{ steps.versioning.outputs.NEXT_RELEASE }}"
           draft: true
       - name: Add warning comment
         if: steps.check_pr.outputs.PR_EXISTS == 'false' && steps.k8s_check.outputs.VERSION_EXISTS == 'true' && steps.check_warnings.outputs.WARNINGS_FOUND == 'true' && steps.create_pr.outputs.pull-request-number
         uses: actions/github-script@v7
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          github-token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
           script: |
             github.rest.issues.createComment({
               issue_number: ${{ steps.create_pr.outputs.pull-request-number }},
@@ -314,7 +314,7 @@ jobs:
         if: steps.check_pr.outputs.PR_EXISTS == 'false' && steps.k8s_check.outputs.VERSION_EXISTS == 'true' && steps.create_pr.outputs.pull-request-number
         uses: actions/github-script@v7
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          github-token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
           script: |
             github.rest.issues.createComment({
               issue_number: ${{ steps.create_pr.outputs.pull-request-number }},
