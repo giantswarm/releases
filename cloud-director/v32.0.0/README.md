@@ -2,14 +2,13 @@
 
 > **WARNING:** With Flatcar 4230.2.0, cgroups v1 backwards compatibility has been removed. This means that enabling legacy cgroups v1 is no longer supported and nodes still using them will fail to update.
 
-
 ## Changes compared to v31.1.1
 
 ### Components
 
 - cluster-cloud-director from v0.68.1 to v0.69.1
 - Flatcar from v4152.2.3 to [v4230.2.2](https://www.flatcar-linux.org/releases/#release-4230.2.2)
-- Kubernetes from v1.31.11 to [v1.32.8](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.32.md#v1.32.8)
+- Kubernetes from v1.31.11 to [v1.32.9](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.32.md#v1.32.9)
 
 ### cluster-cloud-director [v0.68.1...v0.69.1](https://github.com/giantswarm/cluster-cloud-director/compare/v0.68.1...v0.69.1)
 
@@ -34,7 +33,6 @@
 - observability-bundle from v2.0.0 to v2.2.2
 - vertical-pod-autoscaler from v5.5.1 to v6.0.1
 - vertical-pod-autoscaler-crd from v3.3.1 to v4.0.1
-
 
 ### capi-node-labeler [v1.1.2...v1.1.3](https://github.com/giantswarm/capi-node-labeler-app/compare/v1.1.2...v1.1.3)
 
