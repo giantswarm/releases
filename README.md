@@ -11,6 +11,10 @@ to all Giant Swarm installations.
 
 ## AWS
 
+- v32
+  - v32.0
+    - [v32.0.0](https://github.com/giantswarm/releases/tree/master/capa/v32.0.0)
+
 - v31
   - v31.1
     - [v31.1.2](https://github.com/giantswarm/releases/tree/master/capa/v31.1.2)
@@ -360,6 +364,10 @@ to all Giant Swarm installations.
     - [v8.2.0](https://github.com/giantswarm/releases/tree/master/aws/archived/v8.2.0)
 
 ## Azure
+
+- v32
+  - v32.0
+    - [v32.0.0](https://github.com/giantswarm/releases/tree/master/azure/v32.0.0)
 
 - v31
   - v31.1
