@@ -173,6 +173,9 @@ jobs:
             You can also provide arguments directly to `devctl`, for example:
             `/update-release --component flatcar@1.2.3`
             `/update-release --app aws-ebs-csi-driver@3.0.5`
+
+            To specify app dependencies, use the `#` separator:
+            `/update-release --app my-app@1.2.3@@dependency1#dependency2`
           branch: "release-${{ steps.versioning.outputs.NEXT_RELEASE }}-${{ matrix.provider }}"
           draft: true
       - name: Read log file to env
@@ -328,7 +331,7 @@ jobs:
         uses: peter-evans/create-pull-request@v7
         with:
           token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
-          title: "CAPI: Release ${{ steps.determine_next_release.outputs.version }}"
+          title: "CAPI: Release ${{ steps.determine_next_release.outputs.version }}."
           body: |
             This PR creates the new CAPI release `${{ steps.determine_next_release.outputs.version }}`.
 
@@ -343,6 +346,9 @@ jobs:
 
             *   Update multiple components and apps for a specific provider:
                 `/update-release --provider azure --component cluster-azure@2.4.1 --app azuredisk-csi-driver@1.32.9`
+
+            *   Specify app dependencies using the `#` separator:
+                `/update-release --provider aws --app my-app@1.2.3@@dependency1#dependency2`
           branch: "release-${{ steps.determine_next_release.outputs.version }}"
           draft: true
 
@@ -457,7 +463,7 @@ jobs:
         uses: peter-evans/create-pull-request@v7
         with:
           token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
-          title: "${{ steps.determine_next_release.outputs.provider_acronym }}: Release ${{ steps.determine_next_release.outputs.version }}"
+          title: "${{ steps.determine_next_release.outputs.provider_acronym }}: Release ${{ steps.determine_next_release.outputs.version }}."
           body: |
             This PR creates the new release `${{ steps.determine_next_release.outputs.version }}` for ${{ matrix.provider }}.
 
@@ -475,6 +481,9 @@ jobs:
 
             *   Update multiple components and apps at once:
                 `/update-release --component cluster-aws@4.0.2 --app karpenter-bundle@2.2.0 --app coredns@1.27.0`
+
+            *   Specify app dependencies using the `#` separator:
+                `/update-release --app my-app@1.2.3@@dependency1#dependency2`
           branch: "release-${{ steps.determine_next_release.outputs.version }}-${{ matrix.provider }}"
           draft: true
 

@@ -97,7 +97,7 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               issue_number: context.issue.number,
-              body: "Could not determine the provider. For multi-provider releases, please specify the provider using the `--provider` flag. \n\n**Example:**\n`/update-release --provider aws --component flatcar@1.2.3`"
+              body: "Could not determine the provider. For multi-provider releases, please specify the provider using the `--provider` flag. \n\n**Example:**\n`/update-release --provider aws --component flatcar@1.2.3`\n\nTo specify app dependencies, use the `#` separator:\n`/update-release --provider aws --app my-app@1.2.3@@dep1#dep2`"
             });
       - name: Fail job if provider is missing
         if: steps.parse_command.outputs.provider_missing == 'true'
@@ -185,9 +185,10 @@ jobs:
           github-token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
           script: |
             const output = process.env.LOG_CONTENT;
+            const provider = "${{ steps.parse_command.outputs.provider }}";
             github.rest.issues.createComment({
               issue_number: ${{ github.event.issue.number }},
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: `### Changes:\n\n${output.replace(/`/g, '\\`')}`
+              body: `### Changes for ${provider.toUpperCase()}\n\n${output.replace(/`/g, '\\`')}`
             });
