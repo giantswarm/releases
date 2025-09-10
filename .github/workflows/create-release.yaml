@@ -285,7 +285,7 @@ jobs:
             
             # Capitalize provider name for the heading
             PROVIDER_UPPER=$(echo "$provider" | awk '{print toupper($0)}')
-            echo "## Changes for ${PROVIDER_UPPER}" >> $LOG_FILE
+            echo "### Changes for ${PROVIDER_UPPER}" >> $LOG_FILE
             echo "" >> $LOG_FILE
 
             BASE_VERSION=$(./tools/determine-next-release.sh "$provider" "major" "${{ needs.dispatcher.outputs.version_override }}" | grep '^base=' | cut -d'=' -f2)
@@ -332,8 +332,17 @@ jobs:
           body: |
             This PR creates the new CAPI release `${{ steps.determine_next_release.outputs.version }}`.
 
-            To update the release files in this PR, comment `/update-release [args]`.
-            For example: `/update-release --component flatcar@4152.2.3 --app aws-ebs-csi-driver@3.0.5`
+            ---
+
+            To update the release files in this PR, comment with `/update-release` and provide arguments directly to `devctl`. For consolidated releases, you **must** specify which provider you are updating.
+
+            **Examples:**
+
+            *   Update a single component for a specific provider:
+                `/update-release --provider aws --component flatcar@4152.2.3`
+
+            *   Update multiple components and apps for a specific provider:
+                `/update-release --provider azure --component cluster-azure@2.4.1 --app azuredisk-csi-driver@1.32.9`
           branch: "release-${{ steps.determine_next_release.outputs.version }}"
           draft: true
 
@@ -348,7 +357,7 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               issue_number: ${{ steps.create_pr.outputs.pull-request-number }},
-              body: `### Changes:\n\n${output.replace(/`/g, '\\`')}`
+              body: `${output.replace(/`/g, '\\`')}`
             });
 
       - name: Trigger e2e tests
@@ -452,8 +461,20 @@ jobs:
           body: |
             This PR creates the new release `${{ steps.determine_next_release.outputs.version }}` for ${{ matrix.provider }}.
 
-            To update the release files in this PR, comment `/update-release [args]`.
-            For example: `/update-release --component flatcar@4152.2.3 --app aws-ebs-csi-driver@3.0.5`
+            ---
+
+            To update the release files in this PR, comment with `/update-release` and provide arguments directly to `devctl`.
+
+            **Examples:**
+
+            *   Update a single component:
+                `/update-release --component flatcar@4152.2.3`
+
+            *   Update a single application:
+                `/update-release --app aws-ebs-csi-driver@3.0.5`
+
+            *   Update multiple components and apps at once:
+                `/update-release --component cluster-aws@4.0.2 --app karpenter-bundle@2.2.0 --app coredns@1.27.0`
           branch: "release-${{ steps.determine_next_release.outputs.version }}-${{ matrix.provider }}"
           draft: true
 

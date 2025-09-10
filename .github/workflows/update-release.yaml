@@ -5,12 +5,12 @@ on:
     types: [created]
 
 jobs:
-  update:
-    name: Update release files
-    if: |
-      github.event.issue.pull_request &&
-      startsWith(github.event.comment.body, '/update-release')
+  update-release:
+    # This job only runs for pull request comments
+    if: github.event.issue.pull_request && startsWith(github.event.comment.body, '/update-release')
     runs-on: ubuntu-latest
+    # Don't run on forks
+    if_secret: TAYLORBOT_GITHUB_ACTION
     env:
       OPSCTL_GITHUB_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
       GH_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
@@ -19,8 +19,8 @@ jobs:
       pull-requests: write
 
     steps:
-      - name: Add in-progress reaction
-        uses: actions/github-script@v8
+      - name: Add reaction to comment to indicate that the bot is working on the update
+        uses: actions/github-script@v7
         with:
           github-token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
           script: |
@@ -28,7 +28,7 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               comment_id: ${{ github.event.comment.id }},
-              content: 'rocket'
+              content: 'eyes'
             })
 
       - name: Get PR branch name
@@ -63,62 +63,76 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
 
-      - name: Parse command arguments
-        id: parse_args
+      - name: Parse command arguments and determine provider
+        id: parse_command
         run: |
           COMMENT_BODY="${{ github.event.comment.body }}"
-          # Remove the command part and trim leading/trailing whitespace
-          ARGS=$(echo "$COMMENT_BODY" | sed 's|^/update-release||' | xargs)
-          echo "DEVCTL_ARGS=$ARGS" >> $GITHUB_OUTPUT
-
-      - name: Parse branch name
-        id: parse_branch
-        run: |
           BRANCH_NAME="${{ steps.get_branch.outputs.result }}"
-          if [[ $BRANCH_NAME == release-v*-* ]]; then
-            # Minor/patch branch: release-v31.2.0-azure
-            VERSION=$(echo $BRANCH_NAME | cut -d'-' -f2)
-            PROVIDER=$(echo $BRANCH_NAME | cut -d'-' -f3)
-            echo "IS_MAJOR=false" >> $GITHUB_OUTPUT
-            echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
-            echo "PROVIDER=$PROVIDER" >> $GITHUB_OUTPUT
+
+          # Extract devctl arguments, excluding the /update-release command and any --provider flag
+          DEVCTL_ARGS=$(echo "$COMMENT_BODY" | sed -E 's|/update-release||; s/--provider[= ]+[a-zA-Z-]+//' | xargs)
+          echo "devctl_args=$DEVCTL_ARGS" >> "$GITHUB_OUTPUT"
+
+          # 1. Check for --provider in the comment
+          COMMENT_PROVIDER=$(echo "$COMMENT_BODY" | grep -oP '(?<=--provider(=| ))[a-zA-Z-]+')
+
+          # 2. If not in comment, try to get it from the branch name
+          BRANCH_PROVIDER=$(echo "$BRANCH_NAME" | sed -n 's/release-v[0-9.]*-\(.*\)/\1/p')
+
+          if [[ -n "$COMMENT_PROVIDER" ]]; then
+            echo "Provider specified in comment: $COMMENT_PROVIDER"
+            echo "provider=$COMMENT_PROVIDER" >> "$GITHUB_OUTPUT"
+          elif [[ -n "$BRANCH_PROVIDER" ]]; then
+            echo "Provider inferred from branch name: $BRANCH_PROVIDER"
+            echo "provider=$BRANCH_PROVIDER" >> "$GITHUB_OUTPUT"
           else
-            # Major release branch: release-v32.0.0
-            VERSION=$(echo $BRANCH_NAME | cut -d'-' -f2)
-            echo "IS_MAJOR=true" >> $GITHUB_OUTPUT
-            echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
+            echo "provider_missing=true" >> "$GITHUB_OUTPUT"
+            echo "Provider was not specified in the command and could not be inferred from branch name '$BRANCH_NAME'."
           fi
-          
+
+      - name: Add comment if provider is missing
+        if: steps.parse_command.outputs.provider_missing == 'true'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body: "Could not determine the provider. For multi-provider releases, please specify the provider using the `--provider` flag. \n\n**Example:**\n`/update-release --provider aws --component flatcar@1.2.3`"
+            });
+      - name: Fail job if provider is missing
+        if: steps.parse_command.outputs.provider_missing == 'true'
+        run: |
+          exit 1
+
       - name: Recreate release files
+        id: recreate_release
+        if: steps.parse_command.outputs.provider_missing != 'true'
         run: |
           set -o pipefail
-          if [[ "${{ steps.parse_branch.outputs.IS_MAJOR }}" == "true" ]]; then
-            # Major release: loop through all providers
-            LOG_FILE="/tmp/release_output.log"
-            touch $LOG_FILE
-            for provider in aws azure vsphere cloud-director; do
-              echo "--- Recreating release for $provider ---"
-              BASE_VERSION=$(./tools/determine-next-release.sh $provider major ${{ steps.parse_branch.outputs.VERSION }} | grep 'Base release:' | awk '{print $3}')
-              devctl release create \
-                --base $BASE_VERSION \
-                --name ${{ steps.parse_branch.outputs.VERSION }} \
-                --provider $provider \
-                --bumpall --overwrite -y ${{ steps.parse_args.outputs.DEVCTL_ARGS }} --output markdown --requested-only 2>&1 | tee -a $LOG_FILE
-            done
-          else
-            # Minor/patch release for a single provider
-            PROVIDER="${{ steps.parse_branch.outputs.PROVIDER }}"
-            VERSION="${{ steps.parse_branch.outputs.VERSION }}"
-            BASE_VERSION=$(./tools/determine-next-release.sh $PROVIDER "minor" $VERSION | grep 'Base release:' | awk '{print $3}')
-            devctl release create \
-              --base $BASE_VERSION \
-              --name $VERSION \
-              --provider $PROVIDER \
-              --bumpall --overwrite -y ${{ steps.parse_args.outputs.DEVCTL_ARGS }} --output markdown --requested-only 2>&1 | tee /tmp/release_output.log
+          # The release name is derived from the branch name.
+          BRANCH_NAME="${{ steps.get_branch.outputs.result }}"
+          RELEASE_NAME=$(echo "$BRANCH_NAME" | sed -n 's/release-\(v[0-9.]*\).*/\1/p')
+
+          if [[ -z "$RELEASE_NAME" ]]; then
+            echo "Could not determine release name from branch '$BRANCH_NAME'. Aborting."
+            exit 1
           fi
-        env:
-          OPSCTL_GITHUB_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
-          GH_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+
+          # The base version is determined automatically by devctl based on the release name
+          # and the existing releases in the repository for that provider.
+
+          devctl release create \
+            --name "$RELEASE_NAME" \
+            --provider "${{ steps.parse_command.outputs.provider }}" \
+            ${{ steps.parse_command.outputs.devctl_args }} \
+            --overwrite -y --output markdown --requested-only 2>&1 | tee /tmp/release_output.log
+          
+          LOG_CONTENT=$(cat /tmp/release_output.log)
+          echo "LOG_CONTENT<<EOF" >> "$GITHUB_ENV"
+          echo "${LOG_CONTENT}" >> "$GITHUB_ENV"
+          echo "EOF" >> "$GITHUB_ENV"
 
       - name: Commit and push changes
         run: |
