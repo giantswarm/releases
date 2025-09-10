@@ -367,6 +367,7 @@ to all Giant Swarm installations.
 
 - v30
   - v30.1
+    - [v30.1.5](https://github.com/giantswarm/releases/tree/master/azure/v30.1.5)
     - [v30.1.4](https://github.com/giantswarm/releases/tree/master/azure/v30.1.4)
 
 - v29

@@ -29,6 +29,13 @@
       "isStable": true
     },
     {
+      "version": "30.1.5",
+      "isDeprecated": false,
+      "releaseTimestamp": "2025-09-10T12:46:38Z",
+      "changelogUrl": "https://github.com/giantswarm/releases/blob/master/azure/v30.1.5/README.md",
+      "isStable": true
+    },
+    {
       "version": "31.1.1",
       "isDeprecated": false,
       "releaseTimestamp": "2025-09-03T09:42:22Z",
