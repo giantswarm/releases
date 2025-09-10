@@ -77,7 +77,7 @@ jobs:
     outputs:
       alignment: ${{ steps.check.outputs.alignment }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Check major version alignment
         id: check
         run: |
@@ -216,7 +216,7 @@ jobs:
     if: needs.dispatcher.outputs.release_type == 'major' && needs.preflight_check.outputs.alignment == 'aligned'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Determine next release version
         id: determine_next_release
         run: |
@@ -383,7 +383,7 @@ jobs:
         provider: ${{ fromJSON(needs.dispatcher.outputs.provider_matrix) }}
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Determine next release version
         id: determine_next_release
         run: |
