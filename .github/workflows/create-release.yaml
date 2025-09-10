@@ -348,7 +348,7 @@ jobs:
 
       - name: Add comment to PR with devctl output
         if: steps.create_pr.outputs.pull-request-number && steps.create_pr.outputs.pull-request-number != ''
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         with:
           github-token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
           script: |
@@ -480,7 +480,7 @@ jobs:
 
       - name: Add comment to PR with devctl output
         if: steps.create_pr.outputs.pull-request-number && steps.create_pr.outputs.pull-request-number != ''
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         with:
           github-token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
           script: |
