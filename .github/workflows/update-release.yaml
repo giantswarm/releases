@@ -112,20 +112,32 @@ jobs:
           BRANCH_NAME="${{ steps.get_branch.outputs.result }}"
           PROVIDER="${{ steps.parse_command.outputs.provider }}"
 
-          # 1. Determine the release name from the branch. This will be used for both 'base' and 'name'
-          #    to ensure devctl performs an in-place update of the release files in the branch.
+          # 1. Determine the release name from the branch.
           RELEASE_NAME=$(echo "$BRANCH_NAME" | sed -n 's/release-\(v[0-9.]*\).*/\1/p')
           if [[ -z "$RELEASE_NAME" ]]; then
             echo "Could not determine release name from branch '$BRANCH_NAME'. Aborting."
             exit 1
           fi
-          echo "Updating release: $RELEASE_NAME for provider $PROVIDER"
 
-          # 2. Recreate the release files using devctl
+          # 2. Determine the correct previous release to use as a base.
+          search_dir=$PROVIDER
+          if [ "$PROVIDER" == "aws" ]; then
+              search_dir="capa"
+          fi
+          BASE_VERSION=$(find "$search_dir" -name "v*" -type d -not -path "*/archived/*" -exec basename {} \; | grep -v "^${RELEASE_NAME}$" | sort -V | tail -n 1)
+          if [[ -z "$BASE_VERSION" ]]; then
+            echo "Error: Could not determine base version for release '$RELEASE_NAME'."
+            exit 1
+          fi
+          echo "Updating release '$RELEASE_NAME' for provider '$PROVIDER' using base '$BASE_VERSION'"
+
+          # 3. Recreate the release, applying user-provided changes on top of a fresh --bumpall.
+          #    This ensures all components are at their latest correct versions, preventing reverts.
           devctl release create \
-            --base "$RELEASE_NAME" \
+            --base "$BASE_VERSION" \
             --name "$RELEASE_NAME" \
             --provider "$PROVIDER" \
+            --bumpall \
             ${{ steps.parse_command.outputs.devctl_args }} \
             --overwrite -y --output markdown --requested-only 2>&1 | tee /tmp/release_output.log
 
