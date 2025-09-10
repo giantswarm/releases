@@ -325,7 +325,7 @@ jobs:
       - name: Create Pull Request
         id: create_pr
         if: steps.check_pr.outputs.PR_EXISTS == 'false' && (needs.dispatcher.outputs.release_type != 'major' || steps.k8s_check.outputs.VERSION_EXISTS == 'true')
-        uses: peter-evans/create-pull-request@v6
+        uses: peter-evans/create-pull-request@v7
         with:
           token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
           title: "CAPI: Release ${{ steps.determine_next_release.outputs.version }}"
@@ -454,7 +454,7 @@ jobs:
       - name: Create Pull Request
         id: create_pr
         if: steps.check_pr.outputs.PR_EXISTS == 'false' && (needs.dispatcher.outputs.release_type != 'major' || steps.k8s_check.outputs.VERSION_EXISTS == 'true')
-        uses: peter-evans/create-pull-request@v6
+        uses: peter-evans/create-pull-request@v7
         with:
           token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
           title: "${{ steps.determine_next_release.outputs.provider_acronym }}: Release ${{ steps.determine_next_release.outputs.version }}"
