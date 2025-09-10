@@ -109,30 +109,46 @@ jobs:
         if: steps.parse_command.outputs.provider_missing != 'true'
         run: |
           set -o pipefail
-          # The release name is derived from the branch name.
           BRANCH_NAME="${{ steps.get_branch.outputs.result }}"
-          RELEASE_NAME=$(echo "$BRANCH_NAME" | sed -n 's/release-\(v[0-9.]*\).*/\1/p')
+          PROVIDER="${{ steps.parse_command.outputs.provider }}"
 
+          # 1. Determine the release name from the branch
+          RELEASE_NAME=$(echo "$BRANCH_NAME" | sed -n 's/release-\(v[0-9.]*\).*/\1/p')
           if [[ -z "$RELEASE_NAME" ]]; then
             echo "Could not determine release name from branch '$BRANCH_NAME'. Aborting."
             exit 1
           fi
+          echo "Updating release: $RELEASE_NAME for provider $PROVIDER"
 
-          # The base version is determined automatically by devctl based on the release name
-          # and the existing releases in the repository for that provider.
+          # 2. Determine the base version for the release
+          search_dir=$PROVIDER
+          if [ "$PROVIDER" == "aws" ]; then
+              search_dir="capa"
+          fi
 
+          BASE_VERSION=$(find "$search_dir" -name "v*" -type d -not -path "*/archived/*" -exec basename {} \; | grep -v "^${RELEASE_NAME}$" | sort -V | tail -n 1)
+          if [[ -z "$BASE_VERSION" ]]; then
+            echo "Error: Could not determine base version for release '$RELEASE_NAME' on provider '$PROVIDER'."
+            echo "This can happen if it is the very first release for this provider."
+            exit 1
+          fi
+          echo "Determined base version: $BASE_VERSION"
+
+          # 3. Recreate the release files using devctl
           devctl release create \
+            --base "$BASE_VERSION" \
             --name "$RELEASE_NAME" \
-            --provider "${{ steps.parse_command.outputs.provider }}" \
+            --provider "$PROVIDER" \
             ${{ steps.parse_command.outputs.devctl_args }} \
             --overwrite -y --output markdown --requested-only 2>&1 | tee /tmp/release_output.log
-          
+
           LOG_CONTENT=$(cat /tmp/release_output.log)
           echo "LOG_CONTENT<<EOF" >> "$GITHUB_ENV"
           echo "${LOG_CONTENT}" >> "$GITHUB_ENV"
           echo "EOF" >> "$GITHUB_ENV"
 
       - name: Commit and push changes
+        if: steps.parse_command.outputs.provider_missing != 'true'
         run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email '41898282+github-actions[bot]@users.noreply.github.com'
