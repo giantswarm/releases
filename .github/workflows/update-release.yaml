@@ -7,10 +7,8 @@ on:
 jobs:
   update-release:
     # This job only runs for pull request comments
-    if: github.event.issue.pull_request && startsWith(github.event.comment.body, '/update-release')
+    if: github.event.issue.pull_request && startsWith(github.event.comment.body, '/update-release') && github.repository == 'giantswarm/releases'
     runs-on: ubuntu-latest
-    # Don't run on forks
-    if_secret: TAYLORBOT_GITHUB_ACTION
     env:
       OPSCTL_GITHUB_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
       GH_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
