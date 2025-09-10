@@ -112,7 +112,8 @@ jobs:
           BRANCH_NAME="${{ steps.get_branch.outputs.result }}"
           PROVIDER="${{ steps.parse_command.outputs.provider }}"
 
-          # 1. Determine the release name from the branch
+          # 1. Determine the release name from the branch. This will be used for both 'base' and 'name'
+          #    to ensure devctl performs an in-place update of the release files in the branch.
           RELEASE_NAME=$(echo "$BRANCH_NAME" | sed -n 's/release-\(v[0-9.]*\).*/\1/p')
           if [[ -z "$RELEASE_NAME" ]]; then
             echo "Could not determine release name from branch '$BRANCH_NAME'. Aborting."
@@ -120,23 +121,9 @@ jobs:
           fi
           echo "Updating release: $RELEASE_NAME for provider $PROVIDER"
 
-          # 2. Determine the base version for the release
-          search_dir=$PROVIDER
-          if [ "$PROVIDER" == "aws" ]; then
-              search_dir="capa"
-          fi
-
-          BASE_VERSION=$(find "$search_dir" -name "v*" -type d -not -path "*/archived/*" -exec basename {} \; | grep -v "^${RELEASE_NAME}$" | sort -V | tail -n 1)
-          if [[ -z "$BASE_VERSION" ]]; then
-            echo "Error: Could not determine base version for release '$RELEASE_NAME' on provider '$PROVIDER'."
-            echo "This can happen if it is the very first release for this provider."
-            exit 1
-          fi
-          echo "Determined base version: $BASE_VERSION"
-
-          # 3. Recreate the release files using devctl
+          # 2. Recreate the release files using devctl
           devctl release create \
-            --base "$BASE_VERSION" \
+            --base "$RELEASE_NAME" \
             --name "$RELEASE_NAME" \
             --provider "$PROVIDER" \
             ${{ steps.parse_command.outputs.devctl_args }} \
