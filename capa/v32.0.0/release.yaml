@@ -136,10 +136,10 @@ spec:
     catalog: cluster
     version: 4.0.2
   - name: flatcar
-    version: 4230.2.2
+    version: 4230.2.1
   - name: kubernetes
     version: 1.32.9
   - name: os-tooling
     version: 1.26.1
-  date: "2025-09-10T07:58:28Z"
+  date: "2025-09-10T07:59:41Z"
   state: active
