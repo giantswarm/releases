@@ -359,6 +359,15 @@ jobs:
           for provider in ${{ needs.major_release_decider.outputs.provider_list }}; do
             echo "--- Creating release for $provider ---"
 
+            echo "--- DEBUG: Running determine-next-release.sh for $provider ---"
+            SCRIPT_OUTPUT=$(./tools/determine-next-release.sh "$provider" "major" "${{ needs.major_release_decider.outputs.version_override }}")
+            echo "--- DEBUG: Script output ---"
+            echo "$SCRIPT_OUTPUT"
+            echo "--- END DEBUG ---"
+
+            BASE_VERSION=$(echo "$SCRIPT_OUTPUT" | grep '^base=' | cut -d'=' -f2)
+            echo "--- DEBUG: Parsed BASE_VERSION for $provider: '$BASE_VERSION' ---"
+
             # Add a separator before each provider except the first one
             if [ "$first_provider" = true ]; then
               first_provider=false
@@ -372,8 +381,6 @@ jobs:
             PROVIDER_UPPER=$(echo "$provider" | awk '{print toupper($0)}')
             echo "### Changes for ${PROVIDER_UPPER}" >> $LOG_FILE
             echo "" >> $LOG_FILE
-
-            BASE_VERSION=$(./tools/determine-next-release.sh "$provider" "major" "${{ needs.major_release_decider.outputs.version_override }}" | grep '^base=' | cut -d'=' -f2)
 
             n=0
             until [ "$n" -ge 3 ]
@@ -502,6 +509,15 @@ jobs:
           for provider in ${{ needs.minor_release_decider.outputs.provider_list }}; do
             echo "--- Creating release for $provider ---"
 
+            echo "--- DEBUG: Running determine-next-release.sh for $provider ---"
+            SCRIPT_OUTPUT=$(./tools/determine-next-release.sh "$provider" "minor" "${{ needs.minor_release_decider.outputs.version_override }}")
+            echo "--- DEBUG: Script output ---"
+            echo "$SCRIPT_OUTPUT"
+            echo "--- END DEBUG ---"
+
+            BASE_VERSION=$(echo "$SCRIPT_OUTPUT" | grep '^base=' | cut -d'=' -f2)
+            echo "--- DEBUG: Parsed BASE_VERSION for $provider: '$BASE_VERSION' ---"
+
             # Add a separator before each provider except the first one
             if [ "$first_provider" = true ]; then
               first_provider=false
@@ -515,8 +531,6 @@ jobs:
             PROVIDER_UPPER=$(echo "$provider" | awk '{print toupper($0)}')
             echo "### Changes for ${PROVIDER_UPPER}" >> $LOG_FILE
             echo "" >> $LOG_FILE
-
-            BASE_VERSION=$(./tools/determine-next-release.sh "$provider" "minor" "${{ needs.minor_release_decider.outputs.version_override }}" | grep '^base=' | cut -d'=' -f2)
 
             n=0
             until [ "$n" -ge 3 ]
