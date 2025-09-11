@@ -115,6 +115,8 @@ jobs:
         uses: actions/checkout@v5
       - name: Install devctl
         uses: ./.github/actions/install-devctl
+        with:
+          github_token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
       - name: Set provider display name for title
         id: provider_name
         run: |
@@ -230,6 +232,8 @@ jobs:
 
       - name: Install devctl
         uses: ./.github/actions/install-devctl
+        with:
+          github_token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
 
       - name: Check for new upstream Kubernetes version
         id: k8s_check
@@ -381,6 +385,8 @@ jobs:
 
       - name: Install devctl
         uses: ./.github/actions/install-devctl
+        with:
+          github_token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
 
       - name: Check for existing PR
         id: check_pr
@@ -526,6 +532,8 @@ jobs:
 
       - name: Install devctl
         uses: ./.github/actions/install-devctl
+        with:
+          github_token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
 
       - name: Check for new upstream Kubernetes version
         id: k8s_check
@@ -645,6 +653,8 @@ jobs:
 
       - name: Install devctl
         uses: ./.github/actions/install-devctl
+        with:
+          github_token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
 
       - name: Check for existing PR
         id: check_pr

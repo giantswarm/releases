@@ -1,12 +1,16 @@
 name: 'Install devctl'
 description: 'Installs the latest version of devctl'
+inputs:
+  github_token:
+    description: 'The GitHub token to use for authentication'
+    required: true
 runs:
   using: "composite"
   steps:
     - name: Install devctl from release binary
       shell: bash
       env:
-        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GH_TOKEN: ${{ inputs.github_token }}
       run: |
         mkdir -p /tmp/devctl_install && cd /tmp/devctl_install
         LATEST_DEVCTL_TAG=$(gh release view --repo giantswarm/devctl --json tagName --jq '.tagName')
