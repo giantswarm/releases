@@ -26,7 +26,7 @@ for provider in "${PROVIDERS[@]}"; do
     fi
 
     # Find the latest release version in the provider's directory, excluding archived releases.
-    LATEST_RELEASE=$(find "$search_dir" -name "v*" -type d -not -path "*/archived/*" -exec basename {} \; | sort -V | tail -n 1)
+    LATEST_RELEASE=$(find "$search_dir" -name "v[0-9]*" -type d -not -path "*/archived/*" -exec basename {} \; | sort -V | tail -n 1)
 
     if [ -z "$LATEST_RELEASE" ]; then
         echo "Warning: No active releases found for provider '$provider'. Skipping."
