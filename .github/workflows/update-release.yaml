@@ -71,7 +71,7 @@ jobs:
           echo "devctl_args=$DEVCTL_ARGS" >> "$GITHUB_OUTPUT"
 
           # Check for --provider in the comment
-          COMMENT_PROVIDER=$(echo "$COMMENT_BODY" | grep -oP '(?<=--provider(=| ))[a-zA-Z-]+')
+          COMMENT_PROVIDER=$(echo "$COMMENT_BODY" | grep -oP '(?<=--provider(=| ))[a-zA-Z-]+' || true)
 
           if [[ -n "$COMMENT_PROVIDER" ]]; then
             echo "Provider specified in comment: $COMMENT_PROVIDER"
