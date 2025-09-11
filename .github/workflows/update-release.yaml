@@ -61,56 +61,34 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
 
-      - name: Parse command arguments and determine provider
+      - name: Parse command arguments and determine provider(s)
         id: parse_command
         run: |
           COMMENT_BODY="${{ github.event.comment.body }}"
-          BRANCH_NAME="${{ steps.get_branch.outputs.result }}"
 
           # Extract devctl arguments, excluding the /update-release command and any --provider flag
           DEVCTL_ARGS=$(echo "$COMMENT_BODY" | sed -E 's|/update-release||; s/--provider[= ]+[a-zA-Z-]+//' | xargs)
           echo "devctl_args=$DEVCTL_ARGS" >> "$GITHUB_OUTPUT"
 
-          # 1. Check for --provider in the comment
+          # Check for --provider in the comment
           COMMENT_PROVIDER=$(echo "$COMMENT_BODY" | grep -oP '(?<=--provider(=| ))[a-zA-Z-]+')
-
-          # 2. If not in comment, try to get it from the branch name
-          BRANCH_PROVIDER=$(echo "$BRANCH_NAME" | sed -n 's/release-v[0-9.]*-\(.*\)/\1/p')
 
           if [[ -n "$COMMENT_PROVIDER" ]]; then
             echo "Provider specified in comment: $COMMENT_PROVIDER"
             echo "provider=$COMMENT_PROVIDER" >> "$GITHUB_OUTPUT"
-          elif [[ -n "$BRANCH_PROVIDER" ]]; then
-            echo "Provider inferred from branch name: $BRANCH_PROVIDER"
-            echo "provider=$BRANCH_PROVIDER" >> "$GITHUB_OUTPUT"
           else
-            echo "provider_missing=true" >> "$GITHUB_OUTPUT"
-            echo "Provider was not specified in the command and could not be inferred from branch name '$BRANCH_NAME'."
+            echo "No provider specified. Will attempt to update for all providers."
+            ALL_PROVIDERS="aws azure capa cloud-director kvm vsphere"
+            echo "providers_list=${ALL_PROVIDERS}" >> "$GITHUB_OUTPUT"
           fi
-
-      - name: Add comment if provider is missing
-        if: steps.parse_command.outputs.provider_missing == 'true'
-        uses: actions/github-script@v8
-        with:
-          script: |
-            github.rest.issues.createComment({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              issue_number: context.issue.number,
-              body: "Could not determine the provider. For multi-provider releases, please specify the provider using the `--provider` flag. \n\n**Example:**\n`/update-release --provider aws --component flatcar@1.2.3`\n\nTo specify app dependencies, use the `#` separator:\n`/update-release --provider aws --app my-app@1.2.3@@dep1#dep2`"
-            });
-      - name: Fail job if provider is missing
-        if: steps.parse_command.outputs.provider_missing == 'true'
-        run: |
-          exit 1
 
       - name: Recreate release files
         id: recreate_release
-        if: steps.parse_command.outputs.provider_missing != 'true'
+        if: success() && (steps.parse_command.outputs.provider || steps.parse_command.outputs.providers_list)
         run: |
           set -o pipefail
           BRANCH_NAME="${{ steps.get_branch.outputs.result }}"
-          PROVIDER="${{ steps.parse_command.outputs.provider }}"
+          PROVIDERS_TO_UPDATE="${{ steps.parse_command.outputs.provider }}${{ steps.parse_command.outputs.providers_list }}"
 
           # 1. Determine the release name from the branch.
           RELEASE_NAME=$(echo "$BRANCH_NAME" | sed -n 's/release-\(v[0-9.]*\).*/\1/p')
@@ -119,35 +97,60 @@ jobs:
             exit 1
           fi
 
-          # 2. Determine the correct previous release to use as a base.
-          search_dir=$PROVIDER
-          if [ "$PROVIDER" == "aws" ]; then
-              search_dir="capa"
-          fi
-          BASE_VERSION=$(find "$search_dir" -name "v*" -type d -not -path "*/archived/*" -exec basename {} \; | grep -v "^${RELEASE_NAME}$" | sort -V | tail -n 1)
-          if [[ -z "$BASE_VERSION" ]]; then
-            echo "Error: Could not determine base version for release '$RELEASE_NAME'."
-            exit 1
-          fi
-          echo "Updating release '$RELEASE_NAME' for provider '$PROVIDER' using base '$BASE_VERSION'"
+          FULL_LOG_CONTENT=""
 
-          # 3. Recreate the release, applying user-provided changes on top of a fresh --bumpall.
-          #    This ensures all components are at their latest correct versions, preventing reverts.
-          devctl release create \
-            --base "$BASE_VERSION" \
-            --name "$RELEASE_NAME" \
-            --provider "$PROVIDER" \
-            --bumpall \
-            ${{ steps.parse_command.outputs.devctl_args }} \
-            --overwrite -y --output markdown --requested-only 2>&1 | tee /tmp/release_output.log
+          for PROVIDER in $PROVIDERS_TO_UPDATE; do
+            echo "Processing provider: $PROVIDER"
 
-          LOG_CONTENT=$(cat /tmp/release_output.log)
-          echo "LOG_CONTENT<<EOF" >> "$GITHUB_ENV"
-          echo "${LOG_CONTENT}" >> "$GITHUB_ENV"
-          echo "EOF" >> "$GITHUB_ENV"
+            # 2. Determine the correct previous release to use as a base.
+            search_dir=$PROVIDER
+            if [ "$PROVIDER" == "aws" ]; then
+                search_dir="capa"
+            fi
+
+            # Check if release directory for the given release name exists for the provider in the current branch
+            if [ ! -d "$search_dir/$RELEASE_NAME" ]; then
+              echo "Release '$RELEASE_NAME' does not exist for provider '$PROVIDER' (in directory '$search_dir'). Skipping."
+              continue
+            fi
+
+            BASE_VERSION=$(find "$search_dir" -name "v*" -type d -not -path "*/archived/*" -exec basename {} \; | grep -v "^${RELEASE_NAME}$" | sort -V | tail -n 1)
+            if [[ -z "$BASE_VERSION" ]]; then
+              echo "Error: Could not determine base version for release '$RELEASE_NAME' for provider '$PROVIDER'."
+              # Don't exit, just continue to the next provider
+              continue
+            fi
+            echo "Updating release '$RELEASE_NAME' for provider '$PROVIDER' using base '$BASE_VERSION'"
+
+            # 3. Recreate the release
+            output=$(devctl release create \
+              --base "$BASE_VERSION" \
+              --name "$RELEASE_NAME" \
+              --provider "$PROVIDER" \
+              --bumpall \
+              ${{ steps.parse_command.outputs.devctl_args }} \
+              --overwrite -y --output markdown --requested-only 2>&1)
+
+            # Check if devctl command was successful
+            if [ $? -ne 0 ]; then
+                FULL_LOG_CONTENT+="### Changes for ${PROVIDER^^}\n\n"
+                FULL_LOG_CONTENT+="devctl command failed for provider $PROVIDER.\n\n"
+                FULL_LOG_CONTENT+="<details><summary>Error Log</summary>\n\n"
+                FULL_LOG_CONTENT+="_Output of \`devctl release create\`_: \n"
+                FULL_LOG_CONTENT+="\`\`\`\n${output}\n\`\`\`\n\n"
+                FULL_LOG_CONTENT+="</details>\n\n"
+            else
+                FULL_LOG_CONTENT+="### Changes for ${PROVIDER^^}\n\n"
+                FULL_LOG_CONTENT+="${output}\n\n"
+            fi
+          done
+
+          echo "log_content<<EOF" >> "$GITHUB_OUTPUT"
+          echo "$FULL_LOG_CONTENT" >> "$GITHUB_OUTPUT"
+          echo "EOF" >> "$GITHUB_OUTPUT"
 
       - name: Commit and push changes
-        if: steps.parse_command.outputs.provider_missing != 'true'
+        if: success() && (steps.parse_command.outputs.provider || steps.parse_command.outputs.providers_list)
         run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email '41898282+github-actions[bot]@users.noreply.github.com'
@@ -172,23 +175,16 @@ jobs:
               comment_id: ${{ github.event.comment.id }},
               content: '+1'
             })
-      - name: Read log file to env
-        run: |
-          log_content=$(cat /tmp/release_output.log)
-          echo "LOG_CONTENT<<EOF" >> $GITHUB_ENV
-          echo "${log_content}" >> $GITHUB_ENV
-          echo "EOF" >> $GITHUB_ENV
-
       - name: Post devctl output as a comment
+        if: steps.recreate_release.outputs.log_content != ''
         uses: actions/github-script@v8
         with:
           github-token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
           script: |
-            const output = process.env.LOG_CONTENT;
-            const provider = "${{ steps.parse_command.outputs.provider }}";
+            const output = `${{ steps.recreate_release.outputs.log_content }}`;
             github.rest.issues.createComment({
               issue_number: ${{ github.event.issue.number }},
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: `### Changes for ${provider.toUpperCase()}\n\n${output.replace(/`/g, '\\`')}`
+              body: output
             });
