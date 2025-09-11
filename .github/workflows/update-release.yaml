@@ -106,11 +106,9 @@ jobs:
           PROVIDERS_TO_UPDATE="${{ steps.parse_command.outputs.provider }}${{ steps.parse_command.outputs.providers_list }}"
           
           # For `devctl`, the provider for the `capa` directory is `aws`.
+          # We must translate `aws` to `capa` for directory lookups.
           if [[ " ${PROVIDERS_TO_UPDATE} " =~ " aws " ]]; then
-            # If we are in a consolidated release, there might be both aws and capa releases.
-            if [[ " ${PROVIDERS_TO_UPDATE} " =~ " capa " ]]; then
-              PROVIDERS_TO_UPDATE=$(echo "${PROVIDERS_TO_UPDATE}" | sed 's/aws/capa/g')
-            fi
+            PROVIDERS_TO_UPDATE=$(echo "${PROVIDERS_TO_UPDATE}" | sed 's/aws/capa/g')
           fi
 
           # 1. Determine the release name from the branch.
