@@ -159,6 +159,9 @@ jobs:
             fi
           done
 
+          # Replace literal '\n' with actual newlines for proper rendering in the GitHub comment.
+          FULL_LOG_CONTENT=$(printf '%b' "${FULL_LOG_CONTENT}")
+
           # Use GITHUB_ENV to avoid issues with special characters in output strings.
           echo "DEVCTL_OUTPUT_COMMENT<<EOF" >> "$GITHUB_ENV"
           echo "$FULL_LOG_CONTENT" >> "$GITHUB_ENV"
