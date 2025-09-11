@@ -160,7 +160,12 @@ jobs:
                 FULL_LOG_CONTENT="${FULL_LOG_CONTENT}${LOG_PART}"
             else
                 LOG_PART="### Changes for ${PROVIDER_DIR^^}\n\n"
-                LOG_PART="${LOG_PART}${output}\n\n"
+                # Trim whitespace to check if the output is empty.
+                if [[ -z "$(echo -e "${output}" | tr -d '[:space:]')" ]]; then
+                  LOG_PART="${LOG_PART}No changes detected for provider ${PROVIDER_DIR^^}. The components and versions specified may already be up to date.\n\n"
+                else
+                  LOG_PART="${LOG_PART}${output}\n\n"
+                fi
                 FULL_LOG_CONTENT="${FULL_LOG_CONTENT}${LOG_PART}"
             fi
           done
