@@ -115,27 +115,27 @@ jobs:
           FULL_LOG_CONTENT=""
 
           for PROVIDER in $PROVIDERS_TO_UPDATE; do
-            echo "Processing provider: $PROVIDER"
+            PROVIDER_DIR=$PROVIDER
+            echo "Processing provider: $PROVIDER_DIR"
 
-            # 2. Determine the correct previous release to use as a base.
-            search_dir=$PROVIDER
-            if [ "$PROVIDER" == "aws" ]; then
-                search_dir="capa"
+            # For `devctl`, the provider for the `capa` directory is `aws`.
+            if [ "$PROVIDER" == "capa" ]; then
+                PROVIDER="aws"
             fi
 
             # Check if release directory for the given release name exists for the provider in the current branch
-            if [ ! -d "$search_dir/$RELEASE_NAME" ]; then
-              echo "Release '$RELEASE_NAME' does not exist for provider '$PROVIDER' (in directory '$search_dir'). Skipping."
+            if [ ! -d "$PROVIDER_DIR/$RELEASE_NAME" ]; then
+              echo "Release '$RELEASE_NAME' does not exist for provider '$PROVIDER_DIR' (in directory '$PROVIDER_DIR'). Skipping."
               continue
             fi
 
-            BASE_VERSION=$(find "$search_dir" -name "v*" -type d -not -path "*/archived/*" -exec basename {} \; | grep -v "^${RELEASE_NAME}$" | sort -V | tail -n 1)
+            BASE_VERSION=$(find "$PROVIDER_DIR" -name "v*" -type d -not -path "*/archived/*" -exec basename {} \; | grep -v "^${RELEASE_NAME}$" | sort -V | tail -n 1)
             if [[ -z "$BASE_VERSION" ]]; then
-              echo "Error: Could not determine base version for release '$RELEASE_NAME' for provider '$PROVIDER'."
+              echo "Error: Could not determine base version for release '$RELEASE_NAME' for provider '$PROVIDER_DIR'."
               # Don't exit, just continue to the next provider
               continue
             fi
-            echo "Updating release '$RELEASE_NAME' for provider '$PROVIDER' using base '$BASE_VERSION'"
+            echo "Updating release '$RELEASE_NAME' for provider '$PROVIDER_DIR' using base '$BASE_VERSION'"
 
             # 3. Recreate the release
             if ! output=$(devctl release create \
@@ -145,21 +145,22 @@ jobs:
               --bumpall \
               ${{ steps.parse_command.outputs.devctl_args }} \
               --overwrite -y --output markdown --requested-only 2>&1); then
-                FULL_LOG_CONTENT+="### Changes for ${PROVIDER^^}\n\n"
-                FULL_LOG_CONTENT+="devctl command failed for provider $PROVIDER.\n\n"
+                FULL_LOG_CONTENT+="### Changes for ${PROVIDER_DIR^^}\n\n"
+                FULL_LOG_CONTENT+="devctl command failed for provider $PROVIDER_DIR.\n\n"
                 FULL_LOG_CONTENT+="<details><summary>Error Log</summary>\n\n"
                 FULL_LOG_CONTENT+="_Output of \`devctl release create\`_: \n"
                 FULL_LOG_CONTENT+="\`\`\`\n${output}\n\`\`\`\n\n"
                 FULL_LOG_CONTENT+="</details>\n\n"
             else
-                FULL_LOG_CONTENT+="### Changes for ${PROVIDER^^}\n\n"
+                FULL_LOG_CONTENT+="### Changes for ${PROVIDER_DIR^^}\n\n"
                 FULL_LOG_CONTENT+="${output}\n\n"
             fi
           done
 
-          echo "log_content<<EOF" >> "$GITHUB_OUTPUT"
-          echo "$FULL_LOG_CONTENT" >> "$GITHUB_OUTPUT"
-          echo "EOF" >> "$GITHUB_OUTPUT"
+          # Use GITHUB_ENV to avoid issues with special characters in output strings.
+          echo "DEVCTL_OUTPUT_COMMENT<<EOF" >> "$GITHUB_ENV"
+          echo "$FULL_LOG_CONTENT" >> "$GITHUB_ENV"
+          echo "EOF" >> "$GITHUB_ENV"
 
       - name: Commit and push changes
         if: success() && (steps.parse_command.outputs.provider || steps.parse_command.outputs.providers_list)
@@ -188,12 +189,12 @@ jobs:
               content: '+1'
             })
       - name: Post devctl output as a comment
-        if: steps.recreate_release.outputs.log_content != ''
+        if: env.DEVCTL_OUTPUT_COMMENT != ''
         uses: actions/github-script@v8
         with:
           github-token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
           script: |
-            const output = `${{ steps.recreate_release.outputs.log_content }}`;
+            const output = process.env.DEVCTL_OUTPUT_COMMENT;
             github.rest.issues.createComment({
               issue_number: ${{ github.event.issue.number }},
               owner: context.repo.owner,
