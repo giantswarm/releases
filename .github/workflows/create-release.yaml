@@ -242,8 +242,8 @@ jobs:
   # This is the job for creating a single, consolidated PR for a major release when all providers are aligned.
   major_release_consolidated:
     name: "Major Release (Consolidated)"
-    needs: [dispatcher, preflight_check]
-    if: needs.dispatcher.outputs.release_type == 'major' && (needs.dispatcher.outputs.force_consolidated == 'true' || (needs.dispatcher.outputs.is_manual == 'false' && needs.preflight_check.outputs.alignment == 'aligned'))
+    needs: [dispatcher]
+    if: needs.dispatcher.outputs.release_type == 'major' && (needs.dispatcher.outputs.force_consolidated == 'true' || needs.dispatcher.outputs.is_manual == 'false')
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
@@ -395,8 +395,8 @@ jobs:
 
   minor_release_consolidated:
     name: "Minor Release (Consolidated)"
-    needs: [dispatcher, preflight_check_minor]
-    if: needs.dispatcher.outputs.release_type == 'minor' && (needs.dispatcher.outputs.force_consolidated == 'true' || (needs.dispatcher.outputs.is_manual == 'false' && needs.preflight_check_minor.outputs.alignment == 'aligned'))
+    needs: [dispatcher]
+    if: needs.dispatcher.outputs.release_type == 'minor' && (needs.dispatcher.outputs.force_consolidated == 'true' || needs.dispatcher.outputs.is_manual == 'false')
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
@@ -540,7 +540,7 @@ jobs:
   major_release_individual:
     name: "Major Release (Individual)"
     needs: [dispatcher, preflight_check]
-    if: needs.dispatcher.outputs.release_type == 'major' && needs.dispatcher.outputs.is_manual == 'false' && needs.preflight_check.outputs.alignment == 'misaligned'
+    if: needs.dispatcher.outputs.is_manual == 'false' && needs.preflight_check.outputs.alignment == 'misaligned'
     strategy:
       matrix:
         provider: ${{ fromJSON(needs.dispatcher.outputs.provider_matrix) }}
@@ -661,7 +661,7 @@ jobs:
   minor_release_individual:
     name: "Minor Release (Individual)"
     needs: [dispatcher, preflight_check_minor]
-    if: needs.dispatcher.outputs.release_type == 'minor' && needs.dispatcher.outputs.is_manual == 'false' && needs.preflight_check_minor.outputs.alignment == 'misaligned'
+    if: needs.dispatcher.outputs.is_manual == 'false' && needs.preflight_check_minor.outputs.alignment == 'misaligned'
     strategy:
       matrix:
         provider: ${{ fromJSON(needs.dispatcher.outputs.provider_matrix) }}
