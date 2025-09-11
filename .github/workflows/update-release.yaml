@@ -77,9 +77,24 @@ jobs:
             echo "Provider specified in comment: $COMMENT_PROVIDER"
             echo "provider=$COMMENT_PROVIDER" >> "$GITHUB_OUTPUT"
           else
-            echo "No provider specified. Will attempt to update for all providers."
-            ALL_PROVIDERS="aws azure capa cloud-director kvm vsphere"
-            echo "providers_list=${ALL_PROVIDERS}" >> "$GITHUB_OUTPUT"
+            echo "No provider specified. Detecting providers from PR files."
+            # Get providers from the PR's changed files.
+            PR_PROVIDERS=$(gh pr view ${{ github.event.issue.number }} --json files --jq '.files[].path' | cut -d'/' -f1 | sort -u | xargs)
+            # List of valid provider directories.
+            VALID_PROVIDERS="azure capa cloud-director vsphere"
+            PROVIDERS_LIST=""
+            for provider in $PR_PROVIDERS; do
+              if [[ " $VALID_PROVIDERS " =~ " $provider " ]]; then
+                PROVIDERS_LIST="$PROVIDERS_LIST $provider"
+              fi
+            done
+            # Trim leading/trailing whitespace.
+            PROVIDERS_LIST=$(echo "$PROVIDERS_LIST" | xargs)
+            if [[ -z "$PROVIDERS_LIST" ]]; then
+              echo "Could not determine any providers from the PR files."
+            fi
+            echo "Detected providers: $PROVIDERS_LIST"
+            echo "providers_list=${PROVIDERS_LIST}" >> "$GITHUB_OUTPUT"
           fi
 
       - name: Recreate release files
@@ -123,16 +138,13 @@ jobs:
             echo "Updating release '$RELEASE_NAME' for provider '$PROVIDER' using base '$BASE_VERSION'"
 
             # 3. Recreate the release
-            output=$(devctl release create \
+            if ! output=$(devctl release create \
               --base "$BASE_VERSION" \
               --name "$RELEASE_NAME" \
               --provider "$PROVIDER" \
               --bumpall \
               ${{ steps.parse_command.outputs.devctl_args }} \
-              --overwrite -y --output markdown --requested-only 2>&1)
-
-            # Check if devctl command was successful
-            if [ $? -ne 0 ]; then
+              --overwrite -y --output markdown --requested-only 2>&1); then
                 FULL_LOG_CONTENT+="### Changes for ${PROVIDER^^}\n\n"
                 FULL_LOG_CONTENT+="devctl command failed for provider $PROVIDER.\n\n"
                 FULL_LOG_CONTENT+="<details><summary>Error Log</summary>\n\n"
