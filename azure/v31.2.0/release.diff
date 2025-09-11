@@ -5,20 +5,20 @@ metadata:                                                          metadata:
 spec:                                                              spec:
   apps:                                                              apps:
   - name: azure-cloud-controller-manager                             - name: azure-cloud-controller-manager
-    version: 1.31.8-gs2                                                version: 1.31.8-gs2
+    version: 1.31.8-gs2                                         |      version: 1.32.7-1
     dependsOn:                                                         dependsOn:
     - vertical-pod-autoscaler-crd                                      - vertical-pod-autoscaler-crd
   - name: azure-cloud-node-manager                                   - name: azure-cloud-node-manager
-    version: 1.31.8-gs1                                                version: 1.31.8-gs1
+    version: 1.31.8-gs1                                         |      version: 1.32.7
     dependsOn:                                                         dependsOn:
     - vertical-pod-autoscaler-crd                                      - vertical-pod-autoscaler-crd
   - name: azuredisk-csi-driver                                       - name: azuredisk-csi-driver
-    version: 1.31.11-gs1                                               version: 1.31.11-gs1
+    version: 1.31.11-gs1                                        |      version: 1.32.9
     dependsOn:                                                         dependsOn:
     - azure-cloud-controller-manager                                   - azure-cloud-controller-manager
     - azure-cloud-node-manager                                         - azure-cloud-node-manager
   - name: azurefile-csi-driver                                       - name: azurefile-csi-driver
-    version: 1.31.7-gs1                                                version: 1.31.7-gs1
+    version: 1.31.7-gs1                                         |      version: 1.32.5
     dependsOn:                                                         dependsOn:
     - azure-cloud-controller-manager                                   - azure-cloud-controller-manager
     - azure-cloud-node-manager                                         - azure-cloud-node-manager
@@ -117,10 +117,10 @@ spec:                                                              spec:
     catalog: cluster                                                   catalog: cluster
     version: 2.3.1                                              |      version: 2.4.1
   - name: flatcar                                                    - name: flatcar
-    version: 4152.2.3                                           |      version: 4230.2.2
+    version: 4152.2.3                                                  version: 4152.2.3
   - name: kubernetes                                                 - name: kubernetes
     version: 1.31.11                                            |      version: 1.31.13
   - name: os-tooling                                                 - name: os-tooling
     version: 1.26.1                                                    version: 1.26.1
-  date: "2025-09-10T12:57:18Z"                                  |    date: "2025-09-11T08:18:28Z"
+  date: "2025-09-10T12:57:18Z"                                  |    date: "2025-09-11T08:22:04Z"
   state: active                                                      state: active

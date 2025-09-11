@@ -7,7 +7,6 @@
 ### Components
 
 - cluster-azure from v2.3.1 to v2.4.1
-- Flatcar from v4152.2.3 to [v4230.2.2](https://www.flatcar-linux.org/releases/#release-4230.2.2)
 - Kubernetes from v1.31.11 to [v1.31.13](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.31.md#v1.31.13)
 
 ### cluster-azure [v2.3.1...v2.4.1](https://github.com/giantswarm/cluster-azure/compare/v2.3.1...v2.4.1)
@@ -19,6 +18,10 @@
 
 ### Apps
 
+- azure-cloud-controller-manager from v1.31.8-gs2 to v1.32.7-1
+- azure-cloud-node-manager from v1.31.8-gs1 to v1.32.7
+- azuredisk-csi-driver from v1.31.11-gs1 to v1.32.9
+- azurefile-csi-driver from v1.31.7-gs1 to v1.32.5
 - capi-node-labeler from v1.1.2 to v1.1.3
 - cert-exporter from v2.9.8 to v2.9.9
 - cert-manager from v3.9.1 to v3.9.2
@@ -33,6 +36,35 @@
 - observability-bundle from v2.0.0 to v2.2.2
 - vertical-pod-autoscaler from v5.5.1 to v6.0.1
 - vertical-pod-autoscaler-crd from v3.3.1 to v4.0.1
+
+### azure-cloud-controller-manager [v1.31.8-gs2...v1.32.7-1](https://github.com/giantswarm/azure-cloud-controller-manager-app/compare/v1.31.8-gs2...v1.32.7-1)
+
+#### Changed
+
+- Chart: Update RBAC. ([#124](https://github.com/giantswarm/azure-cloud-controller-manager-app/pull/124))
+- Switch to semver-compatible release name
+- Chart: Update to upstream v1.32.7. ([#114](https://github.com/giantswarm/azure-cloud-controller-manager-app/pull/114))
+
+### azure-cloud-node-manager [v1.31.8-gs1...v1.32.7](https://github.com/giantswarm/azure-cloud-node-manager-app/compare/v1.31.8-gs1...v1.32.7)
+
+#### Changed
+
+- Switch to semver-compatible release name.
+- Chart: Update to upstream v1.32.7. ([#107](https://github.com/giantswarm/azure-cloud-node-manager-app/pull/107))
+
+### azuredisk-csi-driver [v1.31.11-gs1...v1.32.9](https://github.com/giantswarm/azuredisk-csi-driver-app/compare/v1.31.11-gs1...v1.32.9)
+
+#### Changed
+
+- Switch to semver-compatible release name
+- Chart: Update to upstream v1.32.9.
+
+### azurefile-csi-driver [v1.31.7-gs1...v1.32.5](https://github.com/giantswarm/azurefile-csi-driver-app/compare/v1.31.7-gs1...v1.32.5)
+
+#### Changed
+
+- Switch to semver-compatible release name.
+- Chart: Update to upstream v1.32.5.
 
 ### capi-node-labeler [v1.1.2...v1.1.3](https://github.com/giantswarm/capi-node-labeler-app/compare/v1.1.2...v1.1.3)
 

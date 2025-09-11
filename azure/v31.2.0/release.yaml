@@ -5,20 +5,20 @@ metadata:
 spec:
   apps:
   - name: azure-cloud-controller-manager
-    version: 1.31.8-gs2
+    version: 1.32.7-1
     dependsOn:
     - vertical-pod-autoscaler-crd
   - name: azure-cloud-node-manager
-    version: 1.31.8-gs1
+    version: 1.32.7
     dependsOn:
     - vertical-pod-autoscaler-crd
   - name: azuredisk-csi-driver
-    version: 1.31.11-gs1
+    version: 1.32.9
     dependsOn:
     - azure-cloud-controller-manager
     - azure-cloud-node-manager
   - name: azurefile-csi-driver
-    version: 1.31.7-gs1
+    version: 1.32.5
     dependsOn:
     - azure-cloud-controller-manager
     - azure-cloud-node-manager
@@ -117,10 +117,10 @@ spec:
     catalog: cluster
     version: 2.4.1
   - name: flatcar
-    version: 4230.2.2
+    version: 4152.2.3
   - name: kubernetes
     version: 1.31.13
   - name: os-tooling
     version: 1.26.1
-  date: "2025-09-11T08:18:28Z"
+  date: "2025-09-11T08:22:04Z"
   state: active

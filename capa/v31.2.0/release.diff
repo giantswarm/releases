@@ -45,11 +45,11 @@ spec:                                                              spec:
     dependsOn:                                                         dependsOn:
     - prometheus-operator-crd                                          - prometheus-operator-crd
   - name: cloud-provider-aws                                         - name: cloud-provider-aws
-    version: 1.31.5-gs1                                                version: 1.31.5-gs1
+    version: 1.31.5-gs1                                         |      version: 1.32.3
     dependsOn:                                                         dependsOn:
     - vertical-pod-autoscaler-crd                                      - vertical-pod-autoscaler-crd
   - name: cluster-autoscaler                                         - name: cluster-autoscaler
-    version: 1.31.3-gs1                                                version: 1.31.3-gs1
+    version: 1.31.3-gs1                                         |      version: 1.32.2-gs1
     dependsOn:                                                         dependsOn:
     - kyverno-crds                                                     - kyverno-crds
   - name: coredns                                                    - name: coredns
@@ -141,10 +141,10 @@ spec:                                                              spec:
     catalog: cluster                                                   catalog: cluster
     version: 3.6.2                                              |      version: 4.0.2
   - name: flatcar                                                    - name: flatcar
-    version: 4152.2.3                                           |      version: 4230.2.2
+    version: 4152.2.3                                                  version: 4152.2.3
   - name: kubernetes                                                 - name: kubernetes
     version: 1.31.11                                            |      version: 1.31.13
   - name: os-tooling                                                 - name: os-tooling
     version: 1.26.1                                                    version: 1.26.1
-  date: "2025-09-05T10:59:17Z"                                  |    date: "2025-09-11T08:18:16Z"
+  date: "2025-09-05T10:59:17Z"                                  |    date: "2025-09-11T08:22:17Z"
   state: active                                                      state: active
