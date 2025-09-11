@@ -7,7 +7,7 @@ on:
 jobs:
   update-release:
     # This job only runs for pull request comments
-    if: github.event.issue.pull_request && startsWith(github.event.comment.body, '/update-release') && github.repository == 'giantswarm/releases' && github.event.sender.type != 'Bot'
+    if: github.event.issue.pull_request && startsWith(github.event.comment.body, '/update-release') && github.repository == 'giantswarm/releases' && github.event.sender.type != 'Bot' && github.event.sender.login != 'taylorbot'
     runs-on: ubuntu-latest
     env:
       OPSCTL_GITHUB_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
@@ -135,7 +135,15 @@ jobs:
               continue
             fi
 
-            BASE_VERSION=$(find "$PROVIDER_DIR" -maxdepth 1 -name "v*" -type d -not -path "*/archived/*" -exec basename {} \; | grep -v "^${RELEASE_NAME}$" | sort -V | tail -n 1)
+            echo "--- DEBUG: Finding base version for $PROVIDER_DIR ---"
+            FIND_OUTPUT=$(find "$PROVIDER_DIR" -maxdepth 1 -name "v*" -type d -not -path "*/archived/*" -exec basename {} \; | grep -v "^${RELEASE_NAME}$" | sort -V)
+            echo "--- DEBUG: Find output ---"
+            echo "$FIND_OUTPUT"
+            echo "--- END DEBUG ---"
+
+            BASE_VERSION=$(echo "$FIND_OUTPUT" | tail -n 1)
+            echo "--- DEBUG: Parsed BASE_VERSION for $PROVIDER_DIR: '$BASE_VERSION' ---"
+
             if [[ -z "$BASE_VERSION" ]]; then
               echo "Error: Could not determine base version for release '$RELEASE_NAME' for provider '$PROVIDER_DIR'."
               # Don't exit, just continue to the next provider
