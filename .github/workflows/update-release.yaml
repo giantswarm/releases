@@ -145,15 +145,17 @@ jobs:
               --bumpall \
               ${{ steps.parse_command.outputs.devctl_args }} \
               --overwrite -y --output markdown --requested-only 2>&1); then
-                FULL_LOG_CONTENT+="### Changes for ${PROVIDER_DIR^^}\n\n"
-                FULL_LOG_CONTENT+="devctl command failed for provider $PROVIDER_DIR.\n\n"
-                FULL_LOG_CONTENT+="<details><summary>Error Log</summary>\n\n"
-                FULL_LOG_CONTENT+="_Output of \`devctl release create\`_: \n"
-                FULL_LOG_CONTENT+="\`\`\`\n${output}\n\`\`\`\n\n"
-                FULL_LOG_CONTENT+="</details>\n\n"
+                LOG_PART="### Changes for ${PROVIDER_DIR^^}\n\n"
+                LOG_PART="${LOG_PART}devctl command failed for provider $PROVIDER_DIR.\n\n"
+                LOG_PART="${LOG_PART}<details><summary>Error Log</summary>\n\n"
+                LOG_PART="${LOG_PART}_Output of \`devctl release create\`_: \n"
+                LOG_PART="${LOG_PART}\`\`\`\n${output}\n\`\`\`\n\n"
+                LOG_PART="${LOG_PART}</details>\n\n"
+                FULL_LOG_CONTENT="${FULL_LOG_CONTENT}${LOG_PART}"
             else
-                FULL_LOG_CONTENT+="### Changes for ${PROVIDER_DIR^^}\n\n"
-                FULL_LOG_CONTENT+="${output}\n\n"
+                LOG_PART="### Changes for ${PROVIDER_DIR^^}\n\n"
+                LOG_PART="${LOG_PART}${output}\n\n"
+                FULL_LOG_CONTENT="${FULL_LOG_CONTENT}${LOG_PART}"
             fi
           done
 
