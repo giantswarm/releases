@@ -15,8 +15,8 @@ ALL_RELEASES=""
 
 if [ -z "$PROVIDER" ]; then
   # Scan all provider directories to find the absolute latest release
-  if [ "$RELEASE_TYPE" != "major" ]; then
-    echo "Error: An empty provider is only allowed for 'major' release types."
+  if [ "$RELEASE_TYPE" != "major" ] && [ "$RELEASE_TYPE" != "minor" ]; then
+    echo "Error: An empty provider is only allowed for 'major' or 'minor' release types."
     exit 1
   fi
   PROVIDER_DIRS=$(find . -maxdepth 1 -type d -name "v*" -exec basename {} \; | xargs -I {} find ./{} -maxdepth 1 -type d -name "v*" 2>/dev/null)

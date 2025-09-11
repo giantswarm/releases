@@ -91,35 +91,91 @@ jobs:
             echo "provider_list=aws azure cloud-director vsphere" >> "$GITHUB_OUTPUT"
           fi
 
-  preflight_check:
-    name: "Pre-flight Check"
-    needs: dispatcher
-    if: needs.dispatcher.outputs.release_type == 'major' && needs.dispatcher.outputs.is_manual == 'false'
+  major_release_decider:
+    name: "Major Release Decider"
+    needs: [dispatcher]
+    if: needs.dispatcher.outputs.release_type == 'major'
     runs-on: ubuntu-latest
     outputs:
-      alignment: ${{ steps.check.outputs.alignment }}
+      run_consolidated: ${{ steps.decider.outputs.run_consolidated }}
+      run_individual: ${{ steps.decider.outputs.run_individual }}
     steps:
       - uses: actions/checkout@v5
-      - name: Check major version alignment
-        id: check
+      - id: decider
         run: |
-          chmod +x ./tools/check-major-version-alignment.sh
-          ./tools/check-major-version-alignment.sh ${{ needs.dispatcher.outputs.provider_list }}
+          IS_MANUAL='${{ needs.dispatcher.outputs.is_manual }}'
+          FORCE_CONSOLIDATED='${{ needs.dispatcher.outputs.force_consolidated }}'
+          ALIGNMENT="aligned" # Default to aligned for manual runs
 
-  preflight_check_minor:
-    name: "Pre-flight Check Minor"
-    needs: dispatcher
-    if: needs.dispatcher.outputs.release_type == 'minor' && needs.dispatcher.outputs.is_manual == 'false'
+          if [[ "$IS_MANUAL" == 'false' ]]; then
+            echo "Scheduled run detected. Running pre-flight alignment check."
+            chmod +x ./tools/check-major-version-alignment.sh
+            ALIGNMENT=$(./tools/check-major-version-alignment.sh ${{ needs.dispatcher.outputs.provider_list }} | grep 'alignment=' | cut -d'=' -f2)
+          fi
+
+          if [[ "$FORCE_CONSOLIDATED" == 'true' ]]; then
+            echo "Manual consolidated run detected. Running consolidated job."
+            echo "run_consolidated=true" >> "$GITHUB_OUTPUT"
+            echo "run_individual=false" >> "$GITHUB_OUTPUT"
+          elif [[ "$IS_MANUAL" == 'false' ]]; then
+            echo "Scheduled run detected. Checking pre-flight alignment."
+            if [[ "$ALIGNMENT" == 'aligned' ]]; then
+              echo "Providers are aligned. Running consolidated job."
+              echo "run_consolidated=true" >> "$GITHUB_OUTPUT"
+              echo "run_individual=false" >> "$GITHUB_OUTPUT"
+            else
+              echo "Providers are misaligned. Running individual jobs."
+              echo "run_consolidated=false" >> "$GITHUB_OUTPUT"
+              echo "run_individual=true" >> "$GITHUB_OUTPUT"
+            fi
+          else
+            echo "No valid condition met. No major release job will run."
+            echo "run_consolidated=false" >> "$GITHUB_OUTPUT"
+            echo "run_individual=false" >> "$GITHUB_OUTPUT"
+          fi
+
+  minor_release_decider:
+    name: "Minor Release Decider"
+    needs: [dispatcher]
+    if: needs.dispatcher.outputs.release_type == 'minor'
     runs-on: ubuntu-latest
     outputs:
-      alignment: ${{ steps.check.outputs.alignment }}
+      run_consolidated: ${{ steps.decider.outputs.run_consolidated }}
+      run_individual: ${{ steps.decider.outputs.run_individual }}
     steps:
       - uses: actions/checkout@v5
-      - name: Check minor version alignment
-        id: check
+      - id: decider
         run: |
-          chmod +x ./tools/check-minor-version-alignment.sh
-          ./tools/check-minor-version-alignment.sh ${{ needs.dispatcher.outputs.provider_list }}
+          IS_MANUAL='${{ needs.dispatcher.outputs.is_manual }}'
+          FORCE_CONSOLIDATED='${{ needs.dispatcher.outputs.force_consolidated }}'
+          ALIGNMENT="aligned" # Default to aligned for manual runs
+
+          if [[ "$IS_MANUAL" == 'false' ]]; then
+            echo "Scheduled run detected. Running pre-flight alignment check."
+            chmod +x ./tools/check-minor-version-alignment.sh
+            ALIGNMENT=$(./tools/check-minor-version-alignment.sh ${{ needs.dispatcher.outputs.provider_list }} | grep 'alignment=' | cut -d'=' -f2)
+          fi
+
+          if [[ "$FORCE_CONSOLIDATED" == 'true' ]]; then
+            echo "Manual consolidated run detected. Running consolidated job."
+            echo "run_consolidated=true" >> "$GITHUB_OUTPUT"
+            echo "run_individual=false" >> "$GITHUB_OUTPUT"
+          elif [[ "$IS_MANUAL" == 'false' ]]; then
+            echo "Scheduled run detected. Checking pre-flight alignment."
+            if [[ "$ALIGNMENT" == 'aligned' ]]; then
+              echo "Providers are aligned. Running consolidated job."
+              echo "run_consolidated=true" >> "$GITHUB_OUTPUT"
+              echo "run_individual=false" >> "$GITHUB_OUTPUT"
+            else
+              echo "Providers are misaligned. Running individual jobs."
+              echo "run_consolidated=false" >> "$GITHUB_OUTPUT"
+              echo "run_individual=true" >> "$GITHUB_OUTPUT"
+            fi
+          else
+            echo "No valid condition met. No minor release job will run."
+            echo "run_consolidated=false" >> "$GITHUB_OUTPUT"
+            echo "run_individual=false" >> "$GITHUB_OUTPUT"
+          fi
 
   minor_patch_release:
     name: "Minor/Patch Release"
@@ -242,8 +298,8 @@ jobs:
   # This is the job for creating a single, consolidated PR for a major release when all providers are aligned.
   major_release_consolidated:
     name: "Major Release (Consolidated)"
-    needs: [dispatcher]
-    if: needs.dispatcher.outputs.release_type == 'major' && (needs.dispatcher.outputs.force_consolidated == 'true' || needs.dispatcher.outputs.is_manual == 'false')
+    needs: [major_release_decider]
+    if: needs.major_release_decider.outputs.run_consolidated == 'true'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
@@ -395,8 +451,8 @@ jobs:
 
   minor_release_consolidated:
     name: "Minor Release (Consolidated)"
-    needs: [dispatcher]
-    if: needs.dispatcher.outputs.release_type == 'minor' && (needs.dispatcher.outputs.force_consolidated == 'true' || needs.dispatcher.outputs.is_manual == 'false')
+    needs: [minor_release_decider]
+    if: needs.minor_release_decider.outputs.run_consolidated == 'true'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
@@ -539,8 +595,8 @@ jobs:
   # This is the job for creating individual PRs for a major release when providers are not aligned.
   major_release_individual:
     name: "Major Release (Individual)"
-    needs: [dispatcher, preflight_check]
-    if: needs.dispatcher.outputs.is_manual == 'false' && needs.preflight_check.outputs.alignment == 'misaligned'
+    needs: [major_release_decider]
+    if: needs.major_release_decider.outputs.run_individual == 'true'
     strategy:
       matrix:
         provider: ${{ fromJSON(needs.dispatcher.outputs.provider_matrix) }}
@@ -660,8 +716,8 @@ jobs:
 
   minor_release_individual:
     name: "Minor Release (Individual)"
-    needs: [dispatcher, preflight_check_minor]
-    if: needs.dispatcher.outputs.is_manual == 'false' && needs.preflight_check_minor.outputs.alignment == 'misaligned'
+    needs: [minor_release_decider]
+    if: needs.minor_release_decider.outputs.run_individual == 'true'
     strategy:
       matrix:
         provider: ${{ fromJSON(needs.dispatcher.outputs.provider_matrix) }}
