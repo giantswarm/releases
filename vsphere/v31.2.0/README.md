@@ -7,7 +7,6 @@
 ### Components
 
 - cluster-vsphere from v1.5.1 to v1.6.1
-- Flatcar from v4152.2.3 to [v4230.2.2](https://www.flatcar-linux.org/releases/#release-4230.2.2)
 - Kubernetes from v1.31.11 to [v1.31.13](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.31.md#v1.31.13)
 
 ### cluster-vsphere [v1.5.1...v1.6.1](https://github.com/giantswarm/cluster-vsphere/compare/v1.5.1...v1.6.1)

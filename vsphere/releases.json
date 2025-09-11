@@ -38,7 +38,7 @@
     {
       "version": "31.2.0",
       "isDeprecated": false,
-      "releaseTimestamp": "2025-09-11T08:18:48Z",
+      "releaseTimestamp": "2025-09-11T08:45:52Z",
       "changelogUrl": "https://github.com/giantswarm/releases/blob/master/vsphere/v31.2.0/README.md",
       "isStable": true
     }
