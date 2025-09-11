@@ -162,7 +162,7 @@ jobs:
                 LOG_PART="### Changes for ${PROVIDER_DIR^^}\n\n"
                 # Trim whitespace to check if the output is empty.
                 if [[ -z "$(echo -e "${output}" | tr -d '[:space:]')" ]]; then
-                  LOG_PART="${LOG_PART}No changes detected for provider ${PROVIDER_DIR^^}. The components and versions specified may already be up to date.\n\n"
+                  LOG_PART="${LOG_PART}No changes detected for provider ${PROVIDER_DIR^^}. The requested app/component versions may already be present in the base release \`${BASE_VERSION}\`.\n\n"
                 else
                   LOG_PART="${LOG_PART}${output}\n\n"
                 fi
