@@ -5,7 +5,7 @@ metadata:
 spec:
   apps:
   - name: azure-cloud-controller-manager
-    version: 1.32.7
+    version: 1.32.7-1
     dependsOn:
     - vertical-pod-autoscaler-crd
   - name: azure-cloud-node-manager
@@ -117,10 +117,10 @@ spec:
     catalog: cluster
     version: 2.4.1
   - name: flatcar
-    version: 4230.2.2
+    version: 4230.2.1
   - name: kubernetes
     version: 1.32.9
   - name: os-tooling
     version: 1.26.1
-  date: "2025-09-11T05:54:40Z"
+  date: "2025-09-11T06:20:47Z"
   state: active

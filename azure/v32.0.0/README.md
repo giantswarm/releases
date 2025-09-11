@@ -7,7 +7,7 @@
 ### Components
 
 - cluster-azure from v2.3.1 to v2.4.1
-- Flatcar from v4152.2.3 to [v4230.2.2](https://www.flatcar-linux.org/releases/#release-4230.2.2)
+- Flatcar from v4152.2.3 to [v4230.2.1](https://www.flatcar-linux.org/releases/#release-4230.2.1)
 - Kubernetes from v1.31.11 to [v1.32.9](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.32.md#v1.32.9)
 
 ### cluster-azure [v2.3.1...v2.4.1](https://github.com/giantswarm/cluster-azure/compare/v2.3.1...v2.4.1)
@@ -19,7 +19,7 @@
 
 ### Apps
 
-- azure-cloud-controller-manager from v1.31.8-gs2 to v1.32.7
+- azure-cloud-controller-manager from v1.31.8-gs2 to v1.32.7-1
 - azure-cloud-node-manager from v1.31.8-gs1 to v1.32.7
 - azuredisk-csi-driver from v1.31.11-gs1 to v1.32.9
 - azurefile-csi-driver from v1.31.7-gs1 to v1.32.5
@@ -38,10 +38,11 @@
 - vertical-pod-autoscaler from v5.5.1 to v6.0.1
 - vertical-pod-autoscaler-crd from v3.3.1 to v4.0.1
 
-### azure-cloud-controller-manager [v1.31.8-gs2...v1.32.7](https://github.com/giantswarm/azure-cloud-controller-manager-app/compare/v1.31.8-gs2...v1.32.7)
+### azure-cloud-controller-manager [v1.31.8-gs2...v1.32.7-1](https://github.com/giantswarm/azure-cloud-controller-manager-app/compare/v1.31.8-gs2...v1.32.7-1)
 
 #### Changed
 
+- Chart: Update RBAC. ([#124](https://github.com/giantswarm/azure-cloud-controller-manager-app/pull/124))
 - Switch to semver-compatible release name
 - Chart: Update to upstream v1.32.7. ([#114](https://github.com/giantswarm/azure-cloud-controller-manager-app/pull/114))
 
