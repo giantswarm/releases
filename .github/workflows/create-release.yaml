@@ -27,6 +27,8 @@ jobs:
       provider_list: ${{ steps.dispatcher.outputs.provider_list }}
       is_manual: ${{ steps.dispatcher.outputs.is_manual }}
       version_override: ${{ steps.dispatcher.outputs.version_override }}
+      force_consolidated: ${{ steps.dispatcher.outputs.force_consolidated }}
+      provider_count: ${{ steps.dispatcher.outputs.provider_count }}
     steps:
       - name: Determine release type and providers
         id: dispatcher
@@ -35,6 +37,23 @@ jobs:
           # Determine release type from triggers
           if [[ "${{ github.event_name }}" == 'workflow_dispatch' ]]; then
             echo "is_manual=true" >> "$GITHUB_OUTPUT"
+            PROVIDER_INPUT="${{ github.event.inputs.provider }}"
+
+            # Count providers
+            if [[ "$PROVIDER_INPUT" == '' ]]; then
+              PROVIDER_COUNT=0
+            else
+              PROVIDER_COUNT=$(echo "$PROVIDER_INPUT" | tr ',' ' ' | wc -w)
+            fi
+            echo "provider_count=$PROVIDER_COUNT" >> "$GITHUB_OUTPUT"
+
+            # Set force_consolidated flag for manual runs with 0 or 2+ providers.
+            if [[ $PROVIDER_COUNT -eq 1 ]]; then
+              echo "force_consolidated=false" >> "$GITHUB_OUTPUT"
+            else
+              echo "force_consolidated=true" >> "$GITHUB_OUTPUT"
+            fi
+
             if [[ "${{ github.event.inputs.version }}" != '' ]]; then
               echo "version_override=${{ github.event.inputs.version }}" >> "$GITHUB_OUTPUT"
               if [[ "${{ github.event.inputs.version }}" =~ \.[0-9]+\.[0-9]+$ ]]; then
@@ -46,6 +65,9 @@ jobs:
               RELEASE_TYPE="${{ github.event.inputs.release_type }}"
             fi
           elif [[ "${{ github.event_name }}" == 'schedule' ]]; then
+            echo "is_manual=false" >> "$GITHUB_OUTPUT"
+            echo "force_consolidated=false" >> "$GITHUB_OUTPUT"
+            echo "provider_count=0" >> "$GITHUB_OUTPUT" # Not relevant for scheduled runs, but set a default.
             MONTH=$(date +'%m')
             # Major release on the first month of each quarter (Jan, Apr, Jul, Oct)
             if (( 10#${MONTH} % 3 == 1 )); then
@@ -72,7 +94,7 @@ jobs:
   preflight_check:
     name: "Pre-flight Check"
     needs: dispatcher
-    if: needs.dispatcher.outputs.release_type == 'major'
+    if: needs.dispatcher.outputs.release_type == 'major' && needs.dispatcher.outputs.is_manual == 'false'
     runs-on: ubuntu-latest
     outputs:
       alignment: ${{ steps.check.outputs.alignment }}
@@ -87,7 +109,7 @@ jobs:
   preflight_check_minor:
     name: "Pre-flight Check Minor"
     needs: dispatcher
-    if: needs.dispatcher.outputs.release_type == 'minor'
+    if: needs.dispatcher.outputs.release_type == 'minor' && needs.dispatcher.outputs.is_manual == 'false'
     runs-on: ubuntu-latest
     outputs:
       alignment: ${{ steps.check.outputs.alignment }}
@@ -102,7 +124,7 @@ jobs:
   minor_patch_release:
     name: "Minor/Patch Release"
     needs: dispatcher
-    if: needs.dispatcher.outputs.release_type == 'minor' || needs.dispatcher.outputs.release_type == 'patch'
+    if: (needs.dispatcher.outputs.release_type == 'minor' || needs.dispatcher.outputs.release_type == 'patch') && needs.dispatcher.outputs.is_manual == 'true' && needs.dispatcher.outputs.provider_count == 1
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -221,7 +243,7 @@ jobs:
   major_release_consolidated:
     name: "Major Release (Consolidated)"
     needs: [dispatcher, preflight_check]
-    if: needs.dispatcher.outputs.release_type == 'major' && needs.preflight_check.outputs.alignment == 'aligned'
+    if: needs.dispatcher.outputs.release_type == 'major' && (needs.dispatcher.outputs.force_consolidated == 'true' || (needs.dispatcher.outputs.is_manual == 'false' && needs.preflight_check.outputs.alignment == 'aligned'))
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
@@ -374,7 +396,7 @@ jobs:
   minor_release_consolidated:
     name: "Minor Release (Consolidated)"
     needs: [dispatcher, preflight_check_minor]
-    if: needs.dispatcher.outputs.release_type == 'minor' && needs.preflight_check_minor.outputs.alignment == 'aligned'
+    if: needs.dispatcher.outputs.release_type == 'minor' && (needs.dispatcher.outputs.force_consolidated == 'true' || (needs.dispatcher.outputs.is_manual == 'false' && needs.preflight_check_minor.outputs.alignment == 'aligned'))
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
@@ -518,7 +540,7 @@ jobs:
   major_release_individual:
     name: "Major Release (Individual)"
     needs: [dispatcher, preflight_check]
-    if: needs.dispatcher.outputs.release_type == 'major' && needs.preflight_check.outputs.alignment == 'misaligned'
+    if: needs.dispatcher.outputs.release_type == 'major' && needs.dispatcher.outputs.is_manual == 'false' && needs.preflight_check.outputs.alignment == 'misaligned'
     strategy:
       matrix:
         provider: ${{ fromJSON(needs.dispatcher.outputs.provider_matrix) }}
@@ -639,7 +661,7 @@ jobs:
   minor_release_individual:
     name: "Minor Release (Individual)"
     needs: [dispatcher, preflight_check_minor]
-    if: needs.dispatcher.outputs.release_type == 'minor' && needs.preflight_check_minor.outputs.alignment == 'misaligned'
+    if: needs.dispatcher.outputs.release_type == 'minor' && needs.dispatcher.outputs.is_manual == 'false' && needs.preflight_check_minor.outputs.alignment == 'misaligned'
     strategy:
       matrix:
         provider: ${{ fromJSON(needs.dispatcher.outputs.provider_matrix) }}
