@@ -1,0 +1,17 @@
+name: 'Install devctl'
+description: 'Installs the latest version of devctl'
+runs:
+  using: "composite"
+  steps:
+    - name: Install devctl from release binary
+      shell: bash
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        mkdir -p /tmp/devctl_install && cd /tmp/devctl_install
+        LATEST_DEVCTL_TAG=$(gh release view --repo giantswarm/devctl --json tagName --jq '.tagName')
+        ASSET_NAME="devctl-${LATEST_DEVCTL_TAG}-linux-amd64.tar.gz"
+        gh release download --repo giantswarm/devctl "$LATEST_DEVCTL_TAG" --pattern "$ASSET_NAME"
+        tar -xzf "$ASSET_NAME"
+        find . -name "devctl" -type f -exec sudo mv {} /usr/local/bin/devctl \;
+        cd -

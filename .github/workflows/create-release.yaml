@@ -59,14 +59,15 @@ jobs:
 
           # Determine provider matrix and list
           if [[ "${{ github.event_name }}" == 'workflow_dispatch' && "${{ github.event.inputs.provider }}" != '' ]]; then
+            # Manual run with a specific provider list.
             PROVIDER_JSON=$(echo '${{ github.event.inputs.provider }}' | jq -R 'split(",")' | jq -c '.')
             echo "provider_matrix=${PROVIDER_JSON}" >> "$GITHUB_OUTPUT"
             PROVIDER_LIST=$(echo "${{ github.event.inputs.provider }}" | sed 's/,/ /g')
             echo "provider_list=${PROVIDER_LIST}" >> "$GITHUB_OUTPUT"
           else
-            # Default for scheduled runs
-            echo "provider_matrix=[\"aws\",\"azure\",\"capa\",\"cloud-director\",\"kvm\",\"vsphere\"]" >> "$GITHUB_OUTPUT"
-            echo "provider_list=aws azure capa cloud-director kvm vsphere" >> "$GITHUB_OUTPUT"
+            # Default for all scheduled runs (major or minor) and manual runs without a specified provider.
+            echo "provider_matrix=[\"aws\",\"azure\",\"cloud-director\",\"vsphere\"]" >> "$GITHUB_OUTPUT"
+            echo "provider_list=aws azure cloud-director vsphere" >> "$GITHUB_OUTPUT"
           fi
 
   preflight_check:
@@ -84,6 +85,21 @@ jobs:
           chmod +x ./tools/check-major-version-alignment.sh
           ./tools/check-major-version-alignment.sh ${{ needs.dispatcher.outputs.provider_list }}
 
+  preflight_check_minor:
+    name: "Pre-flight Check Minor"
+    needs: dispatcher
+    if: needs.dispatcher.outputs.release_type == 'minor'
+    runs-on: ubuntu-latest
+    outputs:
+      alignment: ${{ steps.check.outputs.alignment }}
+    steps:
+      - uses: actions/checkout@v5
+      - name: Check minor version alignment
+        id: check
+        run: |
+          chmod +x ./tools/check-minor-version-alignment.sh
+          ./tools/check-minor-version-alignment.sh ${{ needs.dispatcher.outputs.provider_list }}
+
   minor_patch_release:
     name: "Minor/Patch Release"
     needs: dispatcher
@@ -98,17 +114,8 @@ jobs:
     steps:
       - name: Check out code
         uses: actions/checkout@v5
-      - name: Install devctl from release binary
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          mkdir -p /tmp/devctl_install && cd /tmp/devctl_install
-          LATEST_DEVCTL_TAG=$(gh release view --repo giantswarm/devctl --json tagName --jq '.tagName')
-          ASSET_NAME="devctl-${LATEST_DEVCTL_TAG}-linux-amd64.tar.gz"
-          gh release download --repo giantswarm/devctl "$LATEST_DEVCTL_TAG" --pattern "$ASSET_NAME"
-          tar -xzf "$ASSET_NAME"
-          find . -name "devctl" -type f -exec sudo mv {} /usr/local/bin/devctl \;
-          cd -
+      - name: Install devctl
+        uses: ./.github/actions/install-devctl
       - name: Set provider display name for title
         id: provider_name
         run: |
@@ -204,16 +211,10 @@ jobs:
 
       - name: Trigger e2e tests
         if: steps.check_pr.outputs.PR_EXISTS == 'false' && steps.create_pr.outputs.pull-request-number
-        uses: actions/github-script@v8
+        uses: ./.github/actions/trigger-e2e-tests
         with:
-          github-token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
-          script: |
-            github.rest.issues.createComment({
-              issue_number: ${{ steps.create_pr.outputs.pull-request-number }},
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: '/run releases-test-suites'
-            })
+          pr_number: ${{ steps.create_pr.outputs.pull-request-number }}
+          github_token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
 
   # This is the job for creating a single, consolidated PR for a major release when all providers are aligned.
   major_release_consolidated:
@@ -228,19 +229,8 @@ jobs:
         run: |
           ./tools/determine-next-release.sh "" ${{ needs.dispatcher.outputs.release_type }} ${{ needs.dispatcher.outputs.version_override }}
 
-      - name: Install devctl from release binary
-        id: install_devctl
-        env:
-          GH_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
-        run: |
-          mkdir -p /tmp/devctl_install
-          cd /tmp/devctl_install
-          LATEST_DEVCTL_TAG=$(gh release view --repo giantswarm/devctl --json tagName --jq '.tagName')
-          ASSET_NAME="devctl-${LATEST_DEVCTL_TAG}-linux-amd64.tar.gz"
-          gh release download --repo giantswarm/devctl "$LATEST_DEVCTL_TAG" --pattern "$ASSET_NAME"
-          tar -xzf "$ASSET_NAME"
-          find . -name "devctl" -type f -exec sudo mv {} /usr/local/bin/devctl \;
-          cd -
+      - name: Install devctl
+        uses: ./.github/actions/install-devctl
 
       - name: Check for new upstream Kubernetes version
         id: k8s_check
@@ -373,16 +363,151 @@ jobs:
 
       - name: Trigger e2e tests
         if: steps.check_pr.outputs.PR_EXISTS == 'false' && steps.k8s_check.outputs.VERSION_EXISTS == 'true' && steps.create_pr.outputs.pull-request-number
+        uses: ./.github/actions/trigger-e2e-tests
+        with:
+          pr_number: ${{ steps.create_pr.outputs.pull-request-number }}
+          github_token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+
+  minor_release_consolidated:
+    name: "Minor Release (Consolidated)"
+    needs: [dispatcher, preflight_check_minor]
+    if: needs.dispatcher.outputs.release_type == 'minor' && needs.preflight_check_minor.outputs.alignment == 'aligned'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - name: Determine next release version
+        id: determine_next_release
+        run: |
+          ./tools/determine-next-release.sh "" "minor" ${{ needs.dispatcher.outputs.version_override }}
+
+      - name: Install devctl
+        uses: ./.github/actions/install-devctl
+
+      - name: Check for existing PR
+        id: check_pr
+        env:
+          GH_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+        run: |
+          PR_EXISTS=$(gh pr list --repo "$GITHUB_REPOSITORY" --head "release-${{ steps.determine_next_release.outputs.version }}" --json number --jq '.[0].number')
+          if [ -z "$PR_EXISTS" ]; then
+            echo "PR_EXISTS=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "PR_EXISTS=true" >> "$GITHUB_OUTPUT"
+            echo "An open PR for this release already exists. Skipping."
+          fi
+
+      - name: Create release files and get output
+        id: create_release
+        if: steps.check_pr.outputs.PR_EXISTS == 'false'
+        env:
+          OPSCTL_GITHUB_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+          GH_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+        run: |
+          set -o pipefail
+          export OPSCTL_GITHUB_TOKEN=${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+          LOG_FILE="/tmp/release_output.log"
+          touch $LOG_FILE
+          first_provider=true
+          for provider in ${{ needs.dispatcher.outputs.provider_list }}; do
+            echo "--- Creating release for $provider ---"
+
+            # Add a separator before each provider except the first one
+            if [ "$first_provider" = true ]; then
+              first_provider=false
+            else
+              echo "" >> $LOG_FILE
+              echo "---" >> $LOG_FILE
+              echo "" >> $LOG_FILE
+            fi
+            
+            # Capitalize provider name for the heading
+            PROVIDER_UPPER=$(echo "$provider" | awk '{print toupper($0)}')
+            echo "### Changes for ${PROVIDER_UPPER}" >> $LOG_FILE
+            echo "" >> $LOG_FILE
+
+            BASE_VERSION=$(./tools/determine-next-release.sh "$provider" "minor" "${{ needs.dispatcher.outputs.version_override }}" | grep '^base=' | cut -d'=' -f2)
+
+            n=0
+            until [ "$n" -ge 3 ]
+            do
+              devctl release create \
+                --base "$BASE_VERSION" \
+                --name "${{ steps.determine_next_release.outputs.version }}" \
+                --provider "$provider" \
+                --bumpall --overwrite -y --output markdown --changes-only 2>&1 | tee -a $LOG_FILE && break
+              n=$((n+1))
+              if [ "$n" -ge 3 ]; then
+                  echo "The command has failed 3 times in a row. Aborting."
+                  exit 1
+              fi
+              echo "Command failed. Retrying in 15 seconds..."
+              sleep 15
+            done
+          done
+        
+          LOG_CONTENT=$(cat /tmp/release_output.log)
+          echo "LOG_CONTENT<<EOF" >> "$GITHUB_ENV"
+          echo "$LOG_CONTENT" >> "$GITHUB_ENV"
+          echo "EOF" >> "$GITHUB_ENV"
+
+      - name: Update README.md
+        id: update_readme
+        if: steps.check_pr.outputs.PR_EXISTS == 'false'
+        run: |
+          for provider in ${{ needs.dispatcher.outputs.provider_list }}; do
+            ./tools/update-readme.sh "$provider" "${{ steps.determine_next_release.outputs.version }}"
+            echo "Successfully updated README.md with ${{ steps.determine_next_release.outputs.version }} for $provider"
+          done
+
+      - name: Create Pull Request
+        id: create_pr
+        if: steps.check_pr.outputs.PR_EXISTS == 'false'
+        uses: peter-evans/create-pull-request@v7
+        with:
+          token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+          title: "CAPI: Minor Release ${{ steps.determine_next_release.outputs.version }}."
+          body: |
+            This PR creates the new CAPI release `${{ steps.determine_next_release.outputs.version }}`.
+
+            ---
+
+            To update the release files in this PR, comment with `/update-release` and provide arguments directly to `devctl`. For consolidated releases, you **must** specify which provider you are updating.
+            If you do not specify a provider, the bot will automatically detect the provider from the PR files.
+            Available providers: `aws`, `azure`, `cloud-director`, `vsphere`.
+
+            **Examples:**
+
+            *   Update a single component for a specific provider:
+                `/update-release --provider aws --component flatcar@4152.2.3`
+
+            *   Update multiple components and apps for a specific provider:
+                `/update-release --provider azure --component cluster-azure@2.4.1 --app azuredisk-csi-driver@1.32.9`
+
+            *   Specify app dependencies using the `#` separator:
+                `/update-release --provider aws --app my-app@1.2.3@@dependency1#dependency2`
+          branch: "release-${{ steps.determine_next_release.outputs.version }}"
+          draft: true
+
+      - name: Add comment to PR with devctl output
+        if: steps.create_pr.outputs.pull-request-number && steps.create_pr.outputs.pull-request-number != ''
         uses: actions/github-script@v8
         with:
           github-token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
           script: |
+            const output = `${{ env.LOG_CONTENT }}`;
             github.rest.issues.createComment({
-              issue_number: ${{ steps.create_pr.outputs.pull-request-number }},
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: '/run releases-test-suites'
-            })
+              issue_number: ${{ steps.create_pr.outputs.pull-request-number }},
+              body: `### Changes:\n\n${output.replace(/`/g, '\\`')}`
+            });
+
+      - name: Trigger e2e tests
+        if: steps.check_pr.outputs.PR_EXISTS == 'false' && steps.create_pr.outputs.pull-request-number
+        uses: ./.github/actions/trigger-e2e-tests
+        with:
+          pr_number: ${{ steps.create_pr.outputs.pull-request-number }}
+          github_token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
 
   # This is the job for creating individual PRs for a major release when providers are not aligned.
   major_release_individual:
@@ -400,19 +525,8 @@ jobs:
         run: |
           ./tools/determine-next-release.sh "${{ matrix.provider }}" ${{ needs.dispatcher.outputs.release_type }} ${{ needs.dispatcher.outputs.version_override }}
 
-      - name: Install devctl from release binary
-        id: install_devctl
-        env:
-          GH_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
-        run: |
-          mkdir -p /tmp/devctl_install
-          cd /tmp/devctl_install
-          LATEST_DEVCTL_TAG=$(gh release view --repo giantswarm/devctl --json tagName --jq '.tagName')
-          ASSET_NAME="devctl-${LATEST_DEVCTL_TAG}-linux-amd64.tar.gz"
-          gh release download --repo giantswarm/devctl "$LATEST_DEVCTL_TAG" --pattern "$ASSET_NAME"
-          tar -xzf "$ASSET_NAME"
-          find . -name "devctl" -type f -exec sudo mv {} /usr/local/bin/devctl \;
-          cd -
+      - name: Install devctl
+        uses: ./.github/actions/install-devctl
 
       - name: Check for new upstream Kubernetes version
         id: k8s_check
@@ -465,6 +579,115 @@ jobs:
       - name: Create Pull Request
         id: create_pr
         if: steps.check_pr.outputs.PR_EXISTS == 'false' && (needs.dispatcher.outputs.release_type != 'major' || steps.k8s_check.outputs.VERSION_EXISTS == 'true')
+        uses: peter-evans/create-pull-request@v7
+        with:
+          token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+          title: "${{ steps.determine_next_release.outputs.provider_acronym }}: Release ${{ steps.determine_next_release.outputs.version }}."
+          body: |
+            This PR creates the new release `${{ steps.determine_next_release.outputs.version }}` for ${{ matrix.provider }}.
+
+            ---
+
+            To update the release files in this PR, comment with `/update-release` and provide arguments directly to `devctl`.
+            If you do not specify a provider, the bot will automatically detect the provider from the PR files.
+            Available providers: `aws`, `azure`, `cloud-director`, `vsphere`.
+
+            **Examples:**
+
+            *   Update a single component:
+                `/update-release --component flatcar@4152.2.3`
+
+            *   Update a single application:
+                `/update-release --app aws-ebs-csi-driver@3.0.5`
+
+            *   Update multiple components and apps at once:
+                `/update-release --component cluster-aws@4.0.2 --app karpenter-bundle@2.2.0 --app coredns@1.27.0`
+
+            *   Specify app dependencies using the `#` separator:
+                `/update-release --app my-app@1.2.3@@dependency1#dependency2`
+          branch: "release-${{ steps.determine_next_release.outputs.version }}-${{ matrix.provider }}"
+          draft: true
+
+      - name: Add comment to PR with devctl output
+        if: steps.create_pr.outputs.pull-request-number && steps.create_pr.outputs.pull-request-number != ''
+        uses: actions/github-script@v8
+        with:
+          github-token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+          script: |
+            const output = `${{ env.LOG_CONTENT }}`;
+            github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: ${{ steps.create_pr.outputs.pull-request-number }},
+              body: `### Changes:\n\n${output.replace(/`/g, '\\`')}`
+            });
+
+      - name: Trigger e2e tests
+        if: steps.check_pr.outputs.PR_EXISTS == 'false' && steps.create_pr.outputs.pull-request-number
+        uses: ./.github/actions/trigger-e2e-tests
+        with:
+          pr_number: ${{ steps.create_pr.outputs.pull-request-number }}
+          github_token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+
+  minor_release_individual:
+    name: "Minor Release (Individual)"
+    needs: [dispatcher, preflight_check_minor]
+    if: needs.dispatcher.outputs.release_type == 'minor' && needs.preflight_check_minor.outputs.alignment == 'misaligned'
+    strategy:
+      matrix:
+        provider: ${{ fromJSON(needs.dispatcher.outputs.provider_matrix) }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - name: Determine next release version
+        id: determine_next_release
+        run: |
+          ./tools/determine-next-release.sh "${{ matrix.provider }}" ${{ needs.dispatcher.outputs.release_type }} ${{ needs.dispatcher.outputs.version_override }}
+
+      - name: Install devctl
+        uses: ./.github/actions/install-devctl
+
+      - name: Check for existing PR
+        id: check_pr
+        env:
+          GH_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+        run: |
+          PR_EXISTS=$(gh pr list --repo "$GITHUB_REPOSITORY" --head "release-${{ steps.determine_next_release.outputs.version }}-${{ matrix.provider }}" --json number --jq '.[0].number')
+          if [ -z "$PR_EXISTS" ]; then
+            echo "PR_EXISTS=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "PR_EXISTS=true" >> "$GITHUB_OUTPUT"
+            echo "An open PR for this release already exists. Skipping."
+          fi
+
+      - name: Create release files and get output
+        id: create_release
+        if: steps.check_pr.outputs.PR_EXISTS == 'false'
+        env:
+          OPSCTL_GITHUB_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+          GH_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+        run: |
+          set -o pipefail
+          devctl release create \
+            --base "${{ steps.determine_next_release.outputs.base }}" \
+            --name "${{ steps.determine_next_release.outputs.version }}" \
+            --provider "${{ matrix.provider }}" \
+            --bumpall --overwrite -y --output markdown --changes-only 2>&1 | tee /tmp/release_output.log
+          
+          LOG_CONTENT=$(cat /tmp/release_output.log)
+          echo "LOG_CONTENT<<EOF" >> "$GITHUB_ENV"
+          echo "$LOG_CONTENT" >> "$GITHUB_ENV"
+          echo "EOF" >> "$GITHUB_ENV"
+
+      - name: Update README.md
+        id: update_readme
+        if: steps.check_pr.outputs.PR_EXISTS == 'false'
+        run: |
+          ./tools/update-readme.sh "${{ matrix.provider }}" "${{ steps.determine_next_release.outputs.version }}"
+
+      - name: Create Pull Request
+        id: create_pr
+        if: steps.check_pr.outputs.PR_EXISTS == 'false'
         uses: peter-evans/create-pull-request@v7
         with:
           token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}

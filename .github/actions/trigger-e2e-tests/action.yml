@@ -1,0 +1,23 @@
+name: 'Trigger e2e tests'
+description: 'Triggers the e2e tests by commenting on the PR'
+inputs:
+  pr_number:
+    description: 'The number of the pull request to comment on'
+    required: true
+  github_token:
+    description: 'The GitHub token to use for authentication'
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - name: Trigger e2e tests
+      uses: actions/github-script@v8
+      with:
+        github-token: ${{ inputs.github_token }}
+        script: |
+          github.rest.issues.createComment({
+            issue_number: ${{ inputs.pr_number }},
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            body: '/run releases-test-suites'
+          })
