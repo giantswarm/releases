@@ -1,13 +1,11 @@
 name: Update Release PR (Comment Trigger)
 
 on:
-  issue_comment:
-    types: [created]
+  repository_dispatch:
+    types: [update-release-triggered]
 
 jobs:
   update-release:
-    # This job only runs for pull request comments
-    if: github.event.issue.pull_request && startsWith(github.event.comment.body, '/update-release') && github.repository == 'giantswarm/releases'
     runs-on: ubuntu-latest
     env:
       OPSCTL_GITHUB_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
@@ -25,7 +23,7 @@ jobs:
             github.rest.reactions.createForIssueComment({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              comment_id: ${{ github.event.comment.id }},
+              comment_id: ${{ github.event.client_payload.comment.id }},
               content: 'eyes'
             })
 
@@ -39,7 +37,7 @@ jobs:
             const pr = await github.rest.pulls.get({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              pull_number: ${{ github.event.issue.number }}
+              pull_number: ${{ github.event.client_payload.issue.number }}
             });
             return pr.data.head.ref;
 
@@ -64,7 +62,7 @@ jobs:
       - name: Parse command arguments and determine provider
         id: parse_command
         run: |
-          COMMENT_BODY="${{ github.event.comment.body }}"
+          COMMENT_BODY="/update-release ${{ github.event.client_payload.slash_command.args }}"
           BRANCH_NAME="${{ steps.get_branch.outputs.result }}"
 
           # Extract devctl arguments, excluding the /update-release command and any --provider flag
@@ -96,7 +94,7 @@ jobs:
             github.rest.issues.createComment({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              issue_number: context.issue.number,
+              issue_number: ${{ github.event.client_payload.issue.number }},
               body: "Could not determine the provider. For multi-provider releases, please specify the provider using the `--provider` flag. \n\n**Example:**\n`/update-release --provider aws --component flatcar@1.2.3`\n\nTo specify app dependencies, use the `#` separator:\n`/update-release --provider aws --app my-app@1.2.3@@dep1#dep2`"
             });
       - name: Fail job if provider is missing
@@ -169,7 +167,7 @@ jobs:
             github.rest.reactions.createForIssueComment({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              comment_id: ${{ github.event.comment.id }},
+              comment_id: ${{ github.event.client_payload.comment.id }},
               content: '+1'
             })
       - name: Read log file to env
@@ -187,7 +185,7 @@ jobs:
             const output = process.env.LOG_CONTENT;
             const provider = "${{ steps.parse_command.outputs.provider }}";
             github.rest.issues.createComment({
-              issue_number: ${{ github.event.issue.number }},
+              issue_number: ${{ github.event.client_payload.issue.number }},
               owner: context.repo.owner,
               repo: context.repo.repo,
               body: `### Changes for ${provider.toUpperCase()}\n\n${output.replace(/`/g, '\\`')}`

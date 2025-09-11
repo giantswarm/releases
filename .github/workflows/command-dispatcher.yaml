@@ -1,0 +1,20 @@
+name: Slash Command Dispatcher
+
+on:
+  issue_comment:
+    types: [created]
+
+jobs:
+  dispatch:
+    if: github.event.sender.type != 'Bot' && github.event.issue.pull_request
+    runs-on: ubuntu-latest
+    steps:
+      - name: Slash Command Dispatch
+        uses: peter-evans/slash-command-dispatch@v3
+        with:
+          token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+          commands: update-release
+          permission: write
+          issue-type: pull-request
+          repository: giantswarm/releases
+          event-type-suffix: triggered
