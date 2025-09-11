@@ -135,15 +135,7 @@ jobs:
               continue
             fi
 
-            echo "--- DEBUG: Finding base version for $PROVIDER_DIR ---"
-            FIND_OUTPUT=$(find "$PROVIDER_DIR" -maxdepth 1 -name "v*" -type d -not -path "*/archived/*" -exec basename {} \; | grep -v "^${RELEASE_NAME}$" | sort -V)
-            echo "--- DEBUG: Find output ---"
-            echo "$FIND_OUTPUT"
-            echo "--- END DEBUG ---"
-
-            BASE_VERSION=$(echo "$FIND_OUTPUT" | tail -n 1)
-            echo "--- DEBUG: Parsed BASE_VERSION for $PROVIDER_DIR: '$BASE_VERSION' ---"
-
+            BASE_VERSION=$(find "$PROVIDER_DIR" -maxdepth 1 -type d -name "v[0-9]*.[0-9]*.[0-9]*" -not -path "*/archived/*" -exec basename {} \; | grep -v "^${RELEASE_NAME}$" | sort -V | tail -n 1)
             if [[ -z "$BASE_VERSION" ]]; then
               echo "Error: Could not determine base version for release '$RELEASE_NAME' for provider '$PROVIDER_DIR'."
               # Don't exit, just continue to the next provider
