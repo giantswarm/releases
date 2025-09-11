@@ -8,9 +8,8 @@ on:
         required: true
         default: 'minor'
       provider:
-        description: 'Provider (aws, azure, cloud-director or vsphere)'
-        required: true
-        default: 'aws'
+        description: 'Provider (e.g. aws, azure, cloud-director or vsphere). Leave empty to run for all providers.'
+        required: false
       version:
         description: 'Specific version to create (e.g. v30.0.1). Overrides release_type.'
         required: false
