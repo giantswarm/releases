@@ -34,8 +34,8 @@ else
     echo "Provider directory not found: $PROVIDER_DIR"
     exit 1
   fi
-  # Get a sorted list of all releases for the provider
-  ALL_RELEASES=$(ls -d ${PROVIDER_DIR}/v* 2>/dev/null | grep -o 'v[0-9]\+\.[0-9]\+\.[0-9]\+' | sort -V)
+  # Get a sorted list of all releases for the provider, excluding archived releases.
+  ALL_RELEASES=$(find "$PROVIDER_DIR" -maxdepth 1 -type d -name "v*" -not -path "*/archived/*" -exec basename {} \; | sort -V)
 fi
 
 

@@ -556,7 +556,7 @@ jobs:
         uses: peter-evans/create-pull-request@v7
         with:
           token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
-          title: "CAPI: Minor Release ${{ steps.determine_next_release.outputs.version }}."
+          title: "CAPI: Release ${{ steps.determine_next_release.outputs.version }}."
           body: |
             This PR creates the new CAPI release `${{ steps.determine_next_release.outputs.version }}`.
 
