@@ -99,6 +99,10 @@ jobs:
     outputs:
       run_consolidated: ${{ steps.decider.outputs.run_consolidated }}
       run_individual: ${{ steps.decider.outputs.run_individual }}
+      provider_list: ${{ needs.dispatcher.outputs.provider_list }}
+      provider_matrix: ${{ needs.dispatcher.outputs.provider_matrix }}
+      version_override: ${{ needs.dispatcher.outputs.version_override }}
+      release_type: ${{ needs.dispatcher.outputs.release_type }}
     steps:
       - uses: actions/checkout@v5
       - id: decider
@@ -142,6 +146,10 @@ jobs:
     outputs:
       run_consolidated: ${{ steps.decider.outputs.run_consolidated }}
       run_individual: ${{ steps.decider.outputs.run_individual }}
+      provider_list: ${{ needs.dispatcher.outputs.provider_list }}
+      provider_matrix: ${{ needs.dispatcher.outputs.provider_matrix }}
+      version_override: ${{ needs.dispatcher.outputs.version_override }}
+      release_type: ${{ needs.dispatcher.outputs.release_type }}
     steps:
       - uses: actions/checkout@v5
       - id: decider
@@ -306,7 +314,7 @@ jobs:
       - name: Determine next release version
         id: determine_next_release
         run: |
-          ./tools/determine-next-release.sh "" ${{ needs.dispatcher.outputs.release_type }} ${{ needs.dispatcher.outputs.version_override }}
+          ./tools/determine-next-release.sh "" ${{ needs.major_release_decider.outputs.release_type }} ${{ needs.major_release_decider.outputs.version_override }}
 
       - name: Install devctl
         uses: ./.github/actions/install-devctl
@@ -348,7 +356,7 @@ jobs:
           LOG_FILE="/tmp/release_output.log"
           touch $LOG_FILE
           first_provider=true
-          for provider in ${{ needs.dispatcher.outputs.provider_list }}; do
+          for provider in ${{ needs.major_release_decider.outputs.provider_list }}; do
             echo "--- Creating release for $provider ---"
 
             # Add a separator before each provider except the first one
@@ -365,7 +373,7 @@ jobs:
             echo "### Changes for ${PROVIDER_UPPER}" >> $LOG_FILE
             echo "" >> $LOG_FILE
 
-            BASE_VERSION=$(./tools/determine-next-release.sh "$provider" "major" "${{ needs.dispatcher.outputs.version_override }}" | grep '^base=' | cut -d'=' -f2)
+            BASE_VERSION=$(./tools/determine-next-release.sh "$provider" "major" "${{ needs.major_release_decider.outputs.version_override }}" | grep '^base=' | cut -d'=' -f2)
 
             n=0
             until [ "$n" -ge 3 ]
@@ -394,7 +402,7 @@ jobs:
         id: update_readme
         if: steps.check_pr.outputs.PR_EXISTS == 'false' && (needs.dispatcher.outputs.release_type != 'major' || steps.k8s_check.outputs.VERSION_EXISTS == 'true')
         run: |
-          for provider in ${{ needs.dispatcher.outputs.provider_list }}; do
+          for provider in ${{ needs.major_release_decider.outputs.provider_list }}; do
             ./tools/update-readme.sh "$provider" "${{ steps.determine_next_release.outputs.version }}"
             echo "Successfully updated README.md with ${{ steps.determine_next_release.outputs.version }} for $provider"
           done
@@ -459,7 +467,7 @@ jobs:
       - name: Determine next release version
         id: determine_next_release
         run: |
-          ./tools/determine-next-release.sh "" "minor" ${{ needs.dispatcher.outputs.version_override }}
+          ./tools/determine-next-release.sh "" "minor" ${{ needs.minor_release_decider.outputs.version_override }}
 
       - name: Install devctl
         uses: ./.github/actions/install-devctl
@@ -491,7 +499,7 @@ jobs:
           LOG_FILE="/tmp/release_output.log"
           touch $LOG_FILE
           first_provider=true
-          for provider in ${{ needs.dispatcher.outputs.provider_list }}; do
+          for provider in ${{ needs.minor_release_decider.outputs.provider_list }}; do
             echo "--- Creating release for $provider ---"
 
             # Add a separator before each provider except the first one
@@ -508,7 +516,7 @@ jobs:
             echo "### Changes for ${PROVIDER_UPPER}" >> $LOG_FILE
             echo "" >> $LOG_FILE
 
-            BASE_VERSION=$(./tools/determine-next-release.sh "$provider" "minor" "${{ needs.dispatcher.outputs.version_override }}" | grep '^base=' | cut -d'=' -f2)
+            BASE_VERSION=$(./tools/determine-next-release.sh "$provider" "minor" "${{ needs.minor_release_decider.outputs.version_override }}" | grep '^base=' | cut -d'=' -f2)
 
             n=0
             until [ "$n" -ge 3 ]
@@ -537,7 +545,7 @@ jobs:
         id: update_readme
         if: steps.check_pr.outputs.PR_EXISTS == 'false'
         run: |
-          for provider in ${{ needs.dispatcher.outputs.provider_list }}; do
+          for provider in ${{ needs.minor_release_decider.outputs.provider_list }}; do
             ./tools/update-readme.sh "$provider" "${{ steps.determine_next_release.outputs.version }}"
             echo "Successfully updated README.md with ${{ steps.determine_next_release.outputs.version }} for $provider"
           done
@@ -599,14 +607,14 @@ jobs:
     if: needs.major_release_decider.outputs.run_individual == 'true'
     strategy:
       matrix:
-        provider: ${{ fromJSON(needs.dispatcher.outputs.provider_matrix) }}
+        provider: ${{ fromJSON(needs.major_release_decider.outputs.provider_matrix) }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
       - name: Determine next release version
         id: determine_next_release
         run: |
-          ./tools/determine-next-release.sh "${{ matrix.provider }}" ${{ needs.dispatcher.outputs.release_type }} ${{ needs.dispatcher.outputs.version_override }}
+          ./tools/determine-next-release.sh "${{ matrix.provider }}" ${{ needs.major_release_decider.outputs.release_type }} ${{ needs.major_release_decider.outputs.version_override }}
 
       - name: Install devctl
         uses: ./.github/actions/install-devctl
@@ -720,14 +728,14 @@ jobs:
     if: needs.minor_release_decider.outputs.run_individual == 'true'
     strategy:
       matrix:
-        provider: ${{ fromJSON(needs.dispatcher.outputs.provider_matrix) }}
+        provider: ${{ fromJSON(needs.minor_release_decider.outputs.provider_matrix) }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
       - name: Determine next release version
         id: determine_next_release
         run: |
-          ./tools/determine-next-release.sh "${{ matrix.provider }}" ${{ needs.dispatcher.outputs.release_type }} ${{ needs.dispatcher.outputs.version_override }}
+          ./tools/determine-next-release.sh "${{ matrix.provider }}" ${{ needs.minor_release_decider.outputs.release_type }} ${{ needs.minor_release_decider.outputs.version_override }}
 
       - name: Install devctl
         uses: ./.github/actions/install-devctl
