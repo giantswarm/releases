@@ -190,6 +190,8 @@ jobs:
     needs: dispatcher
     if: (needs.dispatcher.outputs.release_type == 'minor' || needs.dispatcher.outputs.release_type == 'patch') && needs.dispatcher.outputs.is_manual == 'true' && needs.dispatcher.outputs.provider_count == 1
     runs-on: ubuntu-latest
+    outputs:
+      pr_url: ${{ steps.create_pr.outputs.pull-request-url }}
     strategy:
       matrix:
         provider: ${{ fromJSON(needs.dispatcher.outputs.provider_matrix) }}
@@ -275,6 +277,9 @@ jobs:
             `/update-release --app my-app@1.2.3@@dependency1#dependency2`
           branch: "release-${{ steps.versioning.outputs.NEXT_RELEASE }}-${{ matrix.provider }}"
           draft: true
+          labels: |
+            release/${{ needs.dispatcher.outputs.release_type }}
+            provider/${{ matrix.provider }}
       - name: Read log file to env
         if: steps.check_pr.outputs.PR_EXISTS == 'false' && steps.create_pr.outputs.pull-request-number
         run: |
@@ -282,6 +287,7 @@ jobs:
           echo "LOG_CONTENT<<EOF" >> $GITHUB_ENV
           echo "${log_content}" >> $GITHUB_ENV
           echo "EOF" >> $GITHUB_ENV
+
       - name: Post devctl output as a comment
         if: steps.check_pr.outputs.PR_EXISTS == 'false' && steps.create_pr.outputs.pull-request-number
         uses: actions/github-script@v8
@@ -309,6 +315,8 @@ jobs:
     needs: [major_release_decider]
     if: needs.major_release_decider.outputs.run_consolidated == 'true'
     runs-on: ubuntu-latest
+    outputs:
+      pr_url: ${{ steps.create_pr.outputs.pull-request-url }}
     steps:
       - uses: actions/checkout@v5
       - name: Determine next release version
@@ -370,7 +378,7 @@ jobs:
             
             # Capitalize provider name for the heading
             PROVIDER_UPPER=$(echo "$provider" | awk '{print toupper($0)}')
-            echo "### Changes for ${PROVIDER_UPPER}" >> $LOG_FILE
+            echo "<details><summary>Changes for ${PROVIDER_UPPER}</summary>" >> $LOG_FILE
             echo "" >> $LOG_FILE
 
             BASE_VERSION=$(./tools/determine-next-release.sh "$provider" "major" "${{ needs.major_release_decider.outputs.version_override }}" | grep '^base=' | cut -d'=' -f2)
@@ -391,12 +399,18 @@ jobs:
               echo "Command failed. Retrying in 15 seconds..."
               sleep 15
             done
+            echo "</details>" >> $LOG_FILE
           done
         
           LOG_CONTENT=$(cat /tmp/release_output.log)
           echo "LOG_CONTENT<<EOF" >> "$GITHUB_ENV"
           echo "$LOG_CONTENT" >> "$GITHUB_ENV"
           echo "EOF" >> "$GITHUB_ENV"
+          
+          PROVIDER_LABELS=$(echo "${{ needs.major_release_decider.outputs.provider_list }}" | sed 's/[^ ]* */provider\/&/g' | sed 's/provider\/\s*//g' | tr ' ' '\n')
+          echo "PROVIDER_LABELS<<EOF" >> "$GITHUB_OUTPUT"
+          echo "$PROVIDER_LABELS" >> "$GITHUB_OUTPUT"
+          echo "EOF" >> "$GITHUB_OUTPUT"
 
       - name: Update README.md
         id: update_readme
@@ -435,6 +449,9 @@ jobs:
                 `/update-release --provider aws --app my-app@1.2.3@@dependency1#dependency2`
           branch: "release-${{ steps.determine_next_release.outputs.version }}"
           draft: true
+          labels: |
+            release/${{ needs.major_release_decider.outputs.release_type }}
+            ${{ steps.create_release.outputs.PROVIDER_LABELS }}
 
       - name: Add comment to PR with devctl output
         if: steps.create_pr.outputs.pull-request-number && steps.create_pr.outputs.pull-request-number != ''
@@ -462,6 +479,8 @@ jobs:
     needs: [minor_release_decider]
     if: needs.minor_release_decider.outputs.run_consolidated == 'true'
     runs-on: ubuntu-latest
+    outputs:
+      pr_url: ${{ steps.create_pr.outputs.pull-request-url }}
     steps:
       - uses: actions/checkout@v5
       - name: Determine next release version
@@ -513,7 +532,7 @@ jobs:
             
             # Capitalize provider name for the heading
             PROVIDER_UPPER=$(echo "$provider" | awk '{print toupper($0)}')
-            echo "### Changes for ${PROVIDER_UPPER}" >> $LOG_FILE
+            echo "<details><summary>Changes for ${PROVIDER_UPPER}</summary>" >> $LOG_FILE
             echo "" >> $LOG_FILE
 
             BASE_VERSION=$(./tools/determine-next-release.sh "$provider" "minor" "${{ needs.minor_release_decider.outputs.version_override }}" | grep '^base=' | cut -d'=' -f2)
@@ -534,12 +553,18 @@ jobs:
               echo "Command failed. Retrying in 15 seconds..."
               sleep 15
             done
+            echo "</details>" >> $LOG_FILE
           done
         
           LOG_CONTENT=$(cat /tmp/release_output.log)
           echo "LOG_CONTENT<<EOF" >> "$GITHUB_ENV"
           echo "$LOG_CONTENT" >> "$GITHUB_ENV"
           echo "EOF" >> "$GITHUB_ENV"
+
+          PROVIDER_LABELS=$(echo "${{ needs.minor_release_decider.outputs.provider_list }}" | sed 's/[^ ]* */provider\/&/g' | sed 's/provider\/\s*//g' | tr ' ' '\n')
+          echo "PROVIDER_LABELS<<EOF" >> "$GITHUB_OUTPUT"
+          echo "$PROVIDER_LABELS" >> "$GITHUB_OUTPUT"
+          echo "EOF" >> "$GITHUB_OUTPUT"
 
       - name: Update README.md
         id: update_readme
@@ -578,6 +603,9 @@ jobs:
                 `/update-release --provider aws --app my-app@1.2.3@@dependency1#dependency2`
           branch: "release-${{ steps.determine_next_release.outputs.version }}"
           draft: true
+          labels: |
+            release/${{ needs.minor_release_decider.outputs.release_type }}
+            ${{ steps.create_release.outputs.PROVIDER_LABELS }}
 
       - name: Add comment to PR with devctl output
         if: steps.create_pr.outputs.pull-request-number && steps.create_pr.outputs.pull-request-number != ''
@@ -609,6 +637,8 @@ jobs:
       matrix:
         provider: ${{ fromJSON(needs.major_release_decider.outputs.provider_matrix) }}
     runs-on: ubuntu-latest
+    outputs:
+      pr_url: ${{ steps.create_pr.outputs.pull-request-url }}
     steps:
       - uses: actions/checkout@v5
       - name: Determine next release version
@@ -700,6 +730,9 @@ jobs:
                 `/update-release --app my-app@1.2.3@@dependency1#dependency2`
           branch: "release-${{ steps.determine_next_release.outputs.version }}-${{ matrix.provider }}"
           draft: true
+          labels: |
+            release/${{ needs.major_release_decider.outputs.release_type }}
+            provider/${{ matrix.provider }}
 
       - name: Add comment to PR with devctl output
         if: steps.create_pr.outputs.pull-request-number && steps.create_pr.outputs.pull-request-number != ''
@@ -730,6 +763,8 @@ jobs:
       matrix:
         provider: ${{ fromJSON(needs.minor_release_decider.outputs.provider_matrix) }}
     runs-on: ubuntu-latest
+    outputs:
+      pr_url: ${{ steps.create_pr.outputs.pull-request-url }}
     steps:
       - uses: actions/checkout@v5
       - name: Determine next release version
@@ -811,6 +846,9 @@ jobs:
                 `/update-release --app my-app@1.2.3@@dependency1#dependency2`
           branch: "release-${{ steps.determine_next_release.outputs.version }}-${{ matrix.provider }}"
           draft: true
+          labels: |
+            release/${{ needs.minor_release_decider.outputs.release_type }}
+            provider/${{ matrix.provider }}
 
       - name: Add comment to PR with devctl output
         if: steps.create_pr.outputs.pull-request-number && steps.create_pr.outputs.pull-request-number != ''
@@ -825,3 +863,107 @@ jobs:
               issue_number: ${{ steps.create_pr.outputs.pull-request-number }},
               body: `### Changes:\n\n${output.replace(/`/g, '\\`')}`
             });
+
+  summarize_releases:
+    name: "Summarize Releases"
+    needs:
+      - minor_patch_release
+      - major_release_consolidated
+      - minor_release_consolidated
+      - major_release_individual
+      - minor_release_individual
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Checkout code"
+        uses: actions/checkout@v5
+      
+      - name: "Generate release summary"
+        id: generate_summary
+        run: |
+          SUMMARY_CONTENT="## Release Summary\n\n"
+          
+          # Consolidated Major Releases
+          if [[ "${{ needs.major_release_consolidated.outputs.pr_url }}" != "" ]]; then
+            SUMMARY_CONTENT="${SUMMARY_CONTENT}**Consolidated Major Release PR:**\n"
+            SUMMARY_CONTENT="${SUMMARY_CONTENT}- ${{ needs.major_release_consolidated.outputs.pr_url }}\n\n"
+          fi
+          
+          # Consolidated Minor Releases
+          if [[ "${{ needs.minor_release_consolidated.outputs.pr_url }}" != "" ]]; then
+            SUMMARY_CONTENT="${SUMMARY_CONTENT}**Consolidated Minor Release PR:**\n"
+            SUMMARY_CONTENT="${SUMMARY_CONTENT}- ${{ needs.minor_release_consolidated.outputs.pr_url }}\n\n"
+          fi
+          
+          # Individual Major Releases
+          MAJOR_INDIVIDUAL_RELEASES=$(echo "${{ toJSON(needs.major_release_individual.outputs) }}" | jq -r 'select(.result == "success") | .outputs | to_entries[] | select(.key | endswith("_pr_url")) | .value')
+          if [[ "$MAJOR_INDIVIDUAL_RELEASES" != "" ]]; then
+            SUMMARY_CONTENT="${SUMMARY_CONTENT}**Individual Major Release PRs:**\n"
+            for url in $MAJOR_INDIVIDUAL_RELEASES; do
+              SUMMARY_CONTENT="${SUMMARY_CONTENT}- $url\n"
+            done
+            SUMMARY_CONTENT="${SUMMARY_CONTENT}\n"
+          fi
+          
+          # Individual Minor Releases
+          MINOR_INDIVIDUAL_RELEASES=$(echo "${{ toJSON(needs.minor_release_individual.outputs) }}" | jq -r 'select(.result == "success") | .outputs | to_entries[] | select(.key | endswith("_pr_url")) | .value')
+          if [[ "$MINOR_INDIVIDUAL_RELEASES" != "" ]]; then
+            SUMMARY_CONTENT="${SUMMARY_CONTENT}**Individual Minor Release PRs:**\n"
+            for url in $MINOR_INDIVIDUAL_RELEASES; do
+              SUMMARY_CONTENT="${SUMMARY_CONTENT}- $url\n"
+            done
+            SUMMARY_CONTENT="${SUMMARY_CONTENT}\n"
+          fi
+          
+          # Minor/Patch Releases
+          MINOR_PATCH_RELEASES=$(echo "${{ toJSON(needs.minor_patch_release.outputs) }}" | jq -r 'select(.result == "success") | .outputs | to_entries[] | select(.key | endswith("_pr_url")) | .value')
+          if [[ "$MINOR_PATCH_RELEASES" != "" ]]; then
+            SUMMARY_CONTENT="${SUMMARY_CONTENT}**Minor/Patch Release PRs:**\n"
+            for url in $MINOR_PATCH_RELEASES; do
+              SUMMARY_CONTENT="${SUMMARY_CONTENT}- $url\n"
+            done
+            SUMMARY_CONTENT="${SUMMARY_CONTENT}\n"
+          fi
+
+          echo "SUMMARY_CONTENT<<EOF" >> "$GITHUB_ENV"
+          echo "$SUMMARY_CONTENT" >> "$GITHUB_ENV"
+          echo "EOF" >> "$GITHUB_ENV"
+
+      - name: "Post job summary"
+        run: |
+          echo "${{ env.SUMMARY_CONTENT }}" >> $GITHUB_STEP_SUMMARY
+
+  notify_failure:
+    name: "Notify on Failure"
+    needs:
+      - minor_patch_release
+      - major_release_consolidated
+      - minor_release_consolidated
+      - major_release_individual
+      - minor_release_individual
+    if: failure()
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Send failure notification"
+        run: |
+          echo "## :x: Release Workflow Failed" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "One or more release jobs failed. Please check the workflow logs for details." >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Failed job(s):" >> $GITHUB_STEP_SUMMARY
+          
+          if [[ "${{ needs.minor_patch_release.result }}" == "failure" ]]; then
+            echo "- Minor/Patch Release" >> $GITHUB_STEP_SUMMARY
+          fi
+          if [[ "${{ needs.major_release_consolidated.result }}" == "failure" ]]; then
+            echo "- Major Release (Consolidated)" >> $GITHUB_STEP_SUMMARY
+          fi
+          if [[ "${{ needs.minor_release_consolidated.result }}" == "failure" ]]; then
+            echo "- Minor Release (Consolidated)" >> $GITHUB_STEP_SUMMARY
+          fi
+          if [[ "${{ needs.major_release_individual.result }}" == "failure" ]]; then
+            echo "- Major Release (Individual)" >> $GITHUB_STEP_SUMMARY
+          fi
+          if [[ "${{ needs.minor_release_individual.result }}" == "failure" ]]; then
+            echo "- Minor Release (Individual)" >> $GITHUB_STEP_SUMMARY
+          fi
