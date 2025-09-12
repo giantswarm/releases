@@ -241,6 +241,9 @@ jobs:
       - name: Create new release
         if: steps.check_pr.outputs.PR_EXISTS == 'false'
         id: create_release
+        env:
+          DEVCTL_UNSAFE_FORCE_VERSION: ${{ steps.install_devctl.outputs.version }}
+          DEVCTL_GITHUB_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
         run: |
           set -o pipefail
           devctl release create \
@@ -358,6 +361,8 @@ jobs:
         env:
           OPSCTL_GITHUB_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
           GH_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+          DEVCTL_UNSAFE_FORCE_VERSION: ${{ steps.install_devctl.outputs.version }}
+          DEVCTL_GITHUB_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
         run: |
           set -o pipefail
           export OPSCTL_GITHUB_TOKEN=${{ secrets.TAYLORBOT_GITHUB_ACTION }}
@@ -512,6 +517,8 @@ jobs:
         env:
           OPSCTL_GITHUB_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
           GH_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+          DEVCTL_UNSAFE_FORCE_VERSION: ${{ steps.install_devctl.outputs.version }}
+          DEVCTL_GITHUB_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
         run: |
           set -o pipefail
           export OPSCTL_GITHUB_TOKEN=${{ secrets.TAYLORBOT_GITHUB_ACTION }}
@@ -680,6 +687,8 @@ jobs:
         env:
           OPSCTL_GITHUB_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
           GH_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+          DEVCTL_UNSAFE_FORCE_VERSION: ${{ steps.install_devctl.outputs.version }}
+          DEVCTL_GITHUB_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
         run: |
           set -o pipefail
           devctl release create \
@@ -796,6 +805,8 @@ jobs:
         env:
           OPSCTL_GITHUB_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
           GH_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+          DEVCTL_UNSAFE_FORCE_VERSION: ${{ steps.install_devctl.outputs.version }}
+          DEVCTL_GITHUB_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
         run: |
           set -o pipefail
           devctl release create \

@@ -4,16 +4,22 @@ inputs:
   github_token:
     description: 'The GitHub token to use for authentication'
     required: true
+outputs:
+  version:
+    description: 'The version of devctl that was installed'
+    value: ${{ steps.install.outputs.version }}
 runs:
   using: "composite"
   steps:
     - name: Install devctl from release binary
+      id: install
       shell: bash
       env:
         GH_TOKEN: ${{ inputs.github_token }}
       run: |
         mkdir -p /tmp/devctl_install && cd /tmp/devctl_install
         LATEST_DEVCTL_TAG=$(gh release view --repo giantswarm/devctl --json tagName --jq '.tagName')
+        echo "version=${LATEST_DEVCTL_TAG}" >> $GITHUB_OUTPUT
         ASSET_NAME="devctl-${LATEST_DEVCTL_TAG}-linux-amd64.tar.gz"
         gh release download --repo giantswarm/devctl "$LATEST_DEVCTL_TAG" --pattern "$ASSET_NAME"
         tar -xzf "$ASSET_NAME"
