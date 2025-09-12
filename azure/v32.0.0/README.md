@@ -6,14 +6,17 @@
 
 ### Components
 
-- cluster-azure from v2.3.1 to v2.4.1
+- cluster-azure from v2.3.1 to v3.0.0
 - Flatcar from v4152.2.3 to [v4230.2.2](https://www.flatcar-linux.org/releases/#release-4230.2.2)
 - Kubernetes from v1.31.11 to [v1.32.9](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.32.md#v1.32.9)
 
-### cluster-azure [v2.3.1...v2.4.1](https://github.com/giantswarm/cluster-azure/compare/v2.3.1...v2.4.1)
+### cluster-azure [v2.3.1...v3.0.0](https://github.com/giantswarm/cluster-azure/compare/v2.3.1...v3.0.0)
 
 #### Changed
 
+- Chart: Update `cluster` to v3.0.1.
+  - **BREAKING CHANGE:** Cgroups v1 is not supported anymore. The `.internal.advancedConfiguration.cgroupsv1` and `.global.nodePools.().cgroupsv1` flags have been removed.
+  - Chart: Simplify containerd configuration by using a single config file for both control-plane and worker nodes.
 - Chart: Update `cluster` to v2.6.2.
 - Remove custom cilium configuration overrides
 

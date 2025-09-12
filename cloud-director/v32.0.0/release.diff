@@ -101,12 +101,12 @@ spec:                                                              spec:
   components:                                                        components:
   - name: cluster-cloud-director                                     - name: cluster-cloud-director
     catalog: cluster                                                   catalog: cluster
-    version: 0.68.1                                             |      version: 0.69.1
+    version: 0.68.1                                             |      version: 1.0.0
   - name: flatcar                                                    - name: flatcar
     version: 4152.2.3                                           |      version: 4230.2.2
   - name: kubernetes                                                 - name: kubernetes
     version: 1.31.11                                            |      version: 1.32.9
   - name: os-tooling                                                 - name: os-tooling
     version: 1.26.1                                                    version: 1.26.1
-  date: "2025-08-21T19:03:23Z"                                  |    date: "2025-09-11T08:38:58Z"
+  date: "2025-08-21T19:03:23Z"                                  |    date: "2025-09-12T13:09:33Z"
   state: active                                                      state: active
