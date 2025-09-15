@@ -2,7 +2,7 @@
 
 > **WARNING:** With Flatcar 4230.2.0, cgroups v1 backwards compatibility has been removed. This means that enabling legacy cgroups v1 is no longer supported and nodes still using them will fail to update.
 
-## Changes compared to v31.1.1
+## Changes compared to v31.1.2
 
 ### Components
 
@@ -22,7 +22,7 @@
 
 ### Apps
 
-- azure-cloud-controller-manager from v1.31.8-gs1 to v1.32.7-1
+- azure-cloud-controller-manager from v1.31.8-gs2 to v1.32.7-1
 - azure-cloud-node-manager from v1.31.8-gs1 to v1.32.7
 - azuredisk-csi-driver from v1.31.11-gs1 to v1.32.9
 - azurefile-csi-driver from v1.31.7-gs1 to v1.32.5
@@ -41,7 +41,7 @@
 - vertical-pod-autoscaler from v5.5.1 to v6.0.1
 - vertical-pod-autoscaler-crd from v3.3.1 to v4.0.1
 
-### azure-cloud-controller-manager [v1.31.8-gs1...v1.32.7-1](https://github.com/giantswarm/azure-cloud-controller-manager-app/compare/v1.31.8-gs1...v1.32.7-1)
+### azure-cloud-controller-manager [v1.31.8-gs2...v1.32.7-1](https://github.com/giantswarm/azure-cloud-controller-manager-app/compare/v1.31.8-gs2...v1.32.7-1)
 
 #### Changed
 

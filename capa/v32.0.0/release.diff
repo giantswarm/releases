@@ -1,7 +1,7 @@
 apiVersion: release.giantswarm.io/v1alpha1                         apiVersion: release.giantswarm.io/v1alpha1
 kind: Release                                                      kind: Release
 metadata:                                                          metadata:
-  name: aws-31.1.1                                              |    name: aws-32.0.0
+  name: aws-31.1.2                                              |    name: aws-32.0.0
 spec:                                                              spec:
   apps:                                                              apps:
   - name: aws-ebs-csi-driver                                         - name: aws-ebs-csi-driver
@@ -139,12 +139,12 @@ spec:                                                              spec:
   components:                                                        components:
   - name: cluster-aws                                                - name: cluster-aws
     catalog: cluster                                                   catalog: cluster
-    version: 3.6.1                                              |      version: 5.0.0
+    version: 3.6.2                                              |      version: 5.0.0
   - name: flatcar                                                    - name: flatcar
     version: 4152.2.3                                           |      version: 4230.2.2
   - name: kubernetes                                                 - name: kubernetes
     version: 1.31.11                                            |      version: 1.32.9
   - name: os-tooling                                                 - name: os-tooling
     version: 1.26.1                                                    version: 1.26.1
-  date: "2025-08-21T18:17:23Z"                                  |    date: "2025-09-12T13:05:35Z"
+  date: "2025-09-05T10:59:17Z"                                  |    date: "2025-09-15T10:31:15Z"
   state: active                                                      state: active

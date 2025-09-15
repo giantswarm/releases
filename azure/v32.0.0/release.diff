@@ -1,11 +1,11 @@
 apiVersion: release.giantswarm.io/v1alpha1                         apiVersion: release.giantswarm.io/v1alpha1
 kind: Release                                                      kind: Release
 metadata:                                                          metadata:
-  name: azure-31.1.1                                            |    name: azure-32.0.0
+  name: azure-31.1.2                                            |    name: azure-32.0.0
 spec:                                                              spec:
   apps:                                                              apps:
   - name: azure-cloud-controller-manager                             - name: azure-cloud-controller-manager
-    version: 1.31.8-gs1                                         |      version: 1.32.7-1
+    version: 1.31.8-gs2                                         |      version: 1.32.7-1
     dependsOn:                                                         dependsOn:
     - vertical-pod-autoscaler-crd                                      - vertical-pod-autoscaler-crd
   - name: azure-cloud-node-manager                                   - name: azure-cloud-node-manager
@@ -122,5 +122,5 @@ spec:                                                              spec:
     version: 1.31.11                                            |      version: 1.32.9
   - name: os-tooling                                                 - name: os-tooling
     version: 1.26.1                                                    version: 1.26.1
-  date: "2025-09-03T09:42:22Z"                                  |    date: "2025-09-12T13:09:02Z"
+  date: "2025-09-10T12:57:18Z"                                  |    date: "2025-09-15T10:31:33Z"
   state: active                                                      state: active
