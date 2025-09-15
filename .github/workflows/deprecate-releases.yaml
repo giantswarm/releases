@@ -79,9 +79,8 @@ jobs:
         run: |
           cd tools
           go mod tidy
-          go build -o deprecate-releases deprecate-release.go
+          go build -o $GITHUB_WORKSPACE/deprecate-releases deprecate-release.go
 
-          cp deprecate-releases $GITHUB_WORKSPACE/
           cd $GITHUB_WORKSPACE
 
       - name: Run deprecation tool
