@@ -909,7 +909,7 @@ jobs:
           fi
           
           # Individual Major Releases
-          MAJOR_INDIVIDUAL_RELEASES=$(echo '${{ toJSON(needs.major_release_individual) }}' | jq -r '.[] | select(.result == "success") | .outputs.pr_url')
+          MAJOR_INDIVIDUAL_RELEASES=$(echo '${{ toJSON(needs.major_release_individual) }}' | jq -r '(if has("result") then . else .[] end) | select(.result == "success") | .outputs.pr_url')
           if [[ "$MAJOR_INDIVIDUAL_RELEASES" != "" ]]; then
             SUMMARY_CONTENT="${SUMMARY_CONTENT}**Individual Major Release PRs:**\n"
             for url in $MAJOR_INDIVIDUAL_RELEASES; do
@@ -919,7 +919,7 @@ jobs:
           fi
           
           # Individual Minor Releases
-          MINOR_INDIVIDUAL_RELEASES=$(echo '${{ toJSON(needs.minor_release_individual) }}' | jq -r '.[] | select(.result == "success") | .outputs.pr_url')
+          MINOR_INDIVIDUAL_RELEASES=$(echo '${{ toJSON(needs.minor_release_individual) }}' | jq -r '(if has("result") then . else .[] end) | select(.result == "success") | .outputs.pr_url')
           if [[ "$MINOR_INDIVIDUAL_RELEASES" != "" ]]; then
             SUMMARY_CONTENT="${SUMMARY_CONTENT}**Individual Minor Release PRs:**\n"
             for url in $MINOR_INDIVIDUAL_RELEASES; do
@@ -929,7 +929,7 @@ jobs:
           fi
           
           # Minor/Patch Releases
-          MINOR_PATCH_RELEASES=$(echo '${{ toJSON(needs.minor_patch_release) }}' | jq -r '.[] | select(.result == "success") | .outputs.pr_url')
+          MINOR_PATCH_RELEASES=$(echo '${{ toJSON(needs.minor_patch_release) }}' | jq -r '(if has("result") then . else .[] end) | select(.result == "success") | .outputs.pr_url')
           if [[ "$MINOR_PATCH_RELEASES" != "" ]]; then
             SUMMARY_CONTENT="${SUMMARY_CONTENT}**Minor/Patch Release PRs:**\n"
             for url in $MINOR_PATCH_RELEASES; do
