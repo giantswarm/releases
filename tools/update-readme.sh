@@ -131,7 +131,7 @@ while IFS= read -r line || [ -n "$line" ]; do
   # Find patch insertion point
   if $in_minor_section && ! $version_inserted && [[ "$line" =~ ^\ \ \ \ -\ \[(v[0-9]+\.[0-9]+\.[0-9]+)\]\(.*$ ]]; then
     EXISTING_VERSION=${BASH_REMATCH[1]}
-    if dpkg --compare-versions "$RELEASE_VERSION" "gt" "$EXISTING_VERSION"; then
+    if dpkg --compare-versions "${RELEASE_VERSION#v}" "gt" "${EXISTING_VERSION#v}"; then
       echo "$PATCH_LINE" >> "$TMP_README_FILE"
       version_inserted=true
     fi
