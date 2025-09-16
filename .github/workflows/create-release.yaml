@@ -229,14 +229,16 @@ jobs:
       - name: Check for existing PR
         id: check_pr
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
         run: |
-          if gh pr list --head "$BRANCH_NAME" --json number --limit 1 | grep -q "number"; then
-            echo "PR for branch $BRANCH_NAME already exists. Skipping provider ${{ matrix.provider }}."
-            echo "PR_EXISTS=true" >> $GITHUB_OUTPUT
-          else
+          BRANCH_NAME="release-${{ steps.versioning.outputs.NEXT_RELEASE }}-${{ matrix.provider }}"
+          PR_EXISTS=$(gh pr list --repo "$GITHUB_REPOSITORY" --head "$BRANCH_NAME" --json number --jq '.[0].number')
+          if [ -z "$PR_EXISTS" ]; then
             echo "No existing PR found for branch $BRANCH_NAME. Proceeding."
             echo "PR_EXISTS=false" >> $GITHUB_OUTPUT
+          else
+            echo "PR for branch $BRANCH_NAME already exists. Skipping provider ${{ matrix.provider }}."
+            echo "PR_EXISTS=true" >> $GITHUB_OUTPUT
           fi
       - name: Create new release
         if: steps.check_pr.outputs.PR_EXISTS == 'false'
