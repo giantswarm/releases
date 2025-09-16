@@ -944,7 +944,7 @@ jobs:
 
       - name: "Post job summary"
         run: |
-          echo "${{ env.SUMMARY_CONTENT }}" >> $GITHUB_STEP_SUMMARY
+          printf "%b" "${{ env.SUMMARY_CONTENT }}" >> $GITHUB_STEP_SUMMARY
 
   notify_failure:
     name: "Notify on Failure"
