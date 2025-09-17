@@ -148,6 +148,7 @@ jobs:
               --base "$BASE_VERSION" \
               --name "$RELEASE_NAME" \
               --provider "$PROVIDER" \
+              --provider-header \
               --bumpall \
               ${{ steps.parse_command.outputs.devctl_args }} \
               --overwrite -y --output markdown --requested-only 2>&1); then
@@ -159,12 +160,11 @@ jobs:
                 LOG_PART="${LOG_PART}</details>\n\n"
                 FULL_LOG_CONTENT="${FULL_LOG_CONTENT}${LOG_PART}"
             else
-                LOG_PART="### Changes for ${PROVIDER_DIR^^}\n\n"
                 # Trim whitespace to check if the output is empty.
                 if [[ -z "$(echo -e "${output}" | tr -d '[:space:]')" ]]; then
-                  LOG_PART="${LOG_PART}No changes detected for provider ${PROVIDER_DIR^^}. The requested app/component versions may already be present in the base release \`${BASE_VERSION}\`.\n\n"
+                  LOG_PART="No changes detected for provider ${PROVIDER_DIR^^}. The requested app/component versions may already be present in the base release \`${BASE_VERSION}\`.\n\n"
                 else
-                  LOG_PART="${LOG_PART}${output}\n\n"
+                  LOG_PART="${output}\n\n"
                 fi
                 FULL_LOG_CONTENT="${FULL_LOG_CONTENT}${LOG_PART}"
             fi
