@@ -305,7 +305,7 @@ jobs:
             release/${{ needs.dispatcher.outputs.release_type }}
             provider/${{ matrix.provider }}
       - name: Read log file to env
-        if: steps.check_pr.outputs.PR_EXISTS == 'false' && steps.create_pr.outputs.pull-request-number
+        if: steps.check_pr.outputs.PR_EXISTS == 'false' && steps.create_pr.outputs.pull-request-number && needs.dispatcher.outputs.release_type != 'patch'
         run: |
           log_content=$(cat /tmp/release_output.log)
           echo "LOG_CONTENT<<EOF" >> $GITHUB_ENV
@@ -313,7 +313,7 @@ jobs:
           echo "EOF" >> $GITHUB_ENV
 
       - name: Post devctl output as a comment
-        if: steps.check_pr.outputs.PR_EXISTS == 'false' && steps.create_pr.outputs.pull-request-number
+        if: steps.check_pr.outputs.PR_EXISTS == 'false' && steps.create_pr.outputs.pull-request-number && needs.dispatcher.outputs.release_type != 'patch'
         uses: actions/github-script@v8
         with:
           github-token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
