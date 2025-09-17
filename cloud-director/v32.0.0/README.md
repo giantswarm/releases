@@ -7,7 +7,7 @@
 ### Components
 
 - cluster-cloud-director from v0.68.1 to v1.0.0
-- Flatcar from v4152.2.3 to [v4230.2.2](https://www.flatcar-linux.org/releases/#release-4230.2.2)
+- Flatcar from v4152.2.3 to [v4230.2.3](https://www.flatcar-linux.org/releases/#release-4230.2.3)
 - Kubernetes from v1.31.11 to [v1.32.9](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.32.md#v1.32.9)
 
 ### cluster-cloud-director [v0.68.1...v1.0.0](https://github.com/giantswarm/cluster-cloud-director/compare/v0.68.1...v1.0.0)

@@ -7,7 +7,7 @@
 ### Components
 
 - cluster-azure from v2.3.1 to v3.0.0
-- Flatcar from v4152.2.3 to [v4230.2.2](https://www.flatcar-linux.org/releases/#release-4230.2.2)
+- Flatcar from v4152.2.3 to [v4230.2.3](https://www.flatcar-linux.org/releases/#release-4230.2.3)
 - Kubernetes from v1.31.11 to [v1.32.9](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.32.md#v1.32.9)
 
 ### cluster-azure [v2.3.1...v3.0.0](https://github.com/giantswarm/cluster-azure/compare/v2.3.1...v3.0.0)
