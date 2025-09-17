@@ -7,7 +7,7 @@
 ### Components
 
 - cluster-aws from v3.6.2 to v5.0.0
-- Flatcar from v4152.2.3 to [v4230.2.3](https://www.flatcar-linux.org/releases/#release-4230.2.3)
+- Flatcar from v4152.2.3 to [v4230.2.2](https://www.flatcar-linux.org/releases/#release-4230.2.2)
 - Kubernetes from v1.31.11 to [v1.32.9](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.32.md#v1.32.9)
 
 ### cluster-aws [v3.6.2...v5.0.0](https://github.com/giantswarm/cluster-aws/compare/v3.6.2...v5.0.0)

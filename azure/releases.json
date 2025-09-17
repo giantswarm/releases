@@ -38,7 +38,7 @@
     {
       "version": "32.0.0",
       "isDeprecated": false,
-      "releaseTimestamp": "2025-09-17T06:01:06Z",
+      "releaseTimestamp": "2025-09-15T10:31:33Z",
       "changelogUrl": "https://github.com/giantswarm/releases/blob/master/azure/v32.0.0/README.md",
       "isStable": true
     }
