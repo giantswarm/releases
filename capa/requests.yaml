@@ -67,7 +67,7 @@ releases:
     version: ">= 1.6.2"
   - name: security-bundle
     version: ">= 1.8.2"
-- name: "> 25.1.2 < 25.2.0 || > 25.3.0 < 26.0.0 || > 26.2.0 < 27.0.0 || > 27.3.0 < 28.0.0 || > 28.3.0 < 29.0.0 || > 29.0.0"
+- name: "> 29.0.0"
   requests:
   - name: cert-exporter
     version: ">= 2.9.2"
