@@ -71,10 +71,14 @@ jobs:
             echo "description_only=true" >> "$GITHUB_OUTPUT"
             # Extract description (everything after --provider xxx, or after /update-description if no provider)
             if [[ "$COMMENT_BODY" == *"--provider"* ]]; then
-              DESCRIPTION=$(echo "$COMMENT_BODY" | sed -E 's|.*--provider[= ]+[a-zA-Z-]+ *||' | sed 's/^"//' | sed 's/"$//')
+              # Extract everything after --provider <provider> 
+              DESCRIPTION=$(echo "$COMMENT_BODY" | sed -E 's|.*--provider[= ]+[a-zA-Z-]+ +||')
             else
-              DESCRIPTION=$(echo "$COMMENT_BODY" | sed -E 's|/update-description *||' | sed 's/^"//' | sed 's/"$//')
+              # Extract everything after /update-description 
+              DESCRIPTION=$(echo "$COMMENT_BODY" | sed -E 's|/update-description +||')
             fi
+            # Remove surrounding quotes if present
+            DESCRIPTION=$(echo "$DESCRIPTION" | sed 's/^"//' | sed 's/"$//')
             echo "description=$DESCRIPTION" >> "$GITHUB_OUTPUT"
             DEVCTL_ARGS=""
           else
