@@ -5,7 +5,7 @@ metadata:                                                          metadata:
 spec:                                                              spec:
   apps:                                                              apps:
   - name: aws-ebs-csi-driver                                         - name: aws-ebs-csi-driver
-    version: 3.0.5                                              |      version: 3.1.0
+    version: 3.0.5                                                     version: 3.0.5
     dependsOn:                                                         dependsOn:
     - cloud-provider-aws                                               - cloud-provider-aws
   - name: aws-ebs-csi-driver-servicemonitors                         - name: aws-ebs-csi-driver-servicemonitors
@@ -136,10 +136,10 @@ spec:                                                              spec:
     catalog: cluster                                                   catalog: cluster
     version: 5.0.0                                                     version: 5.0.0
   - name: flatcar                                                    - name: flatcar
-    version: 4230.2.2                                           |      version: 4152.2.2
+    version: 4230.2.2                                           |      version: 4230.2.3
   - name: kubernetes                                                 - name: kubernetes
     version: 1.32.9                                                    version: 1.32.9
   - name: os-tooling                                                 - name: os-tooling
     version: 1.26.1                                                    version: 1.26.1
-  date: "2025-09-15T10:31:15Z"                                  |    date: "2025-09-18T12:47:49Z"
+  date: "2025-09-15T10:31:15Z"                                  |    date: "2025-09-18T12:48:29Z"
   state: active                                                      state: active
