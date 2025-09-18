@@ -186,15 +186,27 @@ jobs:
               # Update announcement.md
               ANNOUNCEMENT_FILE="$PROVIDER_DIR/$RELEASE_NAME/announcement.md"
               if [ -f "$ANNOUNCEMENT_FILE" ]; then
-                if grep -q "<< Add description here >>" "$ANNOUNCEMENT_FILE"; then
-                  # Replace inline placeholder
-                  sed -i "s/<< Add description here >>/$DESCRIPTION/g" "$ANNOUNCEMENT_FILE"
-                  echo "Added description to announcement.md"
+                # Determine provider name
+                PROVIDER_NAME=""
+                if [[ "$PROVIDER_DIR" == "capa" ]]; then
+                  PROVIDER_NAME="CAPA"
+                elif [[ "$PROVIDER_DIR" == "azure" ]]; then
+                  PROVIDER_NAME="Azure"
+                elif [[ "$PROVIDER_DIR" == "vsphere" ]]; then
+                  PROVIDER_NAME="vSphere"
+                elif [[ "$PROVIDER_DIR" == "cloud-director" ]]; then
+                  PROVIDER_NAME="VMware Cloud Director"
                 else
-                  # Replace everything on line 1 after the first "**. " with new description
-                  sed -i "1s/\*\*\. .*/\*\*. $DESCRIPTION/" "$ANNOUNCEMENT_FILE"
-                  echo "Updated existing description in announcement.md"
+                  PROVIDER_NAME=$(echo "$PROVIDER_DIR" | tr 'a-z' 'A-Z')
                 fi
+                
+                # Always recreate line 1 with the proper format
+                RELEASE_VERSION=$(echo "$RELEASE_NAME" | sed 's/v//')
+                NEW_LINE_1="**Workload cluster release v${RELEASE_VERSION} for ${PROVIDER_NAME} is available**. $DESCRIPTION"
+                
+                # Replace line 1 completely
+                sed -i "1c\\$NEW_LINE_1" "$ANNOUNCEMENT_FILE"
+                echo "Updated announcement.md with new description"
               fi
               LOG_PART="### Announcement updated for ${PROVIDER_DIR^^}\n\n"
               LOG_PART="${LOG_PART}📢 **Announcement**: $DESCRIPTION\n\n"
@@ -361,7 +373,24 @@ jobs:
               echo "Restored description in README.md"
             fi
             if [[ -n "$ANNOUNCEMENT_BACKUP" ]]; then
-              sed -i "s/<< Add description here >>/$ANNOUNCEMENT_BACKUP/g" "${PROVIDER_DIR}/${RELEASE_NAME}/announcement.md"
+              # Determine provider name for restore
+              PROVIDER_NAME=""
+              if [[ "$PROVIDER_DIR" == "capa" ]]; then
+                PROVIDER_NAME="CAPA"
+              elif [[ "$PROVIDER_DIR" == "azure" ]]; then
+                PROVIDER_NAME="Azure"
+              elif [[ "$PROVIDER_DIR" == "vsphere" ]]; then
+                PROVIDER_NAME="vSphere"
+              elif [[ "$PROVIDER_DIR" == "cloud-director" ]]; then
+                PROVIDER_NAME="VMware Cloud Director"
+              else
+                PROVIDER_NAME=$(echo "$PROVIDER_DIR" | tr 'a-z' 'A-Z')
+              fi
+              
+              # Recreate line 1 with proper format when restoring
+              RELEASE_VERSION=$(echo "$RELEASE_NAME" | sed 's/v//')
+              NEW_LINE_1="**Workload cluster release v${RELEASE_VERSION} for ${PROVIDER_NAME} is available**. $ANNOUNCEMENT_BACKUP"
+              sed -i "1c\\$NEW_LINE_1" "${PROVIDER_DIR}/${RELEASE_NAME}/announcement.md"
               echo "Restored description in announcement.md"
             fi
           done
