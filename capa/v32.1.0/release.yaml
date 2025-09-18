@@ -5,9 +5,7 @@ metadata:
 spec:
   apps:
   - name: aws-ebs-csi-driver
-    version: 3.1.0
-    dependsOn:
-    - cloud-provider-aws
+    version: 3.0.5
   - name: aws-ebs-csi-driver-servicemonitors
     version: 0.1.0
     dependsOn:
@@ -141,5 +139,5 @@ spec:
     version: 1.32.9
   - name: os-tooling
     version: 1.26.1
-  date: "2025-09-18T13:28:48Z"
+  date: "2025-09-18T13:30:10Z"
   state: active

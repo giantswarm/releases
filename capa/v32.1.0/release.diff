@@ -1,13 +1,11 @@
 apiVersion: release.giantswarm.io/v1alpha1                         apiVersion: release.giantswarm.io/v1alpha1
 kind: Release                                                      kind: Release
 metadata:                                                          metadata:
-  name: aws-32.0.0                                              |    name: aws-32.1.0
+  name: aws-32.1.0                                                   name: aws-32.1.0
 spec:                                                              spec:
   apps:                                                              apps:
   - name: aws-ebs-csi-driver                                         - name: aws-ebs-csi-driver
-    version: 3.0.5                                              |      version: 3.1.0
-    dependsOn:                                                         dependsOn:
-    - cloud-provider-aws                                               - cloud-provider-aws
+    version: 3.0.5                                                     version: 3.0.5
   - name: aws-ebs-csi-driver-servicemonitors                         - name: aws-ebs-csi-driver-servicemonitors
     version: 0.1.0                                                     version: 0.1.0
     dependsOn:                                                         dependsOn:
@@ -136,10 +134,10 @@ spec:                                                              spec:
     catalog: cluster                                                   catalog: cluster
     version: 5.0.0                                                     version: 5.0.0
   - name: flatcar                                                    - name: flatcar
-    version: 4230.2.2                                           |      version: 4230.2.3
+    version: 4230.2.3                                                  version: 4230.2.3
   - name: kubernetes                                                 - name: kubernetes
     version: 1.32.9                                                    version: 1.32.9
   - name: os-tooling                                                 - name: os-tooling
     version: 1.26.1                                                    version: 1.26.1
-  date: "2025-09-15T10:31:15Z"                                  |    date: "2025-09-18T13:28:48Z"
+  date: "2025-09-18T13:30:10Z"                                       date: "2025-09-18T13:30:10Z"
   state: active                                                      state: active
