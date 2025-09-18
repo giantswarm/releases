@@ -139,7 +139,7 @@ jobs:
 
             # 3. Recreate the release
             DEVCTL_ARGS="${{ steps.parse_command.outputs.devctl_args }}"
-            DEVCTL_COMMAND="devctl release create --base \"$RELEASE_NAME\" --name \"$RELEASE_NAME\" --provider \"$PROVIDER\" --overwrite -y --output markdown --requested-only"
+            DEVCTL_COMMAND="devctl release create --name \"$RELEASE_NAME\" --provider \"$PROVIDER\" --overwrite -y --output markdown --requested-only --from-branch"
 
             # By default, we only bump all components if no specific app/component is requested.
             if [[ "$DEVCTL_ARGS" == *--app* || "$DEVCTL_ARGS" == *--component* ]]; then
