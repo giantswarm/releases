@@ -135,22 +135,23 @@ jobs:
               continue
             fi
 
-            BASE_VERSION=$(find "$PROVIDER_DIR" -maxdepth 1 -type d -name "v[0-9]*.[0-9]*.[0-9]*" -not -path "*/archived/*" -exec basename {} \; | grep -v "^${RELEASE_NAME}$" | sort -V | tail -n 1)
-            if [[ -z "$BASE_VERSION" ]]; then
-              echo "Error: Could not determine base version for release '$RELEASE_NAME' for provider '$PROVIDER_DIR'."
-              # Don't exit, just continue to the next provider
-              continue
-            fi
-            echo "Updating release '$RELEASE_NAME' for provider '$PROVIDER_DIR' using base '$BASE_VERSION'"
+            echo "Updating release '$RELEASE_NAME' for provider '$PROVIDER_DIR'"
 
             # 3. Recreate the release
-            if ! output=$(devctl release create \
-              --base "$BASE_VERSION" \
-              --name "$RELEASE_NAME" \
-              --provider "$PROVIDER" \
-              --bumpall \
-              ${{ steps.parse_command.outputs.devctl_args }} \
-              --overwrite -y --output markdown --requested-only 2>&1 | uniq); then
+            DEVCTL_ARGS="${{ steps.parse_command.outputs.devctl_args }}"
+            DEVCTL_COMMAND="devctl release create --name \"$RELEASE_NAME\" --provider \"$PROVIDER\" --overwrite -y --output markdown --requested-only"
+
+            # By default, we only bump all components if no specific app/component is requested.
+            if [[ "$DEVCTL_ARGS" == *--app* || "$DEVCTL_ARGS" == *--component* ]]; then
+              echo "Specific app/component version requested, not bumping all."
+              DEVCTL_COMMAND="$DEVCTL_COMMAND $DEVCTL_ARGS"
+            else
+              echo "No specific app/component version requested, bumping all."
+              DEVCTL_COMMAND="$DEVCTL_COMMAND --bumpall $DEVCTL_ARGS"
+            fi
+
+            echo "Running command: $DEVCTL_COMMAND"
+            if ! output=$(eval "$DEVCTL_COMMAND" 2>&1 | uniq); then
                 LOG_PART="### Changes for ${PROVIDER_DIR^^}\n\n"
                 LOG_PART="${LOG_PART}devctl command failed for provider $PROVIDER_DIR.\n\n"
                 LOG_PART="${LOG_PART}<details><summary>Error Log</summary>\n\n"
