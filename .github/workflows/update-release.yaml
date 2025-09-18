@@ -7,7 +7,7 @@ on:
 jobs:
   update-release:
     # This job only runs for pull request comments
-    if: github.event.issue.pull_request && (startsWith(github.event.comment.body, '/update-release') || startsWith(github.event.comment.body, '/update-description')) && github.repository == 'giantswarm/releases' && github.event.sender.type != 'Bot' && github.event.sender.login != 'taylorbot'
+    if: github.event.issue.pull_request && (startsWith(github.event.comment.body, '/update-release') || startsWith(github.event.comment.body, '/update-readme') || startsWith(github.event.comment.body, '/update-announcement')) && github.repository == 'giantswarm/releases' && github.event.sender.type != 'Bot' && github.event.sender.login != 'taylorbot'
     runs-on: ubuntu-latest
     env:
       OPSCTL_GITHUB_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
@@ -68,15 +68,27 @@ jobs:
         run: |
 
           # Check if this is a description-only update
-          if [[ "$COMMENT_BODY" == *"/update-description"* ]]; then
+          if [[ "$COMMENT_BODY" == *"/update-readme"* ]]; then
             echo "description_only=true" >> "$GITHUB_OUTPUT"
-            # Extract description (everything after --provider xxx, or after /update-description if no provider)
+            echo "update_type=readme" >> "$GITHUB_OUTPUT"
+            # Extract description (everything after --provider xxx, or after /update-readme if no provider)
             if [[ "$COMMENT_BODY" == *"--provider"* ]]; then
-              # Extract everything after --provider <provider> 
               DESCRIPTION=$(echo "$COMMENT_BODY" | sed -E 's|.*--provider[= ]+[a-zA-Z-]+ +||')
             else
-              # Extract everything after /update-description 
-              DESCRIPTION=$(echo "$COMMENT_BODY" | sed -E 's|/update-description +||')
+              DESCRIPTION=$(echo "$COMMENT_BODY" | sed -E 's|/update-readme +||')
+            fi
+            # Remove surrounding quotes if present
+            DESCRIPTION=$(echo "$DESCRIPTION" | sed 's/^"//' | sed 's/"$//')
+            echo "description=$DESCRIPTION" >> "$GITHUB_OUTPUT"
+            DEVCTL_ARGS=""
+          elif [[ "$COMMENT_BODY" == *"/update-announcement"* ]]; then
+            echo "description_only=true" >> "$GITHUB_OUTPUT"
+            echo "update_type=announcement" >> "$GITHUB_OUTPUT"
+            # Extract description (everything after --provider xxx, or after /update-announcement if no provider)
+            if [[ "$COMMENT_BODY" == *"--provider"* ]]; then
+              DESCRIPTION=$(echo "$COMMENT_BODY" | sed -E 's|.*--provider[= ]+[a-zA-Z-]+ +||')
+            else
+              DESCRIPTION=$(echo "$COMMENT_BODY" | sed -E 's|/update-announcement +||')
             fi
             # Remove surrounding quotes if present
             DESCRIPTION=$(echo "$DESCRIPTION" | sed 's/^"//' | sed 's/"$//')
@@ -116,13 +128,14 @@ jobs:
             echo "providers_list=${PROVIDERS_LIST}" >> "$GITHUB_OUTPUT"
           fi
 
-      - name: Update descriptions
-        id: update_descriptions  
+      - name: Update documentation
+        id: update_docs
         if: success() && steps.parse_command.outputs.description_only == 'true' && (steps.parse_command.outputs.provider || steps.parse_command.outputs.providers_list)
         run: |
           BRANCH_NAME="${{ steps.get_branch.outputs.result }}"
           PROVIDERS_TO_UPDATE="${{ steps.parse_command.outputs.provider }}${{ steps.parse_command.outputs.providers_list }}"
           DESCRIPTION="${{ steps.parse_command.outputs.description }}"
+          UPDATE_TYPE="${{ steps.parse_command.outputs.update_type }}"
           
           # For `devctl`, the provider for the `capa` directory is `aws`.
           if [[ " ${PROVIDERS_TO_UPDATE} " =~ " aws " ]]; then
@@ -140,7 +153,7 @@ jobs:
 
           for PROVIDER in $PROVIDERS_TO_UPDATE; do
             PROVIDER_DIR=$PROVIDER
-            echo "Updating description for provider: $PROVIDER_DIR"
+            echo "Updating $UPDATE_TYPE for provider: $PROVIDER_DIR"
 
             # Check if release directory exists
             if [ ! -d "$PROVIDER_DIR/$RELEASE_NAME" ]; then
@@ -148,22 +161,41 @@ jobs:
               continue
             fi
 
-            # Update README.md and announcement.md
-            README_FILE="$PROVIDER_DIR/$RELEASE_NAME/README.md"
-            ANNOUNCEMENT_FILE="$PROVIDER_DIR/$RELEASE_NAME/announcement.md"
+            if [[ "$UPDATE_TYPE" == "readme" ]]; then
+              # Update README.md
+              README_FILE="$PROVIDER_DIR/$RELEASE_NAME/README.md"
+              if [ -f "$README_FILE" ]; then
+                if grep -q "<< Add description here >>" "$README_FILE"; then
+                  # Replace placeholder
+                  sed -i "s/<< Add description here >>/$DESCRIPTION/g" "$README_FILE"
+                  echo "Added description to README.md"
+                else
+                  # Replace the warning/description section (line 3, after title and blank line)
+                  sed -i "3c\\$DESCRIPTION" "$README_FILE"
+                  echo "Updated existing description in README.md"
+                fi
+              fi
+              LOG_PART="### README updated for ${PROVIDER_DIR^^}\n\n"
+              LOG_PART="${LOG_PART}📝 **README Description**: $DESCRIPTION\n\n"
             
-            if [ -f "$README_FILE" ]; then
-              sed -i "s/<< Add description here >>/$DESCRIPTION/g" "$README_FILE"
-              echo "Updated description in $README_FILE"
-            fi
-            
-            if [ -f "$ANNOUNCEMENT_FILE" ]; then
-              sed -i "s/<< Add description here >>/$DESCRIPTION/g" "$ANNOUNCEMENT_FILE"  
-              echo "Updated description in $ANNOUNCEMENT_FILE"
+            elif [[ "$UPDATE_TYPE" == "announcement" ]]; then
+              # Update announcement.md
+              ANNOUNCEMENT_FILE="$PROVIDER_DIR/$RELEASE_NAME/announcement.md"
+              if [ -f "$ANNOUNCEMENT_FILE" ]; then
+                if grep -q "<< Add description here >>" "$ANNOUNCEMENT_FILE"; then
+                  # Replace inline placeholder
+                  sed -i "s/<< Add description here >>/$DESCRIPTION/g" "$ANNOUNCEMENT_FILE"
+                  echo "Added description to announcement.md"
+                else
+                  # Find and replace existing description after "**. " pattern
+                  sed -i "s/\*\*\. .*/\*\*. $DESCRIPTION/" "$ANNOUNCEMENT_FILE"
+                  echo "Updated existing description in announcement.md"
+                fi
+              fi
+              LOG_PART="### Announcement updated for ${PROVIDER_DIR^^}\n\n"
+              LOG_PART="${LOG_PART}📢 **Announcement**: $DESCRIPTION\n\n"
             fi
 
-            LOG_PART="### Description updated for ${PROVIDER_DIR^^}\n\n"
-            LOG_PART="${LOG_PART}📝 **Description**: $DESCRIPTION\n\n"
             FULL_LOG_CONTENT="${FULL_LOG_CONTENT}${LOG_PART}"
           done
 
@@ -232,6 +264,18 @@ jobs:
             BEFORE_HASH=""
             if [ -f "${PROVIDER_DIR}/${RELEASE_NAME}/release.yaml" ]; then
               BEFORE_HASH=$(sha256sum "${PROVIDER_DIR}/${RELEASE_NAME}/release.yaml" | cut -d' ' -f1)
+            fi
+            
+            # Backup existing descriptions before devctl overwrites them
+            README_BACKUP=""
+            ANNOUNCEMENT_BACKUP=""
+            if [ -f "${PROVIDER_DIR}/${RELEASE_NAME}/README.md" ] && ! grep -q "<< Add description here >>" "${PROVIDER_DIR}/${RELEASE_NAME}/README.md"; then
+              # Extract existing README description (line 3, which is the warning/description)
+              README_BACKUP=$(sed -n '3p' "${PROVIDER_DIR}/${RELEASE_NAME}/README.md" || true)
+            fi
+            if [ -f "${PROVIDER_DIR}/${RELEASE_NAME}/announcement.md" ] && ! grep -q "<< Add description here >>" "${PROVIDER_DIR}/${RELEASE_NAME}/announcement.md"; then
+              # Extract existing announcement description (everything after "**. ")
+              ANNOUNCEMENT_BACKUP=$(sed -n '1p' "${PROVIDER_DIR}/${RELEASE_NAME}/announcement.md" | sed 's/.*\*\*\. //' || true)
             fi
             
             if ! output=$(eval "$DEVCTL_COMMAND" 2>&1 | uniq); then
@@ -305,6 +349,16 @@ jobs:
                   LOG_PART="${LOG_PART}No changes detected for provider ${PROVIDER_DIR^^}. The requested app/component versions may already be present in the current release.\n\n"
                 fi
                 FULL_LOG_CONTENT="${FULL_LOG_CONTENT}${LOG_PART}"
+            fi
+            
+            # Restore descriptions if they existed before devctl overwrote them
+            if [[ -n "$README_BACKUP" ]]; then
+              sed -i "3c\\$README_BACKUP" "${PROVIDER_DIR}/${RELEASE_NAME}/README.md"
+              echo "Restored description in README.md"
+            fi
+            if [[ -n "$ANNOUNCEMENT_BACKUP" ]]; then
+              sed -i "s/<< Add description here >>/$ANNOUNCEMENT_BACKUP/g" "${PROVIDER_DIR}/${RELEASE_NAME}/announcement.md"
+              echo "Restored description in announcement.md"
             fi
           done
 

@@ -286,8 +286,11 @@ jobs:
 
             **Add descriptions:**
 
-            *   Add description to release documentation:
-                \`/update-description \"This patch release fixes CVE-2024-1234 in security-bundle and updates Flatcar for hardware compatibility.\"\`"
+            *   Update README.md with detailed description:
+                \`/update-readme \"This patch release fixes CVE-2024-1234 in security-bundle and updates Flatcar for hardware compatibility. It also resolves boot issues on certain hardware configurations.\"\`
+
+            *   Update announcement.md with brief summary:
+                \`/update-announcement \"Workload cluster release v32.0.1 for CAPA fixes critical security vulnerabilities and improves system stability.\"\`"
           else
             body="This PR was automatically created. It creates \`${{ steps.versioning.outputs.NEXT_RELEASE }}\` for \`${{ matrix.provider }}\`.
 
@@ -313,8 +316,11 @@ jobs:
 
             **Add descriptions:**
 
-            *   Add description to release documentation:
-                \`/update-description \"This minor release includes Kubernetes 1.32 support and enhanced security features.\"\`"
+            *   Update README.md with detailed description:
+                \`/update-readme \"This minor release includes Kubernetes 1.32 support and enhanced security features. It also introduces performance improvements and platform stability enhancements.\"\`
+
+            *   Update announcement.md with brief summary:
+                \`/update-announcement \"Workload cluster release v32.1.0 for CAPA includes Kubernetes 1.32 support and enhanced security features.\"\`"
           fi
           echo "body<<EOF" >> $GITHUB_OUTPUT
           echo "$body" >> $GITHUB_OUTPUT
@@ -505,11 +511,14 @@ jobs:
 
             **Add descriptions:**
 
-            *   Add description for specific provider:
-                `/update-description --provider aws "This release includes important security updates and performance improvements."`
+            *   Update README.md for specific provider:
+                `/update-readme --provider aws "This major release includes Kubernetes 1.32 support, enhanced security features, and significant performance improvements. It introduces new platform capabilities and resolves several stability issues."`
 
-            *   Add description for all providers (auto-detected):
-                `/update-description "This release brings significant platform enhancements and stability improvements."`
+            *   Update announcement.md for specific provider:
+                `/update-announcement --provider aws "Workload cluster release v32.0.0 for CAPA includes Kubernetes 1.32 support and enhanced security features."`
+
+            *   Update all providers (auto-detected):
+                `/update-readme "This major release brings significant platform enhancements and stability improvements across all supported providers."`
           branch: "release-${{ steps.determine_next_release.outputs.version }}"
           draft: true
           labels: |
@@ -669,11 +678,14 @@ jobs:
 
             **Add descriptions:**
 
-            *   Add description for specific provider:
-                `/update-description --provider aws "This release includes important security updates and performance improvements."`
+            *   Update README.md for specific provider:
+                `/update-readme --provider aws "This major release includes Kubernetes 1.32 support, enhanced security features, and significant performance improvements. It introduces new platform capabilities and resolves several stability issues."`
 
-            *   Add description for all providers (auto-detected):
-                `/update-description "This release brings significant platform enhancements and stability improvements."`
+            *   Update announcement.md for specific provider:
+                `/update-announcement --provider aws "Workload cluster release v32.0.0 for CAPA includes Kubernetes 1.32 support and enhanced security features."`
+
+            *   Update all providers (auto-detected):
+                `/update-readme "This major release brings significant platform enhancements and stability improvements across all supported providers."`
           branch: "release-${{ steps.determine_next_release.outputs.version }}"
           draft: true
           labels: |
@@ -806,8 +818,11 @@ jobs:
 
             **Add descriptions:**
 
-            *   Add description to release documentation:
-                `/update-description "This release includes important security updates and performance improvements."`
+            *   Update README.md with detailed description:
+                `/update-readme "This release includes important security updates and performance improvements. It introduces new platform capabilities and resolves several stability issues."`
+
+            *   Update announcement.md with brief summary:
+                `/update-announcement "Workload cluster release includes enhanced security features and performance improvements."`
           branch: "release-${{ steps.determine_next_release.outputs.version }}-${{ matrix.provider }}"
           draft: true
           labels: |
@@ -929,8 +944,11 @@ jobs:
 
             **Add descriptions:**
 
-            *   Add description to release documentation:
-                `/update-description "This release includes important security updates and performance improvements."`
+            *   Update README.md with detailed description:
+                `/update-readme "This release includes important security updates and performance improvements. It introduces new platform capabilities and resolves several stability issues."`
+
+            *   Update announcement.md with brief summary:
+                `/update-announcement "Workload cluster release includes enhanced security features and performance improvements."`
           branch: "release-${{ steps.determine_next_release.outputs.version }}-${{ matrix.provider }}"
           draft: true
           labels: |
