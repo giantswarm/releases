@@ -2,18 +2,15 @@
 
 << Add description here >>
 
-## Changes compared to v32.0.0
+## Changes compared to v32.1.0
 
-### Components
-
-- Flatcar from v4230.2.2 to [v4230.2.3](https://www.flatcar-linux.org/releases/#release-4230.2.3)
 
 ### Apps
 
-- aws-ebs-csi-driver from v3.0.5 to v3.1.0
+- aws-ebs-csi-driver from v3.1.0 to v3.0.5
 
-### aws-ebs-csi-driver [v3.0.5...v3.1.0](https://github.com/giantswarm/aws-ebs-csi-driver-app/compare/v3.0.5...v3.1.0)
+### aws-ebs-csi-driver [v3.1.0...v3.0.5](https://github.com/giantswarm/aws-ebs-csi-driver-app/compare/v3.1.0...v3.0.5)
 
 #### Changed
 
-- Set default `updateStrategy.rollingUpdate.maxUnavailable` to 25% in `DaemonSet` to speed up rolling update.
+- Chart: Update `snapshot-controller` to v8.2.1. ([#283](https://github.com/giantswarm/aws-ebs-csi-driver-app/pull/283))
