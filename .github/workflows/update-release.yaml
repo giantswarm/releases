@@ -151,8 +151,15 @@ jobs:
             fi
 
             echo "Running command: $DEVCTL_COMMAND"
+            
+            # Check for changes before running the command
+            BEFORE_HASH=""
+            if [ -f "${PROVIDER_DIR}/${RELEASE_NAME}/release.yaml" ]; then
+              BEFORE_HASH=$(sha256sum "${PROVIDER_DIR}/${RELEASE_NAME}/release.yaml" | cut -d' ' -f1)
+            fi
+            
             if ! output=$(eval "$DEVCTL_COMMAND" 2>&1 | uniq); then
-                LOG_PART="### Changes for ${PROVIDER_DIR^^}\n\n"
+                LOG_PART="### User-requested changes for ${PROVIDER_DIR^^}\n\n"
                 LOG_PART="${LOG_PART}devctl command failed for provider $PROVIDER_DIR.\n\n"
                 LOG_PART="${LOG_PART}<details><summary>Error Log</summary>\n\n"
                 LOG_PART="${LOG_PART}_Output of \`devctl release create\`_: \n"
@@ -160,12 +167,64 @@ jobs:
                 LOG_PART="${LOG_PART}</details>\n\n"
                 FULL_LOG_CONTENT="${FULL_LOG_CONTENT}${LOG_PART}"
             else
-                LOG_PART="### Changes for ${PROVIDER_DIR^^}\n\n"
-                # Trim whitespace to check if the output is empty.
-                if [[ -z "$(echo -e "${output}" | tr -d '[:space:]')" ]]; then
-                  LOG_PART="${LOG_PART}No changes detected for provider ${PROVIDER_DIR^^}. The requested app/component versions may already be present in the base release \`${BASE_VERSION}\`.\n\n"
+                LOG_PART="### User-requested changes for ${PROVIDER_DIR^^}\n\n"
+                
+                # Check if files actually changed
+                AFTER_HASH=""
+                if [ -f "${PROVIDER_DIR}/${RELEASE_NAME}/release.yaml" ]; then
+                  AFTER_HASH=$(sha256sum "${PROVIDER_DIR}/${RELEASE_NAME}/release.yaml" | cut -d' ' -f1)
+                fi
+                
+                # Determine if changes were made
+                if [[ "$BEFORE_HASH" != "$AFTER_HASH" ]]; then
+                  # Files changed, show what was requested
+                  if [[ -z "$(echo -e "${output}" | tr -d '[:space:]')" ]]; then
+                    # Generate a table showing what changed
+                    CHANGES_TABLE=""
+                    
+                    # Parse the requested changes and show them in table format
+                    if [[ "$DEVCTL_ARGS" == *--app* ]]; then
+                      CHANGES_TABLE="${CHANGES_TABLE}| APP NAME | DESIRED APP VERSION |\n"
+                      CHANGES_TABLE="${CHANGES_TABLE}|----------|--------------------|\n"
+                      
+                      # Extract app changes from the arguments
+                      echo "$DEVCTL_ARGS" | grep -oE '\--app [^ ]+' | sed 's/--app //' | while read -r app_spec; do
+                        if [[ "$app_spec" == *@* ]]; then
+                          app_name=$(echo "$app_spec" | cut -d'@' -f1)
+                          app_version=$(echo "$app_spec" | cut -d'@' -f2)
+                          CHANGES_TABLE="${CHANGES_TABLE}| $app_name | **$app_version** |\n"
+                        fi
+                      done
+                    fi
+                    
+                    if [[ "$DEVCTL_ARGS" == *--component* ]]; then
+                      if [[ -n "$CHANGES_TABLE" ]]; then
+                        CHANGES_TABLE="${CHANGES_TABLE}\n"
+                      fi
+                      CHANGES_TABLE="${CHANGES_TABLE}| COMPONENT NAME | DESIRED VERSION |\n"
+                      CHANGES_TABLE="${CHANGES_TABLE}|----------------|----------------|\n"
+                      
+                      # Extract component changes from the arguments
+                      echo "$DEVCTL_ARGS" | grep -oE '\--component [^ ]+' | sed 's/--component //' | while read -r comp_spec; do
+                        if [[ "$comp_spec" == *@* ]]; then
+                          comp_name=$(echo "$comp_spec" | cut -d'@' -f1)
+                          comp_version=$(echo "$comp_spec" | cut -d'@' -f2)
+                          CHANGES_TABLE="${CHANGES_TABLE}| $comp_name | **$comp_version** |\n"
+                        fi
+                      done
+                    fi
+                    
+                    if [[ -n "$CHANGES_TABLE" ]]; then
+                      LOG_PART="${LOG_PART}${CHANGES_TABLE}\n"
+                    else
+                      LOG_PART="${LOG_PART}✅ Changes applied successfully.\n\n"
+                    fi
+                  else
+                    LOG_PART="${LOG_PART}${output}\n\n"
+                  fi
                 else
-                  LOG_PART="${LOG_PART}${output}\n\n"
+                  # No changes detected
+                  LOG_PART="${LOG_PART}No changes detected for provider ${PROVIDER_DIR^^}. The requested app/component versions may already be present in the current release.\n\n"
                 fi
                 FULL_LOG_CONTENT="${FULL_LOG_CONTENT}${LOG_PART}"
             fi
