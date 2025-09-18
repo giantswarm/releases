@@ -7,7 +7,7 @@ on:
 jobs:
   update-release:
     # This job only runs for pull request comments
-    if: github.event.issue.pull_request && startsWith(github.event.comment.body, '/update-release') && github.repository == 'giantswarm/releases' && github.event.sender.type != 'Bot' && github.event.sender.login != 'taylorbot'
+    if: github.event.issue.pull_request && (startsWith(github.event.comment.body, '/update-release') || startsWith(github.event.comment.body, '/update-description')) && github.repository == 'giantswarm/releases' && github.event.sender.type != 'Bot' && github.event.sender.login != 'taylorbot'
     runs-on: ubuntu-latest
     env:
       OPSCTL_GITHUB_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
@@ -66,8 +66,22 @@ jobs:
         run: |
           COMMENT_BODY="${{ github.event.comment.body }}"
 
-          # Extract devctl arguments, excluding the /update-release command and any --provider flag
-          DEVCTL_ARGS=$(echo "$COMMENT_BODY" | sed -E 's|/update-release||; s/--provider[= ]+[a-zA-Z-]+//' | xargs)
+          # Check if this is a description-only update
+          if [[ "$COMMENT_BODY" == *"/update-description"* ]]; then
+            echo "description_only=true" >> "$GITHUB_OUTPUT"
+            # Extract description (everything after --provider xxx, or after /update-description if no provider)
+            if [[ "$COMMENT_BODY" == *"--provider"* ]]; then
+              DESCRIPTION=$(echo "$COMMENT_BODY" | sed -E 's|.*--provider[= ]+[a-zA-Z-]+ *||' | sed 's/^"//' | sed 's/"$//')
+            else
+              DESCRIPTION=$(echo "$COMMENT_BODY" | sed -E 's|/update-description *||' | sed 's/^"//' | sed 's/"$//')
+            fi
+            echo "description=$DESCRIPTION" >> "$GITHUB_OUTPUT"
+            DEVCTL_ARGS=""
+          else
+            echo "description_only=false" >> "$GITHUB_OUTPUT"
+            # Extract devctl arguments, excluding the /update-release command and any --provider flag
+            DEVCTL_ARGS=$(echo "$COMMENT_BODY" | sed -E 's|/update-release||; s/--provider[= ]+[a-zA-Z-]+//' | xargs)
+          fi
           echo "devctl_args=$DEVCTL_ARGS" >> "$GITHUB_OUTPUT"
 
           # Check for --provider in the comment
@@ -97,9 +111,66 @@ jobs:
             echo "providers_list=${PROVIDERS_LIST}" >> "$GITHUB_OUTPUT"
           fi
 
+      - name: Update descriptions
+        id: update_descriptions  
+        if: success() && steps.parse_command.outputs.description_only == 'true' && (steps.parse_command.outputs.provider || steps.parse_command.outputs.providers_list)
+        run: |
+          BRANCH_NAME="${{ steps.get_branch.outputs.result }}"
+          PROVIDERS_TO_UPDATE="${{ steps.parse_command.outputs.provider }}${{ steps.parse_command.outputs.providers_list }}"
+          DESCRIPTION="${{ steps.parse_command.outputs.description }}"
+          
+          # For `devctl`, the provider for the `capa` directory is `aws`.
+          if [[ " ${PROVIDERS_TO_UPDATE} " =~ " aws " ]]; then
+            PROVIDERS_TO_UPDATE=$(echo "${PROVIDERS_TO_UPDATE}" | sed 's/aws/capa/g')
+          fi
+
+          # Determine the release name from the branch.
+          RELEASE_NAME=$(echo "$BRANCH_NAME" | sed -n 's/release-\(v[0-9.]*\).*/\1/p')
+          if [[ -z "$RELEASE_NAME" ]]; then
+            echo "Could not determine release name from branch '$BRANCH_NAME'. Aborting."
+            exit 1
+          fi
+
+          FULL_LOG_CONTENT=""
+
+          for PROVIDER in $PROVIDERS_TO_UPDATE; do
+            PROVIDER_DIR=$PROVIDER
+            echo "Updating description for provider: $PROVIDER_DIR"
+
+            # Check if release directory exists
+            if [ ! -d "$PROVIDER_DIR/$RELEASE_NAME" ]; then
+              echo "Release '$RELEASE_NAME' does not exist for provider '$PROVIDER_DIR'. Skipping."
+              continue
+            fi
+
+            # Update README.md and announcement.md
+            README_FILE="$PROVIDER_DIR/$RELEASE_NAME/README.md"
+            ANNOUNCEMENT_FILE="$PROVIDER_DIR/$RELEASE_NAME/announcement.md"
+            
+            if [ -f "$README_FILE" ]; then
+              sed -i "s/<< Add description here >>/$DESCRIPTION/g" "$README_FILE"
+              echo "Updated description in $README_FILE"
+            fi
+            
+            if [ -f "$ANNOUNCEMENT_FILE" ]; then
+              sed -i "s/<< Add description here >>/$DESCRIPTION/g" "$ANNOUNCEMENT_FILE"  
+              echo "Updated description in $ANNOUNCEMENT_FILE"
+            fi
+
+            LOG_PART="### Description updated for ${PROVIDER_DIR^^}\n\n"
+            LOG_PART="${LOG_PART}📝 **Description**: $DESCRIPTION\n\n"
+            FULL_LOG_CONTENT="${FULL_LOG_CONTENT}${LOG_PART}"
+          done
+
+          # Replace literal '\n' with actual newlines for proper rendering in the GitHub comment.
+          FULL_LOG_CONTENT=$(printf '%b' "${FULL_LOG_CONTENT}")
+          echo "DEVCTL_OUTPUT_COMMENT<<EOF" >> "$GITHUB_ENV"
+          echo "$FULL_LOG_CONTENT" >> "$GITHUB_ENV"
+          echo "EOF" >> "$GITHUB_ENV"
+
       - name: Recreate release files
         id: recreate_release
-        if: success() && (steps.parse_command.outputs.provider || steps.parse_command.outputs.providers_list)
+        if: success() && steps.parse_command.outputs.description_only != 'true' && (steps.parse_command.outputs.provider || steps.parse_command.outputs.providers_list)
         run: |
           set -o pipefail
           BRANCH_NAME="${{ steps.get_branch.outputs.result }}"

@@ -266,26 +266,55 @@ jobs:
             ---
 
             **Note:** For patch releases, it does not automatically bump any component or app.
-            To bump a specific component or app, please use the \`--component\` or \`--app\` flags with the \`/update-release\` command.
+            To update specific components or apps, comment with \`/update-release\` and provide arguments directly to \`devctl\`.
+            If you do not specify a provider, the bot will automatically detect the provider from the PR files.
+            Available providers: \`aws\`, \`azure\`, \`cloud-director\`, \`vsphere\`.
 
-            You can also provide arguments directly to \`devctl\`, for example:
-            \`/update-release --component flatcar@1.2.3\`
-            \`/update-release --app aws-ebs-csi-driver@3.0.5\`"
+            **Examples:**
+
+            *   Update a single component:
+                \`/update-release --component flatcar@4152.2.3\`
+
+            *   Update a single application:
+                \`/update-release --app aws-ebs-csi-driver@3.0.5\`
+
+            *   Update multiple components and apps at once:
+                \`/update-release --component kubernetes@1.31.8 --app security-bundle@1.12.1\`
+
+            *   Specify app dependencies using the \`#\` separator:
+                \`/update-release --app my-app@1.2.3@@dependency1#dependency2\`
+
+            **Add descriptions:**
+
+            *   Add description to release documentation:
+                \`/update-description \"This patch release fixes CVE-2024-1234 in security-bundle and updates Flatcar for hardware compatibility.\"\`"
           else
             body="This PR was automatically created. It creates \`${{ steps.versioning.outputs.NEXT_RELEASE }}\` for \`${{ matrix.provider }}\`.
 
             ---
 
-            **Note:** To update the release files, comment \`/update-release\` on this PR.
-            You can also provide arguments directly to \`devctl\`, for example:
-            \`/update-release --component flatcar@1.2.3\`
-            \`/update-release --app aws-ebs-csi-driver@3.0.5\`
-
+            To update the release files, comment with \`/update-release\` and provide arguments directly to \`devctl\`.
             If you do not specify a provider, the bot will automatically detect the provider from the PR files.
             Available providers: \`aws\`, \`azure\`, \`cloud-director\`, \`vsphere\`.
 
-            To specify app dependencies, use the \`#\` separator:
-            \`/update-release --app my-app@1.2.3@@dependency1#dependency2\`"
+            **Examples:**
+
+            *   Update a single component:
+                \`/update-release --component flatcar@4152.2.3\`
+
+            *   Update a single application:
+                \`/update-release --app aws-ebs-csi-driver@3.0.5\`
+
+            *   Update multiple components and apps at once:
+                \`/update-release --component kubernetes@1.31.8 --app security-bundle@1.12.1\`
+
+            *   Specify app dependencies using the \`#\` separator:
+                \`/update-release --app my-app@1.2.3@@dependency1#dependency2\`
+
+            **Add descriptions:**
+
+            *   Add description to release documentation:
+                \`/update-description \"This minor release includes Kubernetes 1.32 support and enhanced security features.\"\`"
           fi
           echo "body<<EOF" >> $GITHUB_OUTPUT
           echo "$body" >> $GITHUB_OUTPUT
@@ -473,6 +502,14 @@ jobs:
 
             *   Specify app dependencies using the `#` separator:
                 `/update-release --provider aws --app my-app@1.2.3@@dependency1#dependency2`
+
+            **Add descriptions:**
+
+            *   Add description for specific provider:
+                `/update-description --provider aws "This release includes important security updates and performance improvements."`
+
+            *   Add description for all providers (auto-detected):
+                `/update-description "This release brings significant platform enhancements and stability improvements."`
           branch: "release-${{ steps.determine_next_release.outputs.version }}"
           draft: true
           labels: |
@@ -629,6 +666,14 @@ jobs:
 
             *   Specify app dependencies using the `#` separator:
                 `/update-release --provider aws --app my-app@1.2.3@@dependency1#dependency2`
+
+            **Add descriptions:**
+
+            *   Add description for specific provider:
+                `/update-description --provider aws "This release includes important security updates and performance improvements."`
+
+            *   Add description for all providers (auto-detected):
+                `/update-description "This release brings significant platform enhancements and stability improvements."`
           branch: "release-${{ steps.determine_next_release.outputs.version }}"
           draft: true
           labels: |
@@ -758,6 +803,11 @@ jobs:
 
             *   Specify app dependencies using the `#` separator:
                 `/update-release --app my-app@1.2.3@@dependency1#dependency2`
+
+            **Add descriptions:**
+
+            *   Add description to release documentation:
+                `/update-description "This release includes important security updates and performance improvements."`
           branch: "release-${{ steps.determine_next_release.outputs.version }}-${{ matrix.provider }}"
           draft: true
           labels: |
@@ -876,6 +926,11 @@ jobs:
 
             *   Specify app dependencies using the `#` separator:
                 `/update-release --app my-app@1.2.3@@dependency1#dependency2`
+
+            **Add descriptions:**
+
+            *   Add description to release documentation:
+                `/update-description "This release includes important security updates and performance improvements."`
           branch: "release-${{ steps.determine_next_release.outputs.version }}-${{ matrix.provider }}"
           draft: true
           labels: |
