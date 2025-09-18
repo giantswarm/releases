@@ -63,8 +63,9 @@ jobs:
 
       - name: Parse command arguments and determine provider(s)
         id: parse_command
+        env:
+          COMMENT_BODY: ${{ github.event.comment.body }}
         run: |
-          COMMENT_BODY="${{ github.event.comment.body }}"
 
           # Check if this is a description-only update
           if [[ "$COMMENT_BODY" == *"/update-description"* ]]; then
