@@ -6,7 +6,7 @@
 
 ### Components
 
-- Flatcar from v4230.2.2 to [v4230.2.3](https://www.flatcar-linux.org/releases/#release-4230.2.3)
+- Flatcar from v4230.2.2 to [v4152.2.2](https://www.flatcar-linux.org/releases/#release-4152.2.2)
 
 ### Apps
 
