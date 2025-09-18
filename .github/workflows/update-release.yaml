@@ -66,38 +66,39 @@ jobs:
         env:
           COMMENT_BODY: ${{ github.event.comment.body }}
         run: |
+          # Use printf to safely handle quotes and special characters
+          printf '%s\n' "$COMMENT_BODY" > /tmp/comment_body.txt
 
           # Check if this is a description-only update
-          if [[ "$COMMENT_BODY" == *"/update-readme"* ]]; then
+          COMMENT_CONTENT=$(cat /tmp/comment_body.txt)
+          if [[ "$COMMENT_CONTENT" == *"/update-readme"* ]]; then
             echo "description_only=true" >> "$GITHUB_OUTPUT"
             echo "update_type=readme" >> "$GITHUB_OUTPUT"
-            # Extract description (everything after --provider xxx, or after /update-readme if no provider)
-            if [[ "$COMMENT_BODY" == *"--provider"* ]]; then
-              DESCRIPTION=$(echo "$COMMENT_BODY" | sed -E 's|.*--provider[= ]+[a-zA-Z-]+ +||')
+            # Extract description safely from file
+            if [[ "$COMMENT_CONTENT" == *"--provider"* ]]; then
+              DESCRIPTION=$(echo "$COMMENT_CONTENT" | sed -E 's|.*--provider[= ]+[a-zA-Z-]+ +||' | sed 's/^"//' | sed 's/"$//')
             else
-              DESCRIPTION=$(echo "$COMMENT_BODY" | sed -E 's|/update-readme +||')
+              DESCRIPTION=$(echo "$COMMENT_CONTENT" | sed -E 's|/update-readme +||' | sed 's/^"//' | sed 's/"$//')
             fi
-            # Remove surrounding quotes if present
-            DESCRIPTION=$(echo "$DESCRIPTION" | sed 's/^"//' | sed 's/"$//')
-            echo "description=$DESCRIPTION" >> "$GITHUB_OUTPUT"
+            # Use base64 encoding to safely pass description with special characters
+            echo "description=$(echo "$DESCRIPTION" | base64 -w 0)" >> "$GITHUB_OUTPUT"
             DEVCTL_ARGS=""
-          elif [[ "$COMMENT_BODY" == *"/update-announcement"* ]]; then
+          elif [[ "$COMMENT_CONTENT" == *"/update-announcement"* ]]; then
             echo "description_only=true" >> "$GITHUB_OUTPUT"
             echo "update_type=announcement" >> "$GITHUB_OUTPUT"
-            # Extract description (everything after --provider xxx, or after /update-announcement if no provider)
-            if [[ "$COMMENT_BODY" == *"--provider"* ]]; then
-              DESCRIPTION=$(echo "$COMMENT_BODY" | sed -E 's|.*--provider[= ]+[a-zA-Z-]+ +||')
+            # Extract description safely from file
+            if [[ "$COMMENT_CONTENT" == *"--provider"* ]]; then
+              DESCRIPTION=$(echo "$COMMENT_CONTENT" | sed -E 's|.*--provider[= ]+[a-zA-Z-]+ +||' | sed 's/^"//' | sed 's/"$//')
             else
-              DESCRIPTION=$(echo "$COMMENT_BODY" | sed -E 's|/update-announcement +||')
+              DESCRIPTION=$(echo "$COMMENT_CONTENT" | sed -E 's|/update-announcement +||' | sed 's/^"//' | sed 's/"$//')
             fi
-            # Remove surrounding quotes if present
-            DESCRIPTION=$(echo "$DESCRIPTION" | sed 's/^"//' | sed 's/"$//')
-            echo "description=$DESCRIPTION" >> "$GITHUB_OUTPUT"
+            # Use base64 encoding to safely pass description with special characters
+            echo "description=$(echo "$DESCRIPTION" | base64 -w 0)" >> "$GITHUB_OUTPUT"
             DEVCTL_ARGS=""
           else
             echo "description_only=false" >> "$GITHUB_OUTPUT"
             # Extract devctl arguments, excluding the /update-release command and any --provider flag
-            DEVCTL_ARGS=$(echo "$COMMENT_BODY" | sed -E 's|/update-release||; s/--provider[= ]+[a-zA-Z-]+//' | xargs)
+            DEVCTL_ARGS=$(echo "$COMMENT_CONTENT" | sed -E 's|/update-release||; s/--provider[= ]+[a-zA-Z-]+//' | xargs)
           fi
           echo "devctl_args=$DEVCTL_ARGS" >> "$GITHUB_OUTPUT"
 
@@ -134,8 +135,11 @@ jobs:
         run: |
           BRANCH_NAME="${{ steps.get_branch.outputs.result }}"
           PROVIDERS_TO_UPDATE="${{ steps.parse_command.outputs.provider }}${{ steps.parse_command.outputs.providers_list }}"
-          DESCRIPTION="${{ steps.parse_command.outputs.description }}"
+          DESCRIPTION_B64="${{ steps.parse_command.outputs.description }}"
           UPDATE_TYPE="${{ steps.parse_command.outputs.update_type }}"
+          
+          # Decode description from base64
+          DESCRIPTION=$(echo "$DESCRIPTION_B64" | base64 -d)
           
           # For `devctl`, the provider for the `capa` directory is `aws`.
           if [[ " ${PROVIDERS_TO_UPDATE} " =~ " aws " ]]; then
