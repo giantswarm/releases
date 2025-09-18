@@ -191,8 +191,8 @@ jobs:
                   sed -i "s/<< Add description here >>/$DESCRIPTION/g" "$ANNOUNCEMENT_FILE"
                   echo "Added description to announcement.md"
                 else
-                  # Find and replace existing description after "**. " pattern
-                  sed -i "s/\*\*\. .*/\*\*. $DESCRIPTION/" "$ANNOUNCEMENT_FILE"
+                  # Replace everything on line 1 after the first "**. " with new description
+                  sed -i "1s/\*\*\. .*/\*\*. $DESCRIPTION/" "$ANNOUNCEMENT_FILE"
                   echo "Updated existing description in announcement.md"
                 fi
               fi
