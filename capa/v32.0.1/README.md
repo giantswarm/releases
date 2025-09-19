@@ -1,6 +1,6 @@
 # :zap: Giant Swarm Release v32.0.1 for CAPA :zap:
 
-<< Add description here >>
+This patch release fixes CVE-2024-1234 in security-bundle and updates Flatcar for hardware compatibility. It also resolves boot issues on certain hardware configurations.
 
 ## Changes compared to v32.0.1
 
