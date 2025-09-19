@@ -7,23 +7,28 @@ on:
         description: 'Type of release (major, minor, patch). Used if a specific version is not provided.'
         required: true
         default: 'minor'
+      provider_all:
+        description: 'Include all providers (AWS, Azure, Cloud Director, vSphere)'
+        required: false
+        type: boolean
+        default: true
       provider_aws:
-        description: 'Include AWS (CAPA) provider. If no providers are selected, all providers will be used.'
+        description: 'Include AWS (CAPA) provider'
         required: false
         type: boolean
         default: false
       provider_azure:
-        description: 'Include Azure (CAPZ) provider. If no providers are selected, all providers will be used.'
+        description: 'Include Azure (CAPZ) provider'
         required: false
         type: boolean
         default: false
       provider_cloud_director:
-        description: 'Include Cloud Director (CAPVCD) provider. If no providers are selected, all providers will be used.'
+        description: 'Include Cloud Director (CAPVCD) provider'
         required: false
         type: boolean
         default: false
       provider_vsphere:
-        description: 'Include vSphere (CAPV) provider. If no providers are selected, all providers will be used.'
+        description: 'Include vSphere (CAPV) provider'
         required: false
         type: boolean
         default: false
@@ -57,21 +62,30 @@ jobs:
             
             # Build provider list from boolean inputs
             SELECTED_PROVIDERS=""
-            if [[ "${{ github.event.inputs.provider_aws }}" == 'true' ]]; then
-              SELECTED_PROVIDERS="${SELECTED_PROVIDERS}aws,"
-            fi
-            if [[ "${{ github.event.inputs.provider_azure }}" == 'true' ]]; then
-              SELECTED_PROVIDERS="${SELECTED_PROVIDERS}azure,"
-            fi
-            if [[ "${{ github.event.inputs.provider_cloud_director }}" == 'true' ]]; then
-              SELECTED_PROVIDERS="${SELECTED_PROVIDERS}cloud-director,"
-            fi
-            if [[ "${{ github.event.inputs.provider_vsphere }}" == 'true' ]]; then
-              SELECTED_PROVIDERS="${SELECTED_PROVIDERS}vsphere,"
+            
+            # Check if "all providers" is selected
+            if [[ "${{ github.event.inputs.provider_all }}" == 'true' ]]; then
+              SELECTED_PROVIDERS="aws,azure,cloud-director,vsphere"
+            else
+              # Build list from individual provider selections
+              if [[ "${{ github.event.inputs.provider_aws }}" == 'true' ]]; then
+                SELECTED_PROVIDERS="${SELECTED_PROVIDERS}aws,"
+              fi
+              if [[ "${{ github.event.inputs.provider_azure }}" == 'true' ]]; then
+                SELECTED_PROVIDERS="${SELECTED_PROVIDERS}azure,"
+              fi
+              if [[ "${{ github.event.inputs.provider_cloud_director }}" == 'true' ]]; then
+                SELECTED_PROVIDERS="${SELECTED_PROVIDERS}cloud-director,"
+              fi
+              if [[ "${{ github.event.inputs.provider_vsphere }}" == 'true' ]]; then
+                SELECTED_PROVIDERS="${SELECTED_PROVIDERS}vsphere,"
+              fi
+              
+              # Remove trailing comma
+              SELECTED_PROVIDERS=$(echo "$SELECTED_PROVIDERS" | sed 's/,$//')
             fi
             
-            # Remove trailing comma
-            PROVIDER_INPUT=$(echo "$SELECTED_PROVIDERS" | sed 's/,$//')
+            PROVIDER_INPUT="$SELECTED_PROVIDERS"
 
             # Count providers
             if [[ "$PROVIDER_INPUT" == '' ]]; then
