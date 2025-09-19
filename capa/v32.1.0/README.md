@@ -1,6 +1,6 @@
 # :zap: Giant Swarm Release v32.1.0 for CAPA :zap:
 
-<< Add description here >>
+This major release brings significant platform enhancements and stability improvements across all supported providers.
 
 ## Changes compared to v32.0.0
 
