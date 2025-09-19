@@ -7,9 +7,26 @@ on:
         description: 'Type of release (major, minor, patch). Used if a specific version is not provided.'
         required: true
         default: 'minor'
-      provider:
-        description: 'Provider (e.g. aws, azure, cloud-director or vsphere). Leave empty to run for all providers.'
+      provider_aws:
+        description: 'Include AWS (CAPA) provider. If no providers are selected, all providers will be used.'
         required: false
+        type: boolean
+        default: false
+      provider_azure:
+        description: 'Include Azure (CAPZ) provider. If no providers are selected, all providers will be used.'
+        required: false
+        type: boolean
+        default: false
+      provider_cloud_director:
+        description: 'Include Cloud Director (CAPVCD) provider. If no providers are selected, all providers will be used.'
+        required: false
+        type: boolean
+        default: false
+      provider_vsphere:
+        description: 'Include vSphere (CAPV) provider. If no providers are selected, all providers will be used.'
+        required: false
+        type: boolean
+        default: false
       version:
         description: 'Specific version to create (e.g. v30.0.1). Overrides release_type.'
         required: false
@@ -37,7 +54,24 @@ jobs:
           # Determine release type from triggers
           if [[ "${{ github.event_name }}" == 'workflow_dispatch' ]]; then
             echo "is_manual=true" >> "$GITHUB_OUTPUT"
-            PROVIDER_INPUT="${{ github.event.inputs.provider }}"
+            
+            # Build provider list from boolean inputs
+            SELECTED_PROVIDERS=""
+            if [[ "${{ github.event.inputs.provider_aws }}" == 'true' ]]; then
+              SELECTED_PROVIDERS="${SELECTED_PROVIDERS}aws,"
+            fi
+            if [[ "${{ github.event.inputs.provider_azure }}" == 'true' ]]; then
+              SELECTED_PROVIDERS="${SELECTED_PROVIDERS}azure,"
+            fi
+            if [[ "${{ github.event.inputs.provider_cloud_director }}" == 'true' ]]; then
+              SELECTED_PROVIDERS="${SELECTED_PROVIDERS}cloud-director,"
+            fi
+            if [[ "${{ github.event.inputs.provider_vsphere }}" == 'true' ]]; then
+              SELECTED_PROVIDERS="${SELECTED_PROVIDERS}vsphere,"
+            fi
+            
+            # Remove trailing comma
+            PROVIDER_INPUT=$(echo "$SELECTED_PROVIDERS" | sed 's/,$//')
 
             # Count providers
             if [[ "$PROVIDER_INPUT" == '' ]]; then
@@ -79,14 +113,15 @@ jobs:
           echo "release_type=${RELEASE_TYPE}" >> "$GITHUB_OUTPUT"
 
           # Determine provider matrix and list
-          if [[ "${{ github.event_name }}" == 'workflow_dispatch' && "${{ github.event.inputs.provider }}" != '' ]]; then
+          if [[ "${{ github.event_name }}" == 'workflow_dispatch' && "$PROVIDER_INPUT" != '' ]]; then
             # Manual run with a specific provider list.
-            PROVIDER_JSON=$(echo '${{ github.event.inputs.provider }}' | jq -R 'split(",")' | jq -c '.')
+            PROVIDER_JSON=$(echo "$PROVIDER_INPUT" | jq -R 'split(",")' | jq -c '.')
             echo "provider_matrix=${PROVIDER_JSON}" >> "$GITHUB_OUTPUT"
-            PROVIDER_LIST=$(echo "${{ github.event.inputs.provider }}" | sed 's/,/ /g')
+            PROVIDER_LIST=$(echo "$PROVIDER_INPUT" | sed 's/,/ /g')
             echo "provider_list=${PROVIDER_LIST}" >> "$GITHUB_OUTPUT"
           else
-            # Default for all scheduled runs (major or minor) and manual runs without a specified provider.
+            # Default for all scheduled runs (major or minor) and manual runs without any selected providers.
+            # When maintaining this list, please also update the provider boolean inputs in the workflow_dispatch inputs
             echo "provider_matrix=[\"aws\",\"azure\",\"cloud-director\",\"vsphere\"]" >> "$GITHUB_OUTPUT"
             echo "provider_list=aws azure cloud-director vsphere" >> "$GITHUB_OUTPUT"
           fi
