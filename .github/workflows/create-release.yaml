@@ -369,7 +369,7 @@ jobs:
           echo "$LOG_CONTENT" >> "$GITHUB_ENV"
           echo "EOF" >> "$GITHUB_ENV"
           
-          PROVIDER_LABELS=$(echo "${{ needs.major_release_decider.outputs.provider_list }}" | sed 's/[^ ]* */provider\/&/g' | sed 's/provider\/\s*//g' | tr ' ' '\n')
+          PROVIDER_LABELS=$(echo "${{ needs.major_release_decider.outputs.provider_list }}" | tr ' ' '\n')
           echo "PROVIDER_LABELS<<EOF" >> "$GITHUB_OUTPUT"
           echo "$PROVIDER_LABELS" >> "$GITHUB_OUTPUT"
           echo "EOF" >> "$GITHUB_OUTPUT"
@@ -536,7 +536,7 @@ jobs:
           echo "$LOG_CONTENT" >> "$GITHUB_ENV"
           echo "EOF" >> "$GITHUB_ENV"
 
-          PROVIDER_LABELS=$(echo "${{ needs.minor_release_decider.outputs.provider_list }}" | sed 's/[^ ]* */provider\/&/g' | sed 's/provider\/\s*//g' | tr ' ' '\n')
+          PROVIDER_LABELS=$(echo "${{ needs.minor_release_decider.outputs.provider_list }}" | tr ' ' '\n')
           echo "PROVIDER_LABELS<<EOF" >> "$GITHUB_OUTPUT"
           echo "$PROVIDER_LABELS" >> "$GITHUB_OUTPUT"
           echo "EOF" >> "$GITHUB_OUTPUT"
@@ -728,7 +728,7 @@ jobs:
           draft: true
           labels: |
             release/${{ needs.major_release_decider.outputs.release_type }}
-            provider/${{ matrix.provider }}
+            ${{ matrix.provider }}
 
       - name: Add comment to PR with devctl output
         if: steps.create_pr.outputs.pull-request-number && steps.create_pr.outputs.pull-request-number != ''
@@ -854,7 +854,7 @@ jobs:
           draft: true
           labels: |
             release/${{ needs.minor_release_decider.outputs.release_type }}
-            provider/${{ matrix.provider }}
+            ${{ matrix.provider }}
 
       - name: Add comment to PR with devctl output
         if: steps.create_pr.outputs.pull-request-number && steps.create_pr.outputs.pull-request-number != ''
@@ -991,7 +991,7 @@ jobs:
           draft: true
           labels: |
             release/${{ needs.patch_release_decider.outputs.release_type }}
-            provider/${{ matrix.provider }}
+            ${{ matrix.provider }}
 
   patch_release_consolidated:
     name: "Patch Release (Consolidated)"
@@ -1082,7 +1082,7 @@ jobs:
           echo "$LOG_CONTENT" >> "$GITHUB_ENV"
           echo "EOF" >> "$GITHUB_ENV"
 
-          PROVIDER_LABELS=$(echo "${{ needs.patch_release_decider.outputs.provider_list }}" | sed 's/[^ ]* */provider\/&/g' | sed 's/provider\/\s*//g' | tr ' ' '\n')
+          PROVIDER_LABELS=$(echo "${{ needs.patch_release_decider.outputs.provider_list }}" | tr ' ' '\n')
           echo "PROVIDER_LABELS<<EOF" >> "$GITHUB_OUTPUT"
           echo "$PROVIDER_LABELS" >> "$GITHUB_OUTPUT"
           echo "EOF" >> "$GITHUB_OUTPUT"
