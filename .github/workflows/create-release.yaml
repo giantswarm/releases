@@ -234,188 +234,40 @@ jobs:
             echo "run_individual=false" >> "$GITHUB_OUTPUT"
           fi
 
-  minor_patch_release:
-    name: "Minor/Patch Release"
-    needs: dispatcher
-    if: (needs.dispatcher.outputs.release_type == 'minor' || needs.dispatcher.outputs.release_type == 'patch') && needs.dispatcher.outputs.is_manual == 'true' && needs.dispatcher.outputs.provider_count == 1
+  patch_release_decider:
+    name: "Patch Release Decider"
+    needs: [dispatcher]
+    if: needs.dispatcher.outputs.release_type == 'patch'
     runs-on: ubuntu-latest
     outputs:
-      pr_url: ${{ steps.create_pr.outputs.pull-request-url }}
-    strategy:
-      matrix:
-        provider: ${{ fromJSON(needs.dispatcher.outputs.provider_matrix) }}
-    env:
-      OPSCTL_GITHUB_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
-      GH_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+      run_consolidated: ${{ steps.decider.outputs.run_consolidated }}
+      run_individual: ${{ steps.decider.outputs.run_individual }}
+      provider_list: ${{ needs.dispatcher.outputs.provider_list }}
+      provider_matrix: ${{ needs.dispatcher.outputs.provider_matrix }}
+      version_override: ${{ needs.dispatcher.outputs.version_override }}
+      release_type: ${{ needs.dispatcher.outputs.release_type }}
     steps:
-      - name: Check out code
-        uses: actions/checkout@v5
-      - name: Install devctl
-        uses: ./.github/actions/install-devctl
-        with:
-          github_token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
-      - name: Set provider display name for title
-        id: provider_name
+      - uses: actions/checkout@v5
+      - id: decider
         run: |
-          provider="${{ matrix.provider }}"
-          name=""
-          if [[ "$provider" == "aws" ]]; then
-            name="CAPA"
-          elif [[ "$provider" == "azure" ]]; then
-            name="CAPZ"
-          elif [[ "$provider" == "vsphere" ]]; then
-            name="CAPV"
-          elif [[ "$provider" == "cloud-director" ]]; then
-            name="CAPVCD"
+          IS_MANUAL='${{ needs.dispatcher.outputs.is_manual }}'
+          FORCE_CONSOLIDATED='${{ needs.dispatcher.outputs.force_consolidated }}'
+
+          if [[ "$IS_MANUAL" == 'true' ]]; then
+            if [[ "$FORCE_CONSOLIDATED" == 'true' ]]; then
+              echo "Manual consolidated patch run detected. Running consolidated job."
+              echo "run_consolidated=true" >> "$GITHUB_OUTPUT"
+              echo "run_individual=false" >> "$GITHUB_OUTPUT"
+            else
+              echo "Manual single provider patch run detected. Running individual job."
+              echo "run_consolidated=false" >> "$GITHUB_OUTPUT"
+              echo "run_individual=true" >> "$GITHUB_OUTPUT"
+            fi
           else
-            name=$(echo "$provider" | tr 'a-z' 'A-Z')
+            echo "Patch releases are only supported for manual runs."
+            echo "run_consolidated=false" >> "$GITHUB_OUTPUT"
+            echo "run_individual=false" >> "$GITHUB_OUTPUT"
           fi
-          echo "NAME=$name" >> $GITHUB_OUTPUT
-      - name: Determine next release version
-        id: versioning
-        run: |
-          ./tools/determine-next-release.sh ${{ matrix.provider }} ${{ needs.dispatcher.outputs.release_type }} ${{ needs.dispatcher.outputs.version_override }}
-      - name: Check for existing PR
-        id: check_pr
-        env:
-          GH_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
-        run: |
-          BRANCH_NAME="release-${{ steps.versioning.outputs.NEXT_RELEASE }}-${{ matrix.provider }}"
-          PR_EXISTS=$(gh pr list --repo "$GITHUB_REPOSITORY" --head "$BRANCH_NAME" --json number --jq '.[0].number')
-          if [ -z "$PR_EXISTS" ]; then
-            echo "No existing PR found for branch $BRANCH_NAME. Proceeding."
-            echo "PR_EXISTS=false" >> $GITHUB_OUTPUT
-          else
-            echo "PR for branch $BRANCH_NAME already exists. Skipping provider ${{ matrix.provider }}."
-            echo "PR_EXISTS=true" >> $GITHUB_OUTPUT
-          fi
-      - name: Create new release
-        if: steps.check_pr.outputs.PR_EXISTS == 'false'
-        id: create_release
-        env:
-          DEVCTL_UNSAFE_FORCE_VERSION: ${{ steps.install_devctl.outputs.version }}
-          DEVCTL_GITHUB_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
-        run: |
-          set -o pipefail
-          devctl release create \
-            --base ${{ steps.versioning.outputs.LATEST_RELEASE }} \
-            --name ${{ steps.versioning.outputs.NEXT_RELEASE }} \
-            --provider ${{ matrix.provider }} \
-            --bumpall --overwrite -y --output markdown --changes-only 2>&1 | tee /tmp/release_output.log
-      - name: Update README.md
-        id: update_readme
-        run: |
-          ./tools/update-readme.sh "${{ matrix.provider }}" "${{ steps.versioning.outputs.NEXT_RELEASE }}"
-      - name: Prepare PR body
-        id: pr_body
-        run: |
-          if [[ "${{ needs.dispatcher.outputs.release_type }}" == 'patch' ]]; then
-            body="This PR was automatically created. It creates \`${{ steps.versioning.outputs.NEXT_RELEASE }}\` for \`${{ matrix.provider }}\`.
-
-            ---
-
-            **Note:** For patch releases, it does not automatically bump any component or app.
-            To update specific components or apps, comment with \`/update-release\` and provide arguments directly to \`devctl\`.
-            If you do not specify a provider, the bot will automatically detect the provider from the PR files.
-            Available providers: \`aws\`, \`azure\`, \`cloud-director\`, \`vsphere\`.
-
-            **Examples:**
-
-            *   Update a single component:
-                \`/update-release --component flatcar@4152.2.3\`
-
-            *   Update a single application:
-                \`/update-release --app aws-ebs-csi-driver@3.0.5\`
-
-            *   Update multiple components and apps at once:
-                \`/update-release --component kubernetes@1.31.8 --app security-bundle@1.12.1\`
-
-            *   Specify app dependencies using the \`#\` separator:
-                \`/update-release --app my-app@1.2.3@@dependency1#dependency2\`
-
-            **Add descriptions:**
-
-            *   Update README.md with detailed description:
-                \`/update-readme \"This patch release fixes CVE-2024-1234 in security-bundle and updates Flatcar for hardware compatibility. It also resolves boot issues on certain hardware configurations.\"\`
-
-            *   Update announcement.md with brief summary:
-                \`/update-announcement \"Workload cluster release v32.0.1 for CAPA fixes critical security vulnerabilities and improves system stability.\"\`"
-          else
-            body="This PR was automatically created. It creates \`${{ steps.versioning.outputs.NEXT_RELEASE }}\` for \`${{ matrix.provider }}\`.
-
-            ---
-
-            To update the release files, comment with \`/update-release\` and provide arguments directly to \`devctl\`.
-            If you do not specify a provider, the bot will automatically detect the provider from the PR files.
-            Available providers: \`aws\`, \`azure\`, \`cloud-director\`, \`vsphere\`.
-
-            **Examples:**
-
-            *   Update a single component:
-                \`/update-release --component flatcar@4152.2.3\`
-
-            *   Update a single application:
-                \`/update-release --app aws-ebs-csi-driver@3.0.5\`
-
-            *   Update multiple components and apps at once:
-                \`/update-release --component kubernetes@1.31.8 --app security-bundle@1.12.1\`
-
-            *   Specify app dependencies using the \`#\` separator:
-                \`/update-release --app my-app@1.2.3@@dependency1#dependency2\`
-
-            **Add descriptions:**
-
-            *   Update README.md with detailed description:
-                \`/update-readme \"This minor release includes Kubernetes 1.32 support and enhanced security features. It also introduces performance improvements and platform stability enhancements.\"\`
-
-            *   Update announcement.md with brief summary:
-                \`/update-announcement \"Workload cluster release v32.1.0 for CAPA includes Kubernetes 1.32 support and enhanced security features.\"\`"
-          fi
-          echo "body<<EOF" >> $GITHUB_OUTPUT
-          echo "$body" >> $GITHUB_OUTPUT
-          echo "EOF" >> $GITHUB_OUTPUT
-      - name: Create Pull Request
-        id: create_pr
-        if: steps.check_pr.outputs.PR_EXISTS == 'false'
-        uses: peter-evans/create-pull-request@v7
-        with:
-          token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
-          commit-message: "feat: Create ${{ steps.versioning.outputs.NEXT_RELEASE }} for ${{ matrix.provider }}"
-          title: "${{ steps.provider_name.outputs.NAME }}: Release ${{ steps.versioning.outputs.NEXT_RELEASE }}."
-          body: ${{ steps.pr_body.outputs.body }}
-          branch: "release-${{ steps.versioning.outputs.NEXT_RELEASE }}-${{ matrix.provider }}"
-          draft: true
-          labels: |
-            release/${{ needs.dispatcher.outputs.release_type }}
-            provider/${{ matrix.provider }}
-      - name: Read log file to env
-        if: steps.check_pr.outputs.PR_EXISTS == 'false' && steps.create_pr.outputs.pull-request-number && needs.dispatcher.outputs.release_type != 'patch'
-        run: |
-          log_content=$(cat /tmp/release_output.log)
-          echo "LOG_CONTENT<<EOF" >> $GITHUB_ENV
-          echo "${log_content}" >> $GITHUB_ENV
-          echo "EOF" >> $GITHUB_ENV
-
-      - name: Post devctl output as a comment
-        if: steps.check_pr.outputs.PR_EXISTS == 'false' && steps.create_pr.outputs.pull-request-number && needs.dispatcher.outputs.release_type != 'patch'
-        uses: actions/github-script@v8
-        with:
-          github-token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
-          script: |
-            const output = process.env.LOG_CONTENT;
-            github.rest.issues.createComment({
-              issue_number: ${{ steps.create_pr.outputs.pull-request-number }},
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: `### Changes:\n\n${output.replace(/`/g, '\\`')}`
-            });
-
-      - name: Trigger e2e tests
-        if: steps.check_pr.outputs.PR_EXISTS == 'false' && steps.create_pr.outputs.pull-request-number && needs.dispatcher.outputs.release_type != 'patch'
-        uses: ./.github/actions/trigger-e2e-tests
-        with:
-          pr_number: ${{ steps.create_pr.outputs.pull-request-number }}
-          github_token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
 
   # This is the job for creating a single, consolidated PR for a major release when all providers are aligned.
   major_release_consolidated:
@@ -1018,14 +870,299 @@ jobs:
               body: `### Changes:\n\n${output.replace(/`/g, '\\`')}`
             });
 
+  patch_release_individual:
+    name: "Patch Release (Individual)"
+    needs: [patch_release_decider]
+    if: needs.patch_release_decider.outputs.run_individual == 'true'
+    strategy:
+      matrix:
+        provider: ${{ fromJSON(needs.patch_release_decider.outputs.provider_matrix) }}
+    runs-on: ubuntu-latest
+    outputs:
+      pr_url: ${{ steps.create_pr.outputs.pull-request-url }}
+    env:
+      OPSCTL_GITHUB_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+      GH_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v5
+      - name: Install devctl
+        uses: ./.github/actions/install-devctl
+        with:
+          github_token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+      - name: Set provider display name for title
+        id: provider_name
+        run: |
+          provider="${{ matrix.provider }}"
+          name=""
+          if [[ "$provider" == "aws" ]]; then
+            name="CAPA"
+          elif [[ "$provider" == "azure" ]]; then
+            name="CAPZ"
+          elif [[ "$provider" == "vsphere" ]]; then
+            name="CAPV"
+          elif [[ "$provider" == "cloud-director" ]]; then
+            name="CAPVCD"
+          else
+            name=$(echo "$provider" | tr 'a-z' 'A-Z')
+          fi
+          echo "NAME=$name" >> $GITHUB_OUTPUT
+      - name: Determine next release version
+        id: versioning
+        run: |
+          ./tools/determine-next-release.sh ${{ matrix.provider }} ${{ needs.patch_release_decider.outputs.release_type }} ${{ needs.patch_release_decider.outputs.version_override }}
+      - name: Check for existing PR
+        id: check_pr
+        env:
+          GH_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+        run: |
+          BRANCH_NAME="release-${{ steps.versioning.outputs.NEXT_RELEASE }}-${{ matrix.provider }}"
+          PR_EXISTS=$(gh pr list --repo "$GITHUB_REPOSITORY" --head "$BRANCH_NAME" --json number --jq '.[0].number')
+          if [ -z "$PR_EXISTS" ]; then
+            echo "No existing PR found for branch $BRANCH_NAME. Proceeding."
+            echo "PR_EXISTS=false" >> $GITHUB_OUTPUT
+          else
+            echo "PR for branch $BRANCH_NAME already exists. Skipping provider ${{ matrix.provider }}."
+            echo "PR_EXISTS=true" >> $GITHUB_OUTPUT
+          fi
+      - name: Create new release
+        if: steps.check_pr.outputs.PR_EXISTS == 'false'
+        id: create_release
+        env:
+          DEVCTL_UNSAFE_FORCE_VERSION: ${{ steps.install_devctl.outputs.version }}
+          DEVCTL_GITHUB_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+        run: |
+          set -o pipefail
+          devctl release create \
+            --base ${{ steps.versioning.outputs.LATEST_RELEASE }} \
+            --name ${{ steps.versioning.outputs.NEXT_RELEASE }} \
+            --provider ${{ matrix.provider }} \
+            --bumpall --overwrite -y --output markdown --changes-only 2>&1 | tee /tmp/release_output.log
+      - name: Update README.md
+        id: update_readme
+        run: |
+          ./tools/update-readme.sh "${{ matrix.provider }}" "${{ steps.versioning.outputs.NEXT_RELEASE }}"
+      - name: Prepare PR body
+        id: pr_body
+        run: |
+          body="This PR was automatically created. It creates \`${{ steps.versioning.outputs.NEXT_RELEASE }}\` for \`${{ matrix.provider }}\`.
+
+          ---
+
+          **Note:** For patch releases, it does not automatically bump any component or app.
+          To update specific components or apps, comment with \`/update-release\` and provide arguments directly to \`devctl\`.
+          If you do not specify a provider, the bot will automatically detect the provider from the PR files.
+          Available providers: \`aws\`, \`azure\`, \`cloud-director\`, \`vsphere\`.
+
+          **Examples:**
+
+          *   Update a single component:
+              \`/update-release --component flatcar@4152.2.3\`
+
+          *   Update a single application:
+              \`/update-release --app aws-ebs-csi-driver@3.0.5\`
+
+          *   Update multiple components and apps at once:
+              \`/update-release --component kubernetes@1.31.8 --app security-bundle@1.12.1\`
+
+          *   Specify app dependencies using the \`#\` separator:
+              \`/update-release --app my-app@1.2.3@@dependency1#dependency2\`
+
+          **Add descriptions:**
+
+          *   Update README.md with detailed description:
+              \`/update-readme \"This patch release fixes CVE-2024-1234 in security-bundle and updates Flatcar for hardware compatibility. It also resolves boot issues on certain hardware configurations.\"\`
+
+          *   Update announcement.md with brief summary:
+              \`/update-announcement \"Workload cluster release v32.0.1 for CAPA fixes critical security vulnerabilities and improves system stability.\"\`"
+          echo "body<<EOF" >> $GITHUB_OUTPUT
+          echo "$body" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+      - name: Create Pull Request
+        id: create_pr
+        if: steps.check_pr.outputs.PR_EXISTS == 'false'
+        uses: peter-evans/create-pull-request@v7
+        with:
+          token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+          commit-message: "feat: Create ${{ steps.versioning.outputs.NEXT_RELEASE }} for ${{ matrix.provider }}"
+          title: "${{ steps.provider_name.outputs.NAME }}: Release ${{ steps.versioning.outputs.NEXT_RELEASE }}."
+          body: ${{ steps.pr_body.outputs.body }}
+          branch: "release-${{ steps.versioning.outputs.NEXT_RELEASE }}-${{ matrix.provider }}"
+          draft: true
+          labels: |
+            release/${{ needs.patch_release_decider.outputs.release_type }}
+            provider/${{ matrix.provider }}
+
+  patch_release_consolidated:
+    name: "Patch Release (Consolidated)"
+    needs: [patch_release_decider]
+    if: needs.patch_release_decider.outputs.run_consolidated == 'true'
+    runs-on: ubuntu-latest
+    outputs:
+      pr_url: ${{ steps.create_pr.outputs.pull-request-url }}
+    steps:
+      - uses: actions/checkout@v5
+      - name: Determine next release version
+        id: determine_next_release
+        run: |
+          ./tools/determine-next-release.sh "" "patch" ${{ needs.patch_release_decider.outputs.version_override }}
+
+      - name: Install devctl
+        uses: ./.github/actions/install-devctl
+        with:
+          github_token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+
+      - name: Check for existing PR
+        id: check_pr
+        env:
+          GH_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+        run: |
+          PR_EXISTS=$(gh pr list --repo "$GITHUB_REPOSITORY" --head "release-${{ steps.determine_next_release.outputs.version }}" --json number --jq '.[0].number')
+          if [ -z "$PR_EXISTS" ]; then
+            echo "PR_EXISTS=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "PR_EXISTS=true" >> "$GITHUB_OUTPUT"
+            echo "An open PR for this release already exists. Skipping."
+          fi
+
+      - name: Create release files and get output
+        id: create_release
+        if: steps.check_pr.outputs.PR_EXISTS == 'false'
+        env:
+          OPSCTL_GITHUB_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+          GH_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+          DEVCTL_UNSAFE_FORCE_VERSION: ${{ steps.install_devctl.outputs.version }}
+          DEVCTL_GITHUB_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+        run: |
+          set -o pipefail
+          export OPSCTL_GITHUB_TOKEN=${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+          LOG_FILE="/tmp/release_output.log"
+          touch $LOG_FILE
+          first_provider=true
+          for provider in ${{ needs.patch_release_decider.outputs.provider_list }}; do
+            echo "--- Creating release for $provider ---"
+
+            # Add a separator before each provider except the first one
+            if [ "$first_provider" = true ]; then
+              first_provider=false
+            else
+              echo "" >> $LOG_FILE
+              echo "---" >> $LOG_FILE
+              echo "" >> $LOG_FILE
+            fi
+            
+            # Capitalize provider name for the heading
+            PROVIDER_UPPER=$(echo "$provider" | awk '{print toupper($0)}')
+            echo "<details><summary>Changes for ${PROVIDER_UPPER}</summary>" >> $LOG_FILE
+            echo "" >> $LOG_FILE
+
+            BASE_VERSION=$(./tools/determine-next-release.sh "$provider" "patch" "${{ needs.patch_release_decider.outputs.version_override }}" | grep '^base=' | cut -d'=' -f2)
+
+            n=0
+            until [ "$n" -ge 3 ]
+            do
+              devctl release create \
+                --base "$BASE_VERSION" \
+                --name "${{ steps.determine_next_release.outputs.version }}" \
+                --provider "$provider" \
+                --bumpall --overwrite -y --output markdown --changes-only 2>&1 | tee -a $LOG_FILE && break
+              n=$((n+1))
+              if [ "$n" -ge 3 ]; then
+                  echo "The command has failed 3 times in a row. Aborting."
+                  exit 1
+              fi
+              echo "Command failed. Retrying in 15 seconds..."
+              sleep 15
+            done
+            echo "</details>" >> $LOG_FILE
+          done
+        
+          LOG_CONTENT=$(cat /tmp/release_output.log)
+          echo "LOG_CONTENT<<EOF" >> "$GITHUB_ENV"
+          echo "$LOG_CONTENT" >> "$GITHUB_ENV"
+          echo "EOF" >> "$GITHUB_ENV"
+
+          PROVIDER_LABELS=$(echo "${{ needs.patch_release_decider.outputs.provider_list }}" | sed 's/[^ ]* */provider\/&/g' | sed 's/provider\/\s*//g' | tr ' ' '\n')
+          echo "PROVIDER_LABELS<<EOF" >> "$GITHUB_OUTPUT"
+          echo "$PROVIDER_LABELS" >> "$GITHUB_OUTPUT"
+          echo "EOF" >> "$GITHUB_OUTPUT"
+
+      - name: Update README.md
+        id: update_readme
+        if: steps.check_pr.outputs.PR_EXISTS == 'false'
+        run: |
+          for provider in ${{ needs.patch_release_decider.outputs.provider_list }}; do
+            ./tools/update-readme.sh "$provider" "${{ steps.determine_next_release.outputs.version }}"
+            echo "Successfully updated README.md with ${{ steps.determine_next_release.outputs.version }} for $provider"
+          done
+
+      - name: Create Pull Request
+        id: create_pr
+        if: steps.check_pr.outputs.PR_EXISTS == 'false'
+        uses: peter-evans/create-pull-request@v7
+        with:
+          token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+          title: "CAPI: Release ${{ steps.determine_next_release.outputs.version }}."
+          body: |
+            This PR creates the new CAPI patch release `${{ steps.determine_next_release.outputs.version }}`.
+
+            ---
+
+            **Note:** For patch releases, it does not automatically bump any component or app.
+            To update the release files in this PR, comment with `/update-release` and provide arguments directly to `devctl`. For consolidated releases, you **must** specify which provider you are updating.
+            If you do not specify a provider, the bot will automatically detect the provider from the PR files.
+            Available providers: `aws`, `azure`, `cloud-director`, `vsphere`.
+
+            **Examples:**
+
+            *   Update a single component for a specific provider:
+                `/update-release --provider aws --component flatcar@4152.2.3`
+
+            *   Update multiple components and apps for a specific provider:
+                `/update-release --provider azure --component cluster-azure@2.4.1 --app azuredisk-csi-driver@1.32.9`
+
+            *   Specify app dependencies using the `#` separator:
+                `/update-release --provider aws --app my-app@1.2.3@@dependency1#dependency2`
+
+            **Add descriptions:**
+
+            *   Update README.md for specific provider:
+                `/update-readme --provider aws "This patch release fixes CVE-2024-1234 in security-bundle and updates Flatcar for hardware compatibility. It also resolves boot issues on certain hardware configurations."`
+
+            *   Update announcement.md for specific provider:
+                `/update-announcement --provider aws "Workload cluster release v32.0.1 for CAPA fixes critical security vulnerabilities and improves system stability."`
+
+            *   Update all providers (auto-detected):
+                `/update-readme "This patch release brings important security fixes and stability improvements across all supported providers."`
+          branch: "release-${{ steps.determine_next_release.outputs.version }}"
+          draft: true
+          labels: |
+            release/${{ needs.patch_release_decider.outputs.release_type }}
+            ${{ steps.create_release.outputs.PROVIDER_LABELS }}
+
+      - name: Add comment to PR with devctl output
+        if: steps.create_pr.outputs.pull-request-number && steps.create_pr.outputs.pull-request-number != ''
+        uses: actions/github-script@v8
+        with:
+          github-token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+          script: |
+            const output = `${{ env.LOG_CONTENT }}`;
+            github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: ${{ steps.create_pr.outputs.pull-request-number }},
+              body: `${output.replace(/`/g, '\\`')}`
+            });
+
   summarize_releases:
     name: "Summarize Releases"
     needs:
-      - minor_patch_release
       - major_release_consolidated
       - minor_release_consolidated
       - major_release_individual
       - minor_release_individual
+      - patch_release_individual
+      - patch_release_consolidated
     if: always()
     runs-on: ubuntu-latest
     steps:
@@ -1069,11 +1206,18 @@ jobs:
             SUMMARY_CONTENT="${SUMMARY_CONTENT}\n"
           fi
           
-          # Minor/Patch Releases
-          MINOR_PATCH_RELEASES=$(echo '${{ toJSON(needs.minor_patch_release) }}' | jq -r '(if has("result") then . else .[] end) | select(.result == "success") | .outputs.pr_url')
-          if [[ "$MINOR_PATCH_RELEASES" != "" ]]; then
-            SUMMARY_CONTENT="${SUMMARY_CONTENT}**Minor/Patch Release PRs:**\n"
-            for url in $MINOR_PATCH_RELEASES; do
+          
+          # Consolidated Patch Releases
+          if [[ "${{ needs.patch_release_consolidated.outputs.pr_url }}" != "" ]]; then
+            SUMMARY_CONTENT="${SUMMARY_CONTENT}**Consolidated Patch Release PR:**\n"
+            SUMMARY_CONTENT="${SUMMARY_CONTENT}- ${{ needs.patch_release_consolidated.outputs.pr_url }}\n\n"
+          fi
+          
+          # Individual Patch Releases
+          PATCH_INDIVIDUAL_RELEASES=$(echo '${{ toJSON(needs.patch_release_individual) }}' | jq -r '(if has("result") then . else .[] end) | select(.result == "success") | .outputs.pr_url')
+          if [[ "$PATCH_INDIVIDUAL_RELEASES" != "" ]]; then
+            SUMMARY_CONTENT="${SUMMARY_CONTENT}**Individual Patch Release PRs:**\n"
+            for url in $PATCH_INDIVIDUAL_RELEASES; do
               SUMMARY_CONTENT="${SUMMARY_CONTENT}- $url\n"
             done
             SUMMARY_CONTENT="${SUMMARY_CONTENT}\n"
@@ -1090,11 +1234,12 @@ jobs:
   notify_failure:
     name: "Notify on Failure"
     needs:
-      - minor_patch_release
       - major_release_consolidated
       - minor_release_consolidated
       - major_release_individual
       - minor_release_individual
+      - patch_release_individual
+      - patch_release_consolidated
     if: failure()
     runs-on: ubuntu-latest
     steps:
@@ -1106,9 +1251,6 @@ jobs:
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "Failed job(s):" >> $GITHUB_STEP_SUMMARY
           
-          if [[ "${{ needs.minor_patch_release.result }}" == "failure" ]]; then
-            echo "- Minor/Patch Release" >> $GITHUB_STEP_SUMMARY
-          fi
           if [[ "${{ needs.major_release_consolidated.result }}" == "failure" ]]; then
             echo "- Major Release (Consolidated)" >> $GITHUB_STEP_SUMMARY
           fi
@@ -1120,4 +1262,10 @@ jobs:
           fi
           if [[ "${{ needs.minor_release_individual.result }}" == "failure" ]]; then
             echo "- Minor Release (Individual)" >> $GITHUB_STEP_SUMMARY
+          fi
+          if [[ "${{ needs.patch_release_individual.result }}" == "failure" ]]; then
+            echo "- Patch Release (Individual)" >> $GITHUB_STEP_SUMMARY
+          fi
+          if [[ "${{ needs.patch_release_consolidated.result }}" == "failure" ]]; then
+            echo "- Patch Release (Consolidated)" >> $GITHUB_STEP_SUMMARY
           fi
