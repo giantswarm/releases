@@ -61,11 +61,6 @@ jobs:
         id: dispatcher
         run: |
           RELEASE_TYPE=""
-          # Debug: Print all inputs
-          echo "Debug - github.event_name: '${{ github.event_name }}'"
-          echo "Debug - github.event.inputs.release_type: '${{ github.event.inputs.release_type }}'"
-          echo "Debug - github.event.inputs.version: '${{ github.event.inputs.version }}'"
-          
           # Determine release type from triggers
           if [[ "${{ github.event_name }}" == 'workflow_dispatch' ]]; then
             echo "is_manual=true" >> "$GITHUB_OUTPUT"
@@ -121,15 +116,11 @@ jobs:
               fi
             else
               RELEASE_TYPE="${{ github.event.inputs.release_type }}"
-              echo "Debug - RELEASE_TYPE after assignment: '$RELEASE_TYPE'"
               if [[ "$RELEASE_TYPE" == '' ]]; then
                 RELEASE_TYPE="major"
-                echo "Debug - RELEASE_TYPE set to major (fallback)"
               fi
             fi
-            echo "Debug - Final RELEASE_TYPE: '$RELEASE_TYPE'"
             echo "release_type=$RELEASE_TYPE" >> "$GITHUB_OUTPUT"
-            echo "Debug - Set output: release_type=$RELEASE_TYPE"
           elif [[ "${{ github.event_name }}" == 'schedule' ]]; then
             echo "is_manual=false" >> "$GITHUB_OUTPUT"
             echo "force_consolidated=false" >> "$GITHUB_OUTPUT"
@@ -154,17 +145,6 @@ jobs:
             echo "provider_matrix=[\"aws\",\"azure\",\"cloud-director\",\"vsphere\"]" >> "$GITHUB_OUTPUT"
             echo "provider_list=aws azure cloud-director vsphere" >> "$GITHUB_OUTPUT"
           fi
-
-  debug_outputs:
-    name: "Debug Outputs"
-    needs: [dispatcher]
-    runs-on: ubuntu-latest
-    steps:
-      - name: Debug dispatcher outputs
-        run: |
-          echo "release_type: '${{ needs.dispatcher.outputs.release_type }}'"
-          echo "provider_list: '${{ needs.dispatcher.outputs.provider_list }}'"
-          echo "is_manual: '${{ needs.dispatcher.outputs.is_manual }}'"
 
   major_release_decider:
     name: "Major Release Decider"
@@ -234,10 +214,16 @@ jobs:
             echo "Alignment result: $ALIGNMENT"
           fi
 
-          if [[ "$FORCE_CONSOLIDATED" == 'true' ]]; then
-            echo "Manual consolidated run detected. Running consolidated job."
-            echo "run_consolidated=true" >> "$GITHUB_OUTPUT"
-            echo "run_individual=false" >> "$GITHUB_OUTPUT"
+          if [[ "$IS_MANUAL" == 'true' ]]; then
+            if [[ "$FORCE_CONSOLIDATED" == 'true' ]]; then
+              echo "Manual consolidated major run detected. Running consolidated job."
+              echo "run_consolidated=true" >> "$GITHUB_OUTPUT"
+              echo "run_individual=false" >> "$GITHUB_OUTPUT"
+            else
+              echo "Manual single provider major run detected. Running individual job."
+              echo "run_consolidated=false" >> "$GITHUB_OUTPUT"
+              echo "run_individual=true" >> "$GITHUB_OUTPUT"
+            fi
           elif [[ "$IS_MANUAL" == 'false' ]]; then
             echo "Scheduled run detected. Checking pre-flight alignment."
             if [[ "$ALIGNMENT" == 'aligned' ]]; then
@@ -300,10 +286,16 @@ jobs:
             echo "Minor alignment result: $ALIGNMENT"
           fi
 
-          if [[ "$FORCE_CONSOLIDATED" == 'true' ]]; then
-            echo "Manual consolidated run detected. Running consolidated job."
-            echo "run_consolidated=true" >> "$GITHUB_OUTPUT"
-            echo "run_individual=false" >> "$GITHUB_OUTPUT"
+          if [[ "$IS_MANUAL" == 'true' ]]; then
+            if [[ "$FORCE_CONSOLIDATED" == 'true' ]]; then
+              echo "Manual consolidated minor run detected. Running consolidated job."
+              echo "run_consolidated=true" >> "$GITHUB_OUTPUT"
+              echo "run_individual=false" >> "$GITHUB_OUTPUT"
+            else
+              echo "Manual single provider minor run detected. Running individual job."
+              echo "run_consolidated=false" >> "$GITHUB_OUTPUT"
+              echo "run_individual=true" >> "$GITHUB_OUTPUT"
+            fi
           elif [[ "$IS_MANUAL" == 'false' ]]; then
             echo "Scheduled run detected. Checking pre-flight alignment."
             if [[ "$ALIGNMENT" == 'aligned' ]]; then
