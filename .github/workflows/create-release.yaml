@@ -37,7 +37,7 @@ on:
         required: false
         type: string
   schedule:
-    - cron: '0 9 1 * *' # Run at 09:00 UTC on the first day of every month
+    - cron: '30 9 1 * *' # Run at 09:30 UTC on the first day of every month
 
 jobs:
   dispatcher:
@@ -117,14 +117,11 @@ jobs:
             echo "force_consolidated=false" >> "$GITHUB_OUTPUT"
             echo "provider_count=0" >> "$GITHUB_OUTPUT" # Not relevant for scheduled runs, but set a default.
             MONTH=$(date +'%m')
-            # Major release on the first month of each quarter (Jan, Apr, Jul, Oct)
-            if (( 10#${MONTH} % 3 == 1 )); then
-              RELEASE_TYPE="major"
-            else
-              RELEASE_TYPE="minor"
-            fi
+            
+            # For scheduled runs, we'll create separate jobs for major and minor releases
+            # The individual job deciders will handle the logic for when to run
+            echo "release_type=major_and_minor" >> "$GITHUB_OUTPUT"
           fi
-          echo "release_type=${RELEASE_TYPE}" >> "$GITHUB_OUTPUT"
 
           # Determine provider matrix and list
           if [[ "${{ github.event_name }}" == 'workflow_dispatch' && "$PROVIDER_INPUT" != '' ]]; then
@@ -143,7 +140,7 @@ jobs:
   major_release_decider:
     name: "Major Release Decider"
     needs: [dispatcher]
-    if: needs.dispatcher.outputs.release_type == 'major'
+    if: needs.dispatcher.outputs.release_type == 'major' || needs.dispatcher.outputs.release_type == 'major_and_minor'
     runs-on: ubuntu-latest
     outputs:
       run_consolidated: ${{ steps.decider.outputs.run_consolidated }}
@@ -161,9 +158,47 @@ jobs:
           ALIGNMENT="aligned" # Default to aligned for manual runs
 
           if [[ "$IS_MANUAL" == 'false' ]]; then
-            echo "Scheduled run detected. Running pre-flight alignment check."
+            echo "Scheduled run detected. Checking if this is a quarterly month for major releases."
+            MONTH=$(date +'%m')
+            # Major releases only on first month of each quarter (Jan, Apr, Jul, Oct)
+            if (( 10#${MONTH} % 3 != 1 )); then
+              echo "Not a quarterly month ($MONTH). Skipping major release."
+              echo "run_consolidated=false" >> "$GITHUB_OUTPUT"
+              echo "run_individual=false" >> "$GITHUB_OUTPUT"
+              exit 0
+            fi
+            
+            echo "Quarterly month detected. Checking for existing major release PRs."
+            # Check if there are already open PRs for the next major version
+            chmod +x ./tools/check-major-version-merged.sh
+            # Split the provider list into individual arguments
+            PROVIDER_ARGS=(${{ needs.dispatcher.outputs.provider_list }})
+            MERGED_STATUS=$(./tools/check-major-version-merged.sh "${PROVIDER_ARGS[@]}" | grep 'merged=' | cut -d'=' -f2)
+            LATEST_MAJOR=$(./tools/check-major-version-merged.sh "${PROVIDER_ARGS[@]}" | grep 'latest_major=' | cut -d'=' -f2)
+            NEXT_MAJOR=$(./tools/check-major-version-merged.sh "${PROVIDER_ARGS[@]}" | grep 'next_major=' | cut -d'=' -f2)
+            
+            # Check for existing OPEN PRs for the next major version
+            CONSOLIDATED_PR=$(gh pr list --repo "$GITHUB_REPOSITORY" --head "release-v$NEXT_MAJOR.0.0" --state open --json number --jq '.[0].number' 2>/dev/null || echo "")
+            INDIVIDUAL_PRS=()
+            for provider in "${PROVIDER_ARGS[@]}"; do
+              PR=$(gh pr list --repo "$GITHUB_REPOSITORY" --head "release-v$NEXT_MAJOR.0.0-$provider" --state open --json number --jq '.[0].number' 2>/dev/null || echo "")
+              if [ -n "$PR" ]; then
+                INDIVIDUAL_PRS+=("$provider")
+              fi
+            done
+            
+            if [ -n "$CONSOLIDATED_PR" ] || [ ${#INDIVIDUAL_PRS[@]} -gt 0 ]; then
+              echo "Found existing PRs for v$NEXT_MAJOR.0.0. Skipping major release creation."
+              echo "run_consolidated=false" >> "$GITHUB_OUTPUT"
+              echo "run_individual=false" >> "$GITHUB_OUTPUT"
+              exit 0
+            fi
+            
+            echo "No existing PRs found. Running pre-flight alignment check."
             chmod +x ./tools/check-major-version-alignment.sh
-            ALIGNMENT=$(./tools/check-major-version-alignment.sh ${{ needs.dispatcher.outputs.provider_list }} | grep 'alignment=' | cut -d'=' -f2)
+            # Split the provider list into individual arguments
+            PROVIDER_ARGS=(${{ needs.dispatcher.outputs.provider_list }})
+            ALIGNMENT=$(./tools/check-major-version-alignment.sh "${PROVIDER_ARGS[@]}" | grep 'alignment=' | cut -d'=' -f2)
           fi
 
           if [[ "$FORCE_CONSOLIDATED" == 'true' ]]; then
@@ -190,7 +225,7 @@ jobs:
   minor_release_decider:
     name: "Minor Release Decider"
     needs: [dispatcher]
-    if: needs.dispatcher.outputs.release_type == 'minor'
+    if: needs.dispatcher.outputs.release_type == 'minor' || needs.dispatcher.outputs.release_type == 'major_and_minor'
     runs-on: ubuntu-latest
     outputs:
       run_consolidated: ${{ steps.decider.outputs.run_consolidated }}
@@ -208,9 +243,24 @@ jobs:
           ALIGNMENT="aligned" # Default to aligned for manual runs
 
           if [[ "$IS_MANUAL" == 'false' ]]; then
-            echo "Scheduled run detected. Running pre-flight alignment check."
+            echo "Scheduled run detected. Checking for existing minor release PRs."
+            chmod +x ./tools/check-minor-release-prs.sh
+            # Split the provider list into individual arguments
+            PROVIDER_ARGS=(${{ needs.dispatcher.outputs.provider_list }})
+            PRS_EXIST=$(./tools/check-minor-release-prs.sh "${PROVIDER_ARGS[@]}" | grep 'prs_exist=' | cut -d'=' -f2)
+            
+            if [[ "$PRS_EXIST" == "true" ]]; then
+              echo "Found existing minor release PRs. Skipping minor release creation."
+              echo "run_consolidated=false" >> "$GITHUB_OUTPUT"
+              echo "run_individual=false" >> "$GITHUB_OUTPUT"
+              exit 0
+            fi
+            
+            echo "No existing minor release PRs found. Running pre-flight alignment check."
             chmod +x ./tools/check-minor-version-alignment.sh
-            ALIGNMENT=$(./tools/check-minor-version-alignment.sh ${{ needs.dispatcher.outputs.provider_list }} | grep 'alignment=' | cut -d'=' -f2)
+            # Split the provider list into individual arguments
+            PROVIDER_ARGS=(${{ needs.dispatcher.outputs.provider_list }})
+            ALIGNMENT=$(./tools/check-minor-version-alignment.sh "${PROVIDER_ARGS[@]}" | grep 'alignment=' | cut -d'=' -f2)
           fi
 
           if [[ "$FORCE_CONSOLIDATED" == 'true' ]]; then
@@ -282,7 +332,8 @@ jobs:
       - name: Determine next release version
         id: determine_next_release
         run: |
-          ./tools/determine-next-release.sh "" ${{ needs.major_release_decider.outputs.release_type }} ${{ needs.major_release_decider.outputs.version_override }}
+          # For major release jobs, always use "major" as the release type
+          ./tools/determine-next-release.sh "" "major" ${{ needs.major_release_decider.outputs.version_override }}
 
       - name: Install devctl
         uses: ./.github/actions/install-devctl
@@ -292,7 +343,7 @@ jobs:
       - name: Check for new upstream Kubernetes version
         id: k8s_check
         # This check is only relevant for major releases that are not manual backports.
-        if: needs.dispatcher.outputs.release_type == 'major' && needs.dispatcher.outputs.version_override == ''
+        if: needs.dispatcher.outputs.version_override == ''
         env:
           GH_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
         run: |
@@ -424,7 +475,7 @@ jobs:
           branch: "release-${{ steps.determine_next_release.outputs.version }}"
           draft: true
           labels: |
-            release/${{ needs.major_release_decider.outputs.release_type }}
+            release/major
             ${{ steps.create_release.outputs.PROVIDER_LABELS }}
 
       - name: Add comment to PR with devctl output
@@ -592,7 +643,7 @@ jobs:
           branch: "release-${{ steps.determine_next_release.outputs.version }}"
           draft: true
           labels: |
-            release/${{ needs.minor_release_decider.outputs.release_type }}
+            release/minor
             ${{ steps.create_release.outputs.PROVIDER_LABELS }}
 
       - name: Add comment to PR with devctl output
@@ -632,7 +683,8 @@ jobs:
       - name: Determine next release version
         id: determine_next_release
         run: |
-          ./tools/determine-next-release.sh "${{ matrix.provider }}" ${{ needs.major_release_decider.outputs.release_type }} ${{ needs.major_release_decider.outputs.version_override }}
+          # For major release jobs, always use "major" as the release type
+          ./tools/determine-next-release.sh "${{ matrix.provider }}" "major" ${{ needs.major_release_decider.outputs.version_override }}
 
       - name: Install devctl
         uses: ./.github/actions/install-devctl
@@ -642,7 +694,7 @@ jobs:
       - name: Check for new upstream Kubernetes version
         id: k8s_check
         # This check is only relevant for major releases that are not manual backports.
-        if: needs.dispatcher.outputs.release_type == 'major' && needs.dispatcher.outputs.version_override == ''
+        if: needs.dispatcher.outputs.version_override == ''
         env:
           GH_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
         run: |
@@ -730,7 +782,7 @@ jobs:
           branch: "release-${{ steps.determine_next_release.outputs.version }}-${{ matrix.provider }}"
           draft: true
           labels: |
-            release/${{ needs.major_release_decider.outputs.release_type }}
+            release/major
             ${{ matrix.provider }}
 
       - name: Add comment to PR with devctl output
@@ -769,7 +821,8 @@ jobs:
       - name: Determine next release version
         id: determine_next_release
         run: |
-          ./tools/determine-next-release.sh "${{ matrix.provider }}" ${{ needs.minor_release_decider.outputs.release_type }} ${{ needs.minor_release_decider.outputs.version_override }}
+          # For minor release jobs, always use "minor" as the release type
+          ./tools/determine-next-release.sh "${{ matrix.provider }}" "minor" ${{ needs.minor_release_decider.outputs.version_override }}
 
       - name: Install devctl
         uses: ./.github/actions/install-devctl
@@ -857,7 +910,7 @@ jobs:
           branch: "release-${{ steps.determine_next_release.outputs.version }}-${{ matrix.provider }}"
           draft: true
           labels: |
-            release/${{ needs.minor_release_decider.outputs.release_type }}
+            release/minor
             ${{ matrix.provider }}
 
       - name: Add comment to PR with devctl output
