@@ -37,7 +37,7 @@ on:
         required: false
         type: string
   schedule:
-    - cron: '30 9 1 * *' # Run at 09:30 UTC on the first day of every month
+    - cron: '45 9 1 * *' # Run at 09:45 UTC on the first day of every month
 
 jobs:
   dispatcher:
@@ -198,7 +198,11 @@ jobs:
             chmod +x ./tools/check-major-version-alignment.sh
             # Split the provider list into individual arguments
             PROVIDER_ARGS=(${{ needs.dispatcher.outputs.provider_list }})
-            ALIGNMENT=$(./tools/check-major-version-alignment.sh "${PROVIDER_ARGS[@]}" | grep 'alignment=' | cut -d'=' -f2)
+            echo "Provider args: ${PROVIDER_ARGS[*]}"
+            ALIGNMENT_OUTPUT=$(./tools/check-major-version-alignment.sh "${PROVIDER_ARGS[@]}")
+            echo "Alignment check output: $ALIGNMENT_OUTPUT"
+            ALIGNMENT=$(echo "$ALIGNMENT_OUTPUT" | grep 'alignment=' | cut -d'=' -f2)
+            echo "Alignment result: $ALIGNMENT"
           fi
 
           if [[ "$FORCE_CONSOLIDATED" == 'true' ]]; then
@@ -260,7 +264,11 @@ jobs:
             chmod +x ./tools/check-minor-version-alignment.sh
             # Split the provider list into individual arguments
             PROVIDER_ARGS=(${{ needs.dispatcher.outputs.provider_list }})
-            ALIGNMENT=$(./tools/check-minor-version-alignment.sh "${PROVIDER_ARGS[@]}" | grep 'alignment=' | cut -d'=' -f2)
+            echo "Provider args: ${PROVIDER_ARGS[*]}"
+            ALIGNMENT_OUTPUT=$(./tools/check-minor-version-alignment.sh "${PROVIDER_ARGS[@]}")
+            echo "Minor alignment check output: $ALIGNMENT_OUTPUT"
+            ALIGNMENT=$(echo "$ALIGNMENT_OUTPUT" | grep 'alignment=' | cut -d'=' -f2)
+            echo "Minor alignment result: $ALIGNMENT"
           fi
 
           if [[ "$FORCE_CONSOLIDATED" == 'true' ]]; then
@@ -492,12 +500,12 @@ jobs:
               body: `${output.replace(/`/g, '\\`')}`
             });
 
-      - name: Trigger e2e tests
-        if: steps.check_pr.outputs.PR_EXISTS == 'false' && steps.k8s_check.outputs.VERSION_EXISTS == 'true' && steps.create_pr.outputs.pull-request-number
-        uses: ./.github/actions/trigger-e2e-tests
-        with:
-          pr_number: ${{ steps.create_pr.outputs.pull-request-number }}
-          github_token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+      # - name: Trigger e2e tests
+      #   if: steps.check_pr.outputs.PR_EXISTS == 'false' && steps.k8s_check.outputs.VERSION_EXISTS == 'true' && steps.create_pr.outputs.pull-request-number
+      #   uses: ./.github/actions/trigger-e2e-tests
+      #   with:
+      #     pr_number: ${{ steps.create_pr.outputs.pull-request-number }}
+      #     github_token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
 
   minor_release_consolidated:
     name: "Minor Release (Consolidated)"
@@ -660,12 +668,12 @@ jobs:
               body: `### Changes:\n\n${output.replace(/`/g, '\\`')}`
             });
 
-      - name: Trigger e2e tests
-        if: steps.check_pr.outputs.PR_EXISTS == 'false' && steps.create_pr.outputs.pull-request-number
-        uses: ./.github/actions/trigger-e2e-tests
-        with:
-          pr_number: ${{ steps.create_pr.outputs.pull-request-number }}
-          github_token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+      # - name: Trigger e2e tests
+      #   if: steps.check_pr.outputs.PR_EXISTS == 'false' && steps.create_pr.outputs.pull-request-number
+      #   uses: ./.github/actions/trigger-e2e-tests
+      #   with:
+      #     pr_number: ${{ steps.create_pr.outputs.pull-request-number }}
+      #     github_token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
 
   # This is the job for creating individual PRs for a major release when providers are not aligned.
   major_release_individual:
@@ -799,12 +807,12 @@ jobs:
               body: `### Changes:\n\n${output.replace(/`/g, '\\`')}`
             });
 
-      - name: Trigger e2e tests
-        if: steps.check_pr.outputs.PR_EXISTS == 'false' && steps.create_pr.outputs.pull-request-number
-        uses: ./.github/actions/trigger-e2e-tests
-        with:
-          pr_number: ${{ steps.create_pr.outputs.pull-request-number }}
-          github_token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+      # - name: Trigger e2e tests
+      #   if: steps.check_pr.outputs.PR_EXISTS == 'false' && steps.create_pr.outputs.pull-request-number
+      #   uses: ./.github/actions/trigger-e2e-tests
+      #   with:
+      #     pr_number: ${{ steps.create_pr.outputs.pull-request-number }}
+      #     github_token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
 
   minor_release_individual:
     name: "Minor Release (Individual)"
