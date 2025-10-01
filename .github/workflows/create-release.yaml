@@ -129,6 +129,7 @@ jobs:
             fi
             echo "Debug - Final RELEASE_TYPE: '$RELEASE_TYPE'"
             echo "release_type=$RELEASE_TYPE" >> "$GITHUB_OUTPUT"
+            echo "Debug - Set output: release_type=$RELEASE_TYPE"
           elif [[ "${{ github.event_name }}" == 'schedule' ]]; then
             echo "is_manual=false" >> "$GITHUB_OUTPUT"
             echo "force_consolidated=false" >> "$GITHUB_OUTPUT"
@@ -153,6 +154,17 @@ jobs:
             echo "provider_matrix=[\"aws\",\"azure\",\"cloud-director\",\"vsphere\"]" >> "$GITHUB_OUTPUT"
             echo "provider_list=aws azure cloud-director vsphere" >> "$GITHUB_OUTPUT"
           fi
+
+  debug_outputs:
+    name: "Debug Outputs"
+    needs: [dispatcher]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Debug dispatcher outputs
+        run: |
+          echo "release_type: '${{ needs.dispatcher.outputs.release_type }}'"
+          echo "provider_list: '${{ needs.dispatcher.outputs.provider_list }}'"
+          echo "is_manual: '${{ needs.dispatcher.outputs.is_manual }}'"
 
   major_release_decider:
     name: "Major Release Decider"
