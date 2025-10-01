@@ -12,6 +12,7 @@ jobs:
     env:
       OPSCTL_GITHUB_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
       GH_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+      DEVCTL_GITHUB_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
     permissions:
       contents: write
       pull-requests: write
@@ -226,6 +227,7 @@ jobs:
         if: success() && steps.parse_command.outputs.description_only != 'true' && (steps.parse_command.outputs.provider || steps.parse_command.outputs.providers_list)
         run: |
           set -o pipefail
+          export DEVCTL_GITHUB_TOKEN=${{ secrets.TAYLORBOT_GITHUB_ACTION }}
           BRANCH_NAME="${{ steps.get_branch.outputs.result }}"
           PROVIDERS_TO_UPDATE="${{ steps.parse_command.outputs.provider }}${{ steps.parse_command.outputs.providers_list }}"
           
