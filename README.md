@@ -660,6 +660,10 @@ to all Giant Swarm installations.
 
 ## VMware Cloud Director
 
+- v33
+  - v33.0
+    - [v33.0.0](https://github.com/giantswarm/releases/tree/master/cloud-director/v33.0.0)
+
 - v32
   - v32.0
     - [v32.0.0](https://github.com/giantswarm/releases/tree/master/cloud-director/v32.0.0)
