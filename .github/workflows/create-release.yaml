@@ -6,7 +6,12 @@ on:
       release_type:
         description: 'Type of release (major, minor, patch). Used if a specific version is not provided.'
         required: true
+        type: choice
         default: 'minor'
+        options:
+          - major
+          - minor
+          - patch
       provider_all:
         description: 'Include all providers (AWS, Azure, Cloud Director, vSphere)'
         required: false
@@ -37,7 +42,7 @@ on:
         required: false
         type: string
   schedule:
-    - cron: '00 10 1 * *' # Run at 10:00 UTC on the first day of every month
+    - cron: '00 8 1 * *' # Run at 12:00 UTC on the first day of every month
 
 jobs:
   dispatcher:
@@ -111,7 +116,11 @@ jobs:
               fi
             else
               RELEASE_TYPE="${{ github.event.inputs.release_type }}"
+              if [[ "$RELEASE_TYPE" == '' ]]; then
+                RELEASE_TYPE="major"
+              fi
             fi
+            echo "release_type=$RELEASE_TYPE" >> "$GITHUB_OUTPUT"
           elif [[ "${{ github.event_name }}" == 'schedule' ]]; then
             echo "is_manual=false" >> "$GITHUB_OUTPUT"
             echo "force_consolidated=false" >> "$GITHUB_OUTPUT"
@@ -500,12 +509,12 @@ jobs:
               body: `${output.replace(/`/g, '\\`')}`
             });
 
-      # - name: Trigger e2e tests
-      #   if: steps.check_pr.outputs.PR_EXISTS == 'false' && steps.k8s_check.outputs.VERSION_EXISTS == 'true' && steps.create_pr.outputs.pull-request-number
-      #   uses: ./.github/actions/trigger-e2e-tests
-      #   with:
-      #     pr_number: ${{ steps.create_pr.outputs.pull-request-number }}
-      #     github_token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+      - name: Trigger e2e tests
+        if: steps.check_pr.outputs.PR_EXISTS == 'false' && steps.k8s_check.outputs.VERSION_EXISTS == 'true' && steps.create_pr.outputs.pull-request-number
+        uses: ./.github/actions/trigger-e2e-tests
+        with:
+          pr_number: ${{ steps.create_pr.outputs.pull-request-number }}
+          github_token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
 
   minor_release_consolidated:
     name: "Minor Release (Consolidated)"
@@ -668,12 +677,12 @@ jobs:
               body: `### Changes:\n\n${output.replace(/`/g, '\\`')}`
             });
 
-      # - name: Trigger e2e tests
-      #   if: steps.check_pr.outputs.PR_EXISTS == 'false' && steps.create_pr.outputs.pull-request-number
-      #   uses: ./.github/actions/trigger-e2e-tests
-      #   with:
-      #     pr_number: ${{ steps.create_pr.outputs.pull-request-number }}
-      #     github_token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+      - name: Trigger e2e tests
+        if: steps.check_pr.outputs.PR_EXISTS == 'false' && steps.create_pr.outputs.pull-request-number
+        uses: ./.github/actions/trigger-e2e-tests
+        with:
+          pr_number: ${{ steps.create_pr.outputs.pull-request-number }}
+          github_token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
 
   # This is the job for creating individual PRs for a major release when providers are not aligned.
   major_release_individual:
@@ -807,12 +816,12 @@ jobs:
               body: `### Changes:\n\n${output.replace(/`/g, '\\`')}`
             });
 
-      # - name: Trigger e2e tests
-      #   if: steps.check_pr.outputs.PR_EXISTS == 'false' && steps.create_pr.outputs.pull-request-number
-      #   uses: ./.github/actions/trigger-e2e-tests
-      #   with:
-      #     pr_number: ${{ steps.create_pr.outputs.pull-request-number }}
-      #     github_token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+      - name: Trigger e2e tests
+        if: steps.check_pr.outputs.PR_EXISTS == 'false' && steps.create_pr.outputs.pull-request-number
+        uses: ./.github/actions/trigger-e2e-tests
+        with:
+          pr_number: ${{ steps.create_pr.outputs.pull-request-number }}
+          github_token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
 
   minor_release_individual:
     name: "Minor Release (Individual)"
