@@ -61,6 +61,11 @@ jobs:
         id: dispatcher
         run: |
           RELEASE_TYPE=""
+          # Debug: Print all inputs
+          echo "Debug - github.event_name: '${{ github.event_name }}'"
+          echo "Debug - github.event.inputs.release_type: '${{ github.event.inputs.release_type }}'"
+          echo "Debug - github.event.inputs.version: '${{ github.event.inputs.version }}'"
+          
           # Determine release type from triggers
           if [[ "${{ github.event_name }}" == 'workflow_dispatch' ]]; then
             echo "is_manual=true" >> "$GITHUB_OUTPUT"
@@ -116,10 +121,13 @@ jobs:
               fi
             else
               RELEASE_TYPE="${{ github.event.inputs.release_type }}"
+              echo "Debug - RELEASE_TYPE after assignment: '$RELEASE_TYPE'"
               if [[ "$RELEASE_TYPE" == '' ]]; then
                 RELEASE_TYPE="major"
+                echo "Debug - RELEASE_TYPE set to major (fallback)"
               fi
             fi
+            echo "Debug - Final RELEASE_TYPE: '$RELEASE_TYPE'"
             echo "release_type=$RELEASE_TYPE" >> "$GITHUB_OUTPUT"
           elif [[ "${{ github.event_name }}" == 'schedule' ]]; then
             echo "is_manual=false" >> "$GITHUB_OUTPUT"
