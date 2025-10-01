@@ -113,6 +113,30 @@ fi
 echo "Base release: $LATEST_RELEASE"
 echo "New release: $NEXT_RELEASE"
 
+# Set provider acronym for PR titles
+PROVIDER_ACRONYM=""
+if [ -n "$PROVIDER" ]; then
+  case "$PROVIDER" in
+    "aws")
+      PROVIDER_ACRONYM="CAPA"
+      ;;
+    "azure")
+      PROVIDER_ACRONYM="CAPZ"
+      ;;
+    "vsphere")
+      PROVIDER_ACRONYM="CAPV"
+      ;;
+    "cloud-director")
+      PROVIDER_ACRONYM="CAPVCD"
+      ;;
+    *)
+      PROVIDER_ACRONYM=$(echo "$PROVIDER" | tr 'a-z' 'A-Z')
+      ;;
+  esac
+else
+  PROVIDER_ACRONYM="CAPI"
+fi
+
 if [ -n "$GITHUB_OUTPUT" ]; then
   echo "LATEST_RELEASE=${LATEST_RELEASE}" >> $GITHUB_OUTPUT
   echo "NEXT_RELEASE=${NEXT_RELEASE}" >> $GITHUB_OUTPUT

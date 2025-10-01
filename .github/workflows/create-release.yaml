@@ -37,7 +37,7 @@ on:
         required: false
         type: string
   schedule:
-    - cron: '30 8 1 * *' # Run at 08:30 UTC on the first day of every month
+    - cron: '0 9 1 * *' # Run at 09:00 UTC on the first day of every month
 
 jobs:
   dispatcher:
