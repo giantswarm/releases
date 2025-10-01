@@ -37,7 +37,7 @@ on:
         required: false
         type: string
   schedule:
-    - cron: '45 9 1 * *' # Run at 09:45 UTC on the first day of every month
+    - cron: '00 10 1 * *' # Run at 10:00 UTC on the first day of every month
 
 jobs:
   dispatcher:
@@ -201,7 +201,7 @@ jobs:
             echo "Provider args: ${PROVIDER_ARGS[*]}"
             ALIGNMENT_OUTPUT=$(./tools/check-major-version-alignment.sh "${PROVIDER_ARGS[@]}")
             echo "Alignment check output: $ALIGNMENT_OUTPUT"
-            ALIGNMENT=$(echo "$ALIGNMENT_OUTPUT" | grep 'alignment=' | cut -d'=' -f2)
+            ALIGNMENT=$(echo "$ALIGNMENT_OUTPUT" | grep 'Alignment status:' | cut -d':' -f2 | xargs)
             echo "Alignment result: $ALIGNMENT"
           fi
 
@@ -267,7 +267,7 @@ jobs:
             echo "Provider args: ${PROVIDER_ARGS[*]}"
             ALIGNMENT_OUTPUT=$(./tools/check-minor-version-alignment.sh "${PROVIDER_ARGS[@]}")
             echo "Minor alignment check output: $ALIGNMENT_OUTPUT"
-            ALIGNMENT=$(echo "$ALIGNMENT_OUTPUT" | grep 'alignment=' | cut -d'=' -f2)
+            ALIGNMENT=$(echo "$ALIGNMENT_OUTPUT" | grep 'Alignment status:' | cut -d':' -f2 | xargs)
             echo "Minor alignment result: $ALIGNMENT"
           fi
 
