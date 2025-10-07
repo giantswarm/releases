@@ -293,6 +293,11 @@ jobs:
               if [[ -n "$BASE_RELEASE" ]]; then
                 echo "Using base release: $BASE_RELEASE to generate changelog"
                 
+                # Backup release.yaml before temp devctl overwrites it
+                if [ -f "${PROVIDER_DIR}/${RELEASE_NAME}/release.yaml" ]; then
+                  cp "${PROVIDER_DIR}/${RELEASE_NAME}/release.yaml" /tmp/release.yaml.backup
+                fi
+                
                 # Step 1: Generate temporary README with changelogs using --base and --bumpall
                 echo "Generating temporary README with changelogs..."
                 devctl release create --base "$BASE_RELEASE" --name "$RELEASE_NAME" --provider "$PROVIDER" --bumpall --overwrite -y --output markdown $DEVCTL_ARGS > /dev/null 2>&1 || true
@@ -320,6 +325,12 @@ jobs:
                 
                 # Save changelog content for later injection
                 echo "$CHANGELOG_CONTENT" > /tmp/changelog_inject.txt
+                
+                # Restore original release.yaml before running final devctl
+                if [ -f /tmp/release.yaml.backup ]; then
+                  cp /tmp/release.yaml.backup "${PROVIDER_DIR}/${RELEASE_NAME}/release.yaml"
+                  echo "Restored original release.yaml"
+                fi
               fi
               
               # Step 3: Run devctl with --update-existing to only update release.yaml
