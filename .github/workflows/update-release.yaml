@@ -272,72 +272,15 @@ jobs:
 
             echo "Updating release '$RELEASE_NAME' for provider '$PROVIDER_DIR'"
 
-            # 3. Determine the base release from the README.md
-            BASE_RELEASE=""
-            if [ -f "${PROVIDER_DIR}/${RELEASE_NAME}/README.md" ]; then
-              # Extract base release from "## Changes compared to vX.Y.Z" line
-              BASE_RELEASE=$(grep -oP '## Changes compared to \Kv[0-9]+\.[0-9]+\.[0-9]+' "${PROVIDER_DIR}/${RELEASE_NAME}/README.md" || true)
-            fi
-            
-            # 4. Recreate the release
+            # 3. Recreate the release
             DEVCTL_ARGS="${{ steps.parse_command.outputs.devctl_args }}"
-            
+
             # By default, we only bump all components if no specific app/component is requested.
             if [[ "$DEVCTL_ARGS" == *--app* || "$DEVCTL_ARGS" == *--component* ]]; then
-              echo "Specific app/component version requested."
-              
-              # Extract app/component names for changelog extraction
-              REQUESTED_APPS=$(echo "$DEVCTL_ARGS" | grep -oP '(?<=--app )[^ @]+' || true)
-              REQUESTED_COMPONENTS=$(echo "$DEVCTL_ARGS" | grep -oP '(?<=--component )[^ @]+' || true)
-              
-              if [[ -n "$BASE_RELEASE" ]]; then
-                echo "Using base release: $BASE_RELEASE to generate changelog"
-                
-                # Backup release.yaml before temp devctl overwrites it
-                if [ -f "${PROVIDER_DIR}/${RELEASE_NAME}/release.yaml" ]; then
-                  cp "${PROVIDER_DIR}/${RELEASE_NAME}/release.yaml" /tmp/release.yaml.backup
-                fi
-                
-                # Step 1: Generate temporary README with changelogs using --base and --bumpall
-                echo "Generating temporary README with changelogs..."
-                devctl release create --base "$BASE_RELEASE" --name "$RELEASE_NAME" --provider "$PROVIDER" --bumpall --overwrite -y --output markdown $DEVCTL_ARGS > /dev/null 2>&1 || true
-                
-                # Step 2: Extract changelog sections for requested apps/components
-                TEMP_README="${PROVIDER_DIR}/${RELEASE_NAME}/README.md"
-                CHANGELOG_CONTENT=""
-                
-                for APP in $REQUESTED_APPS; do
-                  echo "Extracting changelog for app: $APP"
-                  # Extract the changelog section (from ### app-name to next ### or end)
-                  CHANGELOG_SECTION=$(awk "/^### $APP \[/,/^### [^#]/ {if (/^### [^#]/ && !/^### $APP \[/) exit; print}" "$TEMP_README" || true)
-                  if [ -n "$CHANGELOG_SECTION" ]; then
-                    CHANGELOG_CONTENT="${CHANGELOG_CONTENT}${CHANGELOG_SECTION}\n\n"
-                  fi
-                done
-                
-                for COMP in $REQUESTED_COMPONENTS; do
-                  echo "Extracting changelog for component: $COMP"
-                  CHANGELOG_SECTION=$(awk "/^### $COMP \[/,/^### [^#]/ {if (/^### [^#]/ && !/^### $COMP \[/) exit; print}" "$TEMP_README" || true)
-                  if [ -n "$CHANGELOG_SECTION" ]; then
-                    CHANGELOG_CONTENT="${CHANGELOG_CONTENT}${CHANGELOG_SECTION}\n\n"
-                  fi
-                done
-                
-                # Save changelog content for later injection
-                echo "$CHANGELOG_CONTENT" > /tmp/changelog_inject.txt
-                
-                # Restore original release.yaml before running final devctl
-                if [ -f /tmp/release.yaml.backup ]; then
-                  cp /tmp/release.yaml.backup "${PROVIDER_DIR}/${RELEASE_NAME}/release.yaml"
-                  echo "Restored original release.yaml"
-                fi
-              fi
-              
-              # Step 3: Run devctl with --update-existing to only update release.yaml
-              echo "Updating release.yaml with requested changes..."
-              DEVCTL_COMMAND="devctl release create --name \"$RELEASE_NAME\" --provider \"$PROVIDER\" --overwrite -y --output markdown --requested-only --update-existing $DEVCTL_ARGS"
+              echo "Specific app/component version requested, using --update-existing with --regenerate-readme."
+              DEVCTL_COMMAND="devctl release create --name \"$RELEASE_NAME\" --provider \"$PROVIDER\" --overwrite -y --output markdown --requested-only --update-existing --regenerate-readme $DEVCTL_ARGS"
             else
-              echo "No specific app/component version requested, bumping all."
+              echo "No specific app/component version requested, bumping all with --update-existing."
               DEVCTL_COMMAND="devctl release create --name \"$RELEASE_NAME\" --provider \"$PROVIDER\" --overwrite -y --output markdown --requested-only --update-existing --bumpall $DEVCTL_ARGS"
             fi
 
@@ -438,38 +381,6 @@ jobs:
             if [[ -n "$README_DESCRIPTION_BACKUP" ]]; then
               sed -i "3c\\$README_DESCRIPTION_BACKUP" "${PROVIDER_DIR}/${RELEASE_NAME}/README.md"
               echo "Restored description in README.md"
-            fi
-            
-            # Inject changelog content if we extracted it earlier
-            if [ -f /tmp/changelog_inject.txt ] && [ -s /tmp/changelog_inject.txt ]; then
-              echo "Injecting changelog content into README.md..."
-              CHANGELOG_TO_INJECT=$(cat /tmp/changelog_inject.txt)
-              
-              # Update app/component list in README.md
-              for APP in $REQUESTED_APPS; do
-                # Extract new version line from changelog
-                NEW_APP_LINE=$(echo "$CHANGELOG_TO_INJECT" | grep "^- $APP from" || true)
-                if [ -n "$NEW_APP_LINE" ]; then
-                  if grep -q "^- $APP from" "${PROVIDER_DIR}/${RELEASE_NAME}/README.md"; then
-                    # Update existing line
-                    sed -i "/^- $APP from/c\\$NEW_APP_LINE" "${PROVIDER_DIR}/${RELEASE_NAME}/README.md"
-                  else
-                    # Add new line after the last app line
-                    LAST_APP_LINE=$(grep -n "^- .* from v" "${PROVIDER_DIR}/${RELEASE_NAME}/README.md" | tail -1 | cut -d: -f1)
-                    if [ -n "$LAST_APP_LINE" ]; then
-                      sed -i "${LAST_APP_LINE}a\\$NEW_APP_LINE" "${PROVIDER_DIR}/${RELEASE_NAME}/README.md"
-                    fi
-                  fi
-                fi
-              done
-              
-              # Append changelog sections at the end of README.md
-              echo "" >> "${PROVIDER_DIR}/${RELEASE_NAME}/README.md"
-              printf '%b' "$CHANGELOG_TO_INJECT" >> "${PROVIDER_DIR}/${RELEASE_NAME}/README.md"
-              
-              # Clean up
-              rm -f /tmp/changelog_inject.txt
-              echo "Changelog injected successfully"
             fi
             if [[ -n "$ANNOUNCEMENT_BACKUP" ]]; then
               # Determine provider name for restore
