@@ -11,7 +11,7 @@
 ### Apps
 
 - aws-ebs-csi-driver from v3.0.5 to v3.1.0
-- aws-nth-bundle from v1.2.2 to v1.2.3
+- aws-nth-bundle from v1.2.2 to v1.3.0
 - cert-exporter from v2.9.9 to v2.9.10
 - cilium from v1.3.0 to v1.3.1
 - etcd-defrag from v1.0.8 to v1.1.0
@@ -27,10 +27,12 @@
 
 - Set default `updateStrategy.rollingUpdate.maxUnavailable` to 25% in `DaemonSet` to speed up rolling update.
 
-### aws-nth-bundle [v1.2.2...v1.2.3](https://github.com/giantswarm/aws-nth-bundle/compare/v1.2.2...v1.2.3)
+### aws-nth-bundle [v1.2.2...v1.3.0](https://github.com/giantswarm/aws-nth-bundle/compare/v1.2.2...v1.3.0)
 
 #### Changed
 
+- Upgrade aws-nth-crossplane-resources to v1.3.0, fixing support for multiple OIDC providers in the NTH IAM role as required for cleanup of migrated vintage clusters, and supporting heartbeat sending
+- Upgrade aws-node-termination-handler-app to v1.23.0, enabling heartbeats by default and upgrading to upstream application version v1.25.2 which fixes a resource leak bug relevant to heartbeat sending
 - Upgrade aws-nth-crossplane-resources to v1.1.1, supporting multiple OIDC providers in the NTH IAM role as required for cleanup of migrated vintage clusters
 
 ### cert-exporter [v2.9.9...v2.9.10](https://github.com/giantswarm/cert-exporter/compare/v2.9.9...v2.9.10)
