@@ -272,17 +272,29 @@ jobs:
 
             echo "Updating release '$RELEASE_NAME' for provider '$PROVIDER_DIR'"
 
-            # 3. Recreate the release
+            # 3. Determine the base release from the README.md
+            BASE_RELEASE=""
+            if [ -f "${PROVIDER_DIR}/${RELEASE_NAME}/README.md" ]; then
+              # Extract base release from "## Changes compared to vX.Y.Z" line
+              BASE_RELEASE=$(grep -oP '## Changes compared to \Kv[0-9]+\.[0-9]+\.[0-9]+' "${PROVIDER_DIR}/${RELEASE_NAME}/README.md" || true)
+            fi
+            
+            # 4. Recreate the release
             DEVCTL_ARGS="${{ steps.parse_command.outputs.devctl_args }}"
-            DEVCTL_COMMAND="devctl release create --name \"$RELEASE_NAME\" --provider \"$PROVIDER\" --overwrite -y --output markdown --requested-only --update-existing"
-
+            
             # By default, we only bump all components if no specific app/component is requested.
             if [[ "$DEVCTL_ARGS" == *--app* || "$DEVCTL_ARGS" == *--component* ]]; then
-              echo "Specific app/component version requested, not bumping all."
-              DEVCTL_COMMAND="$DEVCTL_COMMAND $DEVCTL_ARGS"
+              echo "Specific app/component version requested, using --base to regenerate README with changelog."
+              if [[ -n "$BASE_RELEASE" ]]; then
+                echo "Using base release: $BASE_RELEASE"
+                DEVCTL_COMMAND="devctl release create --base \"$BASE_RELEASE\" --name \"$RELEASE_NAME\" --provider \"$PROVIDER\" --overwrite -y --output markdown $DEVCTL_ARGS"
+              else
+                echo "Could not determine base release, using --update-existing"
+                DEVCTL_COMMAND="devctl release create --name \"$RELEASE_NAME\" --provider \"$PROVIDER\" --overwrite -y --output markdown --requested-only --update-existing $DEVCTL_ARGS"
+              fi
             else
               echo "No specific app/component version requested, bumping all."
-              DEVCTL_COMMAND="$DEVCTL_COMMAND --bumpall $DEVCTL_ARGS"
+              DEVCTL_COMMAND="devctl release create --name \"$RELEASE_NAME\" --provider \"$PROVIDER\" --overwrite -y --output markdown --requested-only --update-existing --bumpall $DEVCTL_ARGS"
             fi
 
             echo "Running command: $DEVCTL_COMMAND"
@@ -293,12 +305,12 @@ jobs:
               BEFORE_HASH=$(sha256sum "${PROVIDER_DIR}/${RELEASE_NAME}/release.yaml" | cut -d' ' -f1)
             fi
             
-            # Backup existing files before devctl overwrites them
-            README_BACKUP=""
+            # Backup existing descriptions before devctl overwrites them
+            README_DESCRIPTION_BACKUP=""
             ANNOUNCEMENT_BACKUP=""
-            if [ -f "${PROVIDER_DIR}/${RELEASE_NAME}/README.md" ]; then
-              # Backup the entire README.md because devctl with --update-existing empties it
-              README_BACKUP=$(cat "${PROVIDER_DIR}/${RELEASE_NAME}/README.md")
+            if [ -f "${PROVIDER_DIR}/${RELEASE_NAME}/README.md" ] && ! grep -q "<< Add description here >>" "${PROVIDER_DIR}/${RELEASE_NAME}/README.md"; then
+              # Extract existing README description (line 3, which is the warning/description)
+              README_DESCRIPTION_BACKUP=$(sed -n '3p' "${PROVIDER_DIR}/${RELEASE_NAME}/README.md" || true)
             fi
             if [ -f "${PROVIDER_DIR}/${RELEASE_NAME}/announcement.md" ] && ! grep -q "<< Add description here >>" "${PROVIDER_DIR}/${RELEASE_NAME}/announcement.md"; then
               # Extract existing announcement description (everything after "**. ")
@@ -378,10 +390,10 @@ jobs:
                 FULL_LOG_CONTENT="${FULL_LOG_CONTENT}${LOG_PART}"
             fi
             
-            # Restore README.md if it existed before devctl overwrote it
-            if [[ -n "$README_BACKUP" ]]; then
-              echo "$README_BACKUP" > "${PROVIDER_DIR}/${RELEASE_NAME}/README.md"
-              echo "Restored README.md content"
+            # Restore README description if it existed before devctl overwrote it
+            if [[ -n "$README_DESCRIPTION_BACKUP" ]]; then
+              sed -i "3c\\$README_DESCRIPTION_BACKUP" "${PROVIDER_DIR}/${RELEASE_NAME}/README.md"
+              echo "Restored description in README.md"
             fi
             if [[ -n "$ANNOUNCEMENT_BACKUP" ]]; then
               # Determine provider name for restore
