@@ -296,9 +296,9 @@ jobs:
             # Backup existing descriptions before devctl overwrites them
             README_BACKUP=""
             ANNOUNCEMENT_BACKUP=""
-            if [ -f "${PROVIDER_DIR}/${RELEASE_NAME}/README.md" ]; then
-              # Always backup the entire README.md content, not just the description
-              README_BACKUP=$(cat "${PROVIDER_DIR}/${RELEASE_NAME}/README.md")
+            if [ -f "${PROVIDER_DIR}/${RELEASE_NAME}/README.md" ] && ! grep -q "<< Add description here >>" "${PROVIDER_DIR}/${RELEASE_NAME}/README.md"; then
+              # Extract existing README description (line 3, which is the warning/description)
+              README_BACKUP=$(sed -n '3p' "${PROVIDER_DIR}/${RELEASE_NAME}/README.md" || true)
             fi
             if [ -f "${PROVIDER_DIR}/${RELEASE_NAME}/announcement.md" ] && ! grep -q "<< Add description here >>" "${PROVIDER_DIR}/${RELEASE_NAME}/announcement.md"; then
               # Extract existing announcement description (everything after "**. ")
@@ -378,10 +378,10 @@ jobs:
                 FULL_LOG_CONTENT="${FULL_LOG_CONTENT}${LOG_PART}"
             fi
             
-            # Restore README.md if it existed before devctl overwrote it
+            # Restore descriptions if they existed before devctl overwrote them
             if [[ -n "$README_BACKUP" ]]; then
-              echo "$README_BACKUP" > "${PROVIDER_DIR}/${RELEASE_NAME}/README.md"
-              echo "Restored README.md content"
+              sed -i "3c\\$README_BACKUP" "${PROVIDER_DIR}/${RELEASE_NAME}/README.md"
+              echo "Restored description in README.md"
             fi
             if [[ -n "$ANNOUNCEMENT_BACKUP" ]]; then
               # Determine provider name for restore
