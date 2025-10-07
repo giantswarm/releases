@@ -170,6 +170,9 @@ jobs:
               # Update README.md
               README_FILE="$PROVIDER_DIR/$RELEASE_NAME/README.md"
               if [ -f "$README_FILE" ]; then
+                # Backup the entire README.md content before making changes
+                README_BACKUP=$(cat "$README_FILE")
+                
                 if grep -q "<< Add description here >>" "$README_FILE"; then
                   # Replace placeholder
                   sed -i "s/<< Add description here >>/$DESCRIPTION/g" "$README_FILE"
@@ -178,6 +181,12 @@ jobs:
                   # Replace the warning/description section (line 3, after title and blank line)
                   sed -i "3c\\$DESCRIPTION" "$README_FILE"
                   echo "Updated existing description in README.md"
+                fi
+                
+                # Verify the change was made correctly and restore if needed
+                if ! grep -q "$DESCRIPTION" "$README_FILE"; then
+                  echo "Description update failed, restoring original content"
+                  echo "$README_BACKUP" > "$README_FILE"
                 fi
               fi
               LOG_PART="### README updated for ${PROVIDER_DIR^^}\n\n"
@@ -287,9 +296,9 @@ jobs:
             # Backup existing descriptions before devctl overwrites them
             README_BACKUP=""
             ANNOUNCEMENT_BACKUP=""
-            if [ -f "${PROVIDER_DIR}/${RELEASE_NAME}/README.md" ] && ! grep -q "<< Add description here >>" "${PROVIDER_DIR}/${RELEASE_NAME}/README.md"; then
-              # Extract existing README description (line 3, which is the warning/description)
-              README_BACKUP=$(sed -n '3p' "${PROVIDER_DIR}/${RELEASE_NAME}/README.md" || true)
+            if [ -f "${PROVIDER_DIR}/${RELEASE_NAME}/README.md" ]; then
+              # Always backup the entire README.md content, not just the description
+              README_BACKUP=$(cat "${PROVIDER_DIR}/${RELEASE_NAME}/README.md")
             fi
             if [ -f "${PROVIDER_DIR}/${RELEASE_NAME}/announcement.md" ] && ! grep -q "<< Add description here >>" "${PROVIDER_DIR}/${RELEASE_NAME}/announcement.md"; then
               # Extract existing announcement description (everything after "**. ")
@@ -369,10 +378,10 @@ jobs:
                 FULL_LOG_CONTENT="${FULL_LOG_CONTENT}${LOG_PART}"
             fi
             
-            # Restore descriptions if they existed before devctl overwrote them
+            # Restore README.md if it existed before devctl overwrote it
             if [[ -n "$README_BACKUP" ]]; then
-              sed -i "3c\\$README_BACKUP" "${PROVIDER_DIR}/${RELEASE_NAME}/README.md"
-              echo "Restored description in README.md"
+              echo "$README_BACKUP" > "${PROVIDER_DIR}/${RELEASE_NAME}/README.md"
+              echo "Restored README.md content"
             fi
             if [[ -n "$ANNOUNCEMENT_BACKUP" ]]; then
               # Determine provider name for restore
