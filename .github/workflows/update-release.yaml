@@ -274,15 +274,15 @@ jobs:
 
             # 3. Recreate the release
             DEVCTL_ARGS="${{ steps.parse_command.outputs.devctl_args }}"
-            DEVCTL_COMMAND="devctl release create --name \"$RELEASE_NAME\" --provider \"$PROVIDER\" --overwrite -y --output markdown --requested-only --update-existing"
-
+            
             # By default, we only bump all components if no specific app/component is requested.
             if [[ "$DEVCTL_ARGS" == *--app* || "$DEVCTL_ARGS" == *--component* ]]; then
               echo "Specific app/component version requested, not bumping all."
-              DEVCTL_COMMAND="$DEVCTL_COMMAND $DEVCTL_ARGS"
+              # Don't use --requested-only so devctl regenerates the README.md with changelog info
+              DEVCTL_COMMAND="devctl release create --name \"$RELEASE_NAME\" --provider \"$PROVIDER\" --overwrite -y --output markdown --update-existing $DEVCTL_ARGS"
             else
               echo "No specific app/component version requested, bumping all."
-              DEVCTL_COMMAND="$DEVCTL_COMMAND --bumpall $DEVCTL_ARGS"
+              DEVCTL_COMMAND="devctl release create --name \"$RELEASE_NAME\" --provider \"$PROVIDER\" --overwrite -y --output markdown --requested-only --update-existing --bumpall $DEVCTL_ARGS"
             fi
 
             echo "Running command: $DEVCTL_COMMAND"
