@@ -502,7 +502,6 @@ jobs:
             *   Update all providers (auto-detected):
                 `/update-readme "This major release brings significant platform enhancements and stability improvements across all supported providers."`
           branch: "release-${{ steps.determine_next_release.outputs.version }}"
-          draft: true
           labels: |
             release/major
             ${{ steps.create_release.outputs.PROVIDER_LABELS }}
@@ -670,7 +669,6 @@ jobs:
             *   Update all providers (auto-detected):
                 `/update-readme "This major release brings significant platform enhancements and stability improvements across all supported providers."`
           branch: "release-${{ steps.determine_next_release.outputs.version }}"
-          draft: true
           labels: |
             release/minor
             ${{ steps.create_release.outputs.PROVIDER_LABELS }}
@@ -809,7 +807,6 @@ jobs:
             *   Update announcement.md with brief summary:
                 `/update-announcement "Workload cluster release includes enhanced security features and performance improvements."`
           branch: "release-${{ steps.determine_next_release.outputs.version }}-${{ matrix.provider }}"
-          draft: true
           labels: |
             release/major
             ${{ matrix.provider }}
@@ -937,7 +934,6 @@ jobs:
             *   Update announcement.md with brief summary:
                 `/update-announcement "Workload cluster release includes enhanced security features and performance improvements."`
           branch: "release-${{ steps.determine_next_release.outputs.version }}-${{ matrix.provider }}"
-          draft: true
           labels: |
             release/minor
             ${{ matrix.provider }}
@@ -1075,7 +1071,6 @@ jobs:
           title: "${{ steps.provider_name.outputs.NAME }}: Release ${{ steps.versioning.outputs.NEXT_RELEASE }}."
           body: ${{ steps.pr_body.outputs.body }}
           branch: "release-${{ steps.versioning.outputs.NEXT_RELEASE }}-${{ matrix.provider }}"
-          draft: true
           labels: |
             release/${{ needs.patch_release_decider.outputs.release_type }}
             ${{ matrix.provider }}
@@ -1223,7 +1218,6 @@ jobs:
             *   Update all providers (auto-detected):
                 `/update-readme "This patch release brings important security fixes and stability improvements across all supported providers."`
           branch: "release-${{ steps.determine_next_release.outputs.version }}"
-          draft: true
           labels: |
             release/${{ needs.patch_release_decider.outputs.release_type }}
             ${{ steps.create_release.outputs.PROVIDER_LABELS }}
