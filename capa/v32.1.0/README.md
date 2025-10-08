@@ -6,7 +6,14 @@
 
 ### Components
 
+- cluster-aws from v5.0.0 to v5.1.0
 - Flatcar from v4230.2.2 to [v4230.2.3](https://www.flatcar-linux.org/releases/#release-4230.2.3)
+
+### cluster-aws [v5.0.0...v5.1.0](https://github.com/giantswarm/cluster-aws/compare/v5.0.0...v5.1.0)
+
+#### Added
+
+- Expose value to configure `terminationGracePeriod` in the karpenter node pools.
 
 ### Apps
 
