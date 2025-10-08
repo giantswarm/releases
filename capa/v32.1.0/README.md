@@ -14,6 +14,7 @@
 - aws-nth-bundle from v1.2.2 to v1.3.0
 - cert-exporter from v2.9.9 to v2.9.10
 - cilium from v1.3.0 to v1.3.1
+- Added cluster-aws v5.1.0
 - etcd-defrag from v1.0.8 to v1.1.0
 - etcd-k8s-res-count-exporter from v1.10.7 to v1.10.8
 - k8s-audit-metrics from v0.10.6 to v0.10.7
@@ -46,6 +47,12 @@
 #### Changed
 
 - Upgrade Cilium to [v1.18.2](https://github.com/cilium/cilium/releases/tag/v1.18.2).
+
+### cluster-aws [v5.1.0](https://github.com/giantswarm/cluster-aws/releases/tag/v5.1.0)
+
+#### Added
+
+- Expose value to configure `terminationGracePeriod` in the karpenter node pools.
 
 ### etcd-defrag [v1.0.8...v1.1.0](https://github.com/giantswarm/etcd-defrag-app/compare/v1.0.8...v1.1.0)
 

@@ -52,6 +52,8 @@ spec:
     version: 1.32.2-gs1
     dependsOn:
     - kyverno-crds
+  - name: cluster-aws
+    version: 5.1.0
   - name: coredns
     version: 1.27.0
     dependsOn:
@@ -141,5 +143,5 @@ spec:
     version: 1.32.9
   - name: os-tooling
     version: 1.26.1
-  date: "2025-10-07T11:59:51Z"
+  date: "2025-10-08T07:34:16Z"
   state: active
