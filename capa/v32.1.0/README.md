@@ -17,7 +17,7 @@
 
 ### Apps
 
-- aws-ebs-csi-driver from v3.0.5 to v3.1.0
+- aws-ebs-csi-driver from v3.0.5 to v3.2.0
 - aws-nth-bundle from v1.2.2 to v1.3.0
 - cert-exporter from v2.9.9 to v2.9.10
 - cilium from v1.3.0 to v1.3.1
@@ -29,10 +29,11 @@
 - vertical-pod-autoscaler from v6.0.1 to v6.1.0
 - vertical-pod-autoscaler-crd from v4.0.1 to v4.1.0
 
-### aws-ebs-csi-driver [v3.0.5...v3.1.0](https://github.com/giantswarm/aws-ebs-csi-driver-app/compare/v3.0.5...v3.1.0)
+### aws-ebs-csi-driver [v3.0.5...v3.2.0](https://github.com/giantswarm/aws-ebs-csi-driver-app/compare/v3.0.5...v3.2.0)
 
 #### Changed
 
+- Configure `gsoci.azurecr.io` as the default container image registry.
 - Set default `updateStrategy.rollingUpdate.maxUnavailable` to 25% in `DaemonSet` to speed up rolling update.
 
 ### aws-nth-bundle [v1.2.2...v1.3.0](https://github.com/giantswarm/aws-nth-bundle/compare/v1.2.2...v1.3.0)
