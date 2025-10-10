@@ -143,5 +143,5 @@ spec:                                                              spec:
     version: 1.32.9                                                    version: 1.32.9
   - name: os-tooling                                                 - name: os-tooling
     version: 1.26.1                                                    version: 1.26.1
-  date: "2025-09-15T10:31:15Z"                                  |    date: "2025-10-10T16:36:51Z"
+  date: "2025-09-15T10:31:15Z"                                  |    date: "2025-10-10T16:43:58Z"
   state: active                                                      state: active
