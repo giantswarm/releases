@@ -705,6 +705,8 @@ to all Giant Swarm installations.
   - v27.0
     - [v27.0.0](https://github.com/giantswarm/releases/tree/master/cloud-director/archived/v27.0.0)
 
+## EKS
+
 # Running tests against PRs
 
 ## Workload Cluster End-to-End Tests

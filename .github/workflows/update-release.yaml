@@ -114,7 +114,7 @@ jobs:
             # Get providers from the PR's changed files.
             PR_PROVIDERS=$(gh pr view ${{ github.event.issue.number }} --json files --jq '.files[].path' | cut -d'/' -f1 | sort -u | xargs)
             # List of valid provider directories.
-            VALID_PROVIDERS="azure capa cloud-director vsphere"
+            VALID_PROVIDERS="azure capa cloud-director eks vsphere"
             PROVIDERS_LIST=""
             for provider in $PR_PROVIDERS; do
               if [[ " $VALID_PROVIDERS " =~ " $provider " ]]; then
@@ -206,6 +206,8 @@ jobs:
                   PROVIDER_NAME="vSphere"
                 elif [[ "$PROVIDER_DIR" == "cloud-director" ]]; then
                   PROVIDER_NAME="VMware Cloud Director"
+                elif [[ "$PROVIDER_DIR" == "eks" ]]; then
+                  PROVIDER_NAME="EKS"
                 else
                   PROVIDER_NAME=$(echo "$PROVIDER_DIR" | tr 'a-z' 'A-Z')
                 fi
@@ -393,6 +395,8 @@ jobs:
                 PROVIDER_NAME="vSphere"
               elif [[ "$PROVIDER_DIR" == "cloud-director" ]]; then
                 PROVIDER_NAME="VMware Cloud Director"
+              elif [[ "$PROVIDER_DIR" == "eks" ]]; then
+                PROVIDER_NAME="EKS"
               else
                 PROVIDER_NAME=$(echo "$PROVIDER_DIR" | tr 'a-z' 'A-Z')
               fi
