@@ -6,14 +6,18 @@
 
 ### Components
 
-- cluster-aws from v5.0.0 to v5.1.0
+- cluster-aws from v5.0.0 to v5.2.0
 - Flatcar from v4230.2.2 to [v4230.2.3](https://www.flatcar-linux.org/releases/#release-4230.2.3)
 
-### cluster-aws [v5.0.0...v5.1.0](https://github.com/giantswarm/cluster-aws/compare/v5.0.0...v5.1.0)
+### cluster-aws [v5.0.0...v5.2.0](https://github.com/giantswarm/cluster-aws/compare/v5.0.0...v5.2.0)
 
 #### Added
 
 - Expose value to configure `terminationGracePeriod` in the karpenter node pools.
+
+#### Changed
+
+- Reduce heartbeat timeout for ASG lifecycle hooks to from 30 minutes to 3 minutes since aws-node-termination-handler-app (NTH) can now send heartbeats
 
 ### Apps
 
