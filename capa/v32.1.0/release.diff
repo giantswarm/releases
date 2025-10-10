@@ -53,7 +53,7 @@ spec:                                                              spec:
     dependsOn:                                                         dependsOn:
     - kyverno-crds                                                     - kyverno-crds
                                                                 >    - name: cluster-aws
-                                                                >      version: 5.1.0
+                                                                >      version: 5.2.0
   - name: coredns                                                    - name: coredns
     version: 1.27.0                                                    version: 1.27.0
     dependsOn:                                                         dependsOn:
@@ -143,5 +143,5 @@ spec:                                                              spec:
     version: 1.32.9                                                    version: 1.32.9
   - name: os-tooling                                                 - name: os-tooling
     version: 1.26.1                                                    version: 1.26.1
-  date: "2025-09-15T10:31:15Z"                                  |    date: "2025-10-08T07:53:06Z"
+  date: "2025-09-15T10:31:15Z"                                  |    date: "2025-10-10T16:36:51Z"
   state: active                                                      state: active
