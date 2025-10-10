@@ -16,6 +16,9 @@ const (
 
 	// ProviderCloudDirector represents the new VCD provider which is implemented with Cluster API.
 	ProviderCloudDirector Provider = "cloud-director"
+
+	// ProviderEKS represents the new EKS provider which is implemented with Cluster API.
+	ProviderEKS Provider = "eks3"
 )
 
 var SupportedProviders = []Provider{
@@ -23,6 +26,7 @@ var SupportedProviders = []Provider{
 	ProviderAzure,
 	ProviderVsphere,
 	ProviderCloudDirector,
+	ProviderEKS,
 }
 
 type Provider string

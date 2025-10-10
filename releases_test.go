@@ -149,7 +149,7 @@ func findReleases(provider string, archived bool) ([]v1alpha1.Release, error) {
 		if err != nil {
 			return nil, microerror.Mask(err)
 		}
-		if strings.Contains(release.Name, "azure") || strings.Contains(release.Name, "aws") || strings.Contains(release.Name, "vsphere") {
+		if strings.Contains(release.Name, "azure") || strings.Contains(release.Name, "aws") || strings.Contains(release.Name, "vsphere") || strings.Contains(release.Name, "eks") {
 			parts := strings.Split(release.Name, "-")
 			release.Name = "v" + parts[len(parts)-1] //
 		}
@@ -238,6 +238,10 @@ func Test_Releases(t *testing.T) {
 		{
 			provider: "vsphere",
 			name:     "case 5: vsphere releases are valid",
+		},
+		{
+			provider: "eks",
+			name:     "case 6: eks releases are valid",
 		},
 	}
 

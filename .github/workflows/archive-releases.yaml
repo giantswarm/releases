@@ -21,6 +21,7 @@ on:
       - "azure/**"
       - "capa/**"
       - "cloud-director/**"
+      - "eks/**"
       - "vsphere/**"
   workflow_dispatch:
 
@@ -36,7 +37,7 @@ jobs:
       - name: Find providers with releases
         id: find-providers
         run: |
-          PROVIDERS=$(find . -maxdepth 1 -type d \( -name "azure" -o -name "capa" -o -name "vsphere" -o -name "cloud-director" \) | sed 's|./||' | sort)
+          PROVIDERS=$(find . -maxdepth 1 -type d \( -name "azure" -o -name "capa" -o -name "vsphere" -o -name "cloud-director" -o -name "eks" \) | sed 's|./||' | sort)
 
           if [ -z "$PROVIDERS" ]; then
             echo "WARNING: No provider directories found"
