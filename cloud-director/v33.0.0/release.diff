@@ -100,8 +100,8 @@ spec:                                                              spec:
     version: 4.0.1                                              |      version: 4.1.1
   components:                                                        components:
   - name: cluster-cloud-director                                     - name: cluster-cloud-director
-    catalog: cluster                                                   catalog: cluster
-    version: 1.0.0                                              |      version: 2.0.2
+    catalog: cluster                                            |      catalog: cluster-test
+    version: 1.0.0                                              |      version: 2.0.2-c559c55e191b9ba14670b98917cf8b4db7089c96
   - name: flatcar                                                    - name: flatcar
     version: 4230.2.2                                           |      version: 4230.2.3
   - name: kubernetes                                                 - name: kubernetes

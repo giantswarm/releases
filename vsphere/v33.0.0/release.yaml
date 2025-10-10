@@ -110,8 +110,8 @@ spec:
     - cilium
   components:
   - name: cluster-vsphere
-    catalog: cluster
-    version: 3.0.2
+    catalog: cluster-test
+    version: 3.0.2-c00355b9942463b2a161af6ef1add7d17320601b
   - name: flatcar
     version: 4230.2.3
   - name: kubernetes
