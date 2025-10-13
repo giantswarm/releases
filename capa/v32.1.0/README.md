@@ -6,10 +6,10 @@
 
 ### Components
 
-- cluster-aws from v5.0.0 to v5.2.0
+- cluster-aws from v5.0.0 to v5.3.0
 - Flatcar from v4230.2.2 to [v4230.2.3](https://www.flatcar-linux.org/releases/#release-4230.2.3)
 
-### cluster-aws [v5.0.0...v5.2.0](https://github.com/giantswarm/cluster-aws/compare/v5.0.0...v5.2.0)
+### cluster-aws [v5.0.0...v5.3.0](https://github.com/giantswarm/cluster-aws/compare/v5.0.0...v5.3.0)
 
 #### Added
 
@@ -17,6 +17,10 @@
 
 #### Changed
 
+- Configure the following `startupTaints` to help `karpenter` ignore pending `Pods` due to these taints that will be removed after the node starts, avoiding unnecessary instance provisioning:
+  - `node.cluster.x-k8s.io/uninitialized:NoSchedule`
+  - `node.cilium.io/agent-not-ready:NoSchedule`
+  - `ebs.csi.aws.com/agent-not-ready:NoExecute`
 - Reduce heartbeat timeout for ASG lifecycle hooks to from 30 minutes to 3 minutes since aws-node-termination-handler-app (NTH) can now send heartbeats
 
 ### Apps
