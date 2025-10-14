@@ -624,14 +624,14 @@ to all Giant Swarm installations.
 - v31
   - v31.1
     - [v31.1.1](https://github.com/giantswarm/releases/tree/master/vsphere/v31.1.1)
-    - [v31.1.0](https://github.com/giantswarm/releases/tree/master/vsphere/v31.1.0)
+    - [v31.1.0](https://github.com/giantswarm/releases/tree/master/vsphere/archived/v31.1.0)
   - v31.0
     - [v31.0.0](https://github.com/giantswarm/releases/tree/master/vsphere/v31.0.0)
 
 - v30
   - v30.1
     - [v30.1.4](https://github.com/giantswarm/releases/tree/master/vsphere/v30.1.4)
-    - [v30.1.3](https://github.com/giantswarm/releases/tree/master/vsphere/v30.1.3)
+    - [v30.1.3](https://github.com/giantswarm/releases/tree/master/vsphere/archived/v30.1.3)
     - [v30.1.2](https://github.com/giantswarm/releases/tree/master/vsphere/archived/v30.1.2)
     - [v30.1.1](https://github.com/giantswarm/releases/tree/master/vsphere/archived/v30.1.1)
     - [v30.1.0](https://github.com/giantswarm/releases/tree/master/vsphere/archived/v30.1.0)
