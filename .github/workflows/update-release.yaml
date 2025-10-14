@@ -294,6 +294,12 @@ jobs:
               BEFORE_HASH=$(sha256sum "${PROVIDER_DIR}/${RELEASE_NAME}/release.yaml" | cut -d' ' -f1)
             fi
             
+            # Backup the current release.yaml to extract version information later
+            RELEASE_YAML_BACKUP=""
+            if [ -f "${PROVIDER_DIR}/${RELEASE_NAME}/release.yaml" ]; then
+              RELEASE_YAML_BACKUP=$(cat "${PROVIDER_DIR}/${RELEASE_NAME}/release.yaml")
+            fi
+            
             # Backup existing descriptions before devctl overwrites them
             README_DESCRIPTION_BACKUP=""
             ANNOUNCEMENT_BACKUP=""
@@ -332,8 +338,8 @@ jobs:
                     
                     # Parse the requested changes and show them in table format
                     if [[ "$DEVCTL_ARGS" == *--app* ]]; then
-                      CHANGES_TABLE="${CHANGES_TABLE}| APP NAME | DESIRED APP VERSION |\n"
-                      CHANGES_TABLE="${CHANGES_TABLE}|----------|--------------------|\n"
+                      CHANGES_TABLE="${CHANGES_TABLE}| APP NAME | CURRENT APP VERSION | DESIRED APP VERSION |\n"
+                      CHANGES_TABLE="${CHANGES_TABLE}|----------|---------------------|---------------------|\n"
                       
                       # Extract app changes from the arguments
                       APP_SPECS=$(echo "$DEVCTL_ARGS" | grep -oE '\--app [^ ]+' | sed 's/--app //')
@@ -341,7 +347,22 @@ jobs:
                         if [[ "$app_spec" == *@* ]]; then
                           app_name=$(echo "$app_spec" | cut -d'@' -f1)
                           app_version=$(echo "$app_spec" | cut -d'@' -f2)
-                          CHANGES_TABLE="${CHANGES_TABLE}| $app_name | **$app_version** |\n"
+                          
+                          # Try to find the current version from the release.yaml backup (before the update)
+                          CURRENT_VERSION=""
+                          if [[ -n "$RELEASE_YAML_BACKUP" ]]; then
+                            # Look for the app in the release.yaml backup and extract its current version
+                            CURRENT_VERSION=$(echo "$RELEASE_YAML_BACKUP" | awk -v app="$app_name" '
+                              /^  - name:/ { current_app = $3 }
+                              current_app == app && /^    version:/ { print $2; exit }
+                            ')
+                          fi
+                          
+                          if [[ -n "$CURRENT_VERSION" ]]; then
+                            CHANGES_TABLE="${CHANGES_TABLE}| $app_name | $CURRENT_VERSION | **$app_version** |\n"
+                          else
+                            CHANGES_TABLE="${CHANGES_TABLE}| $app_name | _(new)_ | **$app_version** |\n"
+                          fi
                         fi
                       done
                     fi
@@ -350,8 +371,8 @@ jobs:
                       if [[ -n "$CHANGES_TABLE" ]]; then
                         CHANGES_TABLE="${CHANGES_TABLE}\n"
                       fi
-                      CHANGES_TABLE="${CHANGES_TABLE}| COMPONENT NAME | DESIRED VERSION |\n"
-                      CHANGES_TABLE="${CHANGES_TABLE}|----------------|----------------|\n"
+                      CHANGES_TABLE="${CHANGES_TABLE}| COMPONENT NAME | CURRENT VERSION | DESIRED VERSION |\n"
+                      CHANGES_TABLE="${CHANGES_TABLE}|----------------|-----------------|----------------|\n"
                       
                       # Extract component changes from the arguments
                       COMP_SPECS=$(echo "$DEVCTL_ARGS" | grep -oE '\--component [^ ]+' | sed 's/--component //')
@@ -359,7 +380,22 @@ jobs:
                         if [[ "$comp_spec" == *@* ]]; then
                           comp_name=$(echo "$comp_spec" | cut -d'@' -f1)
                           comp_version=$(echo "$comp_spec" | cut -d'@' -f2)
-                          CHANGES_TABLE="${CHANGES_TABLE}| $comp_name | **$comp_version** |\n"
+                          
+                          # Try to find the current version from the release.yaml backup (before the update)
+                          CURRENT_COMP_VERSION=""
+                          if [[ -n "$RELEASE_YAML_BACKUP" ]]; then
+                            # Look for the component in the release.yaml backup and extract its current version
+                            CURRENT_COMP_VERSION=$(echo "$RELEASE_YAML_BACKUP" | awk -v comp="$comp_name" '
+                              /^  - name:/ { current_comp = $3 }
+                              current_comp == comp && /^    version:/ { print $2; exit }
+                            ')
+                          fi
+                          
+                          if [[ -n "$CURRENT_COMP_VERSION" ]]; then
+                            CHANGES_TABLE="${CHANGES_TABLE}| $comp_name | $CURRENT_COMP_VERSION | **$comp_version** |\n"
+                          else
+                            CHANGES_TABLE="${CHANGES_TABLE}| $comp_name | _(new)_ | **$comp_version** |\n"
+                          fi
                         fi
                       done
                     fi
