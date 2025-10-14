@@ -1,9 +1,6 @@
 apiVersion: release.giantswarm.io/v1alpha1
 kind: Release
 metadata:
-  annotations:
-    giantswarm.io/docs: https://docs.giantswarm.io/use-the-api/management-api/crd/releases.release.giantswarm.io
-    giantswarm.io/release-notes: https://github.com/giantswarm/releases/tree/master/eks/v32.2.0
   name: eks-32.0.0
 spec:
   apps:
@@ -104,4 +101,3 @@ spec:
     version: 1.26.1
   date: "2025-10-10T12:00:00Z"
   state: active
-
