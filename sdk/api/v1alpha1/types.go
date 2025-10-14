@@ -18,7 +18,7 @@ const (
 	ProviderCloudDirector Provider = "cloud-director"
 
 	// ProviderEKS represents the new EKS provider which is implemented with Cluster API.
-	ProviderEKS Provider = "eks3"
+	ProviderEKS Provider = "eks"
 )
 
 var SupportedProviders = []Provider{
