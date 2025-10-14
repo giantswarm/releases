@@ -32,6 +32,9 @@ case $PROVIDER in
   "cloud-director")
     HEADING_SEARCH_STRING="## VMware Cloud Director"
     ;;
+  "eks")
+    HEADING_SEARCH_STRING="## EKS"
+    ;;
   *)
     echo "Error: Unknown provider '$PROVIDER'. Please add it to the case statement in tools/update-readme.sh" >&2
     exit 1
