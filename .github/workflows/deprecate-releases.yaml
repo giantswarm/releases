@@ -17,6 +17,7 @@ on:
       - "azure/**"
       - "capa/**"
       - "cloud-director/**"
+      - "eks/**"
       - "vsphere/**"
 
 jobs:
@@ -32,7 +33,7 @@ jobs:
       - name: Find providers with releases
         id: find-providers
         run: |
-          PROVIDERS=$(find . -maxdepth 1 -type d -name "azure" -o -name "capa" -o -name "vsphere" -o -name "cloud-director" | sed 's|./||' | jq -R -s -c 'split("\n") | map(select(length > 0))')
+          PROVIDERS=$(find . -maxdepth 1 -type d -name "azure" -o -name "capa" -o -name "vsphere" -o -name "cloud-director" -o -name "eks" | sed 's|./||' | jq -R -s -c 'split("\n") | map(select(length > 0))')
           echo "providers=$PROVIDERS" >> $GITHUB_OUTPUT
 
   deprecate-releases:

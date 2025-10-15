@@ -129,6 +129,9 @@ if [ -n "$PROVIDER" ]; then
     "cloud-director")
       PROVIDER_ACRONYM="CAPVCD"
       ;;
+    "eks")
+      PROVIDER_ACRONYM="EKS"
+      ;;
     *)
       PROVIDER_ACRONYM=$(echo "$PROVIDER" | tr 'a-z' 'A-Z')
       ;;

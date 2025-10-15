@@ -32,6 +32,11 @@ on:
         required: false
         type: boolean
         default: false
+      provider_eks:
+        description: 'Include EKS provider'
+        required: false
+        type: boolean
+        default: false
       provider_vsphere:
         description: 'Include vSphere (CAPV) provider'
         required: false
@@ -70,7 +75,7 @@ jobs:
             
             # Check if "all providers" is selected
             if [[ "${{ github.event.inputs.provider_all }}" == 'true' ]]; then
-              SELECTED_PROVIDERS="aws,azure,cloud-director,vsphere"
+              SELECTED_PROVIDERS="aws,azure,cloud-director,eks,vsphere"
             else
               # Build list from individual provider selections
               if [[ "${{ github.event.inputs.provider_aws }}" == 'true' ]]; then
@@ -78,6 +83,9 @@ jobs:
               fi
               if [[ "${{ github.event.inputs.provider_azure }}" == 'true' ]]; then
                 SELECTED_PROVIDERS="${SELECTED_PROVIDERS}azure,"
+              fi
+              if [[ "${{ github.event.inputs.provider_eks }}" == 'true' ]]; then
+                SELECTED_PROVIDERS="${SELECTED_PROVIDERS}eks,"
               fi
               if [[ "${{ github.event.inputs.provider_cloud_director }}" == 'true' ]]; then
                 SELECTED_PROVIDERS="${SELECTED_PROVIDERS}cloud-director,"
@@ -142,8 +150,8 @@ jobs:
           else
             # Default for all scheduled runs (major or minor) and manual runs without any selected providers.
             # When maintaining this list, please also update the provider boolean inputs in the workflow_dispatch inputs
-            echo "provider_matrix=[\"aws\",\"azure\",\"cloud-director\",\"vsphere\"]" >> "$GITHUB_OUTPUT"
-            echo "provider_list=aws azure cloud-director vsphere" >> "$GITHUB_OUTPUT"
+            echo "provider_matrix=[\"aws\",\"azure\",\"cloud-director\",\"eks\",\"vsphere\"]" >> "$GITHUB_OUTPUT"
+            echo "provider_list=aws azure cloud-director eks vsphere" >> "$GITHUB_OUTPUT"
           fi
 
   major_release_decider:
@@ -478,7 +486,7 @@ jobs:
 
             To update the release files in this PR, comment with `/update-release` and provide arguments directly to `devctl`. For consolidated releases, you **must** specify which provider you are updating.
             If you do not specify a provider, the bot will automatically detect the provider from the PR files.
-            Available providers: `aws`, `azure`, `cloud-director`, `vsphere`.
+            Available providers: `aws`, `azure`, `cloud-director`, `eks`, `vsphere`.
 
             **Examples:**
 
@@ -645,7 +653,7 @@ jobs:
 
             To update the release files in this PR, comment with `/update-release` and provide arguments directly to `devctl`. For consolidated releases, you **must** specify which provider you are updating.
             If you do not specify a provider, the bot will automatically detect the provider from the PR files.
-            Available providers: `aws`, `azure`, `cloud-director`, `vsphere`.
+            Available providers: `aws`, `azure`, `cloud-director`, `eks`, `vsphere`.
 
             **Examples:**
 
@@ -783,7 +791,7 @@ jobs:
 
             To update the release files in this PR, comment with `/update-release` and provide arguments directly to `devctl`.
             If you do not specify a provider, the bot will automatically detect the provider from the PR files.
-            Available providers: `aws`, `azure`, `cloud-director`, `vsphere`.
+            Available providers: `aws`, `azure`, `cloud-director`, `eks`, `vsphere`.
 
             **Examples:**
 
@@ -910,7 +918,7 @@ jobs:
 
             To update the release files in this PR, comment with `/update-release` and provide arguments directly to `devctl`.
             If you do not specify a provider, the bot will automatically detect the provider from the PR files.
-            Available providers: `aws`, `azure`, `cloud-director`, `vsphere`.
+            Available providers: `aws`, `azure`, `cloud-director`, `eks`, `vsphere`.
 
             **Examples:**
 
@@ -1035,7 +1043,7 @@ jobs:
           **Note:** For patch releases, it does not automatically bump any component or app.
           To update specific components or apps, comment with \`/update-release\` and provide arguments directly to \`devctl\`.
           If you do not specify a provider, the bot will automatically detect the provider from the PR files.
-          Available providers: \`aws\`, \`azure\`, \`cloud-director\`, \`vsphere\`.
+          Available providers: \`aws\`, \`azure\`, \`cloud-director\`, \`eks\`, \`vsphere\`.
 
           **Examples:**
 
@@ -1194,7 +1202,7 @@ jobs:
             **Note:** For patch releases, it does not automatically bump any component or app.
             To update the release files in this PR, comment with `/update-release` and provide arguments directly to `devctl`. For consolidated releases, you **must** specify which provider you are updating.
             If you do not specify a provider, the bot will automatically detect the provider from the PR files.
-            Available providers: `aws`, `azure`, `cloud-director`, `vsphere`.
+            Available providers: `aws`, `azure`, `cloud-director`, `eks`, `vsphere`.
 
             **Examples:**
 

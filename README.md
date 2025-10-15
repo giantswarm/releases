@@ -42,7 +42,7 @@ to all Giant Swarm installations.
     - [v29.6.3](https://github.com/giantswarm/releases/tree/master/capa/archived/v29.6.3)
     - [v29.6.2](https://github.com/giantswarm/releases/tree/master/capa/archived/v29.6.2)
     - [v29.6.1](https://github.com/giantswarm/releases/tree/master/capa/archived/v29.6.1)
-    - [v29.6.0](https://github.com/giantswarm/releases/tree/master/capa/v29.6.0)
+    - [v29.6.0](https://github.com/giantswarm/releases/tree/master/capa/archived/v29.6.0)
   - v29.5
     - [v29.5.0](https://github.com/giantswarm/releases/tree/master/capa/archived/v29.5.0)
   - v29.4
@@ -630,14 +630,14 @@ to all Giant Swarm installations.
 - v31
   - v31.1
     - [v31.1.1](https://github.com/giantswarm/releases/tree/master/vsphere/v31.1.1)
-    - [v31.1.0](https://github.com/giantswarm/releases/tree/master/vsphere/v31.1.0)
+    - [v31.1.0](https://github.com/giantswarm/releases/tree/master/vsphere/archived/v31.1.0)
   - v31.0
     - [v31.0.0](https://github.com/giantswarm/releases/tree/master/vsphere/v31.0.0)
 
 - v30
   - v30.1
     - [v30.1.4](https://github.com/giantswarm/releases/tree/master/vsphere/v30.1.4)
-    - [v30.1.3](https://github.com/giantswarm/releases/tree/master/vsphere/v30.1.3)
+    - [v30.1.3](https://github.com/giantswarm/releases/tree/master/vsphere/archived/v30.1.3)
     - [v30.1.2](https://github.com/giantswarm/releases/tree/master/vsphere/archived/v30.1.2)
     - [v30.1.1](https://github.com/giantswarm/releases/tree/master/vsphere/archived/v30.1.1)
     - [v30.1.0](https://github.com/giantswarm/releases/tree/master/vsphere/archived/v30.1.0)
@@ -712,6 +712,8 @@ to all Giant Swarm installations.
 - v27
   - v27.0
     - [v27.0.0](https://github.com/giantswarm/releases/tree/master/cloud-director/archived/v27.0.0)
+
+## EKS
 
 # Running tests against PRs
 
