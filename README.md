@@ -11,6 +11,10 @@ to all Giant Swarm installations.
 
 ## AWS
 
+- v33
+  - v33.0
+    - [v33.0.0](https://github.com/giantswarm/releases/tree/master/capa/v33.0.0)
+
 - v32
   - v32.1
     - [v32.1.0](https://github.com/giantswarm/releases/tree/master/capa/v32.1.0)
@@ -367,6 +371,10 @@ to all Giant Swarm installations.
 
 ## Azure
 
+- v33
+  - v33.0
+    - [v33.0.0](https://github.com/giantswarm/releases/tree/master/azure/v33.0.0)
+
 - v32
   - v32.1
     - [v32.1.0](https://github.com/giantswarm/releases/tree/master/azure/v32.1.0)
@@ -621,6 +629,10 @@ to all Giant Swarm installations.
 
 ## vSphere
 
+- v33
+  - v33.0
+    - [v33.0.0](https://github.com/giantswarm/releases/tree/master/vsphere/v33.0.0)
+
 - v32
   - v32.1
     - [v32.1.0](https://github.com/giantswarm/releases/tree/master/vsphere/v32.1.0)
@@ -666,6 +678,10 @@ to all Giant Swarm installations.
 
 ## VMware Cloud Director
 
+- v33
+  - v33.0
+    - [v33.0.0](https://github.com/giantswarm/releases/tree/master/cloud-director/v33.0.0)
+
 - v32
   - v32.1
     - [v32.1.0](https://github.com/giantswarm/releases/tree/master/cloud-director/v32.1.0)
@@ -681,7 +697,7 @@ to all Giant Swarm installations.
 
 - v30
   - v30.1
-    - [v30.1.4](https://github.com/giantswarm/releases/tree/master/cloud-director/v30.1.4)
+    - [v30.1.4](https://github.com/giantswarm/releases/tree/master/cloud-director/archived/v30.1.4)
     - [v30.1.3](https://github.com/giantswarm/releases/tree/master/cloud-director/archived/v30.1.3)
     - [v30.1.2](https://github.com/giantswarm/releases/tree/master/cloud-director/archived/v30.1.2)
     - [v30.1.1](https://github.com/giantswarm/releases/tree/master/cloud-director/archived/v30.1.1)
@@ -714,6 +730,10 @@ to all Giant Swarm installations.
     - [v27.0.0](https://github.com/giantswarm/releases/tree/master/cloud-director/archived/v27.0.0)
 
 ## EKS
+
+- v32
+  - v32.0
+    - [v32.0.0](https://github.com/giantswarm/releases/tree/master/eks/v32.0.0)
 
 # Running tests against PRs
 
