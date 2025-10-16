@@ -723,6 +723,10 @@ to all Giant Swarm installations.
 
 ## EKS
 
+- v32
+  - v32.0
+    - [v32.0.0](https://github.com/giantswarm/releases/tree/master/eks/v32.0.0)
+
 # Running tests against PRs
 
 ## Workload Cluster End-to-End Tests
