@@ -15,8 +15,6 @@ releases:
   requests:
   - name: coredns
     version: ">= 1.26.0"
-  - name: k8s-dns-node-cache
-    version: ">= 2.9.0"
 - name: ">= 30.1.2 < 31.0.0"
   requests:
   - name: cilium
@@ -43,7 +41,3 @@ releases:
   requests:
   - name: coredns
     version: ">= 1.23.0"
-- name: "> 29.0.0"
-  requests:
-  - name: cert-exporter
-    version: ">= 2.9.2"
