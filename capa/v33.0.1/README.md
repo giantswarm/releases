@@ -43,7 +43,12 @@ This release improves the stability of Karpenter node pools.
 
 #### Changed
 
+- Revert previous `kyverno` update ([#536](https://github.com/giantswarm/security-bundle/pull/536), [#531](https://github.com/giantswarm/security-bundle/pull/531), [#538](https://github.com/giantswarm/security-bundle/pull/538)).
 - Update `kyverno-policy-operator` (app) to v0.1.6.
+- Update `kyverno` (app) to v0.20.0.
+- Update `kyverno-crds` (app) to v1.14.0.
+- Update `kyverno-policies` (app) to v0.24.0.
+- Update `kyverno-policy-operator` (app) to v0.1.5.
 - Update `trivy-operator` (app) to v0.12.1.
 - Update `trivy` (app) to v0.14.1.
 - Update `falco` (app) to v0.11.0.
