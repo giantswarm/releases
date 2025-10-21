@@ -119,7 +119,7 @@ spec:                                                              spec:
     - prometheus-operator-crd                                          - prometheus-operator-crd
   - name: security-bundle                                            - name: security-bundle
     catalog: giantswarm                                                catalog: giantswarm
-    version: 1.12.0                                                    version: 1.12.0
+    version: 1.12.0                                             |      version: 1.13.1
     dependsOn:                                                         dependsOn:
     - prometheus-operator-crd                                          - prometheus-operator-crd
   - name: teleport-kube-agent                                        - name: teleport-kube-agent
@@ -140,5 +140,5 @@ spec:                                                              spec:
     version: 1.33.5                                                    version: 1.33.5
   - name: os-tooling                                                 - name: os-tooling
     version: 1.26.1                                                    version: 1.26.1
-  date: "2025-10-15T15:31:52Z"                                  |    date: "2025-10-21T11:45:17Z"
+  date: "2025-10-15T15:31:52Z"                                  |    date: "2025-10-21T13:24:12Z"
   state: active                                                      state: active
