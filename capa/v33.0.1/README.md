@@ -22,9 +22,16 @@ This release improves the stability of Karpenter node pools.
 
 ### Apps
 
+- aws-pod-identity-webhook from v1.19.1 to v2.0.0
 - karpenter from v1.3.0 to v1.4.0
 - Added karpenter-taint-remover v1.0.1
 - security-bundle from v1.12.0 to v1.13.1
+
+### aws-pod-identity-webhook [v1.19.1...v2.0.0](https://github.com/giantswarm/aws-pod-identity-webhook/compare/v1.19.1...v2.0.0)
+
+#### Changed
+
+- Upgrade IRSA to latest v0.6.9
 
 ### karpenter [v1.3.0...v1.4.0](https://github.com/giantswarm/karpenter-app/compare/v1.3.0...v1.4.0)
 
