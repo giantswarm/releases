@@ -135,7 +135,7 @@ spec:
     catalog: cluster
     version: 6.2.0
   - name: flatcar
-    version: 4230.2.4
+    version: 4230.2.3
   - name: kubernetes
     version: 1.33.5
   - name: os-tooling
