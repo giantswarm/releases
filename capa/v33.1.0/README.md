@@ -7,7 +7,6 @@ This releases improves the stability of karpenter nodepools.
 ### Components
 
 - cluster-aws from v6.0.0 to v6.2.0
-- Flatcar from v4230.2.3 to [v4230.2.4](https://www.flatcar-linux.org/releases/#release-4230.2.4)
 
 ### cluster-aws [v6.0.0...v6.2.0](https://github.com/giantswarm/cluster-aws/compare/v6.0.0...v6.2.0)
 
