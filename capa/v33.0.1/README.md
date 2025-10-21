@@ -1,4 +1,4 @@
-# :zap: Giant Swarm Release v33.1.0 for CAPA :zap:
+# :zap: Giant Swarm Release v33.0.1 for CAPA :zap:
 
 This releases improves the stability of karpenter nodepools.
 
