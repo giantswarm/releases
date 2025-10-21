@@ -71,10 +71,10 @@
       "isStable": true
     },
     {
-      "version": "33.1.0",
+      "version": "33.0.1",
       "isDeprecated": false,
       "releaseTimestamp": "2025-10-21T09:45:17Z",
-      "changelogUrl": "https://github.com/giantswarm/releases/blob/master/capa/v33.1.0/README.md",
+      "changelogUrl": "https://github.com/giantswarm/releases/blob/master/capa/v33.0.1/README.md",
       "isStable": true
     }
   ],

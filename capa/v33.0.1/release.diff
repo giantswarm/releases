@@ -1,7 +1,7 @@
 apiVersion: release.giantswarm.io/v1alpha1                         apiVersion: release.giantswarm.io/v1alpha1
 kind: Release                                                      kind: Release
 metadata:                                                          metadata:
-  name: aws-33.0.0                                              |    name: aws-33.1.0
+  name: aws-33.0.0                                              |    name: aws-33.0.1
 spec:                                                              spec:
   apps:                                                              apps:
   - name: aws-ebs-csi-driver                                         - name: aws-ebs-csi-driver
