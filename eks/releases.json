@@ -10,7 +10,7 @@
     {
       "version": "32.0.1",
       "isDeprecated": false,
-      "releaseTimestamp": "2025-10-29T11:28:31Z",
+      "releaseTimestamp": "2025-10-29T11:34:47Z",
       "changelogUrl": "https://github.com/giantswarm/releases/blob/master/eks/v32.0.1/README.md",
       "isStable": true
     }

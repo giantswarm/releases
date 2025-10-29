@@ -21,6 +21,8 @@ spec:
     - cilium
   - name: teleport-kube-agent
     version: 0.10.6
+  - name: vertical-pod-autoscaler-crd
+    version: 4.0.1
   components:
   - name: cluster-eks
     catalog: cluster
@@ -31,5 +33,5 @@ spec:
     version: 1.32.9
   - name: os-tooling
     version: 1.26.1
-  date: "2025-10-29T11:28:31Z"
+  date: "2025-10-29T11:34:47Z"
   state: active
