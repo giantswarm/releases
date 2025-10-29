@@ -1401,11 +1401,15 @@ jobs:
 
       - name: "Send Slack notification"
         id: send_slack
-        if: secrets.SLACK_BOT_TOKEN != '' && secrets.SLACK_RELEASE_CHANNEL_ID != ''
         env:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
           SLACK_CHANNEL_ID: ${{ secrets.SLACK_RELEASE_CHANNEL_ID }}
         run: |
+          # Skip if Slack is not configured
+          if [[ -z "$SLACK_BOT_TOKEN" ]] || [[ -z "$SLACK_CHANNEL_ID" ]]; then
+            echo "Slack is not configured. Skipping notification."
+            exit 0
+          fi
           # Build Slack message with release version if available
           if [[ -n "${{ env.RELEASE_VERSION }}" ]]; then
             SLACK_TITLE="📢 Scheduled Release ${{ env.RELEASE_VERSION }} Available"
