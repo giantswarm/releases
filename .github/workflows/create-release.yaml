@@ -1404,6 +1404,7 @@ jobs:
         env:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
           SLACK_CHANNEL_ID: ${{ secrets.SLACK_RELEASE_CHANNEL_ID }}
+          GH_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
         run: |
           # Skip if Slack is not configured
           if [[ -z "$SLACK_BOT_TOKEN" ]] || [[ -z "$SLACK_CHANNEL_ID" ]]; then
@@ -1417,30 +1418,19 @@ jobs:
             SLACK_TITLE="📢 Scheduled Release PR Available"
           fi
 
-          # Determine PR URL and type (always single PR - either consolidated or individual)
-          PR_URL=""
-          PR_TYPE=""
+          # Get the PR URL from whichever job created it (only one PR is ever created)
+          PR_URL=$(echo '${{ toJSON(needs.*.outputs.pr_url) }}' | jq -r 'to_entries[] | .value | select(. != null and . != "")' | head -n 1)
 
-          if [[ "${{ needs.major_release_consolidated.outputs.pr_url }}" != "" ]]; then
-            PR_URL="${{ needs.major_release_consolidated.outputs.pr_url }}"
-            PR_TYPE="All CAPI providers (consolidated)"
-          elif [[ "${{ needs.minor_release_consolidated.outputs.pr_url }}" != "" ]]; then
-            PR_URL="${{ needs.minor_release_consolidated.outputs.pr_url }}"
-            PR_TYPE="All CAPI providers (consolidated)"
+          echo "Found PR URL: $PR_URL"
+
+          # Fetch the PR title using GitHub API
+          if [[ -n "$PR_URL" ]]; then
+            PR_NUMBER=$(echo "$PR_URL" | grep -oE '[0-9]+$')
+            PR_TITLE=$(gh pr view "$PR_NUMBER" --repo "$GITHUB_REPOSITORY" --json title --jq '.title')
+            echo "PR Title: $PR_TITLE"
           else
-            # Check for individual PRs (should only be one)
-            MAJOR_INDIVIDUAL_RELEASES=$(echo '${{ toJSON(needs.major_release_individual) }}' | jq -r '(if has("result") then . else .[] end) | select(.result == "success") | .outputs.pr_url' 2>/dev/null || true)
-            MINOR_INDIVIDUAL_RELEASES=$(echo '${{ toJSON(needs.minor_release_individual) }}' | jq -r '(if has("result") then . else .[] end) | select(.result == "success") | .outputs.pr_url' 2>/dev/null || true)
-
-            if [[ -n "$MAJOR_INDIVIDUAL_RELEASES" ]]; then
-              PR_URL=$(echo "$MAJOR_INDIVIDUAL_RELEASES" | head -n 1)
-              PROVIDER=$(echo "$PR_URL" | grep -oP 'release-v[0-9.]+-\K[^/]+' || echo "provider")
-              PR_TYPE="${PROVIDER} only"
-            elif [[ -n "$MINOR_INDIVIDUAL_RELEASES" ]]; then
-              PR_URL=$(echo "$MINOR_INDIVIDUAL_RELEASES" | head -n 1)
-              PROVIDER=$(echo "$PR_URL" | grep -oP 'release-v[0-9.]+-\K[^/]+' || echo "provider")
-              PR_TYPE="${PROVIDER} only"
-            fi
+            echo "Error: No PR URL found"
+            exit 1
           fi
 
           # Create Slack payload
@@ -1459,7 +1449,7 @@ jobs:
                 "type": "section",
                 "text": {
                   "type": "mrkdwn",
-                  "text": "The scheduled workload cluster release PR has been created and is now ready for product teams to add their changes.\n\n:rocket: *Release PR:* <$PR_URL|${{ env.RELEASE_VERSION }} - $PR_TYPE>"
+                  "text": "The scheduled workload cluster release PR has been created and is now ready for product teams to add their changes.\n\n*Release PR:* <$PR_URL|$PR_TITLE>"
                 }
               },
               {
@@ -1468,20 +1458,6 @@ jobs:
                   "type": "mrkdwn",
                   "text": ":book: *Need help adding changes?*\nCheck out the <https://intranet.giantswarm.io/docs/product/releases/capi/capi-release-drafting/|CAPI Release Drafting Guide> for detailed instructions on how to update releases."
                 }
-              },
-              {
-                "type": "actions",
-                "elements": [
-                  {
-                    "type": "button",
-                    "text": {
-                      "type": "plain_text",
-                      "text": "View Releases Board",
-                      "emoji": true
-                    },
-                    "url": "https://github.com/orgs/giantswarm/projects/365"
-                  }
-                ]
               }
             ]
           }
