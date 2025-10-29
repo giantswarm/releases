@@ -729,6 +729,7 @@ to all Giant Swarm installations.
 
 - v32
   - v32.0
+    - [v32.0.1](https://github.com/giantswarm/releases/tree/master/eks/v32.0.1)
     - [v32.0.0](https://github.com/giantswarm/releases/tree/master/eks/v32.0.0)
 
 # Running tests against PRs
