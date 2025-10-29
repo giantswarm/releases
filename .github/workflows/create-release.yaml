@@ -480,9 +480,15 @@ jobs:
           token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
           title: "CAPI: Release ${{ steps.determine_next_release.outputs.version }}."
           body: |
-            This PR creates the new CAPI release `${{ steps.determine_next_release.outputs.version }}`.
+            This PR creates the new CAPI **major release** `${{ steps.determine_next_release.outputs.version }}` for **all providers** (consolidated).
+
+            Major releases include new Kubernetes versions, significant platform upgrades, and breaking changes across all CAPI providers.
+
+            📖 **Need help?** Check out the [CAPI Release Drafting Guide](https://intranet.giantswarm.io/docs/product/releases/capi/capi-release-drafting/) for detailed instructions.
 
             ---
+
+            ## Updating this Release
 
             To update the release files in this PR, comment with `/update-release` and provide arguments directly to `devctl`. For consolidated releases, you **must** specify which provider you are updating.
             If you do not specify a provider, the bot will automatically detect the provider from the PR files.
@@ -647,9 +653,15 @@ jobs:
           token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
           title: "CAPI: Release ${{ steps.determine_next_release.outputs.version }}."
           body: |
-            This PR creates the new CAPI release `${{ steps.determine_next_release.outputs.version }}`.
+            This PR creates the new CAPI **minor release** `${{ steps.determine_next_release.outputs.version }}` for **all providers** (consolidated).
+
+            Minor releases include component updates, bug fixes, and feature improvements across all CAPI providers without breaking changes.
+
+            📖 **Need help?** Check out the [CAPI Release Drafting Guide](https://intranet.giantswarm.io/docs/product/releases/capi/capi-release-drafting/) for detailed instructions.
 
             ---
+
+            ## Updating this Release
 
             To update the release files in this PR, comment with `/update-release` and provide arguments directly to `devctl`. For consolidated releases, you **must** specify which provider you are updating.
             If you do not specify a provider, the bot will automatically detect the provider from the PR files.
@@ -669,13 +681,13 @@ jobs:
             **Add descriptions:**
 
             *   Update README.md for specific provider:
-                `/update-readme --provider aws "This major release includes Kubernetes 1.32 support, enhanced security features, and significant performance improvements. It introduces new platform capabilities and resolves several stability issues."`
+                `/update-readme --provider aws "This release includes component updates, bug fixes, and performance improvements."`
 
             *   Update announcement.md for specific provider:
-                `/update-announcement --provider aws "Workload cluster release v32.0.0 for CAPA includes Kubernetes 1.32 support and enhanced security features."`
+                `/update-announcement --provider aws "Workload cluster release includes important updates and improvements."`
 
             *   Update all providers (auto-detected):
-                `/update-readme "This major release brings significant platform enhancements and stability improvements across all supported providers."`
+                `/update-readme "This minor release brings component updates and improvements across all supported providers."`
           branch: "release-${{ steps.determine_next_release.outputs.version }}"
           labels: |
             release/minor
@@ -785,9 +797,15 @@ jobs:
           token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
           title: "${{ steps.determine_next_release.outputs.provider_acronym }}: Release ${{ steps.determine_next_release.outputs.version }}."
           body: |
-            This PR creates the new release `${{ steps.determine_next_release.outputs.version }}` for ${{ matrix.provider }}.
+            This PR creates the new **major release** `${{ steps.determine_next_release.outputs.version }}` for **${{ matrix.provider }}** only.
+
+            Major releases include new Kubernetes versions, significant platform upgrades, and breaking changes.
+
+            📖 **Need help?** Check out the [CAPI Release Drafting Guide](https://intranet.giantswarm.io/docs/product/releases/capi/capi-release-drafting/) for detailed instructions.
 
             ---
+
+            ## Updating this Release
 
             To update the release files in this PR, comment with `/update-release` and provide arguments directly to `devctl`.
             If you do not specify a provider, the bot will automatically detect the provider from the PR files.
@@ -810,10 +828,10 @@ jobs:
             **Add descriptions:**
 
             *   Update README.md with detailed description:
-                `/update-readme "This release includes important security updates and performance improvements. It introduces new platform capabilities and resolves several stability issues."`
+                `/update-readme "This major release includes Kubernetes 1.32 support, enhanced security features, and significant performance improvements. It introduces new platform capabilities and resolves several stability issues."`
 
             *   Update announcement.md with brief summary:
-                `/update-announcement "Workload cluster release includes enhanced security features and performance improvements."`
+                `/update-announcement "Workload cluster release includes Kubernetes 1.32 support and enhanced security features."`
           branch: "release-${{ steps.determine_next_release.outputs.version }}-${{ matrix.provider }}"
           labels: |
             release/major
@@ -910,12 +928,17 @@ jobs:
         uses: peter-evans/create-pull-request@v7
         with:
           token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
-          draft: true  # TEMPORARY: Set to true for testing - change to false for production
           title: "${{ steps.determine_next_release.outputs.provider_acronym }}: Release ${{ steps.determine_next_release.outputs.version }}."
           body: |
-            This PR creates the new release `${{ steps.determine_next_release.outputs.version }}` for ${{ matrix.provider }}.
+            This PR creates the new **minor release** `${{ steps.determine_next_release.outputs.version }}` for **${{ matrix.provider }}** only.
+
+            Minor releases include component updates, bug fixes, and feature improvements without breaking changes.
+
+            📖 **Need help?** Check out the [CAPI Release Drafting Guide](https://intranet.giantswarm.io/docs/product/releases/capi/capi-release-drafting/) for detailed instructions.
 
             ---
+
+            ## Updating this Release
 
             To update the release files in this PR, comment with `/update-release` and provide arguments directly to `devctl`.
             If you do not specify a provider, the bot will automatically detect the provider from the PR files.
@@ -938,10 +961,10 @@ jobs:
             **Add descriptions:**
 
             *   Update README.md with detailed description:
-                `/update-readme "This release includes important security updates and performance improvements. It introduces new platform capabilities and resolves several stability issues."`
+                `/update-readme "This release includes component updates, bug fixes, and performance improvements."`
 
             *   Update announcement.md with brief summary:
-                `/update-announcement "Workload cluster release includes enhanced security features and performance improvements."`
+                `/update-announcement "Workload cluster release includes important updates and improvements."`
           branch: "release-${{ steps.determine_next_release.outputs.version }}-${{ matrix.provider }}"
           labels: |
             release/minor
@@ -1037,9 +1060,15 @@ jobs:
       - name: Prepare PR body
         id: pr_body
         run: |
-          body="This PR was automatically created. It creates \`${{ steps.versioning.outputs.NEXT_RELEASE }}\` for \`${{ matrix.provider }}\`.
+          body="This PR creates the new **patch release** \`${{ steps.versioning.outputs.NEXT_RELEASE }}\` for **${{ matrix.provider }}** only.
+
+          Patch releases contain targeted fixes for specific security issues, critical bugs, or component updates.
+
+          📖 **Need help?** Check out the [CAPI Release Drafting Guide](https://intranet.giantswarm.io/docs/product/releases/capi/capi-release-drafting/) for detailed instructions.
 
           ---
+
+          ## Updating this Release
 
           **Note:** For patch releases, it does not automatically bump any component or app.
           To update specific components or apps, comment with \`/update-release\` and provide arguments directly to \`devctl\`.
@@ -1066,7 +1095,7 @@ jobs:
               \`/update-readme \"This patch release fixes CVE-2024-1234 in security-bundle and updates Flatcar for hardware compatibility. It also resolves boot issues on certain hardware configurations.\"\`
 
           *   Update announcement.md with brief summary:
-              \`/update-announcement \"Workload cluster release v32.0.1 for CAPA fixes critical security vulnerabilities and improves system stability.\"\`"
+              \`/update-announcement \"Workload cluster release fixes critical security vulnerabilities and improves system stability.\"\`"
           echo "body<<EOF" >> $GITHUB_OUTPUT
           echo "$body" >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
@@ -1196,9 +1225,15 @@ jobs:
           token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
           title: "CAPI: Release ${{ steps.determine_next_release.outputs.version }}."
           body: |
-            This PR creates the new CAPI patch release `${{ steps.determine_next_release.outputs.version }}`.
+            This PR creates the new CAPI **patch release** `${{ steps.determine_next_release.outputs.version }}` for **all providers** (consolidated).
+
+            Patch releases contain targeted fixes for specific security issues, critical bugs, or component updates.
+
+            📖 **Need help?** Check out the [CAPI Release Drafting Guide](https://intranet.giantswarm.io/docs/product/releases/capi/capi-release-drafting/) for detailed instructions.
 
             ---
+
+            ## Updating this Release
 
             **Note:** For patch releases, it does not automatically bump any component or app.
             To update the release files in this PR, comment with `/update-release` and provide arguments directly to `devctl`. For consolidated releases, you **must** specify which provider you are updating.
@@ -1222,7 +1257,7 @@ jobs:
                 `/update-readme --provider aws "This patch release fixes CVE-2024-1234 in security-bundle and updates Flatcar for hardware compatibility. It also resolves boot issues on certain hardware configurations."`
 
             *   Update announcement.md for specific provider:
-                `/update-announcement --provider aws "Workload cluster release v32.0.1 for CAPA fixes critical security vulnerabilities and improves system stability."`
+                `/update-announcement --provider aws "Workload cluster release fixes critical security vulnerabilities and improves system stability."`
 
             *   Update all providers (auto-detected):
                 `/update-readme "This patch release brings important security fixes and stability improvements across all supported providers."`
@@ -1332,9 +1367,9 @@ jobs:
       - major_release_individual
       - minor_release_individual
     # Only announce for scheduled (non-manual) releases that successfully created PRs
-    # TEMPORARY: Allow manual runs for testing - remove "needs.dispatcher.outputs.is_manual == 'false' &&" to re-enable
     if: |
       always() &&
+      needs.dispatcher.outputs.is_manual == 'false' &&
       (needs.major_release_consolidated.result == 'success' ||
        needs.minor_release_consolidated.result == 'success' ||
        needs.major_release_individual.result == 'success' ||
