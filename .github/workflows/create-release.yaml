@@ -69,10 +69,10 @@ jobs:
           # Determine release type from triggers
           if [[ "${{ github.event_name }}" == 'workflow_dispatch' ]]; then
             echo "is_manual=true" >> "$GITHUB_OUTPUT"
-            
+
             # Build provider list from boolean inputs
             SELECTED_PROVIDERS=""
-            
+
             # Check if "all providers" is selected
             if [[ "${{ github.event.inputs.provider_all }}" == 'true' ]]; then
               SELECTED_PROVIDERS="aws,azure,cloud-director,eks,vsphere"
@@ -93,11 +93,11 @@ jobs:
               if [[ "${{ github.event.inputs.provider_vsphere }}" == 'true' ]]; then
                 SELECTED_PROVIDERS="${SELECTED_PROVIDERS}vsphere,"
               fi
-              
+
               # Remove trailing comma
               SELECTED_PROVIDERS=$(echo "$SELECTED_PROVIDERS" | sed 's/,$//')
             fi
-            
+
             PROVIDER_INPUT="$SELECTED_PROVIDERS"
 
             # Count providers
@@ -134,7 +134,7 @@ jobs:
             echo "force_consolidated=false" >> "$GITHUB_OUTPUT"
             echo "provider_count=0" >> "$GITHUB_OUTPUT" # Not relevant for scheduled runs, but set a default.
             MONTH=$(date +'%m')
-            
+
             # For scheduled runs, we'll create separate jobs for major and minor releases
             # The individual job deciders will handle the logic for when to run
             echo "release_type=major_and_minor" >> "$GITHUB_OUTPUT"
@@ -184,7 +184,7 @@ jobs:
               echo "run_individual=false" >> "$GITHUB_OUTPUT"
               exit 0
             fi
-            
+
             echo "Quarterly month detected. Checking for existing major release PRs."
             # Check if there are already open PRs for the next major version
             chmod +x ./tools/check-major-version-merged.sh
@@ -193,7 +193,7 @@ jobs:
             MERGED_STATUS=$(./tools/check-major-version-merged.sh "${PROVIDER_ARGS[@]}" | grep 'merged=' | cut -d'=' -f2)
             LATEST_MAJOR=$(./tools/check-major-version-merged.sh "${PROVIDER_ARGS[@]}" | grep 'latest_major=' | cut -d'=' -f2)
             NEXT_MAJOR=$(./tools/check-major-version-merged.sh "${PROVIDER_ARGS[@]}" | grep 'next_major=' | cut -d'=' -f2)
-            
+
             # Check for existing OPEN PRs for the next major version
             CONSOLIDATED_PR=$(gh pr list --repo "$GITHUB_REPOSITORY" --head "release-v$NEXT_MAJOR.0.0" --state open --json number --jq '.[0].number' 2>/dev/null || echo "")
             INDIVIDUAL_PRS=()
@@ -203,14 +203,14 @@ jobs:
                 INDIVIDUAL_PRS+=("$provider")
               fi
             done
-            
+
             if [ -n "$CONSOLIDATED_PR" ] || [ ${#INDIVIDUAL_PRS[@]} -gt 0 ]; then
               echo "Found existing PRs for v$NEXT_MAJOR.0.0. Skipping major release creation."
               echo "run_consolidated=false" >> "$GITHUB_OUTPUT"
               echo "run_individual=false" >> "$GITHUB_OUTPUT"
               exit 0
             fi
-            
+
             echo "No existing PRs found. Running pre-flight alignment check."
             chmod +x ./tools/check-major-version-alignment.sh
             # Split the provider list into individual arguments
@@ -275,14 +275,14 @@ jobs:
             # Split the provider list into individual arguments
             PROVIDER_ARGS=(${{ needs.dispatcher.outputs.provider_list }})
             PRS_EXIST=$(./tools/check-minor-release-prs.sh "${PROVIDER_ARGS[@]}" | grep 'prs_exist=' | cut -d'=' -f2)
-            
+
             if [[ "$PRS_EXIST" == "true" ]]; then
               echo "Found existing minor release PRs. Skipping minor release creation."
               echo "run_consolidated=false" >> "$GITHUB_OUTPUT"
               echo "run_individual=false" >> "$GITHUB_OUTPUT"
               exit 0
             fi
-            
+
             echo "No existing minor release PRs found. Running pre-flight alignment check."
             chmod +x ./tools/check-minor-version-alignment.sh
             # Split the provider list into individual arguments
@@ -426,7 +426,7 @@ jobs:
               echo "---" >> $LOG_FILE
               echo "" >> $LOG_FILE
             fi
-            
+
             # Capitalize provider name for the heading
             PROVIDER_UPPER=$(echo "$provider" | awk '{print toupper($0)}')
             echo "<details><summary>Changes for ${PROVIDER_UPPER}</summary>" >> $LOG_FILE
@@ -452,12 +452,12 @@ jobs:
             done
             echo "</details>" >> $LOG_FILE
           done
-        
+
           LOG_CONTENT=$(cat /tmp/release_output.log)
           echo "LOG_CONTENT<<EOF" >> "$GITHUB_ENV"
           echo "$LOG_CONTENT" >> "$GITHUB_ENV"
           echo "EOF" >> "$GITHUB_ENV"
-          
+
           PROVIDER_LABELS=$(echo "${{ needs.major_release_decider.outputs.provider_list }}" | tr ' ' '\n')
           echo "PROVIDER_LABELS<<EOF" >> "$GITHUB_OUTPUT"
           echo "$PROVIDER_LABELS" >> "$GITHUB_OUTPUT"
@@ -593,7 +593,7 @@ jobs:
               echo "---" >> $LOG_FILE
               echo "" >> $LOG_FILE
             fi
-            
+
             # Capitalize provider name for the heading
             PROVIDER_UPPER=$(echo "$provider" | awk '{print toupper($0)}')
             echo "<details><summary>Changes for ${PROVIDER_UPPER}</summary>" >> $LOG_FILE
@@ -619,7 +619,7 @@ jobs:
             done
             echo "</details>" >> $LOG_FILE
           done
-        
+
           LOG_CONTENT=$(cat /tmp/release_output.log)
           echo "LOG_CONTENT<<EOF" >> "$GITHUB_ENV"
           echo "$LOG_CONTENT" >> "$GITHUB_ENV"
@@ -765,7 +765,7 @@ jobs:
             --name "${{ steps.determine_next_release.outputs.version }}" \
             --provider "${{ matrix.provider }}" \
             --bumpall --overwrite -y --output markdown --changes-only 2>&1 | tee /tmp/release_output.log
-          
+
           LOG_CONTENT=$(cat /tmp/release_output.log)
           echo "LOG_CONTENT<<EOF" >> "$GITHUB_ENV"
           echo "$LOG_CONTENT" >> "$GITHUB_ENV"
@@ -892,7 +892,7 @@ jobs:
             --name "${{ steps.determine_next_release.outputs.version }}" \
             --provider "${{ matrix.provider }}" \
             --bumpall --overwrite -y --output markdown --changes-only 2>&1 | tee /tmp/release_output.log
-          
+
           LOG_CONTENT=$(cat /tmp/release_output.log)
           echo "LOG_CONTENT<<EOF" >> "$GITHUB_ENV"
           echo "$LOG_CONTENT" >> "$GITHUB_ENV"
@@ -910,6 +910,7 @@ jobs:
         uses: peter-evans/create-pull-request@v7
         with:
           token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+          draft: true  # TEMPORARY: Set to true for testing - change to false for production
           title: "${{ steps.determine_next_release.outputs.provider_acronym }}: Release ${{ steps.determine_next_release.outputs.version }}."
           body: |
             This PR creates the new release `${{ steps.determine_next_release.outputs.version }}` for ${{ matrix.provider }}.
@@ -1141,7 +1142,7 @@ jobs:
               echo "---" >> $LOG_FILE
               echo "" >> $LOG_FILE
             fi
-            
+
             # Capitalize provider name for the heading
             PROVIDER_UPPER=$(echo "$provider" | awk '{print toupper($0)}')
             echo "<details><summary>Changes for ${PROVIDER_UPPER}</summary>" >> $LOG_FILE
@@ -1167,7 +1168,7 @@ jobs:
             done
             echo "</details>" >> $LOG_FILE
           done
-        
+
           LOG_CONTENT=$(cat /tmp/release_output.log)
           echo "LOG_CONTENT<<EOF" >> "$GITHUB_ENV"
           echo "$LOG_CONTENT" >> "$GITHUB_ENV"
@@ -1258,24 +1259,24 @@ jobs:
     steps:
       - name: "Checkout code"
         uses: actions/checkout@v5
-      
+
       - name: "Generate release summary"
         id: generate_summary
         run: |
           SUMMARY_CONTENT="## Release Summary\n\n"
-          
+
           # Consolidated Major Releases
           if [[ "${{ needs.major_release_consolidated.outputs.pr_url }}" != "" ]]; then
             SUMMARY_CONTENT="${SUMMARY_CONTENT}**Consolidated Major Release PR:**\n"
             SUMMARY_CONTENT="${SUMMARY_CONTENT}- ${{ needs.major_release_consolidated.outputs.pr_url }}\n\n"
           fi
-          
+
           # Consolidated Minor Releases
           if [[ "${{ needs.minor_release_consolidated.outputs.pr_url }}" != "" ]]; then
             SUMMARY_CONTENT="${SUMMARY_CONTENT}**Consolidated Minor Release PR:**\n"
             SUMMARY_CONTENT="${SUMMARY_CONTENT}- ${{ needs.minor_release_consolidated.outputs.pr_url }}\n\n"
           fi
-          
+
           # Individual Major Releases
           MAJOR_INDIVIDUAL_RELEASES=$(echo '${{ toJSON(needs.major_release_individual) }}' | jq -r '(if has("result") then . else .[] end) | select(.result == "success") | .outputs.pr_url')
           if [[ "$MAJOR_INDIVIDUAL_RELEASES" != "" ]]; then
@@ -1285,7 +1286,7 @@ jobs:
             done
             SUMMARY_CONTENT="${SUMMARY_CONTENT}\n"
           fi
-          
+
           # Individual Minor Releases
           MINOR_INDIVIDUAL_RELEASES=$(echo '${{ toJSON(needs.minor_release_individual) }}' | jq -r '(if has("result") then . else .[] end) | select(.result == "success") | .outputs.pr_url')
           if [[ "$MINOR_INDIVIDUAL_RELEASES" != "" ]]; then
@@ -1295,14 +1296,14 @@ jobs:
             done
             SUMMARY_CONTENT="${SUMMARY_CONTENT}\n"
           fi
-          
-          
+
+
           # Consolidated Patch Releases
           if [[ "${{ needs.patch_release_consolidated.outputs.pr_url }}" != "" ]]; then
             SUMMARY_CONTENT="${SUMMARY_CONTENT}**Consolidated Patch Release PR:**\n"
             SUMMARY_CONTENT="${SUMMARY_CONTENT}- ${{ needs.patch_release_consolidated.outputs.pr_url }}\n\n"
           fi
-          
+
           # Individual Patch Releases
           PATCH_INDIVIDUAL_RELEASES=$(echo '${{ toJSON(needs.patch_release_individual) }}' | jq -r '(if has("result") then . else .[] end) | select(.result == "success") | .outputs.pr_url')
           if [[ "$PATCH_INDIVIDUAL_RELEASES" != "" ]]; then
@@ -1320,6 +1321,181 @@ jobs:
       - name: "Post job summary"
         run: |
           printf "%b" "${{ env.SUMMARY_CONTENT }}" >> $GITHUB_STEP_SUMMARY
+
+  announce_scheduled_release:
+    name: "Announce Scheduled Release"
+    needs:
+      - dispatcher
+      - summarize_releases
+      - major_release_consolidated
+      - minor_release_consolidated
+      - major_release_individual
+      - minor_release_individual
+    # Only announce for scheduled (non-manual) releases that successfully created PRs
+    # TEMPORARY: Allow manual runs for testing - remove "needs.dispatcher.outputs.is_manual == 'false' &&" to re-enable
+    if: |
+      always() &&
+      (needs.major_release_consolidated.result == 'success' ||
+       needs.minor_release_consolidated.result == 'success' ||
+       needs.major_release_individual.result == 'success' ||
+       needs.minor_release_individual.result == 'success') &&
+      secrets.SLACK_BOT_TOKEN != ''
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Checkout code"
+        uses: actions/checkout@v5
+
+      - name: "Prepare Slack announcement"
+        id: prepare_announcement
+        env:
+          GH_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+        run: |
+          # Extract release version from PR URLs
+          RELEASE_VERSION=""
+
+          # Try to get version from consolidated PRs first
+          if [[ "${{ needs.major_release_consolidated.outputs.pr_url }}" != "" ]]; then
+            PR_URL="${{ needs.major_release_consolidated.outputs.pr_url }}"
+            PR_NUMBER=$(echo "$PR_URL" | grep -oE '[0-9]+$')
+            RELEASE_VERSION=$(gh pr view "$PR_NUMBER" --repo "$GITHUB_REPOSITORY" --json headRefName --jq '.headRefName' | sed -n 's/release-\(v[0-9.]*\).*/\1/p')
+          elif [[ "${{ needs.minor_release_consolidated.outputs.pr_url }}" != "" ]]; then
+            PR_URL="${{ needs.minor_release_consolidated.outputs.pr_url }}"
+            PR_NUMBER=$(echo "$PR_URL" | grep -oE '[0-9]+$')
+            RELEASE_VERSION=$(gh pr view "$PR_NUMBER" --repo "$GITHUB_REPOSITORY" --json headRefName --jq '.headRefName' | sed -n 's/release-\(v[0-9.]*\).*/\1/p')
+          else
+            # Try to get from individual PRs
+            MAJOR_INDIVIDUAL_RELEASES=$(echo '${{ toJSON(needs.major_release_individual) }}' | jq -r '(if has("result") then . else .[] end) | select(.result == "success") | .outputs.pr_url' 2>/dev/null || true)
+            MINOR_INDIVIDUAL_RELEASES=$(echo '${{ toJSON(needs.minor_release_individual) }}' | jq -r '(if has("result") then . else .[] end) | select(.result == "success") | .outputs.pr_url' 2>/dev/null || true)
+
+            FIRST_URL=""
+            if [[ "$MAJOR_INDIVIDUAL_RELEASES" != "" ]]; then
+              FIRST_URL=$(echo "$MAJOR_INDIVIDUAL_RELEASES" | head -n 1)
+            elif [[ "$MINOR_INDIVIDUAL_RELEASES" != "" ]]; then
+              FIRST_URL=$(echo "$MINOR_INDIVIDUAL_RELEASES" | head -n 1)
+            fi
+
+            if [[ "$FIRST_URL" != "" ]]; then
+              PR_NUMBER=$(echo "$FIRST_URL" | grep -oE '[0-9]+$')
+              RELEASE_VERSION=$(gh pr view "$PR_NUMBER" --repo "$GITHUB_REPOSITORY" --json headRefName --jq '.headRefName' | sed -n 's/release-\(v[0-9.]*\).*/\1/p')
+            fi
+          fi
+
+          echo "Detected release version: $RELEASE_VERSION"
+          echo "RELEASE_VERSION=$RELEASE_VERSION" >> "$GITHUB_ENV"
+
+          # Determine release type
+          RELEASE_TYPE="Release"
+          if [[ "${{ needs.dispatcher.outputs.release_type }}" == "major_and_minor" ]]; then
+            # Check which actually ran
+            if [[ "${{ needs.major_release_consolidated.result }}" == "success" ]] || [[ "${{ needs.major_release_individual.result }}" == "success" ]]; then
+              RELEASE_TYPE="Major Release"
+            elif [[ "${{ needs.minor_release_consolidated.result }}" == "success" ]] || [[ "${{ needs.minor_release_individual.result }}" == "success" ]]; then
+              RELEASE_TYPE="Minor Release"
+            fi
+          elif [[ "${{ needs.dispatcher.outputs.release_type }}" == "major" ]]; then
+            RELEASE_TYPE="Major Release"
+          elif [[ "${{ needs.dispatcher.outputs.release_type }}" == "minor" ]]; then
+            RELEASE_TYPE="Minor Release"
+          fi
+
+          echo "RELEASE_TYPE=$RELEASE_TYPE" >> "$GITHUB_ENV"
+
+      - name: "Send Slack notification"
+        id: send_slack
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+          SLACK_CHANNEL_ID: ${{ secrets.SLACK_RELEASE_CHANNEL_ID }}
+        run: |
+          # Build Slack message with release version if available
+          if [[ -n "${{ env.RELEASE_VERSION }}" ]]; then
+            SLACK_TITLE="📢 Scheduled Release ${{ env.RELEASE_VERSION }} Available"
+          else
+            SLACK_TITLE="📢 Scheduled Release PR Available"
+          fi
+
+          # Determine PR URL and type (always single PR - either consolidated or individual)
+          PR_URL=""
+          PR_TYPE=""
+
+          if [[ "${{ needs.major_release_consolidated.outputs.pr_url }}" != "" ]]; then
+            PR_URL="${{ needs.major_release_consolidated.outputs.pr_url }}"
+            PR_TYPE="All CAPI providers (consolidated)"
+          elif [[ "${{ needs.minor_release_consolidated.outputs.pr_url }}" != "" ]]; then
+            PR_URL="${{ needs.minor_release_consolidated.outputs.pr_url }}"
+            PR_TYPE="All CAPI providers (consolidated)"
+          else
+            # Check for individual PRs (should only be one)
+            MAJOR_INDIVIDUAL_RELEASES=$(echo '${{ toJSON(needs.major_release_individual) }}' | jq -r '(if has("result") then . else .[] end) | select(.result == "success") | .outputs.pr_url' 2>/dev/null || true)
+            MINOR_INDIVIDUAL_RELEASES=$(echo '${{ toJSON(needs.minor_release_individual) }}' | jq -r '(if has("result") then . else .[] end) | select(.result == "success") | .outputs.pr_url' 2>/dev/null || true)
+
+            if [[ -n "$MAJOR_INDIVIDUAL_RELEASES" ]]; then
+              PR_URL=$(echo "$MAJOR_INDIVIDUAL_RELEASES" | head -n 1)
+              PROVIDER=$(echo "$PR_URL" | grep -oP 'release-v[0-9.]+-\K[^/]+' || echo "provider")
+              PR_TYPE="${PROVIDER} only"
+            elif [[ -n "$MINOR_INDIVIDUAL_RELEASES" ]]; then
+              PR_URL=$(echo "$MINOR_INDIVIDUAL_RELEASES" | head -n 1)
+              PROVIDER=$(echo "$PR_URL" | grep -oP 'release-v[0-9.]+-\K[^/]+' || echo "provider")
+              PR_TYPE="${PROVIDER} only"
+            fi
+          fi
+
+          # Create Slack payload
+          SLACK_PAYLOAD=$(cat <<EOF
+          {
+            "blocks": [
+              {
+                "type": "header",
+                "text": {
+                  "type": "plain_text",
+                  "text": "$SLACK_TITLE",
+                  "emoji": true
+                }
+              },
+              {
+                "type": "section",
+                "text": {
+                  "type": "mrkdwn",
+                  "text": "The scheduled workload cluster release PR has been created and is now ready for product teams to add their changes.\n\n:rocket: *Release PR:* <$PR_URL|${{ env.RELEASE_VERSION }} - $PR_TYPE>"
+                }
+              },
+              {
+                "type": "section",
+                "text": {
+                  "type": "mrkdwn",
+                  "text": ":book: *Need help adding changes?*\nCheck out the <https://intranet.giantswarm.io/docs/product/releases/capi/capi-release-drafting/|CAPI Release Drafting Guide> for detailed instructions on how to update releases."
+                }
+              },
+              {
+                "type": "actions",
+                "elements": [
+                  {
+                    "type": "button",
+                    "text": {
+                      "type": "plain_text",
+                      "text": "View Releases Board",
+                      "emoji": true
+                    },
+                    "url": "https://github.com/orgs/giantswarm/projects/365"
+                  }
+                ]
+              }
+            ]
+          }
+          EOF
+          )
+
+          # Send to Slack using Bot Token
+          echo "Sending to Slack using Bot Token"
+          RESPONSE=$(curl -s -X POST "https://slack.com/api/chat.postMessage" \
+            -H "Authorization: Bearer $SLACK_BOT_TOKEN" \
+            -H "Content-Type: application/json; charset=utf-8" \
+            -d "{\"channel\": \"$SLACK_CHANNEL_ID\", \"blocks\": $(echo "$SLACK_PAYLOAD" | jq -c '.blocks'), \"metadata\": {\"event_type\": \"release_announcement\", \"event_payload\": {\"version\": \"${{ env.RELEASE_VERSION }}\", \"type\": \"${{ env.RELEASE_TYPE }}\"}}}")
+
+          # Extract message timestamp for later updates
+          MESSAGE_TS=$(echo "$RESPONSE" | jq -r '.ts')
+          echo "MESSAGE_TS=$MESSAGE_TS" >> "$GITHUB_OUTPUT"
+          echo "SLACK_CHANNEL=$SLACK_CHANNEL_ID" >> "$GITHUB_OUTPUT"
+          echo "Slack message sent with timestamp: $MESSAGE_TS"
 
   notify_failure:
     name: "Notify on Failure"
@@ -1340,7 +1516,7 @@ jobs:
           echo "One or more release jobs failed. Please check the workflow logs for details." >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "Failed job(s):" >> $GITHUB_STEP_SUMMARY
-          
+
           if [[ "${{ needs.major_release_consolidated.result }}" == "failure" ]]; then
             echo "- Major Release (Consolidated)" >> $GITHUB_STEP_SUMMARY
           fi
