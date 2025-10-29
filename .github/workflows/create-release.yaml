@@ -1338,8 +1338,7 @@ jobs:
       (needs.major_release_consolidated.result == 'success' ||
        needs.minor_release_consolidated.result == 'success' ||
        needs.major_release_individual.result == 'success' ||
-       needs.minor_release_individual.result == 'success') &&
-      secrets.SLACK_BOT_TOKEN != ''
+       needs.minor_release_individual.result == 'success')
     runs-on: ubuntu-latest
     steps:
       - name: "Checkout code"
@@ -1402,6 +1401,7 @@ jobs:
 
       - name: "Send Slack notification"
         id: send_slack
+        if: secrets.SLACK_BOT_TOKEN != '' && secrets.SLACK_RELEASE_CHANNEL_ID != ''
         env:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
           SLACK_CHANNEL_ID: ${{ secrets.SLACK_RELEASE_CHANNEL_ID }}
