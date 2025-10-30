@@ -29,7 +29,6 @@
 - aws-nth-bundle from v1.2.2 to v1.3.0
 - cert-exporter from v2.9.9 to v2.9.10
 - cilium from v1.3.0 to v1.3.1
-- Added cluster-aws v5.2.0
 - etcd-defrag from v1.0.8 to v1.1.0
 - etcd-k8s-res-count-exporter from v1.10.7 to v1.10.8
 - k8s-audit-metrics from v0.10.6 to v0.10.7

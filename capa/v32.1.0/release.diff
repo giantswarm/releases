@@ -52,8 +52,6 @@ spec:                                                              spec:
     version: 1.32.2-gs1                                                version: 1.32.2-gs1
     dependsOn:                                                         dependsOn:
     - kyverno-crds                                                     - kyverno-crds
-                                                                >    - name: cluster-aws
-                                                                >      version: 5.2.0
   - name: coredns                                                    - name: coredns
     version: 1.27.0                                                    version: 1.27.0
     dependsOn:                                                         dependsOn:
