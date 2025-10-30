@@ -1,0 +1,92 @@
+name: Bump Components in Open Release PRs
+
+on:
+  schedule:
+    # Run every Monday at 09:00 UTC
+    - cron: '0 9 * * 1'
+  workflow_dispatch:
+    inputs:
+      pr_number:
+        description: 'Specific PR number to update (optional, leave empty to update all open release PRs)'
+        required: false
+        type: string
+
+jobs:
+  find-open-release-prs:
+    name: "Find Open Release PRs"
+    runs-on: ubuntu-latest
+    outputs:
+      pr_numbers: ${{ steps.find_prs.outputs.pr_numbers }}
+      pr_count: ${{ steps.find_prs.outputs.pr_count }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v5
+
+      - name: Find open release PRs
+        id: find_prs
+        env:
+          GH_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+        run: |
+          if [[ -n "${{ github.event.inputs.pr_number }}" ]]; then
+            # Manual run with specific PR
+            PR_NUMBERS='["${{ github.event.inputs.pr_number }}"]'
+            PR_COUNT=1
+          else
+            # Find all open PRs with release branch pattern
+            PR_LIST=$(gh pr list --repo "$GITHUB_REPOSITORY" --state open --json number,headRefName,labels \
+              | jq -c '[.[] | select(.headRefName | test("^release-v[0-9]+\\.[0-9]+\\.[0-9]+")) | .number]')
+            
+            PR_COUNT=$(echo "$PR_LIST" | jq 'length')
+            PR_NUMBERS="$PR_LIST"
+          fi
+          
+          echo "Found $PR_COUNT open release PR(s)"
+          echo "pr_numbers=$PR_NUMBERS" >> "$GITHUB_OUTPUT"
+          echo "pr_count=$PR_COUNT" >> "$GITHUB_OUTPUT"
+
+  bump-release-components:
+    name: "Bump Components in PR #${{ matrix.pr_number }}"
+    needs: [find-open-release-prs]
+    if: needs.find-open-release-prs.outputs.pr_count > 0
+    strategy:
+      matrix:
+        pr_number: ${{ fromJSON(needs.find-open-release-prs.outputs.pr_numbers) }}
+      fail-fast: false
+    runs-on: ubuntu-latest
+    steps:
+      - name: Post /update-release comment to trigger component bump
+        uses: actions/github-script@v8
+        with:
+          # Use default github.token instead of TAYLORBOT_GITHUB_ACTION to avoid the taylorbot filter
+          # in update-release.yaml workflow (line 10: github.event.sender.login != 'taylorbot')
+          github-token: ${{ github.token }}
+          script: |
+            const prNumber = ${{ matrix.pr_number }};
+            
+            // Post the /update-release comment which will trigger the existing update-release.yaml workflow
+            // When no specific components are provided, it automatically bumps all components
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: prNumber,
+              body: '/update-release'
+            });
+            
+            console.log('Posted /update-release comment to PR #' + prNumber);
+
+  summarize:
+    name: "Summary"
+    needs: [find-open-release-prs, bump-release-components]
+    if: always() && needs.find-open-release-prs.outputs.pr_count > 0
+    runs-on: ubuntu-latest
+    steps:
+      - name: Generate summary
+        run: |
+          echo "## Weekly Component Bump Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Posted \`/update-release\` comment on ${{ needs.find-open-release-prs.outputs.pr_count }} open release PR(s)" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "The update-release workflow will now process each PR and bump components to their latest versions." >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Check individual PR comments for detailed results." >> $GITHUB_STEP_SUMMARY
+
