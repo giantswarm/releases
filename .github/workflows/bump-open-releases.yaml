@@ -1,4 +1,4 @@
-name: Bump Components in Open Release PRs
+name: Bump Apps and Components
 
 on:
   schedule:
@@ -45,7 +45,7 @@ jobs:
           echo "pr_count=$PR_COUNT" >> "$GITHUB_OUTPUT"
 
   bump-release-components:
-    name: "Bump Components in PR #${{ matrix.pr_number }}"
+    name: "Bump Apps and Components in PR #${{ matrix.pr_number }}"
     needs: [find-open-release-prs]
     if: needs.find-open-release-prs.outputs.pr_count > 0
     strategy:
@@ -57,9 +57,9 @@ jobs:
       - name: Post /update-release comment to trigger component bump
         uses: actions/github-script@v8
         with:
-          # Use default github.token instead of TAYLORBOT_GITHUB_ACTION to avoid the taylorbot filter
-          # in update-release.yaml workflow (line 10: github.event.sender.login != 'taylorbot')
-          github-token: ${{ github.token }}
+          # Use TAYLORBOT_GITHUB_ACTION to enable workflow chaining
+          # (default github.token cannot trigger other workflows due to GitHub security restrictions)
+          github-token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
           script: |
             const prNumber = ${{ matrix.pr_number }};
             
@@ -82,11 +82,11 @@ jobs:
     steps:
       - name: Generate summary
         run: |
-          echo "## Weekly Component Bump Summary" >> $GITHUB_STEP_SUMMARY
+          echo "## Weekly Apps and Components Bump Summary" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "Posted \`/update-release\` comment on ${{ needs.find-open-release-prs.outputs.pr_count }} open release PR(s)" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "The update-release workflow will now process each PR and bump components to their latest versions." >> $GITHUB_STEP_SUMMARY
+          echo "The update-release workflow will now process each PR and bump apps and components to their latest versions." >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "Check individual PR comments for detailed results." >> $GITHUB_STEP_SUMMARY
 

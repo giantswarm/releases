@@ -7,7 +7,7 @@ on:
 jobs:
   update-release:
     # This job only runs for pull request comments
-    if: github.event.issue.pull_request && (startsWith(github.event.comment.body, '/update-release') || startsWith(github.event.comment.body, '/update-readme') || startsWith(github.event.comment.body, '/update-announcement')) && github.repository == 'giantswarm/releases' && github.event.sender.login != 'taylorbot'
+    if: github.event.issue.pull_request && (startsWith(github.event.comment.body, '/update-release') || startsWith(github.event.comment.body, '/update-readme') || startsWith(github.event.comment.body, '/update-announcement')) && github.repository == 'giantswarm/releases'
     runs-on: ubuntu-latest
     env:
       OPSCTL_GITHUB_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
