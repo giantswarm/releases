@@ -282,8 +282,8 @@ jobs:
               echo "Specific app/component version requested, using --update-existing with --regenerate-readme."
               DEVCTL_COMMAND="devctl release create --name \"$RELEASE_NAME\" --provider \"$PROVIDER\" --overwrite -y --output markdown --requested-only --update-existing --regenerate-readme $DEVCTL_ARGS"
             else
-              echo "No specific app/component version requested, bumping all with --update-existing."
-              DEVCTL_COMMAND="devctl release create --name \"$RELEASE_NAME\" --provider \"$PROVIDER\" --overwrite -y --output markdown --requested-only --update-existing --bumpall $DEVCTL_ARGS"
+              echo "No specific app/component version requested, bumping all with --bumpall."
+              DEVCTL_COMMAND="devctl release create --name \"$RELEASE_NAME\" --provider \"$PROVIDER\" --overwrite -y --output markdown --update-existing --bumpall $DEVCTL_ARGS"
             fi
 
             echo "Running command: $DEVCTL_COMMAND"
