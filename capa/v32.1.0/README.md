@@ -6,43 +6,23 @@
 
 ### Components
 
-- cluster-aws from v5.0.0 to v6.4.0
+- cluster-aws from v5.0.0 to v5.3.0
 - Flatcar from v4230.2.2 to [v4230.2.4](https://www.flatcar.org/releases/#release-4230.2.4)
 - os-tooling from v1.26.1 to v1.26.2
 
-### cluster-aws [v5.0.0...v6.4.0](https://github.com/giantswarm/cluster-aws/compare/v5.0.0...v6.4.0)
+### cluster-aws [v5.0.0...v5.3.0](https://github.com/giantswarm/cluster-aws/compare/v5.0.0...v5.3.0)
 
 #### Added
 
-- Add node-problem-detector-app, disabled by default.
-- Add `capa-karpenter-taint-remover` to handle CAPA - Karpenter taint race condition.
-- Add standard tags to IRSA infrastructure.
 - Expose value to configure `terminationGracePeriod` in the karpenter node pools.
 
 #### Changed
 
-- Tidy up dependencies on `azs-getter`.
-- Make `global.baseDomain` and `global.managementCluster` required values. These values will be passed to the chart when deploying it from the `cluster-app-installation-values` ConfigMap in the default namespace.
-- Extract required values to its own central file to avoid repeating the `required` keyword and error messages. This is normally done automatically by a Kyverno policy.
-- Change the default root disk size for Karpenter node pools. Karpenter will choose the cheapest instances, and certain instances, like `g6f.xlarge` come with some drivers that require a larger disk.
-- Chart: Update `cluster` to v4.3.0.
-- Change default consolidation time to 6 hours to avoid constant node rolling.
-- Rename `capa-karpenter-taint-remover` app.
-- Set `terminationGracePeriod` default to 30m, to avoid having `karpenter` nodes stuck in `Deleting` state due to `Pods` blocking the deletion i.e. PDBs.
-- Chart: Update `cluster` to v4.2.0.
-- The container registry passed as value to default apps is set to `gsoci.azurecr.io`, regardless of the cluster region. The mirroring feature of `containerd` will make sure the right registry is used.
-- Switch to HelmReleases to install `karpenter` and `karpenter-crossplane-resources` charts.
-- Bump flux `HelmReleases` api version to v2.
-- Reduce heartbeat timeout for ASG lifecycle hooks to from 30 minutes to 3 minutes since aws-node-termination-handler-app (NTH) can now send heartbeats
 - Configure the following `startupTaints` to help `karpenter` ignore pending `Pods` due to these taints that will be removed after the node starts, avoiding unnecessary instance provisioning:
   - `node.cluster.x-k8s.io/uninitialized:NoSchedule`
   - `node.cilium.io/agent-not-ready:NoSchedule`
   - `ebs.csi.aws.com/agent-not-ready:NoExecute`
-- Include `cilium` ENI mode pod CIDRs in the NodePort Services security group ingress rules.
-
-#### Removed
-
-- Removed `capi-node-labeler` app. From now on, the worker nodes won't have the `node-role.kubernetes.io/worker` or `node.kubernetes.io/worker` labels.
+- Reduce heartbeat timeout for ASG lifecycle hooks to from 30 minutes to 3 minutes since aws-node-termination-handler-app (NTH) can now send heartbeats
 
 ### Apps
 
