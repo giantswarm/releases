@@ -45,11 +45,11 @@ spec:
     dependsOn:
     - prometheus-operator-crd
   - name: cloud-provider-aws
-    version: 1.33.2-1
+    version: 1.32.3
     dependsOn:
     - vertical-pod-autoscaler-crd
   - name: cluster-autoscaler
-    version: 1.33.1-2
+    version: 1.32.2-gs1
     dependsOn:
     - kyverno-crds
   - name: coredns
@@ -141,5 +141,5 @@ spec:
     version: 1.32.9
   - name: os-tooling
     version: 1.26.2
-  date: "2025-10-31T14:28:47Z"
+  date: "2025-10-31T14:34:05Z"
   state: active
