@@ -189,9 +189,9 @@ jobs:
                   echo "$README_BACKUP" > "$README_FILE"
                 fi
               fi
-              LOG_PART="<details><summary>README updated for ${PROVIDER_DIR^^}</summary>\n\n"
+              # README updates are usually short, keep them expanded
+              LOG_PART="### README updated for ${PROVIDER_DIR^^}\n\n"
               LOG_PART="${LOG_PART}📝 **README Description**: $DESCRIPTION\n\n"
-              LOG_PART="${LOG_PART}</details>\n\n"
             
             elif [[ "$UPDATE_TYPE" == "announcement" ]]; then
               # Update announcement.md
@@ -221,9 +221,9 @@ jobs:
                 sed -i "1c\\$NEW_LINE_1" "$ANNOUNCEMENT_FILE"
                 echo "Updated announcement.md with new description"
               fi
-              LOG_PART="<details><summary>Announcement updated for ${PROVIDER_DIR^^}</summary>\n\n"
+              # Announcement updates are usually short, keep them expanded
+              LOG_PART="### Announcement updated for ${PROVIDER_DIR^^}\n\n"
               LOG_PART="${LOG_PART}📢 **Announcement**: $DESCRIPTION\n\n"
-              LOG_PART="${LOG_PART}</details>\n\n"
             fi
 
             FULL_LOG_CONTENT="${FULL_LOG_CONTENT}${LOG_PART}"
@@ -320,6 +320,7 @@ jobs:
             fi
             
             if ! output=$(eval "$DEVCTL_COMMAND" 2>&1 | uniq); then
+                # Error case - always collapse
                 LOG_PART="<details><summary>User-requested changes for ${PROVIDER_DIR^^}</summary>\n\n"
                 LOG_PART="${LOG_PART}devctl command failed for provider $PROVIDER_DIR.\n\n"
                 LOG_PART="${LOG_PART}<details><summary>Error Log</summary>\n\n"
@@ -329,13 +330,14 @@ jobs:
                 LOG_PART="${LOG_PART}</details>\n\n"
                 FULL_LOG_CONTENT="${FULL_LOG_CONTENT}${LOG_PART}"
             else
-                LOG_PART="<details><summary>User-requested changes for ${PROVIDER_DIR^^}</summary>\n\n"
-                
                 # Check if files actually changed
                 AFTER_HASH=""
                 if [ -f "${PROVIDER_DIR}/${RELEASE_NAME}/release.yaml" ]; then
                   AFTER_HASH=$(sha256sum "${PROVIDER_DIR}/${RELEASE_NAME}/release.yaml" | cut -d' ' -f1)
                 fi
+                
+                # Build the content first (without details wrapper)
+                CONTENT_PART=""
                 
                 # Determine if changes were made
                 if [[ "$BEFORE_HASH" != "$AFTER_HASH" ]]; then
@@ -409,18 +411,32 @@ jobs:
                     fi
                     
                     if [[ -n "$CHANGES_TABLE" ]]; then
-                      LOG_PART="${LOG_PART}${CHANGES_TABLE}\n"
+                      CONTENT_PART="${CONTENT_PART}${CHANGES_TABLE}\n"
                     else
-                      LOG_PART="${LOG_PART}✅ Changes applied successfully.\n\n"
+                      CONTENT_PART="${CONTENT_PART}✅ Changes applied successfully.\n\n"
                     fi
                   else
-                    LOG_PART="${LOG_PART}${output}\n\n"
+                    CONTENT_PART="${CONTENT_PART}${output}\n\n"
                   fi
                 else
                   # No changes detected
-                  LOG_PART="${LOG_PART}No changes detected for provider ${PROVIDER_DIR^^}. The requested app/component versions may already be present in the current release.\n\n"
+                  CONTENT_PART="${CONTENT_PART}No changes detected for provider ${PROVIDER_DIR^^}. The requested app/component versions may already be present in the current release.\n\n"
                 fi
-                LOG_PART="${LOG_PART}</details>\n\n"
+                
+                # Count the number of lines in the output to determine if we should collapse it
+                # Count lines that look like table rows (contain |) as a proxy for number of changes
+                CHANGE_COUNT=$(echo -e "$output" | grep -c '|' || echo "0")
+                
+                # Only wrap in details if there are more than 5 changes (roughly 5 table rows)
+                if [[ $CHANGE_COUNT -gt 5 ]]; then
+                  LOG_PART="<details><summary>User-requested changes for ${PROVIDER_DIR^^}</summary>\n\n"
+                  LOG_PART="${LOG_PART}${CONTENT_PART}"
+                  LOG_PART="${LOG_PART}</details>\n\n"
+                else
+                  LOG_PART="### User-requested changes for ${PROVIDER_DIR^^}\n\n"
+                  LOG_PART="${LOG_PART}${CONTENT_PART}"
+                fi
+                
                 FULL_LOG_CONTENT="${FULL_LOG_CONTENT}${LOG_PART}"
             fi
             
