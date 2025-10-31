@@ -283,7 +283,12 @@ jobs:
               DEVCTL_COMMAND="devctl release create --name \"$RELEASE_NAME\" --provider \"$PROVIDER\" --overwrite -y --output markdown --requested-only --update-existing --regenerate-readme $DEVCTL_ARGS"
             else
               echo "No specific app/component version requested, bumping all to latest versions."
-              DEVCTL_COMMAND="devctl release create --name \"$RELEASE_NAME\" --provider \"$PROVIDER\" --overwrite -y --output markdown --bumpall $DEVCTL_ARGS"
+              # Determine the base release for --bumpall
+              # The release type parameter is required by the script but ignored when version override is provided
+              # The script intelligently determines the base from the version itself (major/minor/patch)
+              BASE_VERSION=$(./tools/determine-next-release.sh "$PROVIDER" "patch" "$RELEASE_NAME" | grep '^base=' | cut -d'=' -f2)
+              echo "Determined base version: $BASE_VERSION"
+              DEVCTL_COMMAND="devctl release create --name \"$RELEASE_NAME\" --provider \"$PROVIDER\" --base \"$BASE_VERSION\" --overwrite -y --output markdown --bumpall $DEVCTL_ARGS"
             fi
 
             echo "Running command: $DEVCTL_COMMAND"
