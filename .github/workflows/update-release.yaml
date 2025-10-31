@@ -189,8 +189,9 @@ jobs:
                   echo "$README_BACKUP" > "$README_FILE"
                 fi
               fi
-              LOG_PART="### README updated for ${PROVIDER_DIR^^}\n\n"
+              LOG_PART="<details><summary>README updated for ${PROVIDER_DIR^^}</summary>\n\n"
               LOG_PART="${LOG_PART}📝 **README Description**: $DESCRIPTION\n\n"
+              LOG_PART="${LOG_PART}</details>\n\n"
             
             elif [[ "$UPDATE_TYPE" == "announcement" ]]; then
               # Update announcement.md
@@ -220,8 +221,9 @@ jobs:
                 sed -i "1c\\$NEW_LINE_1" "$ANNOUNCEMENT_FILE"
                 echo "Updated announcement.md with new description"
               fi
-              LOG_PART="### Announcement updated for ${PROVIDER_DIR^^}\n\n"
+              LOG_PART="<details><summary>Announcement updated for ${PROVIDER_DIR^^}</summary>\n\n"
               LOG_PART="${LOG_PART}📢 **Announcement**: $DESCRIPTION\n\n"
+              LOG_PART="${LOG_PART}</details>\n\n"
             fi
 
             FULL_LOG_CONTENT="${FULL_LOG_CONTENT}${LOG_PART}"
@@ -318,15 +320,16 @@ jobs:
             fi
             
             if ! output=$(eval "$DEVCTL_COMMAND" 2>&1 | uniq); then
-                LOG_PART="### User-requested changes for ${PROVIDER_DIR^^}\n\n"
+                LOG_PART="<details><summary>User-requested changes for ${PROVIDER_DIR^^}</summary>\n\n"
                 LOG_PART="${LOG_PART}devctl command failed for provider $PROVIDER_DIR.\n\n"
                 LOG_PART="${LOG_PART}<details><summary>Error Log</summary>\n\n"
                 LOG_PART="${LOG_PART}_Output of \`devctl release create\`_: \n"
                 LOG_PART="${LOG_PART}\`\`\`\n${output}\n\`\`\`\n\n"
                 LOG_PART="${LOG_PART}</details>\n\n"
+                LOG_PART="${LOG_PART}</details>\n\n"
                 FULL_LOG_CONTENT="${FULL_LOG_CONTENT}${LOG_PART}"
             else
-                LOG_PART="### User-requested changes for ${PROVIDER_DIR^^}\n\n"
+                LOG_PART="<details><summary>User-requested changes for ${PROVIDER_DIR^^}</summary>\n\n"
                 
                 # Check if files actually changed
                 AFTER_HASH=""
@@ -417,6 +420,7 @@ jobs:
                   # No changes detected
                   LOG_PART="${LOG_PART}No changes detected for provider ${PROVIDER_DIR^^}. The requested app/component versions may already be present in the current release.\n\n"
                 fi
+                LOG_PART="${LOG_PART}</details>\n\n"
                 FULL_LOG_CONTENT="${FULL_LOG_CONTENT}${LOG_PART}"
             fi
             
