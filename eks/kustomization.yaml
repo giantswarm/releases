@@ -3,6 +3,7 @@ commonAnnotations:
 resources:
 - v32.0.0
 - v32.0.1
+- v32.1.0
 transformers:
 - |
   apiVersion: builtin
