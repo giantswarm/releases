@@ -400,6 +400,18 @@ jobs:
             echo "An open PR for this release already exists. Skipping."
           fi
 
+      - name: Filter providers for release
+        id: filter_providers
+        if: steps.check_pr.outputs.PR_EXISTS == 'false' && (needs.dispatcher.outputs.release_type != 'major' || steps.k8s_check.outputs.VERSION_EXISTS == 'true')
+        run: |
+          chmod +x ./tools/filter-providers-for-release.sh
+          ./tools/filter-providers-for-release.sh "${{ steps.determine_next_release.outputs.version }}" ${{ needs.major_release_decider.outputs.provider_list }}
+
+          # Store the filtered provider list for use in subsequent steps
+          FILTERED_PROVIDERS=$(./tools/filter-providers-for-release.sh "${{ steps.determine_next_release.outputs.version }}" ${{ needs.major_release_decider.outputs.provider_list }} | grep "^included_providers=" | cut -d'=' -f2)
+          echo "filtered_providers=$FILTERED_PROVIDERS" >> "$GITHUB_OUTPUT"
+          echo "Using filtered provider list: $FILTERED_PROVIDERS"
+
       - name: Create release files and get output
         id: create_release
         if: steps.check_pr.outputs.PR_EXISTS == 'false' && (needs.dispatcher.outputs.release_type != 'major' || steps.k8s_check.outputs.VERSION_EXISTS == 'true')
@@ -415,7 +427,7 @@ jobs:
           LOG_FILE="/tmp/release_output.log"
           touch $LOG_FILE
           first_provider=true
-          for provider in ${{ needs.major_release_decider.outputs.provider_list }}; do
+          for provider in ${{ steps.filter_providers.outputs.filtered_providers }}; do
             echo "--- Creating release for $provider ---"
 
             # Add a separator before each provider except the first one
@@ -458,7 +470,7 @@ jobs:
           echo "$LOG_CONTENT" >> "$GITHUB_ENV"
           echo "EOF" >> "$GITHUB_ENV"
 
-          PROVIDER_LABELS=$(echo "${{ needs.major_release_decider.outputs.provider_list }}" | tr ' ' '\n')
+          PROVIDER_LABELS=$(echo "${{ steps.filter_providers.outputs.filtered_providers }}" | tr ' ' '\n')
           echo "PROVIDER_LABELS<<EOF" >> "$GITHUB_OUTPUT"
           echo "$PROVIDER_LABELS" >> "$GITHUB_OUTPUT"
           echo "EOF" >> "$GITHUB_OUTPUT"
@@ -467,7 +479,7 @@ jobs:
         id: update_readme
         if: steps.check_pr.outputs.PR_EXISTS == 'false' && (needs.dispatcher.outputs.release_type != 'major' || steps.k8s_check.outputs.VERSION_EXISTS == 'true')
         run: |
-          for provider in ${{ needs.major_release_decider.outputs.provider_list }}; do
+          for provider in ${{ steps.filter_providers.outputs.filtered_providers }}; do
             ./tools/update-readme.sh "$provider" "${{ steps.determine_next_release.outputs.version }}"
             echo "Successfully updated README.md with ${{ steps.determine_next_release.outputs.version }} for $provider"
           done
@@ -573,6 +585,18 @@ jobs:
             echo "An open PR for this release already exists. Skipping."
           fi
 
+      - name: Filter providers for release
+        id: filter_providers
+        if: steps.check_pr.outputs.PR_EXISTS == 'false'
+        run: |
+          chmod +x ./tools/filter-providers-for-release.sh
+          ./tools/filter-providers-for-release.sh "${{ steps.determine_next_release.outputs.version }}" ${{ needs.minor_release_decider.outputs.provider_list }}
+
+          # Store the filtered provider list for use in subsequent steps
+          FILTERED_PROVIDERS=$(./tools/filter-providers-for-release.sh "${{ steps.determine_next_release.outputs.version }}" ${{ needs.minor_release_decider.outputs.provider_list }} | grep "^included_providers=" | cut -d'=' -f2)
+          echo "filtered_providers=$FILTERED_PROVIDERS" >> "$GITHUB_OUTPUT"
+          echo "Using filtered provider list: $FILTERED_PROVIDERS"
+
       - name: Create release files and get output
         id: create_release
         if: steps.check_pr.outputs.PR_EXISTS == 'false'
@@ -588,7 +612,7 @@ jobs:
           LOG_FILE="/tmp/release_output.log"
           touch $LOG_FILE
           first_provider=true
-          for provider in ${{ needs.minor_release_decider.outputs.provider_list }}; do
+          for provider in ${{ steps.filter_providers.outputs.filtered_providers }}; do
             echo "--- Creating release for $provider ---"
 
             # Add a separator before each provider except the first one
@@ -631,7 +655,7 @@ jobs:
           echo "$LOG_CONTENT" >> "$GITHUB_ENV"
           echo "EOF" >> "$GITHUB_ENV"
 
-          PROVIDER_LABELS=$(echo "${{ needs.minor_release_decider.outputs.provider_list }}" | tr ' ' '\n')
+          PROVIDER_LABELS=$(echo "${{ steps.filter_providers.outputs.filtered_providers }}" | tr ' ' '\n')
           echo "PROVIDER_LABELS<<EOF" >> "$GITHUB_OUTPUT"
           echo "$PROVIDER_LABELS" >> "$GITHUB_OUTPUT"
           echo "EOF" >> "$GITHUB_OUTPUT"
@@ -640,7 +664,7 @@ jobs:
         id: update_readme
         if: steps.check_pr.outputs.PR_EXISTS == 'false'
         run: |
-          for provider in ${{ needs.minor_release_decider.outputs.provider_list }}; do
+          for provider in ${{ steps.filter_providers.outputs.filtered_providers }}; do
             ./tools/update-readme.sh "$provider" "${{ steps.determine_next_release.outputs.version }}"
             echo "Successfully updated README.md with ${{ steps.determine_next_release.outputs.version }} for $provider"
           done
@@ -1145,6 +1169,18 @@ jobs:
             echo "An open PR for this release already exists. Skipping."
           fi
 
+      - name: Filter providers for release
+        id: filter_providers
+        if: steps.check_pr.outputs.PR_EXISTS == 'false'
+        run: |
+          chmod +x ./tools/filter-providers-for-release.sh
+          ./tools/filter-providers-for-release.sh "${{ steps.determine_next_release.outputs.version }}" ${{ needs.patch_release_decider.outputs.provider_list }}
+
+          # Store the filtered provider list for use in subsequent steps
+          FILTERED_PROVIDERS=$(./tools/filter-providers-for-release.sh "${{ steps.determine_next_release.outputs.version }}" ${{ needs.patch_release_decider.outputs.provider_list }} | grep "^included_providers=" | cut -d'=' -f2)
+          echo "filtered_providers=$FILTERED_PROVIDERS" >> "$GITHUB_OUTPUT"
+          echo "Using filtered provider list: $FILTERED_PROVIDERS"
+
       - name: Create release files and get output
         id: create_release
         if: steps.check_pr.outputs.PR_EXISTS == 'false'
@@ -1160,7 +1196,7 @@ jobs:
           LOG_FILE="/tmp/release_output.log"
           touch $LOG_FILE
           first_provider=true
-          for provider in ${{ needs.patch_release_decider.outputs.provider_list }}; do
+          for provider in ${{ steps.filter_providers.outputs.filtered_providers }}; do
             echo "--- Creating release for $provider ---"
 
             # Add a separator before each provider except the first one
@@ -1203,7 +1239,7 @@ jobs:
           echo "$LOG_CONTENT" >> "$GITHUB_ENV"
           echo "EOF" >> "$GITHUB_ENV"
 
-          PROVIDER_LABELS=$(echo "${{ needs.patch_release_decider.outputs.provider_list }}" | tr ' ' '\n')
+          PROVIDER_LABELS=$(echo "${{ steps.filter_providers.outputs.filtered_providers }}" | tr ' ' '\n')
           echo "PROVIDER_LABELS<<EOF" >> "$GITHUB_OUTPUT"
           echo "$PROVIDER_LABELS" >> "$GITHUB_OUTPUT"
           echo "EOF" >> "$GITHUB_OUTPUT"
@@ -1212,7 +1248,7 @@ jobs:
         id: update_readme
         if: steps.check_pr.outputs.PR_EXISTS == 'false'
         run: |
-          for provider in ${{ needs.patch_release_decider.outputs.provider_list }}; do
+          for provider in ${{ steps.filter_providers.outputs.filtered_providers }}; do
             ./tools/update-readme.sh "$provider" "${{ steps.determine_next_release.outputs.version }}"
             echo "Successfully updated README.md with ${{ steps.determine_next_release.outputs.version }} for $provider"
           done

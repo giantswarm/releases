@@ -10,8 +10,11 @@ fi
 
 PROVIDERS=("$@")
 MINOR_VERSIONS=()
+# Providers to exclude from alignment check (but still process for releases)
+EXCLUDED_PROVIDERS=("eks")
 
 echo "Checking minor version alignment for providers: ${PROVIDERS[*]}"
+echo "Providers excluded from alignment check: ${EXCLUDED_PROVIDERS[*]}"
 
 for provider in "${PROVIDERS[@]}"; do
     # Handle aws -> capa directory mapping for modern releases
@@ -36,7 +39,21 @@ for provider in "${PROVIDERS[@]}"; do
     # Extract minor version (e.g., v31.2.0 -> 31.2)
     MINOR_VERSION=$(echo "$LATEST_RELEASE" | sed -E 's/^v([0-9]+\.[0-9]+)\..*/\1/')
     echo "Latest release for $provider is $LATEST_RELEASE (Minor: $MINOR_VERSION)"
-    MINOR_VERSIONS+=("$MINOR_VERSION")
+
+    # Check if this provider should be excluded from alignment check
+    IS_EXCLUDED=false
+    for excluded in "${EXCLUDED_PROVIDERS[@]}"; do
+        if [ "$provider" == "$excluded" ]; then
+            IS_EXCLUDED=true
+            echo "  -> Excluding $provider from alignment check"
+            break
+        fi
+    done
+
+    # Only include in alignment check if not excluded
+    if [ "$IS_EXCLUDED" == "false" ]; then
+        MINOR_VERSIONS+=("$MINOR_VERSION")
+    fi
 done
 
 ALIGNMENT="aligned"
