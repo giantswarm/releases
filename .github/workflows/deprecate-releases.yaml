@@ -12,7 +12,6 @@ on:
       - "master"
       - "main"
       - "release-deprecation"
-      - "3qrf" # testing purpose, ignore
     paths:
       - ".github/workflows/deprecate-releases.yaml"
       - "azure/**"

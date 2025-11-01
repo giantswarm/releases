@@ -14,7 +14,6 @@ on:
     branches:
       - "master"
       - "main"
-      - "3qrf" # testing purpose, ignore
     paths:
       - ".github/workflows/archive-releases.yaml"
       - "azure/**"
@@ -25,7 +24,6 @@ on:
 
 jobs:
   archive-releases:
-    name: Archive Deprecated Releases
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
