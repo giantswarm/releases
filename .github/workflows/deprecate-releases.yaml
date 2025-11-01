@@ -21,27 +21,8 @@ on:
       - "vsphere/**"
 
 jobs:
-  find-releases:
-    runs-on: ubuntu-latest
-    outputs:
-      providers: ${{ steps.find-providers.outputs.providers }}
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v5
-
-      - name: Find providers with releases
-        id: find-providers
-        run: |
-          PROVIDERS=$(find . -maxdepth 1 -type d -name "azure" -o -name "capa" -o -name "vsphere" -o -name "cloud-director" -o -name "eks" | sed 's|./||' | jq -R -s -c 'split("\n") | map(select(length > 0))')
-          echo "providers=$PROVIDERS" >> $GITHUB_OUTPUT
-
   deprecate-releases:
-    needs: find-releases
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        provider: ${{ fromJson(needs.find-releases.outputs.providers) }}
 
     steps:
       - name: Checkout code
@@ -54,73 +35,61 @@ jobs:
         with:
           go-version: "1.25"
 
-      - name: Set provider display name
-        id: provider-name
-        run: |
-          PROVIDER="${{ matrix.provider }}"
-          case "$PROVIDER" in
-            capa)
-              echo "display_name=CAPA" >> $GITHUB_OUTPUT
-              ;;
-            azure)
-              echo "display_name=CAPZ" >> $GITHUB_OUTPUT
-              ;;
-            vsphere)
-              echo "display_name=CAPV" >> $GITHUB_OUTPUT
-              ;;
-            cloud-director)
-              echo "display_name=CAPVCD" >> $GITHUB_OUTPUT
-              ;;
-            *)
-              echo "display_name=${PROVIDER^^}" >> $GITHUB_OUTPUT
-              ;;
-          esac
-
       - name: Build deprecation tool
         run: |
           cd tools
           go mod tidy
           go build -o $GITHUB_WORKSPACE/deprecate-releases deprecate-release.go
-
           cd $GITHUB_WORKSPACE
 
-      - name: Run deprecation tool
+      - name: Run deprecation tool for all providers
         id: deprecation
         run: |
-          ./deprecate-releases -provider ${{ matrix.provider }} -verbose -grafana-api-key="${{ secrets.GRAFANA_API_KEY }}"
+          PROVIDERS="azure capa vsphere cloud-director eks"
+          
+          for PROVIDER in $PROVIDERS; do
+            if [ -d "$PROVIDER" ]; then
+              echo "Processing provider: $PROVIDER"
+              ./deprecate-releases -provider "$PROVIDER" -verbose -grafana-api-key="${{ secrets.GRAFANA_API_KEY }}" || true
+            else
+              echo "Skipping provider $PROVIDER (directory not found)"
+            fi
+          done
         env:
           GRAFANA_API_KEY: ${{ secrets.GRAFANA_API_KEY }}
 
-      # Update releases.json for each provider
-      - name: Update releases.json
+      - name: Update releases.json files
         run: |
-          RELEASES_JSON="${{ matrix.provider }}/releases.json"
-          if [ -f "$RELEASES_JSON" ]; then
-            echo "Updating deprecation status in $RELEASES_JSON"
+          PROVIDERS="azure capa vsphere cloud-director eks"
+          
+          for PROVIDER in $PROVIDERS; do
+            RELEASES_JSON="${PROVIDER}/releases.json"
+            if [ -f "$RELEASES_JSON" ]; then
+              echo "Updating deprecation status in $RELEASES_JSON"
 
-            # Create a temporary file to store the updated JSON
-            TMP_JSON=$(mktemp)
+              # Create a temporary file to store the updated JSON
+              TMP_JSON=$(mktemp)
 
-            # For each changed release.yaml file, update the corresponding entry in releases.json
-            for file in $(git diff --name-only | grep -E ".*release\.yaml$"); do
-              # Extract version from directory name
-              dir=$(dirname "$file")
-              version=$(basename "$dir" | sed 's/^v//')
+              # For each changed release.yaml file in this provider, update the corresponding entry in releases.json
+              for file in $(git diff --name-only | grep -E "^${PROVIDER}/.*release\.yaml$"); do
+                # Extract version from directory name
+                dir=$(dirname "$file")
+                version=$(basename "$dir" | sed 's/^v//')
 
-              echo "Checking if $version needs to be marked as deprecated in releases.json"
+                echo "Checking if $version needs to be marked as deprecated in releases.json"
 
-              # Check if this release is now deprecated
-              if grep -q "state: deprecated" "$file"; then
-                echo "Marking version $version as deprecated in releases.json"
+                # Check if this release is now deprecated
+                if grep -q "state: deprecated" "$file"; then
+                  echo "Marking version $version as deprecated in releases.json"
 
-                # Use jq to update the isDeprecated flag for this version
-                jq --arg ver "$version" '.releases |= map(if .version == $ver then .isDeprecated = true else . end)' "$RELEASES_JSON" > "$TMP_JSON"
-                mv "$TMP_JSON" "$RELEASES_JSON"
-              fi
-            done
-          fi
+                  # Use jq to update the isDeprecated flag for this version
+                  jq --arg ver "$version" '.releases |= map(if .version == $ver then .isDeprecated = true else . end)' "$RELEASES_JSON" > "$TMP_JSON"
+                  mv "$TMP_JSON" "$RELEASES_JSON"
+                fi
+              done
+            fi
+          done
 
-      # Better approach to clean up unwanted changes
       - name: Keep only release files changes
         run: |
           # Remove the binary
@@ -138,48 +107,86 @@ jobs:
       - name: Prepare changed files list
         id: changed-files
         run: |
+          # Ensure we're looking at the latest git state
+          git add -A
+          
           # Get changed release.yaml files (these are the ones that were deprecated)
-          DEPRECATED_RELEASE_YAML_FILES=$(git diff --name-only | grep -E ".*release\.yaml$" || echo "")
+          DEPRECATED_RELEASE_YAML_FILES=$(git diff --cached --name-only | grep -E ".*release\.yaml$" || echo "")
 
-          # Get changed releases.json file
-          RELEASES_JSON_FILE=$(git diff --name-only | grep -E ".*releases\.json$" || echo "")
+          # Get changed releases.json files
+          RELEASES_JSON_FILES=$(git diff --cached --name-only | grep -E ".*releases\.json$" || echo "")
 
-          if [[ -n "$DEPRECATED_RELEASE_YAML_FILES" || -n "$RELEASES_JSON_FILE" ]]; then
-            # Use a different output variable name to avoid confusion with the old structure
-            echo "pr_body_changed_files_section<<EOF" >> $GITHUB_OUTPUT
-
-            if [[ -n "$RELEASES_JSON_FILE" ]]; then
-              echo "### Modified Configuration" >> $GITHUB_OUTPUT
-              echo "- \`$RELEASES_JSON_FILE\` - Updated deprecated status for relevant versions." >> $GITHUB_OUTPUT
-              echo "" >> $GITHUB_OUTPUT
+          if [[ -n "$DEPRECATED_RELEASE_YAML_FILES" || -n "$RELEASES_JSON_FILES" ]]; then
+            # Build PR body
+            PR_BODY=""
+            
+            if [[ -n "$RELEASES_JSON_FILES" ]]; then
+              PR_BODY="${PR_BODY}### Modified Configuration\n\n"
+              for json_file in $RELEASES_JSON_FILES; do
+                PR_BODY="${PR_BODY}- \`$json_file\` - Updated deprecated status for relevant versions.\n"
+              done
+              PR_BODY="${PR_BODY}\n"
             fi
 
             if [[ -n "$DEPRECATED_RELEASE_YAML_FILES" ]]; then
-              echo "### Releases Deprecated in this PR" >> $GITHUB_OUTPUT
-              echo "" >> $GITHUB_OUTPUT
+              PR_BODY="${PR_BODY}### Releases Deprecated in this PR\n\n"
 
-              # Extract versions from the DEPRECATED files and sort them
-              DEPRECATED_VERSIONS=$(echo "$DEPRECATED_RELEASE_YAML_FILES" | sed -E 's|.*/v([0-9]+\.[0-9]+\.[0-9]+.*)/release.yaml|\1|' | sort -V)
+              # Group by provider
+              PROVIDERS="azure capa vsphere cloud-director eks"
+              
+              for PROVIDER in $PROVIDERS; do
+                # Get deprecated versions for this provider
+                PROVIDER_DEPRECATED_FILES=$(echo "$DEPRECATED_RELEASE_YAML_FILES" | grep "^${PROVIDER}/" || echo "")
+                
+                if [[ -n "$PROVIDER_DEPRECATED_FILES" ]]; then
+                  # Set provider display name
+                  case "$PROVIDER" in
+                    capa)
+                      DISPLAY_NAME="CAPA"
+                      ;;
+                    azure)
+                      DISPLAY_NAME="CAPZ"
+                      ;;
+                    vsphere)
+                      DISPLAY_NAME="CAPV"
+                      ;;
+                    cloud-director)
+                      DISPLAY_NAME="CAPVCD"
+                      ;;
+                    *)
+                      DISPLAY_NAME=$(echo "$PROVIDER" | tr '[:lower:]' '[:upper:]')
+                      ;;
+                  esac
+                  
+                  PR_BODY="${PR_BODY}#### ${DISPLAY_NAME}\n\n"
+                  
+                  # Extract versions from the DEPRECATED files and sort them
+                  DEPRECATED_VERSIONS=$(echo "$PROVIDER_DEPRECATED_FILES" | sed -E 's|.*/v([0-9]+\.[0-9]+\.[0-9]+.*)/release.yaml|\1|' | sort -V)
 
-              # Extract major versions from the DEPRECATED files and make them unique
-              MAJOR_VERSIONS_WITH_DEPRECATIONS=$(echo "$DEPRECATED_VERSIONS" | sed -E 's|^([0-9]+)\..*|\1|' | sort -n | uniq)
+                  # Extract major versions from the DEPRECATED files and make them unique
+                  MAJOR_VERSIONS_WITH_DEPRECATIONS=$(echo "$DEPRECATED_VERSIONS" | sed -E 's|^([0-9]+)\..*|\1|' | sort -n | uniq)
 
-              echo "| Major Version | Releases Deprecated by this PR |" >> $GITHUB_OUTPUT
-              echo "|---------------|--------------------------------|" >> $GITHUB_OUTPUT
+                  PR_BODY="${PR_BODY}\n| Major Version | Releases Deprecated |\n"
+                  PR_BODY="${PR_BODY}|---------------|--------------------|\n"
 
-              for major in $MAJOR_VERSIONS_WITH_DEPRECATIONS; do
-                # Get all deprecated versions for this major version from the diff
-                DEPRECATED_IN_MAJOR_FROM_DIFF=$(echo "$DEPRECATED_VERSIONS" | grep -E "^${major}\." | sed 's/^/v/')
+                  for major in $MAJOR_VERSIONS_WITH_DEPRECATIONS; do
+                    # Get all deprecated versions for this major version from the diff
+                    DEPRECATED_IN_MAJOR_FROM_DIFF=$(echo "$DEPRECATED_VERSIONS" | grep -E "^${major}\." | sed 's/^/v/')
 
-                DEPRECATED_LIST_STR="N/A" # Should not happen if major is in MAJOR_VERSIONS_WITH_DEPRECATIONS
-                if [[ -n "$DEPRECATED_IN_MAJOR_FROM_DIFF" ]]; then
-                  DEPRECATED_LIST_STR=$(echo "$DEPRECATED_IN_MAJOR_FROM_DIFF" | paste -sd "," - | sed 's/,/, /g')
+                    if [[ -n "$DEPRECATED_IN_MAJOR_FROM_DIFF" ]]; then
+                      DEPRECATED_LIST_STR=$(echo "$DEPRECATED_IN_MAJOR_FROM_DIFF" | paste -sd "," - | sed 's/,/, /g')
+                      PR_BODY="${PR_BODY}| v${major}         | ${DEPRECATED_LIST_STR} |\n"
+                    fi
+                  done
+                  
+                  PR_BODY="${PR_BODY}\n"
                 fi
-
-                echo "| v${major}         | ${DEPRECATED_LIST_STR}              |" >> $GITHUB_OUTPUT
               done
             fi
 
+            # Use EOF delimiter to handle multiline output
+            echo "pr_body_changed_files_section<<EOF" >> $GITHUB_OUTPUT
+            echo -e "$PR_BODY" >> $GITHUB_OUTPUT
             echo "EOF" >> $GITHUB_OUTPUT
             echo "has_changes=true" >> $GITHUB_OUTPUT
           else
@@ -192,12 +199,12 @@ jobs:
         uses: peter-evans/create-pull-request@0edc001d28a2959cd7a6b505629f1d82f0a6e67d
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          commit-message: "${{ steps.provider-name.outputs.display_name }}: Deprecate outdated releases"
-          title: "${{ steps.provider-name.outputs.display_name }}: Deprecate outdated releases"
+          commit-message: "CAPI: Deprecate outdated releases"
+          title: "CAPI: Deprecate outdated releases"
           body: |
-            ## Automated Release Deprecation for ${{ steps.provider-name.outputs.display_name }}
+            ## Automated Release Deprecation for CAPI
 
-            This PR automatically marks outdated releases for ${{ steps.provider-name.outputs.display_name }} as deprecated.
+            This PR automatically marks outdated releases across all CAPI providers as deprecated.
             A release is kept active if it meets any of the following criteria:
 
             - Currently in use
@@ -208,8 +215,12 @@ jobs:
 
             ## Verify in Grafana
 
-            You can check which releases are currently in use in the [CAPI Releases Dashboard](https://giantswarm.grafana.net/d/be9a0bh8mbwn4e/capi-releases?orgId=1&from=now-6h&to=now&timezone=browser&var-installation=$__all&var-provider=${{ matrix.provider }}&var-repo=${{ matrix.provider }}&var-release_version=$__all&var-customer=$__all).
-          branch: auto-deprecate-${{ matrix.provider }}-releases
+            You can check which releases are currently in use in the [CAPI Releases Dashboard](https://giantswarm.grafana.net/d/be9a0bh8mbwn4e/capi-releases?orgId=1&from=now-6h&to=now&timezone=browser).
+
+            ---
+
+            /skip-ci This change does not affect what's being tested by CI.
+          branch: auto-deprecate-capi-releases
           base: master
           labels: |
             release-maintenance
