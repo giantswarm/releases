@@ -19,7 +19,7 @@ spec:                                                              spec:
     dependsOn:                                                         dependsOn:
     - cert-manager                                                     - cert-manager
   - name: cert-exporter                                              - name: cert-exporter
-    version: 2.9.12                                                    version: 2.9.12
+    version: 2.9.12                                             |      version: 2.9.13
     dependsOn:                                                         dependsOn:
     - kyverno-crds                                                     - kyverno-crds
   - name: cert-manager                                               - name: cert-manager
@@ -63,7 +63,7 @@ spec:                                                              spec:
     dependsOn:                                                         dependsOn:
     - kyverno-crds                                                     - kyverno-crds
   - name: etcd-k8s-res-count-exporter                                - name: etcd-k8s-res-count-exporter
-    version: 1.10.9                                                    version: 1.10.9
+    version: 1.10.9                                             |      version: 1.10.10
     dependsOn:                                                         dependsOn:
     - kyverno-crds                                                     - kyverno-crds
   - name: external-dns                                               - name: external-dns
@@ -75,7 +75,7 @@ spec:                                                              spec:
     dependsOn:                                                         dependsOn:
     - prometheus-operator-crd                                          - prometheus-operator-crd
   - name: k8s-audit-metrics                                          - name: k8s-audit-metrics
-    version: 0.10.8                                                    version: 0.10.8
+    version: 0.10.8                                             |      version: 0.10.9
     dependsOn:                                                         dependsOn:
     - kyverno-crds                                                     - kyverno-crds
   - name: k8s-dns-node-cache                                         - name: k8s-dns-node-cache
@@ -102,7 +102,7 @@ spec:                                                              spec:
     dependsOn:                                                         dependsOn:
     - cilium                                                           - cilium
   - name: node-exporter                                              - name: node-exporter
-    version: 1.20.7                                                    version: 1.20.7
+    version: 1.20.7                                             |      version: 1.20.8
     dependsOn:                                                         dependsOn:
     - kyverno-crds                                                     - kyverno-crds
   - name: observability-bundle                                       - name: observability-bundle
@@ -140,5 +140,5 @@ spec:                                                              spec:
     version: 1.33.5                                                    version: 1.33.5
   - name: os-tooling                                                 - name: os-tooling
     version: 1.26.1                                             |      version: 1.26.2
-  date: "2025-10-21T16:17:53Z"                                  |    date: "2025-11-01T06:06:52Z"
+  date: "2025-10-21T16:17:53Z"                                  |    date: "2025-11-01T07:45:02Z"
   state: active                                                      state: active

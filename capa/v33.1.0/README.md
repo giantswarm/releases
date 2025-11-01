@@ -27,9 +27,13 @@
 ### Apps
 
 - aws-ebs-csi-driver from v3.2.0 to v3.3.0
+- cert-exporter from v2.9.12 to v2.9.13
 - cert-manager from v3.9.3 to v3.9.4
 - etcd-defrag from v1.2.1 to v1.2.2
+- etcd-k8s-res-count-exporter from v1.10.9 to v1.10.10
+- k8s-audit-metrics from v0.10.8 to v0.10.9
 - karpenter-crossplane-resources from v0.4.0 to v0.5.0
+- node-exporter from v1.20.7 to v1.20.8
 - security-bundle from v1.13.1 to v1.14.0
 
 ### aws-ebs-csi-driver [v3.2.0...v3.3.0](https://github.com/giantswarm/aws-ebs-csi-driver-app/compare/v3.2.0...v3.3.0)
@@ -57,6 +61,12 @@
 - csi-node-driver-registrar: v2.13.0 → v2.14.0
 - volume-modifier-for-k8s: v0.5.1 → v0.8.0
 
+### cert-exporter [v2.9.12...v2.9.13](https://github.com/giantswarm/cert-exporter/compare/v2.9.12...v2.9.13)
+
+#### Changed
+
+- Go: Update dependencies.
+
 ### cert-manager [v3.9.3...v3.9.4](https://github.com/giantswarm/cert-manager-app/compare/v3.9.3...v3.9.4)
 
 #### Added
@@ -76,11 +86,29 @@
 
 - Chart: Update dependency ahrtr/etcd-defrag to v0.35.0. ([#64](https://github.com/giantswarm/etcd-defrag-app/pull/64))
 
+### etcd-k8s-res-count-exporter [v1.10.9...v1.10.10](https://github.com/giantswarm/etcd-kubernetes-resources-count-exporter/compare/v1.10.9...v1.10.10)
+
+#### Changed
+
+- Go: Update dependencies.
+
+### k8s-audit-metrics [v0.10.8...v0.10.9](https://github.com/giantswarm/k8s-audit-metrics/compare/v0.10.8...v0.10.9)
+
+#### Changed
+
+- Go: Update dependencies.
+
 ### karpenter-crossplane-resources [v0.4.0...v0.5.0](https://github.com/giantswarm/karpenter-crossplane-resources/compare/v0.4.0...v0.5.0)
 
 #### Added
 
 - Add new Helm value to configure the workers IAM role. When Karpenter launches worker instances, it will attach the worker instance profile.
+
+### node-exporter [v1.20.7...v1.20.8](https://github.com/giantswarm/node-exporter-app/compare/v1.20.7...v1.20.8)
+
+#### Changed
+
+- Go: Update dependencies.
 
 ### security-bundle [v1.13.1...v1.14.0](https://github.com/giantswarm/security-bundle/compare/v1.13.1...v1.14.0)
 
