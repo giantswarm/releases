@@ -31,7 +31,7 @@
     {
       "version": "33.1.0",
       "isDeprecated": false,
-      "releaseTimestamp": "2025-11-01T06:06:51Z",
+      "releaseTimestamp": "2025-11-01T07:45:13Z",
       "changelogUrl": "https://github.com/giantswarm/releases/blob/master/cloud-director/v33.1.0/README.md",
       "isStable": true
     }
