@@ -5,7 +5,7 @@ metadata:
 spec:
   apps:
   - name: cert-exporter
-    version: 2.9.12
+    version: 2.9.13
     dependsOn:
     - kyverno-crds
   - name: cert-manager
@@ -39,7 +39,7 @@ spec:
     dependsOn:
     - kyverno-crds
   - name: etcd-k8s-res-count-exporter
-    version: 1.10.9
+    version: 1.10.10
     dependsOn:
     - kyverno-crds
   - name: external-dns
@@ -47,7 +47,7 @@ spec:
     dependsOn:
     - prometheus-operator-crd
   - name: k8s-audit-metrics
-    version: 0.10.8
+    version: 0.10.9
     dependsOn:
     - kyverno-crds
   - name: k8s-dns-node-cache
@@ -76,7 +76,7 @@ spec:
     dependsOn:
     - cilium
   - name: node-exporter
-    version: 1.20.7
+    version: 1.20.8
     dependsOn:
     - kyverno-crds
   - name: observability-bundle
@@ -118,5 +118,5 @@ spec:
     version: 1.33.5
   - name: os-tooling
     version: 1.26.2
-  date: "2025-11-01T06:06:53Z"
+  date: "2025-11-01T07:45:10Z"
   state: active
