@@ -7,6 +7,9 @@ name: Archive Deprecated Releases
 on:
   schedule:
     - cron: "0 10 * * 1" # Every Monday at 10:00 AM UTC
+
+  # Allow manual triggering 
+  workflow_dispatch:
   push:
     branches:
       - "master"
@@ -19,7 +22,6 @@ on:
       - "cloud-director/**"
       - "eks/**"
       - "vsphere/**"
-  workflow_dispatch:
 
 jobs:
   archive-releases:

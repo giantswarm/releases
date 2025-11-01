@@ -108,11 +108,14 @@ jobs:
       - name: Prepare changed files list
         id: changed-files
         run: |
+          # Ensure we're looking at the latest git state
+          git add -A
+          
           # Get changed release.yaml files (these are the ones that were deprecated)
-          DEPRECATED_RELEASE_YAML_FILES=$(git diff --name-only | grep -E ".*release\.yaml$" || echo "")
+          DEPRECATED_RELEASE_YAML_FILES=$(git diff --cached --name-only | grep -E ".*release\.yaml$" || echo "")
 
           # Get changed releases.json files
-          RELEASES_JSON_FILES=$(git diff --name-only | grep -E ".*releases\.json$" || echo "")
+          RELEASES_JSON_FILES=$(git diff --cached --name-only | grep -E ".*releases\.json$" || echo "")
 
           if [[ -n "$DEPRECATED_RELEASE_YAML_FILES" || -n "$RELEASES_JSON_FILES" ]]; then
             # Build PR body
