@@ -371,6 +371,8 @@ to all Giant Swarm installations.
 ## Azure
 
 - v33
+  - v33.1
+    - [v33.1.0](https://github.com/giantswarm/releases/tree/master/azure/v33.1.0)
   - v33.0
     - [v33.0.0](https://github.com/giantswarm/releases/tree/master/azure/archived/v33.0.0)
     - [v33.0.1](https://github.com/giantswarm/releases/tree/master/azure/v33.0.1)
