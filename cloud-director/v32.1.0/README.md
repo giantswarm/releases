@@ -24,30 +24,32 @@
 
 ### Apps
 
-- capi-node-labeler from v1.1.3 to v1.1.4
-- cert-exporter from v2.9.9 to v2.9.12
+- capi-node-labeler from v1.1.3 to v1.1.5
+- cert-exporter from v2.9.9 to v2.9.13
 - cert-manager from v3.9.2 to v3.9.4
 - cilium from v1.3.0 to v1.3.1
 - coredns from v1.27.0 to v1.28.2
 - etcd-defrag from v1.0.8 to v1.2.2
-- etcd-k8s-res-count-exporter from v1.10.7 to v1.10.9
-- k8s-audit-metrics from v0.10.6 to v0.10.8
-- node-exporter from v1.20.5 to v1.20.7
+- etcd-k8s-res-count-exporter from v1.10.7 to v1.10.10
+- k8s-audit-metrics from v0.10.6 to v0.10.9
+- node-exporter from v1.20.5 to v1.20.8
 - observability-bundle from v2.2.2 to v2.3.2
 - security-bundle from v1.12.0 to v1.14.0
 - vertical-pod-autoscaler from v6.0.1 to v6.1.1
 - vertical-pod-autoscaler-crd from v4.0.1 to v4.1.1
 
-### capi-node-labeler [v1.1.3...v1.1.4](https://github.com/giantswarm/capi-node-labeler-app/compare/v1.1.3...v1.1.4)
+### capi-node-labeler [v1.1.3...v1.1.5](https://github.com/giantswarm/capi-node-labeler-app/compare/v1.1.3...v1.1.5)
 
 #### Changed
 
 - Go: Update dependencies.
+- Go: Update dependencies.
 
-### cert-exporter [v2.9.9...v2.9.12](https://github.com/giantswarm/cert-exporter/compare/v2.9.9...v2.9.12)
+### cert-exporter [v2.9.9...v2.9.13](https://github.com/giantswarm/cert-exporter/compare/v2.9.9...v2.9.13)
 
 #### Changed
 
+- Go: Update dependencies.
 - Go: Update dependencies.
 - Chart: Add value to toggle creation of Daemonset resources.
 - Go: Update dependencies.
@@ -90,26 +92,29 @@
 - Update Kyverno API to v2 for policy exceptions
 - Chart: Update dependency ahrtr/etcd-defrag to v0.32.0. ([#57](https://github.com/giantswarm/etcd-defrag-app/pull/57))
 
-### etcd-k8s-res-count-exporter [v1.10.7...v1.10.9](https://github.com/giantswarm/etcd-kubernetes-resources-count-exporter/compare/v1.10.7...v1.10.9)
+### etcd-k8s-res-count-exporter [v1.10.7...v1.10.10](https://github.com/giantswarm/etcd-kubernetes-resources-count-exporter/compare/v1.10.7...v1.10.10)
 
 #### Changed
 
+- Go: Update dependencies.
 - Go: Update dependencies.
 - Update Kyverno API to v2 for policy exceptions
 - Go: Update dependencies.
 
-### k8s-audit-metrics [v0.10.6...v0.10.8](https://github.com/giantswarm/k8s-audit-metrics/compare/v0.10.6...v0.10.8)
+### k8s-audit-metrics [v0.10.6...v0.10.9](https://github.com/giantswarm/k8s-audit-metrics/compare/v0.10.6...v0.10.9)
 
 #### Changed
 
+- Go: Update dependencies.
 - Go: Update dependencies.
 - Update Kyverno API to v2 for policy exceptions
 - Go: Update dependencies.
 
-### node-exporter [v1.20.5...v1.20.7](https://github.com/giantswarm/node-exporter-app/compare/v1.20.5...v1.20.7)
+### node-exporter [v1.20.5...v1.20.8](https://github.com/giantswarm/node-exporter-app/compare/v1.20.5...v1.20.8)
 
 #### Changed
 
+- Go: Update dependencies.
 - Go: Update dependencies.
 - Update Kyverno API to v2 for policy exceptions
 - Go: Update dependencies.

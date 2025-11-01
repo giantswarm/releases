@@ -6,38 +6,58 @@
 
 ### Components
 
-- cluster-aws from v5.0.0 to v5.3.0
+- cluster-aws from v5.0.0 to v6.4.0
 - Flatcar from v4230.2.2 to [v4230.2.4](https://www.flatcar.org/releases/#release-4230.2.4)
 - os-tooling from v1.26.1 to v1.26.2
 
-### cluster-aws [v5.0.0...v5.3.0](https://github.com/giantswarm/cluster-aws/compare/v5.0.0...v5.3.0)
+### cluster-aws [v5.0.0...v6.4.0](https://github.com/giantswarm/cluster-aws/compare/v5.0.0...v6.4.0)
 
 #### Added
 
+- Add node-problem-detector-app, disabled by default.
+- Add `capa-karpenter-taint-remover` to handle CAPA - Karpenter taint race condition.
+- Add standard tags to IRSA infrastructure.
 - Expose value to configure `terminationGracePeriod` in the karpenter node pools.
 
 #### Changed
 
+- Tidy up dependencies on `azs-getter`.
+- Make `global.baseDomain` and `global.managementCluster` required values. These values will be passed to the chart when deploying it from the `cluster-app-installation-values` ConfigMap in the default namespace.
+- Extract required values to its own central file to avoid repeating the `required` keyword and error messages. This is normally done automatically by a Kyverno policy.
+- Change the default root disk size for Karpenter node pools. Karpenter will choose the cheapest instances, and certain instances, like `g6f.xlarge` come with some drivers that require a larger disk.
+- Chart: Update `cluster` to v4.3.0.
+- Change default consolidation time to 6 hours to avoid constant node rolling.
+- Rename `capa-karpenter-taint-remover` app.
+- Set `terminationGracePeriod` default to 30m, to avoid having `karpenter` nodes stuck in `Deleting` state due to `Pods` blocking the deletion i.e. PDBs.
+- Chart: Update `cluster` to v4.2.0.
+- The container registry passed as value to default apps is set to `gsoci.azurecr.io`, regardless of the cluster region. The mirroring feature of `containerd` will make sure the right registry is used.
+- Switch to HelmReleases to install `karpenter` and `karpenter-crossplane-resources` charts.
+- Bump flux `HelmReleases` api version to v2.
+- Reduce heartbeat timeout for ASG lifecycle hooks to from 30 minutes to 3 minutes since aws-node-termination-handler-app (NTH) can now send heartbeats
 - Configure the following `startupTaints` to help `karpenter` ignore pending `Pods` due to these taints that will be removed after the node starts, avoiding unnecessary instance provisioning:
   - `node.cluster.x-k8s.io/uninitialized:NoSchedule`
   - `node.cilium.io/agent-not-ready:NoSchedule`
   - `ebs.csi.aws.com/agent-not-ready:NoExecute`
-- Reduce heartbeat timeout for ASG lifecycle hooks to from 30 minutes to 3 minutes since aws-node-termination-handler-app (NTH) can now send heartbeats
+- Include `cilium` ENI mode pod CIDRs in the NodePort Services security group ingress rules.
+
+#### Removed
+
+- Removed `capi-node-labeler` app. From now on, the worker nodes won't have the `node-role.kubernetes.io/worker` or `node.kubernetes.io/worker` labels.
 
 ### Apps
 
 - aws-ebs-csi-driver from v3.0.5 to v3.3.0
 - aws-nth-bundle from v1.2.2 to v1.3.0
 - aws-pod-identity-webhook from v1.19.1 to v2.0.0
-- capi-node-labeler from v1.1.3 to v1.1.4
-- cert-exporter from v2.9.9 to v2.9.12
+- capi-node-labeler from v1.1.3 to v1.1.5
+- cert-exporter from v2.9.9 to v2.9.13
 - cert-manager from v3.9.2 to v3.9.4
 - cilium from v1.3.0 to v1.3.1
 - coredns from v1.27.0 to v1.28.2
 - etcd-defrag from v1.0.8 to v1.2.2
-- etcd-k8s-res-count-exporter from v1.10.7 to v1.10.9
-- k8s-audit-metrics from v0.10.6 to v0.10.8
-- node-exporter from v1.20.5 to v1.20.7
+- etcd-k8s-res-count-exporter from v1.10.7 to v1.10.10
+- k8s-audit-metrics from v0.10.6 to v0.10.9
+- node-exporter from v1.20.5 to v1.20.8
 - observability-bundle from v2.2.2 to v2.3.2
 - security-bundle from v1.12.0 to v1.14.0
 - vertical-pod-autoscaler from v6.0.1 to v6.1.1
@@ -84,16 +104,18 @@
 
 - Upgrade IRSA to latest v0.6.9
 
-### capi-node-labeler [v1.1.3...v1.1.4](https://github.com/giantswarm/capi-node-labeler-app/compare/v1.1.3...v1.1.4)
+### capi-node-labeler [v1.1.3...v1.1.5](https://github.com/giantswarm/capi-node-labeler-app/compare/v1.1.3...v1.1.5)
 
 #### Changed
 
 - Go: Update dependencies.
+- Go: Update dependencies.
 
-### cert-exporter [v2.9.9...v2.9.12](https://github.com/giantswarm/cert-exporter/compare/v2.9.9...v2.9.12)
+### cert-exporter [v2.9.9...v2.9.13](https://github.com/giantswarm/cert-exporter/compare/v2.9.9...v2.9.13)
 
 #### Changed
 
+- Go: Update dependencies.
 - Go: Update dependencies.
 - Chart: Add value to toggle creation of Daemonset resources.
 - Go: Update dependencies.
@@ -136,26 +158,29 @@
 - Update Kyverno API to v2 for policy exceptions
 - Chart: Update dependency ahrtr/etcd-defrag to v0.32.0. ([#57](https://github.com/giantswarm/etcd-defrag-app/pull/57))
 
-### etcd-k8s-res-count-exporter [v1.10.7...v1.10.9](https://github.com/giantswarm/etcd-kubernetes-resources-count-exporter/compare/v1.10.7...v1.10.9)
+### etcd-k8s-res-count-exporter [v1.10.7...v1.10.10](https://github.com/giantswarm/etcd-kubernetes-resources-count-exporter/compare/v1.10.7...v1.10.10)
 
 #### Changed
 
+- Go: Update dependencies.
 - Go: Update dependencies.
 - Update Kyverno API to v2 for policy exceptions
 - Go: Update dependencies.
 
-### k8s-audit-metrics [v0.10.6...v0.10.8](https://github.com/giantswarm/k8s-audit-metrics/compare/v0.10.6...v0.10.8)
+### k8s-audit-metrics [v0.10.6...v0.10.9](https://github.com/giantswarm/k8s-audit-metrics/compare/v0.10.6...v0.10.9)
 
 #### Changed
 
+- Go: Update dependencies.
 - Go: Update dependencies.
 - Update Kyverno API to v2 for policy exceptions
 - Go: Update dependencies.
 
-### node-exporter [v1.20.5...v1.20.7](https://github.com/giantswarm/node-exporter-app/compare/v1.20.5...v1.20.7)
+### node-exporter [v1.20.5...v1.20.8](https://github.com/giantswarm/node-exporter-app/compare/v1.20.5...v1.20.8)
 
 #### Changed
 
+- Go: Update dependencies.
 - Go: Update dependencies.
 - Update Kyverno API to v2 for policy exceptions
 - Go: Update dependencies.

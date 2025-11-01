@@ -19,9 +19,9 @@ spec:
     dependsOn:
     - cert-manager
   - name: capi-node-labeler
-    version: 1.1.4
+    version: 1.1.5
   - name: cert-exporter
-    version: 2.9.12
+    version: 2.9.13
     dependsOn:
     - kyverno-crds
   - name: cert-manager
@@ -65,7 +65,7 @@ spec:
     dependsOn:
     - kyverno-crds
   - name: etcd-k8s-res-count-exporter
-    version: 1.10.9
+    version: 1.10.10
     dependsOn:
     - kyverno-crds
   - name: external-dns
@@ -77,7 +77,7 @@ spec:
     dependsOn:
     - prometheus-operator-crd
   - name: k8s-audit-metrics
-    version: 0.10.8
+    version: 0.10.9
     dependsOn:
     - kyverno-crds
   - name: k8s-dns-node-cache
@@ -103,7 +103,7 @@ spec:
     dependsOn:
     - cilium
   - name: node-exporter
-    version: 1.20.7
+    version: 1.20.8
     dependsOn:
     - kyverno-crds
   - name: observability-bundle
@@ -134,12 +134,12 @@ spec:
   components:
   - name: cluster-aws
     catalog: cluster
-    version: 5.3.0
+    version: 6.4.0
   - name: flatcar
     version: 4230.2.4
   - name: kubernetes
     version: 1.32.9
   - name: os-tooling
     version: 1.26.2
-  date: "2025-10-31T14:55:37Z"
+  date: "2025-11-01T08:06:03Z"
   state: active
