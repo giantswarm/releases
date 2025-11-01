@@ -30,7 +30,7 @@
     },
     {
       "version": "33.0.0",
-      "isDeprecated": false,
+      "isDeprecated": true,
       "releaseTimestamp": "2025-10-15T15:31:51Z",
       "changelogUrl": "https://github.com/giantswarm/releases/blob/master/vsphere/v33.0.0/README.md",
       "isStable": true
