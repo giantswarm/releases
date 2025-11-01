@@ -47,7 +47,7 @@ on:
         required: false
         type: string
   schedule:
-    - cron: '28 20 1 * *' # TESTING: Run at 20:28 UTC - CHANGE BACK AFTER TESTING!
+    - cron: '40 20 1 * *' # TESTING: Run at 20:28 UTC - CHANGE BACK AFTER TESTING!
     # ORIGINAL: - cron: '00 6 1 * *' # Run at 6:00 UTC on the first day of every month
 
 jobs:
