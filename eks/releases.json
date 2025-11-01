@@ -1,5 +1,12 @@
 {
   "releases": [
+    {
+      "version": "32.0.0",
+      "isDeprecated": false,
+      "releaseTimestamp": "2025-10-10T12:00:00Z",
+      "changelogUrl": "https://github.com/giantswarm/releases/blob/master/eks/v32.0.0/README.md",
+      "isStable": true
+    }
   ],
   "sourceUrl": "https://github.com/giantswarm/releases",
   "changelogUrl": "https://github.com/giantswarm/releases/blob/main/README.md",
