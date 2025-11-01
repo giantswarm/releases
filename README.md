@@ -30,18 +30,18 @@ to all Giant Swarm installations.
 
 - v30
   - v30.1
-    - [v30.1.5](https://github.com/giantswarm/releases/tree/master/capa/v30.1.5)
+    - [v30.1.5](https://github.com/giantswarm/releases/tree/master/capa/archived/v30.1.5)
     - [v30.1.4](https://github.com/giantswarm/releases/tree/master/capa/archived/v30.1.4)
     - [v30.1.3](https://github.com/giantswarm/releases/tree/master/capa/archived/v30.1.3)
     - [v30.1.2](https://github.com/giantswarm/releases/tree/master/capa/archived/v30.1.2)
     - [v30.1.1](https://github.com/giantswarm/releases/tree/master/capa/archived/v30.1.1)
-    - [v30.1.0](https://github.com/giantswarm/releases/tree/master/capa/v30.1.0)
+    - [v30.1.0](https://github.com/giantswarm/releases/tree/master/capa/archived/v30.1.0)
   - v30.0
     - [v30.0.0](https://github.com/giantswarm/releases/tree/master/capa/archived/v30.0.0)
 
 - v29
   - v29.6
-    - [v29.6.4](https://github.com/giantswarm/releases/tree/master/capa/v29.6.4)
+    - [v29.6.4](https://github.com/giantswarm/releases/tree/master/capa/archived/v29.6.4)
     - [v29.6.3](https://github.com/giantswarm/releases/tree/master/capa/archived/v29.6.3)
     - [v29.6.2](https://github.com/giantswarm/releases/tree/master/capa/archived/v29.6.2)
     - [v29.6.1](https://github.com/giantswarm/releases/tree/master/capa/archived/v29.6.1)
@@ -62,7 +62,7 @@ to all Giant Swarm installations.
 
 - v28
   - v28.5
-    - [v28.5.5](https://github.com/giantswarm/releases/tree/master/capa/v28.5.5)
+    - [v28.5.5](https://github.com/giantswarm/releases/tree/master/capa/archived/v28.5.5)
     - [v28.5.4](https://github.com/giantswarm/releases/tree/master/capa/archived/v28.5.4)
     - [v28.5.3](https://github.com/giantswarm/releases/tree/master/capa/archived/v28.5.3)
     - [v28.5.2](https://github.com/giantswarm/releases/tree/master/capa/archived/v28.5.2)
@@ -629,7 +629,7 @@ to all Giant Swarm installations.
 
 - v33
   - v33.0
-    - [v33.0.0](https://github.com/giantswarm/releases/tree/master/vsphere/v33.0.0)
+    - [v33.0.0](https://github.com/giantswarm/releases/tree/master/vsphere/archived/v33.0.0)
     - [v33.0.1](https://github.com/giantswarm/releases/tree/master/vsphere/v33.0.1)
 
 - v32
@@ -677,7 +677,7 @@ to all Giant Swarm installations.
 
 - v33
   - v33.0
-    - [v33.0.0](https://github.com/giantswarm/releases/tree/master/cloud-director/v33.0.0)
+    - [v33.0.0](https://github.com/giantswarm/releases/tree/master/cloud-director/archived/v33.0.0)
     - [v33.0.1](https://github.com/giantswarm/releases/tree/master/cloud-director/v33.0.1)
 
 - v32
