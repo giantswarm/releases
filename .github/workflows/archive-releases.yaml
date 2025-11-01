@@ -120,7 +120,8 @@ jobs:
             if [ -s "$MOVED_RELEASES_TEMP_FILE" ]; then
               echo "INFO: Moving all safe-to-archive releases for $PROVIDER_ROOT_DIR..."
               ARCHIVE_PARENT_DIR="$PROVIDER_ROOT_DIR/archived"
-              cat "$MOVED_RELEASES_TEMP_FILE" | while read -r release_entry; do
+              # Use process substitution instead of pipe to avoid subshell
+              while read -r release_entry; do
                 PROVIDER_FROM_ENTRY=$(echo "$release_entry" | cut -d':' -f1)
                 RELEASE_TO_MOVE=$(echo "$release_entry" | cut -d':' -f2)
                 
@@ -130,7 +131,7 @@ jobs:
                   OVERALL_MOVED_RELEASES="${OVERALL_MOVED_RELEASES}${PROVIDER_ROOT_DIR}:${RELEASE_TO_MOVE}\n"
                   OVERALL_HAS_CHANGES=true
                 fi
-              done
+              done < "$MOVED_RELEASES_TEMP_FILE"
             fi
 
             # Update kustomization.yaml if there were moves
@@ -144,10 +145,10 @@ jobs:
                 TEMP_SED_SCRIPT_KUSTOMIZATION=$(mktemp)
                 trap 'rm -f "$TEMP_SED_SCRIPT_KUSTOMIZATION"' EXIT
 
-                cat "$MOVED_RELEASES_TEMP_FILE" | while read -r release_entry; do
+                while read -r release_entry; do
                   RELEASE_NAME=$(echo "$release_entry" | cut -d':' -f2)
                   echo "/^\s*-\s*${RELEASE_NAME}\s*$/d" >> "$TEMP_SED_SCRIPT_KUSTOMIZATION"
-                done
+                done < "$MOVED_RELEASES_TEMP_FILE"
 
                 if [ -s "$TEMP_SED_SCRIPT_KUSTOMIZATION" ]; then
                   NEW_KUSTOMIZATION_CONTENT=$(echo "$ORIG_KUSTOMIZATION_CONTENT" | sed -f "$TEMP_SED_SCRIPT_KUSTOMIZATION")
@@ -179,13 +180,13 @@ jobs:
                 TEMP_SED_SCRIPT_README=$(mktemp)
                 trap 'rm -f "$TEMP_SED_SCRIPT_README"' EXIT
 
-                cat "$MOVED_RELEASES_TEMP_FILE" | while read -r release_entry; do
+                while read -r release_entry; do
                   RELEASE_NAME=$(echo "$release_entry" | cut -d':' -f2)
                   # Update GitHub links in README.md
                   OLD_GITHUB_PATH="tree/master/${PROVIDER_ROOT_DIR}/${RELEASE_NAME}"
                   NEW_GITHUB_PATH="tree/master/${PROVIDER_ROOT_DIR}/archived/${RELEASE_NAME}"
                   echo "s#${OLD_GITHUB_PATH}#${NEW_GITHUB_PATH}#g" >> "$TEMP_SED_SCRIPT_README"
-                done
+                done < "$MOVED_RELEASES_TEMP_FILE"
 
                 if [ -s "$TEMP_SED_SCRIPT_README" ]; then
                   NEW_README_CONTENT=$(echo "$ORIG_README_CONTENT" | sed -f "$TEMP_SED_SCRIPT_README")
