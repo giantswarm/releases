@@ -22,9 +22,19 @@
 
 ### Apps
 
+- cert-exporter from v2.9.12 to v2.9.13
 - cert-manager from v3.9.3 to v3.9.4
 - etcd-defrag from v1.2.1 to v1.2.2
+- etcd-k8s-res-count-exporter from v1.10.9 to v1.10.10
+- k8s-audit-metrics from v0.10.8 to v0.10.9
+- node-exporter from v1.20.7 to v1.20.8
 - security-bundle from v1.13.1 to v1.14.0
+
+### cert-exporter [v2.9.12...v2.9.13](https://github.com/giantswarm/cert-exporter/compare/v2.9.12...v2.9.13)
+
+#### Changed
+
+- Go: Update dependencies.
 
 ### cert-manager [v3.9.3...v3.9.4](https://github.com/giantswarm/cert-manager-app/compare/v3.9.3...v3.9.4)
 
@@ -44,6 +54,24 @@
 #### Changed
 
 - Chart: Update dependency ahrtr/etcd-defrag to v0.35.0. ([#64](https://github.com/giantswarm/etcd-defrag-app/pull/64))
+
+### etcd-k8s-res-count-exporter [v1.10.9...v1.10.10](https://github.com/giantswarm/etcd-kubernetes-resources-count-exporter/compare/v1.10.9...v1.10.10)
+
+#### Changed
+
+- Go: Update dependencies.
+
+### k8s-audit-metrics [v0.10.8...v0.10.9](https://github.com/giantswarm/k8s-audit-metrics/compare/v0.10.8...v0.10.9)
+
+#### Changed
+
+- Go: Update dependencies.
+
+### node-exporter [v1.20.7...v1.20.8](https://github.com/giantswarm/node-exporter-app/compare/v1.20.7...v1.20.8)
+
+#### Changed
+
+- Go: Update dependencies.
 
 ### security-bundle [v1.13.1...v1.14.0](https://github.com/giantswarm/security-bundle/compare/v1.13.1...v1.14.0)
 
