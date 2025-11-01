@@ -216,6 +216,10 @@ jobs:
             ## Verify in Grafana
 
             You can check which releases are currently in use in the [CAPI Releases Dashboard](https://giantswarm.grafana.net/d/be9a0bh8mbwn4e/capi-releases?orgId=1&from=now-6h&to=now&timezone=browser).
+
+            ---
+
+            /skip-ci This change does not affect what's being tested by CI.
           branch: auto-deprecate-capi-releases
           base: master
           labels: |

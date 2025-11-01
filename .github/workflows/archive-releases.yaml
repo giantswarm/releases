@@ -286,6 +286,10 @@ jobs:
 
             ${{ steps.archive_script.outputs.archived_releases_pr_body_section }}
 
+            ---
+
+            /skip-ci This change does not affect what's being tested by CI.
+
           branch: auto-archive-capi-releases
           base: master
           labels: |
