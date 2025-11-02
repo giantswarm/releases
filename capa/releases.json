@@ -38,7 +38,7 @@
     {
       "version": "32.1.0",
       "isDeprecated": false,
-      "releaseTimestamp": "2025-11-01T08:07:22Z",
+      "releaseTimestamp": "2025-11-02T09:58:02Z",
       "changelogUrl": "https://github.com/giantswarm/releases/blob/master/capa/v32.1.0/README.md",
       "isStable": true
     },
