@@ -6,24 +6,8 @@
 
 ### Components
 
-- cluster-azure from v3.0.0 to v4.4.0
 - Flatcar from v4230.2.2 to [v4230.2.4](https://www.flatcar.org/releases/#release-4230.2.4)
 - os-tooling from v1.26.1 to v1.26.2
-
-### cluster-azure [v3.0.0...v4.4.0](https://github.com/giantswarm/cluster-azure/compare/v3.0.0...v4.4.0)
-
-#### Changed
-
-- Make `global.baseDomain` and `global.managementCluster` required values. These values will be passed to the chart when deploying it from the `cluster-app-installation-values` ConfigMap in the default namespace.
-- Extract required values to its own central file to avoid repeating the `required` keyword and error messages. This is normally done automatically by a Kyverno policy.
-- Chart: Update `cluster` to v4.4.0.
-- Install External DNS CRDs and watch default sources.
-- Chart: Update `cluster` to v4.3.0.
-- Chart: Update `cluster` to v4.2.0.
-- Chart: Update `cluster` to v4.1.0.
-- Chart: Update `cluster` to v4.0.3.
-- Chart: Update `cluster` to v4.0.2.
-- Chart: Update `cluster` to v4.0.1.
 
 ### Apps
 

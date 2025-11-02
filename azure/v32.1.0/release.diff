@@ -115,12 +115,12 @@ spec:                                                              spec:
   components:                                                        components:
   - name: cluster-azure                                              - name: cluster-azure
     catalog: cluster                                                   catalog: cluster
-    version: 3.0.0                                              |      version: 4.4.0
+    version: 3.0.0                                                     version: 3.0.0
   - name: flatcar                                                    - name: flatcar
     version: 4230.2.2                                           |      version: 4230.2.4
   - name: kubernetes                                                 - name: kubernetes
     version: 1.32.9                                                    version: 1.32.9
   - name: os-tooling                                                 - name: os-tooling
     version: 1.26.1                                             |      version: 1.26.2
-  date: "2025-09-15T10:31:33Z"                                  |    date: "2025-11-01T08:05:48Z"
+  date: "2025-09-15T10:31:33Z"                                  |    date: "2025-11-02T09:58:24Z"
   state: active                                                      state: active
