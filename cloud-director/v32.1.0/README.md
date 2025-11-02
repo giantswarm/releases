@@ -6,21 +6,8 @@
 
 ### Components
 
-- cluster-cloud-director from v1.0.0 to v2.4.0
 - Flatcar from v4230.2.2 to [v4230.2.4](https://www.flatcar.org/releases/#release-4230.2.4)
 - os-tooling from v1.26.1 to v1.26.2
-
-### cluster-cloud-director [v1.0.0...v2.4.0](https://github.com/giantswarm/cluster-cloud-director/compare/v1.0.0...v2.4.0)
-
-#### Changed
-
-- Chart: Update `cluster` to v4.4.0.
-- Chart: Update `cluster` to v4.3.0.
-- Chart: Update `cluster` to v4.2.0.
-- Chart: Update `cluster` to v4.1.0.
-- Chart: Update `cluster` to v4.0.3.
-- Chart: Update `cluster` to v4.0.2.
-- Chart: Update `cluster` to v4.0.1.
 
 ### Apps
 
