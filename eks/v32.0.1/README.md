@@ -7,10 +7,10 @@
 
 ### Apps
 
-- Added vertical-pod-autoscaler-crd v4.0.1
+- Added vertical-pod-autoscaler-crd v4.1.1
 
-### vertical-pod-autoscaler-crd [v4.0.1](https://github.com/giantswarm/vertical-pod-autoscaler-crd/releases/tag/v4.0.1)
+### vertical-pod-autoscaler-crd [v4.1.1](https://github.com/giantswarm/vertical-pod-autoscaler-crd/releases/tag/v4.1.1)
 
 #### Changed
 
-- Chart: Sync to upstream. ([#162](https://github.com/giantswarm/vertical-pod-autoscaler-crd/pull/162))
+- Chart: Sync to upstream. ([#166](https://github.com/giantswarm/vertical-pod-autoscaler-crd/pull/166))
