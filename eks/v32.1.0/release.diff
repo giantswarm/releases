@@ -26,12 +26,12 @@ spec:                                                              spec:
   components:                                                        components:
   - name: cluster-eks                                                - name: cluster-eks
     catalog: cluster                                                   catalog: cluster
-    version: 1.0.0                                                     version: 1.0.0
+    version: 1.0.0                                              |      version: 1.1.0
   - name: flatcar                                                    - name: flatcar
     version: 4152.2.3                                           |      version: 4230.2.4
   - name: kubernetes                                                 - name: kubernetes
     version: 1.32.9                                                    version: 1.32.9
   - name: os-tooling                                                 - name: os-tooling
     version: 1.26.1                                             |      version: 1.26.2
-  date: "2025-11-02T12:03:41Z"                                  |    date: "2025-11-02T12:04:29Z"
+  date: "2025-11-02T12:03:41Z"                                  |    date: "2025-11-03T06:33:06Z"
   state: active                                                      state: active

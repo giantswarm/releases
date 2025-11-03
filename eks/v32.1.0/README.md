@@ -6,8 +6,15 @@
 
 ### Components
 
+- cluster-eks from v1.0.0 to v1.1.0
 - Flatcar from v4152.2.3 to [v4230.2.4](https://www.flatcar.org/releases/#release-4230.2.4)
 - os-tooling from v1.26.1 to v1.26.2
+
+### cluster-eks [v1.0.0...v1.1.0](https://github.com/giantswarm/cluster-eks/compare/v1.0.0...v1.1.0)
+
+#### Fixed
+
+- Fix availability zone handling in managed machine pool template.
 
 ### Apps
 
