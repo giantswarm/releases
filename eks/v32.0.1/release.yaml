@@ -5,7 +5,7 @@ metadata:
 spec:
   apps:
   - name: aws-ebs-csi-driver
-    version: 3.3.0
+    version: 3.0.5
     dependsOn:
     - vertical-pod-autoscaler-crd
   - name: cilium
@@ -33,5 +33,5 @@ spec:
     version: 1.32.9
   - name: os-tooling
     version: 1.26.1
-  date: "2025-11-03T09:39:39Z"
+  date: "2025-11-03T09:40:12Z"
   state: active
