@@ -370,6 +370,7 @@ jobs:
         id: determine_next_release
         run: |
           # For major release jobs, always use "major" as the release type
+          chmod +x ./tools/determine-next-release.sh
           ./tools/determine-next-release.sh "" "major" ${{ needs.major_release_decider.outputs.version_override }}
 
       - name: Install devctl
@@ -508,7 +509,31 @@ jobs:
             Available providers: `aws`, `azure`, `cloud-director`, `eks`, `vsphere`.
 
             **Examples:**
-      
+
+            *   Update a single component for a specific provider:
+                `/update-release --provider aws --component flatcar@4152.2.3`
+
+            *   Update multiple components and apps for a specific provider:
+                `/update-release --provider azure --component cluster-azure@2.4.1 --app azuredisk-csi-driver@1.32.9`
+
+            *   Specify app dependencies using the `#` separator:
+                `/update-release --provider aws --app my-app@1.2.3@@dependency1#dependency2`
+
+            **Add descriptions:**
+
+            *   Update README.md for specific provider:
+                `/update-readme --provider aws "This major release includes Kubernetes 1.32 support, enhanced security features, and significant performance improvements. It introduces new platform capabilities and resolves several stability issues."`
+
+            *   Update announcement.md for specific provider:
+                `/update-announcement --provider aws "Workload cluster release v32.0.0 for CAPA includes Kubernetes 1.32 support and enhanced security features."`
+
+            *   Update all providers (auto-detected):
+                `/update-readme "This major release brings significant platform enhancements and stability improvements across all supported providers."`
+          branch: "release-${{ steps.determine_next_release.outputs.version }}"
+          labels: |
+            release/major
+            ${{ steps.create_release.outputs.PROVIDER_LABELS }}
+
       - name: Analyze Breaking Changes
         if: steps.create_pr.outputs.pull-request-number != ''
         env:
@@ -536,30 +561,6 @@ jobs:
                 body: comment
               });
             }
-
-            *   Update a single component for a specific provider:
-                `/update-release --provider aws --component flatcar@4152.2.3`
-
-            *   Update multiple components and apps for a specific provider:
-                `/update-release --provider azure --component cluster-azure@2.4.1 --app azuredisk-csi-driver@1.32.9`
-
-            *   Specify app dependencies using the `#` separator:
-                `/update-release --provider aws --app my-app@1.2.3@@dependency1#dependency2`
-
-            **Add descriptions:**
-
-            *   Update README.md for specific provider:
-                `/update-readme --provider aws "This major release includes Kubernetes 1.32 support, enhanced security features, and significant performance improvements. It introduces new platform capabilities and resolves several stability issues."`
-
-            *   Update announcement.md for specific provider:
-                `/update-announcement --provider aws "Workload cluster release v32.0.0 for CAPA includes Kubernetes 1.32 support and enhanced security features."`
-
-            *   Update all providers (auto-detected):
-                `/update-readme "This major release brings significant platform enhancements and stability improvements across all supported providers."`
-          branch: "release-${{ steps.determine_next_release.outputs.version }}"
-          labels: |
-            release/major
-            ${{ steps.create_release.outputs.PROVIDER_LABELS }}
 
       - name: Add comment to PR with devctl output
         if: steps.create_pr.outputs.pull-request-number && steps.create_pr.outputs.pull-request-number != ''
