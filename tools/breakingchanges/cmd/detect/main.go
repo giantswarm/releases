@@ -2,7 +2,9 @@ package main
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
+	"net/http"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -97,24 +99,42 @@ func main() {
 
 func detectChangedReleases(repoRoot string) ([]breakingchanges.Release, error) {
 	var releases []breakingchanges.Release
+	var changedFiles []string
 
-	// Use git diff to find files changed between origin/master and HEAD
-	// This shows files that were added/modified in the PR branch
-	cmd := exec.Command("git", "diff", "--name-only", "origin/master", "HEAD")
-	cmd.Dir = repoRoot
-	output, err := cmd.Output()
-	if err != nil {
-		// If that fails (shallow clone), try HEAD~1
-		cmd = exec.Command("git", "diff", "--name-only", "HEAD~1", "HEAD")
-		cmd.Dir = repoRoot
-		output, err = cmd.Output()
+	// Try to get changed files from GitHub PR API first (most reliable in CI)
+	prNumber := os.Getenv("PR_NUMBER")
+	githubToken := os.Getenv("GITHUB_TOKEN")
+
+	if prNumber != "" && githubToken != "" {
+		fmt.Printf("Fetching changed files from PR #%s via GitHub API...\n", prNumber)
+		files, err := fetchPRChangedFiles(prNumber, githubToken)
 		if err != nil {
-			return nil, fmt.Errorf("failed to run git diff: %w", err)
+			fmt.Printf("Warning: Failed to fetch PR files from API: %v\n", err)
+		} else {
+			changedFiles = files
+			fmt.Printf("Found %d changed files from PR\n", len(changedFiles))
 		}
 	}
 
+	// Fallback to git diff if API fetch failed or not in CI
+	if len(changedFiles) == 0 {
+		fmt.Println("Using git diff to detect changed files...")
+		cmd := exec.Command("git", "diff", "--name-only", "origin/master", "HEAD")
+		cmd.Dir = repoRoot
+		output, err := cmd.Output()
+		if err != nil {
+			// If that fails (shallow clone), try HEAD~1
+			cmd = exec.Command("git", "diff", "--name-only", "HEAD~1", "HEAD")
+			cmd.Dir = repoRoot
+			output, err = cmd.Output()
+			if err != nil {
+				return nil, fmt.Errorf("failed to run git diff: %w", err)
+			}
+		}
+		changedFiles = strings.Split(string(output), "\n")
+	}
+
 	// Parse changed files and extract unique release directories
-	changedFiles := strings.Split(string(output), "\n")
 	releaseMap := make(map[string]bool) // Use map to deduplicate
 
 	for _, file := range changedFiles {
@@ -176,4 +196,43 @@ func detectChangedReleases(repoRoot string) ([]breakingchanges.Release, error) {
 	}
 
 	return releases, nil
+}
+
+// fetchPRChangedFiles fetches the list of changed files from a GitHub PR
+func fetchPRChangedFiles(prNumber, token string) ([]string, error) {
+	url := fmt.Sprintf("https://api.github.com/repos/giantswarm/releases/pulls/%s/files", prNumber)
+
+	req, err := http.NewRequest("GET", url, nil)
+	if err != nil {
+		return nil, err
+	}
+
+	req.Header.Set("Authorization", "Bearer "+token)
+	req.Header.Set("Accept", "application/vnd.github.v3+json")
+
+	client := &http.Client{}
+	resp, err := client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+	defer resp.Body.Close()
+
+	if resp.StatusCode != http.StatusOK {
+		return nil, fmt.Errorf("GitHub API returned status %d", resp.StatusCode)
+	}
+
+	var prFiles []struct {
+		Filename string `json:"filename"`
+	}
+
+	if err := json.NewDecoder(resp.Body).Decode(&prFiles); err != nil {
+		return nil, err
+	}
+
+	files := make([]string, len(prFiles))
+	for i, f := range prFiles {
+		files[i] = f.Filename
+	}
+
+	return files, nil
 }
