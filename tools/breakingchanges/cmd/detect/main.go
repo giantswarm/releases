@@ -73,11 +73,18 @@ func main() {
 		os.Exit(1)
 	}
 
-	// Set GitHub Actions output
-	if len(allFindings) > 0 {
-		fmt.Println("::set-output name=has_findings::true")
-	} else {
-		fmt.Println("::set-output name=has_findings::false")
+	// Set GitHub Actions output (using environment file method)
+	githubOutput := os.Getenv("GITHUB_OUTPUT")
+	if githubOutput != "" {
+		f, err := os.OpenFile(githubOutput, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+		if err == nil {
+			defer f.Close()
+			if len(allFindings) > 0 {
+				f.WriteString("has_findings=true\n")
+			} else {
+				f.WriteString("has_findings=false\n")
+			}
+		}
 	}
 
 	fmt.Printf("Analysis complete. Found %d potential breaking changes.\n", len(allFindings))
