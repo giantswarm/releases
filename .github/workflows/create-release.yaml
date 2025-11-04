@@ -534,6 +534,12 @@ jobs:
             release/major
             ${{ steps.create_release.outputs.PROVIDER_LABELS }}
 
+      - name: Checkout PR branch for analysis
+        if: steps.create_pr.outputs.pull-request-number != ''
+        run: |
+          git fetch origin "release-${{ steps.determine_next_release.outputs.version }}"
+          git checkout "release-${{ steps.determine_next_release.outputs.version }}"
+
       - name: Analyze Breaking Changes
         if: steps.create_pr.outputs.pull-request-number != ''
         env:
@@ -576,12 +582,12 @@ jobs:
               body: `${output.replace(/`/g, '\\`')}`
             });
 
-      - name: Trigger e2e tests
-        if: steps.check_pr.outputs.PR_EXISTS == 'false' && steps.k8s_check.outputs.VERSION_EXISTS == 'true' && steps.create_pr.outputs.pull-request-number
-        uses: ./.github/actions/trigger-e2e-tests
-        with:
-          pr_number: ${{ steps.create_pr.outputs.pull-request-number }}
-          github_token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+      # - name: Trigger e2e tests
+      #   if: steps.check_pr.outputs.PR_EXISTS == 'false' && steps.k8s_check.outputs.VERSION_EXISTS == 'true' && steps.create_pr.outputs.pull-request-number
+      #   uses: ./.github/actions/trigger-e2e-tests
+      #   with:
+      #     pr_number: ${{ steps.create_pr.outputs.pull-request-number }}
+      #     github_token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
 
   minor_release_consolidated:
     name: "Minor Release (Consolidated)"
@@ -748,6 +754,12 @@ jobs:
             release/minor
             ${{ steps.create_release.outputs.PROVIDER_LABELS }}
       
+      - name: Checkout PR branch for analysis
+        if: steps.create_pr.outputs.pull-request-number != ''
+        run: |
+          git fetch origin "release-${{ steps.determine_next_release.outputs.version }}"
+          git checkout "release-${{ steps.determine_next_release.outputs.version }}"
+
       - name: Analyze Breaking Changes
         if: steps.create_pr.outputs.pull-request-number != ''
         env:
@@ -790,12 +802,12 @@ jobs:
               body: `### Changes:\n\n${output.replace(/`/g, '\\`')}`
             });
 
-      - name: Trigger e2e tests
-        if: steps.check_pr.outputs.PR_EXISTS == 'false' && steps.create_pr.outputs.pull-request-number
-        uses: ./.github/actions/trigger-e2e-tests
-        with:
-          pr_number: ${{ steps.create_pr.outputs.pull-request-number }}
-          github_token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+      # - name: Trigger e2e tests
+      #   if: steps.check_pr.outputs.PR_EXISTS == 'false' && steps.create_pr.outputs.pull-request-number
+      #   uses: ./.github/actions/trigger-e2e-tests
+      #   with:
+      #     pr_number: ${{ steps.create_pr.outputs.pull-request-number }}
+      #     github_token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
 
   # This is the job for creating individual PRs for a major release when providers are not aligned.
   major_release_individual:
@@ -921,6 +933,12 @@ jobs:
             release/major
             ${{ matrix.provider }}
       
+      - name: Checkout PR branch for analysis
+        if: steps.create_pr.outputs.pull-request-number != ''
+        run: |
+          git fetch origin "release-${{ steps.determine_next_release.outputs.version }}"
+          git checkout "release-${{ steps.determine_next_release.outputs.version }}"
+
       - name: Analyze Breaking Changes
         if: steps.create_pr.outputs.pull-request-number != ''
         env:
@@ -963,12 +981,12 @@ jobs:
               body: `### Changes:\n\n${output.replace(/`/g, '\\`')}`
             });
 
-      - name: Trigger e2e tests
-        if: steps.check_pr.outputs.PR_EXISTS == 'false' && steps.create_pr.outputs.pull-request-number
-        uses: ./.github/actions/trigger-e2e-tests
-        with:
-          pr_number: ${{ steps.create_pr.outputs.pull-request-number }}
-          github_token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+      # - name: Trigger e2e tests
+      #   if: steps.check_pr.outputs.PR_EXISTS == 'false' && steps.create_pr.outputs.pull-request-number
+      #   uses: ./.github/actions/trigger-e2e-tests
+      #   with:
+      #     pr_number: ${{ steps.create_pr.outputs.pull-request-number }}
+      #     github_token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
 
   minor_release_individual:
     name: "Minor Release (Individual)"
@@ -1083,6 +1101,12 @@ jobs:
             release/minor
             ${{ matrix.provider }}
       
+      - name: Checkout PR branch for analysis
+        if: steps.create_pr.outputs.pull-request-number != ''
+        run: |
+          git fetch origin "release-${{ steps.determine_next_release.outputs.version }}"
+          git checkout "release-${{ steps.determine_next_release.outputs.version }}"
+
       - name: Analyze Breaking Changes
         if: steps.create_pr.outputs.pull-request-number != ''
         env:
@@ -1255,6 +1279,12 @@ jobs:
             release/${{ needs.patch_release_decider.outputs.release_type }}
             ${{ matrix.provider }}
       
+      - name: Checkout PR branch for analysis
+        if: steps.create_pr.outputs.pull-request-number != ''
+        run: |
+          git fetch origin "release-${{ steps.determine_next_release.outputs.version }}"
+          git checkout "release-${{ steps.determine_next_release.outputs.version }}"
+
       - name: Analyze Breaking Changes
         if: steps.create_pr.outputs.pull-request-number != ''
         env:
@@ -1449,6 +1479,12 @@ jobs:
             release/${{ needs.patch_release_decider.outputs.release_type }}
             ${{ steps.create_release.outputs.PROVIDER_LABELS }}
       
+      - name: Checkout PR branch for analysis
+        if: steps.create_pr.outputs.pull-request-number != ''
+        run: |
+          git fetch origin "release-${{ steps.determine_next_release.outputs.version }}"
+          git checkout "release-${{ steps.determine_next_release.outputs.version }}"
+
       - name: Analyze Breaking Changes
         if: steps.create_pr.outputs.pull-request-number != ''
         env:
