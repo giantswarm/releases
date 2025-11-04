@@ -60,18 +60,43 @@ for provider in "${PROVIDERS[@]}"; do
     echo "  Current: $LATEST_RELEASE (Major: $CURRENT_MAJOR, Minor: $CURRENT_MINOR)"
     
     # Decision logic:
-    # 1. If provider is at the same major version as target -> INCLUDE
-    # 2. If provider is 1 major version behind -> EXCLUDE (would be a major jump)
-    # 3. If provider is 2+ major versions behind -> EXCLUDE
+    # 1. Same major version:
+    #    a. Same minor or 1 minor behind -> INCLUDE
+    #    b. 2+ minors behind -> EXCLUDE (can't skip minor versions)
+    # 2. 1 major behind AND target is x.0.0 -> INCLUDE (major version bump)
+    # 3. 1 major behind AND target is x.y.z (y>0) -> EXCLUDE (must catch up first)
+    # 4. 2+ major versions behind -> EXCLUDE
     
     if [ "$CURRENT_MAJOR" -eq "$TARGET_MAJOR" ]; then
-        # Same major version - safe to include
-        echo "  ✓ INCLUDE (same major version)"
-        INCLUDED_PROVIDERS+=("$provider")
+        # Same major version - check minor version difference
+        MINOR_DIFF=$((TARGET_MINOR - CURRENT_MINOR))
+        
+        if [ "$MINOR_DIFF" -le 1 ] && [ "$MINOR_DIFF" -ge 0 ]; then
+            # Same minor or 1 minor behind - safe to include
+            if [ "$MINOR_DIFF" -eq 0 ]; then
+                echo "  ✓ INCLUDE (same major and minor version)"
+            else
+                echo "  ✓ INCLUDE (minor version bump from v$CURRENT_MAJOR.$CURRENT_MINOR to v$TARGET_MAJOR.$TARGET_MINOR)"
+            fi
+            INCLUDED_PROVIDERS+=("$provider")
+        elif [ "$MINOR_DIFF" -lt 0 ]; then
+            # Provider is ahead - this shouldn't happen but include anyway
+            echo "  ✓ INCLUDE (provider ahead of target)"
+            INCLUDED_PROVIDERS+=("$provider")
+        else
+            # 2+ minors behind - exclude
+            echo "  ✗ EXCLUDE (too far behind: v$CURRENT_MAJOR.$CURRENT_MINOR vs target v$TARGET_MAJOR.$TARGET_MINOR, must catch up to v$TARGET_MAJOR.$((TARGET_MINOR - 1)).x first)"
+            EXCLUDED_PROVIDERS+=("$provider")
+        fi
     elif [ "$CURRENT_MAJOR" -eq $((TARGET_MAJOR - 1)) ]; then
-        # One major version behind - exclude to prevent major jump
-        echo "  ✗ EXCLUDE (would jump from major $CURRENT_MAJOR to $TARGET_MAJOR)"
-        EXCLUDED_PROVIDERS+=("$provider")
+        # One major version behind - only include if target is a major release (x.0.0)
+        if [ "$TARGET_MINOR" -eq 0 ]; then
+            echo "  ✓ INCLUDE (major version bump from v$CURRENT_MAJOR to v$TARGET_MAJOR)"
+            INCLUDED_PROVIDERS+=("$provider")
+        else
+            echo "  ✗ EXCLUDE (must catch up to v$TARGET_MAJOR.0.0 before joining v$TARGET_MAJOR.$TARGET_MINOR releases)"
+            EXCLUDED_PROVIDERS+=("$provider")
+        fi
     else
         # More than one major version behind - exclude
         echo "  ✗ EXCLUDE (too far behind: major $CURRENT_MAJOR vs target $TARGET_MAJOR)"
