@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"os"
+	"os/exec"
 	"path/filepath"
 	"strings"
 
@@ -97,53 +98,74 @@ func main() {
 func detectChangedReleases(repoRoot string) ([]breakingchanges.Release, error) {
 	var releases []breakingchanges.Release
 
-	providers := []string{"aws", "azure", "capa", "cloud-director", "eks", "kvm", "vsphere"}
+	// Use git diff to find changed release directories
+	cmd := exec.Command("git", "diff", "--name-only", "origin/master...HEAD")
+	cmd.Dir = repoRoot
+	output, err := cmd.Output()
+	if err != nil {
+		return nil, fmt.Errorf("failed to run git diff: %w", err)
+	}
 
-	for _, provider := range providers {
-		providerPath := filepath.Join(repoRoot, provider)
+	// Parse changed files and extract unique release directories
+	changedFiles := strings.Split(string(output), "\n")
+	releaseMap := make(map[string]bool) // Use map to deduplicate
 
-		entries, err := os.ReadDir(providerPath)
-		if err != nil {
-			continue // Provider directory might not exist
+	for _, file := range changedFiles {
+		if file == "" {
+			continue
 		}
 
-		for _, entry := range entries {
-			if !entry.IsDir() {
-				continue
-			}
-
-			// Check if it's a version directory (starts with 'v')
-			if !strings.HasPrefix(entry.Name(), "v") {
-				continue
-			}
-
-			// Skip archived releases
-			if entry.Name() == "archived" {
-				continue
-			}
-
-			releasePath := filepath.Join(providerPath, entry.Name())
-
-			// Check if README exists (indicator of a real release)
-			readmePath := filepath.Join(releasePath, "README.md")
-			if _, err := os.Stat(readmePath); os.IsNotExist(err) {
-				continue
-			}
-
-			// Read files
-			readme, _ := os.ReadFile(readmePath)
-			diff, _ := os.ReadFile(filepath.Join(releasePath, "release.diff"))
-			yaml, _ := os.ReadFile(filepath.Join(releasePath, "release.yaml"))
-
-			releases = append(releases, breakingchanges.Release{
-				Provider: provider,
-				Version:  entry.Name(),
-				Path:     releasePath,
-				README:   string(readme),
-				Diff:     string(diff),
-				YAML:     string(yaml),
-			})
+		// Match pattern: provider/vX.Y.Z/...
+		parts := strings.Split(file, "/")
+		if len(parts) < 2 {
+			continue
 		}
+
+		provider := parts[0]
+		version := parts[1]
+
+		// Check if it's a version directory (starts with 'v')
+		if !strings.HasPrefix(version, "v") {
+			continue
+		}
+
+		// Skip archived releases
+		if version == "archived" {
+			continue
+		}
+
+		// Create unique key for this release
+		releaseKey := provider + "/" + version
+		releaseMap[releaseKey] = true
+	}
+
+	// Load release data for each changed release
+	for releaseKey := range releaseMap {
+		parts := strings.Split(releaseKey, "/")
+		provider := parts[0]
+		version := parts[1]
+
+		releasePath := filepath.Join(repoRoot, provider, version)
+
+		// Check if README exists (indicator of a real release)
+		readmePath := filepath.Join(releasePath, "README.md")
+		if _, err := os.Stat(readmePath); os.IsNotExist(err) {
+			continue
+		}
+
+		// Read files
+		readme, _ := os.ReadFile(readmePath)
+		diff, _ := os.ReadFile(filepath.Join(releasePath, "release.diff"))
+		yaml, _ := os.ReadFile(filepath.Join(releasePath, "release.yaml"))
+
+		releases = append(releases, breakingchanges.Release{
+			Provider: provider,
+			Version:  version,
+			Path:     releasePath,
+			README:   string(readme),
+			Diff:     string(diff),
+			YAML:     string(yaml),
+		})
 	}
 
 	return releases, nil
