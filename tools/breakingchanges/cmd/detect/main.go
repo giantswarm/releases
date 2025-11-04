@@ -136,7 +136,12 @@ func detectChangedReleases(repoRoot string) ([]breakingchanges.Release, error) {
 
 	// Parse changed files and extract unique release directories
 	releaseMap := make(map[string]bool) // Use map to deduplicate
+	validProviders := map[string]bool{
+		"azure": true, "capa": true, "cloud-director": true,
+		"eks": true, "vsphere": true,
+	}
 
+	fmt.Println("Analyzing changed files for release directories...")
 	for _, file := range changedFiles {
 		if file == "" {
 			continue
@@ -151,6 +156,11 @@ func detectChangedReleases(repoRoot string) ([]breakingchanges.Release, error) {
 		provider := parts[0]
 		version := parts[1]
 
+		// Check if it's a valid provider directory
+		if !validProviders[provider] {
+			continue
+		}
+
 		// Check if it's a version directory (starts with 'v')
 		if !strings.HasPrefix(version, "v") {
 			continue
@@ -163,8 +173,13 @@ func detectChangedReleases(repoRoot string) ([]breakingchanges.Release, error) {
 
 		// Create unique key for this release
 		releaseKey := provider + "/" + version
-		releaseMap[releaseKey] = true
+		if !releaseMap[releaseKey] {
+			fmt.Printf("  Detected release: %s\n", releaseKey)
+			releaseMap[releaseKey] = true
+		}
 	}
+
+	fmt.Printf("Total unique releases detected: %d\n", len(releaseMap))
 
 	// Load release data for each changed release
 	for releaseKey := range releaseMap {
