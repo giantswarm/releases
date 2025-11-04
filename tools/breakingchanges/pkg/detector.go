@@ -55,7 +55,7 @@ func (d *Detector) AnalyzeMultipleReleases(ctx context.Context, releases []Relea
 
 	for _, release := range releases {
 		fmt.Printf("\nProcessing %s/%s...\n", release.Provider, release.Version)
-		
+
 		// Extract version changes
 		versionChanges := extractVersionChanges(release.README)
 		allVersionChanges[release.Provider] = versionChanges
@@ -99,7 +99,7 @@ func (d *Detector) AnalyzeMultipleReleases(ctx context.Context, releases []Relea
 	for _, finding := range findings {
 		// Check if finding mentions specific provider
 		mentionedProvider := d.extractProviderFromFinding(finding)
-		
+
 		if mentionedProvider != "" {
 			// Finding is specific to one provider
 			for _, release := range releases {
@@ -124,9 +124,9 @@ func (d *Detector) AnalyzeMultipleReleases(ctx context.Context, releases []Relea
 		}
 	}
 
-	fmt.Printf("\n✓ Consolidated analysis complete. Found %d breaking change(s) affecting %d provider(s)\n", 
+	fmt.Printf("\n✓ Consolidated analysis complete. Found %d breaking change(s) affecting %d provider(s)\n",
 		len(findings), len(releases))
-	
+
 	return findingsWithProviders, nil
 }
 
@@ -278,19 +278,19 @@ func (d *Detector) buildConsolidatedContext(releases []Release, allVersionChange
 func (d *Detector) extractProviderFromFinding(finding Finding) string {
 	// Check if component name contains provider-specific identifier
 	component := strings.ToLower(finding.Component)
-	
+
 	providerIdentifiers := map[string]string{
-		"aws":            "aws",
-		"capa":           "aws",
-		"cluster-aws":    "aws",
-		"azure":          "azure",
-		"capz":           "azure",
-		"cluster-azure":  "azure",
-		"vsphere":        "vsphere",
-		"capv":           "vsphere",
-		"cluster-vsphere": "vsphere",
-		"cloud-director": "cloud-director",
-		"capvcd":         "cloud-director",
+		"aws":                    "aws",
+		"capa":                   "aws",
+		"cluster-aws":            "aws",
+		"azure":                  "azure",
+		"capz":                   "azure",
+		"cluster-azure":          "azure",
+		"vsphere":                "vsphere",
+		"capv":                   "vsphere",
+		"cluster-vsphere":        "vsphere",
+		"cloud-director":         "cloud-director",
+		"capvcd":                 "cloud-director",
 		"cluster-cloud-director": "cloud-director",
 	}
 
@@ -396,4 +396,3 @@ func truncate(s string, maxLen int) string {
 	}
 	return s[:maxLen]
 }
-

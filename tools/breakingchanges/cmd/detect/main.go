@@ -56,7 +56,7 @@ func main() {
 
 	// Analyze each release and track which provider each finding came from
 	var allFindings []breakingchanges.FindingWithProvider
-	
+
 	for _, release := range releases {
 		fmt.Printf("Analyzing %s...\n", release.Path)
 
@@ -98,13 +98,19 @@ func main() {
 func detectChangedReleases(repoRoot string) ([]breakingchanges.Release, error) {
 	var releases []breakingchanges.Release
 
-	// Use git diff to find files changed between HEAD and its parent (HEAD^)
-	// This shows only the files changed in the commit that create-pull-request just made
-	cmd := exec.Command("git", "diff", "--name-only", "HEAD^", "HEAD")
+	// Use git diff to find files changed between origin/master and HEAD
+	// This shows files that were added/modified in the PR branch
+	cmd := exec.Command("git", "diff", "--name-only", "origin/master", "HEAD")
 	cmd.Dir = repoRoot
 	output, err := cmd.Output()
 	if err != nil {
-		return nil, fmt.Errorf("failed to run git diff: %w", err)
+		// If that fails (shallow clone), try HEAD~1
+		cmd = exec.Command("git", "diff", "--name-only", "HEAD~1", "HEAD")
+		cmd.Dir = repoRoot
+		output, err = cmd.Output()
+		if err != nil {
+			return nil, fmt.Errorf("failed to run git diff: %w", err)
+		}
 	}
 
 	// Parse changed files and extract unique release directories
