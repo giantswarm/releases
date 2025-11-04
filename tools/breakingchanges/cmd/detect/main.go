@@ -56,25 +56,11 @@ func main() {
 
 	fmt.Printf("Analyzing %d release(s)...\n", len(releases))
 
-	// Analyze each release and track which provider each finding came from
-	var allFindings []breakingchanges.FindingWithProvider
-
-	for _, release := range releases {
-		fmt.Printf("Analyzing %s...\n", release.Path)
-
-		findings, err := detector.AnalyzeRelease(ctx, release)
-		if err != nil {
-			fmt.Printf("Warning: Failed to analyze %s: %v\n", release.Path, err)
-			continue
-		}
-
-		for _, finding := range findings {
-			allFindings = append(allFindings, breakingchanges.FindingWithProvider{
-				Finding:  finding,
-				Provider: release.Provider,
-				Version:  release.Version,
-			})
-		}
+	// Analyze all releases together in one LLM call
+	allFindings, err := detector.AnalyzeMultipleReleases(ctx, releases)
+	if err != nil {
+		fmt.Printf("Error: Failed to analyze releases: %v\n", err)
+		os.Exit(1)
 	}
 
 	// Generate report with provider grouping
