@@ -138,16 +138,23 @@ Your task is to identify potential breaking changes that could affect customers 
 
 Analyze the provided release information and identify any breaking changes. Consider:
 
+**CRITICAL**: Pay attention to version upgrade paths. The context will show "vX.Y.Z → vA.B.C" format.
+- ONLY report changes that affect THIS SPECIFIC UPGRADE PATH
+- If a changelog mentions "affects upgrades from < v1.32" but the user is already on v1.33, DO NOT report it
+- Ignore backward compatibility notes for versions the user has already passed
+
 1. **Infrastructure Changes**
    - OS-level changes (e.g., cgroups v1 removal in Flatcar)
    - Kernel changes
    - System daemon changes
+   - **Check version ranges**: If a Flatcar warning mentions version 4230.2.0 but upgrade is 4230.2.3→4230.2.4, ignore it
 
 2. **Kubernetes Changes**
    - **IMPORTANT**: Read the Kubernetes changelog section and extract SPECIFIC API deprecations, removals, and behavioral changes
    - List the exact APIs being deprecated/removed (e.g., "batch/v1beta1 CronJob removed")
    - Note feature gate changes with their implications
    - Identify admission controller or RBAC changes that affect workloads
+   - **Check context**: If upgrading 1.33.5→1.34.1, only report changes NEW in 1.34
 
 3. **Component Changes**
    - Configuration flag removals
@@ -158,6 +165,7 @@ Analyze the provided release information and identify any breaking changes. Cons
 4. **Dependency Changes**
    - Major version bumps that indicate breaking changes
    - Check nested dependencies (e.g., if cluster-azure uses cluster chart)
+   - **Patch upgrades** (X.Y.Z → X.Y.Z+1) rarely have breaking changes
 
 For each breaking change found, provide:
 - **severity**: critical (requires action before upgrade) | high (likely needs action) | medium (review recommended) | low (minimal impact)

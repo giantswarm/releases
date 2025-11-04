@@ -111,7 +111,7 @@ func (d *Detector) fetchExternalChangelogs(ctx context.Context, changes []Versio
 		if change.Component == "Flatcar" && strings.Contains(change.ChangelogURL, "releases-stable.json") {
 			content = d.processFlatcarChangelog(content, change.FromVersion, change.ToVersion)
 		} else if change.Component == "Kubernetes" {
-			content = d.processKubernetesChangelog(content)
+			content = d.processKubernetesChangelog(content, change.FromVersion, change.ToVersion)
 		}
 
 		// Limit size to avoid token overload
@@ -138,8 +138,8 @@ func (d *Detector) processFlatcarChangelog(content, fromVersion, toVersion strin
 }
 
 // processKubernetesChangelog extracts breaking changes from K8s changelog
-func (d *Detector) processKubernetesChangelog(content string) string {
-	breakingChanges := d.extractK8sBreakingChanges(content)
+func (d *Detector) processKubernetesChangelog(content, fromVersion, toVersion string) string {
+	breakingChanges := d.extractK8sBreakingChanges(content, fromVersion, toVersion)
 	if breakingChanges != "" {
 		fmt.Printf("✓ Extracted Kubernetes breaking changes (%d bytes)\n", len(breakingChanges))
 		return breakingChanges
