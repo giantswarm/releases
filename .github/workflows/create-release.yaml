@@ -553,7 +553,7 @@ jobs:
       
       - name: Post Breaking Changes Comment
         if: steps.create_pr.outputs.pull-request-number != '' && hashFiles('tools/breakingchanges/breaking-changes-report.md') != ''
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         with:
           github-token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
           script: |
@@ -774,7 +774,7 @@ jobs:
       
       - name: Post Breaking Changes Comment
         if: steps.create_pr.outputs.pull-request-number != '' && hashFiles('tools/breakingchanges/breaking-changes-report.md') != ''
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         with:
           github-token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
           script: |
@@ -954,7 +954,7 @@ jobs:
       
       - name: Post Breaking Changes Comment
         if: steps.create_pr.outputs.pull-request-number != '' && hashFiles('tools/breakingchanges/breaking-changes-report.md') != ''
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         with:
           github-token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
           script: |
@@ -1123,7 +1123,7 @@ jobs:
       
       - name: Post Breaking Changes Comment
         if: steps.create_pr.outputs.pull-request-number != '' && hashFiles('tools/breakingchanges/breaking-changes-report.md') != ''
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         with:
           github-token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
           script: |
@@ -1302,7 +1302,7 @@ jobs:
       
       - name: Post Breaking Changes Comment
         if: steps.create_pr.outputs.pull-request-number != '' && hashFiles('tools/breakingchanges/breaking-changes-report.md') != ''
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         with:
           github-token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
           script: |
@@ -1503,7 +1503,7 @@ jobs:
       
       - name: Post Breaking Changes Comment
         if: steps.create_pr.outputs.pull-request-number != '' && hashFiles('tools/breakingchanges/breaking-changes-report.md') != ''
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         with:
           github-token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
           script: |
