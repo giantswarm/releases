@@ -36,8 +36,8 @@ func main() {
 		os.Exit(1)
 	}
 
-	// Get the repository root (assuming we're in tools/)
-	repoRoot := ".."
+	// Get the repository root (we're running from tools/breakingchanges)
+	repoRoot := "../.."
 
 	// Detect changed releases in the PR
 	releases, err := detectChangedReleases(repoRoot)
