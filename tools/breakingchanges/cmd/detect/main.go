@@ -98,13 +98,13 @@ func main() {
 func detectChangedReleases(repoRoot string) ([]breakingchanges.Release, error) {
 	var releases []breakingchanges.Release
 
-	// Use git show to find files changed in the current HEAD commit (the PR commit)
-	// This works because create-pull-request action just committed the changes
-	cmd := exec.Command("git", "show", "--name-only", "--pretty=format:", "HEAD")
+	// Use git diff to find files changed between HEAD and its parent (HEAD^)
+	// This shows only the files changed in the commit that create-pull-request just made
+	cmd := exec.Command("git", "diff", "--name-only", "HEAD^", "HEAD")
 	cmd.Dir = repoRoot
 	output, err := cmd.Output()
 	if err != nil {
-		return nil, fmt.Errorf("failed to run git show: %w", err)
+		return nil, fmt.Errorf("failed to run git diff: %w", err)
 	}
 
 	// Parse changed files and extract unique release directories

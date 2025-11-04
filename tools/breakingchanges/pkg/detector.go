@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"net/http"
 	"os"
+	"strings"
 )
 
 // Detector orchestrates the breaking change analysis
@@ -36,6 +37,97 @@ func NewDetector(anthropicAPIKey, githubToken string) (*Detector, error) {
 // SetDebugContextFile sets the path for saving debug context
 func (d *Detector) SetDebugContextFile(path string) {
 	d.debugContextFile = path
+}
+
+// AnalyzeMultipleReleases performs consolidated analysis of multiple releases in a single LLM call
+func (d *Detector) AnalyzeMultipleReleases(ctx context.Context, releases []Release) ([]FindingWithProvider, error) {
+	fmt.Println("\n=== Analyzing Multiple Releases (Consolidated) ===")
+
+	// Fetch component mappings from devctl once
+	if err := d.fetchComponentMappings(ctx); err != nil {
+		fmt.Printf("Warning: Could not fetch component mappings: %v\n", err)
+	}
+
+	// Collect all version changes from all releases
+	allVersionChanges := make(map[string][]VersionChange) // provider -> version changes
+	allExternalChanges := make(map[string]string)         // Shared external changelogs (Flatcar, K8s)
+	allComponentDiffs := make(map[string]string)          // Deduplicated component diffs
+
+	for _, release := range releases {
+		fmt.Printf("\nProcessing %s/%s...\n", release.Provider, release.Version)
+		
+		// Extract version changes
+		versionChanges := extractVersionChanges(release.README)
+		allVersionChanges[release.Provider] = versionChanges
+		fmt.Printf("  Found %d version changes\n", len(versionChanges))
+
+		// Collect external changelogs (deduplicated)
+		externalChanges, _ := d.fetchExternalChangelogs(ctx, versionChanges)
+		for key, content := range externalChanges {
+			if _, exists := allExternalChanges[key]; !exists {
+				allExternalChanges[key] = content
+			}
+		}
+
+		// Collect component diffs (deduplicated by component name)
+		componentDiffs, _ := d.fetchComponentDiffs(ctx, versionChanges)
+		for component, diff := range componentDiffs {
+			if _, exists := allComponentDiffs[component]; !exists {
+				allComponentDiffs[component] = diff
+			}
+		}
+	}
+
+	fmt.Printf("\n=== Consolidated Summary ===\n")
+	fmt.Printf("External changelogs: %d\n", len(allExternalChanges))
+	fmt.Printf("Component diffs: %d (deduplicated)\n", len(allComponentDiffs))
+
+	// Build consolidated analysis context
+	analysisContext := d.buildConsolidatedContext(releases, allVersionChanges, allExternalChanges, allComponentDiffs)
+	fmt.Printf("Consolidated context size: ~%d characters\n", len(analysisContext))
+
+	// Make ONE LLM call
+	fmt.Println("\nSending consolidated analysis to AI (this may take 20-40 seconds)...")
+	findings, err := d.analyzeWithLLM(ctx, analysisContext)
+	if err != nil {
+		return nil, fmt.Errorf("LLM analysis failed: %w", err)
+	}
+
+	// Attribute findings to providers
+	// For consolidated releases, findings apply to all providers unless specifically mentioned
+	var findingsWithProviders []FindingWithProvider
+	for _, finding := range findings {
+		// Check if finding mentions specific provider
+		mentionedProvider := d.extractProviderFromFinding(finding)
+		
+		if mentionedProvider != "" {
+			// Finding is specific to one provider
+			for _, release := range releases {
+				if release.Provider == mentionedProvider {
+					findingsWithProviders = append(findingsWithProviders, FindingWithProvider{
+						Finding:  finding,
+						Provider: release.Provider,
+						Version:  release.Version,
+					})
+					break
+				}
+			}
+		} else {
+			// Finding applies to all providers (shared component like Kubernetes/Flatcar)
+			for _, release := range releases {
+				findingsWithProviders = append(findingsWithProviders, FindingWithProvider{
+					Finding:  finding,
+					Provider: release.Provider,
+					Version:  release.Version,
+				})
+			}
+		}
+	}
+
+	fmt.Printf("\n✓ Consolidated analysis complete. Found %d breaking change(s) affecting %d provider(s)\n", 
+		len(findings), len(releases))
+	
+	return findingsWithProviders, nil
 }
 
 // AnalyzeRelease performs the complete analysis of a release
@@ -150,6 +242,74 @@ func (d *Detector) analyzeAndAnnotateFindings(ctx context.Context, analysisConte
 	}
 
 	return findings
+}
+
+// buildConsolidatedContext builds analysis context for multiple releases
+func (d *Detector) buildConsolidatedContext(releases []Release, allVersionChanges map[string][]VersionChange, externalChanges, componentDiffs map[string]string) string {
+	ctx := "# Consolidated Release Analysis\n\n"
+	ctx += fmt.Sprintf("Analyzing %d provider releases together:\n", len(releases))
+	for _, release := range releases {
+		ctx += fmt.Sprintf("- %s %s\n", release.Provider, release.Version)
+	}
+	ctx += "\n"
+
+	// Add version changes per provider
+	ctx += "## Version Changes by Provider\n\n"
+	for provider, versionChanges := range allVersionChanges {
+		if len(versionChanges) > 0 {
+			ctx += fmt.Sprintf("### %s\n\n", provider)
+			for _, vc := range versionChanges {
+				ctx += fmt.Sprintf("- %s: %s → %s\n", vc.Component, vc.FromVersion, vc.ToVersion)
+			}
+			ctx += "\n"
+		}
+	}
+
+	// Add external changelogs (shared across providers)
+	ctx += buildExternalChangelogsSection(externalChanges)
+
+	// Add component diffs (deduplicated)
+	ctx += buildComponentDiffsSection(componentDiffs)
+
+	return ctx
+}
+
+// extractProviderFromFinding checks if a finding mentions a specific provider
+func (d *Detector) extractProviderFromFinding(finding Finding) string {
+	// Check if component name contains provider-specific identifier
+	component := strings.ToLower(finding.Component)
+	
+	providerIdentifiers := map[string]string{
+		"aws":            "aws",
+		"capa":           "aws",
+		"cluster-aws":    "aws",
+		"azure":          "azure",
+		"capz":           "azure",
+		"cluster-azure":  "azure",
+		"vsphere":        "vsphere",
+		"capv":           "vsphere",
+		"cluster-vsphere": "vsphere",
+		"cloud-director": "cloud-director",
+		"capvcd":         "cloud-director",
+		"cluster-cloud-director": "cloud-director",
+	}
+
+	for identifier, provider := range providerIdentifiers {
+		if strings.Contains(component, identifier) {
+			return provider
+		}
+	}
+
+	// Check title and description for provider mentions
+	text := strings.ToLower(finding.Title + " " + finding.Description)
+	for identifier, provider := range providerIdentifiers {
+		if strings.Contains(text, identifier) {
+			return provider
+		}
+	}
+
+	// No specific provider mentioned - applies to all
+	return ""
 }
 
 // buildAnalysisContext constructs the full context string for LLM analysis
