@@ -507,6 +507,34 @@ jobs:
             Available providers: `aws`, `azure`, `cloud-director`, `eks`, `vsphere`.
 
             **Examples:**
+      
+      - name: Analyze Breaking Changes
+        if: steps.create_pr.outputs.pull-request-number != ''
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          GITHUB_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+          PR_NUMBER: ${{ steps.create_pr.outputs.pull-request-number }}
+          HEAD_SHA: ${{ github.sha }}
+        run: |
+          cd tools/breakingchanges
+          go run ./cmd/detect
+      
+      - name: Post Breaking Changes Comment
+        if: steps.create_pr.outputs.pull-request-number != '' && hashFiles('breaking-changes-report.md') != ''
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+          script: |
+            const fs = require('fs');
+            if (fs.existsSync('breaking-changes-report.md')) {
+              const comment = fs.readFileSync('breaking-changes-report.md', 'utf8');
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: ${{ steps.create_pr.outputs.pull-request-number }},
+                body: comment
+              });
+            }
 
             *   Update a single component for a specific provider:
                 `/update-release --provider aws --component flatcar@4152.2.3`
@@ -716,6 +744,34 @@ jobs:
           labels: |
             release/minor
             ${{ steps.create_release.outputs.PROVIDER_LABELS }}
+      
+      - name: Analyze Breaking Changes
+        if: steps.create_pr.outputs.pull-request-number != ''
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          GITHUB_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+          PR_NUMBER: ${{ steps.create_pr.outputs.pull-request-number }}
+          HEAD_SHA: ${{ github.sha }}
+        run: |
+          cd tools/breakingchanges
+          go run ./cmd/detect
+      
+      - name: Post Breaking Changes Comment
+        if: steps.create_pr.outputs.pull-request-number != '' && hashFiles('breaking-changes-report.md') != ''
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+          script: |
+            const fs = require('fs');
+            if (fs.existsSync('breaking-changes-report.md')) {
+              const comment = fs.readFileSync('breaking-changes-report.md', 'utf8');
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: ${{ steps.create_pr.outputs.pull-request-number }},
+                body: comment
+              });
+            }
 
       - name: Add comment to PR with devctl output
         if: steps.create_pr.outputs.pull-request-number && steps.create_pr.outputs.pull-request-number != ''
@@ -860,6 +916,34 @@ jobs:
           labels: |
             release/major
             ${{ matrix.provider }}
+      
+      - name: Analyze Breaking Changes
+        if: steps.create_pr.outputs.pull-request-number != ''
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          GITHUB_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+          PR_NUMBER: ${{ steps.create_pr.outputs.pull-request-number }}
+          HEAD_SHA: ${{ github.sha }}
+        run: |
+          cd tools/breakingchanges
+          go run ./cmd/detect
+      
+      - name: Post Breaking Changes Comment
+        if: steps.create_pr.outputs.pull-request-number != '' && hashFiles('breaking-changes-report.md') != ''
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+          script: |
+            const fs = require('fs');
+            if (fs.existsSync('breaking-changes-report.md')) {
+              const comment = fs.readFileSync('breaking-changes-report.md', 'utf8');
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: ${{ steps.create_pr.outputs.pull-request-number }},
+                body: comment
+              });
+            }
 
       - name: Add comment to PR with devctl output
         if: steps.create_pr.outputs.pull-request-number && steps.create_pr.outputs.pull-request-number != ''
@@ -993,6 +1077,34 @@ jobs:
           labels: |
             release/minor
             ${{ matrix.provider }}
+      
+      - name: Analyze Breaking Changes
+        if: steps.create_pr.outputs.pull-request-number != ''
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          GITHUB_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+          PR_NUMBER: ${{ steps.create_pr.outputs.pull-request-number }}
+          HEAD_SHA: ${{ github.sha }}
+        run: |
+          cd tools/breakingchanges
+          go run ./cmd/detect
+      
+      - name: Post Breaking Changes Comment
+        if: steps.create_pr.outputs.pull-request-number != '' && hashFiles('breaking-changes-report.md') != ''
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+          script: |
+            const fs = require('fs');
+            if (fs.existsSync('breaking-changes-report.md')) {
+              const comment = fs.readFileSync('breaking-changes-report.md', 'utf8');
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: ${{ steps.create_pr.outputs.pull-request-number }},
+                body: comment
+              });
+            }
 
       - name: Add comment to PR with devctl output
         if: steps.create_pr.outputs.pull-request-number && steps.create_pr.outputs.pull-request-number != ''
@@ -1136,6 +1248,34 @@ jobs:
           labels: |
             release/${{ needs.patch_release_decider.outputs.release_type }}
             ${{ matrix.provider }}
+      
+      - name: Analyze Breaking Changes
+        if: steps.create_pr.outputs.pull-request-number != ''
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          GITHUB_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+          PR_NUMBER: ${{ steps.create_pr.outputs.pull-request-number }}
+          HEAD_SHA: ${{ github.sha }}
+        run: |
+          cd tools/breakingchanges
+          go run ./cmd/detect
+      
+      - name: Post Breaking Changes Comment
+        if: steps.create_pr.outputs.pull-request-number != '' && hashFiles('breaking-changes-report.md') != ''
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+          script: |
+            const fs = require('fs');
+            if (fs.existsSync('breaking-changes-report.md')) {
+              const comment = fs.readFileSync('breaking-changes-report.md', 'utf8');
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: ${{ steps.create_pr.outputs.pull-request-number }},
+                body: comment
+              });
+            }
 
   patch_release_consolidated:
     name: "Patch Release (Consolidated)"
@@ -1301,6 +1441,34 @@ jobs:
           labels: |
             release/${{ needs.patch_release_decider.outputs.release_type }}
             ${{ steps.create_release.outputs.PROVIDER_LABELS }}
+      
+      - name: Analyze Breaking Changes
+        if: steps.create_pr.outputs.pull-request-number != ''
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          GITHUB_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+          PR_NUMBER: ${{ steps.create_pr.outputs.pull-request-number }}
+          HEAD_SHA: ${{ github.sha }}
+        run: |
+          cd tools/breakingchanges
+          go run ./cmd/detect
+      
+      - name: Post Breaking Changes Comment
+        if: steps.create_pr.outputs.pull-request-number != '' && hashFiles('breaking-changes-report.md') != ''
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+          script: |
+            const fs = require('fs');
+            if (fs.existsSync('breaking-changes-report.md')) {
+              const comment = fs.readFileSync('breaking-changes-report.md', 'utf8');
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: ${{ steps.create_pr.outputs.pull-request-number }},
+                body: comment
+              });
+            }
 
       - name: Add comment to PR with devctl output
         if: steps.create_pr.outputs.pull-request-number && steps.create_pr.outputs.pull-request-number != ''
