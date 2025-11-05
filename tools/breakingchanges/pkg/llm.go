@@ -105,9 +105,12 @@ func parseFindings(responseText string) ([]Finding, error) {
 	for _, pattern := range patterns {
 		jsonPattern := regexp.MustCompile(pattern)
 		if match := jsonPattern.FindStringSubmatch(responseText); len(match) > 0 {
-			jsonStr := match[1]
-			if jsonStr == "" && len(match) == 1 {
-				// Third pattern - entire match is the JSON
+			var jsonStr string
+			if len(match) > 1 {
+				// Pattern has a capture group
+				jsonStr = match[1]
+			} else {
+				// No capture group - use entire match
 				jsonStr = match[0]
 			}
 			if err := json.Unmarshal([]byte(jsonStr), &findings); err == nil {
