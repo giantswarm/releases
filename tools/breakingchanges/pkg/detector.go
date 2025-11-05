@@ -367,7 +367,7 @@ func buildExternalChangelogsSection(externalChanges map[string]string) string {
 		// Different limits for different components
 		limit := 10000
 		if component == "Kubernetes" {
-			limit = 30000 // K8s changelogs need more space
+			limit = 50000 // K8s changelogs need more space for Urgent Upgrade Notes and detailed API changes
 		}
 
 		if len(changelog) > limit {

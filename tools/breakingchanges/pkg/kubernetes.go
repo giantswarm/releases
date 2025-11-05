@@ -74,11 +74,37 @@ func extractK8sMinorVersionChanges(changelog string, minorVersion int) string {
 	// Extract just this version's section
 	versionSection := changelog[versionIdx:endIdx]
 	
-	// Extract relevant subsections
+	// PRIORITY 1: Extract "Urgent Upgrade Notes" section first (most critical)
+	urgentNotes := extractK8sUrgentUpgradeNotes(versionSection)
+	if urgentNotes != "" {
+		sb.WriteString("## ⚠️ URGENT UPGRADE NOTES ⚠️\n\n")
+		sb.WriteString(urgentNotes)
+		sb.WriteString("\n\n")
+	}
+	
+	// PRIORITY 2: Extract other relevant subsections
 	sb.WriteString(extractK8sSections(versionSection))
 	sb.WriteString(extractK8sKeywordLines(versionSection))
 	
 	return sb.String()
+}
+
+// extractK8sUrgentUpgradeNotes specifically extracts the "Urgent Upgrade Notes" section
+func extractK8sUrgentUpgradeNotes(changelog string) string {
+	// Look for "## Urgent Upgrade Notes" section
+	// Structure is typically:
+	// ## Urgent Upgrade Notes
+	// ### (No, really, you MUST read this before you upgrade)
+	// - actual notes...
+	
+	pattern := regexp.MustCompile(`(?s)##\s+Urgent Upgrade Notes.*?(?:##\s+[A-Z]|$)`)
+	matches := pattern.FindStringSubmatch(changelog)
+	
+	if len(matches) > 0 {
+		return strings.TrimSpace(matches[0])
+	}
+	
+	return ""
 }
 
 // extractK8sPatchChanges extracts changes for a patch release
