@@ -304,13 +304,13 @@ For each breaking or potentially breaking change, provide:
 
 - **component**: Which component is affected (e.g., "cluster-aws", "security-bundle", "Kubernetes")
 
-- **title**: Brief one-line description (e.g., "New RBAC permissions required for cert-manager")
+- **title**: Brief one-line description (MAX 80 chars, e.g., "New RBAC permissions required for cert-manager")
 
-- **description**: Detailed explanation of what changed and why it matters
+- **description**: Detailed explanation of what changed and why it matters (MAX 200 chars - be concise and specific)
 
-- **impact**: Who/what is affected (e.g., "All clusters using custom security policies", "Users with manual RBAC configurations")
+- **impact**: Who/what is affected (MAX 100 chars - one clear statement, e.g., "All clusters using custom security policies")
 
-- **action**: Specific actions users need to take, or "Review and test" if uncertain
+- **action**: Specific actions users need to take (MAX 120 chars - one specific action, e.g., "Update RBAC ClusterRole")
 
 - **confidence**: 
   - **high**: Explicitly documented or clear from code changes
@@ -318,6 +318,8 @@ For each breaking or potentially breaking change, provide:
   - **low**: Potential impact, review recommended
 
 - **raw_text**: The exact text from the changelog/diff that triggered this finding (truncate if > 500 chars)
+
+**CONCISENESS IS CRITICAL**: Keep descriptions short and scannable. GitHub truncates long comments.
 
 ## DO NOT REPORT (Critical Filters)
 
@@ -424,6 +426,32 @@ Return ONLY a JSON array of findings. Do NOT include any markdown formatting, co
 
 If no breaking changes are found, return: []
 
+**Markdown Formatting Guidelines:**
+
+When writing the "title", "description", "impact", and "action" fields, use proper markdown formatting for technical terms:
+
+- **Metric names**: `+"`apiserver_cache_list_fetched_objects_total`"+`, `+"`etcd_request_duration_seconds`"+`
+- **Label names**: `+"`resource_prefix`"+`, `+"`group`"+`, `+"`resource`"+`, `+"`type`"+`, `+"`kind`"+`
+- **Command-line flags**: `+"`--cloud-config`"+`, `+"`--cloud-provider`"+`, `+"`--kubeconfig`"+`
+- **API versions**: `+"`v1alpha3`"+`, `+"`v1beta1`"+`, `+"`batch/v1beta1`"+`, `+"`flowcontrol.apiserver.k8s.io/v1beta3`"+`
+- **Version numbers**: `+"`v4.3.0+`"+`, `+"`v1.33+`"+`, `+"`1.34`"+`
+- **File paths**: `+"`/etc/kubernetes/cloud.conf`"+`, `+"`values.yaml`"+`
+- **Configuration keys/Helm values**: `+"`cloudProvider`"+`, `+"`kubeconfig`"+`, `+"`instanceType`"+`, `+"`workersIamRole`"+`
+- **Feature gates**: `+"`MutableCSINodeAllocatableCount`"+`, `+"`DynamicResourceAllocation`"+`
+- **Resource names**: `+"`FlowSchema`"+`, `+"`PriorityLevelConfiguration`"+`, `+"`ConfigMap`"+`, `+"`Secret`"+`
+- **Permissions**: `+"`certificatesigningrequests/approval`"+`, `+"`pods/exec`"+`, `+"`iam:PassRole`"+`
+- **Components/apps**: `+"`cluster-aws`"+`, `+"`cert-manager`"+`, `+"`karpenter-crossplane-resources`"+`
+
+**Example (GOOD formatting):**
+"Metrics like `+"`apiserver_cache_list_fetched_objects_total`"+` now split `+"`resource_prefix`"+` into separate `+"`group`"+` and `+"`resource`"+` labels."
+
+"The cluster chart `+"`v4.3.0+`"+` enables the `+"`MutableCSINodeAllocatableCount`"+` feature gate by default for Kubernetes `+"`v1.33+`"+` clusters."
+
+"karpenter-crossplane-resources `+"`v0.5.0`"+` adds a new required Helm value `+"`workersIamRole`"+` to configure the IAM role used for worker nodes. This is needed to properly scope the `+"`iam:PassRole`"+` permission."
+
+**Example (BAD formatting):**
+"Metrics like apiserver_cache_list_fetched_objects_total now split resource_prefix into separate group and resource labels."
+
 Example - BAD (too generic):
 {
   "severity": "critical",
@@ -482,10 +510,10 @@ Example - GOOD (specific Kubernetes change):
 {
   "severity": "high",
   "component": "Kubernetes",
-  "title": "flowcontrol.apiserver.k8s.io/v1beta3 API removed",
-  "description": "The flowcontrol.apiserver.k8s.io/v1beta3 API version is removed in 1.34. Use v1 instead.",
-  "impact": "Manifests using v1beta3 FlowSchema or PriorityLevelConfiguration will fail",
-  "action": "Update all FlowSchema and PriorityLevelConfiguration manifests to use flowcontrol.apiserver.k8s.io/v1",
+  "title": "`+"`flowcontrol.apiserver.k8s.io/v1beta3`"+` API removed",
+  "description": "The `+"`flowcontrol.apiserver.k8s.io/v1beta3`"+` API version is removed in 1.34. Use `+"`v1`"+` instead.",
+  "impact": "Manifests using `+"`v1beta3`"+` `+"`FlowSchema`"+` or `+"`PriorityLevelConfiguration`"+` will fail",
+  "action": "Update all `+"`FlowSchema`"+` and `+"`PriorityLevelConfiguration`"+` manifests to use `+"`flowcontrol.apiserver.k8s.io/v1`"+`",
   "confidence": "high",
   "raw_text": "Removed flowcontrol.apiserver.k8s.io/v1beta3 API"
 }
@@ -494,10 +522,10 @@ Example - GOOD (component configuration change - not breaking, but important):
 {
   "severity": "medium",
   "component": "cluster-aws",
-  "title": "Default instance type changed from t3.medium to t3.small",
+  "title": "Default instance type changed from `+"`t3.medium`"+` to `+"`t3.small`"+`",
   "description": "cluster-aws v6.4.0 changes the default worker node instance type",
   "impact": "New clusters will use smaller instances unless explicitly configured",
-  "action": "Review and update instance type configuration if t3.medium is required",
+  "action": "Review and update instance type configuration if `+"`t3.medium`"+` is required",
   "confidence": "high",
   "raw_text": "Changed default instanceType from t3.medium to t3.small in values.yaml"
 }
@@ -506,8 +534,8 @@ Example - GOOD (RBAC change - customers should be aware):
 {
   "severity": "high",
   "component": "cert-manager",
-  "title": "New ClusterRole permissions required for certificate management",
-  "description": "cert-manager 3.9.4 adds new 'certificatesigningrequests/approval' permission to ClusterRole",
+  "title": "New `+"`ClusterRole`"+` permissions required for certificate management",
+  "description": "cert-manager 3.9.4 adds new `+"`certificatesigningrequests/approval`"+` permission to `+"`ClusterRole`"+`",
   "impact": "Clusters with custom RBAC configurations may need manual permission updates",
   "action": "Verify cert-manager has required permissions if using custom RBAC",
   "confidence": "high",

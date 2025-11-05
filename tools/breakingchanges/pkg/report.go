@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"sort"
 	"strings"
+	"time"
 )
 
 // FindingWithProvider wraps a Finding with provider context
@@ -245,17 +246,25 @@ func GenerateReportWithProviders(findingsWithProviders []FindingWithProvider, pr
 
 	var sb strings.Builder
 
-	// Header
+	// Header with timestamp
 	sb.WriteString("## Breaking Change Analysis\n\n")
-	sb.WriteString(fmt.Sprintf("**PR:** #%s | **Commit:** `%s`\n\n", prNumber, commitSHA[:min(8, len(commitSHA))]))
+	sb.WriteString(fmt.Sprintf("**PR:** #%s | **Commit:** `%s` | **Analyzed:** %s\n\n",
+		prNumber,
+		commitSHA[:min(8, len(commitSHA))],
+		time.Now().UTC().Format("2006-01-02 15:04 UTC")))
 
-	// Summary
+	// Calculate statistics
 	critical := 0
 	high := 0
 	medium := 0
 	low := 0
+	componentStats := make(map[string]map[string]int) // component -> severity -> count
+
 	for _, gf := range groupedFindings {
-		switch strings.ToLower(gf.Finding.Severity) {
+		severity := strings.ToLower(gf.Finding.Severity)
+		component := gf.Finding.Component
+
+		switch severity {
 		case "critical":
 			critical++
 		case "high":
@@ -265,10 +274,18 @@ func GenerateReportWithProviders(findingsWithProviders []FindingWithProvider, pr
 		case "low":
 			low++
 		}
+
+		// Track component stats
+		if componentStats[component] == nil {
+			componentStats[component] = make(map[string]int)
+		}
+		componentStats[component][severity]++
 	}
 
+	// Summary with component breakdown
 	sb.WriteString("### Summary\n\n")
-	sb.WriteString(fmt.Sprintf("Found **%d** potential breaking change(s):\n\n", len(groupedFindings)))
+	sb.WriteString(fmt.Sprintf("Found **%d** potential breaking change(s) across **%d** components:\n\n",
+		len(groupedFindings), len(componentStats)))
 
 	if critical > 0 {
 		sb.WriteString(fmt.Sprintf("- 🔴 **%d Critical** - Action required before upgrade\n", critical))
@@ -283,6 +300,40 @@ func GenerateReportWithProviders(findingsWithProviders []FindingWithProvider, pr
 		sb.WriteString(fmt.Sprintf("- 🟢 **%d Low** - Informational\n", low))
 	}
 
+	// Component breakdown
+	if len(componentStats) > 0 {
+		sb.WriteString("\n**By Component:**\n")
+
+		// Sort components for consistent output
+		components := make([]string, 0, len(componentStats))
+		for comp := range componentStats {
+			components = append(components, comp)
+		}
+		sort.Strings(components)
+
+		for _, comp := range components {
+			stats := componentStats[comp]
+			total := stats["critical"] + stats["high"] + stats["medium"] + stats["low"]
+
+			// Build severity string
+			severities := []string{}
+			if stats["critical"] > 0 {
+				severities = append(severities, fmt.Sprintf("%d critical", stats["critical"]))
+			}
+			if stats["high"] > 0 {
+				severities = append(severities, fmt.Sprintf("%d high", stats["high"]))
+			}
+			if stats["medium"] > 0 {
+				severities = append(severities, fmt.Sprintf("%d medium", stats["medium"]))
+			}
+			if stats["low"] > 0 {
+				severities = append(severities, fmt.Sprintf("%d low", stats["low"]))
+			}
+
+			sb.WriteString(fmt.Sprintf("- `%s`: %d findings (%s)\n", comp, total, strings.Join(severities, ", ")))
+		}
+	}
+
 	sb.WriteString("\n---\n\n")
 
 	// Group by severity
@@ -293,16 +344,30 @@ func GenerateReportWithProviders(findingsWithProviders []FindingWithProvider, pr
 			continue
 		}
 
+		// Decide if this severity should be collapsible (Medium/Low)
+		isCollapsible := severity == "medium" || severity == "low"
+
 		// Severity header
+		severityLabel := ""
 		switch severity {
 		case "critical":
-			sb.WriteString("### 🔴 Critical\n\n")
+			severityLabel = "🔴 Critical"
 		case "high":
-			sb.WriteString("### 🟠 High Priority\n\n")
+			severityLabel = "🟠 High Priority"
 		case "medium":
-			sb.WriteString("### 🟡 Medium Priority\n\n")
+			severityLabel = "🟡 Medium Priority"
 		case "low":
-			sb.WriteString("### 🟢 Low Priority\n\n")
+			severityLabel = "🟢 Low Priority"
+		}
+
+		if isCollapsible {
+			// Collapsible section for Medium/Low
+			sb.WriteString(fmt.Sprintf("### %s\n\n", severityLabel))
+			sb.WriteString("<details>\n")
+			sb.WriteString(fmt.Sprintf("<summary>%d %s findings (expand to review)</summary>\n\n", len(findings), severity))
+		} else {
+			// Always visible for Critical/High
+			sb.WriteString(fmt.Sprintf("### %s\n\n", severityLabel))
 		}
 
 		// List findings
@@ -313,6 +378,10 @@ func GenerateReportWithProviders(findingsWithProviders []FindingWithProvider, pr
 			if i < len(findings)-1 {
 				sb.WriteString("---\n\n")
 			}
+		}
+
+		if isCollapsible {
+			sb.WriteString("\n</details>\n")
 		}
 
 		sb.WriteString("\n")
@@ -346,12 +415,13 @@ func formatGroupedFinding(index int, gf GroupedFinding) string {
 	f := gf.Finding
 
 	// Title with component badge
+	// Only show confidence if it's "low" (otherwise it's just noise)
 	confidence := ""
-	if f.Confidence != "" {
-		confidence = fmt.Sprintf(" · %s confidence", f.Confidence)
+	if strings.ToLower(f.Confidence) == "low" {
+		confidence = " · ⚠️ Low AI confidence"
 	}
 
-	sb.WriteString(fmt.Sprintf("#### ⚠️ %d. %s\n\n", index, f.Title))
+	sb.WriteString(fmt.Sprintf("#### %d. %s\n\n", index, f.Title))
 	sb.WriteString(fmt.Sprintf("`%s`%s\n\n", f.Component, confidence))
 
 	// Description
