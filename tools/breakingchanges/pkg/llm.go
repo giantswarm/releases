@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"os"
 	"regexp"
 	"strings"
 )
@@ -115,15 +116,30 @@ func parseFindings(responseText string) ([]Finding, error) {
 			}
 			if err := json.Unmarshal([]byte(jsonStr), &findings); err == nil {
 				return findings, nil
+			} else {
+				// Debug: show what we extracted and why it failed
+				fmt.Printf("DEBUG: Pattern matched, but JSON parse failed: %v\n", err)
+				fmt.Printf("DEBUG: Extracted JSON length: %d bytes\n", len(jsonStr))
+				if len(jsonStr) > 200 {
+					fmt.Printf("DEBUG: JSON starts with: %s...\n", jsonStr[:200])
+				} else {
+					fmt.Printf("DEBUG: Full JSON: %s\n", jsonStr)
+				}
 			}
 		}
 	}
 
-	// Debug: show first 500 chars of response
+	// Debug: show first 500 chars of response and save full response to file
 	debug := responseText
 	if len(debug) > 500 {
 		debug = debug[:500] + "..."
 	}
+	
+	// Save full response to file for debugging
+	if err := os.WriteFile("llm-response-debug.txt", []byte(responseText), 0644); err == nil {
+		fmt.Printf("DEBUG: Full LLM response saved to llm-response-debug.txt (%d bytes)\n", len(responseText))
+	}
+	
 	return nil, fmt.Errorf("failed to parse response as JSON. Response starts with: %s", debug)
 }
 
