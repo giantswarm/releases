@@ -1,0 +1,26 @@
+name: Create SDK Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Specific version to create (e.g. sdk/v0.11.0). Used if a specific version is not provided.'
+        required: false
+        type: string
+
+jobs:
+  release:
+    name: "Create Release"
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+    steps:
+      - name: Create release if it doesn't already exist
+        run: |
+          RELEASE_EXISTS=$(gh release list -R "$GITHUB_REPOSITORY" --json tagName --jq 'map(.tagName == "sdk/${{ github.event.inputs.version }}") | any')
+          if [ -z "$PR_EXISTS" ]; then
+            gh release create -R "$GITHUB_REPOSITORY" sdk/${{ github.event.inputs.version }} --title "Releases SDK ${{ github.event.inputs.version }}" --generate-notes --prerelease
+          else
+            echo "Release sdk/${{ github.event.inputs.version }} already exists."
+          fi
+          
