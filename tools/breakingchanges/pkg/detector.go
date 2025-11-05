@@ -16,6 +16,11 @@ type Detector struct {
 	debugContextFile     string
 	componentMappings    map[string]ComponentMapping
 	componentMappingDone bool
+
+	// Caches to avoid redundant fetches in consolidated PRs
+	flatcarCache    map[string]string // "fromVer->toVer" -> changelog
+	kubernetesCache map[string]string // "fromVer->toVer" -> changelog
+	componentCache  map[string]string // "component@fromVer->toVer" -> diff
 }
 
 // NewDetector creates a new Detector instance
@@ -31,6 +36,9 @@ func NewDetector(anthropicAPIKey, githubToken string) (*Detector, error) {
 		debugContextFile:     "",
 		componentMappings:    make(map[string]ComponentMapping),
 		componentMappingDone: false,
+		flatcarCache:         make(map[string]string),
+		kubernetesCache:      make(map[string]string),
+		componentCache:       make(map[string]string),
 	}, nil
 }
 
@@ -251,7 +259,7 @@ func (d *Detector) buildConsolidatedContext(releases []Release, allVersionChange
 	ctx += "- **Platform**: Linux-only (Flatcar Container Linux)\n"
 	ctx += "- **Windows Support**: NO - Do NOT report Windows-related changes\n"
 	ctx += "- **Experimental Features**: Generally NOT enabled - Be cautious about alpha/beta API warnings\n\n"
-	
+
 	ctx += fmt.Sprintf("## Analyzing %d provider releases:\n", len(releases))
 	for _, release := range releases {
 		ctx += fmt.Sprintf("- %s %s\n", release.Provider, release.Version)
@@ -320,13 +328,13 @@ func (d *Detector) extractProviderFromFinding(finding Finding) string {
 // buildAnalysisContext constructs the full context string for LLM analysis
 func buildAnalysisContext(release Release, versionChanges []VersionChange, externalChanges, componentDiffs map[string]string) string {
 	ctx := fmt.Sprintf("# Release Analysis: %s %s\n\n", release.Provider, release.Version)
-	
+
 	// Add environment context
 	ctx += "## Environment\n"
 	ctx += "- **Platform**: Linux-only (Flatcar Container Linux)\n"
 	ctx += "- **Windows Support**: NO - Do NOT report Windows-related changes\n"
 	ctx += "- **Experimental Features**: Generally NOT enabled - Be cautious about alpha/beta API warnings\n\n"
-	
+
 	ctx += buildReadmeSection(release.README)
 	ctx += buildVersionChangesSection(versionChanges)
 	ctx += buildExternalChangelogsSection(externalChanges)

@@ -99,6 +99,24 @@ func (d *Detector) fetchExternalChangelogs(ctx context.Context, changes []Versio
 			continue
 		}
 
+		// Check cache first
+		cacheKey := fmt.Sprintf("%s->%s", change.FromVersion, change.ToVersion)
+		var cachedContent string
+		var isCached bool
+
+		if change.Component == "Flatcar" {
+			cachedContent, isCached = d.flatcarCache[cacheKey]
+		} else if change.Component == "Kubernetes" {
+			cachedContent, isCached = d.kubernetesCache[cacheKey]
+		}
+
+		if isCached {
+			fmt.Printf("  → Using cached %s changelog (%s)\n", change.Component, cacheKey)
+			key := fmt.Sprintf("%s/%s", change.Component, change.ChangelogURL)
+			result[key] = cachedContent
+			continue
+		}
+
 		fmt.Printf("Fetching %s changelog from %s...\n", change.Component, change.ChangelogURL)
 
 		content, err := d.fetchURL(ctx, change.ChangelogURL)
@@ -112,6 +130,13 @@ func (d *Detector) fetchExternalChangelogs(ctx context.Context, changes []Versio
 			content = d.processFlatcarChangelog(content, change.FromVersion, change.ToVersion)
 		} else if change.Component == "Kubernetes" {
 			content = d.processKubernetesChangelog(content, change.FromVersion, change.ToVersion)
+		}
+
+		// Cache the processed content
+		if change.Component == "Flatcar" {
+			d.flatcarCache[cacheKey] = content
+		} else if change.Component == "Kubernetes" {
+			d.kubernetesCache[cacheKey] = content
 		}
 
 		// Limit size to avoid token overload
@@ -165,6 +190,14 @@ func (d *Detector) fetchComponentDiffs(ctx context.Context, changes []VersionCha
 
 // fetchSingleComponentDiff fetches a single component's diff and its dependencies
 func (d *Detector) fetchSingleComponentDiff(ctx context.Context, change VersionChange, result map[string]string) {
+	// Check cache first
+	cacheKey := fmt.Sprintf("%s@%s->%s", change.Component, change.FromVersion, change.ToVersion)
+	if cachedDiff, isCached := d.componentCache[cacheKey]; isCached {
+		fmt.Printf("  → Using cached diff for %s (v%s -> v%s)\n", change.Component, change.FromVersion, change.ToVersion)
+		result[change.Component] = cachedDiff
+		return
+	}
+
 	// Resolve actual repository name from devctl mappings
 	repoName := change.Component
 	changelogTemplate := ""
@@ -187,6 +220,7 @@ func (d *Detector) fetchSingleComponentDiff(ctx context.Context, change VersionC
 	}
 
 	result[change.Component] = diff
+	d.componentCache[cacheKey] = diff // Cache the diff
 	fmt.Printf("✓ Fetched diff for %s (%d bytes)\n", change.Component, len(diff))
 
 	// Check for Chart.yaml dependency changes

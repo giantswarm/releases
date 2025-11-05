@@ -109,12 +109,11 @@ func GenerateReport(findings []Finding, prNumber, commitSHA string) string {
 func generateNoFindingsReport(prNumber, commitSHA string) string {
 	var sb strings.Builder
 
-	sb.WriteString("## 🤖 Breaking Change Analysis\n\n")
+	sb.WriteString("## Breaking Change Analysis\n\n")
 	sb.WriteString(fmt.Sprintf("**PR:** #%s | **Commit:** `%s`\n\n", prNumber, commitSHA[:8]))
-	sb.WriteString("### ✅ No Breaking Changes Detected\n\n")
+	sb.WriteString("### No Breaking Changes Detected\n\n")
 	sb.WriteString("The automated analysis did not identify any obvious breaking changes in this release.\n\n")
-	sb.WriteString("> ⚠️ **Note:** This does not guarantee there are no breaking changes. ")
-	sb.WriteString("Please still:\n")
+	sb.WriteString("> **Note:** This does not guarantee there are no breaking changes. Please still:\n")
 	sb.WriteString("> - Review component changelogs for behavior changes\n")
 	sb.WriteString("> - Check Kubernetes and Flatcar upgrade notes\n")
 	sb.WriteString("> - Test in a non-production environment, especially for major/minor version bumps\n")
@@ -247,7 +246,7 @@ func GenerateReportWithProviders(findingsWithProviders []FindingWithProvider, pr
 	var sb strings.Builder
 
 	// Header
-	sb.WriteString("## 🤖 Breaking Change Analysis\n\n")
+	sb.WriteString("## Breaking Change Analysis\n\n")
 	sb.WriteString(fmt.Sprintf("**PR:** #%s | **Commit:** `%s`\n\n", prNumber, commitSHA[:min(8, len(commitSHA))]))
 
 	// Summary
@@ -268,7 +267,7 @@ func GenerateReportWithProviders(findingsWithProviders []FindingWithProvider, pr
 		}
 	}
 
-	sb.WriteString("### 📊 Summary\n\n")
+	sb.WriteString("### Summary\n\n")
 	sb.WriteString(fmt.Sprintf("Found **%d** potential breaking change(s):\n\n", len(groupedFindings)))
 
 	if critical > 0 {
@@ -297,13 +296,13 @@ func GenerateReportWithProviders(findingsWithProviders []FindingWithProvider, pr
 		// Severity header
 		switch severity {
 		case "critical":
-			sb.WriteString("### 🔴 Critical Priority\n\n")
+			sb.WriteString("### Critical\n\n")
 		case "high":
-			sb.WriteString("### 🟠 High Priority\n\n")
+			sb.WriteString("### High Priority\n\n")
 		case "medium":
-			sb.WriteString("### 🟡 Medium Priority\n\n")
+			sb.WriteString("### Medium Priority\n\n")
 		case "low":
-			sb.WriteString("### 🟢 Low Priority\n\n")
+			sb.WriteString("### Low Priority\n\n")
 		}
 
 		// List findings
@@ -317,17 +316,11 @@ func GenerateReportWithProviders(findingsWithProviders []FindingWithProvider, pr
 
 	// Footer
 	sb.WriteString("\n\n---\n\n")
-	sb.WriteString("### ℹ️ What to do next\n\n")
-	sb.WriteString("1. **Review** each finding above\n")
-	sb.WriteString("2. **Verify** if the breaking change applies to your use case\n")
-	sb.WriteString("3. **Document** confirmed breaking changes in the release README\n")
-	sb.WriteString("4. **Update** migration guides if needed\n")
-	sb.WriteString("5. **Notify** customers in release announcements\n\n")
-	sb.WriteString("> ⚠️ **Note:** This analysis is automated and may include false positives. Please verify each finding manually before taking action.\n\n")
+	sb.WriteString("> **Note:** This analysis is automated and may include false positives. Please verify each finding before taking action.\n\n")
 
 	// About section
 	sb.WriteString("<details>\n")
-	sb.WriteString("<summary>ℹ️ About this analysis</summary>\n\n")
+	sb.WriteString("<summary>About this analysis</summary>\n\n")
 	sb.WriteString("This automated analysis uses AI to scan:\n")
 	sb.WriteString("- Release changelogs and READMEs\n")
 	sb.WriteString("- Component version changes\n")
@@ -348,59 +341,32 @@ func formatGroupedFinding(index int, gf GroupedFinding) string {
 	var sb strings.Builder
 	f := gf.Finding
 
-	// Build provider list
-	var providers []string
-	for provider, version := range gf.Providers {
-		providers = append(providers, fmt.Sprintf("%s %s", provider, version))
-	}
-	sort.Strings(providers)
-	providerStr := strings.Join(providers, ", ")
-
 	// Title with collapsible details
 	confidence := ""
 	if f.Confidence != "" {
-		confidence = fmt.Sprintf(" <em>(%s confidence)</em>", f.Confidence)
+		confidence = fmt.Sprintf(" · AI confidence: %s", f.Confidence)
 	}
 
-	sb.WriteString(fmt.Sprintf("<details>\n<summary><strong>%d. %s</strong> <code>%s</code>%s</summary>\n\n",
+	sb.WriteString(fmt.Sprintf("<details>\n<summary><strong>%d. %s</strong> · <code>%s</code>%s</summary>\n\n",
 		index, f.Title, f.Component, confidence))
 
-	// Affected Providers
-	sb.WriteString("#### 📦 Affected Releases\n\n")
-	sb.WriteString(providerStr)
-	sb.WriteString("\n\n")
-
-	// Description
+	// Description and Impact combined
 	if f.Description != "" {
-		sb.WriteString("#### 📝 Description\n\n")
 		sb.WriteString(f.Description)
 		sb.WriteString("\n\n")
 	}
 
-	// Impact
 	if f.Impact != "" {
-		sb.WriteString("#### 👥 Impact\n\n")
+		sb.WriteString("**Impact:** ")
 		sb.WriteString(f.Impact)
 		sb.WriteString("\n\n")
 	}
 
 	// Required Actions
 	if f.Action != "" {
-		sb.WriteString("#### ✅ Required Actions\n\n")
+		sb.WriteString("**Action:** ")
 		sb.WriteString(f.Action)
 		sb.WriteString("\n\n")
-	}
-
-	// Raw text
-	if f.RawText != "" {
-		sb.WriteString("#### 📄 Original Text\n\n")
-		sb.WriteString("```\n")
-		rawText := f.RawText
-		if len(rawText) > 500 {
-			rawText = rawText[:500] + "..."
-		}
-		sb.WriteString(rawText)
-		sb.WriteString("\n```\n\n")
 	}
 
 	sb.WriteString("</details>\n")
