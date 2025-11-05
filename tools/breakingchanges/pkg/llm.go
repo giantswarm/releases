@@ -96,36 +96,50 @@ func parseFindings(responseText string) ([]Finding, error) {
 		return findings, nil
 	}
 
-	// If not pure JSON, try to extract JSON from markdown code blocks
+	// If not pure JSON, try to extract JSON from markdown code blocks or find JSON array
+	// Strategy: look for opening [ and closing ] of JSON array
+	
+	// First, try standard markdown code block patterns
 	patterns := []string{
-		"```json\\s*([\\s\\S]*?)\\s*```", // ```json ... ```
-		"```\\s*([\\s\\S]*?)\\s*```",     // ``` ... ```
-		"\\[\\s*\\{[\\s\\S]*\\]",         // Raw JSON array
+		"```json\\s*\n([\\s\\S]*?)```",  // ```json\n ... ```
+		"```json\\s+([\\s\\S]*?)```",    // ```json ... ```
+		"```\\s*\n([\\s\\S]*?)```",      // ```\n ... ```
+		"```\\s+([\\s\\S]*?)```",        // ``` ... ```
 	}
 
-	for _, pattern := range patterns {
+	for i, pattern := range patterns {
 		jsonPattern := regexp.MustCompile(pattern)
-		if match := jsonPattern.FindStringSubmatch(responseText); len(match) > 0 {
-			var jsonStr string
-			if len(match) > 1 {
-				// Pattern has a capture group
-				jsonStr = match[1]
-			} else {
-				// No capture group - use entire match
-				jsonStr = match[0]
-			}
+		if match := jsonPattern.FindStringSubmatch(responseText); len(match) > 1 {
+			jsonStr := strings.TrimSpace(match[1])
+			fmt.Printf("DEBUG: Pattern %d matched, extracted %d bytes\n", i, len(jsonStr))
 			if err := json.Unmarshal([]byte(jsonStr), &findings); err == nil {
 				return findings, nil
 			} else {
 				// Debug: show what we extracted and why it failed
-				fmt.Printf("DEBUG: Pattern matched, but JSON parse failed: %v\n", err)
-				fmt.Printf("DEBUG: Extracted JSON length: %d bytes\n", len(jsonStr))
-				if len(jsonStr) > 200 {
-					fmt.Printf("DEBUG: JSON starts with: %s...\n", jsonStr[:200])
+				fmt.Printf("DEBUG: Pattern %d JSON parse failed: %v\n", i, err)
+				if len(jsonStr) > 300 {
+					fmt.Printf("DEBUG: JSON starts with: %s...\n", jsonStr[:300])
+					fmt.Printf("DEBUG: JSON ends with: ...%s\n", jsonStr[len(jsonStr)-100:])
 				} else {
 					fmt.Printf("DEBUG: Full JSON: %s\n", jsonStr)
 				}
 			}
+		} else {
+			fmt.Printf("DEBUG: Pattern %d did not match\n", i)
+		}
+	}
+	
+	// Last resort: try to find JSON array by looking for [ ... ]
+	fmt.Println("DEBUG: Trying to find raw JSON array...")
+	startIdx := strings.Index(responseText, "[")
+	endIdx := strings.LastIndex(responseText, "]")
+	if startIdx >= 0 && endIdx > startIdx {
+		jsonStr := strings.TrimSpace(responseText[startIdx : endIdx+1])
+		fmt.Printf("DEBUG: Found potential JSON array at positions %d-%d (%d bytes)\n", startIdx, endIdx, len(jsonStr))
+		if err := json.Unmarshal([]byte(jsonStr), &findings); err == nil {
+			return findings, nil
+		} else {
+			fmt.Printf("DEBUG: Raw array parse failed: %v\n", err)
 		}
 	}
 
