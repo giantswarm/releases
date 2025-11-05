@@ -296,19 +296,23 @@ func GenerateReportWithProviders(findingsWithProviders []FindingWithProvider, pr
 		// Severity header
 		switch severity {
 		case "critical":
-			sb.WriteString("### Critical\n\n")
+			sb.WriteString("### 🔴 Critical\n\n")
 		case "high":
-			sb.WriteString("### High Priority\n\n")
+			sb.WriteString("### 🟠 High Priority\n\n")
 		case "medium":
-			sb.WriteString("### Medium Priority\n\n")
+			sb.WriteString("### 🟡 Medium Priority\n\n")
 		case "low":
-			sb.WriteString("### Low Priority\n\n")
+			sb.WriteString("### 🟢 Low Priority\n\n")
 		}
 
 		// List findings
 		for i, gf := range findings {
 			sb.WriteString(formatGroupedFinding(i+1, gf))
-			sb.WriteString("\n")
+
+			// Add separator between findings for better readability
+			if i < len(findings)-1 {
+				sb.WriteString("---\n\n")
+			}
 		}
 
 		sb.WriteString("\n")
@@ -341,35 +345,34 @@ func formatGroupedFinding(index int, gf GroupedFinding) string {
 	var sb strings.Builder
 	f := gf.Finding
 
-	// Title with collapsible details
+	// Title with component badge
 	confidence := ""
 	if f.Confidence != "" {
-		confidence = fmt.Sprintf(" · AI confidence: %s", f.Confidence)
+		confidence = fmt.Sprintf(" · %s confidence", f.Confidence)
 	}
 
-	sb.WriteString(fmt.Sprintf("<details>\n<summary><strong>%d. %s</strong> · <code>%s</code>%s</summary>\n\n",
-		index, f.Title, f.Component, confidence))
+	sb.WriteString(fmt.Sprintf("#### ⚠️ %d. %s\n\n", index, f.Title))
+	sb.WriteString(fmt.Sprintf("`%s`%s\n\n", f.Component, confidence))
 
-	// Description and Impact combined
+	// Description
 	if f.Description != "" {
 		sb.WriteString(f.Description)
 		sb.WriteString("\n\n")
 	}
 
+	// Impact and Action in blockquotes for visual emphasis
 	if f.Impact != "" {
-		sb.WriteString("**Impact:** ")
+		sb.WriteString("> **Impact:** ")
 		sb.WriteString(f.Impact)
 		sb.WriteString("\n\n")
 	}
 
-	// Required Actions
 	if f.Action != "" {
-		sb.WriteString("**Action:** ")
+		sb.WriteString("> **Action:** ")
 		sb.WriteString(f.Action)
 		sb.WriteString("\n\n")
 	}
 
-	sb.WriteString("</details>\n")
 	return sb.String()
 }
 
