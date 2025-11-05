@@ -247,7 +247,12 @@ func (d *Detector) analyzeAndAnnotateFindings(ctx context.Context, analysisConte
 // buildConsolidatedContext builds analysis context for multiple releases
 func (d *Detector) buildConsolidatedContext(releases []Release, allVersionChanges map[string][]VersionChange, externalChanges, componentDiffs map[string]string) string {
 	ctx := "# Consolidated Release Analysis\n\n"
-	ctx += fmt.Sprintf("Analyzing %d provider releases together:\n", len(releases))
+	ctx += "## Environment\n"
+	ctx += "- **Platform**: Linux-only (Flatcar Container Linux)\n"
+	ctx += "- **Windows Support**: NO - Do NOT report Windows-related changes\n"
+	ctx += "- **Experimental Features**: Generally NOT enabled - Be cautious about alpha/beta API warnings\n\n"
+	
+	ctx += fmt.Sprintf("## Analyzing %d provider releases:\n", len(releases))
 	for _, release := range releases {
 		ctx += fmt.Sprintf("- %s %s\n", release.Provider, release.Version)
 	}
@@ -315,6 +320,13 @@ func (d *Detector) extractProviderFromFinding(finding Finding) string {
 // buildAnalysisContext constructs the full context string for LLM analysis
 func buildAnalysisContext(release Release, versionChanges []VersionChange, externalChanges, componentDiffs map[string]string) string {
 	ctx := fmt.Sprintf("# Release Analysis: %s %s\n\n", release.Provider, release.Version)
+	
+	// Add environment context
+	ctx += "## Environment\n"
+	ctx += "- **Platform**: Linux-only (Flatcar Container Linux)\n"
+	ctx += "- **Windows Support**: NO - Do NOT report Windows-related changes\n"
+	ctx += "- **Experimental Features**: Generally NOT enabled - Be cautious about alpha/beta API warnings\n\n"
+	
 	ctx += buildReadmeSection(release.README)
 	ctx += buildVersionChangesSection(versionChanges)
 	ctx += buildExternalChangelogsSection(externalChanges)

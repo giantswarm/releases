@@ -136,12 +136,21 @@ Your task is to identify potential breaking changes that could affect customers 
 
 ## Instructions
 
-Analyze the provided release information and identify any breaking changes. Consider:
+**CRITICAL - Understanding the Upgrade Path:**
+The context shows version changes in "vX.Y.Z → vA.B.C" format, which means:
+- The user is CURRENTLY on version vX.Y.Z (the LEFT side)
+- They are UPGRADING TO version vA.B.C (the RIGHT side)
+- ONLY report changes that affect moving from vX.Y.Z to vA.B.C
 
-**CRITICAL**: Pay attention to version upgrade paths. The context will show "vX.Y.Z → vA.B.C" format.
-- ONLY report changes that affect THIS SPECIFIC UPGRADE PATH
-- If a changelog mentions "affects upgrades from < v1.32" but the user is already on v1.33, DO NOT report it
-- Ignore backward compatibility notes for versions the user has already passed
+**Examples:**
+- "Kubernetes: v1.34.1 → v1.35.0" means: upgrading FROM 1.34.1 TO 1.35.0
+  - Report breaking changes NEW in Kubernetes 1.35
+  - DO NOT report changes from older versions (1.32, 1.33, 1.34.0) - user already has those
+- "Flatcar: v4230.2.3 → v4230.2.4" means: patch upgrade within same major version
+  - Only report if there's an explicit BREAKING CHANGE note
+  - DO NOT report general warnings from earlier 4230.x versions
+
+Analyze the provided release information and identify any breaking changes. Consider:
 
 1. **Infrastructure Changes**
    - OS-level changes (e.g., cgroups v1 removal in Flatcar)
@@ -177,6 +186,24 @@ For each breaking change found, provide:
 - **confidence**: high (explicitly stated as breaking) | medium (likely breaking) | low (potentially breaking)
 - **raw_text**: The exact text from the changelog that triggered this finding
 
+## DO NOT REPORT (Critical Filters)
+
+**1. Backward Compatibility Notes for Already-Passed Versions**
+   - If upgrading 1.33.5 → 1.34.1, DO NOT report notes like "affects upgrades from < 1.32" or "Before updating from Kubernetes < 1.32"
+   - The user has ALREADY passed version 1.32, so these warnings don't apply
+
+**2. Platform-Specific Changes for Unused Platforms**
+   - DO NOT report Windows-related changes (Windows scheduler, Windows feature gates, HostNetworkingService)
+   - This is a Linux-only environment using Flatcar Container Linux
+
+**3. Alpha/Experimental Features Unless Explicitly Enabled**
+   - DRA (Dynamic Resource Allocation) is alpha/beta - only report if there's clear evidence it's being used
+   - Don't report alpha API removals unless they're widely adopted
+
+**4. Patch-Level Upgrades**
+   - For X.Y.Z → X.Y.Z+1 upgrades (e.g., 4230.2.3 → 4230.2.4), breaking changes are extremely rare
+   - Only report if there's an explicit "BREAKING" or "ACTION REQUIRED" note
+
 ## Output Format
 
 Return ONLY a JSON array of findings. Do NOT include any markdown formatting, code blocks, or explanatory text. Just pure JSON.
@@ -192,12 +219,35 @@ Example - BAD (too generic):
   "action": "Review the Kubernetes 1.32 changelog for API deprecations and removals"  ← BAD: Not specific!
 }
 
+Example - BAD (wrong version context) - upgrading 1.33.5 → 1.34.1:
+{
+  "severity": "critical",
+  "component": "Kubernetes",
+  "title": "DRA v1alpha3 API removed",
+  "description": "The v1beta1 API was introduced in 1.32",
+  "action": "Before updating from Kubernetes < 1.32, delete all resources"  ← BAD: User is already on 1.33.5!
+}
+
+Example - BAD (Windows on Linux cluster):
+{
+  "severity": "medium",
+  "component": "Kubernetes",
+  "title": "Windows scheduler profile removed"  ← BAD: This is a Linux-only cluster!
+}
+
+Example - BAD (patch upgrade noise) - upgrading 4230.2.3 → 4230.2.4:
+{
+  "severity": "medium",
+  "component": "Flatcar",
+  "title": "CGroups V1 deprecated in 4230.2.0"  ← BAD: This is a patch upgrade, 4230.2.0 is already passed!
+}
+
 Example - GOOD (specific from changelog):
 {
   "severity": "high",
   "component": "Kubernetes",
   "title": "flowcontrol.apiserver.k8s.io/v1beta3 API removed",
-  "description": "The flowcontrol.apiserver.k8s.io/v1beta3 API version is removed in 1.32. Use v1 instead.",
+  "description": "The flowcontrol.apiserver.k8s.io/v1beta3 API version is removed in 1.34. Use v1 instead.",
   "impact": "Manifests using v1beta3 FlowSchema or PriorityLevelConfiguration will fail",
   "action": "Update all FlowSchema and PriorityLevelConfiguration manifests to use flowcontrol.apiserver.k8s.io/v1",
   "confidence": "high",
