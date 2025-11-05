@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"io"
 	"net/http"
-	"os"
 	"regexp"
 	"strings"
 )
@@ -41,7 +40,7 @@ func (d *Detector) analyzeWithLLM(ctx context.Context, analysisContext string) (
 func (d *Detector) callAnthropicAPI(ctx context.Context, prompt string) ([]Finding, error) {
 	reqBody := anthropicRequest{
 		Model:     "claude-sonnet-4-5-20250929",
-		MaxTokens: 4096,
+		MaxTokens: 8192, // Increased to allow longer responses with multiple findings
 		Messages: []message{
 			{
 				Role:    "user",
@@ -171,17 +170,22 @@ func parseFindings(responseText string) ([]Finding, error) {
 		fmt.Printf("DEBUG: Array brackets not found properly (start=%d, end=%d)\n", startIdx, endIdx)
 	}
 
-	// Debug: show first 500 chars of response and save full response to file
+	// Debug: show more of the response for troubleshooting
+	fmt.Printf("\n=== DEBUG: Full LLM Response (%d bytes) ===\n", len(responseText))
+	if len(responseText) > 2000 {
+		fmt.Printf("%s\n...\n[middle %d bytes omitted]\n...\n%s\n", 
+			responseText[:1000], 
+			len(responseText)-2000,
+			responseText[len(responseText)-1000:])
+	} else {
+		fmt.Println(responseText)
+	}
+	fmt.Println("=== END DEBUG ===")
+	
 	debug := responseText
 	if len(debug) > 500 {
 		debug = debug[:500] + "..."
 	}
-	
-	// Save full response to file for debugging
-	if err := os.WriteFile("llm-response-debug.txt", []byte(responseText), 0644); err == nil {
-		fmt.Printf("DEBUG: Full LLM response saved to llm-response-debug.txt (%d bytes)\n", len(responseText))
-	}
-	
 	return nil, fmt.Errorf("failed to parse response as JSON. Response starts with: %s", debug)
 }
 
