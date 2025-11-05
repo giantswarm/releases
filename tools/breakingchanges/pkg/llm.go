@@ -97,15 +97,15 @@ func parseFindings(responseText string) ([]Finding, error) {
 
 	// If not pure JSON, try to extract JSON from markdown code blocks or find JSON array
 	// Strategy: look for opening [ and closing ] of JSON array
-	
+
 	// First, try standard markdown code block patterns
 	patterns := []string{
-		"```json\\s*\n([\\s\\S]*?)```",   // ```json\n ... ``` (with closing)
-		"```json\\s*\n([\\s\\S]+?)$",     // ```json\n ... (no closing, to end of string)
-		"```json\\s+([\\s\\S]*?)```",     // ```json ... ``` (with closing)
-		"```json\\s+([\\s\\S]+?)$",       // ```json ... (no closing)
-		"```\\s*\n([\\s\\S]*?)```",       // ```\n ... ``` (with closing)
-		"```\\s*\n([\\s\\S]+?)$",         // ```\n ... (no closing)
+		"```json\\s*\n([\\s\\S]*?)```", // ```json\n ... ``` (with closing)
+		"```json\\s*\n([\\s\\S]+?)$",   // ```json\n ... (no closing, to end of string)
+		"```json\\s+([\\s\\S]*?)```",   // ```json ... ``` (with closing)
+		"```json\\s+([\\s\\S]+?)$",     // ```json ... (no closing)
+		"```\\s*\n([\\s\\S]*?)```",     // ```\n ... ``` (with closing)
+		"```\\s*\n([\\s\\S]+?)$",       // ```\n ... (no closing)
 	}
 
 	for i, pattern := range patterns {
@@ -129,23 +129,23 @@ func parseFindings(responseText string) ([]Finding, error) {
 			fmt.Printf("DEBUG: Pattern %d did not match\n", i)
 		}
 	}
-	
+
 	// Last resort: try to find JSON array by looking for [ ... ]
 	fmt.Println("DEBUG: Trying to find raw JSON array...")
 	startIdx := strings.Index(responseText, "[")
 	endIdx := strings.LastIndex(responseText, "]")
 	fmt.Printf("DEBUG: Array search - startIdx: %d, endIdx: %d, total length: %d\n", startIdx, endIdx, len(responseText))
-	
+
 	if startIdx >= 0 && endIdx > startIdx {
 		jsonStr := strings.TrimSpace(responseText[startIdx : endIdx+1])
 		fmt.Printf("DEBUG: Found potential JSON array at positions %d-%d (%d bytes)\n", startIdx, endIdx, len(jsonStr))
-		
+
 		// Show beginning and end of extracted JSON
 		if len(jsonStr) > 500 {
 			fmt.Printf("DEBUG: Array starts: %s...\n", jsonStr[:200])
 			fmt.Printf("DEBUG: Array ends: ...%s\n", jsonStr[len(jsonStr)-200:])
 		}
-		
+
 		if err := json.Unmarshal([]byte(jsonStr), &findings); err == nil {
 			return findings, nil
 		} else {
@@ -173,15 +173,15 @@ func parseFindings(responseText string) ([]Finding, error) {
 	// Debug: show more of the response for troubleshooting
 	fmt.Printf("\n=== DEBUG: Full LLM Response (%d bytes) ===\n", len(responseText))
 	if len(responseText) > 2000 {
-		fmt.Printf("%s\n...\n[middle %d bytes omitted]\n...\n%s\n", 
-			responseText[:1000], 
+		fmt.Printf("%s\n...\n[middle %d bytes omitted]\n...\n%s\n",
+			responseText[:1000],
 			len(responseText)-2000,
 			responseText[len(responseText)-1000:])
 	} else {
 		fmt.Println(responseText)
 	}
 	fmt.Println("=== END DEBUG ===")
-	
+
 	debug := responseText
 	if len(debug) > 500 {
 		debug = debug[:500] + "..."
@@ -229,14 +229,29 @@ Analyze the provided release information and identify any breaking changes. Cons
    - System daemon changes
    - **Check version ranges**: If a Flatcar warning mentions version 4230.2.0 but upgrade is 4230.2.3→4230.2.4, ignore it
 
-2. **Kubernetes Changes**
-   - **CRITICAL**: Look for "⚠️ URGENT UPGRADE NOTES ⚠️" section FIRST - these are mandatory action items
-   - **IMPORTANT**: Read the Kubernetes changelog section and extract SPECIFIC API deprecations, removals, and behavioral changes
-   - List the exact APIs being deprecated/removed (e.g., "batch/v1beta1 CronJob removed")
-   - Note feature gate changes with their implications
-   - Identify admission controller or RBAC changes that affect workloads
-   - Pay special attention to metrics label changes, removed flags, and static pod admission changes
-   - **Check context**: If upgrading 1.33.5→1.34.1, only report changes NEW in 1.34
+2. **Kubernetes Changes** - Focus on these sections in priority order:
+   
+   **PRIORITY 1 - URGENT UPGRADE NOTES** (Most Critical):
+   - Look for "⚠️ URGENT UPGRADE NOTES ⚠️" section FIRST
+   - These are mandatory reading before upgrade - report ALL items from this section
+   - Examples: metrics label changes, removed flags, admission changes
+   
+   **PRIORITY 2 - DEPRECATION SECTION** (Critical):
+   - Focus on the "### Deprecation" section - these are removals and deprecations
+   - List SPECIFIC APIs being deprecated/removed (e.g., "batch/v1beta1 CronJob removed")
+   - Flag removals, API version removals, feature deprecations
+   - These WILL break customer workloads if they're using the deprecated features
+   
+   **PRIORITY 3 - EXPLICIT BREAKING CHANGES** (High):
+   - Look for sections titled "Breaking Change" or "Breaking Changes"
+   - Report items explicitly marked as breaking
+   
+   **LOWER PRIORITY - API Changes section**:
+   - Most "API Change" items are NEW features (additive, not breaking)
+   - Only report if there's a clear REMOVAL or BREAKING change
+   - Skip new features, new fields, new APIs (these don't break existing workloads)
+   
+   **Check context**: If upgrading 1.33.5→1.34.1, only report changes NEW in 1.34
 
 3. **Component Changes** (Apps and Components) - Review diffs even without "BREAKING" keyword
    
@@ -306,19 +321,60 @@ For each breaking or potentially breaking change, provide:
 
 ## DO NOT REPORT (Critical Filters)
 
-**1. Backward Compatibility Notes for Already-Passed Versions**
-   - If upgrading 1.33.5 → 1.34.1, DO NOT report notes like "affects upgrades from < 1.32" or "Before updating from Kubernetes < 1.32"
-   - The user has ALREADY passed version 1.32, so these warnings don't apply
+**1. Backward Compatibility Notes for Already-Passed Versions** ⚠️ MOST COMMON FALSE POSITIVE ⚠️
+   
+   **Rule:** If a warning says "affects upgrades from < vX.Y" or "before updating from < vX.Y", compare X.Y to the FROM version:
+   - If FROM version >= X.Y, the user has ALREADY passed that version → DO NOT REPORT
+   
+   **Examples:**
+   - ❌ BAD: Upgrading 1.33.5 → 1.34.1, reporting "affects upgrades from < 1.32" 
+     → User is at 1.33.5, already past 1.32, warning doesn't apply
+   
+   - ❌ BAD: Upgrading 1.33.5 → 1.34.1, reporting "DRA v1alpha3 removed, must delete resources before updating from < 1.32"
+     → User is at 1.33.5, already past 1.32, this was handled in previous upgrade
+   
+   - ✅ GOOD: Upgrading 1.33.5 → 1.34.1, reporting "Kubelet --cloud-config flag removed in 1.34"
+     → This is NEW in 1.34, affects this specific upgrade
+   
+   **Critical:** READ THE FULL WARNING TEXT. Look for phrases like:
+   - "before updating from Kubernetes < X.Y"
+   - "affects upgrades from versions < X.Y"  
+   - "when upgrading from < X.Y"
+   - "stored using Kubernetes < X.Y"
+   
+   If the FROM version is >= X.Y, SKIP the warning entirely.
 
 **2. Platform-Specific Changes for Unused Platforms**
    - DO NOT report Windows-related changes (Windows scheduler, Windows feature gates, HostNetworkingService)
    - This is a Linux-only environment using Flatcar Container Linux
 
-**3. Alpha/Experimental Features Unless Explicitly Enabled**
+**3. Alpha/Experimental Features and Label Changes**
    - DRA (Dynamic Resource Allocation) is alpha/beta - only report if there's clear evidence it's being used
    - Don't report alpha API removals unless they're widely adopted
+   - DO NOT report alpha feature label renames (e.g., "resource.k8s.io/admin-access" → "resource.kubernetes.io/admin-access")
+   - Exception: If it's in "Urgent Upgrade Notes" section, report it
 
-**4. Low-Risk Patch Upgrades**
+**4. Internal/SDK Changes (Not Customer-Facing)**
+   - DO NOT report internal library changes like:
+     - "gogo protocol definitions removed" - affects SDK users, not workloads
+     - "protobuf" package changes - internal dependency changes
+     - CRI API internal changes (unless it breaks container runtimes)
+     - Internal code generator changes
+   - These don't affect running customer workloads
+
+**5. Bug Fixes That Look Like Breaking Changes**
+   - DO NOT report fixes that make failures **explicit** instead of **silent**:
+     - ❌ BAD: "Static pods denied admission for API object references"
+       → This is a FIX. Previously pods failed silently, now they fail explicitly
+     - ❌ BAD: "Validation now rejects invalid X"
+       → This is a FIX. If it was invalid before, it should have failed
+   
+   **Rule:** If a change **prevents silent failures** or **makes errors visible**, it's a fix, not a breaking change
+   - Old behavior: Thing fails silently / continues with errors
+   - New behavior: Thing fails explicitly / rejects invalid input
+   - This is **fixing broken behavior**, not breaking working behavior
+
+**6. Low-Risk Patch Upgrades**
    - For small patch upgrades (e.g., cert-exporter 2.9.12 → 2.9.13), only report if there are notable changes
    - For Flatcar patch within same major (4230.2.3 → 4230.2.4), only report explicit warnings
    - Use low/medium severity for informational changes
@@ -398,6 +454,28 @@ Example - BAD (patch upgrade noise) - upgrading 4230.2.3 → 4230.2.4:
   "severity": "medium",
   "component": "Flatcar",
   "title": "CGroups V1 deprecated in 4230.2.0"  ← BAD: This is a patch upgrade, 4230.2.0 is already passed!
+}
+
+Example - BAD (internal SDK change):
+{
+  "severity": "medium",
+  "component": "Kubernetes",
+  "title": "Deprecated gogo protocol definitions removed from cri-api"  ← BAD: This is internal tooling, not customer-facing!
+}
+
+Example - BAD (alpha feature label rename):
+{
+  "severity": "medium",
+  "component": "Kubernetes",
+  "title": "DRA admin-access label changed from alpha to beta naming"  ← BAD: Alpha feature, customers not using it!
+}
+
+Example - BAD (bug fix, not breaking change):
+{
+  "severity": "high",
+  "component": "Kubernetes",
+  "title": "Static pods denied admission for API object references"  ← BAD: This is a FIX making silent failures explicit!
+  "description": "Static pods using ConfigMap or Secret references will be rejected"
 }
 
 Example - GOOD (specific Kubernetes change):

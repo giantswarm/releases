@@ -79,10 +79,10 @@ func GenerateReport(findings []Finding, prNumber, commitSHA string) string {
 	sb.WriteString("3. **Test** critical and high severity changes in a dev environment before rolling out\n")
 	sb.WriteString("4. **Document** confirmed breaking changes in the release README and migration guide\n")
 	sb.WriteString("5. **Notify** customers about breaking changes in release announcements\n\n")
-	
+
 	sb.WriteString("> ⚠️ **Note:** This analysis is automated and may include false positives or miss breaking changes. ")
 	sb.WriteString("Always review the full changelogs and test in a non-production environment.\n\n")
-	
+
 	sb.WriteString("<details>\n<summary>ℹ️ About this analysis</summary>\n\n")
 	sb.WriteString("This automated breaking change detector uses AI to analyze:\n")
 	sb.WriteString("- Kubernetes and Flatcar changelogs (especially Urgent Upgrade Notes)\n")
@@ -150,7 +150,6 @@ func formatFinding(f Finding, index int) string {
 		sb.WriteString("\n\n")
 	}
 
-
 	// Raw text (in code block for context)
 	if f.RawText != "" {
 		sb.WriteString("#### 📄 Original Text\n\n")
@@ -217,7 +216,7 @@ func GenerateReportWithProviders(findingsWithProviders []FindingWithProvider, pr
 	for _, fwp := range findingsWithProviders {
 		// Create a key based on title and component to identify duplicates
 		key := fmt.Sprintf("%s|%s", fwp.Finding.Title, fwp.Finding.Component)
-		
+
 		if existing, ok := findingGroups[key]; ok {
 			// Add this provider to existing finding
 			existing.Providers[fwp.Provider] = fwp.Version
@@ -241,8 +240,8 @@ func GenerateReportWithProviders(findingsWithProviders []FindingWithProvider, pr
 	// Sort by severity
 	sort.Slice(groupedFindings, func(i, j int) bool {
 		severityOrder := map[string]int{"critical": 0, "high": 1, "medium": 2, "low": 3}
-		return severityOrder[strings.ToLower(groupedFindings[i].Finding.Severity)] < 
-		       severityOrder[strings.ToLower(groupedFindings[j].Finding.Severity)]
+		return severityOrder[strings.ToLower(groupedFindings[i].Finding.Severity)] <
+			severityOrder[strings.ToLower(groupedFindings[j].Finding.Severity)]
 	})
 
 	var sb strings.Builder
@@ -356,21 +355,15 @@ func formatGroupedFinding(index int, gf GroupedFinding) string {
 	}
 	sort.Strings(providers)
 	providerStr := strings.Join(providers, ", ")
-	
-	// Show if it affects all/multiple providers
-	affectsLabel := ""
-	if len(gf.Providers) > 1 {
-		affectsLabel = fmt.Sprintf(" <em>(affects %d providers)</em>", len(gf.Providers))
-	}
 
 	// Title with collapsible details
 	confidence := ""
 	if f.Confidence != "" {
 		confidence = fmt.Sprintf(" <em>(%s confidence)</em>", f.Confidence)
 	}
-	
-	sb.WriteString(fmt.Sprintf("<details>\n<summary><strong>%d. %s</strong> <code>%s</code>%s%s</summary>\n\n",
-		index, f.Title, f.Component, confidence, affectsLabel))
+
+	sb.WriteString(fmt.Sprintf("<details>\n<summary><strong>%d. %s</strong> <code>%s</code>%s</summary>\n\n",
+		index, f.Title, f.Component, confidence))
 
 	// Affected Providers
 	sb.WriteString("#### 📦 Affected Releases\n\n")
@@ -430,4 +423,3 @@ func min(a, b int) int {
 	}
 	return b
 }
-
