@@ -101,10 +101,12 @@ func parseFindings(responseText string) ([]Finding, error) {
 	
 	// First, try standard markdown code block patterns
 	patterns := []string{
-		"```json\\s*\n([\\s\\S]*?)```",  // ```json\n ... ```
-		"```json\\s+([\\s\\S]*?)```",    // ```json ... ```
-		"```\\s*\n([\\s\\S]*?)```",      // ```\n ... ```
-		"```\\s+([\\s\\S]*?)```",        // ``` ... ```
+		"```json\\s*\n([\\s\\S]*?)```",   // ```json\n ... ``` (with closing)
+		"```json\\s*\n([\\s\\S]+?)$",     // ```json\n ... (no closing, to end of string)
+		"```json\\s+([\\s\\S]*?)```",     // ```json ... ``` (with closing)
+		"```json\\s+([\\s\\S]+?)$",       // ```json ... (no closing)
+		"```\\s*\n([\\s\\S]*?)```",       // ```\n ... ``` (with closing)
+		"```\\s*\n([\\s\\S]+?)$",         // ```\n ... (no closing)
 	}
 
 	for i, pattern := range patterns {
@@ -133,14 +135,40 @@ func parseFindings(responseText string) ([]Finding, error) {
 	fmt.Println("DEBUG: Trying to find raw JSON array...")
 	startIdx := strings.Index(responseText, "[")
 	endIdx := strings.LastIndex(responseText, "]")
+	fmt.Printf("DEBUG: Array search - startIdx: %d, endIdx: %d, total length: %d\n", startIdx, endIdx, len(responseText))
+	
 	if startIdx >= 0 && endIdx > startIdx {
 		jsonStr := strings.TrimSpace(responseText[startIdx : endIdx+1])
 		fmt.Printf("DEBUG: Found potential JSON array at positions %d-%d (%d bytes)\n", startIdx, endIdx, len(jsonStr))
+		
+		// Show beginning and end of extracted JSON
+		if len(jsonStr) > 500 {
+			fmt.Printf("DEBUG: Array starts: %s...\n", jsonStr[:200])
+			fmt.Printf("DEBUG: Array ends: ...%s\n", jsonStr[len(jsonStr)-200:])
+		}
+		
 		if err := json.Unmarshal([]byte(jsonStr), &findings); err == nil {
 			return findings, nil
 		} else {
 			fmt.Printf("DEBUG: Raw array parse failed: %v\n", err)
+			// Show where the error occurred
+			if jsonErr, ok := err.(*json.SyntaxError); ok {
+				fmt.Printf("DEBUG: JSON syntax error at byte offset %d\n", jsonErr.Offset)
+				if jsonErr.Offset > 0 && jsonErr.Offset < int64(len(jsonStr)) {
+					start := int(jsonErr.Offset) - 50
+					if start < 0 {
+						start = 0
+					}
+					end := int(jsonErr.Offset) + 50
+					if end > len(jsonStr) {
+						end = len(jsonStr)
+					}
+					fmt.Printf("DEBUG: Context around error: ...%s...\n", jsonStr[start:end])
+				}
+			}
 		}
+	} else {
+		fmt.Printf("DEBUG: Array brackets not found properly (start=%d, end=%d)\n", startIdx, endIdx)
 	}
 
 	// Debug: show first 500 chars of response and save full response to file
