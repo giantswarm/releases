@@ -23,4 +23,3 @@ jobs:
           else
             echo "Release sdk/${{ github.event.inputs.version }} already exists."
           fi
-          
