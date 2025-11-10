@@ -381,7 +381,7 @@ to all Giant Swarm installations.
   - v32.1
     - [v32.1.0](https://github.com/giantswarm/releases/tree/master/azure/v32.1.0)
   - v32.0
-    - [v32.0.0](https://github.com/giantswarm/releases/tree/master/azure/v32.0.0)
+    - [v32.0.0](https://github.com/giantswarm/releases/tree/master/azure/archived/v32.0.0)
 
 - v31
   - v31.1
@@ -395,12 +395,12 @@ to all Giant Swarm installations.
 
 - v29
   - v29.5
-    - [v29.5.1](https://github.com/giantswarm/releases/tree/master/azure/v29.5.1)
+    - [v29.5.1](https://github.com/giantswarm/releases/tree/master/azure/archived/v29.5.1)
     - [v29.5.0](https://github.com/giantswarm/releases/tree/master/azure/archived/v29.5.0)
   - v29.4
     - [v29.4.0](https://github.com/giantswarm/releases/tree/master/azure/archived/v29.4.0)
   - v29.3
-    - [v29.3.0](https://github.com/giantswarm/releases/tree/master/azure/v29.3.0)
+    - [v29.3.0](https://github.com/giantswarm/releases/tree/master/azure/archived/v29.3.0)
   - v29.2
     - [v29.2.0](https://github.com/giantswarm/releases/tree/master/azure/archived/v29.2.0)
   - v29.1
