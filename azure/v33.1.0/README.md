@@ -24,11 +24,11 @@
 
 - cert-exporter from v2.9.12 to v2.9.13
 - cert-manager from v3.9.3 to v3.9.4
-- etcd-defrag from v1.2.1 to v1.2.2
+- etcd-defrag from v1.2.1 to v1.2.3
 - etcd-k8s-res-count-exporter from v1.10.9 to v1.10.10
 - k8s-audit-metrics from v0.10.8 to v0.10.9
 - node-exporter from v1.20.7 to v1.20.8
-- security-bundle from v1.13.1 to v1.14.0
+- security-bundle from v1.13.1 to v1.15.0
 
 ### cert-exporter [v2.9.12...v2.9.13](https://github.com/giantswarm/cert-exporter/compare/v2.9.12...v2.9.13)
 
@@ -49,10 +49,11 @@
 
 - Upgrade cert-manager to v1.18.2.
 
-### etcd-defrag [v1.2.1...v1.2.2](https://github.com/giantswarm/etcd-defrag-app/compare/v1.2.1...v1.2.2)
+### etcd-defrag [v1.2.1...v1.2.3](https://github.com/giantswarm/etcd-defrag-app/compare/v1.2.1...v1.2.3)
 
 #### Changed
 
+- Chart: Update dependency ahrtr/etcd-defrag to v0.36.0. ([#69](https://github.com/giantswarm/etcd-defrag-app/pull/69))
 - Chart: Update dependency ahrtr/etcd-defrag to v0.35.0. ([#64](https://github.com/giantswarm/etcd-defrag-app/pull/64))
 
 ### etcd-k8s-res-count-exporter [v1.10.9...v1.10.10](https://github.com/giantswarm/etcd-kubernetes-resources-count-exporter/compare/v1.10.9...v1.10.10)
@@ -73,10 +74,16 @@
 
 - Go: Update dependencies.
 
-### security-bundle [v1.13.1...v1.14.0](https://github.com/giantswarm/security-bundle/compare/v1.13.1...v1.14.0)
+### security-bundle [v1.13.1...v1.15.0](https://github.com/giantswarm/security-bundle/compare/v1.13.1...v1.15.0)
+
+#### Added
+
+- Add `kubescape` (app) version v0.0.4.
 
 #### Changed
 
+- Update `kyverno` (app) to v0.21.1.
+- Update `kyverno-crds` (app) to v1.15.0.
 - Update `kyverno` (app) to v0.20.1.
 - Update `kyverno-crds` (app) to v1.14.0.
 - Update `kyverno-policies` (app) to v0.24.0.

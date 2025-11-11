@@ -35,7 +35,7 @@ spec:
     dependsOn:
     - vertical-pod-autoscaler-crd
   - name: etcd-defrag
-    version: 1.2.2
+    version: 1.2.3
     dependsOn:
     - kyverno-crds
   - name: etcd-k8s-res-count-exporter
@@ -93,7 +93,7 @@ spec:
     - prometheus-operator-crd
   - name: security-bundle
     catalog: giantswarm
-    version: 1.14.0
+    version: 1.15.0
     dependsOn:
     - prometheus-operator-crd
   - name: teleport-kube-agent
@@ -118,5 +118,5 @@ spec:
     version: 1.33.5
   - name: os-tooling
     version: 1.26.2
-  date: "2025-11-05T12:47:19Z"
+  date: "2025-11-11T18:24:07Z"
   state: active
