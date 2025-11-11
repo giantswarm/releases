@@ -138,10 +138,10 @@ jobs:
           PROVIDERS_TO_UPDATE="${{ steps.parse_command.outputs.provider }}${{ steps.parse_command.outputs.providers_list }}"
           DESCRIPTION_B64="${{ steps.parse_command.outputs.description }}"
           UPDATE_TYPE="${{ steps.parse_command.outputs.update_type }}"
-          
+
           # Decode description from base64
           DESCRIPTION=$(echo "$DESCRIPTION_B64" | base64 -d)
-          
+
           # For `devctl`, the provider for the `capa` directory is `aws`.
           if [[ " ${PROVIDERS_TO_UPDATE} " =~ " aws " ]]; then
             PROVIDERS_TO_UPDATE=$(echo "${PROVIDERS_TO_UPDATE}" | sed 's/aws/capa/g')
@@ -172,7 +172,7 @@ jobs:
               if [ -f "$README_FILE" ]; then
                 # Backup the entire README.md content before making changes
                 README_BACKUP=$(cat "$README_FILE")
-                
+
                 if grep -q "<< Add description here >>" "$README_FILE"; then
                   # Replace placeholder
                   sed -i "s/<< Add description here >>/$DESCRIPTION/g" "$README_FILE"
@@ -182,7 +182,7 @@ jobs:
                   sed -i "3c\\$DESCRIPTION" "$README_FILE"
                   echo "Updated existing description in README.md"
                 fi
-                
+
                 # Verify the change was made correctly and restore if needed
                 if ! grep -q "$DESCRIPTION" "$README_FILE"; then
                   echo "Description update failed, restoring original content"
@@ -192,7 +192,7 @@ jobs:
               # README updates are usually short, keep them expanded
               LOG_PART="### README updated for ${PROVIDER_DIR^^}\n\n"
               LOG_PART="${LOG_PART}📝 **README Description**: $DESCRIPTION\n\n"
-            
+
             elif [[ "$UPDATE_TYPE" == "announcement" ]]; then
               # Update announcement.md
               ANNOUNCEMENT_FILE="$PROVIDER_DIR/$RELEASE_NAME/announcement.md"
@@ -212,11 +212,11 @@ jobs:
                 else
                   PROVIDER_NAME=$(echo "$PROVIDER_DIR" | tr 'a-z' 'A-Z')
                 fi
-                
+
                 # Always recreate line 1 with the proper format
                 RELEASE_VERSION=$(echo "$RELEASE_NAME" | sed 's/v//')
                 NEW_LINE_1="**Workload cluster release v${RELEASE_VERSION} for ${PROVIDER_NAME} is available**. $DESCRIPTION"
-                
+
                 # Replace line 1 completely
                 sed -i "1c\\$NEW_LINE_1" "$ANNOUNCEMENT_FILE"
                 echo "Updated announcement.md with new description"
@@ -243,7 +243,7 @@ jobs:
           export DEVCTL_GITHUB_TOKEN=${{ secrets.TAYLORBOT_GITHUB_ACTION }}
           BRANCH_NAME="${{ steps.get_branch.outputs.result }}"
           PROVIDERS_TO_UPDATE="${{ steps.parse_command.outputs.provider }}${{ steps.parse_command.outputs.providers_list }}"
-          
+
           # For `devctl`, the provider for the `capa` directory is `aws`.
           # We must translate `aws` to `capa` for directory lookups.
           if [[ " ${PROVIDERS_TO_UPDATE} " =~ " aws " ]]; then
@@ -294,19 +294,19 @@ jobs:
             fi
 
             echo "Running command: $DEVCTL_COMMAND"
-            
+
             # Check for changes before running the command
             BEFORE_HASH=""
             if [ -f "${PROVIDER_DIR}/${RELEASE_NAME}/release.yaml" ]; then
               BEFORE_HASH=$(sha256sum "${PROVIDER_DIR}/${RELEASE_NAME}/release.yaml" | cut -d' ' -f1)
             fi
-            
+
             # Backup the current release.yaml to extract version information later
             RELEASE_YAML_BACKUP=""
             if [ -f "${PROVIDER_DIR}/${RELEASE_NAME}/release.yaml" ]; then
               RELEASE_YAML_BACKUP=$(cat "${PROVIDER_DIR}/${RELEASE_NAME}/release.yaml")
             fi
-            
+
             # Backup existing descriptions before devctl overwrites them
             README_DESCRIPTION_BACKUP=""
             ANNOUNCEMENT_BACKUP=""
@@ -318,7 +318,7 @@ jobs:
               # Extract existing announcement description (everything after "**. ")
               ANNOUNCEMENT_BACKUP=$(sed -n '1p' "${PROVIDER_DIR}/${RELEASE_NAME}/announcement.md" | sed 's/.*\*\*\. //' || true)
             fi
-            
+
             if ! output=$(eval "$DEVCTL_COMMAND" 2>&1 | uniq); then
                 # Error case - always collapse
                 LOG_PART="<details><summary>User-requested changes for ${PROVIDER_DIR^^}</summary>\n\n"
@@ -335,29 +335,29 @@ jobs:
                 if [ -f "${PROVIDER_DIR}/${RELEASE_NAME}/release.yaml" ]; then
                   AFTER_HASH=$(sha256sum "${PROVIDER_DIR}/${RELEASE_NAME}/release.yaml" | cut -d' ' -f1)
                 fi
-                
+
                 # Build the content first (without details wrapper)
                 CONTENT_PART=""
-                
+
                 # Determine if changes were made
                 if [[ "$BEFORE_HASH" != "$AFTER_HASH" ]]; then
                   # Files changed, show what was requested
                   if [[ -z "$(echo -e "${output}" | tr -d '[:space:]')" ]]; then
                     # Generate a table showing what changed
                     CHANGES_TABLE=""
-                    
+
                     # Parse the requested changes and show them in table format
                     if [[ "$DEVCTL_ARGS" == *--app* ]]; then
                       CHANGES_TABLE="${CHANGES_TABLE}| APP NAME | CURRENT APP VERSION | DESIRED APP VERSION |\n"
                       CHANGES_TABLE="${CHANGES_TABLE}|----------|---------------------|---------------------|\n"
-                      
+
                       # Extract app changes from the arguments
                       APP_SPECS=$(echo "$DEVCTL_ARGS" | grep -oE '\--app [^ ]+' | sed 's/--app //')
                       for app_spec in $APP_SPECS; do
                         if [[ "$app_spec" == *@* ]]; then
                           app_name=$(echo "$app_spec" | cut -d'@' -f1)
                           app_version=$(echo "$app_spec" | cut -d'@' -f2)
-                          
+
                           # Try to find the current version from the release.yaml backup (before the update)
                           CURRENT_VERSION=""
                           if [[ -n "$RELEASE_YAML_BACKUP" ]]; then
@@ -367,7 +367,7 @@ jobs:
                               current_app == app && /^    version:/ { print $2; exit }
                             ')
                           fi
-                          
+
                           if [[ -n "$CURRENT_VERSION" ]]; then
                             CHANGES_TABLE="${CHANGES_TABLE}| $app_name | $CURRENT_VERSION | **$app_version** |\n"
                           else
@@ -376,21 +376,21 @@ jobs:
                         fi
                       done
                     fi
-                    
+
                     if [[ "$DEVCTL_ARGS" == *--component* ]]; then
                       if [[ -n "$CHANGES_TABLE" ]]; then
                         CHANGES_TABLE="${CHANGES_TABLE}\n"
                       fi
                       CHANGES_TABLE="${CHANGES_TABLE}| COMPONENT NAME | CURRENT VERSION | DESIRED VERSION |\n"
                       CHANGES_TABLE="${CHANGES_TABLE}|----------------|-----------------|----------------|\n"
-                      
+
                       # Extract component changes from the arguments
                       COMP_SPECS=$(echo "$DEVCTL_ARGS" | grep -oE '\--component [^ ]+' | sed 's/--component //')
                       for comp_spec in $COMP_SPECS; do
                         if [[ "$comp_spec" == *@* ]]; then
                           comp_name=$(echo "$comp_spec" | cut -d'@' -f1)
                           comp_version=$(echo "$comp_spec" | cut -d'@' -f2)
-                          
+
                           # Try to find the current version from the release.yaml backup (before the update)
                           CURRENT_COMP_VERSION=""
                           if [[ -n "$RELEASE_YAML_BACKUP" ]]; then
@@ -400,7 +400,7 @@ jobs:
                               current_comp == comp && /^    version:/ { print $2; exit }
                             ')
                           fi
-                          
+
                           if [[ -n "$CURRENT_COMP_VERSION" ]]; then
                             CHANGES_TABLE="${CHANGES_TABLE}| $comp_name | $CURRENT_COMP_VERSION | **$comp_version** |\n"
                           else
@@ -409,7 +409,7 @@ jobs:
                         fi
                       done
                     fi
-                    
+
                     if [[ -n "$CHANGES_TABLE" ]]; then
                       CONTENT_PART="${CONTENT_PART}${CHANGES_TABLE}\n"
                     else
@@ -422,11 +422,11 @@ jobs:
                   # No changes detected
                   CONTENT_PART="${CONTENT_PART}No changes detected for provider ${PROVIDER_DIR^^}. The requested app/component versions may already be present in the current release.\n\n"
                 fi
-                
+
                 # Count the number of lines in the output to determine if we should collapse it
                 # Count lines that look like table rows (contain |) as a proxy for number of changes
                 CHANGE_COUNT=$(echo -e "$output" | grep -c '|' || echo "0")
-                
+
                 # Only wrap in details if there are more than 5 changes (roughly 5 table rows)
                 if [[ $CHANGE_COUNT -gt 5 ]]; then
                   LOG_PART="<details><summary>User-requested changes for ${PROVIDER_DIR^^}</summary>\n\n"
@@ -436,10 +436,10 @@ jobs:
                   LOG_PART="### User-requested changes for ${PROVIDER_DIR^^}\n\n"
                   LOG_PART="${LOG_PART}${CONTENT_PART}"
                 fi
-                
+
                 FULL_LOG_CONTENT="${FULL_LOG_CONTENT}${LOG_PART}"
             fi
-            
+
             # Restore README description if it existed before devctl overwrote it
             if [[ -n "$README_DESCRIPTION_BACKUP" ]]; then
               sed -i "3c\\$README_DESCRIPTION_BACKUP" "${PROVIDER_DIR}/${RELEASE_NAME}/README.md"
@@ -461,7 +461,7 @@ jobs:
               else
                 PROVIDER_NAME=$(echo "$PROVIDER_DIR" | tr 'a-z' 'A-Z')
               fi
-              
+
               # Recreate line 1 with proper format when restoring
               RELEASE_VERSION=$(echo "$RELEASE_NAME" | sed 's/v//')
               NEW_LINE_1="**Workload cluster release v${RELEASE_VERSION} for ${PROVIDER_NAME} is available**. $ANNOUNCEMENT_BACKUP"
@@ -477,6 +477,67 @@ jobs:
           echo "DEVCTL_OUTPUT_COMMENT<<EOF" >> "$GITHUB_ENV"
           echo "$FULL_LOG_CONTENT" >> "$GITHUB_ENV"
           echo "EOF" >> "$GITHUB_ENV"
+
+      - name: Check Upgrade Path
+        if: success() && steps.parse_command.outputs.description_only != 'true' && steps.parse_command.outputs.devctl_args == ''
+        run: |
+          BRANCH_NAME="${{ steps.get_branch.outputs.result }}"
+          PROVIDERS_TO_UPDATE="${{ steps.parse_command.outputs.provider }}${{ steps.parse_command.outputs.providers_list }}"
+
+          # For `devctl`, the provider for the `capa` directory is `aws`.
+          if [[ " ${PROVIDERS_TO_UPDATE} " =~ " aws " ]]; then
+            PROVIDERS_TO_UPDATE=$(echo "${PROVIDERS_TO_UPDATE}" | sed 's/aws/capa/g')
+          fi
+
+          # Determine the release name from the branch.
+          RELEASE_NAME=$(echo "$BRANCH_NAME" | sed -n 's/release-\(v[0-9.]*\).*/\1/p')
+
+          for PROVIDER in $PROVIDERS_TO_UPDATE; do
+            PROVIDER_DIR=$PROVIDER
+            echo "Checking upgrade path for provider: $PROVIDER_DIR, version: $RELEASE_NAME"
+
+            # Check if release directory exists
+            if [ ! -d "$PROVIDER_DIR/$RELEASE_NAME" ]; then
+              echo "Release '$RELEASE_NAME' does not exist for provider '$PROVIDER_DIR'. Skipping upgrade path check."
+              continue
+            fi
+
+            # Run the upgrade path checker
+            cd tools/check-upgrade-path
+            go run . --provider $([ "$PROVIDER_DIR" == "capa" ] && echo "aws" || echo "$PROVIDER_DIR") --version "$RELEASE_NAME" --workdir ../.. --output "../../upgrade-path-warning-${PROVIDER_DIR}.md" || true
+            cd ../..
+          done
+
+      - name: Post Upgrade Path Warning
+        if: success() && steps.parse_command.outputs.description_only != 'true' && steps.parse_command.outputs.devctl_args == ''
+        uses: actions/github-script@v8
+        with:
+          github-token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+          script: |
+            const fs = require('fs');
+            const glob = require('glob');
+
+            // Find all warning files
+            const warningFiles = glob.sync('upgrade-path-warning-*.md');
+
+            if (warningFiles.length > 0) {
+              let combinedWarnings = '';
+              for (const file of warningFiles) {
+                if (fs.existsSync(file)) {
+                  const content = fs.readFileSync(file, 'utf8');
+                  combinedWarnings += content + '\n\n---\n\n';
+                }
+              }
+
+              if (combinedWarnings) {
+                await github.rest.issues.createComment({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number: ${{ github.event.issue.number }},
+                  body: combinedWarnings
+                });
+              }
+            }
 
       - name: Commit and push changes
         if: success() && (steps.parse_command.outputs.provider || steps.parse_command.outputs.providers_list)
