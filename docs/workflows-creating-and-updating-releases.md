@@ -43,10 +43,11 @@ Inputs:
 - New Kubernetes versions
 - Significant platform upgrades
 - Breaking changes
-- Scheduled quarterly (January, April, July, October)
+- Attempted monthly (every 1st of the month)
+- If an unreleased major exists, a minor release is created instead
 
 **Pre-flight Checks**:
-1. **Quarterly Schedule**: Only runs in months where `(month % 3 == 1)`
+1. **Unreleased Major Check**: Skips if there's an open (unmerged) PR for the next major version
 2. **Kubernetes Version**: Verifies new upstream K8s version exists
 3. **Alignment Check**: Determines if all providers are on the same major version
 4. **Existing PRs**: Skips if PRs already exist for the next major version
@@ -72,7 +73,7 @@ Dispatcher → Major Release Decider
 - Bug fixes
 - Feature improvements
 - No breaking changes
-- Scheduled monthly (all other months)
+- Scheduled monthly (runs when no unreleased major exists)
 
 **Pre-flight Checks**:
 1. **Existing PRs**: Checks for open minor release PRs

@@ -133,7 +133,6 @@ jobs:
             echo "is_manual=false" >> "$GITHUB_OUTPUT"
             echo "force_consolidated=false" >> "$GITHUB_OUTPUT"
             echo "provider_count=0" >> "$GITHUB_OUTPUT" # Not relevant for scheduled runs, but set a default.
-            MONTH=$(date +'%m')
 
             # For scheduled runs, we'll create separate jobs for major and minor releases
             # The individual job deciders will handle the logic for when to run
@@ -175,24 +174,25 @@ jobs:
           ALIGNMENT="aligned" # Default to aligned for manual runs
 
           if [[ "$IS_MANUAL" == 'false' ]]; then
-            echo "Scheduled run detected. Checking if this is a quarterly month for major releases."
-            MONTH=$(date +'%m')
-            # Major releases only on first month of each quarter (Jan, Apr, Jul, Oct)
-            if (( 10#${MONTH} % 3 != 1 )); then
-              echo "Not a quarterly month ($MONTH). Skipping major release."
-              echo "run_consolidated=false" >> "$GITHUB_OUTPUT"
-              echo "run_individual=false" >> "$GITHUB_OUTPUT"
-              exit 0
-            fi
-
-            echo "Quarterly month detected. Checking for existing major release PRs."
-            # Check if there are already open PRs for the next major version
+            echo "Scheduled run detected. Checking if there is an unreleased major version."
+            # Check if there are already open (unreleased) PRs for the next major version
             chmod +x ./tools/check-major-version-merged.sh
             # Split the provider list into individual arguments
             PROVIDER_ARGS=(${{ needs.dispatcher.outputs.provider_list }})
             MERGED_STATUS=$(./tools/check-major-version-merged.sh "${PROVIDER_ARGS[@]}" | grep 'merged=' | cut -d'=' -f2)
             LATEST_MAJOR=$(./tools/check-major-version-merged.sh "${PROVIDER_ARGS[@]}" | grep 'latest_major=' | cut -d'=' -f2)
             NEXT_MAJOR=$(./tools/check-major-version-merged.sh "${PROVIDER_ARGS[@]}" | grep 'next_major=' | cut -d'=' -f2)
+
+            # If merged=false, it means there's an unreleased major (open PR not yet merged)
+            if [[ "$MERGED_STATUS" == "false" ]]; then
+              echo "Found unreleased major version v$NEXT_MAJOR.0.0. Skipping major release creation."
+              echo "A minor release will be created instead."
+              echo "run_consolidated=false" >> "$GITHUB_OUTPUT"
+              echo "run_individual=false" >> "$GITHUB_OUTPUT"
+              exit 0
+            fi
+
+            echo "No unreleased major found. Checking for existing major release PRs."
 
             # Check for existing OPEN PRs for the next major version
             CONSOLIDATED_PR=$(gh pr list --repo "$GITHUB_REPOSITORY" --head "release-v$NEXT_MAJOR.0.0" --state open --json number --jq '.[0].number' 2>/dev/null || echo "")
