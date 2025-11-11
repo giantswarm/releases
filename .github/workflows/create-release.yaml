@@ -806,10 +806,9 @@ jobs:
           github-token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
           script: |
             const fs = require('fs');
-            const glob = require('glob');
 
             // Find all warning files
-            const warningFiles = glob.sync('upgrade-path-warning-*.md');
+            const warningFiles = fs.readdirSync('.').filter(file => file.startsWith('upgrade-path-warning-') && file.endsWith('.md'));
 
             if (warningFiles.length > 0) {
               let combinedWarnings = '';
@@ -1193,10 +1192,9 @@ jobs:
           github-token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
           script: |
             const fs = require('fs');
-            const glob = require('glob');
 
             // Find all warning files
-            const warningFiles = glob.sync('upgrade-path-warning-*.md');
+            const warningFiles = fs.readdirSync('.').filter(file => file.startsWith('upgrade-path-warning-') && file.endsWith('.md'));
 
             if (warningFiles.length > 0) {
               let combinedWarnings = '';
