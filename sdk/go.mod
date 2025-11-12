@@ -8,7 +8,7 @@ require (
 	github.com/google/go-github/v78 v78.0.0
 	github.com/onsi/ginkgo/v2 v2.27.2
 	github.com/onsi/gomega v1.38.2
-	k8s.io/apimachinery v0.34.1
+	k8s.io/apimachinery v0.34.2
 	sigs.k8s.io/yaml v1.6.0
 )
 
