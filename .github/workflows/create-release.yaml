@@ -429,8 +429,6 @@ jobs:
           DEVCTL_GITHUB_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
         run: |
           set -o pipefail
-          export OPSCTL_GITHUB_TOKEN=${{ secrets.TAYLORBOT_GITHUB_ACTION }}
-          export DEVCTL_GITHUB_TOKEN=${{ secrets.TAYLORBOT_GITHUB_ACTION }}
           LOG_FILE="/tmp/release_output.log"
           touch $LOG_FILE
           first_provider=true
@@ -649,8 +647,6 @@ jobs:
           DEVCTL_GITHUB_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
         run: |
           set -o pipefail
-          export OPSCTL_GITHUB_TOKEN=${{ secrets.TAYLORBOT_GITHUB_ACTION }}
-          export DEVCTL_GITHUB_TOKEN=${{ secrets.TAYLORBOT_GITHUB_ACTION }}
           LOG_FILE="/tmp/release_output.log"
           touch $LOG_FILE
           first_provider=true
@@ -913,7 +909,6 @@ jobs:
           DEVCTL_GITHUB_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
         run: |
           set -o pipefail
-          export DEVCTL_GITHUB_TOKEN=${{ secrets.TAYLORBOT_GITHUB_ACTION }}
           devctl release create \
             --base "${{ steps.determine_next_release.outputs.base }}" \
             --name "${{ steps.determine_next_release.outputs.version }}" \
@@ -1081,7 +1076,6 @@ jobs:
           DEVCTL_GITHUB_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
         run: |
           set -o pipefail
-          export DEVCTL_GITHUB_TOKEN=${{ secrets.TAYLORBOT_GITHUB_ACTION }}
           devctl release create \
             --base "${{ steps.determine_next_release.outputs.base }}" \
             --name "${{ steps.determine_next_release.outputs.version }}" \
@@ -1298,7 +1292,6 @@ jobs:
           DEVCTL_GITHUB_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
         run: |
           set -o pipefail
-          export DEVCTL_GITHUB_TOKEN=${{ secrets.TAYLORBOT_GITHUB_ACTION }}
           devctl release create \
             --base ${{ steps.versioning.outputs.LATEST_RELEASE }} \
             --name ${{ steps.versioning.outputs.NEXT_RELEASE }} \
@@ -1453,8 +1446,6 @@ jobs:
           DEVCTL_GITHUB_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
         run: |
           set -o pipefail
-          export OPSCTL_GITHUB_TOKEN=${{ secrets.TAYLORBOT_GITHUB_ACTION }}
-          export DEVCTL_GITHUB_TOKEN=${{ secrets.TAYLORBOT_GITHUB_ACTION }}
           LOG_FILE="/tmp/release_output.log"
           touch $LOG_FILE
           first_provider=true
