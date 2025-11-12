@@ -1,2 +1,5 @@
 .DS_Store
 kustomize/plugin/giantswarm.io/v1/releasenoteurlannotationgenerator/releaseNoteURLAnnotationGenerator
+
+# Upgrade path warning files
+upgrade-path-warning*.md

@@ -483,29 +483,43 @@ jobs:
           BRANCH_NAME="${{ steps.get_branch.outputs.result }}"
           PROVIDERS_TO_UPDATE="${{ steps.parse_command.outputs.provider }}${{ steps.parse_command.outputs.providers_list }}"
 
-          # For `devctl`, the provider for the `capa` directory is `aws`.
-          if [[ " ${PROVIDERS_TO_UPDATE} " =~ " aws " ]]; then
-            PROVIDERS_TO_UPDATE=$(echo "${PROVIDERS_TO_UPDATE}" | sed 's/aws/capa/g')
-          fi
-
           # Determine the release name from the branch.
           RELEASE_NAME=$(echo "$BRANCH_NAME" | sed -n 's/release-\(v[0-9.]*\).*/\1/p')
 
-          for PROVIDER in $PROVIDERS_TO_UPDATE; do
-            PROVIDER_DIR=$PROVIDER
-            echo "Checking upgrade path for provider: $PROVIDER_DIR, version: $RELEASE_NAME"
+          # Collect valid providers (those that have the release directory)
+          VALID_PROVIDERS=""
+          for PROVIDER_DIR in $PROVIDERS_TO_UPDATE; do
+            # Translate capa -> aws for directory lookup
+            CHECK_DIR=$PROVIDER_DIR
+            if [[ "$PROVIDER_DIR" == "aws" ]]; then
+              CHECK_DIR="capa"
+            fi
+
+            echo "Checking if release exists for provider: $CHECK_DIR, version: $RELEASE_NAME"
 
             # Check if release directory exists
-            if [ ! -d "$PROVIDER_DIR/$RELEASE_NAME" ]; then
-              echo "Release '$RELEASE_NAME' does not exist for provider '$PROVIDER_DIR'. Skipping upgrade path check."
+            if [ ! -d "$CHECK_DIR/$RELEASE_NAME" ]; then
+              echo "Release '$RELEASE_NAME' does not exist for provider '$CHECK_DIR'. Skipping."
               continue
             fi
 
-            # Run the upgrade path checker
-            cd tools/check-upgrade-path
-            go run . --provider $([ "$PROVIDER_DIR" == "capa" ] && echo "aws" || echo "$PROVIDER_DIR") --version "$RELEASE_NAME" --workdir ../.. --output "upgrade-path-warning-${PROVIDER_DIR}.md" || true
-            cd ../..
+            # Add to valid providers list (use original provider name, not directory name)
+            if [ -z "$VALID_PROVIDERS" ]; then
+              VALID_PROVIDERS="$PROVIDER_DIR"
+            else
+              VALID_PROVIDERS="$VALID_PROVIDERS,$PROVIDER_DIR"
+            fi
           done
+
+          # Run the upgrade path checker for all valid providers at once
+          if [ -n "$VALID_PROVIDERS" ]; then
+            echo "Checking upgrade path for providers: $VALID_PROVIDERS, version: $RELEASE_NAME"
+            cd tools/check-upgrade-path
+            go run . --providers "$VALID_PROVIDERS" --version "$RELEASE_NAME" --workdir ../.. --output "upgrade-path-warning.md" || true
+            cd ../..
+          else
+            echo "No valid providers found for upgrade path check."
+          fi
 
       - name: Post Upgrade Path Warning
         if: success() && steps.parse_command.outputs.description_only != 'true' && steps.parse_command.outputs.devctl_args == ''
@@ -515,26 +529,16 @@ jobs:
           script: |
             const fs = require('fs');
 
-            // Find all warning files
-            const warningFiles = fs.readdirSync('.').filter(file => file.startsWith('upgrade-path-warning-') && file.endsWith('.md'));
-
-            if (warningFiles.length > 0) {
-              let combinedWarnings = '';
-              for (const file of warningFiles) {
-                if (fs.existsSync(file)) {
-                  const content = fs.readFileSync(file, 'utf8');
-                  combinedWarnings += content + '\n\n---\n\n';
-                }
-              }
-
-              if (combinedWarnings) {
-                await github.rest.issues.createComment({
-                  owner: context.repo.owner,
-                  repo: context.repo.repo,
-                  issue_number: ${{ github.event.issue.number }},
-                  body: combinedWarnings
-                });
-              }
+            // Check for consolidated warning file
+            const warningFile = 'upgrade-path-warning.md';
+            if (fs.existsSync(warningFile)) {
+              const content = fs.readFileSync(warningFile, 'utf8');
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: ${{ github.event.issue.number }},
+                body: content
+              });
             }
 
       - name: Commit and push changes

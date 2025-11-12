@@ -702,12 +702,15 @@ jobs:
         id: check_upgrade_path_minor
         if: steps.check_pr.outputs.PR_EXISTS == 'false'
         run: |
-          for provider in ${{ steps.filter_providers.outputs.filtered_providers }}; do
-            echo "Checking upgrade path for provider: $provider, version: ${{ steps.determine_next_release.outputs.version }}"
+          PROVIDERS="${{ steps.filter_providers.outputs.filtered_providers }}"
+          if [ -n "$PROVIDERS" ]; then
+            echo "Checking upgrade path for providers: $PROVIDERS, version: ${{ steps.determine_next_release.outputs.version }}"
+            # Convert space-separated to comma-separated
+            PROVIDERS_CSV=$(echo "$PROVIDERS" | tr ' ' ',')
             cd tools/check-upgrade-path
-            go run . --provider "$provider" --version "${{ steps.determine_next_release.outputs.version }}" --workdir ../.. --output "upgrade-path-warning-${provider}.md" || true
+            go run . --providers "$PROVIDERS_CSV" --version "${{ steps.determine_next_release.outputs.version }}" --workdir ../.. --output "upgrade-path-warning.md" || true
             cd ../..
-          done
+          fi
 
       - name: Update README.md
         id: update_readme
@@ -809,26 +812,16 @@ jobs:
           script: |
             const fs = require('fs');
 
-            // Find all warning files
-            const warningFiles = fs.readdirSync('.').filter(file => file.startsWith('upgrade-path-warning-') && file.endsWith('.md'));
-
-            if (warningFiles.length > 0) {
-              let combinedWarnings = '';
-              for (const file of warningFiles) {
-                if (fs.existsSync(file)) {
-                  const content = fs.readFileSync(file, 'utf8');
-                  combinedWarnings += content + '\n\n---\n\n';
-                }
-              }
-
-              if (combinedWarnings) {
-                await github.rest.issues.createComment({
-                  owner: context.repo.owner,
-                  repo: context.repo.repo,
-                  issue_number: ${{ steps.create_pr.outputs.pull-request-number }},
-                  body: combinedWarnings
-                });
-              }
+            // Check for consolidated warning file
+            const warningFile = 'upgrade-path-warning.md';
+            if (fs.existsSync(warningFile)) {
+              const content = fs.readFileSync(warningFile, 'utf8');
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: ${{ steps.create_pr.outputs.pull-request-number }},
+                body: content
+              });
             }
 
       - name: Add comment to PR with devctl output
@@ -1093,7 +1086,7 @@ jobs:
         run: |
           echo "Checking upgrade path for provider: ${{ matrix.provider }}, version: ${{ steps.determine_next_release.outputs.version }}"
           cd tools/check-upgrade-path
-          go run . --provider "${{ matrix.provider }}" --version "${{ steps.determine_next_release.outputs.version }}" --workdir ../.. --output "upgrade-path-warning-${{ matrix.provider }}.md" || true
+          go run . --providers "${{ matrix.provider }}" --version "${{ steps.determine_next_release.outputs.version }}" --workdir ../.. --output "upgrade-path-warning.md" || true
           cd ../..
 
       - name: Update README.md
@@ -1193,26 +1186,16 @@ jobs:
           script: |
             const fs = require('fs');
 
-            // Find all warning files
-            const warningFiles = fs.readdirSync('.').filter(file => file.startsWith('upgrade-path-warning-') && file.endsWith('.md'));
-
-            if (warningFiles.length > 0) {
-              let combinedWarnings = '';
-              for (const file of warningFiles) {
-                if (fs.existsSync(file)) {
-                  const content = fs.readFileSync(file, 'utf8');
-                  combinedWarnings += content + '\n\n---\n\n';
-                }
-              }
-
-              if (combinedWarnings) {
-                await github.rest.issues.createComment({
-                  owner: context.repo.owner,
-                  repo: context.repo.repo,
-                  issue_number: ${{ steps.create_pr.outputs.pull-request-number }},
-                  body: combinedWarnings
-                });
-              }
+            // Check for consolidated warning file
+            const warningFile = 'upgrade-path-warning.md';
+            if (fs.existsSync(warningFile)) {
+              const content = fs.readFileSync(warningFile, 'utf8');
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: ${{ steps.create_pr.outputs.pull-request-number }},
+                body: content
+              });
             }
 
       - name: Add comment to PR with devctl output
