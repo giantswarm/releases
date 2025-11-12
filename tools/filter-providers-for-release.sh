@@ -88,6 +88,10 @@ for provider in "${PROVIDERS[@]}"; do
             echo "  ✗ EXCLUDE (too far behind: v$CURRENT_MAJOR.$CURRENT_MINOR vs target v$TARGET_MAJOR.$TARGET_MINOR, must catch up to v$TARGET_MAJOR.$((TARGET_MINOR - 1)).x first)"
             EXCLUDED_PROVIDERS+=("$provider")
         fi
+    elif [ "$CURRENT_MAJOR" -gt "$TARGET_MAJOR" ]; then
+        # Provider is ahead - this is valid for creating minor releases of older majors
+        echo "  ✓ INCLUDE (creating minor release for older major v$TARGET_MAJOR while v$CURRENT_MAJOR exists)"
+        INCLUDED_PROVIDERS+=("$provider")
     elif [ "$CURRENT_MAJOR" -eq $((TARGET_MAJOR - 1)) ]; then
         # One major version behind - only include if target is a major release (x.0.0)
         if [ "$TARGET_MINOR" -eq 0 ]; then
