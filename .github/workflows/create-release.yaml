@@ -705,7 +705,7 @@ jobs:
           for provider in ${{ steps.filter_providers.outputs.filtered_providers }}; do
             echo "Checking upgrade path for provider: $provider, version: ${{ steps.determine_next_release.outputs.version }}"
             cd tools/check-upgrade-path
-            go run . --provider "$provider" --version "${{ steps.determine_next_release.outputs.version }}" --workdir ../.. --output "../../upgrade-path-warning-${provider}.md" || true
+            go run . --provider "$provider" --version "${{ steps.determine_next_release.outputs.version }}" --workdir ../.. --output "upgrade-path-warning-${provider}.md" || true
             cd ../..
           done
 
@@ -1093,7 +1093,7 @@ jobs:
         run: |
           echo "Checking upgrade path for provider: ${{ matrix.provider }}, version: ${{ steps.determine_next_release.outputs.version }}"
           cd tools/check-upgrade-path
-          go run . --provider "${{ matrix.provider }}" --version "${{ steps.determine_next_release.outputs.version }}" --workdir ../.. --output "../../upgrade-path-warning-${{ matrix.provider }}.md" || true
+          go run . --provider "${{ matrix.provider }}" --version "${{ steps.determine_next_release.outputs.version }}" --workdir ../.. --output "upgrade-path-warning-${{ matrix.provider }}.md" || true
           cd ../..
 
       - name: Update README.md

@@ -503,7 +503,7 @@ jobs:
 
             # Run the upgrade path checker
             cd tools/check-upgrade-path
-            go run . --provider $([ "$PROVIDER_DIR" == "capa" ] && echo "aws" || echo "$PROVIDER_DIR") --version "$RELEASE_NAME" --workdir ../.. --output "../../upgrade-path-warning-${PROVIDER_DIR}.md" || true
+            go run . --provider $([ "$PROVIDER_DIR" == "capa" ] && echo "aws" || echo "$PROVIDER_DIR") --version "$RELEASE_NAME" --workdir ../.. --output "upgrade-path-warning-${PROVIDER_DIR}.md" || true
             cd ../..
           done
 
