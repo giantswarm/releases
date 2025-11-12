@@ -117,7 +117,13 @@ jobs:
 
             if [[ "${{ github.event.inputs.version }}" != '' ]]; then
               echo "version_override=${{ github.event.inputs.version }}" >> "$GITHUB_OUTPUT"
-              if [[ "${{ github.event.inputs.version }}" =~ \.[0-9]+\.[0-9]+$ ]]; then
+              # Check if version ends with .X.Y where Y > 0 (patch release)
+              # or .X.0 (minor release)
+              if [[ "${{ github.event.inputs.version }}" =~ \.0\.0$ ]]; then
+                RELEASE_TYPE="major"
+              elif [[ "${{ github.event.inputs.version }}" =~ \.[0-9]+\.0$ ]]; then
+                RELEASE_TYPE="minor"
+              elif [[ "${{ github.event.inputs.version }}" =~ \.[0-9]+\.[0-9]+$ ]]; then
                 RELEASE_TYPE="patch"
               else
                 RELEASE_TYPE="minor"
