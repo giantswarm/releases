@@ -76,188 +76,70 @@ func GenerateConsolidatedReport(allWarnings []ProviderWarnings, currentVersion, 
 		return ""
 	}
 
-	providerNames := map[string]string{
-		"aws":            "AWS",
-		"azure":          "Azure",
-		"cloud-director": "Cloud Director",
-		"eks":            "EKS",
-		"vsphere":        "vSphere",
-	}
-
 	var sb strings.Builder
 
 	sb.WriteString("## ⚠️ Upgrade Path Warning\n\n")
 	sb.WriteString(fmt.Sprintf("The following components/apps in **%s** have versions that are **newer** than those in **%s** (the next major release on the upgrade path).\n\n", currentVersion, nextMajorVersion))
 	sb.WriteString("This means customers upgrading from **" + currentVersion + "** to **" + nextMajorVersion + "** would experience component/app **downgrades**, which may cause issues.\n\n")
 
-	// Collect all items and count occurrences across providers
-	appCounts := make(map[string]int)
-	componentCounts := make(map[string]int)
-	appVersions := make(map[string]VersionWarning)
-	componentVersions := make(map[string]VersionWarning)
-
-	totalProviders := len(allWarnings)
+	// Collect all apps and components (no distinction between shared/provider-specific)
+	allApps := make(map[string]VersionWarning)
+	allComponents := make(map[string]VersionWarning)
 
 	for _, pw := range allWarnings {
 		for _, w := range pw.Warnings {
 			if w.ItemType == "App" {
-				appCounts[w.Name]++
-				if _, exists := appVersions[w.Name]; !exists {
-					appVersions[w.Name] = w
+				// Only add if not already present (de-duplicate across providers)
+				if _, exists := allApps[w.Name]; !exists {
+					allApps[w.Name] = w
 				}
 			} else {
-				componentCounts[w.Name]++
-				if _, exists := componentVersions[w.Name]; !exists {
-					componentVersions[w.Name] = w
+				if _, exists := allComponents[w.Name]; !exists {
+					allComponents[w.Name] = w
 				}
 			}
 		}
 	}
 
-	// Separate shared vs provider-specific
-	sharedApps := []string{}
-	sharedComponents := []string{}
-	providerSpecificApps := make(map[string][]VersionWarning)
-	providerSpecificComponents := make(map[string][]VersionWarning)
-
-	for name, count := range appCounts {
-		if count == totalProviders {
-			sharedApps = append(sharedApps, name)
-		} else {
-			// Provider-specific - collect which providers have it
-			for _, pw := range allWarnings {
-				for _, w := range pw.Warnings {
-					if w.Name == name && w.ItemType == "App" {
-						providerSpecificApps[pw.Provider] = append(providerSpecificApps[pw.Provider], w)
-					}
-				}
-			}
-		}
+	// Sort apps and components by name
+	appNames := make([]string, 0, len(allApps))
+	for name := range allApps {
+		appNames = append(appNames, name)
 	}
+	sort.Strings(appNames)
 
-	for name, count := range componentCounts {
-		if count == totalProviders {
-			sharedComponents = append(sharedComponents, name)
-		} else {
-			// Provider-specific - collect which providers have it
-			for _, pw := range allWarnings {
-				for _, w := range pw.Warnings {
-					if w.Name == name && w.ItemType == "Component" {
-						providerSpecificComponents[pw.Provider] = append(providerSpecificComponents[pw.Provider], w)
-					}
-				}
-			}
-		}
+	componentNames := make([]string, 0, len(allComponents))
+	for name := range allComponents {
+		componentNames = append(componentNames, name)
 	}
+	sort.Strings(componentNames)
 
-	sort.Strings(sharedApps)
-	sort.Strings(sharedComponents)
-
-	// Generate report sections
-	if len(sharedApps) > 0 {
+	// Generate Apps section
+	if len(allApps) > 0 {
 		sb.WriteString("<details>\n")
-		sb.WriteString("<summary>Apps (All Providers)</summary>\n\n")
+		sb.WriteString("<summary>Apps</summary>\n\n")
 		sb.WriteString("| App | This Release (" + currentVersion + ") | Next Major (" + nextMajorVersion + ") | Impact |\n")
 		sb.WriteString("|-----|----------------------------------------|----------------------------------------|--------|\n")
-		for _, name := range sharedApps {
-			w := appVersions[name]
+		for _, name := range appNames {
+			w := allApps[name]
 			sb.WriteString(fmt.Sprintf("| `%s` | **%s** | %s | ⬇️ Downgrade on upgrade |\n",
 				w.Name, w.CurrentVersion, w.NextMajorVersion))
 		}
 		sb.WriteString("\n</details>\n\n")
 	}
 
-	if len(sharedComponents) > 0 {
+	// Generate Components section
+	if len(allComponents) > 0 {
 		sb.WriteString("<details>\n")
-		sb.WriteString("<summary>Components (All Providers)</summary>\n\n")
+		sb.WriteString("<summary>Components</summary>\n\n")
 		sb.WriteString("| Component | This Release (" + currentVersion + ") | Next Major (" + nextMajorVersion + ") | Impact |\n")
 		sb.WriteString("|-----------|----------------------------------------|----------------------------------------|--------|\n")
-		for _, name := range sharedComponents {
-			w := componentVersions[name]
+		for _, name := range componentNames {
+			w := allComponents[name]
 			sb.WriteString(fmt.Sprintf("| `%s` | **%s** | %s | ⬇️ Downgrade on upgrade |\n",
 				w.Name, w.CurrentVersion, w.NextMajorVersion))
 		}
 		sb.WriteString("\n</details>\n\n")
-	}
-
-	if len(providerSpecificApps) > 0 {
-		sb.WriteString("<details>\n")
-		sb.WriteString("<summary>Provider-Specific Apps</summary>\n\n")
-
-		// Sort providers for consistent output
-		providers := make([]string, 0, len(providerSpecificApps))
-		for p := range providerSpecificApps {
-			providers = append(providers, p)
-		}
-		sort.Strings(providers)
-
-		for _, provider := range providers {
-			warnings := providerSpecificApps[provider]
-			if len(warnings) == 0 {
-				continue
-			}
-
-			// Sort warnings by name
-			sort.Slice(warnings, func(i, j int) bool {
-				return warnings[i].Name < warnings[j].Name
-			})
-
-			providerLabel := providerNames[provider]
-			if providerLabel == "" {
-				providerLabel = strings.ToUpper(provider)
-			}
-
-			sb.WriteString(fmt.Sprintf("**%s:**\n\n", providerLabel))
-			sb.WriteString("| App | This Release (" + currentVersion + ") | Next Major (" + nextMajorVersion + ") | Impact |\n")
-			sb.WriteString("|-----|----------------------------------------|----------------------------------------|--------|\n")
-
-			for _, w := range warnings {
-				sb.WriteString(fmt.Sprintf("| `%s` | **%s** | %s | ⬇️ Downgrade on upgrade |\n",
-					w.Name, w.CurrentVersion, w.NextMajorVersion))
-			}
-			sb.WriteString("\n")
-		}
-		sb.WriteString("</details>\n\n")
-	}
-
-	if len(providerSpecificComponents) > 0 {
-		sb.WriteString("<details>\n")
-		sb.WriteString("<summary>Provider-Specific Components</summary>\n\n")
-
-		// Sort providers for consistent output
-		providers := make([]string, 0, len(providerSpecificComponents))
-		for p := range providerSpecificComponents {
-			providers = append(providers, p)
-		}
-		sort.Strings(providers)
-
-		for _, provider := range providers {
-			warnings := providerSpecificComponents[provider]
-			if len(warnings) == 0 {
-				continue
-			}
-
-			// Sort warnings by name
-			sort.Slice(warnings, func(i, j int) bool {
-				return warnings[i].Name < warnings[j].Name
-			})
-
-			providerLabel := providerNames[provider]
-			if providerLabel == "" {
-				providerLabel = strings.ToUpper(provider)
-			}
-
-			sb.WriteString(fmt.Sprintf("**%s:**\n\n", providerLabel))
-			sb.WriteString("| Component | This Release (" + currentVersion + ") | Next Major (" + nextMajorVersion + ") | Impact |\n")
-			sb.WriteString("|-----------|----------------------------------------|----------------------------------------|--------|\n")
-
-			for _, w := range warnings {
-				sb.WriteString(fmt.Sprintf("| `%s` | **%s** | %s | ⬇️ Downgrade on upgrade |\n",
-					w.Name, w.CurrentVersion, w.NextMajorVersion))
-			}
-			sb.WriteString("\n")
-		}
-		sb.WriteString("</details>\n\n")
 	}
 
 	sb.WriteString("> **Note:** This check was triggered because components/apps were automatically bumped to their latest versions.\n")
