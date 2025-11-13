@@ -111,6 +111,8 @@ spec:
     dependsOn:
     - cilium
   components:
+  - name: cluster-aws
+    version: 6.2.0
   - name: cluster-vsphere
     catalog: cluster
     version: 3.4.0
@@ -120,5 +122,5 @@ spec:
     version: 1.32.10
   - name: os-tooling
     version: 1.26.2
-  date: "2025-11-13T13:07:10Z"
+  date: "2025-11-13T13:10:18Z"
   state: active

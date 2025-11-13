@@ -6,9 +6,17 @@
 
 ### Components
 
+- Added cluster-aws v6.2.0
 - cluster-vsphere from v2.0.0 to v3.4.0
 - Flatcar from v4230.2.4 to [v4459.2.0](https://www.flatcar.org/releases/#release-4459.2.0)
 - Kubernetes from v1.32.9 to [v1.32.10](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.32.md#v1.32.10)
+
+### cluster-aws [v6.2.0](https://github.com/giantswarm/cluster-aws/releases/tag/v6.2.0)
+
+#### Changed
+
+- Change default consolidation time to 6 hours to avoid constant node rolling.
+- Rename `capa-karpenter-taint-remover` app.
 
 ### cluster-vsphere [v2.0.0...v3.4.0](https://github.com/giantswarm/cluster-vsphere/compare/v2.0.0...v3.4.0)
 

@@ -113,6 +113,8 @@ spec:                                                              spec:
   - name: vertical-pod-autoscaler-crd                                - name: vertical-pod-autoscaler-crd
     version: 4.1.1                                                     version: 4.1.1
   components:                                                        components:
+                                                                >    - name: cluster-aws
+                                                                >      version: 6.2.0
   - name: cluster-azure                                              - name: cluster-azure
     catalog: cluster                                                   catalog: cluster
     version: 3.0.0                                              |      version: 4.4.0
@@ -122,5 +124,5 @@ spec:                                                              spec:
     version: 1.32.9                                             |      version: 1.32.10
   - name: os-tooling                                                 - name: os-tooling
     version: 1.26.2                                                    version: 1.26.2
-  date: "2025-11-02T09:58:24Z"                                  |    date: "2025-11-13T13:06:51Z"
+  date: "2025-11-02T09:58:24Z"                                  |    date: "2025-11-13T13:10:14Z"
   state: active                                                      state: active
