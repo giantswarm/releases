@@ -1,0 +1,461 @@
+name: Pin Version (Comment Trigger)
+
+on:
+  issue_comment:
+    types: [created]
+
+jobs:
+  pin-version:
+    # This job only runs for pull request comments starting with /pin-version
+    if: github.event.issue.pull_request && startsWith(github.event.comment.body, '/pin-version') && github.repository == 'giantswarm/releases'
+    runs-on: ubuntu-latest
+    env:
+      OPSCTL_GITHUB_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+      GH_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+      DEVCTL_GITHUB_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+      - name: Add reaction to comment to indicate processing
+        uses: actions/github-script@v8
+        with:
+          github-token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+          script: |
+            github.rest.reactions.createForIssueComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              comment_id: ${{ github.event.comment.id }},
+              content: 'eyes'
+            })
+
+      - name: Get PR branch name
+        id: get_branch
+        uses: actions/github-script@v8
+        with:
+          github-token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+          result-encoding: string
+          script: |
+            const pr = await github.rest.pulls.get({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: ${{ github.event.issue.number }}
+            });
+            return pr.data.head.ref;
+
+      - name: Checkout PR branch
+        uses: actions/checkout@v5
+        with:
+          ref: ${{ steps.get_branch.outputs.result }}
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.23'
+
+      - name: Install devctl from release binary
+        run: |
+          mkdir -p /tmp/devctl_install
+          cd /tmp/devctl_install
+          LATEST_DEVCTL_TAG=$(gh release view --repo giantswarm/devctl --json tagName --jq '.tagName')
+          ASSET_NAME="devctl-${LATEST_DEVCTL_TAG}-linux-amd64.tar.gz"
+          gh release download --repo giantswarm/devctl "$LATEST_DEVCTL_TAG" --pattern "$ASSET_NAME"
+          tar -xzf "$ASSET_NAME"
+          find . -name "devctl" -type f -exec sudo mv {} /usr/local/bin/devctl \;
+          cd -
+        env:
+          GH_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+
+      - name: Parse pin-version command
+        id: parse_command
+        env:
+          COMMENT_BODY: ${{ github.event.comment.body }}
+        run: |
+          # Save comment to file for safe parsing
+          printf '%s\n' "$COMMENT_BODY" > /tmp/comment_body.txt
+          COMMENT_CONTENT=$(cat /tmp/comment_body.txt)
+
+          # Extract --provider flag
+          COMMENT_PROVIDER=$(echo "$COMMENT_BODY" | grep -oP '(?<=--provider(=| ))[a-zA-Z-]+' || true)
+
+          if [[ -n "$COMMENT_PROVIDER" ]]; then
+            echo "Provider specified in comment: $COMMENT_PROVIDER"
+            echo "provider=$COMMENT_PROVIDER" >> "$GITHUB_OUTPUT"
+          else
+            echo "No provider specified. Detecting providers from PR files."
+            # Get providers from the PR's changed files
+            PR_PROVIDERS=$(gh pr view ${{ github.event.issue.number }} --json files --jq '.files[].path' | cut -d'/' -f1 | sort -u | xargs)
+            # List of valid provider directories
+            VALID_PROVIDERS="azure capa cloud-director eks vsphere"
+            PROVIDERS_LIST=""
+            for provider in $PR_PROVIDERS; do
+              if [[ " $VALID_PROVIDERS " =~ " $provider " ]]; then
+                PROVIDERS_LIST="$PROVIDERS_LIST $provider"
+              fi
+            done
+            # Trim whitespace
+            PROVIDERS_LIST=$(echo "$PROVIDERS_LIST" | xargs)
+            if [[ -z "$PROVIDERS_LIST" ]]; then
+              echo "Could not determine any providers from the PR files."
+              echo "error=no_provider_detected" >> "$GITHUB_OUTPUT"
+              exit 0
+            fi
+            echo "Detected providers: $PROVIDERS_LIST"
+            echo "providers_list=${PROVIDERS_LIST}" >> "$GITHUB_OUTPUT"
+          fi
+
+          # Extract component or app name and version
+          COMPONENT=$(echo "$COMMENT_CONTENT" | grep -oP '(?<=--component )[^ ]+' || true)
+          APP=$(echo "$COMMENT_CONTENT" | grep -oP '(?<=--app )[^ ]+' || true)
+
+          if [[ -z "$COMPONENT" && -z "$APP" ]]; then
+            echo "error=missing_component_or_app" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          if [[ -n "$COMPONENT" && -n "$APP" ]]; then
+            echo "error=both_component_and_app" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          if [[ -n "$COMPONENT" ]]; then
+            echo "pin_type=component" >> "$GITHUB_OUTPUT"
+            echo "pin_spec=$COMPONENT" >> "$GITHUB_OUTPUT"
+            
+            # Parse component name and version
+            COMPONENT_NAME=$(echo "$COMPONENT" | cut -d'@' -f1)
+            COMPONENT_VERSION=$(echo "$COMPONENT" | cut -d'@' -f2)
+            echo "pin_name=$COMPONENT_NAME" >> "$GITHUB_OUTPUT"
+            echo "pin_version=$COMPONENT_VERSION" >> "$GITHUB_OUTPUT"
+          else
+            echo "pin_type=app" >> "$GITHUB_OUTPUT"
+            echo "pin_spec=$APP" >> "$GITHUB_OUTPUT"
+            
+            # Parse app name and version
+            APP_NAME=$(echo "$APP" | cut -d'@' -f1)
+            APP_VERSION=$(echo "$APP" | cut -d'@' -f2)
+            echo "pin_name=$APP_NAME" >> "$GITHUB_OUTPUT"
+            echo "pin_version=$APP_VERSION" >> "$GITHUB_OUTPUT"
+          fi
+
+          # Extract --until flag (optional)
+          UNTIL=$(echo "$COMMENT_CONTENT" | grep -oP '(?<=--until )[^ ]+' || true)
+          if [[ -n "$UNTIL" ]]; then
+            echo "until=$UNTIL" >> "$GITHUB_OUTPUT"
+            echo "Until version specified: $UNTIL"
+          fi
+
+          # Extract reason (optional)
+          if [[ "$COMMENT_CONTENT" =~ --reason[[:space:]]\"([^\"]+)\" ]]; then
+            REASON="${BASH_REMATCH[1]}"
+          elif [[ "$COMMENT_CONTENT" =~ --reason[[:space:]]\'([^\']+)\' ]]; then
+            REASON="${BASH_REMATCH[1]}"
+          elif [[ "$COMMENT_CONTENT" =~ --reason[[:space:]]([^[:space:]]+) ]]; then
+            REASON="${BASH_REMATCH[1]}"
+          else
+            REASON=""
+          fi
+          
+          if [[ -n "$REASON" ]]; then
+            echo "reason=$(echo "$REASON" | base64 -w 0)" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Post error if command invalid
+        if: steps.parse_command.outputs.error
+        uses: actions/github-script@v8
+        with:
+          github-token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+          script: |
+            const error = '${{ steps.parse_command.outputs.error }}';
+            let message = '❌ **Pin Version Command Failed**\n\n';
+            
+            if (error === 'no_provider_detected') {
+              message += 'Could not detect provider from PR files. Please specify `--provider` explicitly.\n\n';
+              message += 'Example: `/pin-version --provider aws --component flatcar@4152.2.3`';
+            } else if (error === 'missing_component_or_app') {
+              message += 'Missing `--component` or `--app` parameter.\n\n';
+              message += 'Example: `/pin-version --component flatcar@4152.2.3`';
+            } else if (error === 'both_component_and_app') {
+              message += 'Cannot specify both `--component` and `--app`. Please use one.\n\n';
+              message += 'Example: `/pin-version --component flatcar@4152.2.3`';
+            } else {
+              message += `Unknown error: ${error}`;
+            }
+            
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: ${{ github.event.issue.number }},
+              body: message
+            });
+
+            await github.rest.reactions.createForIssueComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              comment_id: ${{ github.event.comment.id }},
+              content: '-1'
+            });
+
+      - name: Update release with pinned version
+        id: update_release
+        if: success() && !steps.parse_command.outputs.error
+        run: |
+          set -o pipefail
+          BRANCH_NAME="${{ steps.get_branch.outputs.result }}"
+          PROVIDERS_TO_UPDATE="${{ steps.parse_command.outputs.provider }}${{ steps.parse_command.outputs.providers_list }}"
+          PIN_TYPE="${{ steps.parse_command.outputs.pin_type }}"
+          PIN_SPEC="${{ steps.parse_command.outputs.pin_spec }}"
+
+          # Translate capa -> aws for directory lookups
+          if [[ " ${PROVIDERS_TO_UPDATE} " =~ " aws " ]]; then
+            PROVIDERS_TO_UPDATE=$(echo "${PROVIDERS_TO_UPDATE}" | sed 's/aws/capa/g')
+          fi
+
+          # Determine release name from branch
+          RELEASE_NAME=$(echo "$BRANCH_NAME" | sed -n 's/release-\(v[0-9.]*\).*/\1/p')
+          if [[ -z "$RELEASE_NAME" ]]; then
+            echo "Could not determine release name from branch '$BRANCH_NAME'. Aborting."
+            exit 1
+          fi
+
+          echo "release_name=$RELEASE_NAME" >> "$GITHUB_OUTPUT"
+
+          FULL_LOG_CONTENT=""
+
+          for PROVIDER in $PROVIDERS_TO_UPDATE; do
+            PROVIDER_DIR=$PROVIDER
+            echo "Processing provider: $PROVIDER_DIR"
+
+            # Translate for devctl
+            DEVCTL_PROVIDER=$PROVIDER
+            if [ "$PROVIDER" == "capa" ]; then
+              DEVCTL_PROVIDER="aws"
+            fi
+
+            # Check if release directory exists
+            if [ ! -d "$PROVIDER_DIR/$RELEASE_NAME" ]; then
+              echo "Release '$RELEASE_NAME' does not exist for provider '$PROVIDER_DIR'. Skipping."
+              continue
+            fi
+
+            echo "Pinning ${PIN_TYPE} to ${PIN_SPEC} for release '$RELEASE_NAME' in provider '$PROVIDER_DIR'"
+
+            # Determine base version for devctl
+            BASE_VERSION=$(./tools/determine-next-release.sh "$DEVCTL_PROVIDER" "patch" "$RELEASE_NAME" | grep '^base=' | cut -d'=' -f2)
+            echo "Determined base version: $BASE_VERSION"
+
+            # Backup existing descriptions
+            README_DESCRIPTION_BACKUP=""
+            ANNOUNCEMENT_BACKUP=""
+            if [ -f "${PROVIDER_DIR}/${RELEASE_NAME}/README.md" ] && ! grep -q "<< Add description here >>" "${PROVIDER_DIR}/${RELEASE_NAME}/README.md"; then
+              README_DESCRIPTION_BACKUP=$(sed -n '3p' "${PROVIDER_DIR}/${RELEASE_NAME}/README.md" || true)
+            fi
+            if [ -f "${PROVIDER_DIR}/${RELEASE_NAME}/announcement.md" ] && ! grep -q "<< Add description here >>" "${PROVIDER_DIR}/${RELEASE_NAME}/announcement.md"; then
+              ANNOUNCEMENT_BACKUP=$(sed -n '1p' "${PROVIDER_DIR}/${RELEASE_NAME}/announcement.md" | sed 's/.*\*\*\. //' || true)
+            fi
+
+            # Build devctl command
+            DEVCTL_COMMAND="devctl release create --name \"$RELEASE_NAME\" --provider \"$DEVCTL_PROVIDER\" --overwrite -y --output markdown --requested-only --update-existing --regenerate-readme --${PIN_TYPE} ${PIN_SPEC}"
+
+            echo "Running command: $DEVCTL_COMMAND"
+
+            if ! output=$(eval "$DEVCTL_COMMAND" 2>&1 | uniq); then
+              LOG_PART="### ❌ Failed to pin ${PIN_TYPE} for ${PROVIDER_DIR^^}\n\n"
+              LOG_PART="${LOG_PART}<details><summary>Error Log</summary>\n\n"
+              LOG_PART="${LOG_PART}\`\`\`\n${output}\n\`\`\`\n\n"
+              LOG_PART="${LOG_PART}</details>\n\n"
+              FULL_LOG_CONTENT="${FULL_LOG_CONTENT}${LOG_PART}"
+            else
+              LOG_PART="### ✅ Pinned ${PIN_TYPE} for ${PROVIDER_DIR^^}\n\n"
+              LOG_PART="${LOG_PART}| Type | Name | Version |\n"
+              LOG_PART="${LOG_PART}|------|------|----------|\n"
+              LOG_PART="${LOG_PART}| ${PIN_TYPE} | ${{ steps.parse_command.outputs.pin_name }} | **${{ steps.parse_command.outputs.pin_version }}** |\n\n"
+              FULL_LOG_CONTENT="${FULL_LOG_CONTENT}${LOG_PART}"
+            fi
+
+            # Restore descriptions
+            if [[ -n "$README_DESCRIPTION_BACKUP" ]]; then
+              sed -i "3c\\$README_DESCRIPTION_BACKUP" "${PROVIDER_DIR}/${RELEASE_NAME}/README.md"
+              echo "Restored description in README.md"
+            fi
+            if [[ -n "$ANNOUNCEMENT_BACKUP" ]]; then
+              PROVIDER_NAME=""
+              case "$PROVIDER_DIR" in
+                capa) PROVIDER_NAME="CAPA" ;;
+                azure) PROVIDER_NAME="Azure" ;;
+                vsphere) PROVIDER_NAME="vSphere" ;;
+                cloud-director) PROVIDER_NAME="VMware Cloud Director" ;;
+                eks) PROVIDER_NAME="EKS" ;;
+                *) PROVIDER_NAME=$(echo "$PROVIDER_DIR" | tr 'a-z' 'A-Z') ;;
+              esac
+
+              RELEASE_VERSION=$(echo "$RELEASE_NAME" | sed 's/v//')
+              NEW_LINE_1="**Workload cluster release v${RELEASE_VERSION} for ${PROVIDER_NAME} is available**. $ANNOUNCEMENT_BACKUP"
+              sed -i "1c\\$NEW_LINE_1" "${PROVIDER_DIR}/${RELEASE_NAME}/announcement.md"
+              echo "Restored description in announcement.md"
+            fi
+          done
+
+          # Format output
+          FULL_LOG_CONTENT=$(printf '%b' "${FULL_LOG_CONTENT}")
+          echo "DEVCTL_OUTPUT_COMMENT<<EOF" >> "$GITHUB_ENV"
+          echo "$FULL_LOG_CONTENT" >> "$GITHUB_ENV"
+          echo "EOF" >> "$GITHUB_ENV"
+
+      - name: Update requests.yaml with pin constraint
+        id: update_requests
+        if: success() && !steps.parse_command.outputs.error
+        run: |
+          PROVIDERS_TO_UPDATE="${{ steps.parse_command.outputs.provider }}${{ steps.parse_command.outputs.providers_list }}"
+          RELEASE_NAME="${{ steps.update_release.outputs.release_name }}"
+          PIN_NAME="${{ steps.parse_command.outputs.pin_name }}"
+          PIN_VERSION="${{ steps.parse_command.outputs.pin_version }}"
+          UNTIL="${{ steps.parse_command.outputs.until }}"
+
+          # Translate capa -> aws for directory lookups
+          if [[ " ${PROVIDERS_TO_UPDATE} " =~ " aws " ]]; then
+            PROVIDERS_TO_UPDATE=$(echo "${PROVIDERS_TO_UPDATE}" | sed 's/aws/capa/g')
+          fi
+
+          # Parse version components (remove 'v' prefix if present)
+          VERSION_NO_V=$(echo "$RELEASE_NAME" | sed 's/^v//')
+
+          # Build the Go tool
+          echo "Building pin-version tool..."
+          cd tools/pin-version
+          go build -o /tmp/pin-version .
+          cd ../..
+
+          REQUESTS_LOG=""
+
+          for PROVIDER in $PROVIDERS_TO_UPDATE; do
+            PROVIDER_DIR=$PROVIDER
+            REQUESTS_FILE="${PROVIDER_DIR}/requests.yaml"
+
+            if [ ! -f "$REQUESTS_FILE" ]; then
+              echo "requests.yaml not found for provider '$PROVIDER_DIR'. Skipping."
+              continue
+            fi
+
+            echo "Updating $REQUESTS_FILE with pin constraint"
+
+            # Run the Go tool
+            if [[ -n "$UNTIL" ]]; then
+              /tmp/pin-version \
+                -requests-file="$REQUESTS_FILE" \
+                -release-version="$VERSION_NO_V" \
+                -until="$UNTIL" \
+                -component-name="$PIN_NAME" \
+                -component-version="$PIN_VERSION"
+              
+              UNTIL_DISPLAY=" until $UNTIL"
+            else
+              /tmp/pin-version \
+                -requests-file="$REQUESTS_FILE" \
+                -release-version="$VERSION_NO_V" \
+                -component-name="$PIN_NAME" \
+                -component-version="$PIN_VERSION"
+              
+              UNTIL_DISPLAY=""
+            fi
+
+            REQUESTS_LOG="${REQUESTS_LOG}📌 Updated \`${REQUESTS_FILE}\` with pin${UNTIL_DISPLAY}\n"
+          done
+
+          # Format output
+          REQUESTS_LOG=$(printf '%b' "${REQUESTS_LOG}")
+          echo "REQUESTS_OUTPUT_COMMENT<<EOF" >> "$GITHUB_ENV"
+          echo "$REQUESTS_LOG" >> "$GITHUB_ENV"
+          echo "EOF" >> "$GITHUB_ENV"
+
+      - name: Commit and push changes
+        if: success() && !steps.parse_command.outputs.error
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add .
+          if git diff --staged --quiet; then
+            echo "No changes to commit."
+          else
+            PIN_TYPE="${{ steps.parse_command.outputs.pin_type }}"
+            PIN_NAME="${{ steps.parse_command.outputs.pin_name }}"
+            PIN_VERSION="${{ steps.parse_command.outputs.pin_version }}"
+            UNTIL="${{ steps.parse_command.outputs.until }}"
+            
+            if [[ -n "$UNTIL" ]]; then
+              git commit -m "chore: Pin ${PIN_TYPE} ${PIN_NAME}@${PIN_VERSION} until ${UNTIL}"
+            else
+              git commit -m "chore: Pin ${PIN_TYPE} ${PIN_NAME}@${PIN_VERSION}"
+            fi
+            git push
+          fi
+        env:
+          GITHUB_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+
+      - name: Add success reaction
+        if: success() && !steps.parse_command.outputs.error
+        uses: actions/github-script@v8
+        with:
+          github-token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+          script: |
+            github.rest.reactions.createForIssueComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              comment_id: ${{ github.event.comment.id }},
+              content: '+1'
+            })
+
+      - name: Post result comment
+        if: success() && !steps.parse_command.outputs.error
+        uses: actions/github-script@v8
+        with:
+          github-token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+          script: |
+            const devctlOutput = process.env.DEVCTL_OUTPUT_COMMENT || '';
+            const requestsOutput = process.env.REQUESTS_OUTPUT_COMMENT || '';
+            const pinType = '${{ steps.parse_command.outputs.pin_type }}';
+            const pinName = '${{ steps.parse_command.outputs.pin_name }}';
+            const pinVersion = '${{ steps.parse_command.outputs.pin_version }}';
+            const until = '${{ steps.parse_command.outputs.until }}';
+            const reasonB64 = '${{ steps.parse_command.outputs.reason }}';
+            
+            let reason = '';
+            if (reasonB64) {
+              reason = Buffer.from(reasonB64, 'base64').toString('utf-8');
+            }
+
+            let body = `## 📌 Version Pin Applied\n\n`;
+            body += `**${pinType}**: \`${pinName}@${pinVersion}\`\n`;
+            
+            if (until) {
+              body += `**Pin until**: v${until}\n`;
+              body += `**Effect**: Pinned for all releases < v${until}\n\n`;
+            } else {
+              body += `**Pin duration**: This release only\n\n`;
+            }
+            
+            if (reason) {
+              body += `**Reason**: ${reason}\n\n`;
+            }
+
+            body += `---\n\n`;
+            body += devctlOutput + '\n\n';
+            body += requestsOutput + '\n\n';
+            body += `---\n\n`;
+            body += `ℹ️ This pin will be respected by automatic version bumps. `;
+            
+            if (until) {
+              body += `Starting with v${until}, this component will auto-update again.\n\n`;
+            } else {
+              body += `Future releases will auto-update to the latest version.\n\n`;
+            }
+            
+            body += `📖 For more information, see [Pinning Versions Documentation](https://github.com/giantswarm/releases/blob/master/docs/workflows-pinning-versions.md)`;
+
+            await github.rest.issues.createComment({
+              issue_number: ${{ github.event.issue.number }},
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: body
+            });

@@ -489,6 +489,15 @@ jobs:
             echo "Successfully updated README.md with ${{ steps.determine_next_release.outputs.version }} for $provider"
           done
 
+      - name: Read release instructions template
+        id: read_instructions
+        if: steps.check_pr.outputs.PR_EXISTS == 'false' && (needs.dispatcher.outputs.release_type != 'major' || steps.k8s_check.outputs.VERSION_EXISTS == 'true')
+        run: |
+          CONTENT=$(cat .github/pr-body-templates/consolidated-release-instructions.md)
+          echo "content<<EOF" >> $GITHUB_OUTPUT
+          echo "$CONTENT" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
       - name: Create Pull Request
         id: create_pr
         if: steps.check_pr.outputs.PR_EXISTS == 'false' && (needs.dispatcher.outputs.release_type != 'major' || steps.k8s_check.outputs.VERSION_EXISTS == 'true')
@@ -505,33 +514,7 @@ jobs:
 
             ---
 
-            ## Updating this Release
-
-            To update the release files in this PR, comment with `/update-release` and provide arguments directly to `devctl`. For consolidated releases, you **must** specify which provider you are updating.
-            If you do not specify a provider, the bot will automatically detect the provider from the PR files.
-            Available providers: `aws`, `azure`, `cloud-director`, `eks`, `vsphere`.
-
-            **Examples:**
-
-            *   Update a single component for a specific provider:
-                `/update-release --provider aws --component flatcar@4152.2.3`
-
-            *   Update multiple components and apps for a specific provider:
-                `/update-release --provider azure --component cluster-azure@2.4.1 --app azuredisk-csi-driver@1.32.9`
-
-            *   Specify app dependencies using the `#` separator:
-                `/update-release --provider aws --app my-app@1.2.3@@dependency1#dependency2`
-
-            **Add descriptions:**
-
-            *   Update README.md for specific provider:
-                `/update-readme --provider aws "This major release includes Kubernetes 1.32 support, enhanced security features, and significant performance improvements. It introduces new platform capabilities and resolves several stability issues."`
-
-            *   Update announcement.md for specific provider:
-                `/update-announcement --provider aws "Workload cluster release v32.0.0 for CAPA includes Kubernetes 1.32 support and enhanced security features."`
-
-            *   Update all providers (auto-detected):
-                `/update-readme "This major release brings significant platform enhancements and stability improvements across all supported providers."`
+            ${{ steps.read_instructions.outputs.content }}
           branch: "release-${{ steps.determine_next_release.outputs.version }}"
           labels: |
             release/major
@@ -721,6 +704,15 @@ jobs:
             echo "Successfully updated README.md with ${{ steps.determine_next_release.outputs.version }} for $provider"
           done
 
+      - name: Read release instructions template
+        id: read_instructions
+        if: steps.check_pr.outputs.PR_EXISTS == 'false'
+        run: |
+          CONTENT=$(cat .github/pr-body-templates/consolidated-release-instructions.md)
+          echo "content<<EOF" >> $GITHUB_OUTPUT
+          echo "$CONTENT" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
       - name: Create Pull Request
         id: create_pr
         if: steps.check_pr.outputs.PR_EXISTS == 'false'
@@ -737,33 +729,7 @@ jobs:
 
             ---
 
-            ## Updating this Release
-
-            To update the release files in this PR, comment with `/update-release` and provide arguments directly to `devctl`. For consolidated releases, you **must** specify which provider you are updating.
-            If you do not specify a provider, the bot will automatically detect the provider from the PR files.
-            Available providers: `aws`, `azure`, `cloud-director`, `eks`, `vsphere`.
-
-            **Examples:**
-
-            *   Update a single component for a specific provider:
-                `/update-release --provider aws --component flatcar@4152.2.3`
-
-            *   Update multiple components and apps for a specific provider:
-                `/update-release --provider azure --component cluster-azure@2.4.1 --app azuredisk-csi-driver@1.32.9`
-
-            *   Specify app dependencies using the `#` separator:
-                `/update-release --provider aws --app my-app@1.2.3@@dependency1#dependency2`
-
-            **Add descriptions:**
-
-            *   Update README.md for specific provider:
-                `/update-readme --provider aws "This release includes component updates, bug fixes, and performance improvements."`
-
-            *   Update announcement.md for specific provider:
-                `/update-announcement --provider aws "Workload cluster release includes important updates and improvements."`
-
-            *   Update all providers (auto-detected):
-                `/update-readme "This minor release brings component updates and improvements across all supported providers."`
+            ${{ steps.read_instructions.outputs.content }}
           branch: "release-${{ steps.determine_next_release.outputs.version }}"
           labels: |
             release/minor
@@ -919,6 +885,15 @@ jobs:
         run: |
           ./tools/update-readme.sh "${{ matrix.provider }}" "${{ steps.determine_next_release.outputs.version }}"
 
+      - name: Read release instructions template
+        id: read_instructions
+        if: steps.check_pr.outputs.PR_EXISTS == 'false' && (needs.dispatcher.outputs.release_type != 'major' || steps.k8s_check.outputs.VERSION_EXISTS == 'true')
+        run: |
+          CONTENT=$(cat .github/pr-body-templates/individual-release-instructions.md)
+          echo "content<<EOF" >> $GITHUB_OUTPUT
+          echo "$CONTENT" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
       - name: Create Pull Request
         id: create_pr
         if: steps.check_pr.outputs.PR_EXISTS == 'false' && (needs.dispatcher.outputs.release_type != 'major' || steps.k8s_check.outputs.VERSION_EXISTS == 'true')
@@ -935,33 +910,7 @@ jobs:
 
             ---
 
-            ## Updating this Release
-
-            To update the release files in this PR, comment with `/update-release` and provide arguments directly to `devctl`.
-            If you do not specify a provider, the bot will automatically detect the provider from the PR files.
-            Available providers: `aws`, `azure`, `cloud-director`, `eks`, `vsphere`.
-
-            **Examples:**
-
-            *   Update a single component:
-                `/update-release --component flatcar@4152.2.3`
-
-            *   Update a single application:
-                `/update-release --app aws-ebs-csi-driver@3.0.5`
-
-            *   Update multiple components and apps at once:
-                `/update-release --component cluster-aws@4.0.2 --app karpenter-bundle@2.2.0 --app coredns@1.27.0`
-
-            *   Specify app dependencies using the `#` separator:
-                `/update-release --app my-app@1.2.3@@dependency1#dependency2`
-
-            **Add descriptions:**
-
-            *   Update README.md with detailed description:
-                `/update-readme "This major release includes Kubernetes 1.32 support, enhanced security features, and significant performance improvements. It introduces new platform capabilities and resolves several stability issues."`
-
-            *   Update announcement.md with brief summary:
-                `/update-announcement "Workload cluster release includes Kubernetes 1.32 support and enhanced security features."`
+            ${{ steps.read_instructions.outputs.content }}
           branch: "release-${{ steps.determine_next_release.outputs.version }}-${{ matrix.provider }}"
           labels: |
             release/major
@@ -1095,6 +1044,15 @@ jobs:
         run: |
           ./tools/update-readme.sh "${{ matrix.provider }}" "${{ steps.determine_next_release.outputs.version }}"
 
+      - name: Read release instructions template
+        id: read_instructions
+        if: steps.check_pr.outputs.PR_EXISTS == 'false'
+        run: |
+          CONTENT=$(cat .github/pr-body-templates/individual-release-instructions.md)
+          echo "content<<EOF" >> $GITHUB_OUTPUT
+          echo "$CONTENT" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
       - name: Create Pull Request
         id: create_pr
         if: steps.check_pr.outputs.PR_EXISTS == 'false'
@@ -1111,33 +1069,7 @@ jobs:
 
             ---
 
-            ## Updating this Release
-
-            To update the release files in this PR, comment with `/update-release` and provide arguments directly to `devctl`.
-            If you do not specify a provider, the bot will automatically detect the provider from the PR files.
-            Available providers: `aws`, `azure`, `cloud-director`, `eks`, `vsphere`.
-
-            **Examples:**
-
-            *   Update a single component:
-                `/update-release --component flatcar@4152.2.3`
-
-            *   Update a single application:
-                `/update-release --app aws-ebs-csi-driver@3.0.5`
-
-            *   Update multiple components and apps at once:
-                `/update-release --component cluster-aws@4.0.2 --app karpenter-bundle@2.2.0 --app coredns@1.27.0`
-
-            *   Specify app dependencies using the `#` separator:
-                `/update-release --app my-app@1.2.3@@dependency1#dependency2`
-
-            **Add descriptions:**
-
-            *   Update README.md with detailed description:
-                `/update-readme "This release includes component updates, bug fixes, and performance improvements."`
-
-            *   Update announcement.md with brief summary:
-                `/update-announcement "Workload cluster release includes important updates and improvements."`
+            ${{ steps.read_instructions.outputs.content }}
           branch: "release-${{ steps.determine_next_release.outputs.version }}-${{ matrix.provider }}"
           labels: |
             release/minor
@@ -1287,6 +1219,9 @@ jobs:
       - name: Prepare PR body
         id: pr_body
         run: |
+          # Read the template
+          TEMPLATE_CONTENT=$(cat .github/pr-body-templates/individual-release-instructions.md)
+          
           body="This PR creates the new **patch release** \`${{ steps.versioning.outputs.NEXT_RELEASE }}\` for **${{ matrix.provider }}** only.
 
           Patch releases contain targeted fixes for specific security issues, critical bugs, or component updates.
@@ -1295,34 +1230,8 @@ jobs:
 
           ---
 
-          ## Updating this Release
-
-          **Note:** For patch releases, it does not automatically bump any component or app.
-          To update specific components or apps, comment with \`/update-release\` and provide arguments directly to \`devctl\`.
-          If you do not specify a provider, the bot will automatically detect the provider from the PR files.
-          Available providers: \`aws\`, \`azure\`, \`cloud-director\`, \`eks\`, \`vsphere\`.
-
-          **Examples:**
-
-          *   Update a single component:
-              \`/update-release --component flatcar@4152.2.3\`
-
-          *   Update a single application:
-              \`/update-release --app aws-ebs-csi-driver@3.0.5\`
-
-          *   Update multiple components and apps at once:
-              \`/update-release --component kubernetes@1.31.8 --app security-bundle@1.12.1\`
-
-          *   Specify app dependencies using the \`#\` separator:
-              \`/update-release --app my-app@1.2.3@@dependency1#dependency2\`
-
-          **Add descriptions:**
-
-          *   Update README.md with detailed description:
-              \`/update-readme \"This patch release fixes CVE-2024-1234 in security-bundle and updates Flatcar for hardware compatibility. It also resolves boot issues on certain hardware configurations.\"\`
-
-          *   Update announcement.md with brief summary:
-              \`/update-announcement \"Workload cluster release fixes critical security vulnerabilities and improves system stability.\"\`"
+          ${TEMPLATE_CONTENT}"
+          
           echo "body<<EOF" >> $GITHUB_OUTPUT
           echo "$body" >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
@@ -1489,6 +1398,15 @@ jobs:
             echo "Successfully updated README.md with ${{ steps.determine_next_release.outputs.version }} for $provider"
           done
 
+      - name: Read release instructions template
+        id: read_instructions
+        if: steps.check_pr.outputs.PR_EXISTS == 'false'
+        run: |
+          CONTENT=$(cat .github/pr-body-templates/consolidated-release-instructions.md)
+          echo "content<<EOF" >> $GITHUB_OUTPUT
+          echo "$CONTENT" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
       - name: Create Pull Request
         id: create_pr
         if: steps.check_pr.outputs.PR_EXISTS == 'false'
@@ -1505,34 +1423,7 @@ jobs:
 
             ---
 
-            ## Updating this Release
-
-            **Note:** For patch releases, it does not automatically bump any component or app.
-            To update the release files in this PR, comment with `/update-release` and provide arguments directly to `devctl`. For consolidated releases, you **must** specify which provider you are updating.
-            If you do not specify a provider, the bot will automatically detect the provider from the PR files.
-            Available providers: `aws`, `azure`, `cloud-director`, `eks`, `vsphere`.
-
-            **Examples:**
-
-            *   Update a single component for a specific provider:
-                `/update-release --provider aws --component flatcar@4152.2.3`
-
-            *   Update multiple components and apps for a specific provider:
-                `/update-release --provider azure --component cluster-azure@2.4.1 --app azuredisk-csi-driver@1.32.9`
-
-            *   Specify app dependencies using the `#` separator:
-                `/update-release --provider aws --app my-app@1.2.3@@dependency1#dependency2`
-
-            **Add descriptions:**
-
-            *   Update README.md for specific provider:
-                `/update-readme --provider aws "This patch release fixes CVE-2024-1234 in security-bundle and updates Flatcar for hardware compatibility. It also resolves boot issues on certain hardware configurations."`
-
-            *   Update announcement.md for specific provider:
-                `/update-announcement --provider aws "Workload cluster release fixes critical security vulnerabilities and improves system stability."`
-
-            *   Update all providers (auto-detected):
-                `/update-readme "This patch release brings important security fixes and stability improvements across all supported providers."`
+            ${{ steps.read_instructions.outputs.content }}
           branch: "release-${{ steps.determine_next_release.outputs.version }}"
           labels: |
             release/${{ needs.patch_release_decider.outputs.release_type }}

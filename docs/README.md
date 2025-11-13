@@ -19,6 +19,14 @@ Documentation for workflows that manage the end-of-life process for releases:
 
 These workflows ensure safe transitions by validating against active usage metrics from Grafana before making changes.
 
+### [Pinning Component Versions](workflows-pinning-versions.md)
+Documentation for pinning specific component or app versions in releases:
+- **Pin Version** (`pin-version.yaml`) - Pins component/app versions via PR comments
+- Prevents automatic version bumps for specified duration
+- Updates both current release and `requests.yaml` for future releases
+
+Use this when you need to keep a specific version temporarily or long-term.
+
 ## Quick Reference
 
 ### Workflow Triggers
