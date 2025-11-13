@@ -44,6 +44,22 @@ jobs:
             });
             return pr.data.head.ref;
 
+      - name: Detect if automatic bump or manual update
+        id: detect_source
+        uses: actions/github-script@v8
+        with:
+          github-token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+          script: |
+            const commentAuthor = context.payload.comment.user.login;
+            const botUsers = ['taylorbot', 'github-actions[bot]'];
+            const isAutomatic = botUsers.includes(commentAuthor);
+            
+            core.setOutput('is_automatic', isAutomatic.toString());
+            core.setOutput('source_type', isAutomatic ? 'automatic' : 'manual');
+            
+            console.log(`Comment author: ${commentAuthor}`);
+            console.log(`Is automatic: ${isAutomatic}`);
+
       - name: Checkout PR branch
         uses: actions/checkout@v5
         with:
@@ -242,6 +258,14 @@ jobs:
           set -o pipefail
           BRANCH_NAME="${{ steps.get_branch.outputs.result }}"
           PROVIDERS_TO_UPDATE="${{ steps.parse_command.outputs.provider }}${{ steps.parse_command.outputs.providers_list }}"
+          IS_AUTOMATIC="${{ steps.detect_source.outputs.is_automatic }}"
+
+          # Determine the message prefix based on source
+          if [[ "$IS_AUTOMATIC" == "true" ]]; then
+            CHANGE_PREFIX="Weekly automatic bump"
+          else
+            CHANGE_PREFIX="User-requested changes"
+          fi
 
           # For `devctl`, the provider for the `capa` directory is `aws`.
           # We must translate `aws` to `capa` for directory lookups.
@@ -365,7 +389,7 @@ jobs:
 
             if ! output=$(eval "$DEVCTL_COMMAND" 2>&1 | uniq); then
                 # Error case - always collapse
-                LOG_PART="<details><summary>User-requested changes for ${PROVIDER_DIR^^}</summary>\n\n"
+                LOG_PART="<details><summary>${CHANGE_PREFIX} for ${PROVIDER_DIR^^}</summary>\n\n"
                 LOG_PART="${LOG_PART}devctl command failed for provider $PROVIDER_DIR.\n\n"
                 LOG_PART="${LOG_PART}<details><summary>Error Log</summary>\n\n"
                 LOG_PART="${LOG_PART}_Output of \`devctl release create\`_: \n"
@@ -473,11 +497,11 @@ jobs:
 
                 # Only wrap in details if there are more than 5 changes (roughly 5 table rows)
                 if [[ $CHANGE_COUNT -gt 5 ]]; then
-                  LOG_PART="<details><summary>User-requested changes for ${PROVIDER_DIR^^}</summary>\n\n"
+                  LOG_PART="<details><summary>${CHANGE_PREFIX} for ${PROVIDER_DIR^^}</summary>\n\n"
                   LOG_PART="${LOG_PART}${CONTENT_PART}"
                   LOG_PART="${LOG_PART}</details>\n\n"
                 else
-                  LOG_PART="### User-requested changes for ${PROVIDER_DIR^^}\n\n"
+                  LOG_PART="### ${CHANGE_PREFIX} for ${PROVIDER_DIR^^}\n\n"
                   LOG_PART="${LOG_PART}${CONTENT_PART}"
                 fi
 
