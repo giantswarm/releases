@@ -24,7 +24,7 @@
     {
       "version": "32.2.0",
       "isDeprecated": false,
-      "releaseTimestamp": "2025-11-13T13:51:19Z",
+      "releaseTimestamp": "2025-11-13T13:58:35Z",
       "changelogUrl": "https://github.com/giantswarm/releases/blob/master/azure/v32.2.0/README.md",
       "isStable": true
     },
