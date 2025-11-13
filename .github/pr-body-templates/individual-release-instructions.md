@@ -3,6 +3,7 @@
 
 To update the release files in this PR, comment with `/update-release` and provide arguments directly to `devctl`.
 
+
 **Examples:**
 
 *   Update a single component:
@@ -32,6 +33,7 @@ To update the release files in this PR, comment with `/update-release` and provi
 
 To pin a specific component or app version (preventing automatic bumps), add a comment with `/pin-version`.
 
+
 **Pin duration:**
 - **Default (no `--until` flag)**: Pins only for this release. Future releases will auto-update.
 - **With `--until vX.Y.Z`**: Pins until the specified version. Example: `--until v32.0.0` pins for all releases < v32.0.0
@@ -60,6 +62,7 @@ To pin a specific component or app version (preventing automatic bumps), add a c
 
 To trigger the E2E test for each new Release added in this PR, add a comment with:
 
+
 `/run releases-test-suites`
 
 If your release is a new _patch_ or _minor_ release for an older major release, specify the previous release for upgrade tests:
@@ -73,12 +76,5 @@ You can also limit which tests are run:
 For conformance tests:
 
 `/run conformance-tests PROVIDER=capa RELEASE_VERSION=29.1.0`
-
-</details>
-
-<details>
-<summary>📖 More Info</summary>
-
-[CAPI Release Drafting Guide](https://intranet.giantswarm.io/docs/product/releases/capi/capi-release-drafting/)
 
 </details>
