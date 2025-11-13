@@ -195,6 +195,10 @@ jobs:
           # Extract --until flag (optional)
           UNTIL=$(echo "$COMMENT_CONTENT" | grep -oP '(?<=--until )[^ ]+' || true)
           if [[ -n "$UNTIL" ]]; then
+            # Normalize: ensure it has "v" prefix for consistency
+            if [[ ! "$UNTIL" =~ ^v ]]; then
+              UNTIL="v${UNTIL}"
+            fi
             echo "until=$UNTIL" >> "$GITHUB_OUTPUT"
             echo "Until version specified: $UNTIL"
           fi
@@ -493,23 +497,23 @@ jobs:
             }
 
             let body = `## 📌 Version Pin Applied\n\n`;
-            body += `**${pinType}**: \`${pinName}@${pinVersion}\`\n`;
+            body += `**${pinType}**: \`${pinName}@${pinVersion}\`\n\n`;
             
             // Show how providers were determined
             if (explicitProvider) {
-              body += `**Provider**: \`${explicitProvider}\` (explicitly specified)\n`;
+              body += `**Provider**: \`${explicitProvider}\` (explicitly specified)\n\n`;
             } else if (detectedProviders) {
               const providerCount = detectedProviders.split(' ').length;
               if (providerCount === 1) {
-                body += `**Provider**: \`${detectedProviders}\` (🔍 auto-detected - ${pinType} exists only here)\n`;
+                body += `**Provider**: \`${detectedProviders}\` (🔍 auto-detected - ${pinType} exists only here)\n\n`;
               } else {
-                body += `**Providers**: \`${detectedProviders.split(' ').join(', ')}\` (🔍 auto-detected - ${pinType} exists in these providers)\n`;
+                body += `**Providers**: \`${detectedProviders.split(' ').join(', ')}\` (🔍 auto-detected - ${pinType} exists in these providers)\n\n`;
               }
             }
             
             if (until) {
-              body += `**Pin until**: v${until}\n`;
-              body += `**Effect**: Pinned for all releases < v${until}\n\n`;
+              body += `**Pin until**: ${until}\n`;
+              body += `**Effect**: Pinned for all releases < ${until}\n\n`;
             } else {
               body += `**Pin duration**: This release only\n\n`;
             }
@@ -519,13 +523,15 @@ jobs:
             }
 
             body += `---\n\n`;
-            body += devctlOutput + '\n\n';
-            body += requestsOutput + '\n\n';
+            body += devctlOutput;
+            if (devctlOutput) body += '\n\n';
+            body += requestsOutput;
+            if (requestsOutput) body += '\n\n';
             body += `---\n\n`;
             body += `ℹ️ This pin will be respected by automatic version bumps. `;
             
             if (until) {
-              body += `Starting with v${until}, this component will auto-update again.\n\n`;
+              body += `Starting with ${until}, this ${pinType} will auto-update again.\n\n`;
             } else {
               body += `Future releases will auto-update to the latest version.\n\n`;
             }
