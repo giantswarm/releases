@@ -515,6 +515,12 @@ jobs:
             ---
 
             ${{ steps.read_instructions.outputs.content }}
+
+            ---
+
+            ### Changes:
+
+            ${{ env.LOG_CONTENT }}
           branch: "release-${{ steps.determine_next_release.outputs.version }}"
           labels: |
             release/major
@@ -554,20 +560,6 @@ jobs:
                 body: comment
               });
             }
-
-      - name: Add comment to PR with devctl output
-        if: steps.create_pr.outputs.pull-request-number && steps.create_pr.outputs.pull-request-number != ''
-        uses: actions/github-script@v8
-        with:
-          github-token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
-          script: |
-            const output = `${{ env.LOG_CONTENT }}`;
-            github.rest.issues.createComment({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              issue_number: ${{ steps.create_pr.outputs.pull-request-number }},
-              body: `${output.replace(/`/g, '\\`')}`
-            });
 
       # - name: Trigger e2e tests
       #   if: steps.check_pr.outputs.PR_EXISTS == 'false' && steps.k8s_check.outputs.VERSION_EXISTS == 'true' && steps.create_pr.outputs.pull-request-number
@@ -730,6 +722,12 @@ jobs:
             ---
 
             ${{ steps.read_instructions.outputs.content }}
+
+            ---
+
+            ### Changes:
+
+            ${{ env.LOG_CONTENT }}
           branch: "release-${{ steps.determine_next_release.outputs.version }}"
           labels: |
             release/minor
@@ -789,20 +787,6 @@ jobs:
                 body: content
               });
             }
-
-      - name: Add comment to PR with devctl output
-        if: steps.create_pr.outputs.pull-request-number && steps.create_pr.outputs.pull-request-number != ''
-        uses: actions/github-script@v8
-        with:
-          github-token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
-          script: |
-            const output = `${{ env.LOG_CONTENT }}`;
-            github.rest.issues.createComment({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              issue_number: ${{ steps.create_pr.outputs.pull-request-number }},
-              body: `### Changes:\n\n${output.replace(/`/g, '\\`')}`
-            });
 
       # - name: Trigger e2e tests
       #   if: steps.check_pr.outputs.PR_EXISTS == 'false' && steps.create_pr.outputs.pull-request-number
@@ -911,6 +895,12 @@ jobs:
             ---
 
             ${{ steps.read_instructions.outputs.content }}
+
+            ---
+
+            ### Changes:
+
+            ${{ env.LOG_CONTENT }}
           branch: "release-${{ steps.determine_next_release.outputs.version }}-${{ matrix.provider }}"
           labels: |
             release/major
@@ -950,20 +940,6 @@ jobs:
                 body: comment
               });
             }
-
-      - name: Add comment to PR with devctl output
-        if: steps.create_pr.outputs.pull-request-number && steps.create_pr.outputs.pull-request-number != ''
-        uses: actions/github-script@v8
-        with:
-          github-token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
-          script: |
-            const output = `${{ env.LOG_CONTENT }}`;
-            github.rest.issues.createComment({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              issue_number: ${{ steps.create_pr.outputs.pull-request-number }},
-              body: `### Changes:\n\n${output.replace(/`/g, '\\`')}`
-            });
 
       # - name: Trigger e2e tests
       #   if: steps.check_pr.outputs.PR_EXISTS == 'false' && steps.create_pr.outputs.pull-request-number
@@ -1070,6 +1046,12 @@ jobs:
             ---
 
             ${{ steps.read_instructions.outputs.content }}
+
+            ---
+
+            ### Changes:
+
+            ${{ env.LOG_CONTENT }}
           branch: "release-${{ steps.determine_next_release.outputs.version }}-${{ matrix.provider }}"
           labels: |
             release/minor
@@ -1129,20 +1111,6 @@ jobs:
                 body: content
               });
             }
-
-      - name: Add comment to PR with devctl output
-        if: steps.create_pr.outputs.pull-request-number && steps.create_pr.outputs.pull-request-number != ''
-        uses: actions/github-script@v8
-        with:
-          github-token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
-          script: |
-            const output = `${{ env.LOG_CONTENT }}`;
-            github.rest.issues.createComment({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              issue_number: ${{ steps.create_pr.outputs.pull-request-number }},
-              body: `### Changes:\n\n${output.replace(/`/g, '\\`')}`
-            });
 
   patch_release_individual:
     name: "Patch Release (Individual)"
@@ -1222,6 +1190,9 @@ jobs:
           # Read the template
           TEMPLATE_CONTENT=$(cat .github/pr-body-templates/individual-release-instructions.md)
           
+          # Read the changes from devctl output
+          CHANGES_CONTENT=$(cat /tmp/release_output.log)
+          
           body="This PR creates the new **patch release** \`${{ steps.versioning.outputs.NEXT_RELEASE }}\` for **${{ matrix.provider }}** only.
 
           Patch releases contain targeted fixes for specific security issues, critical bugs, or component updates.
@@ -1230,7 +1201,13 @@ jobs:
 
           ---
 
-          ${TEMPLATE_CONTENT}"
+          ${TEMPLATE_CONTENT}
+
+          ---
+
+          ### Changes:
+
+          ${CHANGES_CONTENT}"
           
           echo "body<<EOF" >> $GITHUB_OUTPUT
           echo "$body" >> $GITHUB_OUTPUT
@@ -1424,6 +1401,12 @@ jobs:
             ---
 
             ${{ steps.read_instructions.outputs.content }}
+
+            ---
+
+            ### Changes:
+
+            ${{ env.LOG_CONTENT }}
           branch: "release-${{ steps.determine_next_release.outputs.version }}"
           labels: |
             release/${{ needs.patch_release_decider.outputs.release_type }}
@@ -1463,20 +1446,6 @@ jobs:
                 body: comment
               });
             }
-
-      - name: Add comment to PR with devctl output
-        if: steps.create_pr.outputs.pull-request-number && steps.create_pr.outputs.pull-request-number != ''
-        uses: actions/github-script@v8
-        with:
-          github-token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
-          script: |
-            const output = `${{ env.LOG_CONTENT }}`;
-            github.rest.issues.createComment({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              issue_number: ${{ steps.create_pr.outputs.pull-request-number }},
-              body: `${output.replace(/`/g, '\\`')}`
-            });
 
   summarize_releases:
     name: "Summarize Releases"
