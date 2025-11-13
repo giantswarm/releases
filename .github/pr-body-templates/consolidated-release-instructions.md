@@ -34,7 +34,9 @@ Available providers: `aws`, `azure`, `cloud-director`, `eks`, `vsphere`.
 <summary>📌 Pin Component or App Versions</summary>
 
 
-To pin a specific component or app version (preventing automatic bumps), add a comment with `/pin-version`. For consolidated releases, you **must** specify which provider you are pinning for.
+To pin a specific component or app version (preventing automatic bumps), add a comment with `/pin-version`. 
+
+The workflow automatically detects which providers use the component/app. Use `--provider` to pin for a specific provider only (e.g., when a shared component has issues on one provider but not others).
 
 **Pin duration:**
 - **Default (no `--until` flag)**: Pins only for this release. Future releases will auto-update.
@@ -42,20 +44,20 @@ To pin a specific component or app version (preventing automatic bumps), add a c
 
 **Examples:**
 
-*   Pin component for this release only:
-    `/pin-version --provider aws --component flatcar@4152.2.3`
+*   Pin provider-specific component (auto-detects AWS):
+    `/pin-version --component cluster-aws@6.2.0`
 
-*   Pin app for this release only:
-    `/pin-version --provider azure --app cilium@1.2.2`
+*   Pin shared component for all providers that use it:
+    `/pin-version --component flatcar@4152.2.3`
 
-*   Pin component until a specific version:
-    `/pin-version --provider aws --component flatcar@4152.2.3 --until v32.0.0`
+*   Pin shared component for one provider only:
+    `/pin-version --provider azure --component flatcar@4152.2.3`
 
-*   Pin app for all patch releases in this minor series:
-    `/pin-version --provider azure --app security-bundle@1.0.0 --until v31.2.0`
+*   Pin until a specific version:
+    `/pin-version --component cluster-aws@6.2.0 --until v33.0.0`
 
-*   Add a reason for the pin:
-    `/pin-version --provider aws --app security-bundle@1.0.0 --until v32.0.0 --reason "Version 1.1.0 has known issues"`
+*   Add a reason:
+    `/pin-version --component cluster-aws@6.2.0 --until v33.0.0 --reason "Version 6.4.0 has known issues"`
 
 </details>
 

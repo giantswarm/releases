@@ -76,36 +76,7 @@ jobs:
           printf '%s\n' "$COMMENT_BODY" > /tmp/comment_body.txt
           COMMENT_CONTENT=$(cat /tmp/comment_body.txt)
 
-          # Extract --provider flag
-          COMMENT_PROVIDER=$(echo "$COMMENT_BODY" | grep -oP '(?<=--provider(=| ))[a-zA-Z-]+' || true)
-
-          if [[ -n "$COMMENT_PROVIDER" ]]; then
-            echo "Provider specified in comment: $COMMENT_PROVIDER"
-            echo "provider=$COMMENT_PROVIDER" >> "$GITHUB_OUTPUT"
-          else
-            echo "No provider specified. Detecting providers from PR files."
-            # Get providers from the PR's changed files
-            PR_PROVIDERS=$(gh pr view ${{ github.event.issue.number }} --json files --jq '.files[].path' | cut -d'/' -f1 | sort -u | xargs)
-            # List of valid provider directories
-            VALID_PROVIDERS="azure capa cloud-director eks vsphere"
-            PROVIDERS_LIST=""
-            for provider in $PR_PROVIDERS; do
-              if [[ " $VALID_PROVIDERS " =~ " $provider " ]]; then
-                PROVIDERS_LIST="$PROVIDERS_LIST $provider"
-              fi
-            done
-            # Trim whitespace
-            PROVIDERS_LIST=$(echo "$PROVIDERS_LIST" | xargs)
-            if [[ -z "$PROVIDERS_LIST" ]]; then
-              echo "Could not determine any providers from the PR files."
-              echo "error=no_provider_detected" >> "$GITHUB_OUTPUT"
-              exit 0
-            fi
-            echo "Detected providers: $PROVIDERS_LIST"
-            echo "providers_list=${PROVIDERS_LIST}" >> "$GITHUB_OUTPUT"
-          fi
-
-          # Extract component or app name and version
+          # Extract component or app name and version FIRST (needed for smart detection)
           COMPONENT=$(echo "$COMMENT_CONTENT" | grep -oP '(?<=--component )[^ ]+' || true)
           APP=$(echo "$COMMENT_CONTENT" | grep -oP '(?<=--app )[^ ]+' || true)
 
@@ -119,24 +90,106 @@ jobs:
             exit 0
           fi
 
+          # Determine pin type and name
           if [[ -n "$COMPONENT" ]]; then
-            echo "pin_type=component" >> "$GITHUB_OUTPUT"
-            echo "pin_spec=$COMPONENT" >> "$GITHUB_OUTPUT"
-            
-            # Parse component name and version
-            COMPONENT_NAME=$(echo "$COMPONENT" | cut -d'@' -f1)
-            COMPONENT_VERSION=$(echo "$COMPONENT" | cut -d'@' -f2)
-            echo "pin_name=$COMPONENT_NAME" >> "$GITHUB_OUTPUT"
-            echo "pin_version=$COMPONENT_VERSION" >> "$GITHUB_OUTPUT"
+            PIN_TYPE="component"
+            PIN_SPEC="$COMPONENT"
+            PIN_NAME=$(echo "$COMPONENT" | cut -d'@' -f1)
+            PIN_VERSION=$(echo "$COMPONENT" | cut -d'@' -f2)
           else
-            echo "pin_type=app" >> "$GITHUB_OUTPUT"
-            echo "pin_spec=$APP" >> "$GITHUB_OUTPUT"
+            PIN_TYPE="app"
+            PIN_SPEC="$APP"
+            PIN_NAME=$(echo "$APP" | cut -d'@' -f1)
+            PIN_VERSION=$(echo "$APP" | cut -d'@' -f2)
+          fi
+
+          echo "pin_type=$PIN_TYPE" >> "$GITHUB_OUTPUT"
+          echo "pin_spec=$PIN_SPEC" >> "$GITHUB_OUTPUT"
+          echo "pin_name=$PIN_NAME" >> "$GITHUB_OUTPUT"
+          echo "pin_version=$PIN_VERSION" >> "$GITHUB_OUTPUT"
+
+          # Extract --provider flag
+          COMMENT_PROVIDER=$(echo "$COMMENT_BODY" | grep -oP '(?<=--provider(=| ))[a-zA-Z-]+' || true)
+
+          if [[ -n "$COMMENT_PROVIDER" ]]; then
+            echo "Provider specified in comment: $COMMENT_PROVIDER"
+            echo "provider=$COMMENT_PROVIDER" >> "$GITHUB_OUTPUT"
+          else
+            echo "No provider specified. Using smart detection based on component/app availability."
             
-            # Parse app name and version
-            APP_NAME=$(echo "$APP" | cut -d'@' -f1)
-            APP_VERSION=$(echo "$APP" | cut -d'@' -f2)
-            echo "pin_name=$APP_NAME" >> "$GITHUB_OUTPUT"
-            echo "pin_version=$APP_VERSION" >> "$GITHUB_OUTPUT"
+            # Get providers from the PR's changed files
+            PR_PROVIDERS=$(gh pr view ${{ github.event.issue.number }} --json files --jq '.files[].path' | cut -d'/' -f1 | sort -u | xargs)
+            
+            # Get branch name to determine release version
+            BRANCH_NAME=$(gh pr view ${{ github.event.issue.number }} --json headRefName --jq '.headRefName')
+            RELEASE_NAME=$(echo "$BRANCH_NAME" | sed -n 's/release-\(v[0-9.]*\).*/\1/p')
+            
+            if [[ -z "$RELEASE_NAME" ]]; then
+              echo "Could not determine release name from branch '$BRANCH_NAME'."
+              echo "error=no_release_detected" >> "$GITHUB_OUTPUT"
+              exit 0
+            fi
+            
+            echo "Detected release: $RELEASE_NAME"
+            
+            # List of valid provider directories
+            VALID_PROVIDERS="azure capa cloud-director eks vsphere"
+            CANDIDATE_PROVIDERS=""
+            
+            for provider in $PR_PROVIDERS; do
+              if [[ " $VALID_PROVIDERS " =~ " $provider " ]]; then
+                CANDIDATE_PROVIDERS="$CANDIDATE_PROVIDERS $provider"
+              fi
+            done
+            
+            # Trim whitespace
+            CANDIDATE_PROVIDERS=$(echo "$CANDIDATE_PROVIDERS" | xargs)
+            
+            if [[ -z "$CANDIDATE_PROVIDERS" ]]; then
+              echo "Could not determine any providers from the PR files."
+              echo "error=no_provider_detected" >> "$GITHUB_OUTPUT"
+              exit 0
+            fi
+            
+            echo "Candidate providers from PR: $CANDIDATE_PROVIDERS"
+            
+            # Smart detection: Check which providers actually have this component/app
+            MATCHING_PROVIDERS=""
+            
+            for provider in $CANDIDATE_PROVIDERS; do
+              RELEASE_FILE="${provider}/${RELEASE_NAME}/release.yaml"
+              
+              if [[ ! -f "$RELEASE_FILE" ]]; then
+                echo "  ${provider}: Release file not found, skipping"
+                continue
+              fi
+              
+              # Check if component/app exists in this provider's release
+              if [[ "$PIN_TYPE" == "component" ]]; then
+                HAS_ITEM=$(yq eval '.spec.components[] | select(.name == "'"$PIN_NAME"'") | .name' "$RELEASE_FILE" 2>/dev/null || true)
+              else
+                HAS_ITEM=$(yq eval '.spec.apps[] | select(.name == "'"$PIN_NAME"'") | .name' "$RELEASE_FILE" 2>/dev/null || true)
+              fi
+              
+              if [[ -n "$HAS_ITEM" ]]; then
+                echo "  ${provider}: ✅ Has ${PIN_TYPE} '${PIN_NAME}'"
+                MATCHING_PROVIDERS="$MATCHING_PROVIDERS $provider"
+              else
+                echo "  ${provider}: ❌ Does not have ${PIN_TYPE} '${PIN_NAME}'"
+              fi
+            done
+            
+            # Trim whitespace
+            MATCHING_PROVIDERS=$(echo "$MATCHING_PROVIDERS" | xargs)
+            
+            if [[ -z "$MATCHING_PROVIDERS" ]]; then
+              echo "error=component_not_found_in_any_provider" >> "$GITHUB_OUTPUT"
+              echo "searched_providers=$CANDIDATE_PROVIDERS" >> "$GITHUB_OUTPUT"
+              exit 0
+            fi
+            
+            echo "Smart detection result: Pinning for providers: $MATCHING_PROVIDERS"
+            echo "providers_list=${MATCHING_PROVIDERS}" >> "$GITHUB_OUTPUT"
           fi
 
           # Extract --until flag (optional)
@@ -173,6 +226,18 @@ jobs:
             if (error === 'no_provider_detected') {
               message += 'Could not detect provider from PR files. Please specify `--provider` explicitly.\n\n';
               message += 'Example: `/pin-version --provider aws --component flatcar@4152.2.3`';
+            } else if (error === 'no_release_detected') {
+              message += 'Could not determine release version from PR branch name.\n\n';
+              message += 'Expected branch name format: `release-vX.Y.Z`';
+            } else if (error === 'component_not_found_in_any_provider') {
+              const searchedProviders = '${{ steps.parse_command.outputs.searched_providers }}';
+              message += `The specified component/app was not found in any of the providers in this release.\n\n`;
+              message += `**Searched providers:** ${searchedProviders}\n\n`;
+              message += '💡 **Possible reasons:**\n';
+              message += '- Typo in component/app name\n';
+              message += '- Component/app is provider-specific and not in these providers\n';
+              message += '- Component/app not yet added to this release\n\n';
+              message += '**Tip:** Check the release.yaml files to see available components/apps.';
             } else if (error === 'missing_component_or_app') {
               message += 'Missing `--component` or `--app` parameter.\n\n';
               message += 'Example: `/pin-version --component flatcar@4152.2.3`';
@@ -419,6 +484,8 @@ jobs:
             const pinVersion = '${{ steps.parse_command.outputs.pin_version }}';
             const until = '${{ steps.parse_command.outputs.until }}';
             const reasonB64 = '${{ steps.parse_command.outputs.reason }}';
+            const explicitProvider = '${{ steps.parse_command.outputs.provider }}';
+            const detectedProviders = '${{ steps.parse_command.outputs.providers_list }}';
             
             let reason = '';
             if (reasonB64) {
@@ -427,6 +494,18 @@ jobs:
 
             let body = `## 📌 Version Pin Applied\n\n`;
             body += `**${pinType}**: \`${pinName}@${pinVersion}\`\n`;
+            
+            // Show how providers were determined
+            if (explicitProvider) {
+              body += `**Provider**: \`${explicitProvider}\` (explicitly specified)\n`;
+            } else if (detectedProviders) {
+              const providerCount = detectedProviders.split(' ').length;
+              if (providerCount === 1) {
+                body += `**Provider**: \`${detectedProviders}\` (🔍 auto-detected - ${pinType} exists only here)\n`;
+              } else {
+                body += `**Providers**: \`${detectedProviders.split(' ').join(', ')}\` (🔍 auto-detected - ${pinType} exists in these providers)\n`;
+              }
+            }
             
             if (until) {
               body += `**Pin until**: v${until}\n`;

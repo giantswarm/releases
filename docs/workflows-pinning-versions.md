@@ -1,4 +1,4 @@
-# Pinning Component Versions in Releases
+# Pinning Component and App Versions in Releases
 
 This document describes how to pin specific component or app versions in release PRs using the `/pin-version` command.
 
@@ -6,7 +6,47 @@ This document describes how to pin specific component or app versions in release
 
 By default, the release system automatically bumps apps and components to their latest versions. Sometimes you need to pin a specific version (not the latest) for a release, either temporarily for one release or for multiple releases.
 
-The `/pin-version` command provides an interface for teams to pin component versions via PR comments without manually editing `requests.yaml`.
+The `/pin-version` command provides an interface for teams to pin component or app versions via PR comments without manually editing `requests.yaml`.
+
+## Quick Reference
+
+### Pin Components (Auto-Detection)
+
+```bash
+# Pin provider-specific component (auto-detects AWS only)
+/pin-version --component cluster-aws@6.2.0
+
+# Pin shared component for all providers that use it
+/pin-version --component flatcar@4152.2.3
+
+# Pin with duration
+/pin-version --component cluster-aws@6.2.0 --until v33.0.0
+```
+
+### Pin Apps (Auto-Detection)
+
+```bash
+# Pin provider-specific app (auto-detects where it exists)
+/pin-version --app aws-ebs-csi-driver@3.0.5
+
+# Pin shared app for all providers that use it
+/pin-version --app security-bundle@1.14.0
+
+# Pin with duration
+/pin-version --app security-bundle@1.14.0 --until v33.0.0
+```
+
+### Override Auto-Detection (Explicit Provider)
+
+```bash
+# Pin shared component for one provider only (when it has issues there)
+/pin-version --provider azure --component flatcar@4152.2.3
+
+# Pin shared app for one provider only
+/pin-version --provider aws --app cilium@1.2.2 --until v33.0.0
+```
+
+**Provider Detection**: The workflow automatically detects which providers use the component/app. Use `--provider` to override and pin for a specific provider only (e.g., when a shared component has issues on one provider but not others).
 
 ## Use Cases
 
@@ -149,22 +189,25 @@ Pin Kubernetes for all 31.x.x releases:
 
 **Result**: All v31.x.x releases will use Kubernetes 1.31.11. v32.0.0 can use Kubernetes 1.32.x.
 
-### Example 4: Pin in Consolidated PR
+### Example 4: Pin Shared Component for One Provider Only
 
-For consolidated PRs with multiple providers, specify which provider:
+Pin a shared component for one specific provider (when it has issues there but works elsewhere):
 
 ```bash
-/pin-version --provider aws --component flatcar@4152.2.3 --until v32.0.0
+/pin-version --provider azure --component flatcar@4152.2.3 --until v32.0.0 --reason "Flatcar 4200.x has Azure-specific boot issues"
 ```
 
-### Example 5: Pin Multiple Components
+**Result**: Azure uses Flatcar 4152.2.3, but AWS, Cloud Director, and vSphere continue auto-updating.
 
-Run separate commands to pin multiple components:
+### Example 5: Pin Multiple Components and Apps
+
+Run separate commands to pin multiple items:
 
 ```bash
 /pin-version --component flatcar@4152.2.3 --until v32.0.0
 /pin-version --component kubernetes@1.31.11 --until v32.0.0
-/pin-version --app cilium@1.2.2 --reason "Testing new version"
+/pin-version --app security-bundle@1.14.0 --reason "Testing new version"
+/pin-version --app aws-ebs-csi-driver@3.0.4
 ```
 
 ## Unpinning Versions
