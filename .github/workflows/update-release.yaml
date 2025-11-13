@@ -418,21 +418,24 @@ jobs:
                 # Build the content first (without details wrapper)
                 CONTENT_PART=""
 
-                # Determine if changes were made
-                # Check if output contains only "Unchanged" entries (devctl regenerated files but no version changes)
-                ACTUAL_CHANGES_EXIST=true
-                if [[ -n "$output" ]]; then
-                  # Count lines with actual version changes (bold text **version** indicates change)
-                  CHANGED_COUNT=$(echo -e "$output" | grep -c '\*\*' || echo "0")
-                  # Count lines that say "Unchanged"
-                  UNCHANGED_COUNT=$(echo -e "$output" | grep -c 'Unchanged' || echo "0")
+                # Determine if ACTUAL changes were made by comparing file hashes
+                # Don't trust devctl's output - it may show bold versions even when nothing changed
+                ACTUAL_CHANGES_EXIST=false
+                
+                echo "  Comparing file hashes: BEFORE=$BEFORE_HASH, AFTER=$AFTER_HASH"
+                
+                if [[ "$BEFORE_HASH" != "$AFTER_HASH" ]]; then
+                  # Files changed - but is it just timestamps or actual content?
+                  # Check if there are version differences by comparing release.yaml content (excluding date/timestamp)
+                  BEFORE_CONTENT=$(echo "$RELEASE_YAML_BACKUP" | grep -E "^\s+version:" | sort)
+                  AFTER_CONTENT=$(cat "${PROVIDER_DIR}/${RELEASE_NAME}/release.yaml" | grep -E "^\s+version:" | sort)
                   
-                  echo "  Change detection: CHANGED_COUNT=$CHANGED_COUNT, UNCHANGED_COUNT=$UNCHANGED_COUNT"
-                  
-                  # If we have Unchanged entries but no actual changes (no bold text), treat as no changes
-                  if [[ $UNCHANGED_COUNT -gt 0 && $CHANGED_COUNT -eq 0 ]]; then
+                  if [[ "$BEFORE_CONTENT" != "$AFTER_CONTENT" ]]; then
+                    ACTUAL_CHANGES_EXIST=true
+                    echo "  Detection: Actual version changes detected"
+                  else
                     ACTUAL_CHANGES_EXIST=false
-                    echo "  Detection: File hash changed but all items show 'Unchanged' - treating as no changes"
+                    echo "  Detection: Only timestamps changed, no version changes"
                     echo "  Restoring original files to prevent timestamp-only commits"
                     
                     # Restore original files to prevent timestamp-only changes from being committed
@@ -451,6 +454,8 @@ jobs:
                       AFTER_HASH=$(sha256sum "${PROVIDER_DIR}/${RELEASE_NAME}/release.yaml" | cut -d' ' -f1)
                     fi
                   fi
+                else
+                  echo "  Detection: File hash unchanged, no changes"
                 fi
 
                 # Only show changes if hash changed AND actual version changes exist
@@ -530,7 +535,20 @@ jobs:
                       CONTENT_PART="${CONTENT_PART}✅ Changes applied successfully.\n\n"
                     fi
                   else
-                    CONTENT_PART="${CONTENT_PART}${output}\n\n"
+                    # Filter output to only show changed items (remove "Unchanged" entries)
+                    echo "  Filtering output to remove 'Unchanged' entries..."
+                    FILTERED_OUTPUT=$(echo "$output" | grep -v "Unchanged" || true)
+                    
+                    # Count how many actual change lines remain (lines with **)
+                    CHANGE_LINES=$(echo "$FILTERED_OUTPUT" | grep -c '\*\*' || echo "0")
+                    echo "  Found $CHANGE_LINES changed items after filtering"
+                    
+                    if [[ $CHANGE_LINES -gt 0 ]]; then
+                      CONTENT_PART="${CONTENT_PART}${FILTERED_OUTPUT}\n\n"
+                    else
+                      # Only headers remain, so no actual changes
+                      CONTENT_PART="${CONTENT_PART}No version changes detected (all items unchanged).\n\n"
+                    fi
                   fi
                 else
                   # No changes detected (either hash unchanged OR all items show 'Unchanged')
