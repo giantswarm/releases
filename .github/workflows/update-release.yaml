@@ -408,8 +408,23 @@ jobs:
                 CONTENT_PART=""
 
                 # Determine if changes were made
-                if [[ "$BEFORE_HASH" != "$AFTER_HASH" ]]; then
-                  # Files changed, show what was requested
+                # Check if output contains only "Unchanged" entries (devctl regenerated files but no version changes)
+                ACTUAL_CHANGES_EXIST=true
+                if [[ -n "$output" ]]; then
+                  # Count lines with actual version changes (bold text **version** indicates change)
+                  CHANGED_COUNT=$(echo -e "$output" | grep -c '\*\*[0-9]' || echo "0")
+                  # Count lines that say "Unchanged"
+                  UNCHANGED_COUNT=$(echo -e "$output" | grep -c 'Unchanged' || echo "0")
+                  
+                  # If we have Unchanged entries but no actual changes (no bold versions), treat as no changes
+                  if [[ $UNCHANGED_COUNT -gt 0 && $CHANGED_COUNT -eq 0 ]]; then
+                    ACTUAL_CHANGES_EXIST=false
+                    echo "  Detection: File hash changed but all items show 'Unchanged' - treating as no changes"
+                  fi
+                fi
+
+                if [[ "$BEFORE_HASH" != "$AFTER_HASH" && "$ACTUAL_CHANGES_EXIST" == "true" ]]; then
+                  # Files changed AND actual version changes detected
                   if [[ -z "$(echo -e "${output}" | tr -d '[:space:]')" ]]; then
                     # Generate a table showing what changed
                     CHANGES_TABLE=""
@@ -487,25 +502,31 @@ jobs:
                     CONTENT_PART="${CONTENT_PART}${output}\n\n"
                   fi
                 else
-                  # No changes detected
-                  CONTENT_PART="${CONTENT_PART}No changes detected for provider ${PROVIDER_DIR^^}. The requested app/component versions may already be present in the current release.\n\n"
+                  # No changes detected (either hash unchanged OR all items show 'Unchanged')
+                  CONTENT_PART="${CONTENT_PART}No changes detected for provider ${PROVIDER_DIR^^}. All components and apps are already at the requested versions.\n\n"
                 fi
 
-                # Count the number of lines in the output to determine if we should collapse it
-                # Count lines that look like table rows (contain |) as a proxy for number of changes
-                CHANGE_COUNT=$(echo -e "$output" | grep -c '|' || echo "0")
-
-                # Only wrap in details if there are more than 5 changes (roughly 5 table rows)
-                if [[ $CHANGE_COUNT -gt 5 ]]; then
-                  LOG_PART="<details><summary>${CHANGE_PREFIX} for ${PROVIDER_DIR^^}</summary>\n\n"
-                  LOG_PART="${LOG_PART}${CONTENT_PART}"
-                  LOG_PART="${LOG_PART}</details>\n\n"
+                # Check if this is a "no changes" message
+                if [[ "$CONTENT_PART" == *"No changes detected"* ]]; then
+                  # Just append the content without provider header (to avoid redundancy)
+                  FULL_LOG_CONTENT="${FULL_LOG_CONTENT}${CONTENT_PART}"
                 else
-                  LOG_PART="### ${CHANGE_PREFIX} for ${PROVIDER_DIR^^}\n\n"
-                  LOG_PART="${LOG_PART}${CONTENT_PART}"
-                fi
+                  # Count the number of lines in the output to determine if we should collapse it
+                  # Count lines that look like table rows (contain |) as a proxy for number of changes
+                  CHANGE_COUNT=$(echo -e "$output" | grep -c '|' || echo "0")
 
-                FULL_LOG_CONTENT="${FULL_LOG_CONTENT}${LOG_PART}"
+                  # Only wrap in details if there are more than 5 changes (roughly 5 table rows)
+                  if [[ $CHANGE_COUNT -gt 5 ]]; then
+                    LOG_PART="<details><summary>${CHANGE_PREFIX} for ${PROVIDER_DIR^^}</summary>\n\n"
+                    LOG_PART="${LOG_PART}${CONTENT_PART}"
+                    LOG_PART="${LOG_PART}</details>\n\n"
+                  else
+                    LOG_PART="### ${CHANGE_PREFIX} for ${PROVIDER_DIR^^}\n\n"
+                    LOG_PART="${LOG_PART}${CONTENT_PART}"
+                  fi
+
+                  FULL_LOG_CONTENT="${FULL_LOG_CONTENT}${LOG_PART}"
+                fi
             fi
 
             # Restore README description if it existed before devctl overwrote it

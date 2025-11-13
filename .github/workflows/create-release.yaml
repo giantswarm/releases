@@ -446,7 +446,7 @@ jobs:
 
             # Capitalize provider name for the heading
             PROVIDER_UPPER=$(echo "$provider" | awk '{print toupper($0)}')
-            echo "<details><summary>Changes for ${PROVIDER_UPPER}</summary>" >> $LOG_FILE
+            echo "<details><summary>${PROVIDER_UPPER}</summary>" >> $LOG_FILE
             echo "" >> $LOG_FILE
 
             BASE_VERSION=$(./tools/determine-next-release.sh "$provider" "major" "${{ needs.major_release_decider.outputs.version_override }}" | grep '^base=' | cut -d'=' -f2)
@@ -639,7 +639,7 @@ jobs:
 
             # Capitalize provider name for the heading
             PROVIDER_UPPER=$(echo "$provider" | awk '{print toupper($0)}')
-            echo "<details><summary>Changes for ${PROVIDER_UPPER}</summary>" >> $LOG_FILE
+            echo "<details><summary>${PROVIDER_UPPER}</summary>" >> $LOG_FILE
             echo "" >> $LOG_FILE
 
             BASE_VERSION=$(./tools/determine-next-release.sh "$provider" "minor" "${{ needs.minor_release_decider.outputs.version_override }}" | grep '^base=' | cut -d'=' -f2)
@@ -1332,7 +1332,7 @@ jobs:
 
             # Capitalize provider name for the heading
             PROVIDER_UPPER=$(echo "$provider" | awk '{print toupper($0)}')
-            echo "<details><summary>Changes for ${PROVIDER_UPPER}</summary>" >> $LOG_FILE
+            echo "<details><summary>${PROVIDER_UPPER}</summary>" >> $LOG_FILE
             echo "" >> $LOG_FILE
 
             BASE_VERSION=$(./tools/determine-next-release.sh "$provider" "patch" "${{ needs.patch_release_decider.outputs.version_override }}" | grep '^base=' | cut -d'=' -f2)

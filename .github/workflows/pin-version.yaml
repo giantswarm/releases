@@ -496,24 +496,26 @@ jobs:
               reason = Buffer.from(reasonB64, 'base64').toString('utf-8');
             }
 
-            let body = `## 📌 Version Pin Applied\n\n`;
-            body += `**${pinType}**: \`${pinName}@${pinVersion}\`\n\n`;
+            // Capitalize pin type for display
+            const pinTypeDisplay = pinType.charAt(0).toUpperCase() + pinType.slice(1);
             
-            // Show how providers were determined
+            let body = `## 📌 Version Pin Applied\n\n`;
+            body += `**${pinTypeDisplay}**: \`${pinName}@${pinVersion}\`\n`;
+            
+            // Show provider(s) without verbose auto-detection text
             if (explicitProvider) {
-              body += `**Provider**: \`${explicitProvider}\` (explicitly specified)\n\n`;
+              body += `**Provider**: \`${explicitProvider}\`\n`;
             } else if (detectedProviders) {
               const providerCount = detectedProviders.split(' ').length;
               if (providerCount === 1) {
-                body += `**Provider**: \`${detectedProviders}\` (🔍 auto-detected - ${pinType} exists only here)\n\n`;
+                body += `**Provider**: \`${detectedProviders}\`\n`;
               } else {
-                body += `**Providers**: \`${detectedProviders.split(' ').join(', ')}\` (🔍 auto-detected - ${pinType} exists in these providers)\n\n`;
+                body += `**Providers**: \`${detectedProviders.split(' ').join(', ')}\`\n`;
               }
             }
             
             if (until) {
-              body += `**Pin until**: ${until}\n`;
-              body += `**Effect**: Pinned for all releases < ${until}\n\n`;
+              body += `**Pin until**: ${until}\n\n`;
             } else {
               body += `**Pin duration**: This release only\n\n`;
             }
@@ -522,12 +524,11 @@ jobs:
               body += `**Reason**: ${reason}\n\n`;
             }
 
-            body += `---\n\n`;
-            body += devctlOutput;
-            if (devctlOutput) body += '\n\n';
-            body += requestsOutput;
-            if (requestsOutput) body += '\n\n';
-            body += `---\n\n`;
+            // Show which requests.yaml files were updated (from requestsOutput)
+            if (requestsOutput) {
+              body += requestsOutput + '\n\n';
+            }
+
             body += `ℹ️ This pin will be respected by automatic version bumps. `;
             
             if (until) {
