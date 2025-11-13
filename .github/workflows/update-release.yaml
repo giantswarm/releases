@@ -275,13 +275,57 @@ jobs:
 
             echo "Updating release '$RELEASE_NAME' for provider '$PROVIDER_DIR'"
 
-            # 3. Recreate the release
+            # 3. Read current release versions to preserve pinned components/apps
+            CURRENT_RELEASE_FILE="${PROVIDER_DIR}/${RELEASE_NAME}/release.yaml"
+            REQUESTS_FILE="${PROVIDER_DIR}/requests.yaml"
+            PIN_ARGS=""
+            
+            if [ -f "$CURRENT_RELEASE_FILE" ] && [ -f "$REQUESTS_FILE" ]; then
+              echo "Checking for pinned versions in current release $RELEASE_NAME"
+              
+              # Find which items are pinned in requests.yaml (to know what to preserve)
+              PINNED_NAMES=$(yq eval '.releases[] | select(
+                .name == "'"$RELEASE_NAME"'" or
+                .name == "v'"${RELEASE_NAME#v}"'" or
+                ((.name | test("^>= .* < .*$")) and ("'"$RELEASE_NAME"'" | test(.name)))
+              ) | .requests[]? | .name' "$REQUESTS_FILE" 2>/dev/null || true)
+              
+              if [ -n "$PINNED_NAMES" ]; then
+                echo "Found pinned items in requests.yaml:"
+                echo "$PINNED_NAMES"
+                
+                # For each pinned item, get its CURRENT version from the release (not from requests.yaml)
+                while IFS= read -r NAME; do
+                  if [ -n "$NAME" ]; then
+                    # Try to find in components first
+                    CURRENT_VERSION=$(yq eval '.spec.components[] | select(.name == "'"$NAME"'") | .version' "$CURRENT_RELEASE_FILE" 2>/dev/null || true)
+                    
+                    if [ -n "$CURRENT_VERSION" ]; then
+                      PIN_ARGS="$PIN_ARGS --component $NAME@$CURRENT_VERSION"
+                      echo "  📌 Preserving pinned component: $NAME@$CURRENT_VERSION"
+                    else
+                      # Try to find in apps
+                      CURRENT_VERSION=$(yq eval '.spec.apps[] | select(.name == "'"$NAME"'") | .version' "$CURRENT_RELEASE_FILE" 2>/dev/null || true)
+                      
+                      if [ -n "$CURRENT_VERSION" ]; then
+                        PIN_ARGS="$PIN_ARGS --app $NAME@$CURRENT_VERSION"
+                        echo "  📌 Preserving pinned app: $NAME@$CURRENT_VERSION"
+                      fi
+                    fi
+                  fi
+                done <<< "$PINNED_NAMES"
+              else
+                echo "No pinned versions found in requests.yaml for this release"
+              fi
+            fi
+
+            # 4. Recreate the release
             DEVCTL_ARGS="${{ steps.parse_command.outputs.devctl_args }}"
 
             # By default, we bump all apps/components to latest versions if no specific version is requested.
             if [[ "$DEVCTL_ARGS" == *--app* || "$DEVCTL_ARGS" == *--component* ]]; then
               echo "Specific app/component version requested, using --update-existing with --regenerate-readme."
-              DEVCTL_COMMAND="devctl release create --name \"$RELEASE_NAME\" --provider \"$PROVIDER\" --overwrite -y --output markdown --requested-only --update-existing --regenerate-readme $DEVCTL_ARGS"
+              DEVCTL_COMMAND="devctl release create --name \"$RELEASE_NAME\" --provider \"$PROVIDER\" --overwrite -y --output markdown --requested-only --update-existing --regenerate-readme $DEVCTL_ARGS $PIN_ARGS"
             else
               echo "No specific app/component version requested, bumping all to latest versions."
               # Determine the base release for --bumpall
@@ -289,7 +333,8 @@ jobs:
               # The script intelligently determines the base from the version itself (major/minor/patch)
               BASE_VERSION=$(./tools/determine-next-release.sh "$PROVIDER" "patch" "$RELEASE_NAME" | grep '^base=' | cut -d'=' -f2)
               echo "Determined base version: $BASE_VERSION"
-              DEVCTL_COMMAND="devctl release create --name \"$RELEASE_NAME\" --provider \"$PROVIDER\" --base \"$BASE_VERSION\" --overwrite -y --output markdown --bumpall $DEVCTL_ARGS"
+              # When using --bumpall, add pinned versions as explicit constraints
+              DEVCTL_COMMAND="devctl release create --name \"$RELEASE_NAME\" --provider \"$PROVIDER\" --base \"$BASE_VERSION\" --overwrite -y --output markdown --bumpall $DEVCTL_ARGS $PIN_ARGS"
             fi
 
             echo "Running command: $DEVCTL_COMMAND"
