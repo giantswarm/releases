@@ -6,26 +6,20 @@
 
 ### Components
 
-- cluster-aws from v5.3.0 to v6.4.0
+- cluster-aws from v5.3.0 to v6.2.0
 - Flatcar from v4230.2.4 to [v4459.2.0](https://www.flatcar.org/releases/#release-4459.2.0)
 - Kubernetes from v1.32.9 to [v1.32.10](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.32.md#v1.32.10)
 
-### cluster-aws [v5.3.0...v6.4.0](https://github.com/giantswarm/cluster-aws/compare/v5.3.0...v6.4.0)
+### cluster-aws [v5.3.0...v6.2.0](https://github.com/giantswarm/cluster-aws/compare/v5.3.0...v6.2.0)
 
 #### Added
 
-- Add node-problem-detector-app, disabled by default.
 - Add `capa-karpenter-taint-remover` to handle CAPA - Karpenter taint race condition.
 - Add standard tags to IRSA infrastructure.
 - Expose value to configure `terminationGracePeriod` in the karpenter node pools.
 
 #### Changed
 
-- Tidy up dependencies on `azs-getter`.
-- Make `global.baseDomain` and `global.managementCluster` required values. These values will be passed to the chart when deploying it from the `cluster-app-installation-values` ConfigMap in the default namespace.
-- Extract required values to its own central file to avoid repeating the `required` keyword and error messages. This is normally done automatically by a Kyverno policy.
-- Change the default root disk size for Karpenter node pools. Karpenter will choose the cheapest instances, and certain instances, like `g6f.xlarge` come with some drivers that require a larger disk.
-- Chart: Update `cluster` to v4.3.0.
 - Change default consolidation time to 6 hours to avoid constant node rolling.
 - Rename `capa-karpenter-taint-remover` app.
 - Set `terminationGracePeriod` default to 30m, to avoid having `karpenter` nodes stuck in `Deleting` state due to `Pods` blocking the deletion i.e. PDBs.
