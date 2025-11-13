@@ -1,6 +1,7 @@
 <details>
 <summary>📦 Update Components and Apps</summary>
 
+
 To update the release files in this PR, comment with `/update-release` and provide arguments directly to `devctl`. For consolidated releases, you **must** specify which provider you are updating.
 
 Available providers: `aws`, `azure`, `cloud-director`, `eks`, `vsphere`.
@@ -32,6 +33,7 @@ Available providers: `aws`, `azure`, `cloud-director`, `eks`, `vsphere`.
 <details>
 <summary>📌 Pin Component or App Versions</summary>
 
+
 To pin a specific component or app version (preventing automatic bumps), add a comment with `/pin-version`. For consolidated releases, you **must** specify which provider you are pinning for.
 
 **Pin duration:**
@@ -60,6 +62,7 @@ To pin a specific component or app version (preventing automatic bumps), add a c
 <details>
 <summary>🧪 Trigger E2E Tests</summary>
 
+
 To trigger the E2E test for each new Release added in this PR, add a comment with:
 
 `/run releases-test-suites`
@@ -75,12 +78,5 @@ You can also limit which tests are run:
 For conformance tests:
 
 `/run conformance-tests PROVIDER=capa RELEASE_VERSION=29.1.0`
-
-</details>
-
-<details>
-<summary>📖 More Info</summary>
-
-[CAPI Release Drafting Guide](https://intranet.giantswarm.io/docs/product/releases/capi/capi-release-drafting/)
 
 </details>
