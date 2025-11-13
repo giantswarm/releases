@@ -371,10 +371,19 @@ jobs:
               BEFORE_HASH=$(sha256sum "${PROVIDER_DIR}/${RELEASE_NAME}/release.yaml" | cut -d' ' -f1)
             fi
 
-            # Backup the current release.yaml to extract version information later
+            # Backup all files before devctl modifies them (to restore if no actual changes)
             RELEASE_YAML_BACKUP=""
+            RELEASE_DIFF_BACKUP=""
+            RELEASES_JSON_BACKUP=""
+            
             if [ -f "${PROVIDER_DIR}/${RELEASE_NAME}/release.yaml" ]; then
               RELEASE_YAML_BACKUP=$(cat "${PROVIDER_DIR}/${RELEASE_NAME}/release.yaml")
+            fi
+            if [ -f "${PROVIDER_DIR}/${RELEASE_NAME}/release.diff" ]; then
+              RELEASE_DIFF_BACKUP=$(cat "${PROVIDER_DIR}/${RELEASE_NAME}/release.diff")
+            fi
+            if [ -f "${PROVIDER_DIR}/releases.json" ]; then
+              RELEASES_JSON_BACKUP=$(cat "${PROVIDER_DIR}/releases.json")
             fi
 
             # Backup existing descriptions before devctl overwrites them
@@ -414,18 +423,38 @@ jobs:
                 ACTUAL_CHANGES_EXIST=true
                 if [[ -n "$output" ]]; then
                   # Count lines with actual version changes (bold text **version** indicates change)
-                  CHANGED_COUNT=$(echo -e "$output" | grep -c '\*\*[0-9]' || echo "0")
+                  CHANGED_COUNT=$(echo -e "$output" | grep -c '\*\*' || echo "0")
                   # Count lines that say "Unchanged"
                   UNCHANGED_COUNT=$(echo -e "$output" | grep -c 'Unchanged' || echo "0")
                   
-                  # If we have Unchanged entries but no actual changes (no bold versions), treat as no changes
+                  echo "  Change detection: CHANGED_COUNT=$CHANGED_COUNT, UNCHANGED_COUNT=$UNCHANGED_COUNT"
+                  
+                  # If we have Unchanged entries but no actual changes (no bold text), treat as no changes
                   if [[ $UNCHANGED_COUNT -gt 0 && $CHANGED_COUNT -eq 0 ]]; then
                     ACTUAL_CHANGES_EXIST=false
                     echo "  Detection: File hash changed but all items show 'Unchanged' - treating as no changes"
+                    echo "  Restoring original files to prevent timestamp-only commits"
+                    
+                    # Restore original files to prevent timestamp-only changes from being committed
+                    if [[ -n "$RELEASE_YAML_BACKUP" ]]; then
+                      echo "$RELEASE_YAML_BACKUP" > "${PROVIDER_DIR}/${RELEASE_NAME}/release.yaml"
+                    fi
+                    if [[ -n "$RELEASE_DIFF_BACKUP" ]]; then
+                      echo "$RELEASE_DIFF_BACKUP" > "${PROVIDER_DIR}/${RELEASE_NAME}/release.diff"
+                    fi
+                    if [[ -n "$RELEASES_JSON_BACKUP" ]]; then
+                      echo "$RELEASES_JSON_BACKUP" > "${PROVIDER_DIR}/releases.json"
+                    fi
+                    
+                    # Recompute hash after restoration
+                    if [ -f "${PROVIDER_DIR}/${RELEASE_NAME}/release.yaml" ]; then
+                      AFTER_HASH=$(sha256sum "${PROVIDER_DIR}/${RELEASE_NAME}/release.yaml" | cut -d' ' -f1)
+                    fi
                   fi
                 fi
 
-                if [[ "$BEFORE_HASH" != "$AFTER_HASH" && "$ACTUAL_CHANGES_EXIST" == "true" ]]; then
+                # Only show changes if hash changed AND actual version changes exist
+                if [[ "$BEFORE_HASH" != "$AFTER_HASH" ]] && [[ "$ACTUAL_CHANGES_EXIST" == "true" ]]; then
                   # Files changed AND actual version changes detected
                   if [[ -z "$(echo -e "${output}" | tr -d '[:space:]')" ]]; then
                     # Generate a table showing what changed
