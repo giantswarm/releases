@@ -916,50 +916,30 @@ jobs:
             echo "PR for branch $BRANCH_NAME already exists. Skipping provider ${{ matrix.provider }}."
             echo "PR_EXISTS=true" >> $GITHUB_OUTPUT
           fi
-      - name: Create new release
-        if: steps.check_pr.outputs.PR_EXISTS == 'false'
+      - name: Create release files and get output
         id: create_release
-        env:
-          DEVCTL_UNSAFE_FORCE_VERSION: ${{ steps.install_devctl.outputs.version }}
-          DEVCTL_GITHUB_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
-        run: |
-          set -o pipefail
-          devctl release create \
-            --base ${{ steps.determine_next_release.outputs.base }} \
-            --name ${{ steps.determine_next_release.outputs.version }} \
-            --provider ${{ matrix.provider }} \
-            --bumpall --overwrite -y --output markdown --changes-only 2>&1 | tee /tmp/release_output.log
+        if: steps.check_pr.outputs.PR_EXISTS == 'false'
+        uses: ./.github/actions/create-release-individual
+        with:
+          provider: ${{ matrix.provider }}
+          version: ${{ steps.determine_next_release.outputs.version }}
+          base: ${{ steps.determine_next_release.outputs.base }}
+          github_token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+          devctl_version: ${{ steps.install_devctl.outputs.version }}
+
       - name: Update README.md
         id: update_readme
+        if: steps.check_pr.outputs.PR_EXISTS == 'false'
         run: |
           ./tools/update-readme.sh "${{ matrix.provider }}" "${{ steps.determine_next_release.outputs.version }}"
-      - name: Prepare PR body
-        id: pr_body
+
+      - name: Read release instructions template
+        id: read_instructions
+        if: steps.check_pr.outputs.PR_EXISTS == 'false'
         run: |
-          # Read the template
-          TEMPLATE_CONTENT=$(cat .github/pr-body-templates/individual-release-instructions.md)
-          
-          # Read the changes from devctl output
-          CHANGES_CONTENT=$(cat /tmp/release_output.log)
-          
-          body="This PR creates the new **patch release** \`${{ steps.determine_next_release.outputs.version }}\` for **${{ matrix.provider }}** only.
-
-          Patch releases contain targeted fixes for specific security issues, critical bugs, or component updates.
-
-          📖 **Need help?** Check out the [CAPI Release Drafting Guide](https://intranet.giantswarm.io/docs/product/releases/capi/capi-release-drafting/) for detailed instructions.
-
-          ---
-
-          ${TEMPLATE_CONTENT}
-
-          ---
-
-          ### Changes:
-
-          ${CHANGES_CONTENT}"
-          
-          echo "body<<EOF" >> $GITHUB_OUTPUT
-          echo "$body" >> $GITHUB_OUTPUT
+          CONTENT=$(cat .github/pr-body-templates/individual-release-instructions.md)
+          echo "content<<EOF" >> $GITHUB_OUTPUT
+          echo "$CONTENT" >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
       - name: Create Pull Request
         id: create_pr
@@ -968,10 +948,25 @@ jobs:
         with:
           token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
           title: "${{ steps.determine_next_release.outputs.provider_acronym }}: Release ${{ steps.determine_next_release.outputs.version }}."
-          body: ${{ steps.pr_body.outputs.body }}
+          body: |
+            This PR creates the new **patch release** `${{ steps.determine_next_release.outputs.version }}` for **${{ matrix.provider }}** only.
+
+            Patch releases contain targeted fixes for specific security issues, critical bugs, or component updates.
+
+            📖 **Need help?** Check out the [CAPI Release Drafting Guide](https://intranet.giantswarm.io/docs/product/releases/capi/capi-release-drafting/) for detailed instructions.
+
+            ---
+
+            ${{ steps.read_instructions.outputs.content }}
+
+            ---
+
+            ### Changes:
+
+            ${{ env.LOG_CONTENT }}
           branch: "release-${{ steps.determine_next_release.outputs.version }}-${{ matrix.provider }}"
           labels: |
-            release/${{ needs.patch_release_decider.outputs.release_type }}
+            release/patch
             ${{ matrix.provider }}
 
       - name: Checkout PR branch for analysis
@@ -1087,7 +1082,7 @@ jobs:
             ${{ env.LOG_CONTENT }}
           branch: "release-${{ steps.determine_next_release.outputs.version }}"
           labels: |
-            release/${{ needs.patch_release_decider.outputs.release_type }}
+            release/patch
             ${{ steps.create_release.outputs.PROVIDER_LABELS }}
 
       - name: Analyze and Post Breaking Changes
