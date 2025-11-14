@@ -58,7 +58,7 @@ runs:
 
           # Capitalize provider name for the heading
           PROVIDER_UPPER=$(echo "$provider" | awk '{print toupper($0)}')
-          echo "<details><summary>${PROVIDER_UPPER}</summary>" >> $LOG_FILE
+          echo "${PROVIDER_UPPER}" >> $LOG_FILE
           echo "" >> $LOG_FILE
 
           # Determine base version for this provider
@@ -81,7 +81,6 @@ runs:
             echo "Command failed. Retrying in 15 seconds..."
             sleep 15
           done
-          echo "</details>" >> $LOG_FILE
         done
 
         # Output log content to env (for use in PR body)
