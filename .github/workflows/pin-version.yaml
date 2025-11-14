@@ -49,23 +49,20 @@ jobs:
         with:
           ref: ${{ steps.get_branch.outputs.result }}
 
+      - name: Get provider lists
+        id: providers
+        uses: ./.github/actions/get-providers
+
       - name: Set up Go
         uses: actions/setup-go@v5
         with:
           go-version: '1.25'
 
-      - name: Install devctl from release binary
-        run: |
-          mkdir -p /tmp/devctl_install
-          cd /tmp/devctl_install
-          LATEST_DEVCTL_TAG=$(gh release view --repo giantswarm/devctl --json tagName --jq '.tagName')
-          ASSET_NAME="devctl-${LATEST_DEVCTL_TAG}-linux-amd64.tar.gz"
-          gh release download --repo giantswarm/devctl "$LATEST_DEVCTL_TAG" --pattern "$ASSET_NAME"
-          tar -xzf "$ASSET_NAME"
-          find . -name "devctl" -type f -exec sudo mv {} /usr/local/bin/devctl \;
-          cd -
-        env:
-          GH_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+      - name: Install devctl
+        id: install_devctl
+        uses: ./.github/actions/install-devctl
+        with:
+          github_token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
 
       - name: Parse pin-version command
         id: parse_command
@@ -133,7 +130,7 @@ jobs:
             echo "Detected release: $RELEASE_NAME"
             
             # List of valid provider directories
-            VALID_PROVIDERS="azure capa cloud-director eks vsphere"
+            VALID_PROVIDERS="${{ steps.providers.outputs.provider_dirs }}"
             CANDIDATE_PROVIDERS=""
             
             for provider in $PR_PROVIDERS; do

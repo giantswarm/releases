@@ -1,0 +1,31 @@
+name: 'Post Upgrade Path Warning'
+description: 'Posts upgrade path warning as a PR comment if the warning file exists'
+inputs:
+  pr_number:
+    description: 'The number of the pull request to comment on'
+    required: true
+  github_token:
+    description: 'The GitHub token to use for authentication'
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - name: Post Upgrade Path Warning
+      uses: actions/github-script@v8
+      with:
+        github-token: ${{ inputs.github_token }}
+        script: |
+          const fs = require('fs');
+          
+          // Check for consolidated warning file
+          const warningFile = 'upgrade-path-warning.md';
+          if (fs.existsSync(warningFile)) {
+            const content = fs.readFileSync(warningFile, 'utf8');
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: ${{ inputs.pr_number }},
+              body: content
+            });
+          }
+

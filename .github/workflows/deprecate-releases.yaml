@@ -30,6 +30,10 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Get provider lists
+        id: providers
+        uses: ./.github/actions/get-providers
+
       - name: Set up Go
         uses: actions/setup-go@v5
         with:
@@ -45,7 +49,7 @@ jobs:
       - name: Run deprecation tool for all providers
         id: deprecation
         run: |
-          PROVIDERS="azure capa vsphere cloud-director eks"
+          PROVIDERS="${{ steps.providers.outputs.provider_dirs }}"
           
           for PROVIDER in $PROVIDERS; do
             if [ -d "$PROVIDER" ]; then
@@ -60,7 +64,7 @@ jobs:
 
       - name: Update releases.json files
         run: |
-          PROVIDERS="azure capa vsphere cloud-director eks"
+          PROVIDERS="${{ steps.providers.outputs.provider_dirs }}"
           
           for PROVIDER in $PROVIDERS; do
             RELEASES_JSON="${PROVIDER}/releases.json"
@@ -132,7 +136,7 @@ jobs:
               PR_BODY="${PR_BODY}### Releases Deprecated in this PR\n\n"
 
               # Group by provider
-              PROVIDERS="azure capa vsphere cloud-director eks"
+              PROVIDERS="${{ steps.providers.outputs.provider_dirs }}"
               
               for PROVIDER in $PROVIDERS; do
                 # Get deprecated versions for this provider

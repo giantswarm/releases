@@ -62,6 +62,12 @@ jobs:
       force_consolidated: ${{ steps.dispatcher.outputs.force_consolidated }}
       provider_count: ${{ steps.dispatcher.outputs.provider_count }}
     steps:
+      - uses: actions/checkout@v5
+
+      - name: Get provider lists
+        id: providers
+        uses: ./.github/actions/get-providers
+
       - name: Determine release type and providers
         id: dispatcher
         run: |
@@ -75,7 +81,7 @@ jobs:
 
             # Check if "all providers" is selected
             if [[ "${{ github.event.inputs.provider_all }}" == 'true' ]]; then
-              SELECTED_PROVIDERS="aws,azure,cloud-director,eks,vsphere"
+              SELECTED_PROVIDERS=$(echo "${{ steps.providers.outputs.all_providers }}" | tr ' ' ',')
             else
               # Build list from individual provider selections
               if [[ "${{ github.event.inputs.provider_aws }}" == 'true' ]]; then
@@ -154,9 +160,9 @@ jobs:
             echo "provider_list=${PROVIDER_LIST}" >> "$GITHUB_OUTPUT"
           else
             # Default for all scheduled runs (major or minor) and manual runs without any selected providers.
-            # When maintaining this list, please also update the provider boolean inputs in the workflow_dispatch inputs
-            echo "provider_matrix=[\"aws\",\"azure\",\"cloud-director\",\"eks\",\"vsphere\"]" >> "$GITHUB_OUTPUT"
-            echo "provider_list=aws azure cloud-director eks vsphere" >> "$GITHUB_OUTPUT"
+            PROVIDER_JSON=$(echo "${{ steps.providers.outputs.all_providers }}" | tr ' ' '\n' | jq -R . | jq -sc .)
+            echo "provider_matrix=${PROVIDER_JSON}" >> "$GITHUB_OUTPUT"
+            echo "provider_list=${{ steps.providers.outputs.all_providers }}" >> "$GITHUB_OUTPUT"
           fi
 
   major_release_decider:
@@ -526,47 +532,20 @@ jobs:
             release/major
             ${{ steps.create_release.outputs.PROVIDER_LABELS }}
 
-      - name: Checkout PR branch for analysis
+      - name: Analyze and Post Breaking Changes
         if: steps.create_pr.outputs.pull-request-number != ''
-        run: |
-          git fetch origin "release-${{ steps.determine_next_release.outputs.version }}"
-          git checkout "release-${{ steps.determine_next_release.outputs.version }}"
-
-      - name: Analyze Breaking Changes
-        if: steps.create_pr.outputs.pull-request-number != ''
-        env:
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-          GITHUB_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
-          PR_NUMBER: ${{ steps.create_pr.outputs.pull-request-number }}
-          HEAD_SHA: ${{ github.sha }}
-        run: |
-          cd tools/breakingchanges
-          go run ./cmd/detect
-
-      - name: Post Breaking Changes Comment
-        if: steps.create_pr.outputs.pull-request-number != '' && hashFiles('tools/breakingchanges/breaking-changes-report.md') != ''
-        uses: actions/github-script@v8
+        uses: ./.github/actions/analyze-breaking-changes
         with:
-          github-token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
-          script: |
-            const fs = require('fs');
-            const reportPath = 'tools/breakingchanges/breaking-changes-report.md';
-            if (fs.existsSync(reportPath)) {
-              const comment = fs.readFileSync(reportPath, 'utf8');
-              await github.rest.issues.createComment({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                issue_number: ${{ steps.create_pr.outputs.pull-request-number }},
-                body: comment
-              });
-            }
+          pr_number: ${{ steps.create_pr.outputs.pull-request-number }}
+          github_token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
 
-      # - name: Trigger e2e tests
-      #   if: steps.check_pr.outputs.PR_EXISTS == 'false' && steps.k8s_check.outputs.VERSION_EXISTS == 'true' && steps.create_pr.outputs.pull-request-number
-      #   uses: ./.github/actions/trigger-e2e-tests
-      #   with:
-      #     pr_number: ${{ steps.create_pr.outputs.pull-request-number }}
-      #     github_token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+      - name: Trigger e2e tests
+        if: steps.check_pr.outputs.PR_EXISTS == 'false' && steps.k8s_check.outputs.VERSION_EXISTS == 'true' && steps.create_pr.outputs.pull-request-number
+        uses: ./.github/actions/trigger-e2e-tests
+        with:
+          pr_number: ${{ steps.create_pr.outputs.pull-request-number }}
+          github_token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
 
   minor_release_consolidated:
     name: "Minor Release (Consolidated)"
@@ -733,67 +712,27 @@ jobs:
             release/minor
             ${{ steps.create_release.outputs.PROVIDER_LABELS }}
 
-      - name: Checkout PR branch for analysis
+      - name: Analyze and Post Breaking Changes
         if: steps.create_pr.outputs.pull-request-number != ''
-        run: |
-          git fetch origin "release-${{ steps.determine_next_release.outputs.version }}"
-          git checkout "release-${{ steps.determine_next_release.outputs.version }}"
-
-      - name: Analyze Breaking Changes
-        if: steps.create_pr.outputs.pull-request-number != ''
-        env:
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-          GITHUB_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
-          PR_NUMBER: ${{ steps.create_pr.outputs.pull-request-number }}
-          HEAD_SHA: ${{ github.sha }}
-        run: |
-          cd tools/breakingchanges
-          go run ./cmd/detect
-
-      - name: Post Breaking Changes Comment
-        if: steps.create_pr.outputs.pull-request-number != '' && hashFiles('tools/breakingchanges/breaking-changes-report.md') != ''
-        uses: actions/github-script@v8
+        uses: ./.github/actions/analyze-breaking-changes
         with:
-          github-token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
-          script: |
-            const fs = require('fs');
-            const reportPath = 'tools/breakingchanges/breaking-changes-report.md';
-            if (fs.existsSync(reportPath)) {
-              const comment = fs.readFileSync(reportPath, 'utf8');
-              await github.rest.issues.createComment({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                issue_number: ${{ steps.create_pr.outputs.pull-request-number }},
-                body: comment
-              });
-            }
+          pr_number: ${{ steps.create_pr.outputs.pull-request-number }}
+          github_token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
 
       - name: Post Upgrade Path Warning
         if: steps.create_pr.outputs.pull-request-number != ''
-        uses: actions/github-script@v8
+        uses: ./.github/actions/post-upgrade-path-warning
         with:
-          github-token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
-          script: |
-            const fs = require('fs');
+          pr_number: ${{ steps.create_pr.outputs.pull-request-number }}
+          github_token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
 
-            // Check for consolidated warning file
-            const warningFile = 'upgrade-path-warning.md';
-            if (fs.existsSync(warningFile)) {
-              const content = fs.readFileSync(warningFile, 'utf8');
-              await github.rest.issues.createComment({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                issue_number: ${{ steps.create_pr.outputs.pull-request-number }},
-                body: content
-              });
-            }
-
-      # - name: Trigger e2e tests
-      #   if: steps.check_pr.outputs.PR_EXISTS == 'false' && steps.create_pr.outputs.pull-request-number
-      #   uses: ./.github/actions/trigger-e2e-tests
-      #   with:
-      #     pr_number: ${{ steps.create_pr.outputs.pull-request-number }}
-      #     github_token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+      - name: Trigger e2e tests
+        if: steps.check_pr.outputs.PR_EXISTS == 'false' && steps.create_pr.outputs.pull-request-number && !hashFiles('tools/check-upgrade-path/upgrade-path-warning.md')
+        uses: ./.github/actions/trigger-e2e-tests
+        with:
+          pr_number: ${{ steps.create_pr.outputs.pull-request-number }}
+          github_token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
 
   # This is the job for creating individual PRs for a major release when providers are not aligned.
   major_release_individual:
@@ -909,44 +848,23 @@ jobs:
       - name: Checkout PR branch for analysis
         if: steps.create_pr.outputs.pull-request-number != ''
         run: |
-          git fetch origin "release-${{ steps.determine_next_release.outputs.version }}"
-          git checkout "release-${{ steps.determine_next_release.outputs.version }}"
+          git fetch origin "release-${{ steps.determine_next_release.outputs.version }}-${{ matrix.provider }}"
+          git checkout "release-${{ steps.determine_next_release.outputs.version }}-${{ matrix.provider }}"
 
-      - name: Analyze Breaking Changes
+      - name: Analyze and Post Breaking Changes
         if: steps.create_pr.outputs.pull-request-number != ''
-        env:
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-          GITHUB_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
-          PR_NUMBER: ${{ steps.create_pr.outputs.pull-request-number }}
-          HEAD_SHA: ${{ github.sha }}
-        run: |
-          cd tools/breakingchanges
-          go run ./cmd/detect
-
-      - name: Post Breaking Changes Comment
-        if: steps.create_pr.outputs.pull-request-number != '' && hashFiles('tools/breakingchanges/breaking-changes-report.md') != ''
-        uses: actions/github-script@v8
+        uses: ./.github/actions/analyze-breaking-changes
         with:
-          github-token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
-          script: |
-            const fs = require('fs');
-            const reportPath = 'tools/breakingchanges/breaking-changes-report.md';
-            if (fs.existsSync(reportPath)) {
-              const comment = fs.readFileSync(reportPath, 'utf8');
-              await github.rest.issues.createComment({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                issue_number: ${{ steps.create_pr.outputs.pull-request-number }},
-                body: comment
-              });
-            }
+          pr_number: ${{ steps.create_pr.outputs.pull-request-number }}
+          github_token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
 
-      # - name: Trigger e2e tests
-      #   if: steps.check_pr.outputs.PR_EXISTS == 'false' && steps.create_pr.outputs.pull-request-number
-      #   uses: ./.github/actions/trigger-e2e-tests
-      #   with:
-      #     pr_number: ${{ steps.create_pr.outputs.pull-request-number }}
-      #     github_token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+      - name: Trigger e2e tests
+        if: steps.check_pr.outputs.PR_EXISTS == 'false' && steps.create_pr.outputs.pull-request-number
+        uses: ./.github/actions/trigger-e2e-tests
+        with:
+          pr_number: ${{ steps.create_pr.outputs.pull-request-number }}
+          github_token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
 
   minor_release_individual:
     name: "Minor Release (Individual)"
@@ -1060,57 +978,30 @@ jobs:
       - name: Checkout PR branch for analysis
         if: steps.create_pr.outputs.pull-request-number != ''
         run: |
-          git fetch origin "release-${{ steps.determine_next_release.outputs.version }}"
-          git checkout "release-${{ steps.determine_next_release.outputs.version }}"
+          git fetch origin "release-${{ steps.determine_next_release.outputs.version }}-${{ matrix.provider }}"
+          git checkout "release-${{ steps.determine_next_release.outputs.version }}-${{ matrix.provider }}"
 
-      - name: Analyze Breaking Changes
+      - name: Analyze and Post Breaking Changes
         if: steps.create_pr.outputs.pull-request-number != ''
-        env:
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-          GITHUB_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
-          PR_NUMBER: ${{ steps.create_pr.outputs.pull-request-number }}
-          HEAD_SHA: ${{ github.sha }}
-        run: |
-          cd tools/breakingchanges
-          go run ./cmd/detect
-
-      - name: Post Breaking Changes Comment
-        if: steps.create_pr.outputs.pull-request-number != '' && hashFiles('tools/breakingchanges/breaking-changes-report.md') != ''
-        uses: actions/github-script@v8
+        uses: ./.github/actions/analyze-breaking-changes
         with:
-          github-token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
-          script: |
-            const fs = require('fs');
-            const reportPath = 'tools/breakingchanges/breaking-changes-report.md';
-            if (fs.existsSync(reportPath)) {
-              const comment = fs.readFileSync(reportPath, 'utf8');
-              await github.rest.issues.createComment({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                issue_number: ${{ steps.create_pr.outputs.pull-request-number }},
-                body: comment
-              });
-            }
+          pr_number: ${{ steps.create_pr.outputs.pull-request-number }}
+          github_token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
 
       - name: Post Upgrade Path Warning
         if: steps.create_pr.outputs.pull-request-number != ''
-        uses: actions/github-script@v8
+        uses: ./.github/actions/post-upgrade-path-warning
         with:
-          github-token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
-          script: |
-            const fs = require('fs');
+          pr_number: ${{ steps.create_pr.outputs.pull-request-number }}
+          github_token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
 
-            // Check for consolidated warning file
-            const warningFile = 'upgrade-path-warning.md';
-            if (fs.existsSync(warningFile)) {
-              const content = fs.readFileSync(warningFile, 'utf8');
-              await github.rest.issues.createComment({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                issue_number: ${{ steps.create_pr.outputs.pull-request-number }},
-                body: content
-              });
-            }
+      - name: Trigger e2e tests
+        if: steps.check_pr.outputs.PR_EXISTS == 'false' && steps.create_pr.outputs.pull-request-number && !hashFiles('tools/check-upgrade-path/upgrade-path-warning.md')
+        uses: ./.github/actions/trigger-e2e-tests
+        with:
+          pr_number: ${{ steps.create_pr.outputs.pull-request-number }}
+          github_token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
 
   patch_release_individual:
     name: "Patch Release (Individual)"
@@ -1229,37 +1120,16 @@ jobs:
       - name: Checkout PR branch for analysis
         if: steps.create_pr.outputs.pull-request-number != ''
         run: |
-          git fetch origin "release-${{ steps.determine_next_release.outputs.version }}"
-          git checkout "release-${{ steps.determine_next_release.outputs.version }}"
+          git fetch origin "release-${{ steps.versioning.outputs.NEXT_RELEASE }}-${{ matrix.provider }}"
+          git checkout "release-${{ steps.versioning.outputs.NEXT_RELEASE }}-${{ matrix.provider }}"
 
-      - name: Analyze Breaking Changes
+      - name: Analyze and Post Breaking Changes
         if: steps.create_pr.outputs.pull-request-number != ''
-        env:
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-          GITHUB_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
-          PR_NUMBER: ${{ steps.create_pr.outputs.pull-request-number }}
-          HEAD_SHA: ${{ github.sha }}
-        run: |
-          cd tools/breakingchanges
-          go run ./cmd/detect
-
-      - name: Post Breaking Changes Comment
-        if: steps.create_pr.outputs.pull-request-number != '' && hashFiles('tools/breakingchanges/breaking-changes-report.md') != ''
-        uses: actions/github-script@v8
+        uses: ./.github/actions/analyze-breaking-changes
         with:
-          github-token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
-          script: |
-            const fs = require('fs');
-            const reportPath = 'tools/breakingchanges/breaking-changes-report.md';
-            if (fs.existsSync(reportPath)) {
-              const comment = fs.readFileSync(reportPath, 'utf8');
-              await github.rest.issues.createComment({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                issue_number: ${{ steps.create_pr.outputs.pull-request-number }},
-                body: comment
-              });
-            }
+          pr_number: ${{ steps.create_pr.outputs.pull-request-number }}
+          github_token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
 
   patch_release_consolidated:
     name: "Patch Release (Consolidated)"
@@ -1412,123 +1282,18 @@ jobs:
             release/${{ needs.patch_release_decider.outputs.release_type }}
             ${{ steps.create_release.outputs.PROVIDER_LABELS }}
 
-      - name: Checkout PR branch for analysis
+      - name: Analyze and Post Breaking Changes
         if: steps.create_pr.outputs.pull-request-number != ''
-        run: |
-          git fetch origin "release-${{ steps.determine_next_release.outputs.version }}"
-          git checkout "release-${{ steps.determine_next_release.outputs.version }}"
-
-      - name: Analyze Breaking Changes
-        if: steps.create_pr.outputs.pull-request-number != ''
-        env:
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-          GITHUB_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
-          PR_NUMBER: ${{ steps.create_pr.outputs.pull-request-number }}
-          HEAD_SHA: ${{ github.sha }}
-        run: |
-          cd tools/breakingchanges
-          go run ./cmd/detect
-
-      - name: Post Breaking Changes Comment
-        if: steps.create_pr.outputs.pull-request-number != '' && hashFiles('tools/breakingchanges/breaking-changes-report.md') != ''
-        uses: actions/github-script@v8
+        uses: ./.github/actions/analyze-breaking-changes
         with:
-          github-token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
-          script: |
-            const fs = require('fs');
-            const reportPath = 'tools/breakingchanges/breaking-changes-report.md';
-            if (fs.existsSync(reportPath)) {
-              const comment = fs.readFileSync(reportPath, 'utf8');
-              await github.rest.issues.createComment({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                issue_number: ${{ steps.create_pr.outputs.pull-request-number }},
-                body: comment
-              });
-            }
-
-  summarize_releases:
-    name: "Summarize Releases"
-    needs:
-      - major_release_consolidated
-      - minor_release_consolidated
-      - major_release_individual
-      - minor_release_individual
-      - patch_release_individual
-      - patch_release_consolidated
-    if: always()
-    runs-on: ubuntu-latest
-    steps:
-      - name: "Checkout code"
-        uses: actions/checkout@v5
-
-      - name: "Generate release summary"
-        id: generate_summary
-        run: |
-          SUMMARY_CONTENT="## Release Summary\n\n"
-
-          # Consolidated Major Releases
-          if [[ "${{ needs.major_release_consolidated.outputs.pr_url }}" != "" ]]; then
-            SUMMARY_CONTENT="${SUMMARY_CONTENT}**Consolidated Major Release PR:**\n"
-            SUMMARY_CONTENT="${SUMMARY_CONTENT}- ${{ needs.major_release_consolidated.outputs.pr_url }}\n\n"
-          fi
-
-          # Consolidated Minor Releases
-          if [[ "${{ needs.minor_release_consolidated.outputs.pr_url }}" != "" ]]; then
-            SUMMARY_CONTENT="${SUMMARY_CONTENT}**Consolidated Minor Release PR:**\n"
-            SUMMARY_CONTENT="${SUMMARY_CONTENT}- ${{ needs.minor_release_consolidated.outputs.pr_url }}\n\n"
-          fi
-
-          # Individual Major Releases
-          MAJOR_INDIVIDUAL_RELEASES=$(echo '${{ toJSON(needs.major_release_individual) }}' | jq -r '(if has("result") then . else .[] end) | select(.result == "success") | .outputs.pr_url')
-          if [[ "$MAJOR_INDIVIDUAL_RELEASES" != "" ]]; then
-            SUMMARY_CONTENT="${SUMMARY_CONTENT}**Individual Major Release PRs:**\n"
-            for url in $MAJOR_INDIVIDUAL_RELEASES; do
-              SUMMARY_CONTENT="${SUMMARY_CONTENT}- $url\n"
-            done
-            SUMMARY_CONTENT="${SUMMARY_CONTENT}\n"
-          fi
-
-          # Individual Minor Releases
-          MINOR_INDIVIDUAL_RELEASES=$(echo '${{ toJSON(needs.minor_release_individual) }}' | jq -r '(if has("result") then . else .[] end) | select(.result == "success") | .outputs.pr_url')
-          if [[ "$MINOR_INDIVIDUAL_RELEASES" != "" ]]; then
-            SUMMARY_CONTENT="${SUMMARY_CONTENT}**Individual Minor Release PRs:**\n"
-            for url in $MINOR_INDIVIDUAL_RELEASES; do
-              SUMMARY_CONTENT="${SUMMARY_CONTENT}- $url\n"
-            done
-            SUMMARY_CONTENT="${SUMMARY_CONTENT}\n"
-          fi
-
-
-          # Consolidated Patch Releases
-          if [[ "${{ needs.patch_release_consolidated.outputs.pr_url }}" != "" ]]; then
-            SUMMARY_CONTENT="${SUMMARY_CONTENT}**Consolidated Patch Release PR:**\n"
-            SUMMARY_CONTENT="${SUMMARY_CONTENT}- ${{ needs.patch_release_consolidated.outputs.pr_url }}\n\n"
-          fi
-
-          # Individual Patch Releases
-          PATCH_INDIVIDUAL_RELEASES=$(echo '${{ toJSON(needs.patch_release_individual) }}' | jq -r '(if has("result") then . else .[] end) | select(.result == "success") | .outputs.pr_url')
-          if [[ "$PATCH_INDIVIDUAL_RELEASES" != "" ]]; then
-            SUMMARY_CONTENT="${SUMMARY_CONTENT}**Individual Patch Release PRs:**\n"
-            for url in $PATCH_INDIVIDUAL_RELEASES; do
-              SUMMARY_CONTENT="${SUMMARY_CONTENT}- $url\n"
-            done
-            SUMMARY_CONTENT="${SUMMARY_CONTENT}\n"
-          fi
-
-          echo "SUMMARY_CONTENT<<EOF" >> "$GITHUB_ENV"
-          echo "$SUMMARY_CONTENT" >> "$GITHUB_ENV"
-          echo "EOF" >> "$GITHUB_ENV"
-
-      - name: "Post job summary"
-        run: |
-          printf "%b" "${{ env.SUMMARY_CONTENT }}" >> $GITHUB_STEP_SUMMARY
+          pr_number: ${{ steps.create_pr.outputs.pull-request-number }}
+          github_token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
 
   announce_scheduled_release:
     name: "Announce Scheduled Release"
     needs:
       - dispatcher
-      - summarize_releases
       - major_release_consolidated
       - minor_release_consolidated
       - major_release_individual
@@ -1678,42 +1443,3 @@ jobs:
           echo "MESSAGE_TS=$MESSAGE_TS" >> "$GITHUB_OUTPUT"
           echo "SLACK_CHANNEL=$SLACK_CHANNEL_ID" >> "$GITHUB_OUTPUT"
           echo "Slack message sent with timestamp: $MESSAGE_TS"
-
-  notify_failure:
-    name: "Notify on Failure"
-    needs:
-      - major_release_consolidated
-      - minor_release_consolidated
-      - major_release_individual
-      - minor_release_individual
-      - patch_release_individual
-      - patch_release_consolidated
-    if: failure()
-    runs-on: ubuntu-latest
-    steps:
-      - name: "Send failure notification"
-        run: |
-          echo "## :x: Release Workflow Failed" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "One or more release jobs failed. Please check the workflow logs for details." >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "Failed job(s):" >> $GITHUB_STEP_SUMMARY
-
-          if [[ "${{ needs.major_release_consolidated.result }}" == "failure" ]]; then
-            echo "- Major Release (Consolidated)" >> $GITHUB_STEP_SUMMARY
-          fi
-          if [[ "${{ needs.minor_release_consolidated.result }}" == "failure" ]]; then
-            echo "- Minor Release (Consolidated)" >> $GITHUB_STEP_SUMMARY
-          fi
-          if [[ "${{ needs.major_release_individual.result }}" == "failure" ]]; then
-            echo "- Major Release (Individual)" >> $GITHUB_STEP_SUMMARY
-          fi
-          if [[ "${{ needs.minor_release_individual.result }}" == "failure" ]]; then
-            echo "- Minor Release (Individual)" >> $GITHUB_STEP_SUMMARY
-          fi
-          if [[ "${{ needs.patch_release_individual.result }}" == "failure" ]]; then
-            echo "- Patch Release (Individual)" >> $GITHUB_STEP_SUMMARY
-          fi
-          if [[ "${{ needs.patch_release_consolidated.result }}" == "failure" ]]; then
-            echo "- Patch Release (Consolidated)" >> $GITHUB_STEP_SUMMARY
-          fi

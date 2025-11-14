@@ -73,20 +73,3 @@ jobs:
             });
             
             console.log('Posted /update-release comment to PR #' + prNumber);
-
-  summarize:
-    name: "Summary"
-    needs: [find-open-release-prs, bump-release-components]
-    if: always() && needs.find-open-release-prs.outputs.pr_count > 0
-    runs-on: ubuntu-latest
-    steps:
-      - name: Generate summary
-        run: |
-          echo "## Weekly Apps and Components Bump Summary" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "Posted \`/update-release\` comment on ${{ needs.find-open-release-prs.outputs.pr_count }} open release PR(s)" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "The update-release workflow will now process each PR and bump apps and components to their latest versions." >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "Check individual PR comments for detailed results." >> $GITHUB_STEP_SUMMARY
-

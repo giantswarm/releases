@@ -39,12 +39,16 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
+      - name: Get provider lists
+        id: providers
+        uses: ./.github/actions/get-providers
+
       - name: Archive Deprecated Releases for All Providers
         id: archive_script
         run: |
           set -eo pipefail
 
-          PROVIDERS="azure capa vsphere cloud-director eks"
+          PROVIDERS="${{ steps.providers.outputs.provider_dirs }}"
           OVERALL_MOVED_RELEASES=""
           OVERALL_HAS_CHANGES=false
 

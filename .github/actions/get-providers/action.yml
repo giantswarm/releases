@@ -1,0 +1,23 @@
+name: 'Get Provider Lists'
+description: 'Provides centralized provider lists (space-separated, convert as needed)'
+outputs:
+  all_providers:
+    description: 'All providers (space-separated): aws azure cloud-director eks vsphere. Convert to comma: tr " " ",". Convert to JSON: tr " " "\n" | jq -R . | jq -sc .'
+    value: 'aws azure cloud-director eks vsphere'
+  provider_dirs:
+    description: 'Provider directory names (space-separated, uses "capa" not "aws"): azure capa cloud-director eks vsphere'
+    value: 'azure capa cloud-director eks vsphere'
+runs:
+  using: "composite"
+  steps:
+    - name: Provider lists are available as outputs
+      shell: bash
+      run: |
+        echo "Provider lists loaded (space-separated, convert as needed):"
+        echo "  - all_providers: aws azure cloud-director eks vsphere"
+        echo "  - provider_dirs: azure capa cloud-director eks vsphere"
+        echo ""
+        echo "Conversion examples:"
+        echo "  - To comma: echo 'aws azure' | tr ' ' ','"
+        echo "  - To JSON: echo 'aws azure' | tr ' ' '\n' | jq -R . | jq -sc ."
+

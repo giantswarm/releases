@@ -110,7 +110,7 @@ func (d *Detector) fetchFlatcarChannelWarnings(ctx context.Context, fromVersion,
 			// e.g., "in Stable 4230.2.0 release", "Flatcar 4081"
 			versionPattern := regexp.MustCompile(`\b(\d{4}(?:\.\d+){0,2})\b`)
 			versionMatches := versionPattern.FindAllString(content+" "+title, -1)
-			
+
 			// Check if any mentioned version falls within our upgrade range
 			isRelevant := false
 			if len(versionMatches) > 0 {
@@ -143,18 +143,18 @@ func (d *Detector) fetchFlatcarChannelWarnings(ctx context.Context, fromVersion,
 func parseFlatcarMajor(version string) int {
 	// Remove any "v" prefix
 	version = strings.TrimPrefix(version, "v")
-	
+
 	// Split by dots and take first part
 	parts := strings.Split(version, ".")
 	if len(parts) == 0 {
 		return 0
 	}
-	
+
 	major, err := strconv.Atoi(parts[0])
 	if err != nil {
 		return 0
 	}
-	
+
 	return major
 }
 

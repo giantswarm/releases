@@ -1,0 +1,44 @@
+name: 'Analyze and Post Breaking Changes'
+description: 'Analyzes breaking changes and posts them as a PR comment'
+inputs:
+  pr_number:
+    description: 'The number of the pull request to comment on'
+    required: true
+  github_token:
+    description: 'The GitHub token to use for authentication'
+    required: true
+  anthropic_api_key:
+    description: 'The Anthropic API key for Claude analysis'
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - name: Analyze Breaking Changes
+      shell: bash
+      env:
+        ANTHROPIC_API_KEY: ${{ inputs.anthropic_api_key }}
+        GITHUB_TOKEN: ${{ inputs.github_token }}
+        PR_NUMBER: ${{ inputs.pr_number }}
+        HEAD_SHA: ${{ github.sha }}
+      run: |
+        cd tools/breakingchanges
+        go run ./cmd/detect
+
+    - name: Post Breaking Changes Comment
+      if: hashFiles('tools/breakingchanges/breaking-changes-report.md') != ''
+      uses: actions/github-script@v8
+      with:
+        github-token: ${{ inputs.github_token }}
+        script: |
+          const fs = require('fs');
+          const reportPath = 'tools/breakingchanges/breaking-changes-report.md';
+          if (fs.existsSync(reportPath)) {
+            const comment = fs.readFileSync(reportPath, 'utf8');
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: ${{ inputs.pr_number }},
+              body: comment
+            });
+          }
+

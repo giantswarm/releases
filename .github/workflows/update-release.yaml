@@ -18,6 +18,13 @@ jobs:
       pull-requests: write
 
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v5
+
+      - name: Get provider lists
+        id: providers
+        uses: ./.github/actions/get-providers
+
       - name: Add reaction to comment to indicate that the bot is working on the update
         uses: actions/github-script@v8
         with:
@@ -60,23 +67,16 @@ jobs:
             console.log(`Comment author: ${commentAuthor}`);
             console.log(`Is automatic: ${isAutomatic}`);
 
-      - name: Checkout PR branch
+      - name: Checkout PR branch (second checkout for the actual PR branch)
         uses: actions/checkout@v5
         with:
           ref: ${{ steps.get_branch.outputs.result }}
 
-      - name: Install devctl from release binary
-        run: |
-          mkdir -p /tmp/devctl_install
-          cd /tmp/devctl_install
-          LATEST_DEVCTL_TAG=$(gh release view --repo giantswarm/devctl --json tagName --jq '.tagName')
-          ASSET_NAME="devctl-${LATEST_DEVCTL_TAG}-linux-amd64.tar.gz"
-          gh release download --repo giantswarm/devctl "$LATEST_DEVCTL_TAG" --pattern "$ASSET_NAME"
-          tar -xzf "$ASSET_NAME"
-          find . -name "devctl" -type f -exec sudo mv {} /usr/local/bin/devctl \;
-          cd -
-        env:
-          GH_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+      - name: Install devctl
+        id: install_devctl
+        uses: ./.github/actions/install-devctl
+        with:
+          github_token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
 
       - name: Parse command arguments and determine provider(s)
         id: parse_command
@@ -130,7 +130,7 @@ jobs:
             # Get providers from the PR's changed files.
             PR_PROVIDERS=$(gh pr view ${{ github.event.issue.number }} --json files --jq '.files[].path' | cut -d'/' -f1 | sort -u | xargs)
             # List of valid provider directories.
-            VALID_PROVIDERS="azure capa cloud-director eks vsphere"
+            VALID_PROVIDERS="${{ steps.providers.outputs.provider_dirs }}"
             PROVIDERS_LIST=""
             for provider in $PR_PROVIDERS; do
               if [[ " $VALID_PROVIDERS " =~ " $provider " ]]; then
@@ -686,23 +686,10 @@ jobs:
 
       - name: Post Upgrade Path Warning
         if: success() && steps.parse_command.outputs.description_only != 'true' && steps.parse_command.outputs.devctl_args == ''
-        uses: actions/github-script@v8
+        uses: ./.github/actions/post-upgrade-path-warning
         with:
-          github-token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
-          script: |
-            const fs = require('fs');
-
-            // Check for consolidated warning file
-            const warningFile = 'upgrade-path-warning.md';
-            if (fs.existsSync(warningFile)) {
-              const content = fs.readFileSync(warningFile, 'utf8');
-              await github.rest.issues.createComment({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                issue_number: ${{ github.event.issue.number }},
-                body: content
-              });
-            }
+          pr_number: ${{ github.event.issue.number }}
+          github_token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
 
       - name: Commit and push changes
         if: success() && (steps.parse_command.outputs.provider || steps.parse_command.outputs.providers_list)
@@ -743,3 +730,10 @@ jobs:
               repo: context.repo.repo,
               body: output
             });
+
+      - name: Trigger e2e tests
+        if: success() && steps.detect_source.outputs.is_automatic == 'true' && steps.parse_command.outputs.description_only != 'true' && steps.parse_command.outputs.devctl_args == '' && !hashFiles('tools/check-upgrade-path/upgrade-path-warning.md')
+        uses: ./.github/actions/trigger-e2e-tests
+        with:
+          pr_number: ${{ github.event.issue.number }}
+          github_token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
