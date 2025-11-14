@@ -477,8 +477,6 @@ jobs:
 
             ${{ steps.read_instructions.outputs.content }}
 
-            ---
-
             📖 **Need more help?** Check out the [CAPI Release Drafting Guide](https://intranet.giantswarm.io/docs/product/releases/capi/capi-release-drafting/) for detailed instructions.
           branch: "release-${{ steps.determine_next_release.outputs.version }}"
           labels: |
@@ -610,8 +608,6 @@ jobs:
 
             ${{ steps.read_instructions.outputs.content }}
 
-            ---
-
             📖 **Need more help?** Check out the [CAPI Release Drafting Guide](https://intranet.giantswarm.io/docs/product/releases/capi/capi-release-drafting/) for detailed instructions.
           branch: "release-${{ steps.determine_next_release.outputs.version }}"
           labels: |
@@ -741,8 +737,6 @@ jobs:
 
             ${{ steps.read_instructions.outputs.content }}
 
-            ---
-
             📖 **Need more help?** Check out the [CAPI Release Drafting Guide](https://intranet.giantswarm.io/docs/product/releases/capi/capi-release-drafting/) for detailed instructions.
           branch: "release-${{ steps.determine_next_release.outputs.version }}-${{ matrix.provider }}"
           labels: |
@@ -861,8 +855,6 @@ jobs:
             ---
 
             ${{ steps.read_instructions.outputs.content }}
-
-            ---
 
             📖 **Need more help?** Check out the [CAPI Release Drafting Guide](https://intranet.giantswarm.io/docs/product/releases/capi/capi-release-drafting/) for detailed instructions.
           branch: "release-${{ steps.determine_next_release.outputs.version }}-${{ matrix.provider }}"
@@ -983,8 +975,6 @@ jobs:
 
             ${{ steps.read_instructions.outputs.content }}
 
-            ---
-
             📖 **Need more help?** Check out the [CAPI Release Drafting Guide](https://intranet.giantswarm.io/docs/product/releases/capi/capi-release-drafting/) for detailed instructions.
           branch: "release-${{ steps.determine_next_release.outputs.version }}-${{ matrix.provider }}"
           labels: |
@@ -1100,8 +1090,6 @@ jobs:
             ---
 
             ${{ steps.read_instructions.outputs.content }}
-
-            ---
 
             📖 **Need more help?** Check out the [CAPI Release Drafting Guide](https://intranet.giantswarm.io/docs/product/releases/capi/capi-release-drafting/) for detailed instructions.
           branch: "release-${{ steps.determine_next_release.outputs.version }}"

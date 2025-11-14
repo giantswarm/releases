@@ -685,13 +685,6 @@ jobs:
           providers: ${{ steps.prepare_upgrade_check.outputs.providers }}
           version: ${{ steps.prepare_upgrade_check.outputs.version }}
 
-      - name: Post Upgrade Path Warning
-        if: success() && steps.parse_command.outputs.description_only != 'true' && steps.parse_command.outputs.devctl_args == ''
-        uses: ./.github/actions/post-upgrade-path-warning
-        with:
-          pr_number: ${{ github.event.issue.number }}
-          github_token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
-
       - name: Commit and push changes
         if: success() && (steps.parse_command.outputs.provider || steps.parse_command.outputs.providers_list)
         run: |
@@ -731,6 +724,13 @@ jobs:
               repo: context.repo.repo,
               body: output
             });
+
+      - name: Post Upgrade Path Warning
+        if: success() && steps.parse_command.outputs.description_only != 'true' && steps.parse_command.outputs.devctl_args == ''
+        uses: ./.github/actions/post-upgrade-path-warning
+        with:
+          pr_number: ${{ github.event.issue.number }}
+          github_token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
 
       - name: Trigger e2e tests
         if: success() && steps.detect_source.outputs.is_automatic == 'true' && steps.parse_command.outputs.description_only != 'true' && steps.parse_command.outputs.devctl_args == '' && steps.check_upgrade_path.outputs.has_warning == 'false'
