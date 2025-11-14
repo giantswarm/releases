@@ -467,7 +467,11 @@ jobs:
 
             Major releases include new Kubernetes versions, significant platform upgrades, and breaking changes across all CAPI providers.
 
-            📖 **Need help?** Check out the [CAPI Release Drafting Guide](https://intranet.giantswarm.io/docs/product/releases/capi/capi-release-drafting/) for detailed instructions.
+            ---
+
+            ### Changes:
+
+            ${{ env.LOG_CONTENT }}
 
             ---
 
@@ -475,9 +479,7 @@ jobs:
 
             ---
 
-            ### Changes:
-
-            ${{ env.LOG_CONTENT }}
+            📖 **Need more help?** Check out the [CAPI Release Drafting Guide](https://intranet.giantswarm.io/docs/product/releases/capi/capi-release-drafting/) for detailed instructions.
           branch: "release-${{ steps.determine_next_release.outputs.version }}"
           labels: |
             release/major
@@ -598,7 +600,11 @@ jobs:
 
             Minor releases include component updates, bug fixes, and feature improvements across all CAPI providers without breaking changes.
 
-            📖 **Need help?** Check out the [CAPI Release Drafting Guide](https://intranet.giantswarm.io/docs/product/releases/capi/capi-release-drafting/) for detailed instructions.
+            ---
+
+            ### Changes:
+
+            ${{ env.LOG_CONTENT }}
 
             ---
 
@@ -606,9 +612,7 @@ jobs:
 
             ---
 
-            ### Changes:
-
-            ${{ env.LOG_CONTENT }}
+            📖 **Need more help?** Check out the [CAPI Release Drafting Guide](https://intranet.giantswarm.io/docs/product/releases/capi/capi-release-drafting/) for detailed instructions.
           branch: "release-${{ steps.determine_next_release.outputs.version }}"
           labels: |
             release/minor
@@ -727,7 +731,11 @@ jobs:
 
             Major releases include new Kubernetes versions, significant platform upgrades, and breaking changes.
 
-            📖 **Need help?** Check out the [CAPI Release Drafting Guide](https://intranet.giantswarm.io/docs/product/releases/capi/capi-release-drafting/) for detailed instructions.
+            ---
+
+            ### Changes:
+
+            ${{ env.LOG_CONTENT }}
 
             ---
 
@@ -735,9 +743,7 @@ jobs:
 
             ---
 
-            ### Changes:
-
-            ${{ env.LOG_CONTENT }}
+            📖 **Need more help?** Check out the [CAPI Release Drafting Guide](https://intranet.giantswarm.io/docs/product/releases/capi/capi-release-drafting/) for detailed instructions.
           branch: "release-${{ steps.determine_next_release.outputs.version }}-${{ matrix.provider }}"
           labels: |
             release/major
@@ -846,7 +852,11 @@ jobs:
 
             Minor releases include component updates, bug fixes, and feature improvements without breaking changes.
 
-            📖 **Need help?** Check out the [CAPI Release Drafting Guide](https://intranet.giantswarm.io/docs/product/releases/capi/capi-release-drafting/) for detailed instructions.
+            ---
+
+            ### Changes:
+
+            ${{ env.LOG_CONTENT }}
 
             ---
 
@@ -854,9 +864,7 @@ jobs:
 
             ---
 
-            ### Changes:
-
-            ${{ env.LOG_CONTENT }}
+            📖 **Need more help?** Check out the [CAPI Release Drafting Guide](https://intranet.giantswarm.io/docs/product/releases/capi/capi-release-drafting/) for detailed instructions.
           branch: "release-${{ steps.determine_next_release.outputs.version }}-${{ matrix.provider }}"
           labels: |
             release/minor
@@ -965,7 +973,11 @@ jobs:
 
             Patch releases contain targeted fixes for specific security issues, critical bugs, or component updates.
 
-            📖 **Need help?** Check out the [CAPI Release Drafting Guide](https://intranet.giantswarm.io/docs/product/releases/capi/capi-release-drafting/) for detailed instructions.
+            ---
+
+            ### Changes:
+
+            ${{ env.LOG_CONTENT }}
 
             ---
 
@@ -973,9 +985,7 @@ jobs:
 
             ---
 
-            ### Changes:
-
-            ${{ env.LOG_CONTENT }}
+            📖 **Need more help?** Check out the [CAPI Release Drafting Guide](https://intranet.giantswarm.io/docs/product/releases/capi/capi-release-drafting/) for detailed instructions.
           branch: "release-${{ steps.determine_next_release.outputs.version }}-${{ matrix.provider }}"
           labels: |
             release/patch
@@ -1081,7 +1091,11 @@ jobs:
 
             Patch releases contain targeted fixes for specific security issues, critical bugs, or component updates.
 
-            📖 **Need help?** Check out the [CAPI Release Drafting Guide](https://intranet.giantswarm.io/docs/product/releases/capi/capi-release-drafting/) for detailed instructions.
+            ---
+
+            ### Changes:
+
+            ${{ env.LOG_CONTENT }}
 
             ---
 
@@ -1089,9 +1103,7 @@ jobs:
 
             ---
 
-            ### Changes:
-
-            ${{ env.LOG_CONTENT }}
+            📖 **Need more help?** Check out the [CAPI Release Drafting Guide](https://intranet.giantswarm.io/docs/product/releases/capi/capi-release-drafting/) for detailed instructions.
           branch: "release-${{ steps.determine_next_release.outputs.version }}"
           labels: |
             release/patch

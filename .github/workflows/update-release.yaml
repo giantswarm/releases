@@ -547,16 +547,16 @@ jobs:
                       CONTENT_PART="${CONTENT_PART}${FILTERED_OUTPUT}\n\n"
                     else
                       # Only headers remain, so no actual changes
-                      CONTENT_PART="${CONTENT_PART}No version changes detected (all items unchanged).\n\n"
+                      CONTENT_PART="${CONTENT_PART}ℹ️ No version changes detected.\n\n"
                     fi
                   fi
                 else
                   # No changes detected (either hash unchanged OR all items show 'Unchanged')
-                  CONTENT_PART="${CONTENT_PART}No changes detected for provider ${PROVIDER_DIR^^}. All components and apps are already at the requested versions.\n\n"
+                  CONTENT_PART="${CONTENT_PART}ℹ️ No version changes detected for ${PROVIDER_DIR^^}.\n\n"
                 fi
 
                 # Check if this is a "no changes" message
-                if [[ "$CONTENT_PART" == *"No changes detected"* ]]; then
+                if [[ "$CONTENT_PART" == *"No version changes detected"* || "$CONTENT_PART" == *"No changes detected"* ]]; then
                   # Track provider with no changes (for summary at the end)
                   if [[ -z "$PROVIDERS_WITH_NO_CHANGES" ]]; then
                     PROVIDERS_WITH_NO_CHANGES="$PROVIDER_DIR"
@@ -624,11 +624,10 @@ jobs:
             # All providers had no changes - show single summary message
             PROVIDER_COUNT=$(echo "$PROVIDERS_WITH_NO_CHANGES" | wc -w | xargs)
             if [[ $PROVIDER_COUNT -eq 1 ]]; then
-              FULL_LOG_CONTENT="No changes detected for provider ${PROVIDERS_WITH_NO_CHANGES^^}. All components and apps are already at the requested versions.\n\n"
+              FULL_LOG_CONTENT="ℹ️ No version changes detected for ${PROVIDERS_WITH_NO_CHANGES^^}.\n\n"
             else
               # Multiple providers, all with no changes
-              PROVIDER_LIST=$(echo "$PROVIDERS_WITH_NO_CHANGES" | tr ' ' '\n' | tr '[:lower:]' '[:upper:]' | paste -sd ", " -)
-              FULL_LOG_CONTENT="No changes detected in any provider ($PROVIDER_LIST). All components and apps are already at the requested versions.\n\n"
+              FULL_LOG_CONTENT="ℹ️ No version changes detected for any provider.\n\n"
             fi
           fi
 
