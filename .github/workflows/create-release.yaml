@@ -898,25 +898,8 @@ jobs:
         uses: ./.github/actions/install-devctl
         with:
           github_token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
-      - name: Set provider display name for title
-        id: provider_name
-        run: |
-          provider="${{ matrix.provider }}"
-          name=""
-          if [[ "$provider" == "aws" ]]; then
-            name="CAPA"
-          elif [[ "$provider" == "azure" ]]; then
-            name="CAPZ"
-          elif [[ "$provider" == "vsphere" ]]; then
-            name="CAPV"
-          elif [[ "$provider" == "cloud-director" ]]; then
-            name="CAPVCD"
-          else
-            name=$(echo "$provider" | tr 'a-z' 'A-Z')
-          fi
-          echo "NAME=$name" >> $GITHUB_OUTPUT
       - name: Determine next release version
-        id: versioning
+        id: determine_next_release
         run: |
           ./tools/determine-next-release.sh ${{ matrix.provider }} ${{ needs.patch_release_decider.outputs.release_type }} ${{ needs.patch_release_decider.outputs.version_override }}
       - name: Check for existing PR
@@ -924,7 +907,7 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
         run: |
-          BRANCH_NAME="release-${{ steps.versioning.outputs.NEXT_RELEASE }}-${{ matrix.provider }}"
+          BRANCH_NAME="release-${{ steps.determine_next_release.outputs.version }}-${{ matrix.provider }}"
           PR_EXISTS=$(gh pr list --repo "$GITHUB_REPOSITORY" --head "$BRANCH_NAME" --json number --jq '.[0].number')
           if [ -z "$PR_EXISTS" ]; then
             echo "No existing PR found for branch $BRANCH_NAME. Proceeding."
@@ -942,14 +925,14 @@ jobs:
         run: |
           set -o pipefail
           devctl release create \
-            --base ${{ steps.versioning.outputs.LATEST_RELEASE }} \
-            --name ${{ steps.versioning.outputs.NEXT_RELEASE }} \
+            --base ${{ steps.determine_next_release.outputs.base }} \
+            --name ${{ steps.determine_next_release.outputs.version }} \
             --provider ${{ matrix.provider }} \
             --bumpall --overwrite -y --output markdown --changes-only 2>&1 | tee /tmp/release_output.log
       - name: Update README.md
         id: update_readme
         run: |
-          ./tools/update-readme.sh "${{ matrix.provider }}" "${{ steps.versioning.outputs.NEXT_RELEASE }}"
+          ./tools/update-readme.sh "${{ matrix.provider }}" "${{ steps.determine_next_release.outputs.version }}"
       - name: Prepare PR body
         id: pr_body
         run: |
@@ -959,7 +942,7 @@ jobs:
           # Read the changes from devctl output
           CHANGES_CONTENT=$(cat /tmp/release_output.log)
           
-          body="This PR creates the new **patch release** \`${{ steps.versioning.outputs.NEXT_RELEASE }}\` for **${{ matrix.provider }}** only.
+          body="This PR creates the new **patch release** \`${{ steps.determine_next_release.outputs.version }}\` for **${{ matrix.provider }}** only.
 
           Patch releases contain targeted fixes for specific security issues, critical bugs, or component updates.
 
@@ -984,10 +967,9 @@ jobs:
         uses: peter-evans/create-pull-request@v7
         with:
           token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
-          commit-message: "feat: Create ${{ steps.versioning.outputs.NEXT_RELEASE }} for ${{ matrix.provider }}"
-          title: "${{ steps.provider_name.outputs.NAME }}: Release ${{ steps.versioning.outputs.NEXT_RELEASE }}."
+          title: "${{ steps.determine_next_release.outputs.provider_acronym }}: Release ${{ steps.determine_next_release.outputs.version }}."
           body: ${{ steps.pr_body.outputs.body }}
-          branch: "release-${{ steps.versioning.outputs.NEXT_RELEASE }}-${{ matrix.provider }}"
+          branch: "release-${{ steps.determine_next_release.outputs.version }}-${{ matrix.provider }}"
           labels: |
             release/${{ needs.patch_release_decider.outputs.release_type }}
             ${{ matrix.provider }}
@@ -995,8 +977,8 @@ jobs:
       - name: Checkout PR branch for analysis
         if: steps.create_pr.outputs.pull-request-number != ''
         run: |
-          git fetch origin "release-${{ steps.versioning.outputs.NEXT_RELEASE }}-${{ matrix.provider }}"
-          git checkout "release-${{ steps.versioning.outputs.NEXT_RELEASE }}-${{ matrix.provider }}"
+          git fetch origin "release-${{ steps.determine_next_release.outputs.version }}-${{ matrix.provider }}"
+          git checkout "release-${{ steps.determine_next_release.outputs.version }}-${{ matrix.provider }}"
 
       - name: Analyze and Post Breaking Changes
         if: steps.create_pr.outputs.pull-request-number != ''
