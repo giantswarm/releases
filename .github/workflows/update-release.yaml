@@ -640,7 +640,8 @@ jobs:
           echo "$FULL_LOG_CONTENT" >> "$GITHUB_ENV"
           echo "EOF" >> "$GITHUB_ENV"
 
-      - name: Check Upgrade Path
+      - name: Determine providers and version for upgrade path check
+        id: prepare_upgrade_check
         if: success() && steps.parse_command.outputs.description_only != 'true' && steps.parse_command.outputs.devctl_args == ''
         run: |
           BRANCH_NAME="${{ steps.get_branch.outputs.result }}"
@@ -648,6 +649,7 @@ jobs:
 
           # Determine the release name from the branch.
           RELEASE_NAME=$(echo "$BRANCH_NAME" | sed -n 's/release-\(v[0-9.]*\).*/\1/p')
+          echo "version=$RELEASE_NAME" >> "$GITHUB_OUTPUT"
 
           # Collect valid providers (those that have the release directory)
           VALID_PROVIDERS=""
@@ -673,16 +675,16 @@ jobs:
               VALID_PROVIDERS="$VALID_PROVIDERS,$PROVIDER_DIR"
             fi
           done
+          
+          echo "providers=$VALID_PROVIDERS" >> "$GITHUB_OUTPUT"
 
-          # Run the upgrade path checker for all valid providers at once
-          if [ -n "$VALID_PROVIDERS" ]; then
-            echo "Checking upgrade path for providers: $VALID_PROVIDERS, version: $RELEASE_NAME"
-            cd tools/check-upgrade-path
-            go run . --providers "$VALID_PROVIDERS" --version "$RELEASE_NAME" --workdir ../.. --output "upgrade-path-warning.md" || true
-            cd ../..
-          else
-            echo "No valid providers found for upgrade path check."
-          fi
+      - name: Check Upgrade Path
+        id: check_upgrade_path
+        if: success() && steps.parse_command.outputs.description_only != 'true' && steps.parse_command.outputs.devctl_args == ''
+        uses: ./.github/actions/check-upgrade-path
+        with:
+          providers: ${{ steps.prepare_upgrade_check.outputs.providers }}
+          version: ${{ steps.prepare_upgrade_check.outputs.version }}
 
       - name: Post Upgrade Path Warning
         if: success() && steps.parse_command.outputs.description_only != 'true' && steps.parse_command.outputs.devctl_args == ''
@@ -732,7 +734,7 @@ jobs:
             });
 
       - name: Trigger e2e tests
-        if: success() && steps.detect_source.outputs.is_automatic == 'true' && steps.parse_command.outputs.description_only != 'true' && steps.parse_command.outputs.devctl_args == '' && !hashFiles('tools/check-upgrade-path/upgrade-path-warning.md')
+        if: success() && steps.detect_source.outputs.is_automatic == 'true' && steps.parse_command.outputs.description_only != 'true' && steps.parse_command.outputs.devctl_args == '' && steps.check_upgrade_path.outputs.has_warning == 'false'
         uses: ./.github/actions/trigger-e2e-tests
         with:
           pr_number: ${{ github.event.issue.number }}

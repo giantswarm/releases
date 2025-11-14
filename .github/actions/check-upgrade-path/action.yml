@@ -1,0 +1,44 @@
+name: 'Check Upgrade Path'
+description: 'Checks the upgrade path for specified providers and version'
+inputs:
+  providers:
+    description: 'Providers to check (comma-separated or space-separated)'
+    required: true
+  version:
+    description: 'Version to check'
+    required: true
+outputs:
+  has_warning:
+    description: 'Whether an upgrade path warning was generated (true/false)'
+    value: ${{ steps.check.outputs.has_warning }}
+runs:
+  using: "composite"
+  steps:
+    - name: Run upgrade path check
+      id: check
+      shell: bash
+      run: |
+        PROVIDERS="${{ inputs.providers }}"
+        VERSION="${{ inputs.version }}"
+        
+        if [ -n "$PROVIDERS" ]; then
+          echo "Checking upgrade path for providers: $PROVIDERS, version: $VERSION"
+          # Convert space-separated to comma-separated if needed
+          PROVIDERS_CSV=$(echo "$PROVIDERS" | tr ' ' ',')
+          cd tools/check-upgrade-path
+          go run . --providers "$PROVIDERS_CSV" --version "$VERSION" --workdir ../.. --output "upgrade-path-warning.md" || true
+          cd ../..
+          
+          # Check if warning file was created
+          if [ -f "upgrade-path-warning.md" ]; then
+            echo "has_warning=true" >> "$GITHUB_OUTPUT"
+            echo "⚠️ Upgrade path warning generated"
+          else
+            echo "has_warning=false" >> "$GITHUB_OUTPUT"
+            echo "✅ No upgrade path warnings"
+          fi
+        else
+          echo "No providers specified, skipping upgrade path check"
+          echo "has_warning=false" >> "$GITHUB_OUTPUT"
+        fi
+

@@ -1,0 +1,46 @@
+name: 'Create Release Files (Individual)'
+description: 'Creates release files for a single provider (individual releases)'
+inputs:
+  provider:
+    description: 'Provider name'
+    required: true
+  version:
+    description: 'Release version'
+    required: true
+  base:
+    description: 'Base version for the release'
+    required: true
+  github_token:
+    description: 'GitHub token for devctl'
+    required: true
+  devctl_version:
+    description: 'Version of devctl being used'
+    required: true
+outputs:
+  log_content:
+    description: 'Log content from release creation'
+    value: ${{ steps.create.outputs.log_content }}
+runs:
+  using: "composite"
+  steps:
+    - name: Create release files
+      id: create
+      shell: bash
+      env:
+        OPSCTL_GITHUB_TOKEN: ${{ inputs.github_token }}
+        GH_TOKEN: ${{ inputs.github_token }}
+        DEVCTL_UNSAFE_FORCE_VERSION: ${{ inputs.devctl_version }}
+        DEVCTL_GITHUB_TOKEN: ${{ inputs.github_token }}
+      run: |
+        set -o pipefail
+        devctl release create \
+          --base "${{ inputs.base }}" \
+          --name "${{ inputs.version }}" \
+          --provider "${{ inputs.provider }}" \
+          --bumpall --overwrite -y --output markdown --changes-only 2>&1 | tee /tmp/release_output.log
+
+        LOG_CONTENT=$(cat /tmp/release_output.log)
+        echo "LOG_CONTENT<<EOF" >> "$GITHUB_ENV"
+        echo "$LOG_CONTENT" >> "$GITHUB_ENV"
+        echo "EOF" >> "$GITHUB_ENV"
+

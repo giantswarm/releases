@@ -1,0 +1,98 @@
+name: 'Create Release Files (Consolidated)'
+description: 'Creates release files for multiple providers (consolidated releases)'
+inputs:
+  providers:
+    description: 'Space-separated list of providers'
+    required: true
+  version:
+    description: 'Release version'
+    required: true
+  release_type:
+    description: 'Release type (major, minor, patch) for base version calculation'
+    required: true
+  version_override:
+    description: 'Version override for base calculation (optional)'
+    required: false
+    default: ''
+  github_token:
+    description: 'GitHub token for devctl'
+    required: true
+  devctl_version:
+    description: 'Version of devctl being used'
+    required: true
+outputs:
+  log_content:
+    description: 'Formatted log content from release creation'
+    value: ${{ steps.create.outputs.log_content }}
+  provider_labels:
+    description: 'Provider labels (newline-separated)'
+    value: ${{ steps.create.outputs.provider_labels }}
+runs:
+  using: "composite"
+  steps:
+    - name: Create release files
+      id: create
+      shell: bash
+      env:
+        OPSCTL_GITHUB_TOKEN: ${{ inputs.github_token }}
+        GH_TOKEN: ${{ inputs.github_token }}
+        DEVCTL_UNSAFE_FORCE_VERSION: ${{ inputs.devctl_version }}
+        DEVCTL_GITHUB_TOKEN: ${{ inputs.github_token }}
+      run: |
+        set -o pipefail
+        LOG_FILE="/tmp/release_output.log"
+        touch $LOG_FILE
+        first_provider=true
+        
+        for provider in ${{ inputs.providers }}; do
+          echo "--- Creating release for $provider ---"
+
+          # Add a separator before each provider except the first one
+          if [ "$first_provider" = true ]; then
+            first_provider=false
+          else
+            echo "" >> $LOG_FILE
+            echo "---" >> $LOG_FILE
+            echo "" >> $LOG_FILE
+          fi
+
+          # Capitalize provider name for the heading
+          PROVIDER_UPPER=$(echo "$provider" | awk '{print toupper($0)}')
+          echo "<details><summary>${PROVIDER_UPPER}</summary>" >> $LOG_FILE
+          echo "" >> $LOG_FILE
+
+          # Determine base version for this provider
+          BASE_VERSION=$(./tools/determine-next-release.sh "$provider" "${{ inputs.release_type }}" "${{ inputs.version_override }}" | grep '^base=' | cut -d'=' -f2)
+
+          # Retry logic (up to 3 attempts)
+          n=0
+          until [ "$n" -ge 3 ]
+          do
+            devctl release create \
+              --base "$BASE_VERSION" \
+              --name "${{ inputs.version }}" \
+              --provider "$provider" \
+              --bumpall --overwrite -y --output markdown --changes-only 2>&1 | tee -a $LOG_FILE && break
+            n=$((n+1))
+            if [ "$n" -ge 3 ]; then
+                echo "The command has failed 3 times in a row. Aborting."
+                exit 1
+            fi
+            echo "Command failed. Retrying in 15 seconds..."
+            sleep 15
+          done
+          echo "</details>" >> $LOG_FILE
+        done
+
+        # Output log content to env (for use in PR body)
+        LOG_CONTENT=$(cat /tmp/release_output.log)
+        echo "LOG_CONTENT<<EOF" >> "$GITHUB_ENV"
+        echo "$LOG_CONTENT" >> "$GITHUB_ENV"
+        echo "EOF" >> "$GITHUB_ENV"
+
+        # Output provider labels to step output (newline-separated)
+        PROVIDER_LABELS=$(echo "${{ inputs.providers }}" | tr ' ' '\n')
+        echo "PROVIDER_LABELS<<EOF" >> "$GITHUB_OUTPUT"
+        echo "$PROVIDER_LABELS" >> "$GITHUB_OUTPUT"
+        echo "EOF" >> "$GITHUB_OUTPUT"
+

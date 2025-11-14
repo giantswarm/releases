@@ -428,63 +428,14 @@ jobs:
       - name: Create release files and get output
         id: create_release
         if: steps.check_pr.outputs.PR_EXISTS == 'false' && (needs.dispatcher.outputs.release_type != 'major' || steps.k8s_check.outputs.VERSION_EXISTS == 'true')
-        env:
-          OPSCTL_GITHUB_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
-          GH_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
-          DEVCTL_UNSAFE_FORCE_VERSION: ${{ steps.install_devctl.outputs.version }}
-          DEVCTL_GITHUB_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
-        run: |
-          set -o pipefail
-          LOG_FILE="/tmp/release_output.log"
-          touch $LOG_FILE
-          first_provider=true
-          for provider in ${{ steps.filter_providers.outputs.filtered_providers }}; do
-            echo "--- Creating release for $provider ---"
-
-            # Add a separator before each provider except the first one
-            if [ "$first_provider" = true ]; then
-              first_provider=false
-            else
-              echo "" >> $LOG_FILE
-              echo "---" >> $LOG_FILE
-              echo "" >> $LOG_FILE
-            fi
-
-            # Capitalize provider name for the heading
-            PROVIDER_UPPER=$(echo "$provider" | awk '{print toupper($0)}')
-            echo "<details><summary>${PROVIDER_UPPER}</summary>" >> $LOG_FILE
-            echo "" >> $LOG_FILE
-
-            BASE_VERSION=$(./tools/determine-next-release.sh "$provider" "major" "${{ needs.major_release_decider.outputs.version_override }}" | grep '^base=' | cut -d'=' -f2)
-
-            n=0
-            until [ "$n" -ge 3 ]
-            do
-              devctl release create \
-                --base "$BASE_VERSION" \
-                --name "${{ steps.determine_next_release.outputs.version }}" \
-                --provider "$provider" \
-                --bumpall --overwrite -y --output markdown --changes-only 2>&1 | tee -a $LOG_FILE && break
-              n=$((n+1))
-              if [ "$n" -ge 3 ]; then
-                  echo "The command has failed 3 times in a row. Aborting."
-                  exit 1
-              fi
-              echo "Command failed. Retrying in 15 seconds..."
-              sleep 15
-            done
-            echo "</details>" >> $LOG_FILE
-          done
-
-          LOG_CONTENT=$(cat /tmp/release_output.log)
-          echo "LOG_CONTENT<<EOF" >> "$GITHUB_ENV"
-          echo "$LOG_CONTENT" >> "$GITHUB_ENV"
-          echo "EOF" >> "$GITHUB_ENV"
-
-          PROVIDER_LABELS=$(echo "${{ steps.filter_providers.outputs.filtered_providers }}" | tr ' ' '\n')
-          echo "PROVIDER_LABELS<<EOF" >> "$GITHUB_OUTPUT"
-          echo "$PROVIDER_LABELS" >> "$GITHUB_OUTPUT"
-          echo "EOF" >> "$GITHUB_OUTPUT"
+        uses: ./.github/actions/create-release-consolidated
+        with:
+          providers: ${{ steps.filter_providers.outputs.filtered_providers }}
+          version: ${{ steps.determine_next_release.outputs.version }}
+          release_type: major
+          version_override: ${{ needs.major_release_decider.outputs.version_override }}
+          github_token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+          devctl_version: ${{ steps.install_devctl.outputs.version }}
 
       - name: Update README.md
         id: update_readme
@@ -594,77 +545,22 @@ jobs:
       - name: Create release files and get output
         id: create_release
         if: steps.check_pr.outputs.PR_EXISTS == 'false'
-        env:
-          OPSCTL_GITHUB_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
-          GH_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
-          DEVCTL_UNSAFE_FORCE_VERSION: ${{ steps.install_devctl.outputs.version }}
-          DEVCTL_GITHUB_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
-        run: |
-          set -o pipefail
-          LOG_FILE="/tmp/release_output.log"
-          touch $LOG_FILE
-          first_provider=true
-          for provider in ${{ steps.filter_providers.outputs.filtered_providers }}; do
-            echo "--- Creating release for $provider ---"
-
-            # Add a separator before each provider except the first one
-            if [ "$first_provider" = true ]; then
-              first_provider=false
-            else
-              echo "" >> $LOG_FILE
-              echo "---" >> $LOG_FILE
-              echo "" >> $LOG_FILE
-            fi
-
-            # Capitalize provider name for the heading
-            PROVIDER_UPPER=$(echo "$provider" | awk '{print toupper($0)}')
-            echo "<details><summary>${PROVIDER_UPPER}</summary>" >> $LOG_FILE
-            echo "" >> $LOG_FILE
-
-            BASE_VERSION=$(./tools/determine-next-release.sh "$provider" "minor" "${{ needs.minor_release_decider.outputs.version_override }}" | grep '^base=' | cut -d'=' -f2)
-
-            n=0
-            until [ "$n" -ge 3 ]
-            do
-              devctl release create \
-                --base "$BASE_VERSION" \
-                --name "${{ steps.determine_next_release.outputs.version }}" \
-                --provider "$provider" \
-                --bumpall --overwrite -y --output markdown --changes-only 2>&1 | tee -a $LOG_FILE && break
-              n=$((n+1))
-              if [ "$n" -ge 3 ]; then
-                  echo "The command has failed 3 times in a row. Aborting."
-                  exit 1
-              fi
-              echo "Command failed. Retrying in 15 seconds..."
-              sleep 15
-            done
-            echo "</details>" >> $LOG_FILE
-          done
-
-          LOG_CONTENT=$(cat /tmp/release_output.log)
-          echo "LOG_CONTENT<<EOF" >> "$GITHUB_ENV"
-          echo "$LOG_CONTENT" >> "$GITHUB_ENV"
-          echo "EOF" >> "$GITHUB_ENV"
-
-          PROVIDER_LABELS=$(echo "${{ steps.filter_providers.outputs.filtered_providers }}" | tr ' ' '\n')
-          echo "PROVIDER_LABELS<<EOF" >> "$GITHUB_OUTPUT"
-          echo "$PROVIDER_LABELS" >> "$GITHUB_OUTPUT"
-          echo "EOF" >> "$GITHUB_OUTPUT"
+        uses: ./.github/actions/create-release-consolidated
+        with:
+          providers: ${{ steps.filter_providers.outputs.filtered_providers }}
+          version: ${{ steps.determine_next_release.outputs.version }}
+          release_type: minor
+          version_override: ${{ needs.minor_release_decider.outputs.version_override }}
+          github_token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+          devctl_version: ${{ steps.install_devctl.outputs.version }}
 
       - name: Check Upgrade Path
         id: check_upgrade_path_minor
         if: steps.check_pr.outputs.PR_EXISTS == 'false'
-        run: |
-          PROVIDERS="${{ steps.filter_providers.outputs.filtered_providers }}"
-          if [ -n "$PROVIDERS" ]; then
-            echo "Checking upgrade path for providers: $PROVIDERS, version: ${{ steps.determine_next_release.outputs.version }}"
-            # Convert space-separated to comma-separated
-            PROVIDERS_CSV=$(echo "$PROVIDERS" | tr ' ' ',')
-            cd tools/check-upgrade-path
-            go run . --providers "$PROVIDERS_CSV" --version "${{ steps.determine_next_release.outputs.version }}" --workdir ../.. --output "upgrade-path-warning.md" || true
-            cd ../..
-          fi
+        uses: ./.github/actions/check-upgrade-path
+        with:
+          providers: ${{ steps.filter_providers.outputs.filtered_providers }}
+          version: ${{ steps.determine_next_release.outputs.version }}
 
       - name: Update README.md
         id: update_readme
@@ -728,7 +624,7 @@ jobs:
           github_token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
 
       - name: Trigger e2e tests
-        if: steps.check_pr.outputs.PR_EXISTS == 'false' && steps.create_pr.outputs.pull-request-number && !hashFiles('tools/check-upgrade-path/upgrade-path-warning.md')
+        if: steps.check_pr.outputs.PR_EXISTS == 'false' && steps.create_pr.outputs.pull-request-number && steps.check_upgrade_path_minor.outputs.has_warning == 'false'
         uses: ./.github/actions/trigger-e2e-tests
         with:
           pr_number: ${{ steps.create_pr.outputs.pull-request-number }}
@@ -784,23 +680,13 @@ jobs:
       - name: Create release files and get output
         id: create_release
         if: steps.check_pr.outputs.PR_EXISTS == 'false' && (needs.dispatcher.outputs.release_type != 'major' || steps.k8s_check.outputs.VERSION_EXISTS == 'true')
-        env:
-          OPSCTL_GITHUB_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
-          GH_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
-          DEVCTL_UNSAFE_FORCE_VERSION: ${{ steps.install_devctl.outputs.version }}
-          DEVCTL_GITHUB_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
-        run: |
-          set -o pipefail
-          devctl release create \
-            --base "${{ steps.determine_next_release.outputs.base }}" \
-            --name "${{ steps.determine_next_release.outputs.version }}" \
-            --provider "${{ matrix.provider }}" \
-            --bumpall --overwrite -y --output markdown --changes-only 2>&1 | tee /tmp/release_output.log
-
-          LOG_CONTENT=$(cat /tmp/release_output.log)
-          echo "LOG_CONTENT<<EOF" >> "$GITHUB_ENV"
-          echo "$LOG_CONTENT" >> "$GITHUB_ENV"
-          echo "EOF" >> "$GITHUB_ENV"
+        uses: ./.github/actions/create-release-individual
+        with:
+          provider: ${{ matrix.provider }}
+          version: ${{ steps.determine_next_release.outputs.version }}
+          base: ${{ steps.determine_next_release.outputs.base }}
+          github_token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+          devctl_version: ${{ steps.install_devctl.outputs.version }}
 
       - name: Update README.md
         id: update_readme
@@ -905,32 +791,21 @@ jobs:
       - name: Create release files and get output
         id: create_release
         if: steps.check_pr.outputs.PR_EXISTS == 'false'
-        env:
-          OPSCTL_GITHUB_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
-          GH_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
-          DEVCTL_UNSAFE_FORCE_VERSION: ${{ steps.install_devctl.outputs.version }}
-          DEVCTL_GITHUB_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
-        run: |
-          set -o pipefail
-          devctl release create \
-            --base "${{ steps.determine_next_release.outputs.base }}" \
-            --name "${{ steps.determine_next_release.outputs.version }}" \
-            --provider "${{ matrix.provider }}" \
-            --bumpall --overwrite -y --output markdown --changes-only 2>&1 | tee /tmp/release_output.log
-
-          LOG_CONTENT=$(cat /tmp/release_output.log)
-          echo "LOG_CONTENT<<EOF" >> "$GITHUB_ENV"
-          echo "$LOG_CONTENT" >> "$GITHUB_ENV"
-          echo "EOF" >> "$GITHUB_ENV"
+        uses: ./.github/actions/create-release-individual
+        with:
+          provider: ${{ matrix.provider }}
+          version: ${{ steps.determine_next_release.outputs.version }}
+          base: ${{ steps.determine_next_release.outputs.base }}
+          github_token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+          devctl_version: ${{ steps.install_devctl.outputs.version }}
 
       - name: Check Upgrade Path
         id: check_upgrade_path_minor_indiv
         if: steps.check_pr.outputs.PR_EXISTS == 'false'
-        run: |
-          echo "Checking upgrade path for provider: ${{ matrix.provider }}, version: ${{ steps.determine_next_release.outputs.version }}"
-          cd tools/check-upgrade-path
-          go run . --providers "${{ matrix.provider }}" --version "${{ steps.determine_next_release.outputs.version }}" --workdir ../.. --output "upgrade-path-warning.md" || true
-          cd ../..
+        uses: ./.github/actions/check-upgrade-path
+        with:
+          providers: ${{ matrix.provider }}
+          version: ${{ steps.determine_next_release.outputs.version }}
 
       - name: Update README.md
         id: update_readme
@@ -997,7 +872,7 @@ jobs:
           github_token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
 
       - name: Trigger e2e tests
-        if: steps.check_pr.outputs.PR_EXISTS == 'false' && steps.create_pr.outputs.pull-request-number && !hashFiles('tools/check-upgrade-path/upgrade-path-warning.md')
+        if: steps.check_pr.outputs.PR_EXISTS == 'false' && steps.create_pr.outputs.pull-request-number && steps.check_upgrade_path_minor_indiv.outputs.has_warning == 'false'
         uses: ./.github/actions/trigger-e2e-tests
         with:
           pr_number: ${{ steps.create_pr.outputs.pull-request-number }}
@@ -1178,63 +1053,14 @@ jobs:
       - name: Create release files and get output
         id: create_release
         if: steps.check_pr.outputs.PR_EXISTS == 'false'
-        env:
-          OPSCTL_GITHUB_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
-          GH_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
-          DEVCTL_UNSAFE_FORCE_VERSION: ${{ steps.install_devctl.outputs.version }}
-          DEVCTL_GITHUB_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
-        run: |
-          set -o pipefail
-          LOG_FILE="/tmp/release_output.log"
-          touch $LOG_FILE
-          first_provider=true
-          for provider in ${{ steps.filter_providers.outputs.filtered_providers }}; do
-            echo "--- Creating release for $provider ---"
-
-            # Add a separator before each provider except the first one
-            if [ "$first_provider" = true ]; then
-              first_provider=false
-            else
-              echo "" >> $LOG_FILE
-              echo "---" >> $LOG_FILE
-              echo "" >> $LOG_FILE
-            fi
-
-            # Capitalize provider name for the heading
-            PROVIDER_UPPER=$(echo "$provider" | awk '{print toupper($0)}')
-            echo "<details><summary>${PROVIDER_UPPER}</summary>" >> $LOG_FILE
-            echo "" >> $LOG_FILE
-
-            BASE_VERSION=$(./tools/determine-next-release.sh "$provider" "patch" "${{ needs.patch_release_decider.outputs.version_override }}" | grep '^base=' | cut -d'=' -f2)
-
-            n=0
-            until [ "$n" -ge 3 ]
-            do
-              devctl release create \
-                --base "$BASE_VERSION" \
-                --name "${{ steps.determine_next_release.outputs.version }}" \
-                --provider "$provider" \
-                --bumpall --overwrite -y --output markdown --changes-only 2>&1 | tee -a $LOG_FILE && break
-              n=$((n+1))
-              if [ "$n" -ge 3 ]; then
-                  echo "The command has failed 3 times in a row. Aborting."
-                  exit 1
-              fi
-              echo "Command failed. Retrying in 15 seconds..."
-              sleep 15
-            done
-            echo "</details>" >> $LOG_FILE
-          done
-
-          LOG_CONTENT=$(cat /tmp/release_output.log)
-          echo "LOG_CONTENT<<EOF" >> "$GITHUB_ENV"
-          echo "$LOG_CONTENT" >> "$GITHUB_ENV"
-          echo "EOF" >> "$GITHUB_ENV"
-
-          PROVIDER_LABELS=$(echo "${{ steps.filter_providers.outputs.filtered_providers }}" | tr ' ' '\n')
-          echo "PROVIDER_LABELS<<EOF" >> "$GITHUB_OUTPUT"
-          echo "$PROVIDER_LABELS" >> "$GITHUB_OUTPUT"
-          echo "EOF" >> "$GITHUB_OUTPUT"
+        uses: ./.github/actions/create-release-consolidated
+        with:
+          providers: ${{ steps.filter_providers.outputs.filtered_providers }}
+          version: ${{ steps.determine_next_release.outputs.version }}
+          release_type: patch
+          version_override: ${{ needs.patch_release_decider.outputs.version_override }}
+          github_token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+          devctl_version: ${{ steps.install_devctl.outputs.version }}
 
       - name: Update README.md
         id: update_readme
