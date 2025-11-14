@@ -483,6 +483,12 @@ jobs:
             release/major
             ${{ steps.create_release.outputs.PROVIDER_LABELS }}
 
+      - name: Checkout PR branch for analysis
+        if: steps.create_pr.outputs.pull-request-number != ''
+        run: |
+          git fetch origin "release-${{ steps.determine_next_release.outputs.version }}"
+          git checkout "release-${{ steps.determine_next_release.outputs.version }}"
+
       - name: Analyze and Post Breaking Changes
         if: steps.create_pr.outputs.pull-request-number != ''
         uses: ./.github/actions/analyze-breaking-changes
@@ -607,6 +613,12 @@ jobs:
           labels: |
             release/minor
             ${{ steps.create_release.outputs.PROVIDER_LABELS }}
+
+      - name: Checkout PR branch for analysis
+        if: steps.create_pr.outputs.pull-request-number != ''
+        run: |
+          git fetch origin "release-${{ steps.determine_next_release.outputs.version }}"
+          git checkout "release-${{ steps.determine_next_release.outputs.version }}"
 
       - name: Analyze and Post Breaking Changes
         if: steps.create_pr.outputs.pull-request-number != ''
@@ -1084,6 +1096,12 @@ jobs:
           labels: |
             release/patch
             ${{ steps.create_release.outputs.PROVIDER_LABELS }}
+
+      - name: Checkout PR branch for analysis
+        if: steps.create_pr.outputs.pull-request-number != ''
+        run: |
+          git fetch origin "release-${{ steps.determine_next_release.outputs.version }}"
+          git checkout "release-${{ steps.determine_next_release.outputs.version }}"
 
       - name: Analyze and Post Breaking Changes
         if: steps.create_pr.outputs.pull-request-number != ''
