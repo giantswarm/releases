@@ -514,7 +514,8 @@ jobs:
             if (until) {
               body += `**Pin until**: ${until}\n\n`;
             } else {
-              body += `**Pin duration**: This release only\n\n`;
+              const releaseName = '${{ steps.update_release.outputs.release_name }}';
+              body += `**Pin duration**: \`<= ${releaseName}\` (this release and below)\n\n`;
             }
             
             if (reason) {
@@ -531,7 +532,7 @@ jobs:
             if (until) {
               body += `Starting with ${until}, this ${pinType} will auto-update again.\n\n`;
             } else {
-              body += `Future releases will auto-update to the latest version.\n\n`;
+              body += `Releases newer than this will auto-update to the latest version.\n\n`;
             }
             
             body += `📖 For more information, see [Pinning Versions Documentation](https://github.com/giantswarm/releases/blob/master/docs/workflows-pinning-versions.md)`;

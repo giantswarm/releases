@@ -117,9 +117,9 @@ func determineNameConstraint(releaseVersion, untilVersion string) string {
 	// Remove 'v' prefix if present
 	releaseVersion = strings.TrimPrefix(releaseVersion, "v")
 
-	// If no until version, pin only this exact release
+	// If no until version, pin this release and all previous releases
 	if untilVersion == "" {
-		return releaseVersion
+		return "<= " + releaseVersion
 	}
 
 	// Parse release version components
