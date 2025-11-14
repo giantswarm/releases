@@ -41,27 +41,25 @@ func GenerateReport(warnings []VersionWarning, currentVersion, nextMajorVersion 
 
 	// Show apps first, then components
 	if len(appWarnings) > 0 {
-		sb.WriteString("<details>\n")
-		sb.WriteString("<summary>Apps</summary>\n\n")
+		sb.WriteString("### Apps\n\n")
 		sb.WriteString("| App | This Release (" + currentVersion + ") | Next Major (" + nextMajorVersion + ") | Impact |\n")
 		sb.WriteString("|-----|----------------------------------------|----------------------------------------|--------|\n")
 		for _, w := range appWarnings {
 			sb.WriteString(fmt.Sprintf("| `%s` | **%s** | %s | ⬇️ Downgrade on upgrade |\n",
 				w.Name, w.CurrentVersion, w.NextMajorVersion))
 		}
-		sb.WriteString("\n</details>\n\n")
+		sb.WriteString("\n")
 	}
 
 	if len(componentWarnings) > 0 {
-		sb.WriteString("<details>\n")
-		sb.WriteString("<summary>Components</summary>\n\n")
+		sb.WriteString("### Components\n\n")
 		sb.WriteString("| Component | This Release (" + currentVersion + ") | Next Major (" + nextMajorVersion + ") | Impact |\n")
 		sb.WriteString("|-----------|----------------------------------------|----------------------------------------|--------|\n")
 		for _, w := range componentWarnings {
 			sb.WriteString(fmt.Sprintf("| `%s` | **%s** | %s | ⬇️ Downgrade on upgrade |\n",
 				w.Name, w.CurrentVersion, w.NextMajorVersion))
 		}
-		sb.WriteString("\n</details>\n\n")
+		sb.WriteString("\n")
 	}
 
 	sb.WriteString("> **Note:** This check was triggered because components/apps were automatically bumped to their latest versions.\n")
@@ -116,8 +114,7 @@ func GenerateConsolidatedReport(allWarnings []ProviderWarnings, currentVersion, 
 
 	// Generate Apps section
 	if len(allApps) > 0 {
-		sb.WriteString("<details>\n")
-		sb.WriteString("<summary>Apps</summary>\n\n")
+		sb.WriteString("### Apps\n\n")
 		sb.WriteString("| App | This Release (" + currentVersion + ") | Next Major (" + nextMajorVersion + ") | Impact |\n")
 		sb.WriteString("|-----|----------------------------------------|----------------------------------------|--------|\n")
 		for _, name := range appNames {
@@ -125,13 +122,12 @@ func GenerateConsolidatedReport(allWarnings []ProviderWarnings, currentVersion, 
 			sb.WriteString(fmt.Sprintf("| `%s` | **%s** | %s | ⬇️ Downgrade on upgrade |\n",
 				w.Name, w.CurrentVersion, w.NextMajorVersion))
 		}
-		sb.WriteString("\n</details>\n\n")
+		sb.WriteString("\n")
 	}
 
 	// Generate Components section
 	if len(allComponents) > 0 {
-		sb.WriteString("<details>\n")
-		sb.WriteString("<summary>Components</summary>\n\n")
+		sb.WriteString("### Components\n\n")
 		sb.WriteString("| Component | This Release (" + currentVersion + ") | Next Major (" + nextMajorVersion + ") | Impact |\n")
 		sb.WriteString("|-----------|----------------------------------------|----------------------------------------|--------|\n")
 		for _, name := range componentNames {
@@ -139,7 +135,7 @@ func GenerateConsolidatedReport(allWarnings []ProviderWarnings, currentVersion, 
 			sb.WriteString(fmt.Sprintf("| `%s` | **%s** | %s | ⬇️ Downgrade on upgrade |\n",
 				w.Name, w.CurrentVersion, w.NextMajorVersion))
 		}
-		sb.WriteString("\n</details>\n\n")
+		sb.WriteString("\n")
 	}
 
 	sb.WriteString("> **Note:** This check was triggered because components/apps were automatically bumped to their latest versions.\n")
