@@ -19,7 +19,7 @@
 ### Apps
 
 - aws-ebs-csi-driver from v3.0.5 to v3.3.0
-- cilium from v1.3.0 to v1.3.1
+- cilium from v1.3.0 to v1.3.2
 - coredns from v1.28.1 to v1.28.2
 
 ### aws-ebs-csi-driver [v3.0.5...v3.3.0](https://github.com/giantswarm/aws-ebs-csi-driver-app/compare/v3.0.5...v3.3.0)
@@ -49,10 +49,11 @@
 - Configure `gsoci.azurecr.io` as the default container image registry.
 - Set default `updateStrategy.rollingUpdate.maxUnavailable` to 25% in `DaemonSet` to speed up rolling update.
 
-### cilium [v1.3.0...v1.3.1](https://github.com/giantswarm/cilium-app/compare/v1.3.0...v1.3.1)
+### cilium [v1.3.0...v1.3.2](https://github.com/giantswarm/cilium-app/compare/v1.3.0...v1.3.2)
 
 #### Changed
 
+- Upgrade Cilium to [v1.18.4](https://github.com/cilium/cilium/releases/tag/v1.18.4).
 - Upgrade Cilium to [v1.18.2](https://github.com/cilium/cilium/releases/tag/v1.18.2).
 
 ### coredns [v1.28.1...v1.28.2](https://github.com/giantswarm/coredns-app/compare/v1.28.1...v1.28.2)
