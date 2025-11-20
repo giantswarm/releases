@@ -19,7 +19,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Get provider lists
         id: providers
@@ -68,7 +68,7 @@ jobs:
             console.log(`Is automatic: ${isAutomatic}`);
 
       - name: Checkout PR branch (second checkout for the actual PR branch)
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           ref: ${{ steps.get_branch.outputs.result }}
 

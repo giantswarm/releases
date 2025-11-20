@@ -62,7 +62,7 @@ jobs:
       force_consolidated: ${{ steps.dispatcher.outputs.force_consolidated }}
       provider_count: ${{ steps.dispatcher.outputs.provider_count }}
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
 
       - name: Get provider lists
         id: providers
@@ -178,7 +178,7 @@ jobs:
       version_override: ${{ needs.dispatcher.outputs.version_override }}
       release_type: ${{ needs.dispatcher.outputs.release_type }}
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - id: decider
         run: |
           IS_MANUAL='${{ needs.dispatcher.outputs.is_manual }}'
@@ -274,7 +274,7 @@ jobs:
       version_override: ${{ needs.dispatcher.outputs.version_override }}
       release_type: ${{ needs.dispatcher.outputs.release_type }}
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - id: decider
         run: |
           IS_MANUAL='${{ needs.dispatcher.outputs.is_manual }}'
@@ -346,7 +346,7 @@ jobs:
       version_override: ${{ needs.dispatcher.outputs.version_override }}
       release_type: ${{ needs.dispatcher.outputs.release_type }}
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - id: decider
         run: |
           IS_MANUAL='${{ needs.dispatcher.outputs.is_manual }}'
@@ -377,7 +377,7 @@ jobs:
     outputs:
       pr_url: ${{ steps.create_pr.outputs.pull-request-url }}
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - name: Determine next release version
         id: determine_next_release
         run: |
@@ -512,7 +512,7 @@ jobs:
     outputs:
       pr_url: ${{ steps.create_pr.outputs.pull-request-url }}
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - name: Determine next release version
         id: determine_next_release
         run: |
@@ -654,7 +654,7 @@ jobs:
     outputs:
       pr_url: ${{ steps.create_pr.outputs.pull-request-url }}
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - name: Determine next release version
         id: determine_next_release
         run: |
@@ -775,7 +775,7 @@ jobs:
     outputs:
       pr_url: ${{ steps.create_pr.outputs.pull-request-url }}
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - name: Determine next release version
         id: determine_next_release
         run: |
@@ -905,7 +905,7 @@ jobs:
       GH_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
     steps:
       - name: Check out code
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
       - name: Install devctl
         uses: ./.github/actions/install-devctl
         with:
@@ -1003,7 +1003,7 @@ jobs:
     outputs:
       pr_url: ${{ steps.create_pr.outputs.pull-request-url }}
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - name: Determine next release version
         id: determine_next_release
         run: |
@@ -1130,7 +1130,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: "Checkout code"
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: "Prepare Slack announcement"
         id: prepare_announcement
