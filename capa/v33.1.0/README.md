@@ -36,7 +36,6 @@
 - etcd-defrag from v1.2.1 to v1.2.3
 - etcd-k8s-res-count-exporter from v1.10.9 to v1.10.11
 - k8s-audit-metrics from v0.10.8 to v0.10.10
-- karpenter-crossplane-resources from v0.4.0 to v0.5.0
 - node-exporter from v1.20.7 to v1.20.9
 - observability-policies from v0.0.2 to v0.0.3
 - security-bundle from v1.13.1 to v1.15.0
@@ -112,12 +111,6 @@
 
 - Go: Update dependencies.
 - Go: Update dependencies.
-
-### karpenter-crossplane-resources [v0.4.0...v0.5.0](https://github.com/giantswarm/karpenter-crossplane-resources/compare/v0.4.0...v0.5.0)
-
-#### Added
-
-- Add new Helm value to configure the workers IAM role. When Karpenter launches worker instances, it will attach the worker instance profile.
 
 ### node-exporter [v1.20.7...v1.20.9](https://github.com/giantswarm/node-exporter-app/compare/v1.20.7...v1.20.9)
 

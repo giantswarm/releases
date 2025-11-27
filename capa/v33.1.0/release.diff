@@ -85,7 +85,7 @@ spec:                                                              spec:
   - name: karpenter                                                  - name: karpenter
     version: 1.4.0                                                     version: 1.4.0
   - name: karpenter-crossplane-resources                             - name: karpenter-crossplane-resources
-    version: 0.4.0                                              |      version: 0.5.0
+    version: 0.4.0                                                     version: 0.4.0
   - name: karpenter-taint-remover                                    - name: karpenter-taint-remover
     version: 1.0.1                                                     version: 1.0.1
   - name: metrics-server                                             - name: metrics-server
@@ -140,5 +140,5 @@ spec:                                                              spec:
     version: 1.33.5                                             |      version: 1.33.6
   - name: os-tooling                                                 - name: os-tooling
     version: 1.26.1                                             |      version: 1.26.2
-  date: "2025-10-21T16:17:53Z"                                  |    date: "2025-11-27T06:41:39Z"
+  date: "2025-10-21T16:17:53Z"                                  |    date: "2025-11-27T11:27:56Z"
   state: active                                                      state: active
