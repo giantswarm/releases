@@ -11,6 +11,10 @@ to all Giant Swarm installations.
 
 ## AWS
 
+- v34
+  - v34.0
+    - [v34.0.0](https://github.com/giantswarm/releases/tree/master/capa/v34.0.0)
+
 - v33
   - v33.0
     - [v33.0.0](https://github.com/giantswarm/releases/tree/master/capa/archived/v33.0.0)
@@ -372,6 +376,10 @@ to all Giant Swarm installations.
 
 ## Azure
 
+- v34
+  - v34.0
+    - [v34.0.0](https://github.com/giantswarm/releases/tree/master/azure/v34.0.0)
+
 - v33
   - v33.0
     - [v33.0.0](https://github.com/giantswarm/releases/tree/master/azure/archived/v33.0.0)
@@ -631,6 +639,10 @@ to all Giant Swarm installations.
 
 ## vSphere
 
+- v34
+  - v34.0
+    - [v34.0.0](https://github.com/giantswarm/releases/tree/master/vsphere/v34.0.0)
+
 - v33
   - v33.0
     - [v33.0.0](https://github.com/giantswarm/releases/tree/master/vsphere/archived/v33.0.0)
@@ -680,6 +692,10 @@ to all Giant Swarm installations.
     - [v27.0.0](https://github.com/giantswarm/releases/tree/master/vsphere/archived/v27.0.0)
 
 ## VMware Cloud Director
+
+- v34
+  - v34.0
+    - [v34.0.0](https://github.com/giantswarm/releases/tree/master/cloud-director/v34.0.0)
 
 - v33
   - v33.0
