@@ -41,6 +41,12 @@ func main() {
 	flag.StringVar(&componentVersion, "component-version", "", "Version to pin")
 	flag.Parse()
 
+	requestsFile = strings.TrimSpace(requestsFile)
+	releaseVersion = strings.TrimSpace(releaseVersion)
+	untilVersion = strings.TrimSpace(untilVersion)
+	componentName = strings.TrimSpace(componentName)
+	componentVersion = strings.TrimSpace(componentVersion)
+
 	if requestsFile == "" || releaseVersion == "" || componentName == "" || componentVersion == "" {
 		log.Fatal("Required flags: -requests-file, -release-version, -component-name, -component-version")
 	}
