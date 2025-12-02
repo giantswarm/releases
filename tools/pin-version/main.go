@@ -12,12 +12,12 @@ import (
 )
 
 type Request struct {
-	Name    string `yaml:"name"`
-	Version string `yaml:"version"`
+	Name    string    `yaml:"name"`
+	Version yaml.Node `yaml:"version"`
 }
 
 type Release struct {
-	Name     string    `yaml:"name"`
+	Name     yaml.Node `yaml:"name"`
 	Requests []Request `yaml:"requests"`
 }
 
@@ -68,7 +68,7 @@ func main() {
 	// Find or create the release entry
 	releaseIndex := -1
 	for i, release := range requestsData.Releases {
-		if release.Name == nameConstraint {
+		if release.Name.Value == nameConstraint {
 			releaseIndex = i
 			break
 		}
@@ -76,7 +76,7 @@ func main() {
 
 	newRequest := Request{
 		Name:    componentName,
-		Version: componentVersion,
+		Version: yaml.Node{Kind: yaml.ScalarNode, Value: componentVersion, Style: yaml.SingleQuotedStyle},
 	}
 
 	if releaseIndex >= 0 {
@@ -99,10 +99,15 @@ func main() {
 	} else {
 		// Create new release entry at the beginning
 		newRelease := Release{
-			Name:     nameConstraint,
+			Name:     yaml.Node{Kind: yaml.ScalarNode, Value: nameConstraint, Style: yaml.SingleQuotedStyle},
 			Requests: []Request{newRequest},
 		}
 		requestsData.Releases = append([]Release{newRelease}, requestsData.Releases...)
+	}
+
+	// Enforce single quotes on all release names
+	for i := range requestsData.Releases {
+		requestsData.Releases[i].Name.Style = yaml.SingleQuotedStyle
 	}
 
 	// Write back to file
