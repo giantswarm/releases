@@ -44,7 +44,7 @@ These workflows automate the end-of-life process for releases by:
    - Groups deprecated releases by provider and major version in a structured table
    - Includes link to [CAPI Releases Dashboard](https://giantswarm.grafana.net/d/be9a0bh8mbwn4e/capi-releases) for verification
    - Auto-labels with: `release-maintenance`, `automated`
-   - Includes `/skip-ci` directive since changes don't affect CI tests
+   - Posts a separate `/skip-ci` comment since changes don't affect CI tests
 
 #### Example PR Body
 
@@ -112,7 +112,7 @@ A release is kept active if it meets any of the following criteria:
    - Opens a PR titled "CAPI: Archive deprecated releases"
    - Groups archived releases by provider and major version
    - Auto-labels with: `release-maintenance`, `automated`
-   - Includes `/skip-ci` directive
+   - Posts a separate `/skip-ci` comment since changes don't affect CI tests
 
 #### Safety Mechanisms
 

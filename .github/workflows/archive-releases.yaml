@@ -277,6 +277,7 @@ jobs:
 
       - name: Create Pull Request
         if: steps.archive_script.outputs.has_archived_releases == 'true'
+        id: create-pr
         uses: peter-evans/create-pull-request@22a9089034f40e5a961c8808d113e2c98fb63676
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -289,14 +290,22 @@ jobs:
             Archived releases are moved from `<provider>/<version>` to `<provider>/archived/<version>`.
 
             ${{ steps.archive_script.outputs.archived_releases_pr_body_section }}
-
-            ---
-
-            /skip-ci This change does not affect what's being tested by CI.
-
           branch: auto-archive-capi-releases
           base: master
           labels: |
             release-maintenance
             automated
           delete-branch: true
+
+      - name: Post /skip-ci comment
+        if: steps.archive_script.outputs.has_archived_releases == 'true' && steps.create-pr.outputs.pull-request-number
+        uses: actions/github-script@v8
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: ${{ steps.create-pr.outputs.pull-request-number }},
+              body: '/skip-ci This change does not affect what\'s being tested by CI.'
+            });

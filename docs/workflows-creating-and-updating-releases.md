@@ -380,7 +380,8 @@ The bot posts structured comments showing what changed:
 
 1. **Find Open Release PRs**
    - Searches for PRs with branch pattern: `release-v[0-9]+\.[0-9]+\.[0-9]+`
-   - Manual runs can target specific PR number
+   - Excludes PRs created within the last 24 hours (to avoid bumping newly created monthly release PRs)
+   - Manual runs can target specific PR number and bypass the 24-hour filter
 
 2. **Post Update Command**
    - Comments `/update-release` on each PR

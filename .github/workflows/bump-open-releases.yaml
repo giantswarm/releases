@@ -33,14 +33,17 @@ jobs:
             PR_COUNT=1
           else
             # Find all open PRs with release branch pattern
-            PR_LIST=$(gh pr list --repo "$GITHUB_REPOSITORY" --state open --json number,headRefName,labels \
-              | jq -c '[.[] | select(.headRefName | test("^release-v[0-9]+\\.[0-9]+\\.[0-9]+")) | .number]')
+            # Exclude PRs created in the last 24 hours to avoid bumping newly created monthly release PRs
+            CUTOFF_DATE=$(date -u -d '24 hours ago' +%Y-%m-%dT%H:%M:%SZ 2>/dev/null || date -u -v-24H +%Y-%m-%dT%H:%M:%SZ)
+
+            PR_LIST=$(gh pr list --repo "$GITHUB_REPOSITORY" --state open --json number,headRefName,labels,createdAt \
+              | jq -c --arg cutoff "$CUTOFF_DATE" '[.[] | select(.headRefName | test("^release-v[0-9]+\\.[0-9]+\\.[0-9]+")) | select(.createdAt < $cutoff) | .number]')
             
             PR_COUNT=$(echo "$PR_LIST" | jq 'length')
             PR_NUMBERS="$PR_LIST"
           fi
           
-          echo "Found $PR_COUNT open release PR(s)"
+          echo "Found $PR_COUNT open release PR(s) older than 24 hours"
           echo "pr_numbers=$PR_NUMBERS" >> "$GITHUB_OUTPUT"
           echo "pr_count=$PR_COUNT" >> "$GITHUB_OUTPUT"
 
