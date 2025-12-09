@@ -1,1 +1,0 @@
-**Workload cluster release v14.1.2 for KVM** is now available. This release reverts to Linux kernel 5.4 to mitigate issues with node deadlocks on large clusters with many pods. See [release notes](https://docs.giantswarm.io/changes/workload-cluster-releases-kvm/releases/kvm-v14.1.2/) for more details.

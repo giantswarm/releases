@@ -1,1 +1,0 @@
-**Workload cluster release v17.2.0 for AWS is available**. It improves the performance of `etcd` by using `gp3` volumes with provisioned IOPS. It also provides stability improvements, bug fixes and security fixes for various components. Further details can be found in the [release notes](https://docs.giantswarm.io/changes/workload-cluster-releases-aws/releases/aws-v17.2.0/).
