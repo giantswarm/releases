@@ -1,1 +1,0 @@
-**Workload cluster release v17.3.1 for AWS is available**. It fixes a bug in AWS CNI when external SNAT is enabled. Further details can be found in the [release notes](https://docs.giantswarm.io/changes/workload-cluster-releases-aws/releases/aws-v17.3.1/).

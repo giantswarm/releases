@@ -1,1 +1,0 @@
-**Workload cluster release v17.1.0 for AWS is available**. It introduces IAM roles for service accounts (IRSA) as an alternative to Kiam. Further details can be found in the [release notes](https://docs.giantswarm.io/changes/workload-cluster-releases-aws/releases/aws-v17.1.0/).

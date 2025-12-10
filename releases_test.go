@@ -220,28 +220,20 @@ func Test_Releases(t *testing.T) {
 		name     string
 	}{
 		{
-			provider: "aws",
-			name:     "case 1: aws releases are valid",
-		},
-		{
 			provider: "azure",
-			name:     "case 2: azure releases are valid",
+			name:     "case 1: azure releases are valid",
 		},
 		{
 			provider: "capa",
-			name:     "case 3: capa releases are valid",
-		},
-		{
-			provider: "kvm",
-			name:     "case 4: kvm releases are valid",
+			name:     "case 2: capa releases are valid",
 		},
 		{
 			provider: "vsphere",
-			name:     "case 5: vsphere releases are valid",
+			name:     "case 3: vsphere releases are valid",
 		},
 		{
 			provider: "eks",
-			name:     "case 6: eks releases are valid",
+			name:     "case 4: eks releases are valid",
 		},
 	}
 
