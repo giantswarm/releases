@@ -278,7 +278,7 @@ jobs:
       - name: Create Pull Request
         if: steps.archive_script.outputs.has_archived_releases == 'true'
         id: create-pr
-        uses: peter-evans/create-pull-request@41c0e4b7899a4a0922bf899d64c5f25738cfe356
+        uses: peter-evans/create-pull-request@98357b18bf14b5342f975ff684046ec3b2a07725
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           commit-message: "CAPI: Archive deprecated releases"
