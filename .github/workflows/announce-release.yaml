@@ -73,9 +73,9 @@ jobs:
       - name: Get announcement.md
         id: get_announcement_md
         run: |
-          LINK="https://raw.githubusercontent.com/giantswarm/releases/refs/heads/master/${{ github.event.inputs.provider }}/${{ github.event.inputs.version }}/announcement.md"
+          export LINK="https://raw.githubusercontent.com/giantswarm/releases/refs/heads/master/${{ github.event.inputs.provider }}/${{ github.event.inputs.version }}/announcement.md"
           wget $LINK
-          echo announcement=$(cat announcement.md) >> "$GITHUB_OUTPUT"
+          echo $(cat announcement.md) >> "$GITHUB_OUTPUT"
   
   send_messages:
     name: Send Messages
