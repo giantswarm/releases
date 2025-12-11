@@ -6,7 +6,7 @@ on:
       provider:
         type: choice
         description: 'Provider for which the notification is sent (default all)'
-        required: false
+        required: true
         options:
           - capa
           - capz
@@ -16,9 +16,9 @@ on:
         type: string
         description: 'Send the notification to a single specified channel (testing)'
         required: false
-      announcement_link:
+      version:
         type: string
-        description: 'Link to the releases announcement.md'
+        description: 'Semver formatted version for the announcement being made'
         required: true
 
 jobs:
@@ -28,7 +28,7 @@ jobs:
     outputs:
       channels: ${{ steps.collect.outputs.channels }}
     env:
-      GH_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+      GH_TOKEN: $GH_TOKEN
     steps:
       - name: Checkout installations code
         uses: actions/checkout@v3
@@ -60,8 +60,9 @@ jobs:
           else
             slack_channels=($INPUT_CHANNEL)
           fi
-      
-          echo "channels=$(${slack_channels[*]} | jq 'split(" ")')" >> "$GITHUB_OUTPUT"
+          export OUTPUT_CHANNELS=${slack_channels[*]}
+          export OUTPUT_JSON=$(echo $OUTPUT_CHANNELS | jq -R 'split(" ")')
+          echo "$OUTPUT_JSON" >> "$GITHUB_OUTPUT"
   
   get_announcement:
     name: Get announcement
@@ -72,8 +73,9 @@ jobs:
       - name: Get announcement.md
         id: get_announcement_md
         run: |
-          wget ${{ github.events.input.announcement_link }}
-          echo announcement=$(cat announcement.md) >> "$GITHUB_OUTPUT""
+          LINK="https://raw.githubusercontent.com/giantswarm/releases/refs/heads/master/${{ github.event.inputs.provider }}/${{ github.event.inputs.version }}/announcement.md"
+          wget $LINK
+          echo announcement=$(cat announcement.md) >> "$GITHUB_OUTPUT"
   
   send_messages:
     name: Send Messages
