@@ -36,6 +36,7 @@ jobs:
           repository: giantswarm/installations
           path: installations
           ref: master
+          token: ${{ secrets.ANNOUNCE_NOTIFY_TOKEN }}
       - name: Collect channels
         id: collect
         run: |
