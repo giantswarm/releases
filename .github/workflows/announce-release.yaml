@@ -1,0 +1,92 @@
+name: Announce Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      provider:
+        type: choice
+        description: 'Provider for which the notification is sent (default all)'
+        required: false
+        options:
+          - capa
+          - capz
+          - cloud-director
+          - vsphere
+      channel:
+        type: string
+        description: 'Send the notification to a single specified channel (testing)'
+        required: false
+      announcement_link:
+        type: string
+        description: 'Link to the releases announcement.md'
+        required: true
+
+jobs:
+  gather_channels:
+    name: Gather channels
+    runs-on: ubuntu-latest
+    outputs:
+      channels: ${{ steps.collect.outputs.channels }}
+    env:
+      GH_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+    steps:
+      - name: Checkout installations code
+        uses: actions/checkout@v3
+        with:
+          repository: giantswarm/installations
+          path: installations
+          ref: master
+      - name: Collect channels
+        id: collect
+        run: |
+          INPUT_CHANNEL=${{ github.events.inputs.channel }}
+          if [[ -z $INPUT_CHANNEL ]]; then
+            slack_channels=("noise-releases" "sig-product")
+            INPUT_PROVIDER=${{ github.event.inputs.provider }}
+            while read -r installation; do
+              FILE_PATH="$installation/cluster.yaml"
+              if [[ -f "$FILE_PATH" ]]; then
+                INSTALLATION_PROVIDER=$(yq -r ".provider" $FILE_PATH)
+                HAS_SLACK=$(yq 'has("slack")' $FILE_PATH)
+      
+                if [[ -z $INPUT_PROVIDER ]] || [[ $INPUT_PROVIDER == $INSTALLATION_PROVIDER ]]; then
+                  if [[ "$HAS_SLACK" == "true" ]]; then
+                    CHANNEL=$(yq -r '.slack.support[0]' "$FILE_PATH")
+                    slack_channels+=("$CHANNEL")
+                  fi
+                fi
+              fi
+            done < <(find ./installations -type d -mindepth 1 -maxdepth 1)
+          else
+            slack_channels=($INPUT_CHANNEL)
+          fi
+      
+          echo "channels=$(${slack_channels[*]} | jq 'split(" ")')" >> "$GITHUB_OUTPUT"
+  
+  get_announcement:
+    name: Get announcement
+    runs-on: ubuntu-latest
+    outputs:
+      announcement: ${{ steps.get_announcement.outputs.announcement }}
+    steps:
+      - name: Get announcement.md
+        id: get_announcement_md
+        run: |
+          wget ${{ github.events.input.announcement_link }}
+          echo announcement=$(cat announcement.md) >> "$GITHUB_OUTPUT""
+  
+  send_messages:
+    name: Send Messages
+    runs-on: ubuntu-latest
+    needs: gather_channels
+    strategy:
+      matrix: 
+        channel: ${{ fromJSON(needs.gather_channels.outputs.channels) }}
+    steps:
+      - name: Write announcements
+        uses: slackapi/slack-github-action@v2.1.1
+        with:
+          channel: ${{ matrix.channel }}
+          method: chat.postMessage
+          token: ${{ secrets.SLACK_BOT_TOKEN }}
+          text: ${{ steps.get_announcement.outputs.announcement }}
