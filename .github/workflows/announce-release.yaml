@@ -11,6 +11,7 @@ on:
           - capa
           - capz
           - cloud-director
+          - vsphere
       channel:
         type: string
         description: 'Send the notification to a single specified channel (testing)'
