@@ -12,6 +12,7 @@ on:
           - capz
           - cloud-director
           - vsphere
+          - test
       channel:
         type: string
         description: 'Send the notification to a single specified channel (testing)'
@@ -41,7 +42,7 @@ jobs:
         id: collect
         run: |
           INPUT_CHANNEL=${{ github.events.inputs.channel }}
-          if [[ -z $INPUT_CHANNEL ]]; then
+          if [[ $INPUT_CHANNEL != "test" ]]; then
             slack_channels=("noise-releases" "sig-product")
             INPUT_PROVIDER=${{ github.event.inputs.provider }}
             while read -r installation; do
