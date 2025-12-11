@@ -62,6 +62,18 @@ jobs:
       
           echo "channels=$(${slack_channels[*]} | jq 'split(" ")')" >> "$GITHUB_OUTPUT"
   
+  get_announcement:
+    name: Get announcement
+    runs-on: ubuntu-latest
+    outputs:
+      announcement: ${{ steps.get_announcement.outputs.announcement }}
+    steps:
+      - name: Get announcement.md
+        id: get_announcement_md
+        run: |
+          wget ${{ github.events.input.announcement_link }}
+          echo announcement=$(cat announcement.md) >> "$GITHUB_OUTPUT""
+  
   send_messages:
     name: Send Messages
     runs-on: ubuntu-latest
@@ -70,15 +82,10 @@ jobs:
       matrix: 
         channel: ${{ fromJSON(needs.gather_channels.outputs.channels) }}
     steps:
-      - name: Get announcement.md
-        id: get_announcement
-        run: |
-          wget ${{ github.events.input.announcement_link }}
-          announcement=$(cat announcement.md)
       - name: Write announcements
         uses: slackapi/slack-github-action@v2.1.1
         with:
           channel: ${{ matrix.channel }}
           method: chat.postMessage
           token: ${{ secrets.SLACK_BOT_TOKEN }}
-          text: $announcement
+          text: ${{ steps.get_announcement.outputs.announcement }}
