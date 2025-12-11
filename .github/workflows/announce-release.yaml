@@ -28,7 +28,7 @@ jobs:
     outputs:
       channels: ${{ steps.collect.outputs.channels }}
     env:
-      GH_TOKEN: $GH_TOKEN
+      GH_TOKEN: ${{ secrets.ANNOUNCE_NOTIFY_TOKEN }}
     steps:
       - name: Checkout installations code
         uses: actions/checkout@v3
