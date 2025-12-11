@@ -31,7 +31,7 @@ jobs:
       GH_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
     steps:
       - name: Checkout installations code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v6
         with:
           repository: giantswarm/installations
           path: installations
