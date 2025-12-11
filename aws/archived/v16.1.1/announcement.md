@@ -1,1 +1,0 @@
-**Workload cluster release v16.1.1 for AWS is available**. It provides a fix for `aws-ebs-csi-driver` to ensure all taints for `ebs-node` are tolerated as well as selecting the right node selector for all nodes. Further details can be found in the [release notes](https://docs.giantswarm.io/changes/workload-cluster-releases-aws/releases/aws-v16.1.1/).

@@ -200,7 +200,8 @@ jobs:
 
       - name: Create Pull Request
         if: ${{ steps.changed-files.outputs.has_changes == 'true' }}
-        uses: peter-evans/create-pull-request@bc8a47f5657f110049f4afd030c95529a9c62b76
+        id: create-pr
+        uses: peter-evans/create-pull-request@0979079bc20c05bbbb590a56c21c4e2b1d1f1bbe
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           commit-message: "CAPI: Deprecate outdated releases"
@@ -220,12 +221,21 @@ jobs:
             ## Verify in Grafana
 
             You can check which releases are currently in use in the [CAPI Releases Dashboard](https://giantswarm.grafana.net/d/be9a0bh8mbwn4e/capi-releases?orgId=1&from=now-6h&to=now&timezone=browser).
-
-            ---
-
-            /skip-ci This change does not affect what's being tested by CI.
           branch: auto-deprecate-capi-releases
           base: master
           labels: |
             release-maintenance
             automated
+
+      - name: Post /skip-ci comment
+        if: ${{ steps.changed-files.outputs.has_changes == 'true' && steps.create-pr.outputs.pull-request-number }}
+        uses: actions/github-script@v8
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: ${{ steps.create-pr.outputs.pull-request-number }},
+              body: '/skip-ci This change does not affect what\'s being tested by CI.'
+            });

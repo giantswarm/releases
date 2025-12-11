@@ -1,2 +1,0 @@
-**Workload cluster release v17.4.1 for AWS is available**. This is a patch release bringing improvements to app-operator and chart-operator such as pod and container security contexts for PSS and more. It also contains a change in cert-manager to automatically upgrade stored custom resources stored in deprecated apiversions. Further details can be found in the [release notes](https://docs.giantswarm.io/changes/workload-cluster-releases-aws/releases/aws-v17.4.1/).
-

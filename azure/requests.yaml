@@ -1,4 +1,8 @@
 releases:
+- name: "< 34.0.0"
+  requests:
+  - name: cluster-azure
+    version: "< 5.0.0"
 - name: ">= 32.0.0"
   requests:
   - name: cilium

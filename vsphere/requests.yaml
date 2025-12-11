@@ -1,4 +1,8 @@
 releases:
+- name: "< 34.0.0"
+  requests:
+  - name: cluster-vsphere
+    version: "< 4.0.0"
 - name: ">= 32.0.0"
   requests:
   - name: cilium
