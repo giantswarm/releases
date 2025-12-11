@@ -1,1 +1,0 @@
-**Workload cluster release v16.4.2 for AWS is available**. It provides security hardening of app-operator to tighten RBAC permissions as well as honoring write contexts more accurately. Further details can be found in the [release notes](https://docs.giantswarm.io/changes/workload-cluster-releases-aws/releases/aws-v16.4.2/).

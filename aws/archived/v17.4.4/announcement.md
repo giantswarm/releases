@@ -1,1 +1,0 @@
-**Workload cluster release v17.4.4 for AWS is available**. This is a patch release to add missing Elastic File System (EFS) IAM permissions. Further details can be found in the [release notes](https://docs.giantswarm.io/changes/workload-cluster-releases-aws/releases/aws-v17.4.4/).

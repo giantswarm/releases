@@ -1,1 +1,0 @@
-**Workload cluster release v15.2.1 for AWS is available**. It provides a bug fix for `ebs-csi-driver` to enable it to resize EBS volumes. Further details can be found in the [release notes](https://docs.giantswarm.io/changes/workload-cluster-releases-aws/releases/aws-v15.2.1/).

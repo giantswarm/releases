@@ -19,7 +19,7 @@ if [ -z "$PROVIDER" ]; then
     echo "Error: An empty provider is only allowed for 'major' or 'minor' release types."
     exit 1
   fi
-  PROVIDER_DIRS=$(ls -d */ | grep -v -E '^(announcements|app|helm|sdk|tools|archived|kvm)$' | tr '\n' ' ')
+  PROVIDER_DIRS=$(ls -d */ | grep -v -E '^(app|sdk|tools|archived)$' | tr '\n' ' ')
   ALL_RELEASES=$(find $PROVIDER_DIRS -maxdepth 1 -type d -name 'v[0-9]*' -not -path '*/archived/*' -exec basename {} \; | sort -V)
 else
   PROVIDER_DIR="./${PROVIDER}"

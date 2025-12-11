@@ -20,11 +20,3 @@ workflows:
   workflow:
     jobs:
       - validate
-      - path-filtering/filter:
-          name: filter
-          mapping: |
-            aws/.* push-aws true
-          base-revision: master
-          config-path: .circleci/provider_config.yml
-          requires:
-            - validate
