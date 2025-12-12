@@ -1,4 +1,8 @@
 releases:
+- name: ">= 34.0.0"
+  requests:
+  - name: cloud-provider-vsphere-app
+    version: ">= 2.1.0"
 - name: "< 34.0.0"
   requests:
   - name: cluster-vsphere
