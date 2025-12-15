@@ -41,10 +41,10 @@ jobs:
       - name: Collect channels
         id: collect
         run: |
-          INPUT_CHANNEL=${{ github.events.inputs.channel }}
+          INPUT_CHANNEL=${{ inputs.channel }}
           if [[ $INPUT_CHANNEL != "test" ]]; then
             slack_channels=("noise-releases" "sig-product")
-            INPUT_PROVIDER=${{ github.event.inputs.provider }}
+            INPUT_PROVIDER=${{ inputs.provider }}
             while read -r installation; do
               FILE_PATH="$installation/cluster.yaml"
               if [[ -f "$FILE_PATH" ]]; then
@@ -75,7 +75,7 @@ jobs:
       - name: Get announcement.md
         id: get_announcement_md
         run: |
-          export LINK="https://raw.githubusercontent.com/giantswarm/releases/refs/heads/master/${{ github.event.inputs.provider }}/${{ github.event.inputs.version }}/announcement.md"
+          export LINK="https://raw.githubusercontent.com/giantswarm/releases/refs/heads/master/${{ inputs.provider }}/${{ inputs.version }}/announcement.md"
           wget $LINK
           echo $(cat announcement.md) >> "$GITHUB_OUTPUT"
   
