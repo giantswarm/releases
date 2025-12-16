@@ -13,10 +13,11 @@ to all Giant Swarm installations.
 
 - v33
   - v33.1
+    - [v33.1.1](https://github.com/giantswarm/releases/tree/master/capa/v33.1.1)
     - [v33.1.0](https://github.com/giantswarm/releases/tree/master/capa/v33.1.0)
   - v33.0
-    - [v33.0.0](https://github.com/giantswarm/releases/tree/master/capa/archived/v33.0.0)
     - [v33.0.1](https://github.com/giantswarm/releases/tree/master/capa/v33.0.1)
+    - [v33.0.0](https://github.com/giantswarm/releases/tree/master/capa/archived/v33.0.0)
 
 - v32
   - v32.1
@@ -148,10 +149,11 @@ to all Giant Swarm installations.
 
 - v33
   - v33.1
+    - [v33.1.1](https://github.com/giantswarm/releases/tree/master/azure/v33.1.1)
     - [v33.1.0](https://github.com/giantswarm/releases/tree/master/azure/v33.1.0)
   - v33.0
-    - [v33.0.0](https://github.com/giantswarm/releases/tree/master/azure/archived/v33.0.0)
     - [v33.0.1](https://github.com/giantswarm/releases/tree/master/azure/v33.0.1)
+    - [v33.0.0](https://github.com/giantswarm/releases/tree/master/azure/archived/v33.0.0)
 
 - v32
   - v32.1
@@ -327,10 +329,11 @@ to all Giant Swarm installations.
 
 - v33
   - v33.1
+    - [v33.1.1](https://github.com/giantswarm/releases/tree/master/vsphere/v33.1.1)
     - [v33.1.0](https://github.com/giantswarm/releases/tree/master/vsphere/v33.1.0)
   - v33.0
-    - [v33.0.0](https://github.com/giantswarm/releases/tree/master/vsphere/archived/v33.0.0)
     - [v33.0.1](https://github.com/giantswarm/releases/tree/master/vsphere/v33.0.1)
+    - [v33.0.0](https://github.com/giantswarm/releases/tree/master/vsphere/archived/v33.0.0)
 
 - v32
   - v32.1
@@ -379,10 +382,11 @@ to all Giant Swarm installations.
 
 - v33
   - v33.1
+    - [v33.1.1](https://github.com/giantswarm/releases/tree/master/cloud-director/v33.1.1)
     - [v33.1.0](https://github.com/giantswarm/releases/tree/master/cloud-director/v33.1.0)
   - v33.0
-    - [v33.0.0](https://github.com/giantswarm/releases/tree/master/cloud-director/archived/v33.0.0)
     - [v33.0.1](https://github.com/giantswarm/releases/tree/master/cloud-director/archived/v33.0.1)
+    - [v33.0.0](https://github.com/giantswarm/releases/tree/master/cloud-director/archived/v33.0.0)
 
 - v32
   - v32.1
