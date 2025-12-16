@@ -42,9 +42,9 @@ jobs:
         id: collect
         run: |
           INPUT_CHANNEL=${{ inputs.channel }}
-          if [[ $INPUT_CHANNEL != "test" ]]; then
+          INPUT_PROVIDER=${{ inputs.provider }}
+          if [[ $INPUT_PROVIDER != "test" ]]; then
             slack_channels=("noise-releases" "sig-product")
-            INPUT_PROVIDER=${{ inputs.provider }}
             while read -r installation; do
               FILE_PATH="$installation/cluster.yaml"
               if [[ -f "$FILE_PATH" ]]; then
