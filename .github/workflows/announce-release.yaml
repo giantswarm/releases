@@ -64,8 +64,8 @@ jobs:
             # Ensure it is treated as an array by initializing it properly if it is a single string
             slack_channels=("$INPUT_CHANNEL")
           fi
-          # Convert array to JSON string
-          export OUTPUT_CHANNELS=$(printf '%s\n' "${slack_channels[@]}" | jq -R . | jq -s -c .)
+          # Deduplicate channels and convert array to JSON string
+          export OUTPUT_CHANNELS=$(printf '%s\n' "${slack_channels[@]}" | sort -u | jq -R . | jq -s -c .)
           echo "channels=$OUTPUT_CHANNELS" >> "$GITHUB_OUTPUT"
   
   get_announcement:
@@ -102,7 +102,8 @@ jobs:
       - name: Write announcements
         uses: slackapi/slack-github-action@v2.1.1
         with:
-          channel: ${{ matrix.channel }}
           method: chat.postMessage
           token: ${{ secrets.SLACK_BOT_TOKEN }}
-          text: ${{ needs.get_announcement.outputs.announcement }}
+          payload: |
+            channel: ${{ matrix.channel }}
+            text: "${{ needs.get_announcement.outputs.announcement }}"
