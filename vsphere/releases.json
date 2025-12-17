@@ -41,6 +41,13 @@
       "releaseTimestamp": "2025-12-16T15:16:16Z",
       "changelogUrl": "https://github.com/giantswarm/releases/blob/master/vsphere/v33.1.1/README.md",
       "isStable": true
+    },
+    {
+      "version": "34.0.0",
+      "isDeprecated": false,
+      "releaseTimestamp": "2025-12-17T14:47:36Z",
+      "changelogUrl": "https://github.com/giantswarm/releases/blob/master/vsphere/v34.0.0/README.md",
+      "isStable": true
     }
   ],
   "sourceUrl": "https://github.com/giantswarm/releases",
