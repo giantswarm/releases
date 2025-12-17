@@ -101,11 +101,11 @@ jobs:
 
           # Identify changed files that are not release-related
           for file in $(git diff --name-only); do
-            # Keep only release.yaml files and releases.json
-            if [[ ! "$file" =~ .*release\.yaml$ ]] && [[ ! "$file" =~ .*releases\.json$ ]]; then
-              git checkout -- "$file"
-              echo "Reset changes to: $file"
-            fi
+          # Keep only release.yaml files, releases.json, and release.diff files
+          if [[ ! "$file" =~ .*release\.yaml$ ]] && [[ ! "$file" =~ .*releases\.json$ ]] && [[ ! "$file" =~ .*release\.diff$ ]]; then
+            git checkout -- "$file"
+            echo "Reset changes to: $file"
+          fi
           done
 
       - name: Prepare changed files list
