@@ -12,6 +12,7 @@ on:
           - capz
           - cloud-director
           - vsphere
+          - eks
           - test
       channel:
         type: string
@@ -75,7 +76,11 @@ jobs:
       - name: Get announcement.md
         id: get_announcement_md
         run: |
-          export LINK="https://raw.githubusercontent.com/giantswarm/releases/master/${{ inputs.provider }}/${{ inputs.version }}/announcement.md"
+          PROVIDER=${{ inputs.provider }}
+          if [[ "$PROVIDER" == "capz" ]]; then
+            PROVIDER="azure"
+          fi
+          export LINK="https://raw.githubusercontent.com/giantswarm/releases/master/$PROVIDER/${{ inputs.version }}/announcement.md"
           wget $LINK
           echo "announcement<<EOF" >> "$GITHUB_OUTPUT"
           cat announcement.md >> "$GITHUB_OUTPUT"
