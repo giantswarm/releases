@@ -127,6 +127,10 @@ func main() {
 
 		log.Printf("Would deprecate: %s", filePath)
 
+		// Update the release object in memory so subsequent diff checks (for other releases) know it's deprecated
+		// and so that updateReleaseDiffState knows the target state for this release is deprecated.
+		releaseInfo.Release.Spec.State = v1alpha1.StateDeprecated
+
 		if dryRun {
 			if verbose {
 				log.Printf("Dry run: Simulating diff update for %s", releaseInfo.Path)
@@ -157,6 +161,16 @@ func main() {
 			}
 		} else {
 			log.Printf("No 'state: active' found in %s", filePath)
+		}
+	}
+
+	// Update diffs for kept releases as well, in case their previous release was deprecated
+	for _, releaseInfo := range keptReleases {
+		if verbose {
+			log.Printf("Checking diff for kept release: %s", releaseInfo.Path)
+		}
+		if err := updateReleaseDiffState(releaseInfo, releasesByName, verbose, dryRun); err != nil {
+			log.Printf("Error updating diff file for %s: %v", releaseInfo.Path, err)
 		}
 	}
 
@@ -726,7 +740,7 @@ func updateReleaseDiffState(
 				}
 			}
 
-			targetRightStateString := string(v1alpha1.StateDeprecated)
+			targetRightStateString := string(releaseInfoCurrent.Release.Spec.State)
 			if subMatchesRight := stateValueCaptureRegex.FindStringSubmatch(rightPartOriginal); len(subMatchesRight) == 3 {
 				currentValRight := subMatchesRight[2]
 				if currentValRight != targetRightStateString {
