@@ -65,7 +65,7 @@ jobs:
             slack_channels=("$INPUT_CHANNEL")
           fi
           # Convert array to JSON string
-          export OUTPUT_CHANNELS=$(printf '%s\n' "${slack_channels[@]}" | jq -R . | jq -s .)
+          export OUTPUT_CHANNELS=$(printf '%s\n' "${slack_channels[@]}" | jq -R . | jq -s -c .)
           echo "channels=$OUTPUT_CHANNELS" >> "$GITHUB_OUTPUT"
   
   get_announcement:
