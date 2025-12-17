@@ -48,6 +48,10 @@ jobs:
         run: |
           set -eo pipefail
 
+          # Create a temporary directory for all temp files
+          TEMP_DIR=$(mktemp -d)
+          trap 'rm -rf "$TEMP_DIR"' EXIT
+
           PROVIDERS="${{ steps.providers.outputs.provider_dirs }}"
           OVERALL_MOVED_RELEASES=""
           OVERALL_HAS_CHANGES=false
@@ -60,8 +64,7 @@ jobs:
 
             echo "INFO: Processing provider directory: $PROVIDER_ROOT_DIR"
 
-            MOVED_RELEASES_TEMP_FILE=$(mktemp)
-            trap 'rm -f "$MOVED_RELEASES_TEMP_FILE"' EXIT
+            MOVED_RELEASES_TEMP_FILE=$(mktemp -p "$TEMP_DIR")
 
             find "$PROVIDER_ROOT_DIR" -maxdepth 1 -mindepth 1 -type d -name 'v*.*.*' -print0 | sort -z | while IFS= read -r -d $'\0' release_dir_path; do
               RELEASE_YAML_PATH="$release_dir_path/release.yaml"
@@ -144,8 +147,7 @@ jobs:
                 ORIG_KUSTOMIZATION_CONTENT=$(cat "$KUSTOMIZATION_FILE")
                 NEW_KUSTOMIZATION_CONTENT="$ORIG_KUSTOMIZATION_CONTENT"
 
-                TEMP_SED_SCRIPT_KUSTOMIZATION=$(mktemp)
-                trap 'rm -f "$TEMP_SED_SCRIPT_KUSTOMIZATION"' EXIT
+                TEMP_SED_SCRIPT_KUSTOMIZATION=$(mktemp -p "$TEMP_DIR")
 
                 while read -r release_entry; do
                   RELEASE_NAME=$(echo "$release_entry" | cut -d':' -f2)
@@ -179,8 +181,7 @@ jobs:
                 ORIG_README_CONTENT=$(cat "$README_FILE")
                 NEW_README_CONTENT="$ORIG_README_CONTENT"
 
-                TEMP_SED_SCRIPT_README=$(mktemp)
-                trap 'rm -f "$TEMP_SED_SCRIPT_README"' EXIT
+                TEMP_SED_SCRIPT_README=$(mktemp -p "$TEMP_DIR")
 
                 while read -r release_entry; do
                   RELEASE_NAME=$(echo "$release_entry" | cut -d':' -f2)
@@ -230,8 +231,7 @@ jobs:
                 if [ -n "$VERSIONS_TO_REMOVE" ]; then
                   # Use jq to remove releases with matching versions
                   # This ensures proper JSON formatting including commas
-                  TEMP_RELEASES_JSON=$(mktemp)
-                  trap 'rm -f "$TEMP_RELEASES_JSON"' EXIT
+                  TEMP_RELEASES_JSON=$(mktemp -p "$TEMP_DIR")
                   
                   jq --argjson versions "[$VERSIONS_TO_REMOVE]" \
                     '.releases = [.releases[] | select(.version as $v | $versions | index($v) | not)]' \
