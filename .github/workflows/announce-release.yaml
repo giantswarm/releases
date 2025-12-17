@@ -61,11 +61,12 @@ jobs:
               fi
             done < <(find ./installations -type d -mindepth 1 -maxdepth 1)
           else
-            slack_channels=($INPUT_CHANNEL)
+            # Ensure it is treated as an array by initializing it properly if it is a single string
+            slack_channels=("$INPUT_CHANNEL")
           fi
-          export OUTPUT_CHANNELS=${slack_channels[*]}
-          export OUTPUT_JSON=$(echo $OUTPUT_CHANNELS | jq -R 'split(" ")')
-          echo "channels=$OUTPUT_JSON" >> "$GITHUB_OUTPUT"
+          # Convert array to JSON string
+          export OUTPUT_CHANNELS=$(printf '%s\n' "${slack_channels[@]}" | jq -R . | jq -s .)
+          echo "channels=$OUTPUT_CHANNELS" >> "$GITHUB_OUTPUT"
   
   get_announcement:
     name: Get announcement
@@ -77,11 +78,15 @@ jobs:
         id: get_announcement_md
         run: |
           PROVIDER=${{ inputs.provider }}
-          if [[ "$PROVIDER" == "capz" ]]; then
-            PROVIDER="azure"
+          if [[ "$PROVIDER" == "test" ]]; then
+            echo "This is a test announcement for version ${{ inputs.version }}" > announcement.md
+          else
+            if [[ "$PROVIDER" == "capz" ]]; then
+              PROVIDER="azure"
+            fi
+            export LINK="https://raw.githubusercontent.com/giantswarm/releases/master/$PROVIDER/${{ inputs.version }}/announcement.md"
+            wget $LINK
           fi
-          export LINK="https://raw.githubusercontent.com/giantswarm/releases/master/$PROVIDER/${{ inputs.version }}/announcement.md"
-          wget $LINK
           echo "announcement<<EOF" >> "$GITHUB_OUTPUT"
           cat announcement.md >> "$GITHUB_OUTPUT"
           echo "EOF" >> "$GITHUB_OUTPUT"
