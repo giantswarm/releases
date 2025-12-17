@@ -209,6 +209,48 @@ jobs:
               else
                 echo "WARNING: $README_FILE not found."
               fi
+
+              # Update releases.json
+              RELEASES_JSON_FILE="$PROVIDER_ROOT_DIR/releases.json"
+              if [ -f "$RELEASES_JSON_FILE" ]; then
+                echo "INFO: Updating $RELEASES_JSON_FILE"
+                
+                # Create a comma-separated list of versions to remove (without 'v' prefix)
+                VERSIONS_TO_REMOVE=""
+                while read -r release_entry; do
+                  RELEASE_NAME=$(echo "$release_entry" | cut -d':' -f2)
+                  VERSION_WITHOUT_V=$(echo "$RELEASE_NAME" | sed 's/^v//')
+                  if [ -z "$VERSIONS_TO_REMOVE" ]; then
+                    VERSIONS_TO_REMOVE="\"$VERSION_WITHOUT_V\""
+                  else
+                    VERSIONS_TO_REMOVE="$VERSIONS_TO_REMOVE,\"$VERSION_WITHOUT_V\""
+                  fi
+                done < "$MOVED_RELEASES_TEMP_FILE"
+                
+                if [ -n "$VERSIONS_TO_REMOVE" ]; then
+                  # Use jq to remove releases with matching versions
+                  # This ensures proper JSON formatting including commas
+                  TEMP_RELEASES_JSON=$(mktemp)
+                  trap 'rm -f "$TEMP_RELEASES_JSON"' EXIT
+                  
+                  jq --argjson versions "[$VERSIONS_TO_REMOVE]" \
+                    '.releases = [.releases[] | select(.version as $v | $versions | index($v) | not)]' \
+                    "$RELEASES_JSON_FILE" > "$TEMP_RELEASES_JSON"
+                  
+                  if [ $? -eq 0 ]; then
+                    mv "$TEMP_RELEASES_JSON" "$RELEASES_JSON_FILE"
+                    git add "$RELEASES_JSON_FILE"
+                    echo "INFO: $RELEASES_JSON_FILE updated and staged."
+                  else
+                    echo "ERROR: Failed to update $RELEASES_JSON_FILE with jq"
+                    exit 1
+                  fi
+                else
+                  echo "INFO: No versions to remove from $RELEASES_JSON_FILE."
+                fi
+              else
+                echo "WARNING: $RELEASES_JSON_FILE not found for provider $PROVIDER_ROOT_DIR."
+              fi
             fi
           done
 
