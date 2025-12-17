@@ -12,6 +12,7 @@ on:
           - capz
           - cloud-director
           - vsphere
+          - eks
           - test
       channel:
         type: string
@@ -64,25 +65,31 @@ jobs:
           fi
           export OUTPUT_CHANNELS=${slack_channels[*]}
           export OUTPUT_JSON=$(echo $OUTPUT_CHANNELS | jq -R 'split(" ")')
-          echo "$OUTPUT_JSON" >> "$GITHUB_OUTPUT"
+          echo "channels=$OUTPUT_JSON" >> "$GITHUB_OUTPUT"
   
   get_announcement:
     name: Get announcement
     runs-on: ubuntu-latest
     outputs:
-      announcement: ${{ steps.get_announcement.outputs.announcement }}
+      announcement: ${{ steps.get_announcement_md.outputs.announcement }}
     steps:
       - name: Get announcement.md
         id: get_announcement_md
         run: |
-          export LINK="https://raw.githubusercontent.com/giantswarm/releases/refs/heads/master/${{ inputs.provider }}/${{ inputs.version }}/announcement.md"
+          PROVIDER=${{ inputs.provider }}
+          if [[ "$PROVIDER" == "capz" ]]; then
+            PROVIDER="azure"
+          fi
+          export LINK="https://raw.githubusercontent.com/giantswarm/releases/master/$PROVIDER/${{ inputs.version }}/announcement.md"
           wget $LINK
-          echo $(cat announcement.md) >> "$GITHUB_OUTPUT"
+          echo "announcement<<EOF" >> "$GITHUB_OUTPUT"
+          cat announcement.md >> "$GITHUB_OUTPUT"
+          echo "EOF" >> "$GITHUB_OUTPUT"
   
   send_messages:
     name: Send Messages
     runs-on: ubuntu-latest
-    needs: gather_channels
+    needs: [gather_channels, get_announcement]
     strategy:
       matrix: 
         channel: ${{ fromJSON(needs.gather_channels.outputs.channels) }}
@@ -93,4 +100,4 @@ jobs:
           channel: ${{ matrix.channel }}
           method: chat.postMessage
           token: ${{ secrets.SLACK_BOT_TOKEN }}
-          text: ${{ steps.get_announcement.outputs.announcement }}
+          text: ${{ needs.get_announcement.outputs.announcement }}
