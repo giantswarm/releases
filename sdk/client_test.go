@@ -8,7 +8,7 @@ import (
 	"net/http"
 	"net/http/httptest"
 
-	"github.com/google/go-github/v80/github"
+	"github.com/google/go-github/v81/github"
 	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
 
