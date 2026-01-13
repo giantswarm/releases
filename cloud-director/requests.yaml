@@ -7,6 +7,8 @@ releases:
   requests:
   - name: cilium
     version: ">= 1.3.0"
+  - name: observability-bundle
+    version: ">= 2.5.0"
 - name: "< 32.0.0"
   requests:
   - name: flatcar
