@@ -1,6 +1,6 @@
 # :zap: Giant Swarm Release v33.1.2 for CAPA :zap:
 
-<< Add description here >>
+Improve karpenter subnet selection and extraConfig mounting.
 
 ## Changes compared to v33.1.1
 
