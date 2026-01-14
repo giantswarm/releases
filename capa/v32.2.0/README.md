@@ -1,6 +1,6 @@
 # :zap: Giant Swarm Release v32.2.0 for CAPA :zap:
 
-<< Add description here >>
+This release updates the `cluster-aws` chart to address an issue with Karpenter nodes not working properly with ingress load balancers.
 
 ## Changes compared to v32.1.0
 
@@ -14,4 +14,3 @@
 
 - *This change will roll the nodes on Karpenter node pools* Attach the `lb` Security Group to Karpenter nodes.
 - *This change will roll the nodes on Karpenter node pools* Name instance on AWS after the nodepool name.
-
