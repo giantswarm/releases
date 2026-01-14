@@ -18,4 +18,3 @@
 
 - Fix Karpenter NodePool subnet filtering: when users define custom `subnetTags`, the default `giantswarm.io/role: "nodes"` filter is no longer applied, allowing full control over subnet selection. The cluster ownership tag (`sigs.k8s.io/cluster-api-provider-aws/cluster/<cluster-name>: owned`) is still enforced for security.
 - Fix Karpenter HelmRelease: add missing `valuesFrom` parent field for `extraConfigs`, enabling customers to use custom ConfigMaps and Secrets for Karpenter configuration.
-
