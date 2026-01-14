@@ -761,7 +761,28 @@ func updateReleaseDiffState(
 			}
 
 			if lineModifiedThisIteration {
-				processedLine = finalLeftPart + "|" + finalRightPart
+				// Extract the actual state values to check if they're now the same
+				leftStateMatch := stateValueCaptureRegex.FindStringSubmatch(finalLeftPart)
+				rightStateMatch := stateValueCaptureRegex.FindStringSubmatch(finalRightPart)
+
+				if len(leftStateMatch) == 3 && len(rightStateMatch) == 3 && leftStateMatch[2] == rightStateMatch[2] {
+					// Both sides are now the same - remove pipe, use spaces only
+					// Reconstruct with proper spacing (right side starts at position 70)
+					leftContent := strings.TrimRight(finalLeftPart, " ")
+					rightContent := strings.TrimLeft(finalRightPart, " ")
+					const rightStartPosition = 70
+					paddingToRight := rightStartPosition - 1 - len(leftContent)
+					if paddingToRight < 1 {
+						paddingToRight = 1
+					}
+					processedLine = leftContent + strings.Repeat(" ", paddingToRight) + rightContent
+					if verbose {
+						log.Printf("(Pipe) Both sides now '%s', removing pipe.", leftStateMatch[2])
+					}
+				} else {
+					// Values still differ - keep pipe
+					processedLine = finalLeftPart + "|" + finalRightPart
+				}
 				modifiedInDiff = true
 				if verbose {
 					log.Printf("(Pipe) Diff line modification PROPOSED for %s (line %d):\n    Old: %s\n    New: %s", diffFilePath, lineNumber, line, processedLine)
@@ -786,7 +807,7 @@ func updateReleaseDiffState(
 			if previousReleaseStateKnown {
 				targetLeftState = string(previousReleaseActualState)
 			}
-			targetRightState := string(v1alpha1.StateDeprecated)
+			targetRightState := string(releaseInfoCurrent.Release.Spec.State)
 
 			// Only reformat and change if the target states are different from what's parsed,
 			// OR if the values parsed from the diff (val1FromDiff, val2FromDiff) are not identical
@@ -800,18 +821,40 @@ func updateReleaseDiffState(
 
 				leftSideString := indentAndPrefix + targetLeftState
 				rightSideString := "state: " + targetRightState
-				const leftPartTargetWidth = 40
-				paddingLength := leftPartTargetWidth - len(leftSideString)
-				if paddingLength < 1 {
-					paddingLength = 1
-				}
-				padding := strings.Repeat(" ", paddingLength)
-				rightLeadingSpaces := "         "
 
-				processedLine = leftSideString + padding + "|" + rightLeadingSpaces + rightSideString
+				// The diff format has the right side starting at position 70 (1-indexed)
+				// When values differ: pipe at position 65, spaces 66-69, right at 70
+				// When values are same: spaces only (no pipe), right at 70
+				const rightStartPosition = 70 // 1-indexed position where right content starts
+
+				if targetLeftState == targetRightState {
+					// Both sides are the same - no pipe, just spaces
+					paddingToRight := rightStartPosition - 1 - len(leftSideString)
+					if paddingToRight < 1 {
+						paddingToRight = 1
+					}
+					processedLine = leftSideString + strings.Repeat(" ", paddingToRight) + rightSideString
+					if verbose {
+						log.Printf("(No-Pipe) Both sides are '%s', no pipe needed.", targetLeftState)
+					}
+				} else {
+					// Values differ - add pipe
+					const pipePosition = 65 // 1-indexed position where pipe should appear
+
+					paddingToPipe := pipePosition - 1 - len(leftSideString)
+					if paddingToPipe < 1 {
+						paddingToPipe = 1
+					}
+					spacesAfterPipe := rightStartPosition - pipePosition - 1
+					if spacesAfterPipe < 1 {
+						spacesAfterPipe = 4 // minimum spacing after pipe
+					}
+
+					processedLine = leftSideString + strings.Repeat(" ", paddingToPipe) + "|" + strings.Repeat(" ", spacesAfterPipe) + rightSideString
+				}
 				modifiedInDiff = true
 				if verbose {
-					log.Printf("(No-Pipe) Line %d REFORMATTED to pipe format:\n    Old: %s\n    New: %s", lineNumber, line, processedLine)
+					log.Printf("(No-Pipe) Line %d REFORMATTED:\n    Old: %s\n    New: %s", lineNumber, line, processedLine)
 				}
 			} else {
 				if verbose {
