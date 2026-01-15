@@ -17,7 +17,7 @@ import (
 	"time"
 
 	"github.com/Masterminds/semver/v3"
-	"github.com/giantswarm/release-operator/v4/api/v1alpha1"
+	"github.com/giantswarm/releases/sdk/api/v1alpha1"
 	"sigs.k8s.io/yaml"
 )
 
