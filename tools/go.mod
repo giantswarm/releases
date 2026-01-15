@@ -4,13 +4,14 @@ go 1.25.5
 
 require (
 	github.com/Masterminds/semver/v3 v3.4.0
-	github.com/giantswarm/release-operator/v4 v4.2.1
+	github.com/giantswarm/releases/sdk v0.11.0
 	sigs.k8s.io/yaml v1.6.0
 )
 
 require (
+	github.com/davecgh/go-spew v1.1.2-0.20180830191138-d8f796af33cc // indirect
 	github.com/fxamacker/cbor/v2 v2.9.0 // indirect
-	github.com/giantswarm/k8smetadata v0.25.0 // indirect
+	github.com/giantswarm/microerror v0.4.1 // indirect
 	github.com/go-logr/logr v1.4.3 // indirect
 	github.com/json-iterator/go v1.1.12 // indirect
 	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
