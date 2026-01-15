@@ -6,7 +6,7 @@ require (
 	github.com/blang/semver/v4 v4.0.0
 	github.com/davecgh/go-spew v1.1.2-0.20180830191138-d8f796af33cc
 	github.com/giantswarm/microerror v0.4.1
-	github.com/giantswarm/release-operator/v4 v4.2.1
+	github.com/giantswarm/releases/sdk v0.11.0
 	github.com/giantswarm/versionbundle v1.1.0
 	sigs.k8s.io/kustomize/kustomize/v5 v5.8.0
 	sigs.k8s.io/yaml v1.6.0
@@ -15,7 +15,6 @@ require (
 require (
 	github.com/coreos/go-semver v0.3.1 // indirect
 	github.com/fxamacker/cbor/v2 v2.9.0 // indirect
-	github.com/giantswarm/k8smetadata v0.25.0 // indirect
 	github.com/giantswarm/micrologger v1.1.2 // indirect
 	github.com/go-errors/errors v1.5.1 // indirect
 	github.com/go-kit/log v0.2.1 // indirect
@@ -39,6 +38,7 @@ require (
 	github.com/google/gnostic-models v0.7.1 // indirect
 	github.com/inconshreveable/mousetrap v1.1.0 // indirect
 	github.com/json-iterator/go v1.1.12 // indirect
+	github.com/kr/pretty v0.3.1 // indirect
 	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
 	github.com/modern-go/reflect2 v1.0.3-0.20250322232337-35a7c28c31ee // indirect
 	github.com/monochromegane/go-gitignore v0.0.0-20200626010858-205db1a8cc00 // indirect
@@ -54,6 +54,7 @@ require (
 	golang.org/x/sys v0.39.0 // indirect
 	golang.org/x/text v0.32.0 // indirect
 	google.golang.org/protobuf v1.36.11 // indirect
+	gopkg.in/check.v1 v1.0.0-20201130134442-10cb98267c6c // indirect
 	gopkg.in/evanphx/json-patch.v4 v4.13.0 // indirect
 	gopkg.in/inf.v0 v0.9.1 // indirect
 	gopkg.in/resty.v1 v1.12.0 // indirect
