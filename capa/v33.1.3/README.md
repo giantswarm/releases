@@ -13,4 +13,3 @@ Fix Karpenter schema for extraConfigs
 #### Fixed
 
 - Fix Karpenter schema: Use `helmRelease` schema instead of `app` schema. This corrects the `extraConfigs[].kind` field to accept `ConfigMap` and `Secret` (capitalized), and replaces the `priority` field with `optional` field, matching the HelmRelease resource structure.
-
