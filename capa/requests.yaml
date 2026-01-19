@@ -2,7 +2,7 @@ releases:
 - name: "< 34.0.0"
   requests:
   - name: cluster-aws
-    version: "< 7.0.0"
+    version: "< 8.0.0"
 - name: ">= 32.0.0"
   requests:
   - name: cilium
