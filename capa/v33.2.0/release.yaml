@@ -135,12 +135,12 @@ spec:
   components:
   - name: cluster-aws
     catalog: cluster
-    version: 6.4.3
+    version: 7.2.4
   - name: flatcar
     version: 4459.2.2
   - name: kubernetes
     version: 1.33.7
   - name: os-tooling
     version: 1.26.3
-  date: "2026-01-19T16:37:55Z"
+  date: "2026-01-19T16:45:06Z"
   state: active
