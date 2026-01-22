@@ -80,7 +80,7 @@
     {
       "version": "33.1.4",
       "isDeprecated": false,
-      "releaseTimestamp": "2026-01-22T11:32:04Z",
+      "releaseTimestamp": "2026-01-22T11:35:11Z",
       "changelogUrl": "https://github.com/giantswarm/releases/blob/master/capa/v33.1.4/README.md",
       "isStable": true
     }
