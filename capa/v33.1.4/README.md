@@ -4,7 +4,6 @@ Allow volume expansion in GP3
 
 ## Changes compared to v33.1.3
 
-
 ### Apps
 
 - aws-ebs-csi-driver from v3.3.0 to v3.4.0
