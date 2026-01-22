@@ -371,7 +371,7 @@ jobs:
   # This is the job for creating a single, consolidated PR for a major release when all providers are aligned.
   major_release_consolidated:
     name: "Major Release (Consolidated)"
-    needs: [major_release_decider]
+    needs: [dispatcher, major_release_decider]
     if: needs.major_release_decider.outputs.run_consolidated == 'true'
     runs-on: ubuntu-latest
     outputs:
@@ -461,6 +461,7 @@ jobs:
         uses: peter-evans/create-pull-request@v8
         with:
           token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+          draft: ${{ needs.dispatcher.outputs.is_manual == 'true' }}
           title: "CAPI: Release ${{ steps.determine_next_release.outputs.version }}."
           body: |
             This PR creates the new CAPI **major release** `${{ steps.determine_next_release.outputs.version }}` for **all providers** (consolidated).
@@ -506,7 +507,7 @@ jobs:
 
   minor_release_consolidated:
     name: "Minor Release (Consolidated)"
-    needs: [minor_release_decider]
+    needs: [dispatcher, minor_release_decider]
     if: needs.minor_release_decider.outputs.run_consolidated == 'true'
     runs-on: ubuntu-latest
     outputs:
@@ -592,6 +593,7 @@ jobs:
         uses: peter-evans/create-pull-request@v8
         with:
           token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+          draft: ${{ needs.dispatcher.outputs.is_manual == 'true' }}
           title: "CAPI: Release ${{ steps.determine_next_release.outputs.version }}."
           body: |
             This PR creates the new CAPI **minor release** `${{ steps.determine_next_release.outputs.version }}` for **all providers** (consolidated).
@@ -645,7 +647,7 @@ jobs:
   # This is the job for creating individual PRs for a major release when providers are not aligned.
   major_release_individual:
     name: "Major Release (Individual)"
-    needs: [major_release_decider]
+    needs: [dispatcher, major_release_decider]
     if: needs.major_release_decider.outputs.run_individual == 'true'
     strategy:
       matrix:
@@ -721,6 +723,7 @@ jobs:
         uses: peter-evans/create-pull-request@v8
         with:
           token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+          draft: ${{ needs.dispatcher.outputs.is_manual == 'true' }}
           title: "${{ steps.determine_next_release.outputs.provider_acronym }}: Release ${{ steps.determine_next_release.outputs.version }}."
           body: |
             This PR creates the new **major release** `${{ steps.determine_next_release.outputs.version }}` for **${{ matrix.provider }}** only.
@@ -766,7 +769,7 @@ jobs:
 
   minor_release_individual:
     name: "Minor Release (Individual)"
-    needs: [minor_release_decider]
+    needs: [dispatcher, minor_release_decider]
     if: needs.minor_release_decider.outputs.run_individual == 'true'
     strategy:
       matrix:
@@ -840,6 +843,7 @@ jobs:
         uses: peter-evans/create-pull-request@v8
         with:
           token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+          draft: ${{ needs.dispatcher.outputs.is_manual == 'true' }}
           title: "${{ steps.determine_next_release.outputs.provider_acronym }}: Release ${{ steps.determine_next_release.outputs.version }}."
           body: |
             This PR creates the new **minor release** `${{ steps.determine_next_release.outputs.version }}` for **${{ matrix.provider }}** only.
@@ -959,6 +963,7 @@ jobs:
         uses: peter-evans/create-pull-request@v8
         with:
           token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+          draft: true
           title: "${{ steps.determine_next_release.outputs.provider_acronym }}: Release ${{ steps.determine_next_release.outputs.version }}."
           body: |
             This PR creates the new **patch release** `${{ steps.determine_next_release.outputs.version }}` for **${{ matrix.provider }}** only.
@@ -1075,6 +1080,7 @@ jobs:
         uses: peter-evans/create-pull-request@v8
         with:
           token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+          draft: true
           title: "CAPI: Release ${{ steps.determine_next_release.outputs.version }}."
           body: |
             This PR creates the new CAPI **patch release** `${{ steps.determine_next_release.outputs.version }}` for **all providers** (consolidated).
