@@ -6,10 +6,11 @@ Allow volume expansion in GP3
 
 ### Apps
 
-- aws-ebs-csi-driver from v3.3.0 to v3.4.0
+- aws-ebs-csi-driver from v3.3.0 to v3.4.1
 
-### aws-ebs-csi-driver [v3.3.0...v3.4.0](https://github.com/giantswarm/aws-ebs-csi-driver-app/compare/v3.3.0...v3.4.0)
+### aws-ebs-csi-driver [v3.3.0...v3.4.1](https://github.com/giantswarm/aws-ebs-csi-driver-app/compare/v3.3.0...v3.4.0)
 
 #### Fixed
 
 - Allow volume expansion by default on gp3
+- Correct boolean for volume expansion
