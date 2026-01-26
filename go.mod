@@ -7,7 +7,7 @@ require (
 	github.com/davecgh/go-spew v1.1.2-0.20180830191138-d8f796af33cc
 	github.com/giantswarm/microerror v0.4.1
 	github.com/giantswarm/releases/sdk v0.11.0
-	github.com/giantswarm/versionbundle v1.1.0
+	github.com/giantswarm/versionbundle v1.2.0
 	sigs.k8s.io/kustomize/kustomize/v5 v5.8.0
 	sigs.k8s.io/yaml v1.6.0
 )
