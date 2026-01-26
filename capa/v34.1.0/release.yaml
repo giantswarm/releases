@@ -83,9 +83,8 @@ spec:
     dependsOn:
     - kyverno-crds
   - name: karpenter
-    version: 1.4.0
-  - name: karpenter-crossplane-resources
-    version: 0.5.1
+    version: 1.4.0-360ba7e4fec058fad85117b0071f22be56a9d2e5
+    catalog: default-test
   - name: karpenter-taint-remover
     version: 1.0.1
   - name: metrics-server
@@ -138,8 +137,8 @@ spec:
     version: 4.1.1
   components:
   - name: cluster-aws
-    catalog: cluster
-    version: 7.2.5
+    catalog: cluster-test
+    version: 7.2.5-eb1a79a0559b57e7b252178fd3738af786c5a316
   - name: flatcar
     version: 4459.2.2
   - name: kubernetes
