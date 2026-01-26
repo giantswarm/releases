@@ -21,7 +21,7 @@ to all Giant Swarm installations.
     - [v33.1.3](https://github.com/giantswarm/releases/tree/master/capa/v33.1.3)
     - [v33.1.2](https://github.com/giantswarm/releases/tree/master/capa/v33.1.2)
     - [v33.1.1](https://github.com/giantswarm/releases/tree/master/capa/v33.1.1)
-    - [v33.1.0](https://github.com/giantswarm/releases/tree/master/capa/v33.1.0)
+    - [v33.1.0](https://github.com/giantswarm/releases/tree/master/capa/archived/v33.1.0)
   - v33.0
     - [v33.0.1](https://github.com/giantswarm/releases/tree/master/capa/v33.0.1)
     - [v33.0.0](https://github.com/giantswarm/releases/tree/master/capa/archived/v33.0.0)
@@ -30,7 +30,7 @@ to all Giant Swarm installations.
   - v32.2
     - [v32.2.0](https://github.com/giantswarm/releases/tree/master/capa/v32.2.0)
   - v32.1
-    - [v32.1.0](https://github.com/giantswarm/releases/tree/master/capa/v32.1.0)
+    - [v32.1.0](https://github.com/giantswarm/releases/tree/master/capa/archived/v32.1.0)
   - v32.0
     - [v32.0.0](https://github.com/giantswarm/releases/tree/master/capa/v32.0.0)
 
