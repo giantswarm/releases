@@ -6,12 +6,12 @@
 
 ### Components
 
-- cluster-aws from v6.4.3 to v7.2.4
+- cluster-aws from v6.4.3 to v7.2.5
 - Flatcar from v4459.2.1 to [v4459.2.2](https://www.flatcar.org/releases/#release-4459.2.2)
 - Kubernetes from v1.33.6 to [v1.33.7](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.33.md#v1.33.7)
-- os-tooling from v1.26.2 to v1.26.3
+- os-tooling from v1.26.2 to v1.26.4
 
-### cluster-aws [v6.4.3...v7.2.4](https://github.com/giantswarm/cluster-aws/compare/v6.4.3...v7.2.4)
+### cluster-aws [v6.4.3...v7.2.5](https://github.com/giantswarm/cluster-aws/compare/v6.4.3...v7.2.5)
 
 #### :warning: Breaking Changes
 
@@ -31,6 +31,7 @@
 
 #### Changed
 
+- Chart: Update `cluster` to v5.1.2.
 - Chart: Update `cluster` to v5.1.1.
 - Chart: Update `cluster` to v5.1.0.
 - Chart: Update `cluster` to v5.0.0.
@@ -46,11 +47,18 @@
 - Add missing documentation for node pools (health checks were not listed)
 - Ensure defaulting `maxHealthyPercentage` since Helm does not use the default from the schema
 
+#### Removed
+
+- Remove `RolePolicyAttachment` crossplane custom resources as they are not needed when using `Role` and `RolePolicy`.
+
 ### Apps
 
+- aws-ebs-csi-driver from v3.3.0 to v4.0.3
 - cert-exporter from v2.9.14 to v2.9.15
 - cilium from v1.3.2 to v1.3.4
+- cloud-provider-aws from v1.33.2-1 to v2.0.0
 - coredns from v1.28.3 to v1.29.1
+- etcd-defrag from v1.2.3 to v1.2.4
 - etcd-k8s-res-count-exporter from v1.10.11 to v1.10.12
 - external-dns from v3.2.0 to v3.4.0
 - k8s-audit-metrics from v0.10.10 to v0.10.11
@@ -58,6 +66,30 @@
 - node-exporter from v1.20.9 to v1.20.10
 - observability-bundle from v2.3.2 to v2.5.0
 - security-bundle from v1.15.0 to v1.16.1
+
+### aws-ebs-csi-driver [v3.3.0...v4.0.3](https://github.com/giantswarm/aws-ebs-csi-driver-app/compare/v3.3.0...v4.0.3)
+
+#### Added
+
+- Introduce bundle chart architecture with Crossplane IAM resources.
+  - Add `aws-ebs-csi-driver-app-bundle` chart that includes:
+- Crossplane IAM Role with EBS CSI driver permissions
+- Flux HelmRelease to deploy the workload cluster chart
+- ConfigMap for values passthrough
+  - Bundle chart is installed on the management cluster and deploys the app chart to the workload cluster
+  - IAM role uses OIDC federation (IRSA) and reads configuration from `<clusterID>-crossplane-config` ConfigMap
+  - Both charts share the same version and are released together
+
+#### Changed
+
+- Remove dependency for the cloud-provider-aws in the aws-ebs-csi-driver HelmRelease. That dependency should be set in the bundle HelmRelease by the provider cluster chart
+- Update CircleCI configuration to push both app and bundle charts
+- Update README with bundle architecture documentation
+
+#### Fixed
+
+- Fix boolean type of the expansion
+- Allow volume expansion by default on gp3
 
 ### cert-exporter [v2.9.14...v2.9.15](https://github.com/giantswarm/cert-exporter/compare/v2.9.14...v2.9.15)
 
@@ -72,12 +104,24 @@
 - Upgrade Cilium to [v1.18.6](https://github.com/cilium/cilium/releases/tag/v1.18.6).
 - Upgrade Cilium to [v1.18.5](https://github.com/cilium/cilium/releases/tag/v1.18.5).
 
+### cloud-provider-aws [v1.33.2-1...v2.0.0](https://github.com/giantswarm/aws-cloud-controller-manager-app/compare/v1.33.2-1...v2.0.0)
+
+#### Changed
+
+- Chart: Update to upstream v1.34.0.
+
 ### coredns [v1.28.3...v1.29.1](https://github.com/giantswarm/coredns-app/compare/v1.28.3...v1.29.1)
 
 #### Changed
 
 - Update `coredns` image to [1.14.1](https://github.com/coredns/coredns/releases/tag/v1.14.1).
 - Update `coredns` image to [1.14.0](https://github.com/coredns/coredns/releases/tag/v1.14.0).
+
+### etcd-defrag [v1.2.3...v1.2.4](https://github.com/giantswarm/etcd-defrag-app/compare/v1.2.3...v1.2.4)
+
+#### Changed
+
+- Chart: Update dependency ahrtr/etcd-defrag to v0.37.0. ([#78](https://github.com/giantswarm/etcd-defrag-app/pull/78))
 
 ### etcd-k8s-res-count-exporter [v1.10.11...v1.10.12](https://github.com/giantswarm/etcd-kubernetes-resources-count-exporter/compare/v1.10.11...v1.10.12)
 

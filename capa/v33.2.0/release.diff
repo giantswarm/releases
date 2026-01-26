@@ -5,7 +5,7 @@ metadata:                                                          metadata:
 spec:                                                              spec:
   apps:                                                              apps:
   - name: aws-ebs-csi-driver                                         - name: aws-ebs-csi-driver
-    version: 3.3.0                                                     version: 3.3.0
+    version: 3.3.0                                              |      version: 4.0.3
     dependsOn:                                                         dependsOn:
     - cloud-provider-aws                                               - cloud-provider-aws
   - name: aws-ebs-csi-driver-servicemonitors                         - name: aws-ebs-csi-driver-servicemonitors
@@ -43,7 +43,7 @@ spec:                                                              spec:
     dependsOn:                                                         dependsOn:
     - prometheus-operator-crd                                          - prometheus-operator-crd
   - name: cloud-provider-aws                                         - name: cloud-provider-aws
-    version: 1.33.2-1                                                  version: 1.33.2-1
+    version: 1.33.2-1                                           |      version: 2.0.0
     dependsOn:                                                         dependsOn:
     - vertical-pod-autoscaler-crd                                      - vertical-pod-autoscaler-crd
   - name: cluster-autoscaler                                         - name: cluster-autoscaler
@@ -59,7 +59,7 @@ spec:                                                              spec:
     dependsOn:                                                         dependsOn:
     - vertical-pod-autoscaler-crd                                      - vertical-pod-autoscaler-crd
   - name: etcd-defrag                                                - name: etcd-defrag
-    version: 1.2.3                                                     version: 1.2.3
+    version: 1.2.3                                              |      version: 1.2.4
     dependsOn:                                                         dependsOn:
     - kyverno-crds                                                     - kyverno-crds
   - name: etcd-k8s-res-count-exporter                                - name: etcd-k8s-res-count-exporter
@@ -135,12 +135,12 @@ spec:                                                              spec:
   components:                                                        components:
   - name: cluster-aws                                                - name: cluster-aws
     catalog: cluster                                                   catalog: cluster
-    version: 6.4.3                                              |      version: 7.2.4
+    version: 6.4.3                                              |      version: 7.2.5
   - name: flatcar                                                    - name: flatcar
     version: 4459.2.1                                           |      version: 4459.2.2
   - name: kubernetes                                                 - name: kubernetes
     version: 1.33.6                                             |      version: 1.33.7
   - name: os-tooling                                                 - name: os-tooling
-    version: 1.26.2                                             |      version: 1.26.3
-  date: "2026-01-15T12:12:16Z"                                  |    date: "2026-01-19T16:45:06Z"
+    version: 1.26.2                                             |      version: 1.26.4
+  date: "2026-01-15T12:12:16Z"                                  |    date: "2026-01-26T09:13:42Z"
   state: active                                                      state: active
