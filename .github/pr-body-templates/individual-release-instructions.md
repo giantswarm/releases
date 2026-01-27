@@ -78,3 +78,24 @@ For conformance tests:
 `/run conformance-tests PROVIDER=capa RELEASE_VERSION=29.1.0`
 
 </details>
+
+<details>
+<summary>🏗️ Trigger MC Creation Tests</summary>
+
+
+To validate that this release doesn't break Management Cluster creation, run:
+
+`/run generate-mc PROVIDER=capa`
+
+A free installation from `gawstest1-10` is auto-selected. You can override with `INSTALLATION=gawstest1` if needed.
+
+**Note:** Auto-selection only works for CAPA. For other providers, specify the installation explicitly.
+
+This will:
+- Create an ephemeral MC using the release from your PR branch (auto-detected)
+- Post a GitHub check status to this PR
+- Automatically clean up on completion
+
+**Note:** This test is separate from the WC E2E tests and validates that MC creation works with the new release.
+
+</details>

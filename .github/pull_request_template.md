@@ -13,6 +13,7 @@ Ping @sig-product for review of release notes.
 - [ ] Release uses latest stable Flatcar
 - [ ] Release uses latest Kubernetes patch version
 - [ ] Release uses latest supported version of all default apps
+- [ ] MC creation test passed (see "Triggering MC Creation Tests" below)
 
 ### Triggering E2E tests
 
@@ -37,3 +38,20 @@ If you want to trigger conformance tests, you can do so by adding a comment simi
 `/run conformance-tests PROVIDER=capa RELEASE_VERSION=29.1.0`
 
 For more details see the [README.md](/README.md#running-tests-against-prs).
+
+### Triggering MC Creation Tests
+
+To validate that this release doesn't break Management Cluster creation, run:
+
+`/run generate-mc PROVIDER=capa`
+
+A free installation from `gawstest1-10` is auto-selected. You can override with `INSTALLATION=gawstest1` if needed.
+
+**Note:** Auto-selection only works for CAPA. For other providers, specify the installation explicitly.
+
+This will:
+- Create an ephemeral MC using the release from your PR branch (auto-detected)
+- Post a GitHub check status to this PR
+- Automatically clean up on completion
+
+**Note:** This test is separate from the WC E2E tests and validates that MC creation works with the new release.
