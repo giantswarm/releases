@@ -5,7 +5,7 @@ go 1.25.5
 require (
 	github.com/Masterminds/semver/v3 v3.4.0
 	github.com/giantswarm/microerror v0.4.1
-	github.com/google/go-github/v81 v81.0.0
+	github.com/google/go-github/v82 v82.0.0
 	github.com/onsi/ginkgo/v2 v2.27.5
 	github.com/onsi/gomega v1.39.0
 	k8s.io/apimachinery v0.35.0
@@ -17,7 +17,7 @@ require (
 	github.com/go-logr/logr v1.4.3 // indirect
 	github.com/go-task/slim-sprig/v3 v3.0.0 // indirect
 	github.com/google/go-cmp v0.7.0 // indirect
-	github.com/google/go-querystring v1.1.0 // indirect
+	github.com/google/go-querystring v1.2.0 // indirect
 	github.com/google/pprof v0.0.0-20251213031049-b05bdaca462f // indirect
 	github.com/json-iterator/go v1.1.12 // indirect
 	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
