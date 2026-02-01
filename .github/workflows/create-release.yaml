@@ -295,6 +295,29 @@ jobs:
               exit 0
             fi
 
+            # Check if a major release will be created (new K8s version available).
+            # If so, skip minor release to avoid creating both major AND minor in the same run.
+            echo "Checking if a new major release will be created..."
+            chmod +x ./tools/check-major-version-merged.sh
+            chmod +x ./tools/check-new-k8s-version-exists.sh
+
+            # Get the next major version
+            NEXT_MAJOR=$(./tools/check-major-version-merged.sh "${PROVIDER_ARGS[@]}" | grep 'next_major=' | cut -d'=' -f2)
+            echo "Next major version would be: v${NEXT_MAJOR}.0.0"
+
+            # Check if a stable K8s version exists for that major
+            K8S_CHECK_OUTPUT=$(./tools/check-new-k8s-version-exists.sh "v${NEXT_MAJOR}.0.0" 2>&1 || true)
+            echo "K8s version check output: $K8S_CHECK_OUTPUT"
+
+            if echo "$K8S_CHECK_OUTPUT" | grep -q "VERSION_EXISTS=true"; then
+              echo "A new stable Kubernetes version is available for major release v${NEXT_MAJOR}.0.0."
+              echo "Skipping minor release creation - major release will be created instead."
+              echo "run_consolidated=false" >> "$GITHUB_OUTPUT"
+              echo "run_individual=false" >> "$GITHUB_OUTPUT"
+              exit 0
+            fi
+
+            echo "No new Kubernetes version available for major release. Proceeding with minor release."
             echo "No existing minor release PRs found. Running pre-flight alignment check."
             chmod +x ./tools/check-minor-version-alignment.sh
             # Split the provider list into individual arguments
