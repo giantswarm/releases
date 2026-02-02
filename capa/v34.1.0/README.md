@@ -15,6 +15,7 @@
 - etcd-defrag from v1.2.3 to v1.2.4
 - karpenter from v1.4.0 to v2.0.0
 - observability-bundle from v2.5.0 to v2.6.0
+- security-bundle from v1.16.1 to v1.17.0
 
 ### aws-ebs-csi-driver [v3.4.1...v4.1.0](https://github.com/giantswarm/aws-ebs-csi-driver-app/compare/v3.4.1...v4.1.0)
 
@@ -66,3 +67,14 @@
 #### Added
 
 - Add KSM metrics for Gateway API resources
+
+### security-bundle [v1.16.1...v1.17.0](https://github.com/giantswarm/security-bundle/compare/v1.16.1...v1.17.0)
+
+#### Changed
+
+- Update `kyverno` (app) to v0.23.0.
+- Update `kyverno-crds` (app) to v1.16.0.
+- Update `reports-server` (app) to v0.1.0.
+- Update `cloudnative-pg` (app) to v0.0.13.
+- Update `kubescape` (app) to v0.0.5.
+- Update `starboard-exporter` (app) to v1.0.2.
