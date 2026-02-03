@@ -50,6 +50,18 @@ global:
 
 This will automatically convert your legacy configuration to the new structured format.
 
+### Advanced options
+
+Additional configuration options are available for more complex setups, including:
+
+- Multiple audiences (`audiences`, `audienceMatchPolicy`)
+- Custom discovery URL (`discoveryUrl`)
+- Custom CA certificate (`caPem`)
+- CEL expressions for claim and user validation (`claimValidationRules`, `userValidationRules`)
+- Advanced claim mappings with CEL expressions (`claimMappings`)
+
+Refer to the [Kubernetes Structured Authentication documentation](https://kubernetes.io/docs/reference/access-authn-authz/authentication/#using-authentication-configuration) for details.
+
 ## Changes compared to v33.1.4
 
 ### Components
