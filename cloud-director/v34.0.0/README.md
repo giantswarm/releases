@@ -2,7 +2,7 @@
 
 ## OIDC Structured Authentication (optional)
 
-This release introduces optional support for [Kubernetes Structured Authentication Configuration](https://kubernetes.io/docs/reference/access-authn-authz/authentication/#using-authentication-configuration) for OIDC providers. We recommend testing this feature on a non-production cluster first.
+This release introduces optional support for Kubernetes Structured Authentication Configuration for OIDC providers. We recommend testing this feature on a non-production cluster first.
 
 ### Minimal example
 
