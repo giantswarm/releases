@@ -1,5 +1,55 @@
 # :zap: Giant Swarm Release v34.0.0 for Azure :zap:
 
+## OIDC Structured Authentication (optional)
+
+This release introduces optional support for [Kubernetes Structured Authentication Configuration](https://kubernetes.io/docs/reference/access-authn-authz/authentication/#using-authentication-configuration) for OIDC providers.
+
+### Minimal example
+
+```yaml
+global:
+  controlPlane:
+    oidc:
+      structuredAuthentication:
+        enabled: true
+        issuers:
+          - issuerUrl: https://your-idp.example.com
+            clientId: kubernetes
+```
+
+### Example with customization
+
+```yaml
+global:
+  controlPlane:
+    oidc:
+      structuredAuthentication:
+        enabled: true
+        issuers:
+          - issuerUrl: https://your-idp.example.com
+            clientId: kubernetes
+            usernameClaim: email          # Optional: use 'email' instead of 'sub'
+            groupsClaim: roles            # Optional: use 'roles' instead of 'groups'
+            usernamePrefix: "oidc:"       # Optional: prefix usernames
+            groupsPrefix: "oidc:"         # Optional: prefix groups
+```
+
+### Migration from legacy OIDC configuration
+
+If you already use OIDC with the legacy configuration, add `structuredAuthentication.enabled: true` to migrate:
+
+```yaml
+global:
+  controlPlane:
+    oidc:
+      issuerUrl: https://your-idp.example.com
+      clientId: kubernetes
+      structuredAuthentication:
+        enabled: true
+```
+
+This will automatically convert your legacy configuration to the new structured format.
+
 ## Changes compared to v33.1.1
 
 ### Components
