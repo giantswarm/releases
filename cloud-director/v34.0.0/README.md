@@ -1,5 +1,67 @@
 # :zap: Giant Swarm Release v34.0.0 for VMware Cloud Director :zap:
 
+## OIDC Structured Authentication (optional)
+
+This release introduces optional support for Kubernetes Structured Authentication Configuration for OIDC providers. We recommend testing this feature on a non-production cluster first.
+
+### Minimal example
+
+```yaml
+global:
+  controlPlane:
+    oidc:
+      structuredAuthentication:
+        enabled: true
+        issuers:
+          - issuerUrl: https://your-idp.example.com
+            clientId: kubernetes
+```
+
+### Example with customization
+
+```yaml
+global:
+  controlPlane:
+    oidc:
+      structuredAuthentication:
+        enabled: true
+        issuers:
+          - issuerUrl: https://your-idp.example.com
+            clientId: kubernetes
+            usernameClaim: email          # Optional: use 'email' instead of 'sub'
+            groupsClaim: roles            # Optional: use 'roles' instead of 'groups'
+            usernamePrefix: "oidc:"       # Optional: prefix usernames
+            groupsPrefix: "oidc:"         # Optional: prefix groups
+```
+
+### Migration from legacy OIDC configuration
+
+If you already use OIDC with the legacy configuration, add `structuredAuthentication.enabled: true` to migrate:
+
+```yaml
+global:
+  controlPlane:
+    oidc:
+      issuerUrl: https://your-idp.example.com
+      clientId: kubernetes
+      structuredAuthentication:
+        enabled: true
+```
+
+This will automatically convert your legacy configuration to the new structured format.
+
+### Advanced options
+
+Additional configuration options are available for more complex setups, including:
+
+- Multiple audiences (`audiences`, `audienceMatchPolicy`)
+- Custom discovery URL (`discoveryUrl`)
+- Custom CA certificate (`caPem`)
+- CEL expressions for claim and user validation (`claimValidationRules`, `userValidationRules`)
+- Advanced claim mappings with CEL expressions (`claimMappings`)
+
+Refer to the [Kubernetes Structured Authentication documentation](https://kubernetes.io/docs/reference/access-authn-authz/authentication/#using-authentication-configuration) for details.
+
 ## Changes compared to v33.1.1
 
 ### Components
