@@ -13,6 +13,7 @@ Ping @sig-product for review of release notes.
 - [ ] Release uses latest stable Flatcar
 - [ ] Release uses latest Kubernetes patch version
 - [ ] Release uses latest supported version of all default apps
+- [ ] MC creation test passed (see "Triggering MC Creation Tests" below)
 
 ### Triggering E2E tests
 
@@ -37,3 +38,35 @@ If you want to trigger conformance tests, you can do so by adding a comment simi
 `/run conformance-tests PROVIDER=capa RELEASE_VERSION=29.1.0`
 
 For more details see the [README.md](/README.md#running-tests-against-prs).
+
+### Triggering MC Creation Tests
+
+To prevent releases from breaking Management Cluster creation, run these tests before merging. The test recreates MCs using the release from your PR branch (auto-detected from the PR's commit SHA) to catch issues early.
+
+**Test a specific provider:**
+
+`/run generate-mc INSTALLATION=<installation> PROVIDER=<provider>`
+
+Examples:
+- `/run generate-mc INSTALLATION=goten PROVIDER=capa`
+- `/run generate-mc INSTALLATION=goose PROVIDER=capz`
+- `/run generate-mc INSTALLATION=goshawk PROVIDER=cloud-director`
+- `/run generate-mc INSTALLATION=gmc PROVIDER=vsphere`
+
+### Test all providers
+
+`/run generate-mc-all`
+
+**NOTE:** This command tests recreating `capa/goten`, `capz/goose`, `cloud-director/goshawk` and `vsphere/gmc` on head commit of PR.
+
+**Optional parameters:**
+- `MC_BOOTSTRAP_REF` - Git ref for mc-bootstrap repo (default: `main`). Use this to test with a specific mc-bootstrap branch.
+
+This will:
+- Recreate an MC using the release from your PR branch
+- Post a GitHub check status to this PR
+- Automatically clean up on completion
+
+**Note:** This test is separate from the WC E2E tests and validates that MC creation works with the new release.
+
+For more details see the [CAPI release drafting documentation](https://intranet.giantswarm.io/docs/product/releases/capi/capi-release-drafting/#mc-creation-tests).
