@@ -1,5 +1,15 @@
 # :zap: Giant Swarm Release v34.0.0 for CAPA :zap:
 
+## :warning: Important Note for Upgrading to this Release :warning:
+
+_tl;dr_: Please first upgrade your existing cluster to Giant Swarm Release v33.1.4 for CAPA or newer before upgrading to this release! Otherwise, you risk service outage and severe issues.
+
+Giant Swarm Release v34.0.0 for CAPA comes with Kubernetes v1.34. This version contains etcd v3.6, which makes use of the so-called v3 store by default. Before, with etcd v3.5, the v2 store was used by default and synchronized to the already existing v3 store.
+
+Different flaws could lead to an inconsistency between the old v2 store and the already present but unused standby v3 store in etcd v3.5 and before. Because of this, new etcd v3.6 members, which first start to use this v3 store, might suffer from these inconsistencies.
+
+This can come into play when upgrading a cluster to this and future releases from any release older than Giant Swarm Release v33.1.4 for CAPA. For this reason, we require you to first upgrade your cluster to Giant Swarm Release v33.1.4 for CAPA or newer before upgrading to this or future releases.
+
 ## OIDC Structured Authentication (optional)
 
 This release introduces optional support for Kubernetes Structured Authentication Configuration for OIDC providers. We recommend testing this feature on a non-production cluster first.
