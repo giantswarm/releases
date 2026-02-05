@@ -1,10 +1,23 @@
-
 version: 2.1
 
-setup: true
+# This config supports both automatic and manual triggering:
+# - Automatic: When release.yaml files are changed on main/master, retag those charts
+# - Manual: Trigger via CircleCI UI/API with provider and release_version parameters
+#
+# Manual trigger example via API:
+#   curl -X POST https://circleci.com/api/v2/project/gh/giantswarm/releases/pipeline \
+#     -H "Circle-Token: $CIRCLE_TOKEN" \
+#     -H "Content-Type: application/json" \
+#     -d '{"parameters": {"provider": "capa", "release_version": "v34.0.0"}}'
 
-orbs:
-  path-filtering: circleci/path-filtering@3.0.0
+parameters:
+  provider:
+    type: enum
+    enum: ["", "capa", "azure", "vsphere", "cloud-director", "eks"]
+    default: ""
+  release_version:
+    type: string
+    default: ""
 
 jobs:
   validate:
@@ -16,7 +29,337 @@ jobs:
           name: Validate releases
           command: CGO_ENABLED=0 go test ./...
 
+  auto-retag:
+    docker:
+      - image: cimg/base:current
+    steps:
+      - checkout
+      - run:
+          name: Install tools
+          command: |
+            # Install yq
+            sudo wget -qO /usr/local/bin/yq https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64
+            sudo chmod +x /usr/local/bin/yq
+
+            # Install helm
+            curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
+      - run:
+          name: Find changed releases
+          command: |
+            # Get changed release.yaml files compared to previous commit
+            # Exclude archived paths
+            CHANGED_FILES=$(git diff --name-only HEAD~1 HEAD -- '*/v*.*.*/release.yaml' | grep -v '/archived/' || true)
+
+            if [[ -z "${CHANGED_FILES}" ]]; then
+              echo "No release.yaml files changed (excluding archived), skipping"
+              echo "export RELEASES_TO_PROCESS=''" >> "$BASH_ENV"
+              exit 0
+            fi
+
+            echo "Changed release.yaml files:"
+            echo "${CHANGED_FILES}"
+
+            # Extract provider/version pairs
+            RELEASES=""
+            for file in ${CHANGED_FILES}; do
+              # Extract provider and version from path like "capa/v34.0.0/release.yaml"
+              PROVIDER=$(echo "${file}" | cut -d'/' -f1)
+              VERSION=$(echo "${file}" | cut -d'/' -f2)
+              RELEASES="${RELEASES}${PROVIDER}:${VERSION} "
+            done
+
+            echo "Releases to process: ${RELEASES}"
+            echo "export RELEASES_TO_PROCESS='${RELEASES}'" >> "$BASH_ENV"
+      - run:
+          name: Login to OCI registry
+          command: |
+            if [[ -z "${RELEASES_TO_PROCESS}" ]]; then
+              echo "No releases to process, skipping login"
+              exit 0
+            fi
+            echo "${ACR_GSOCI_PASSWORD}" | helm registry login gsoci.azurecr.io \
+              --username "${ACR_GSOCI_USERNAME}" \
+              --password-stdin
+      - run:
+          name: Retag changed releases
+          command: |
+            if [[ -z "${RELEASES_TO_PROCESS}" ]]; then
+              echo "No releases to process"
+              exit 0
+            fi
+
+            OCI_REGISTRY="gsoci.azurecr.io"
+            OCI_PATH="cluster-catalog"
+
+            for release in ${RELEASES_TO_PROCESS}; do
+              PROVIDER=$(echo "${release}" | cut -d':' -f1)
+              RELEASE_VERSION=$(echo "${release}" | cut -d':' -f2)
+              RELEASE_VERSION_CLEAN="${RELEASE_VERSION#v}"
+
+              echo ""
+              echo "=========================================="
+              echo "Processing: ${PROVIDER} ${RELEASE_VERSION}"
+              echo "=========================================="
+
+              # Map provider directory to source and target chart names
+              case "${PROVIDER}" in
+                capa)
+                  SOURCE_CHART="cluster-aws"
+                  TARGET_CHART="release-aws"
+                  ;;
+                azure)
+                  SOURCE_CHART="cluster-azure"
+                  TARGET_CHART="release-azure"
+                  ;;
+                vsphere)
+                  SOURCE_CHART="cluster-vsphere"
+                  TARGET_CHART="release-vsphere"
+                  ;;
+                cloud-director)
+                  SOURCE_CHART="cluster-cloud-director"
+                  TARGET_CHART="release-cloud-director"
+                  ;;
+                eks)
+                  SOURCE_CHART="cluster-eks"
+                  TARGET_CHART="release-eks"
+                  ;;
+                *)
+                  echo "Unknown provider: ${PROVIDER}, skipping"
+                  continue
+                  ;;
+              esac
+
+              RELEASE_PATH="${PROVIDER}/${RELEASE_VERSION}"
+
+              # Check if release.yaml exists
+              if [[ ! -f "${RELEASE_PATH}/release.yaml" ]]; then
+                echo "Release file not found: ${RELEASE_PATH}/release.yaml, skipping"
+                continue
+              fi
+
+              # Only retag active releases (skip deprecated/preview)
+              RELEASE_STATE=$(yq '.spec.state' "${RELEASE_PATH}/release.yaml")
+              if [[ "${RELEASE_STATE}" != "active" ]]; then
+                echo "Release state is '${RELEASE_STATE}' (not active), skipping"
+                continue
+              fi
+
+              # Extract cluster chart version from release.yaml
+              CHART_VERSION=$(yq ".spec.components[] | select(.name == \"${SOURCE_CHART}\") | .version" "${RELEASE_PATH}/release.yaml")
+
+              if [[ -z "${CHART_VERSION}" || "${CHART_VERSION}" == "null" ]]; then
+                echo "Could not find ${SOURCE_CHART} version in release.yaml, skipping"
+                continue
+              fi
+
+              echo "  Source chart: ${SOURCE_CHART}:${CHART_VERSION}"
+              echo "  Target chart: ${TARGET_CHART}:${RELEASE_VERSION_CLEAN}"
+
+              WORK_DIR=$(mktemp -d)
+              cd "${WORK_DIR}"
+
+              # Pull original chart
+              helm pull "oci://${OCI_REGISTRY}/${OCI_PATH}/${SOURCE_CHART}" --version "${CHART_VERSION}"
+
+              # Extract the chart
+              tar -xzf "${SOURCE_CHART}-${CHART_VERSION}.tgz"
+
+              # Rename chart directory
+              mv "${SOURCE_CHART}" "${TARGET_CHART}"
+
+              # Update Chart.yaml: change name and version
+              yq -i ".name = \"${TARGET_CHART}\"" "${TARGET_CHART}/Chart.yaml"
+              yq -i ".version = \"${RELEASE_VERSION_CLEAN}\"" "${TARGET_CHART}/Chart.yaml"
+
+              # Inject global.release.version into values.yaml
+              yq -i ".global.release.version = \"${RELEASE_VERSION_CLEAN}\"" "${TARGET_CHART}/values.yaml"
+
+              # Repackage and push
+              helm package "${TARGET_CHART}"
+              helm push "${TARGET_CHART}-${RELEASE_VERSION_CLEAN}.tgz" "oci://${OCI_REGISTRY}/${OCI_PATH}"
+
+              echo "Successfully pushed: oci://${OCI_REGISTRY}/${OCI_PATH}/${TARGET_CHART}:${RELEASE_VERSION_CLEAN}"
+
+              cd -
+              rm -rf "${WORK_DIR}"
+            done
+
+            echo ""
+            echo "=========================================="
+            echo "All releases processed"
+            echo "=========================================="
+
+  retag-chart:
+    docker:
+      - image: cimg/base:current
+    parameters:
+      provider:
+        type: string
+      release_version:
+        type: string
+    steps:
+      - checkout
+      - run:
+          name: Install tools
+          command: |
+            # Install yq
+            sudo wget -qO /usr/local/bin/yq https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64
+            sudo chmod +x /usr/local/bin/yq
+
+            # Install helm
+            curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
+      - run:
+          name: Parse release information
+          command: |
+            PROVIDER="<< parameters.provider >>"
+            RELEASE_VERSION="<< parameters.release_version >>"
+            RELEASE_VERSION_CLEAN="${RELEASE_VERSION#v}"
+
+            # Map provider directory to source and target chart names
+            case "${PROVIDER}" in
+              capa)
+                SOURCE_CHART="cluster-aws"
+                TARGET_CHART="release-aws"
+                ;;
+              azure)
+                SOURCE_CHART="cluster-azure"
+                TARGET_CHART="release-azure"
+                ;;
+              vsphere)
+                SOURCE_CHART="cluster-vsphere"
+                TARGET_CHART="release-vsphere"
+                ;;
+              cloud-director)
+                SOURCE_CHART="cluster-cloud-director"
+                TARGET_CHART="release-cloud-director"
+                ;;
+              eks)
+                SOURCE_CHART="cluster-eks"
+                TARGET_CHART="release-eks"
+                ;;
+              *)
+                echo "Unknown provider: ${PROVIDER}"
+                exit 1
+                ;;
+            esac
+
+            RELEASE_PATH="${PROVIDER}/${RELEASE_VERSION}"
+
+            # Check if release.yaml exists
+            if [[ ! -f "${RELEASE_PATH}/release.yaml" ]]; then
+              echo "Release file not found: ${RELEASE_PATH}/release.yaml"
+              exit 1
+            fi
+
+            # Extract cluster chart version from release.yaml
+            CHART_VERSION=$(yq ".spec.components[] | select(.name == \"${SOURCE_CHART}\") | .version" "${RELEASE_PATH}/release.yaml")
+
+            if [[ -z "${CHART_VERSION}" || "${CHART_VERSION}" == "null" ]]; then
+              echo "Could not find ${SOURCE_CHART} version in release.yaml"
+              exit 1
+            fi
+
+            echo "Summary:"
+            echo "  Provider: ${PROVIDER}"
+            echo "  Release Version: ${RELEASE_VERSION}"
+            echo "  Source Chart: ${SOURCE_CHART}:${CHART_VERSION}"
+            echo "  Target Chart: ${TARGET_CHART}:${RELEASE_VERSION_CLEAN}"
+
+            # Export for subsequent steps
+            echo "export PROVIDER='${PROVIDER}'" >> "$BASH_ENV"
+            echo "export RELEASE_VERSION='${RELEASE_VERSION}'" >> "$BASH_ENV"
+            echo "export RELEASE_VERSION_CLEAN='${RELEASE_VERSION_CLEAN}'" >> "$BASH_ENV"
+            echo "export SOURCE_CHART='${SOURCE_CHART}'" >> "$BASH_ENV"
+            echo "export TARGET_CHART='${TARGET_CHART}'" >> "$BASH_ENV"
+            echo "export CHART_VERSION='${CHART_VERSION}'" >> "$BASH_ENV"
+
+      - run:
+          name: Login to OCI registry
+          command: |
+            echo "${ACR_GSOCI_PASSWORD}" | helm registry login gsoci.azurecr.io \
+              --username "${ACR_GSOCI_USERNAME}" \
+              --password-stdin
+
+      - run:
+          name: Pull, retag, and push chart
+          command: |
+            set -euo pipefail
+
+            OCI_REGISTRY="gsoci.azurecr.io"
+            OCI_PATH="cluster-catalog"
+
+            WORK_DIR=$(mktemp -d)
+            cd "${WORK_DIR}"
+
+            echo "=== Pulling original chart ==="
+            echo "Pulling ${SOURCE_CHART}:${CHART_VERSION}..."
+            helm pull "oci://${OCI_REGISTRY}/${OCI_PATH}/${SOURCE_CHART}" --version "${CHART_VERSION}"
+
+            # Extract the chart
+            tar -xzf "${SOURCE_CHART}-${CHART_VERSION}.tgz"
+
+            # Rename chart directory
+            mv "${SOURCE_CHART}" "${TARGET_CHART}"
+
+            echo "Updating Chart.yaml..."
+            echo "  name: ${SOURCE_CHART} -> ${TARGET_CHART}"
+            echo "  version: ${CHART_VERSION} -> ${RELEASE_VERSION_CLEAN}"
+            yq -i ".name = \"${TARGET_CHART}\"" "${TARGET_CHART}/Chart.yaml"
+            yq -i ".version = \"${RELEASE_VERSION_CLEAN}\"" "${TARGET_CHART}/Chart.yaml"
+
+            # Inject global.release.version into values.yaml
+            # This allows the cluster subchart to resolve the correct Release CR
+            echo "Injecting global.release.version into values.yaml..."
+            yq -i ".global.release.version = \"${RELEASE_VERSION_CLEAN}\"" "${TARGET_CHART}/values.yaml"
+
+            # Verify the changes
+            echo ""
+            echo "Verification:"
+            echo "  Chart name: $(yq '.name' "${TARGET_CHART}/Chart.yaml")"
+            echo "  Chart version: $(yq '.version' "${TARGET_CHART}/Chart.yaml")"
+            echo "  global.release.version: $(yq '.global.release.version' "${TARGET_CHART}/values.yaml")"
+
+            echo ""
+            echo "Repackaging chart..."
+            helm package "${TARGET_CHART}"
+
+            echo ""
+            echo "=== Pushing to registry ==="
+            echo "Pushing ${TARGET_CHART}:${RELEASE_VERSION_CLEAN}..."
+            helm push "${TARGET_CHART}-${RELEASE_VERSION_CLEAN}.tgz" "oci://${OCI_REGISTRY}/${OCI_PATH}"
+
+            echo ""
+            echo "=== Done ==="
+            echo "Successfully pushed: oci://${OCI_REGISTRY}/${OCI_PATH}/${TARGET_CHART}:${RELEASE_VERSION_CLEAN}"
+
 workflows:
-  workflow:
+  # Runs on all branches - validates release structure
+  validate:
+    when:
+      equal: ["", << pipeline.parameters.provider >>]
     jobs:
       - validate
+
+  # Runs on main/master only - auto-retags changed releases
+  auto-retag:
+    when:
+      equal: ["", << pipeline.parameters.provider >>]
+    jobs:
+      - auto-retag:
+          context: architect
+          filters:
+            branches:
+              only:
+                - main
+                - master
+
+  # Manual trigger - retag a specific release
+  retag-chart:
+    when:
+      not:
+        equal: ["", << pipeline.parameters.provider >>]
+    jobs:
+      - retag-chart:
+          context: architect
+          provider: << pipeline.parameters.provider >>
+          release_version: << pipeline.parameters.release_version >>
