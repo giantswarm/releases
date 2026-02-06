@@ -5,20 +5,18 @@ metadata:                                                          metadata:
 spec:                                                              spec:
   apps:                                                              apps:
   - name: aws-ebs-csi-driver                                         - name: aws-ebs-csi-driver
-    version: 3.0.5                                              |      version: 4.1.0
-  - name: cilium                                                     - name: cilium
-    version: 1.3.0                                              |      version: 1.3.4
-  - dependsOn:                                                  |    - name: coredns
-                                                                >      version: 1.29.1
-                                                                >      dependsOn:
-    - cilium                                                           - cilium
-    name: coredns                                               |    - name: network-policies
-    version: 1.28.1                                             |      catalog: cluster
-  - catalog: cluster                                            |      version: 0.1.3
-    dependsOn:                                                         dependsOn:
-    - cilium                                                           - cilium
-    name: network-policies                                      <
-    version: 0.1.1                                              <
+    version: 3.0.5                                              |      version: 4.1.1
+  - name: cilium                                                <  
+    version: 1.3.0                                              <  
+  - dependsOn:                                                  <  
+    - cilium                                                    <  
+    name: coredns                                               <  
+    version: 1.28.1                                             <  
+  - catalog: cluster                                            <  
+    dependsOn:                                                  <  
+    - cilium                                                    <  
+    name: network-policies                                      <  
+    version: 0.1.1                                              <  
   - name: teleport-kube-agent                                        - name: teleport-kube-agent
     version: 0.10.6                                             |      version: 0.10.7
   components:                                                        components:
