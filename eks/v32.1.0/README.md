@@ -19,13 +19,13 @@
 
 ### Apps
 
-- aws-ebs-csi-driver from v3.0.5 to v4.1.0
+- aws-ebs-csi-driver from v3.0.5 to v4.1.1
 - cilium from v1.3.0 to v1.3.4
 - coredns from v1.28.1 to v1.29.1
 - network-policies from v0.1.1 to v0.1.3
 - teleport-kube-agent from v0.10.6 to v0.10.7
 
-### aws-ebs-csi-driver [v3.0.5...v4.1.0](https://github.com/giantswarm/aws-ebs-csi-driver-app/compare/v3.0.5...v4.1.0)
+### aws-ebs-csi-driver [v3.0.5...v4.1.1](https://github.com/giantswarm/aws-ebs-csi-driver-app/compare/v3.0.5...v4.1.1)
 
 #### Added
 
@@ -40,6 +40,7 @@
 
 #### Changed
 
+- Refactor crossplane config data retrieval. Fail installation if the ConfigMap can't be found, otherwise the chart was creating invalid IAM roles.
 - Change IAM role name for the ebs-csi-driver-controller, to differentiate it from the old one managed by the iam-operator.
 - Remove dependency for the cloud-provider-aws in the aws-ebs-csi-driver HelmRelease. That dependency should be set in the bundle HelmRelease by the provider cluster chart
 - Update CircleCI configuration to push both app and bundle charts
