@@ -44,7 +44,7 @@ on:
         required: false
       version:
         type: string
-        description: 'Semver formatted version for the announcement being made'
+        description: 'Semver formatted version for the announcement being made (e.g. v34.0.0)'
         required: true
 
 jobs:
@@ -68,6 +68,16 @@ jobs:
         run: |
           INPUT_CHANNEL="${{ inputs.channel }}"
           PROVIDERS_ALL="${{ inputs.provider_all }}"
+          
+          # If a specific channel is provided, short-circuit and use ONLY that channel.
+          # This is primarily for testing, so we don't spam all real channels.
+          if [[ -n "$INPUT_CHANNEL" ]]; then
+            slack_channels=("$INPUT_CHANNEL")
+            # Deduplicate and convert array to JSON string
+            export OUTPUT_CHANNELS=$(printf '%s\n' "${slack_channels[@]}" | sort -u | jq -R . | jq -s -c .)
+            echo "channels=$OUTPUT_CHANNELS" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
           
           # Build list of selected providers
           SELECTED_PROVIDERS=()
@@ -200,3 +210,8 @@ jobs:
           payload: |
             channel: ${{ matrix.channel }}
             text: "${{ needs.get_announcement.outputs.announcement }}"
+            blocks:
+              - type: "section"
+                text:
+                  type: "mrkdwn"
+                  text: "${{ needs.get_announcement.outputs.announcement }}"
