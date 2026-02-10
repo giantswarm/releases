@@ -8,7 +8,7 @@ require (
 	github.com/giantswarm/microerror v0.4.1
 	github.com/giantswarm/releases/sdk v0.11.0
 	github.com/giantswarm/versionbundle v1.2.0
-	sigs.k8s.io/kustomize/kustomize/v5 v5.8.0
+	sigs.k8s.io/kustomize/kustomize/v5 v5.8.1
 	sigs.k8s.io/yaml v1.6.0
 )
 
@@ -63,9 +63,9 @@ require (
 	k8s.io/kube-openapi v0.0.0-20251125145642-4e65d59e963e // indirect
 	k8s.io/utils v0.0.0-20251218160917-61b37f7a4624 // indirect
 	sigs.k8s.io/json v0.0.0-20250730193827-2d320260d730 // indirect
-	sigs.k8s.io/kustomize/api v0.21.0 // indirect
-	sigs.k8s.io/kustomize/cmd/config v0.21.0 // indirect
-	sigs.k8s.io/kustomize/kyaml v0.21.0 // indirect
+	sigs.k8s.io/kustomize/api v0.21.1 // indirect
+	sigs.k8s.io/kustomize/cmd/config v0.21.1 // indirect
+	sigs.k8s.io/kustomize/kyaml v0.21.1 // indirect
 	sigs.k8s.io/randfill v1.0.0 // indirect
 	sigs.k8s.io/structured-merge-diff/v6 v6.3.1 // indirect
 )
