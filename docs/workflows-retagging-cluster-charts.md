@@ -19,7 +19,10 @@ When a Release (e.g., `v34.0.0`) references `cluster-aws:7.2.5`, this workflow:
 2. **Renames** the chart from `cluster-aws` to `release-aws`
 3. **Updates** `Chart.yaml` version to `34.0.0`
 4. **Injects** `global.release.version: "34.0.0"` into `values.yaml`
-5. **Pushes** `release-aws:34.0.0` to `gsoci.azurecr.io/charts/giantswarm`
+5. **Packages** with App Build Suite (adds metadata and validation)
+6. **Pushes** `release-aws:34.0.0` to both:
+   - OCI registry: `gsoci.azurecr.io/charts/giantswarm`
+   - GitHub Pages catalog: `cluster-catalog` (required while App/Chart CRs are still in use)
 
 ### Why Rename to release-<provider>?
 
