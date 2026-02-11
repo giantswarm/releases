@@ -50,39 +50,29 @@ commands:
               --password-stdin
 
   retag-and-push:
-    parameters:
-      source_chart:
-        type: string
-      target_chart:
-        type: string
-      chart_version:
-        type: string
-      release_version:
-        type: string
+    # Reads from BASH_ENV: SOURCE_CHART, TARGET_CHART, CHART_VERSION, RELEASE_VERSION_CLEAN
+    # Cannot use CircleCI parameters here because values are determined at runtime
+    # (from parsing release.yaml), not at pipeline compile time.
     steps:
       - run:
-          name: "Pull, retag, and push << parameters.source_chart >> as << parameters.target_chart >>:<< parameters.release_version >>"
+          name: Pull, retag, and push chart
           command: |
             set -euo pipefail
-
-            SOURCE_CHART="<< parameters.source_chart >>"
-            TARGET_CHART="<< parameters.target_chart >>"
-            CHART_VERSION="<< parameters.chart_version >>"
-            RELEASE_VERSION="<< parameters.release_version >>"
 
             OCI_REGISTRY="gsoci.azurecr.io"
             OCI_PATH="charts/giantswarm"
 
+            echo "=== Retagging ${SOURCE_CHART}:${CHART_VERSION} as ${TARGET_CHART}:${RELEASE_VERSION_CLEAN} ==="
+
             # Check if target chart already exists in the registry (avoid overwriting)
-            if helm show chart "oci://${OCI_REGISTRY}/${OCI_PATH}/${TARGET_CHART}" --version "${RELEASE_VERSION}" >/dev/null 2>&1; then
-              echo "${TARGET_CHART}:${RELEASE_VERSION} already exists in registry, skipping"
+            if helm show chart "oci://${OCI_REGISTRY}/${OCI_PATH}/${TARGET_CHART}" --version "${RELEASE_VERSION_CLEAN}" >/dev/null 2>&1; then
+              echo "${TARGET_CHART}:${RELEASE_VERSION_CLEAN} already exists in registry, skipping"
               exit 0
             fi
 
             WORK_DIR=$(mktemp -d)
             cd "${WORK_DIR}"
 
-            echo "=== Pulling original chart ==="
             echo "Pulling ${SOURCE_CHART}:${CHART_VERSION}..."
             helm pull "oci://${OCI_REGISTRY}/${OCI_PATH}/${SOURCE_CHART}" --version "${CHART_VERSION}"
 
@@ -92,36 +82,25 @@ commands:
             # Rename chart directory
             mv "${SOURCE_CHART}" "${TARGET_CHART}"
 
-            echo "Updating Chart.yaml..."
-            echo "  name: ${SOURCE_CHART} -> ${TARGET_CHART}"
-            echo "  version: ${CHART_VERSION} -> ${RELEASE_VERSION}"
+            # Update Chart.yaml: change name and version
             yq -i ".name = \"${TARGET_CHART}\"" "${TARGET_CHART}/Chart.yaml"
-            yq -i ".version = \"${RELEASE_VERSION}\"" "${TARGET_CHART}/Chart.yaml"
+            yq -i ".version = \"${RELEASE_VERSION_CLEAN}\"" "${TARGET_CHART}/Chart.yaml"
 
             # Inject global.release.version into values.yaml
             # This allows the cluster subchart to resolve the correct Release CR
-            echo "Injecting global.release.version into values.yaml..."
-            yq -i ".global.release.version = \"${RELEASE_VERSION}\"" "${TARGET_CHART}/values.yaml"
+            yq -i ".global.release.version = \"${RELEASE_VERSION_CLEAN}\"" "${TARGET_CHART}/values.yaml"
 
             # Verify the changes
-            echo ""
             echo "Verification:"
             echo "  Chart name: $(yq '.name' "${TARGET_CHART}/Chart.yaml")"
             echo "  Chart version: $(yq '.version' "${TARGET_CHART}/Chart.yaml")"
             echo "  global.release.version: $(yq '.global.release.version' "${TARGET_CHART}/values.yaml")"
 
-            echo ""
-            echo "Repackaging chart..."
+            # Repackage and push
             helm package "${TARGET_CHART}"
+            helm push "${TARGET_CHART}-${RELEASE_VERSION_CLEAN}.tgz" "oci://${OCI_REGISTRY}/${OCI_PATH}"
 
-            echo ""
-            echo "=== Pushing to registry ==="
-            echo "Pushing ${TARGET_CHART}:${RELEASE_VERSION}..."
-            helm push "${TARGET_CHART}-${RELEASE_VERSION}.tgz" "oci://${OCI_REGISTRY}/${OCI_PATH}"
-
-            echo ""
-            echo "=== Done ==="
-            echo "Successfully pushed: oci://${OCI_REGISTRY}/${OCI_PATH}/${TARGET_CHART}:${RELEASE_VERSION}"
+            echo "Successfully pushed: oci://${OCI_REGISTRY}/${OCI_PATH}/${TARGET_CHART}:${RELEASE_VERSION_CLEAN}"
 
 jobs:
   validate:
@@ -167,6 +146,9 @@ jobs:
             echo "Releases to process: ${RELEASES}"
             echo "export RELEASES_TO_PROCESS='${RELEASES}'" >> "$BASH_ENV"
       - login-oci-registry
+      # NOTE: Cannot use the retag-and-push command here because CircleCI commands
+      # are expanded at compile time (as steps), not at runtime. This job loops over
+      # multiple releases in a single bash script, so the retag logic must be inline.
       - run:
           name: Retag changed releases
           command: |
@@ -358,63 +340,7 @@ jobs:
             echo "export TARGET_CHART='${TARGET_CHART}'" >> "$BASH_ENV"
             echo "export CHART_VERSION='${CHART_VERSION}'" >> "$BASH_ENV"
       - login-oci-registry
-      - run:
-          name: Pull, retag, and push chart
-          command: |
-            set -euo pipefail
-
-            OCI_REGISTRY="gsoci.azurecr.io"
-            OCI_PATH="charts/giantswarm"
-
-            # Check if target chart already exists in the registry (avoid overwriting)
-            if helm show chart "oci://${OCI_REGISTRY}/${OCI_PATH}/${TARGET_CHART}" --version "${RELEASE_VERSION_CLEAN}" >/dev/null 2>&1; then
-              echo "${TARGET_CHART}:${RELEASE_VERSION_CLEAN} already exists in registry, skipping"
-              exit 0
-            fi
-
-            WORK_DIR=$(mktemp -d)
-            cd "${WORK_DIR}"
-
-            echo "=== Pulling original chart ==="
-            echo "Pulling ${SOURCE_CHART}:${CHART_VERSION}..."
-            helm pull "oci://${OCI_REGISTRY}/${OCI_PATH}/${SOURCE_CHART}" --version "${CHART_VERSION}"
-
-            # Extract the chart
-            tar -xzf "${SOURCE_CHART}-${CHART_VERSION}.tgz"
-
-            # Rename chart directory
-            mv "${SOURCE_CHART}" "${TARGET_CHART}"
-
-            echo "Updating Chart.yaml..."
-            echo "  name: ${SOURCE_CHART} -> ${TARGET_CHART}"
-            echo "  version: ${CHART_VERSION} -> ${RELEASE_VERSION_CLEAN}"
-            yq -i ".name = \"${TARGET_CHART}\"" "${TARGET_CHART}/Chart.yaml"
-            yq -i ".version = \"${RELEASE_VERSION_CLEAN}\"" "${TARGET_CHART}/Chart.yaml"
-
-            # Inject global.release.version into values.yaml
-            # This allows the cluster subchart to resolve the correct Release CR
-            echo "Injecting global.release.version into values.yaml..."
-            yq -i ".global.release.version = \"${RELEASE_VERSION_CLEAN}\"" "${TARGET_CHART}/values.yaml"
-
-            # Verify the changes
-            echo ""
-            echo "Verification:"
-            echo "  Chart name: $(yq '.name' "${TARGET_CHART}/Chart.yaml")"
-            echo "  Chart version: $(yq '.version' "${TARGET_CHART}/Chart.yaml")"
-            echo "  global.release.version: $(yq '.global.release.version' "${TARGET_CHART}/values.yaml")"
-
-            echo ""
-            echo "Repackaging chart..."
-            helm package "${TARGET_CHART}"
-
-            echo ""
-            echo "=== Pushing to registry ==="
-            echo "Pushing ${TARGET_CHART}:${RELEASE_VERSION_CLEAN}..."
-            helm push "${TARGET_CHART}-${RELEASE_VERSION_CLEAN}.tgz" "oci://${OCI_REGISTRY}/${OCI_PATH}"
-
-            echo ""
-            echo "=== Done ==="
-            echo "Successfully pushed: oci://${OCI_REGISTRY}/${OCI_PATH}/${TARGET_CHART}:${RELEASE_VERSION_CLEAN}"
+      - retag-and-push
 
 workflows:
   # Runs on all branches - validates release structure
