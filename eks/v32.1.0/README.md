@@ -6,7 +6,7 @@
 
 ### Components
 
-- cluster-eks from v1.0.0 to v1.2.0
+- cluster-eks from v1.0.0 to v1.2.1
 - Flatcar from v4152.2.3 to [v4459.2.3](https://www.flatcar.org/releases/#release-4459.2.3)
 - Kubernetes from v1.32.9 to [v1.32.11](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.32.md#v1.32.11)
 - os-tooling from v1.26.1 to v1.26.4
