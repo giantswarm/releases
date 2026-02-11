@@ -35,9 +35,6 @@ Strip down clusters to the bare minimum so we can adopt existing EKS clusters.
 ### Apps
 
 - aws-ebs-csi-driver from v3.0.5 to v4.1.1
-- cilium from v1.3.0 to v1.3.4
-- coredns from v1.28.1 to v1.29.1
-- network-policies from v0.1.1 to v0.1.3
 - teleport-kube-agent from v0.10.6 to v0.10.7
 
 ### aws-ebs-csi-driver [v3.0.5...v4.1.1](https://github.com/giantswarm/aws-ebs-csi-driver-app/compare/v3.0.5...v4.1.1)
@@ -87,34 +84,6 @@ Strip down clusters to the bare minimum so we can adopt existing EKS clusters.
 
 - Fix boolean type of the expansion
 - Allow volume expansion by default on gp3
-
-### cilium [v1.3.0...v1.3.4](https://github.com/giantswarm/cilium-app/compare/v1.3.0...v1.3.4)
-
-#### Changed
-
-- Upgrade Cilium to [v1.18.6](https://github.com/cilium/cilium/releases/tag/v1.18.6).
-- Upgrade Cilium to [v1.18.5](https://github.com/cilium/cilium/releases/tag/v1.18.5).
-- Upgrade Cilium to [v1.18.4](https://github.com/cilium/cilium/releases/tag/v1.18.4).
-- Upgrade Cilium to [v1.18.2](https://github.com/cilium/cilium/releases/tag/v1.18.2).
-
-### coredns [v1.28.1...v1.29.1](https://github.com/giantswarm/coredns-app/compare/v1.28.1...v1.29.1)
-
-#### Changed
-
-- Update `coredns` image to [1.14.1](https://github.com/coredns/coredns/releases/tag/v1.14.1).
-- Update `coredns` image to [1.14.0](https://github.com/coredns/coredns/releases/tag/v1.14.0).
-- Update `coredns` image to [1.13.2](https://github.com/coredns/coredns/releases/tag/v1.13.2).
-- Update `coredns` image to [1.13.1](https://github.com/coredns/coredns/releases/tag/v1.13.1).
-
-### network-policies [v0.1.1...v0.1.3](https://github.com/giantswarm/network-policies-app/compare/v0.1.1...v0.1.3)
-
-#### Added
-
-- Add support for Kamaji.
-
-#### Fixed
-
-- Fixed broken templating.
 
 ### teleport-kube-agent [v0.10.6...v0.10.7](https://github.com/giantswarm/teleport-kube-agent-app/compare/v0.10.6...v0.10.7)
 
