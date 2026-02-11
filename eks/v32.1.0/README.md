@@ -1,6 +1,6 @@
-# :zap: Giant Swarm Release v32.1.0 for  :zap:
+# :zap: Giant Swarm Release v32.1.0 for CAPA EKS :zap:
 
-<< Add description here >>
+Strip down clusters to the bare minimum so we can adopt existing EKS clusters.
 
 ## Changes compared to v32.0.0
 
