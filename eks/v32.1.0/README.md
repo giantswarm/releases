@@ -11,10 +11,25 @@ Strip down clusters to the bare minimum so we can adopt existing EKS clusters.
 - Kubernetes from v1.32.9 to [v1.32.11](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.32.md#v1.32.11)
 - os-tooling from v1.26.1 to v1.26.4
 
-### cluster-eks [v1.0.0...v1.1.0](https://github.com/giantswarm/cluster-eks/compare/v1.0.0...v1.1.0)
+### cluster-eks [v1.0.0...v1.2.1](https://github.com/giantswarm/cluster-eks/compare/v1.0.0...v1.2.1)
+
+#### Changed
+
+- Disable podMonitor in teleport-kube-agent app.
+- Disable all Giant Swarm apps by default, keeping only Teleport agent enabled.
+- Only install Cilium hook jobs when Cilium is enabled.
+
+#### Added
+
+- Add support for EKS addons configuration (`global.providerSpecific.addons`).
+- Add support for disabling VPC CNI and kube-proxy (`global.providerSpecific.vpcCni.disable`, `global.providerSpecific.kubeProxy.disable`).
+- Add support for pre-setting network resource IDs (`vpcId`, `internetGatewayId`).
+- Add support for secondary VPC CIDR blocks (`vpcCidrs`).
 
 #### Fixed
 
+- Fix Cilium HelmRelease patching to only run if HelmRelease exists.
+- Fix EBS CSI driver HelmRelease values.
 - Fix availability zone handling in managed machine pool template.
 
 ### Apps
