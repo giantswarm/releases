@@ -15,11 +15,11 @@ This workflow enables the App CR's `.spec.version` field to be the **actual** ve
 
 When a Release (e.g., `v34.0.0`) references `cluster-aws:7.2.5`, this workflow:
 
-1. **Pulls** the original chart `cluster-aws:7.2.5` from `gsoci.azurecr.io/cluster-catalog`
+1. **Pulls** the original chart `cluster-aws:7.2.5` from `gsoci.azurecr.io/charts/giantswarm`
 2. **Renames** the chart from `cluster-aws` to `release-aws`
 3. **Updates** `Chart.yaml` version to `34.0.0`
 4. **Injects** `global.release.version: "34.0.0"` into `values.yaml`
-5. **Pushes** `release-aws:34.0.0` to `gsoci.azurecr.io/cluster-catalog`
+5. **Pushes** `release-aws:34.0.0` to `gsoci.azurecr.io/charts/giantswarm`
 
 ### Why Rename to release-<provider>?
 
