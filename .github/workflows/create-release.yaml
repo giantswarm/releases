@@ -499,12 +499,22 @@ jobs:
 
             ---
 
+            <!-- STAGE_DASHBOARD_START -->
+            | Stage | Status |
+            |-------|--------|
+            | Development | :arrow_right: Current |
+            | Active | :hourglass: Pending |
+            | Freeze | :hourglass: Pending |
+            | Release & Publish | :hourglass: Pending |
+            <!-- STAGE_DASHBOARD_END -->
+
             ${{ steps.read_instructions.outputs.content }}
 
             📖 **Need more help?** Check out the [CAPI Release Drafting Guide](https://intranet.giantswarm.io/docs/product/releases/capi/capi-release-drafting/) for detailed instructions.
           branch: "release-${{ steps.determine_next_release.outputs.version }}"
           labels: |
             release/major
+            stage/development
             ${{ steps.create_release.outputs.PROVIDER_LABELS }}
 
       - name: Checkout PR branch for analysis
@@ -631,12 +641,22 @@ jobs:
 
             ---
 
+            <!-- STAGE_DASHBOARD_START -->
+            | Stage | Status |
+            |-------|--------|
+            | Development | :arrow_right: Current |
+            | Active | :hourglass: Pending |
+            | Freeze | :hourglass: Pending |
+            | Release & Publish | :hourglass: Pending |
+            <!-- STAGE_DASHBOARD_END -->
+
             ${{ steps.read_instructions.outputs.content }}
 
             📖 **Need more help?** Check out the [CAPI Release Drafting Guide](https://intranet.giantswarm.io/docs/product/releases/capi/capi-release-drafting/) for detailed instructions.
           branch: "release-${{ steps.determine_next_release.outputs.version }}"
           labels: |
             release/minor
+            stage/development
             ${{ steps.create_release.outputs.PROVIDER_LABELS }}
 
       - name: Checkout PR branch for analysis
@@ -761,12 +781,22 @@ jobs:
 
             ---
 
+            <!-- STAGE_DASHBOARD_START -->
+            | Stage | Status |
+            |-------|--------|
+            | Development | :arrow_right: Current |
+            | Active | :hourglass: Pending |
+            | Freeze | :hourglass: Pending |
+            | Release & Publish | :hourglass: Pending |
+            <!-- STAGE_DASHBOARD_END -->
+
             ${{ steps.read_instructions.outputs.content }}
 
             📖 **Need more help?** Check out the [CAPI Release Drafting Guide](https://intranet.giantswarm.io/docs/product/releases/capi/capi-release-drafting/) for detailed instructions.
           branch: "release-${{ steps.determine_next_release.outputs.version }}-${{ matrix.provider }}"
           labels: |
             release/major
+            stage/development
             ${{ matrix.provider }}
 
       - name: Checkout PR branch for analysis
@@ -881,12 +911,22 @@ jobs:
 
             ---
 
+            <!-- STAGE_DASHBOARD_START -->
+            | Stage | Status |
+            |-------|--------|
+            | Development | :arrow_right: Current |
+            | Active | :hourglass: Pending |
+            | Freeze | :hourglass: Pending |
+            | Release & Publish | :hourglass: Pending |
+            <!-- STAGE_DASHBOARD_END -->
+
             ${{ steps.read_instructions.outputs.content }}
 
             📖 **Need more help?** Check out the [CAPI Release Drafting Guide](https://intranet.giantswarm.io/docs/product/releases/capi/capi-release-drafting/) for detailed instructions.
           branch: "release-${{ steps.determine_next_release.outputs.version }}-${{ matrix.provider }}"
           labels: |
             release/minor
+            stage/development
             ${{ matrix.provider }}
 
       - name: Checkout PR branch for analysis
@@ -1001,12 +1041,22 @@ jobs:
 
             ---
 
+            <!-- STAGE_DASHBOARD_START -->
+            | Stage | Status |
+            |-------|--------|
+            | Development | :arrow_right: Current |
+            | Active | :hourglass: Pending |
+            | Freeze | :hourglass: Pending |
+            | Release & Publish | :hourglass: Pending |
+            <!-- STAGE_DASHBOARD_END -->
+
             ${{ steps.read_instructions.outputs.content }}
 
             📖 **Need more help?** Check out the [CAPI Release Drafting Guide](https://intranet.giantswarm.io/docs/product/releases/capi/capi-release-drafting/) for detailed instructions.
           branch: "release-${{ steps.determine_next_release.outputs.version }}-${{ matrix.provider }}"
           labels: |
             release/patch
+            stage/development
             ${{ matrix.provider }}
 
       - name: Checkout PR branch for analysis
@@ -1118,12 +1168,22 @@ jobs:
 
             ---
 
+            <!-- STAGE_DASHBOARD_START -->
+            | Stage | Status |
+            |-------|--------|
+            | Development | :arrow_right: Current |
+            | Active | :hourglass: Pending |
+            | Freeze | :hourglass: Pending |
+            | Release & Publish | :hourglass: Pending |
+            <!-- STAGE_DASHBOARD_END -->
+
             ${{ steps.read_instructions.outputs.content }}
 
             📖 **Need more help?** Check out the [CAPI Release Drafting Guide](https://intranet.giantswarm.io/docs/product/releases/capi/capi-release-drafting/) for detailed instructions.
           branch: "release-${{ steps.determine_next_release.outputs.version }}"
           labels: |
             release/patch
+            stage/development
             ${{ steps.create_release.outputs.PROVIDER_LABELS }}
 
       - name: Checkout PR branch for analysis
@@ -1230,7 +1290,7 @@ jobs:
           fi
           # Build Slack message with release version if available
           if [[ -n "${{ env.RELEASE_VERSION }}" ]]; then
-            SLACK_TITLE="📢 Scheduled Release ${{ env.RELEASE_VERSION }} Available"
+            SLACK_TITLE="📢 Scheduled Release ${{ env.RELEASE_VERSION }} — Development"
           else
             SLACK_TITLE="📢 Scheduled Release PR Available"
           fi
@@ -1266,7 +1326,7 @@ jobs:
                 "type": "section",
                 "text": {
                   "type": "mrkdwn",
-                  "text": "The scheduled workload cluster release PR has been created and is now ready for product teams to add their changes.\n\n*Release PR:* <$PR_URL|$PR_TITLE>"
+                  "text": "A new workload cluster release PR has been created and is in the *Development* stage. Team Tenet is reviewing and testing core functionality.\n\nProduct teams will be notified when the release moves to the Active stage.\n\n*Release PR:* <$PR_URL|$PR_TITLE>"
                 }
               },
               {

@@ -51,6 +51,80 @@ jobs:
             });
             return pr.data.head.ref;
 
+      - name: Check release stage and gate access
+        id: check_stage
+        uses: actions/github-script@v8
+        with:
+          github-token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+          script: |
+            const pr = await github.rest.pulls.get({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: ${{ github.event.issue.number }}
+            });
+
+            const labels = pr.data.labels.map(l => l.name);
+            const commentAuthor = context.payload.comment.user.login;
+
+            // Determine current stage
+            let stage = 'none';
+            if (labels.includes('stage/freeze')) {
+              stage = 'freeze';
+            } else if (labels.includes('stage/active')) {
+              stage = 'active';
+            } else if (labels.includes('stage/development')) {
+              stage = 'development';
+            }
+
+            core.setOutput('stage', stage);
+            console.log(`Release stage: ${stage}, Author: ${commentAuthor}`);
+
+            if (stage === 'freeze') {
+              // During freeze, only Team Tenet members can make changes
+              try {
+                const membership = await github.rest.teams.getMembershipForUserInOrg({
+                  org: context.repo.owner,
+                  team_slug: 'team-tenet',
+                  username: commentAuthor
+                });
+                const isTenetMember = membership.data.state === 'active';
+                core.setOutput('allowed', isTenetMember.toString());
+                console.log(`Tenet membership: ${isTenetMember}`);
+              } catch (e) {
+                // Not a member
+                core.setOutput('allowed', 'false');
+                console.log(`User is not a Tenet member: ${e.message}`);
+              }
+            } else {
+              core.setOutput('allowed', 'true');
+            }
+
+      - name: Post rejection comment during freeze
+        if: steps.check_stage.outputs.stage == 'freeze' && steps.check_stage.outputs.allowed == 'false'
+        uses: actions/github-script@v8
+        with:
+          github-token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+          script: |
+            await github.rest.reactions.createForIssueComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              comment_id: ${{ github.event.comment.id }},
+              content: '-1'
+            });
+
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: ${{ github.event.issue.number }},
+              body: '**Update Rejected — Release is in Freeze stage**\n\nOnly Team Tenet members can make changes during the Freeze stage. Contact Team Tenet if you need an exception.'
+            });
+
+      - name: Exit if not allowed during freeze
+        if: steps.check_stage.outputs.stage == 'freeze' && steps.check_stage.outputs.allowed == 'false'
+        run: |
+          echo "User not allowed to make changes during freeze stage. Exiting."
+          exit 1
+
       - name: Detect if automatic bump or manual update
         id: detect_source
         uses: actions/github-script@v8
