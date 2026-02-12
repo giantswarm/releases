@@ -19,6 +19,13 @@ Documentation for workflows that manage the end-of-life process for releases:
 
 These workflows ensure safe transitions by validating against active usage metrics from Grafana before making changes.
 
+### [Release Stages](workflows-release-stages.md)
+Documentation for the staged release lifecycle:
+- **Release Stage** (`release-stages.yaml`) - Manages stage transitions via `/stage` slash command
+- **Stages**: Development → Active → Freeze → Release & Publish
+- Freeze stage blocks non-Tenet changes and skips weekly bumps
+- Slack notifications for consolidated releases on stage transitions
+
 ### [Pinning Component and App Versions](workflows-pinning-versions.md)
 Documentation for pinning specific component or app versions in releases:
 - **Pin Version** (`pin-version.yaml`) - Pins component/app versions via PR comments
@@ -36,6 +43,7 @@ Use this when you need to keep a specific version temporarily or long-term.
 |----------|----------|----------------|
 | Create Release PR | 1st of month 6:00 AM UTC | ✅ |
 | Update Release PR | On PR comment | ❌ |
+| Release Stage | On PR comment (`/stage`) | ❌ |
 | Bump Open Releases | Monday 9:00 AM UTC | ✅ |
 | Deprecate Releases | Monday 6:00 AM UTC | ✅ |
 | Archive Releases | Monday 10:00 AM UTC | ✅ |

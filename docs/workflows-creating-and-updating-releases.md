@@ -195,9 +195,11 @@ Runs `tools/update-readme.sh` to:
 #### 7. Create Pull Request
 Creates PR with:
 - **Title**: `"[Provider]: Release vX.Y.Z."`
-- **Body**: Instructions for updating the release
-- **Labels**: Release type + provider(s)
+- **Body**: Instructions for updating the release + stage dashboard
+- **Labels**: Release type + provider(s) + `stage/development`
 - **Branch**: `release-vX.Y.Z[-provider]`
+
+All new PRs start in the **Development** stage. See [Release Stages](workflows-release-stages.md) for the full lifecycle.
 
 ---
 
@@ -307,17 +309,23 @@ Updates the announcement.md with a brief summary.
 
 ### Update Workflow Process
 
-#### 1. React to Comment
+#### 1. Check Release Stage
+- Fetches PR labels to determine current stage
+- During **Freeze** (`stage/freeze`): checks if comment author is a Team Tenet member
+- Non-Tenet users are blocked with a rejection comment and `-1` reaction
+- All other stages allow changes from any user
+
+#### 2. React to Comment
 - Adds 👀 (eyes) reaction to show processing has started
 - Prevents duplicate runs
 
-#### 2. Parse Command
+#### 3. Parse Command
 - Extracts provider from `--provider` flag OR
 - Auto-detects from PR's changed files (looks for azure/, capa/, vsphere/, etc.)
 - Parses devctl arguments
 - Decodes descriptions (handles special characters via base64)
 
-#### 3. Execute Update
+#### 4. Execute Update
 For component/app updates:
 - Backs up existing descriptions
 - Runs `devctl release create` with appropriate flags
@@ -328,13 +336,13 @@ For description updates:
 - Updates README.md line 3 OR
 - Updates announcement.md line 1 with proper format
 
-#### 4. Commit Changes
+#### 5. Commit Changes
 - Configures Git with bot identity
 - Stages all changes
 - Commits with message: `"chore: Update release files via comment"`
 - Pushes to PR branch
 
-#### 5. Post Results
+#### 6. Post Results
 - Adds ✅ (thumbs up) reaction for success
 - Posts detailed comment with:
   - Change tables showing version updates
@@ -381,6 +389,7 @@ The bot posts structured comments showing what changed:
 1. **Find Open Release PRs**
    - Searches for PRs with branch pattern: `release-v[0-9]+\.[0-9]+\.[0-9]+`
    - Excludes PRs created within the last 24 hours (to avoid bumping newly created monthly release PRs)
+   - Excludes PRs with the `stage/freeze` label (frozen releases should not receive automatic bumps)
    - Manual runs can target specific PR number and bypass the 24-hour filter
 
 2. **Post Update Command**
@@ -417,10 +426,12 @@ For scheduled (non-manual) releases that successfully create PRs:
 
 ### Slack Notification
 Sent to configured Slack channel with:
-- Release version
+- Release version and stage (Development)
 - PR title and link
 - Link to CAPI Release Drafting Guide
 - Metadata for tracking
+
+The initial announcement says the release is in the **Development** stage. Product teams are notified again when the release moves to **Active** via the `/stage active` command. See [Release Stages](workflows-release-stages.md).
 
 **Conditions**:
 - Only for scheduled runs (not manual)
