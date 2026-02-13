@@ -57,6 +57,7 @@ jobs:
               if [[ -z "${CHANGED_FILES}" ]]; then
                 echo "No release.yaml files changed, nothing to retag"
                 circleci-agent step halt
+                exit 0
               fi
 
               echo "Changed release.yaml files:"
@@ -80,10 +81,12 @@ jobs:
               if [[ ! -s /tmp/releases.txt ]]; then
                 echo "No active releases to retag"
                 circleci-agent step halt
+                exit 0
               fi
             else
               echo "Not main/master and no manual trigger, nothing to do"
               circleci-agent step halt
+              exit 0
             fi
 
             echo ""
