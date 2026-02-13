@@ -36,11 +36,24 @@ The `cluster` subchart (bundled inside provider charts) uses `.Chart.Version` to
 
 The subchart's lookup logic in `_helpers.tpl` already checks `$.Values.global.release.version` first, then falls back to `.Chart.Version`. By injecting this value, the subchart correctly resolves the Release CR (e.g., `aws-34.0.0`).
 
+## Architecture
+
+The CI pipeline uses CircleCI's [dynamic config](https://circleci.com/docs/dynamic-config/) (`setup: true` + `continuation` orb) to fan out retag jobs at runtime:
+
+1. **Setup phase** (`.circleci/config.yml`):
+   - `validate` job runs tests on all branches
+   - `setup-retag` job discovers which releases need retagging and generates a continuation config
+2. **Continuation phase** (`.circleci/continue-config.yml` + dynamic workflows):
+   - For each release: `prepare-retag-chart` → `architect/push-to-app-catalog`
+   - All releases are processed in parallel within a single pipeline
+
+This means if a merge introduces 3 new releases, the pipeline fans out into 3 parallel `prepare` + `push` job pairs — similar to a matrix strategy in GitHub Actions.
+
 ## Triggers
 
 ### Automatic (on merge to main/master)
 
-When `release.yaml` files are changed and merged, the workflow automatically creates release charts.
+When `release.yaml` files are changed and merged, the setup job discovers them via `git diff` and generates a continuation config with retag jobs for each changed release.
 
 **Filters:**
 - Excludes archived releases (paths containing `/archived/`)
