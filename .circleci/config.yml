@@ -100,32 +100,33 @@ jobs:
             # Start from the static continuation config (has job/command definitions)
             cp .circleci/continue-config.yml /tmp/continue-config.yml
 
-            # Append dynamic workflow entries for each release
-            printf '%s\n' '' 'workflows:' '  retag:' '    jobs:' >> /tmp/continue-config.yml
+            # Append dynamic workflow entries using yq for proper YAML formatting
+            yq -i '.workflows.retag.jobs = []' /tmp/continue-config.yml
 
             while IFS=: read -r provider version; do
-              printf '%s\n' \
-                "      - prepare-retag-chart:" \
-                "          name: prepare-${provider}-${version}" \
-                "          context: architect" \
-                "          provider: ${provider}" \
-                "          release_version: ${version}" \
-                "      - architect/push-to-app-catalog:" \
-                "          name: push-${provider}-${version}" \
-                "          context: architect" \
-                "          requires:" \
-                "            - prepare-${provider}-${version}" \
-                "          attach_workspace: true" \
-                "          chart: release-chart" \
-                "          explicit_allow_chart_name_mismatch: true" \
-                "          executor: app-build-suite" \
-                "          app_catalog: cluster-catalog" \
-                "          app_catalog_test: cluster-catalog" \
-                "          push_to_appcatalog: true" \
-                "          push_to_oci_registry: true" \
-                "          force-public: true" \
-                "          on_tag: false" \
-                >> /tmp/continue-config.yml
+              yq -i ".workflows.retag.jobs += [
+                {\"prepare-retag-chart\": {
+                  \"name\": \"prepare-${provider}-${version}\",
+                  \"context\": \"architect\",
+                  \"provider\": \"${provider}\",
+                  \"release_version\": \"${version}\"
+                }},
+                {\"architect/push-to-app-catalog\": {
+                  \"name\": \"push-${provider}-${version}\",
+                  \"context\": \"architect\",
+                  \"requires\": [\"prepare-${provider}-${version}\"],
+                  \"attach_workspace\": true,
+                  \"chart\": \"release-chart\",
+                  \"explicit_allow_chart_name_mismatch\": true,
+                  \"executor\": \"app-build-suite\",
+                  \"app_catalog\": \"cluster-catalog\",
+                  \"app_catalog_test\": \"cluster-catalog\",
+                  \"push_to_appcatalog\": true,
+                  \"push_to_oci_registry\": true,
+                  \"force-public\": true,
+                  \"on_tag\": false
+                }}
+              ]" /tmp/continue-config.yml
             done < /tmp/releases.txt
 
             echo "Generated continuation config:"
