@@ -1,6 +1,6 @@
 # :zap: Giant Swarm Release v34.0.0 for CAPA :zap:
 
-## :warning: Important Note for Upgrading to this Release :warning:
+## Warning: Important Note for Upgrading to this Release
 
 _tl;dr_: Please first upgrade your existing cluster to Giant Swarm Release v33.1.4 for CAPA or newer before upgrading to this release! Otherwise, you risk service outage and severe issues.
 
@@ -83,7 +83,7 @@ Refer to the [Kubernetes Structured Authentication documentation](https://kubern
 
 ### cluster-aws [v6.4.3...v7.2.5](https://github.com/giantswarm/cluster-aws/compare/v6.4.3...v7.2.5)
 
-#### :warning: Breaking Changes
+#### Warning: Breaking Changes
 
 - The following IAM permissions have been removed from the control plane nodes
 - autoscaling:SetDesiredCapacity
