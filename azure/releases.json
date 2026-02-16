@@ -2,7 +2,7 @@
   "releases": [
     {
       "version": "31.1.2",
-      "isDeprecated": false,
+      "isDeprecated": true,
       "releaseTimestamp": "2025-09-10T12:57:18Z",
       "changelogUrl": "https://github.com/giantswarm/releases/blob/master/azure/v31.1.2/README.md",
       "isStable": true
