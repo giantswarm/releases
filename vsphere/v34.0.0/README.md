@@ -1,6 +1,6 @@
 # :zap: Giant Swarm Release v34.0.0 for vSphere :zap:
 
-## :warning: Important Note for Upgrading to this Release :warning:
+## Warning: Important Note for Upgrading to this Release
 
 _tl;dr_: Please first upgrade your existing cluster to Giant Swarm Release v33.1.1 for vSphere or newer before upgrading to this release! Otherwise, you risk service outage and severe issues.
 
