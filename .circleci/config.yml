@@ -64,7 +64,7 @@ jobs:
               echo "${CHANGED_FILES}"
               echo ""
 
-              > /tmp/releases.txt
+              rm -f /tmp/releases.txt
               for file in ${CHANGED_FILES}; do
                 PROVIDER=$(echo "${file}" | cut -d'/' -f1)
                 VERSION=$(echo "${file}" | cut -d'/' -f2)
@@ -138,8 +138,28 @@ jobs:
           configuration_path: /tmp/continue-config.yml
 
 workflows:
-  setup:
+  validate:
     jobs:
       - validate
+
+  # Auto-retag: only on main/master, skips PRs entirely
+  auto-retag-setup:
+    when:
+      equal: ["", << pipeline.parameters.provider >>]
+    jobs:
+      - setup-retag:
+          context: architect
+          filters:
+            branches:
+              only:
+                - main
+                - master
+
+  # Manual trigger: runs on any branch when provider is set
+  manual-retag-setup:
+    when:
+      not:
+        equal: ["", << pipeline.parameters.provider >>]
+    jobs:
       - setup-retag:
           context: architect
