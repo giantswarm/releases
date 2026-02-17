@@ -110,7 +110,7 @@ jobs:
             # Skip ct lint — this is a pre-built chart, already linted in its source repo.
             # ct lint fails because the helm repo for dependencies isn't configured in this CI.
             mkdir -p ~/project/.abs
-            printf 'steps = metadata build\n' > ~/project/.abs/main.yaml
+            printf 'steps = metadata\nsteps = build\n' > ~/project/.abs/main.yaml
       - persist_to_workspace:
           root: .
           paths:
