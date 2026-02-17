@@ -1,10 +1,24 @@
-
 version: 2.1
 
 setup: true
 
 orbs:
-  path-filtering: circleci/path-filtering@3.0.0
+  continuation: circleci/continuation@2.0.1
+
+# Manual trigger example:
+#   curl -X POST https://circleci.com/api/v2/project/gh/giantswarm/releases/pipeline \
+#     -H "Circle-Token: $CIRCLE_TOKEN" \
+#     -H "Content-Type: application/json" \
+#     -d '{"parameters": {"provider": "capa", "release_version": "v34.0.0"}}'
+
+parameters:
+  provider:
+    type: enum
+    enum: ["", "capa", "azure", "vsphere", "cloud-director", "eks"]
+    default: ""
+  release_version:
+    type: string
+    default: ""
 
 jobs:
   validate:
@@ -16,7 +30,133 @@ jobs:
           name: Validate releases
           command: CGO_ENABLED=0 go test ./...
 
+  setup-retag:
+    docker:
+      - image: cimg/base:current
+    steps:
+      - checkout
+      - run:
+          name: Install yq
+          command: |
+            sudo wget -qO /usr/local/bin/yq https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64
+            sudo chmod +x /usr/local/bin/yq
+      - run:
+          name: Determine releases to retag
+          command: |
+            set -euo pipefail
+
+            if [[ -n "<< pipeline.parameters.provider >>" ]]; then
+              # Manual trigger - single release
+              echo "<< pipeline.parameters.provider >>:<< pipeline.parameters.release_version >>" > /tmp/releases.txt
+              echo "Manual trigger: << pipeline.parameters.provider >> << pipeline.parameters.release_version >>"
+            elif [[ "${CIRCLE_BRANCH}" == "main" || "${CIRCLE_BRANCH}" == "master" ]]; then
+              # Auto mode on main/master - discover changed releases
+              MERGE_BASE=$(git merge-base HEAD origin/master 2>/dev/null || git merge-base HEAD origin/main 2>/dev/null || echo "HEAD~1")
+              CHANGED_FILES=$(git diff --name-only "${MERGE_BASE}" HEAD -- '*/v*.*.*/release.yaml' | grep -v '/archived/' || true)
+
+              if [[ -z "${CHANGED_FILES}" ]]; then
+                echo "No release.yaml files changed, nothing to retag"
+                circleci-agent step halt
+                exit 0
+              fi
+
+              echo "Changed release.yaml files:"
+              echo "${CHANGED_FILES}"
+              echo ""
+
+              rm -f /tmp/releases.txt
+              for file in ${CHANGED_FILES}; do
+                PROVIDER=$(echo "${file}" | cut -d'/' -f1)
+                VERSION=$(echo "${file}" | cut -d'/' -f2)
+
+                RELEASE_STATE=$(yq '.spec.state' "${file}")
+                if [[ "${RELEASE_STATE}" != "active" ]]; then
+                  echo "Skipping ${PROVIDER}/${VERSION}: state '${RELEASE_STATE}' (not active)"
+                  continue
+                fi
+
+                echo "${PROVIDER}:${VERSION}" >> /tmp/releases.txt
+              done
+
+              if [[ ! -s /tmp/releases.txt ]]; then
+                echo "No active releases to retag"
+                circleci-agent step halt
+                exit 0
+              fi
+            else
+              echo "Not main/master and no manual trigger, nothing to do"
+              circleci-agent step halt
+              exit 0
+            fi
+
+            echo ""
+            echo "Releases to retag:"
+            cat /tmp/releases.txt
+      - run:
+          name: Generate continuation config
+          command: |
+            set -euo pipefail
+
+            # Start from the static continuation config (has job/command definitions)
+            cp .circleci/continue-config.yml /tmp/continue-config.yml
+
+            # Append dynamic workflow entries using yq for proper YAML formatting
+            yq -i '.workflows.retag.jobs = []' /tmp/continue-config.yml
+
+            while IFS=: read -r provider version; do
+              yq -i ".workflows.retag.jobs += [
+                {\"prepare-retag-chart\": {
+                  \"name\": \"prepare-${provider}-${version}\",
+                  \"context\": \"architect\",
+                  \"provider\": \"${provider}\",
+                  \"release_version\": \"${version}\"
+                }},
+                {\"architect/push-to-app-catalog\": {
+                  \"name\": \"push-${provider}-${version}\",
+                  \"context\": \"architect\",
+                  \"requires\": [\"prepare-${provider}-${version}\"],
+                  \"attach_workspace\": true,
+                  \"chart\": \"release-chart\",
+                  \"explicit_allow_chart_name_mismatch\": true,
+                  \"executor\": \"app-build-suite\",
+                  \"app_catalog\": \"cluster-catalog\",
+                  \"app_catalog_test\": \"cluster-catalog\",
+                  \"push_to_appcatalog\": true,
+                  \"push_to_oci_registry\": true,
+                  \"force-public\": true,
+                  \"on_tag\": false
+                }}
+              ]" /tmp/continue-config.yml
+            done < /tmp/releases.txt
+
+            echo "Generated continuation config:"
+            cat /tmp/continue-config.yml
+      - continuation/continue:
+          configuration_path: /tmp/continue-config.yml
+
 workflows:
-  workflow:
+  validate:
     jobs:
       - validate
+
+  # Auto-retag: only on main/master, skips PRs entirely
+  auto-retag-setup:
+    when:
+      equal: ["", << pipeline.parameters.provider >>]
+    jobs:
+      - setup-retag:
+          context: architect
+          filters:
+            branches:
+              only:
+                - main
+                - master
+
+  # Manual trigger: runs on any branch when provider is set
+  manual-retag-setup:
+    when:
+      not:
+        equal: ["", << pipeline.parameters.provider >>]
+    jobs:
+      - setup-retag:
+          context: architect

@@ -1,0 +1,118 @@
+version: 2.1
+
+# Pipeline parameters forwarded from the setup config (config.yml).
+# These must be declared here to avoid "Unexpected argument(s)" errors.
+parameters:
+  provider:
+    type: string
+    default: ""
+  release_version:
+    type: string
+    default: ""
+
+orbs:
+  architect: giantswarm/architect@6.12.0
+
+# Static job definitions for the retag workflow.
+# The workflows section is appended dynamically by the setup job in config.yml.
+
+commands:
+  install-yq:
+    steps:
+      - run:
+          name: Install yq
+          command: |
+            sudo wget -qO /usr/local/bin/yq https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64
+            sudo chmod +x /usr/local/bin/yq
+
+  login-oci-registry:
+    steps:
+      - run:
+          name: Login to OCI registry
+          command: |
+            echo "${ACR_GSOCI_PASSWORD}" | helm registry login gsoci.azurecr.io \
+              --username "${ACR_GSOCI_USERNAME}" \
+              --password-stdin
+
+jobs:
+  prepare-retag-chart:
+    executor: architect/app-build-suite
+    parameters:
+      provider:
+        type: string
+      release_version:
+        type: string
+    steps:
+      - checkout
+      - install-yq
+      - run:
+          name: Parse release information
+          command: |
+            PROVIDER="<< parameters.provider >>"
+            RELEASE_VERSION="<< parameters.release_version >>"
+            RELEASE_VERSION_CLEAN="${RELEASE_VERSION#v}"
+
+            case "${PROVIDER}" in
+              capa)         SOURCE_CHART="cluster-aws";           TARGET_CHART="release-aws" ;;
+              azure)        SOURCE_CHART="cluster-azure";         TARGET_CHART="release-azure" ;;
+              vsphere)      SOURCE_CHART="cluster-vsphere";       TARGET_CHART="release-vsphere" ;;
+              cloud-director) SOURCE_CHART="cluster-cloud-director"; TARGET_CHART="release-cloud-director" ;;
+              eks)          SOURCE_CHART="cluster-eks";           TARGET_CHART="release-eks" ;;
+              *) echo "Unknown provider: ${PROVIDER}"; exit 1 ;;
+            esac
+
+            RELEASE_PATH="${PROVIDER}/${RELEASE_VERSION}"
+
+            if [[ ! -f "${RELEASE_PATH}/release.yaml" ]]; then
+              echo "Release file not found: ${RELEASE_PATH}/release.yaml"
+              exit 1
+            fi
+
+            CHART_VERSION=$(yq ".spec.components[] | select(.name == \"${SOURCE_CHART}\") | .version" "${RELEASE_PATH}/release.yaml")
+
+            if [[ -z "${CHART_VERSION}" || "${CHART_VERSION}" == "null" ]]; then
+              echo "Could not find ${SOURCE_CHART} version in release.yaml"
+              exit 1
+            fi
+
+            echo "Provider: ${PROVIDER}"
+            echo "Source: ${SOURCE_CHART}:${CHART_VERSION} → Target: ${TARGET_CHART}:${RELEASE_VERSION_CLEAN}"
+
+            echo "export SOURCE_CHART='${SOURCE_CHART}'" >> "$BASH_ENV"
+            echo "export TARGET_CHART='${TARGET_CHART}'" >> "$BASH_ENV"
+            echo "export CHART_VERSION='${CHART_VERSION}'" >> "$BASH_ENV"
+            echo "export RELEASE_VERSION_CLEAN='${RELEASE_VERSION_CLEAN}'" >> "$BASH_ENV"
+      - login-oci-registry
+      - run:
+          name: Pull and retag chart
+          command: |
+            set -euo pipefail
+
+            WORK_DIR=$(mktemp -d)
+            cd "${WORK_DIR}"
+
+            helm pull "oci://gsoci.azurecr.io/charts/giantswarm/${SOURCE_CHART}" --version "${CHART_VERSION}"
+
+            tar -xzf "${SOURCE_CHART}-${CHART_VERSION}.tgz"
+            mv "${SOURCE_CHART}" "${TARGET_CHART}"
+
+            yq -i ".name = \"${TARGET_CHART}\"" "${TARGET_CHART}/Chart.yaml"
+            yq -i ".version = \"${RELEASE_VERSION_CLEAN}\"" "${TARGET_CHART}/Chart.yaml"
+            yq -i ".global.release.version = \"${RELEASE_VERSION_CLEAN}\"" "${TARGET_CHART}/values.yaml"
+
+            echo "Chart name: $(yq '.name' "${TARGET_CHART}/Chart.yaml")"
+            echo "Chart version: $(yq '.version' "${TARGET_CHART}/Chart.yaml")"
+            echo "global.release.version: $(yq '.global.release.version' "${TARGET_CHART}/values.yaml")"
+
+            mkdir -p ~/project/helm
+            mv "${TARGET_CHART}" ~/project/helm/release-chart
+
+            # Skip ct lint — this is a pre-built chart, already linted in its source repo.
+            # ct lint fails because the helm repo for dependencies isn't configured in this CI.
+            mkdir -p ~/project/.abs
+            printf 'skip-steps:\n  - HelmChartToolLinter\n' > ~/project/.abs/main.yaml
+      - persist_to_workspace:
+          root: .
+          paths:
+            - helm/release-chart
+            - .abs
