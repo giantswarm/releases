@@ -237,6 +237,12 @@ jobs:
             exit 1
           fi
 
+          # Convert standard Markdown to Slack mrkdwn:
+          #   **bold** -> *bold*
+          #   [text](url) -> <url|text>
+          ANNOUNCEMENT=$(echo "$ANNOUNCEMENT" | sed 's/\*\*\([^*]*\)\*\*/\*\1\*/g')
+          ANNOUNCEMENT=$(echo "$ANNOUNCEMENT" | sed 's/\[\([^]]*\)\](\([^)]*\))/<\2|\1>/g')
+
           echo "announcement<<EOF" >> "$GITHUB_OUTPUT"
           echo "$ANNOUNCEMENT" >> "$GITHUB_OUTPUT"
           echo "EOF" >> "$GITHUB_OUTPUT"
