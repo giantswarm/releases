@@ -6,7 +6,7 @@ This release PR follows a staged lifecycle managed via PR labels:
 
 | Stage | Label | Description |
 |-------|-------|-------------|
-| **Development** | `stage/development` | Team Tenet is reviewing and testing core functionality. Changes are allowed but the release is not yet ready for product team input. |
+| **Development** | `stage/development` | Team Tenet is reviewing and testing core functionality. The release is not yet ready for product team input. |
 | **Active** | `stage/active` | Product teams can now review, bump components, run tests, and add changes. |
 | **Freeze** | `stage/freeze` | Only bugfixes and critical patches are allowed. Only Team Tenet members can make changes. |
 | **Release & Publish** | _(PR merged)_ | The release is finalized and published. |
