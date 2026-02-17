@@ -99,6 +99,7 @@ jobs:
             yq -i ".name = \"${TARGET_CHART}\"" "${TARGET_CHART}/Chart.yaml"
             yq -i ".version = \"${RELEASE_VERSION_CLEAN}\"" "${TARGET_CHART}/Chart.yaml"
             yq -i 'del(.dependencies)' "${TARGET_CHART}/Chart.yaml"
+            rm -f "${TARGET_CHART}/Chart.lock"
             yq -i ".global.release.version = \"${RELEASE_VERSION_CLEAN}\"" "${TARGET_CHART}/values.yaml"
 
             echo "Chart name: $(yq '.name' "${TARGET_CHART}/Chart.yaml")"
