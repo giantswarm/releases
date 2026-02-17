@@ -1,5 +1,15 @@
 version: 2.1
 
+# Pipeline parameters forwarded from the setup config (config.yml).
+# These must be declared here to avoid "Unexpected argument(s)" errors.
+parameters:
+  provider:
+    type: string
+    default: ""
+  release_version:
+    type: string
+    default: ""
+
 orbs:
   architect: giantswarm/architect@6.12.0
 
