@@ -248,9 +248,9 @@ jobs:
           token: ${{ secrets.SLACK_BOT_TOKEN }}
           payload: |
             channel: ${{ matrix.channel }}
-            text: "${{ steps.get_provider_announcement.outputs.announcement }}"
+            text: ${{ toJSON(steps.get_provider_announcement.outputs.announcement) }}
             blocks:
               - type: "section"
                 text:
                   type: "mrkdwn"
-                  text: "${{ steps.get_provider_announcement.outputs.announcement }}"
+                  text: ${{ toJSON(steps.get_provider_announcement.outputs.announcement) }}
