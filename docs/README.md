@@ -35,6 +35,13 @@ Documentation for pinning specific component or app versions in releases:
 
 Use this when you need to keep a specific version temporarily or long-term.
 
+### [Retagging Cluster Provider Charts](workflows-retagging-cluster-charts.md)
+Documentation for the chart retagging workflow that enables automated cluster upgrades:
+- **Auto-Retag** (CircleCI) - Automatically retags charts when releases are merged
+- **Manual Retag** (CircleCI) - Manually trigger retagging for specific provider/version
+
+This workflow retags cluster provider charts (e.g., `cluster-aws:7.2.5` → `34.0.0`) and injects `global.release.version` into `values.yaml`, enabling Flux to upgrade clusters by simply updating the App CR's `.spec.version` field.
+
 ## Quick Reference
 
 ### Workflow Triggers
@@ -47,6 +54,7 @@ Use this when you need to keep a specific version temporarily or long-term.
 | Bump Open Releases | Monday 9:00 AM UTC | ✅ |
 | Deprecate Releases | Monday 6:00 AM UTC | ✅ |
 | Archive Releases | Monday 10:00 AM UTC | ✅ |
+| Retag Cluster Charts (CircleCI) | On merge to main/master | ✅ |
 
 ## External Resources
 
