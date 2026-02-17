@@ -1,0 +1,354 @@
+name: Release Stage (Comment Trigger)
+
+on:
+  issue_comment:
+    types: [created]
+
+jobs:
+  release-stage:
+    if: github.event.issue.pull_request && startsWith(github.event.comment.body, '/stage') && github.repository == 'giantswarm/releases'
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+    permissions:
+      contents: read
+      pull-requests: write
+
+    steps:
+      - name: Add reaction to comment to indicate processing
+        uses: actions/github-script@v8
+        with:
+          github-token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+          script: |
+            github.rest.reactions.createForIssueComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              comment_id: ${{ github.event.comment.id }},
+              content: 'eyes'
+            })
+
+      - name: Get PR details
+        id: pr_details
+        uses: actions/github-script@v8
+        with:
+          github-token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+          script: |
+            const pr = await github.rest.pulls.get({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: ${{ github.event.issue.number }}
+            });
+
+            const labels = pr.data.labels.map(l => l.name);
+            const branch = pr.data.head.ref;
+            const title = pr.data.title;
+            const prUrl = pr.data.html_url;
+            const body = pr.data.body || '';
+
+            core.setOutput('labels', JSON.stringify(labels));
+            core.setOutput('branch', branch);
+            core.setOutput('title', title);
+            core.setOutput('pr_url', prUrl);
+            core.setOutput('body', body);
+
+      - name: Parse and validate stage transition
+        id: validate
+        uses: actions/github-script@v8
+        with:
+          github-token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+          script: |
+            const commentBody = context.payload.comment.body.trim();
+            const labels = JSON.parse('${{ steps.pr_details.outputs.labels }}'.replace(/'/g, "\\'"));
+            const branch = '${{ steps.pr_details.outputs.branch }}';
+
+            // Parse target stage from comment
+            const match = commentBody.match(/^\/stage\s+(active|freeze)\s*$/);
+            if (!match) {
+              core.setOutput('error', 'Invalid command. Usage: `/stage active` or `/stage freeze`');
+              return;
+            }
+
+            const targetStage = match[1];
+            core.setOutput('target_stage', targetStage);
+
+            // Determine current stage from labels
+            let currentStage = 'none';
+            if (labels.includes('stage/freeze')) {
+              currentStage = 'freeze';
+            } else if (labels.includes('stage/active')) {
+              currentStage = 'active';
+            } else if (labels.includes('stage/development')) {
+              currentStage = 'development';
+            }
+            core.setOutput('current_stage', currentStage);
+
+            // Validate transition
+            const validTransitions = {
+              'development': ['active'],
+              'active': ['freeze'],
+              'none': ['active']
+            };
+
+            const allowed = validTransitions[currentStage] || [];
+            if (!allowed.includes(targetStage)) {
+              let errorMsg = `Cannot transition from **${currentStage}** to **${targetStage}**.\\n\\nValid transitions:\\n`;
+              errorMsg += '- `development` -> `active`\\n';
+              errorMsg += '- `active` -> `freeze`\\n';
+              errorMsg += '- `none` -> `active` (legacy PRs)';
+              core.setOutput('error', errorMsg);
+              return;
+            }
+
+            // Determine if this is a consolidated release (branch pattern: release-vX.Y.Z without provider suffix)
+            const isConsolidated = /^release-v\d+\.\d+\.\d+$/.test(branch);
+            core.setOutput('is_consolidated', isConsolidated.toString());
+
+            // Extract version from branch
+            const versionMatch = branch.match(/release-(v\d+\.\d+\.\d+)/);
+            const version = versionMatch ? versionMatch[1] : '';
+            core.setOutput('version', version);
+
+            core.setOutput('valid', 'true');
+
+      - name: Post error if validation failed
+        if: steps.validate.outputs.error
+        uses: actions/github-script@v8
+        with:
+          github-token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+          script: |
+            const error = `${{ steps.validate.outputs.error }}`;
+
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: ${{ github.event.issue.number }},
+              body: `**Stage Transition Failed**\n\n${error}`
+            });
+
+            await github.rest.reactions.createForIssueComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              comment_id: ${{ github.event.comment.id }},
+              content: '-1'
+            });
+
+      - name: Swap stage labels
+        if: steps.validate.outputs.valid == 'true'
+        uses: actions/github-script@v8
+        with:
+          github-token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+          script: |
+            const currentStage = '${{ steps.validate.outputs.current_stage }}';
+            const targetStage = '${{ steps.validate.outputs.target_stage }}';
+            const prNumber = ${{ github.event.issue.number }};
+
+            // Remove current stage label if present
+            if (currentStage !== 'none') {
+              try {
+                await github.rest.issues.removeLabel({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number: prNumber,
+                  name: `stage/${currentStage}`
+                });
+              } catch (e) {
+                console.log(`Label stage/${currentStage} not found, skipping removal`);
+              }
+            }
+
+            // Add new stage label
+            await github.rest.issues.addLabels({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: prNumber,
+              labels: [`stage/${targetStage}`]
+            });
+
+      - name: Request reviewers on active stage
+        if: steps.validate.outputs.valid == 'true' && steps.validate.outputs.target_stage == 'active'
+        uses: actions/github-script@v8
+        with:
+          github-token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+          script: |
+            const teams = ['team-rocket', 'team-phoenix', 'team-shield', 'team-atlas'];
+
+            try {
+              await github.rest.pulls.requestReviewers({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                pull_number: ${{ github.event.issue.number }},
+                team_reviewers: teams
+              });
+              console.log(`Requested reviews from: ${teams.join(', ')}`);
+            } catch (e) {
+              console.log(`Warning: Could not request all team reviewers: ${e.message}`);
+            }
+
+      - name: Send Slack notification
+        if: steps.validate.outputs.valid == 'true' && steps.validate.outputs.is_consolidated == 'true'
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+          SLACK_CHANNEL_ID: ${{ secrets.SLACK_RELEASE_CHANNEL_ID }}
+        run: |
+          # Skip if Slack is not configured
+          if [[ -z "$SLACK_BOT_TOKEN" ]] || [[ -z "$SLACK_CHANNEL_ID" ]]; then
+            echo "Slack is not configured. Skipping notification."
+            exit 0
+          fi
+
+          TARGET_STAGE="${{ steps.validate.outputs.target_stage }}"
+          VERSION="${{ steps.validate.outputs.version }}"
+          PR_URL="${{ steps.pr_details.outputs.pr_url }}"
+          PR_TITLE="${{ steps.pr_details.outputs.title }}"
+
+          if [[ "$TARGET_STAGE" == "active" ]]; then
+            SLACK_TITLE="Release ${VERSION} — Active"
+            SLACK_BODY="Release ${VERSION} is now in the *Active* stage. Product teams can now review, bump components, and run tests.\n\n*Release PR:* <${PR_URL}|${PR_TITLE}>"
+            HELP_BLOCK='{
+              "type": "section",
+              "text": {
+                "type": "mrkdwn",
+                "text": ":book: *Need help adding changes?*\nCheck out the <https://intranet.giantswarm.io/docs/product/releases/capi/capi-release-drafting/|CAPI Release Drafting Guide> for detailed instructions on how to update releases."
+              }
+            }'
+          elif [[ "$TARGET_STAGE" == "freeze" ]]; then
+            SLACK_TITLE="Release ${VERSION} — Freeze"
+            SLACK_BODY="Release ${VERSION} has entered *Freeze*. Only bugfixes and critical patches are allowed.\n\n*Release PR:* <${PR_URL}|${PR_TITLE}>"
+            HELP_BLOCK=""
+          fi
+
+          # Build blocks array
+          BLOCKS='[
+            {
+              "type": "header",
+              "text": {
+                "type": "plain_text",
+                "text": "'"$SLACK_TITLE"'",
+                "emoji": true
+              }
+            },
+            {
+              "type": "section",
+              "text": {
+                "type": "mrkdwn",
+                "text": "'"$SLACK_BODY"'"
+              }
+            }'
+
+          if [[ -n "$HELP_BLOCK" ]]; then
+            BLOCKS="${BLOCKS},${HELP_BLOCK}"
+          fi
+
+          BLOCKS="${BLOCKS}]"
+
+          # Send to Slack using Bot Token
+          echo "Sending stage notification to Slack"
+          RESPONSE=$(curl -s -X POST "https://slack.com/api/chat.postMessage" \
+            -H "Authorization: Bearer $SLACK_BOT_TOKEN" \
+            -H "Content-Type: application/json; charset=utf-8" \
+            -d "{\"channel\": \"$SLACK_CHANNEL_ID\", \"blocks\": $BLOCKS, \"metadata\": {\"event_type\": \"release_stage_change\", \"event_payload\": {\"version\": \"$VERSION\", \"stage\": \"$TARGET_STAGE\"}}}")
+
+          echo "Slack response: $(echo "$RESPONSE" | jq -r '.ok')"
+
+      - name: Update PR body stage dashboard
+        if: steps.validate.outputs.valid == 'true'
+        uses: actions/github-script@v8
+        with:
+          github-token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+          script: |
+            const targetStage = '${{ steps.validate.outputs.target_stage }}';
+            const body = await github.rest.pulls.get({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: ${{ github.event.issue.number }}
+            }).then(r => r.data.body || '');
+
+            const stages = ['Development', 'Active', 'Freeze', 'Release & Publish'];
+            const stageMap = {
+              'active': 1,
+              'freeze': 2
+            };
+
+            const activeIndex = stageMap[targetStage] ?? 0;
+
+            let dashboard = '<!-- STAGE_DASHBOARD_START -->\n';
+            dashboard += '| Stage | Status |\n';
+            dashboard += '|-------|--------|\n';
+
+            stages.forEach((stage, i) => {
+              if (i < activeIndex) {
+                dashboard += `| ${stage} | :white_check_mark: Done |\n`;
+              } else if (i === activeIndex) {
+                dashboard += `| ${stage} | :arrow_right: Current |\n`;
+              } else {
+                dashboard += `| ${stage} | :hourglass: Pending |\n`;
+              }
+            });
+
+            dashboard += '<!-- STAGE_DASHBOARD_END -->';
+
+            let newBody;
+            if (body.includes('<!-- STAGE_DASHBOARD_START -->') && body.includes('<!-- STAGE_DASHBOARD_END -->')) {
+              newBody = body.replace(
+                /<!-- STAGE_DASHBOARD_START -->[\s\S]*?<!-- STAGE_DASHBOARD_END -->/,
+                dashboard
+              );
+            } else {
+              // Insert before the instructions section if possible
+              newBody = body;
+            }
+
+            await github.rest.pulls.update({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: ${{ github.event.issue.number }},
+              body: newBody
+            });
+
+      - name: Add success reaction
+        if: steps.validate.outputs.valid == 'true'
+        uses: actions/github-script@v8
+        with:
+          github-token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+          script: |
+            github.rest.reactions.createForIssueComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              comment_id: ${{ github.event.comment.id }},
+              content: '+1'
+            })
+
+      - name: Post summary comment
+        if: steps.validate.outputs.valid == 'true'
+        uses: actions/github-script@v8
+        with:
+          github-token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+          script: |
+            const targetStage = '${{ steps.validate.outputs.target_stage }}';
+            const version = '${{ steps.validate.outputs.version }}';
+            const isConsolidated = '${{ steps.validate.outputs.is_consolidated }}' === 'true';
+
+            let body = `**Release stage changed to \`${targetStage}\`**\n\n`;
+
+            if (targetStage === 'active') {
+              body += `Release ${version} is now in the **Active** stage.\n\n`;
+              body += `- Product teams have been requested as reviewers\n`;
+              body += `- Teams can now bump components, run tests, and add changes\n`;
+              if (isConsolidated) {
+                body += `- A Slack notification has been sent to the release channel\n`;
+              }
+            } else if (targetStage === 'freeze') {
+              body += `Release ${version} has entered **Freeze**.\n\n`;
+              body += `- Only Team Tenet members can make changes\n`;
+              body += `- Other changes will be rejected by the update workflow\n`;
+              if (isConsolidated) {
+                body += `- A Slack notification has been sent to the release channel\n`;
+              }
+            }
+
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: ${{ github.event.issue.number }},
+              body: body
+            });
