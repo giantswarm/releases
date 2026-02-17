@@ -52,7 +52,7 @@ jobs:
     name: Gather channels
     runs-on: ubuntu-latest
     outputs:
-      channels: ${{ steps.collect.outputs.channels }}
+      provider_channels: ${{ steps.collect.outputs.provider_channels }}
     env:
       GH_TOKEN: ${{ secrets.ANNOUNCE_NOTIFY_TOKEN }}
     steps:
@@ -68,17 +68,7 @@ jobs:
         run: |
           INPUT_CHANNEL="${{ inputs.channel }}"
           PROVIDERS_ALL="${{ inputs.provider_all }}"
-          
-          # If a specific channel is provided, short-circuit and use ONLY that channel.
-          # This is primarily for testing, so we don't spam all real channels.
-          if [[ -n "$INPUT_CHANNEL" ]]; then
-            slack_channels=("$INPUT_CHANNEL")
-            # Deduplicate and convert array to JSON string
-            export OUTPUT_CHANNELS=$(printf '%s\n' "${slack_channels[@]}" | sort -u | jq -R . | jq -s -c .)
-            echo "channels=$OUTPUT_CHANNELS" >> "$GITHUB_OUTPUT"
-            exit 0
-          fi
-          
+
           # Build list of selected providers
           SELECTED_PROVIDERS=()
           if [[ "$PROVIDERS_ALL" == "true" ]]; then
@@ -93,105 +83,136 @@ jobs:
              [[ "${{ inputs.provider_test }}" == "true" ]] && SELECTED_PROVIDERS+=("test")
           fi
 
-          slack_channels=()
-          
-          # Special handling for test provider
-          if [[ " ${SELECTED_PROVIDERS[@]} " =~ " test " ]]; then
-             if [[ -n "$INPUT_CHANNEL" ]]; then
-                slack_channels+=("$INPUT_CHANNEL")
-             else
-                 # Fallback if no channel provided for test
-                 slack_channels+=("test-capi-events") 
-             fi
+          if [[ ${#SELECTED_PROVIDERS[@]} -eq 0 ]]; then
+             echo "No providers selected"
+             exit 1
           fi
 
-          # Collect channels for real providers
-          # Only run installation search if we have real providers selected
-          REAL_PROVIDERS_SELECTED=false
-          for p in "${SELECTED_PROVIDERS[@]}"; do
-            if [[ "$p" != "test" ]]; then
-               REAL_PROVIDERS_SELECTED=true
-               break
-            fi
-          done
+          # Array to store provider-channel pairs
+          declare -a provider_channel_pairs=()
 
-          if [[ "$REAL_PROVIDERS_SELECTED" == "true" ]]; then
-            # Default channels always included for real releases
-            slack_channels+=("noise-releases" "sig-product")
-            
+          # If a specific channel is provided (for testing), pair it with each selected provider
+          if [[ -n "$INPUT_CHANNEL" ]]; then
+            for provider in "${SELECTED_PROVIDERS[@]}"; do
+              provider_channel_pairs+=("{\"provider\":\"$provider\",\"channel\":\"$INPUT_CHANNEL\"}")
+            done
+            export OUTPUT=$(printf '%s\n' "${provider_channel_pairs[@]}" | jq -s -c .)
+            echo "provider_channels=$OUTPUT" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          # Special handling for test provider
+          if [[ " ${SELECTED_PROVIDERS[@]} " =~ " test " ]]; then
+             provider_channel_pairs+=("{\"provider\":\"test\",\"channel\":\"test-capi-events\"}")
+          fi
+
+          # Process real providers
+          for provider in "${SELECTED_PROVIDERS[@]}"; do
+            if [[ "$provider" == "test" ]]; then
+              continue  # Already handled above
+            fi
+
+            # Add default channels for each real provider
+            provider_channel_pairs+=("{\"provider\":\"$provider\",\"channel\":\"noise-releases\"}")
+            provider_channel_pairs+=("{\"provider\":\"$provider\",\"channel\":\"sig-product\"}")
+
+            # Find installation-specific channels for this provider
             while read -r installation; do
               FILE_PATH="$installation/cluster.yaml"
               if [[ -f "$FILE_PATH" ]]; then
                 INSTALLATION_PROVIDER=$(yq -r ".provider" $FILE_PATH)
                 HAS_SLACK=$(yq 'has("slack")' $FILE_PATH)
-                
-                # Check if this installation's provider is in our selected list
-                MATCHED_PROVIDER=false
-                for selected in "${SELECTED_PROVIDERS[@]}"; do
-                    if [[ "$selected" == "$INSTALLATION_PROVIDER" ]]; then
-                       MATCHED_PROVIDER=true
-                       break
-                    fi
-                done
 
-                if [[ "$MATCHED_PROVIDER" == "true" ]]; then
+                # Check if this installation matches current provider
+                if [[ "$provider" == "$INSTALLATION_PROVIDER" ]]; then
                   if [[ "$HAS_SLACK" == "true" ]]; then
                     CHANNEL=$(yq -r '.slack.support[0]' "$FILE_PATH")
-                    slack_channels+=("$CHANNEL")
+                    provider_channel_pairs+=("{\"provider\":\"$provider\",\"channel\":\"$CHANNEL\"}")
                   fi
                 fi
               fi
             done < <(find ./installations -type d -mindepth 1 -maxdepth 1)
-          fi
+          done
 
-          # Deduplicate channels and convert array to JSON string
-          export OUTPUT_CHANNELS=$(printf '%s\n' "${slack_channels[@]}" | sort -u | jq -R . | jq -s -c .)
-          echo "channels=$OUTPUT_CHANNELS" >> "$GITHUB_OUTPUT"
+          # Convert to JSON array and deduplicate
+          export OUTPUT=$(printf '%s\n' "${provider_channel_pairs[@]}" | jq -s -c 'unique')
+          echo "provider_channels=$OUTPUT" >> "$GITHUB_OUTPUT"
   
   get_announcement:
     name: Get announcement
     runs-on: ubuntu-latest
     outputs:
-      announcement: ${{ steps.get_announcement_md.outputs.announcement }}
+      announcements: ${{ steps.get_announcement_md.outputs.announcements }}
     steps:
-      - name: Get announcement.md
+      - name: Get announcement.md files
         id: get_announcement_md
         run: |
-          # We need to pick ONE provider to get the announcement text from.
-          # Assuming the announcement text is the same for the version across providers,
-          # or that we prioritize one if multiple are selected.
-          # For simplicity, let's pick the first selected provider to construct the path.
-          
+          # Build list of selected providers
           PROVIDERS_ALL="${{ inputs.provider_all }}"
-          PROVIDER=""
-          
+          SELECTED_PROVIDERS=()
+
           if [[ "$PROVIDERS_ALL" == "true" ]]; then
-             PROVIDER="capa" # Default to capa if all are selected to find the file
+             # If 'all' is selected, include real providers (exclude test)
+             SELECTED_PROVIDERS+=("capa" "capz" "cloud-director" "vsphere" "eks")
           else
-             [[ "${{ inputs.provider_capa }}" == "true" ]] && PROVIDER="capa"
-             [[ "${{ inputs.provider_capz }}" == "true" ]] && PROVIDER="capz"
-             [[ "${{ inputs.provider_cloud_director }}" == "true" ]] && PROVIDER="cloud-director"
-             [[ "${{ inputs.provider_vsphere }}" == "true" ]] && PROVIDER="vsphere"
-             [[ "${{ inputs.provider_eks }}" == "true" ]] && PROVIDER="eks"
-             [[ "${{ inputs.provider_test }}" == "true" ]] && PROVIDER="test"
+             [[ "${{ inputs.provider_capa }}" == "true" ]] && SELECTED_PROVIDERS+=("capa")
+             [[ "${{ inputs.provider_capz }}" == "true" ]] && SELECTED_PROVIDERS+=("capz")
+             [[ "${{ inputs.provider_cloud_director }}" == "true" ]] && SELECTED_PROVIDERS+=("cloud-director")
+             [[ "${{ inputs.provider_vsphere }}" == "true" ]] && SELECTED_PROVIDERS+=("vsphere")
+             [[ "${{ inputs.provider_eks }}" == "true" ]] && SELECTED_PROVIDERS+=("eks")
+             [[ "${{ inputs.provider_test }}" == "true" ]] && SELECTED_PROVIDERS+=("test")
           fi
-          
-          if [[ -z "$PROVIDER" ]]; then
-             echo "No provider selected"
+
+          if [[ ${#SELECTED_PROVIDERS[@]} -eq 0 ]]; then
+             echo "No providers selected"
              exit 1
           fi
 
-          if [[ "$PROVIDER" == "test" ]]; then
-            echo "This is a test announcement for version ${{ inputs.version }}" > announcement.md
-          else
-            if [[ "$PROVIDER" == "capz" ]]; then
-              PROVIDER="azure"
+          # Fetch announcement for each provider and build JSON object
+          declare -A announcements_map
+
+          for PROVIDER in "${SELECTED_PROVIDERS[@]}"; do
+            echo "Fetching announcement for provider: $PROVIDER"
+
+            if [[ "$PROVIDER" == "test" ]]; then
+              ANNOUNCEMENT_TEXT="This is a test announcement for version ${{ inputs.version }}"
+            else
+              # Map provider name to repo directory name
+              REPO_DIR="$PROVIDER"
+              if [[ "$PROVIDER" == "capz" ]]; then
+                REPO_DIR="azure"
+              fi
+
+              LINK="https://raw.githubusercontent.com/giantswarm/releases/master/$REPO_DIR/${{ inputs.version }}/announcement.md"
+              echo "Downloading from: $LINK"
+
+              if wget -q "$LINK" -O "announcement_${PROVIDER}.md"; then
+                ANNOUNCEMENT_TEXT=$(cat "announcement_${PROVIDER}.md")
+              else
+                echo "Failed to download announcement for $PROVIDER from $LINK"
+                ANNOUNCEMENT_TEXT="Release announcement not available for $PROVIDER ${{ inputs.version }}"
+              fi
             fi
-            export LINK="https://raw.githubusercontent.com/giantswarm/releases/master/$PROVIDER/${{ inputs.version }}/announcement.md"
-            wget $LINK
-          fi
-          echo "announcement<<EOF" >> "$GITHUB_OUTPUT"
-          cat announcement.md >> "$GITHUB_OUTPUT"
+
+            # Store in associative array
+            announcements_map["$PROVIDER"]="$ANNOUNCEMENT_TEXT"
+          done
+
+          # Build JSON object from associative array
+          echo "announcements<<EOF" >> "$GITHUB_OUTPUT"
+          echo "{" >> "$GITHUB_OUTPUT"
+          FIRST=true
+          for PROVIDER in "${!announcements_map[@]}"; do
+            if [[ "$FIRST" == "false" ]]; then
+              echo "," >> "$GITHUB_OUTPUT"
+            fi
+            FIRST=false
+            # Escape the announcement text for JSON
+            ESCAPED=$(echo "${announcements_map[$PROVIDER]}" | jq -Rs .)
+            echo "  \"$PROVIDER\": $ESCAPED" >> "$GITHUB_OUTPUT"
+          done
+          echo "" >> "$GITHUB_OUTPUT"
+          echo "}" >> "$GITHUB_OUTPUT"
           echo "EOF" >> "$GITHUB_OUTPUT"
   
   send_messages:
@@ -199,9 +220,27 @@ jobs:
     runs-on: ubuntu-latest
     needs: [gather_channels, get_announcement]
     strategy:
-      matrix: 
-        channel: ${{ fromJSON(needs.gather_channels.outputs.channels) }}
+      matrix:
+        include: ${{ fromJSON(needs.gather_channels.outputs.provider_channels) }}
     steps:
+      - name: Extract announcement for provider
+        id: get_provider_announcement
+        run: |
+          PROVIDER="${{ matrix.provider }}"
+          ANNOUNCEMENTS='${{ needs.get_announcement.outputs.announcements }}'
+
+          # Extract the announcement for this specific provider
+          ANNOUNCEMENT=$(echo "$ANNOUNCEMENTS" | jq -r ".[\"$PROVIDER\"]")
+
+          if [[ "$ANNOUNCEMENT" == "null" || -z "$ANNOUNCEMENT" ]]; then
+            echo "No announcement found for provider: $PROVIDER"
+            exit 1
+          fi
+
+          echo "announcement<<EOF" >> "$GITHUB_OUTPUT"
+          echo "$ANNOUNCEMENT" >> "$GITHUB_OUTPUT"
+          echo "EOF" >> "$GITHUB_OUTPUT"
+
       - name: Write announcements
         uses: slackapi/slack-github-action@v2.1.1
         with:
@@ -209,9 +248,9 @@ jobs:
           token: ${{ secrets.SLACK_BOT_TOKEN }}
           payload: |
             channel: ${{ matrix.channel }}
-            text: "${{ needs.get_announcement.outputs.announcement }}"
+            text: "${{ steps.get_provider_announcement.outputs.announcement }}"
             blocks:
               - type: "section"
                 text:
                   type: "mrkdwn"
-                  text: "${{ needs.get_announcement.outputs.announcement }}"
+                  text: "${{ steps.get_provider_announcement.outputs.announcement }}"
