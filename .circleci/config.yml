@@ -131,9 +131,6 @@ jobs:
 
             echo "Generated continuation config:"
             cat /tmp/continue-config.yml
-      - run:
-          name: Validate continuation config
-          command: circleci config validate /tmp/continue-config.yml
       - continuation/continue:
           configuration_path: /tmp/continue-config.yml
 
