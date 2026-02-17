@@ -3,7 +3,7 @@ version: 2.1
 setup: true
 
 orbs:
-  continuation: circleci/continuation@1.0.0
+  continuation: circleci/continuation@2.0.1
 
 # Manual trigger example:
 #   curl -X POST https://circleci.com/api/v2/project/gh/giantswarm/releases/pipeline \
