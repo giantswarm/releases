@@ -98,8 +98,6 @@ jobs:
 
             yq -i ".name = \"${TARGET_CHART}\"" "${TARGET_CHART}/Chart.yaml"
             yq -i ".version = \"${RELEASE_VERSION_CLEAN}\"" "${TARGET_CHART}/Chart.yaml"
-            yq -i 'del(.dependencies)' "${TARGET_CHART}/Chart.yaml"
-            rm -f "${TARGET_CHART}/Chart.lock"
             yq -i ".global.release.version = \"${RELEASE_VERSION_CLEAN}\"" "${TARGET_CHART}/values.yaml"
 
             echo "Chart name: $(yq '.name' "${TARGET_CHART}/Chart.yaml")"
@@ -108,7 +106,13 @@ jobs:
 
             mkdir -p ~/project/helm
             mv "${TARGET_CHART}" ~/project/helm/release-chart
+
+            # Skip ct lint — this is a pre-built chart, already linted in its source repo.
+            # ct lint fails because the helm repo for dependencies isn't configured in this CI.
+            mkdir -p ~/project/.abs
+            printf 'skip-steps:\n  - HelmChartToolLinter\n' > ~/project/.abs/main.yaml
       - persist_to_workspace:
           root: .
           paths:
             - helm/release-chart
+            - .abs
