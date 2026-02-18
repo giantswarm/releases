@@ -237,6 +237,12 @@ jobs:
             exit 1
           fi
 
+          # Convert standard Markdown to Slack mrkdwn:
+          #   **bold** -> *bold*
+          #   [text](url) -> <url|text>
+          ANNOUNCEMENT=$(echo "$ANNOUNCEMENT" | sed 's/\*\*\([^*]*\)\*\*/\*\1\*/g')
+          ANNOUNCEMENT=$(echo "$ANNOUNCEMENT" | sed 's/\[\([^]]*\)\](\([^)]*\))/<\2|\1>/g')
+
           echo "announcement<<EOF" >> "$GITHUB_OUTPUT"
           echo "$ANNOUNCEMENT" >> "$GITHUB_OUTPUT"
           echo "EOF" >> "$GITHUB_OUTPUT"
@@ -248,9 +254,9 @@ jobs:
           token: ${{ secrets.SLACK_BOT_TOKEN }}
           payload: |
             channel: ${{ matrix.channel }}
-            text: "${{ steps.get_provider_announcement.outputs.announcement }}"
+            text: ${{ toJSON(steps.get_provider_announcement.outputs.announcement) }}
             blocks:
               - type: "section"
                 text:
                   type: "mrkdwn"
-                  text: "${{ steps.get_provider_announcement.outputs.announcement }}"
+                  text: ${{ toJSON(steps.get_provider_announcement.outputs.announcement) }}
