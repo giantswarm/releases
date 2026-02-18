@@ -1,4 +1,4 @@
-# :zap: Giant Swarm Release v33.0.0 for CAPA EKS :zap:
+# :zap: Giant Swarm Release v33.0.0 for EKS :zap:
 
 This release upgrades Kubernetes to v1.33.8
 
