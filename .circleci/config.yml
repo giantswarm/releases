@@ -51,8 +51,10 @@ jobs:
               echo "Manual trigger: << pipeline.parameters.provider >> << pipeline.parameters.release_version >>"
             elif [[ "${CIRCLE_BRANCH}" == "main" || "${CIRCLE_BRANCH}" == "master" ]]; then
               # Auto mode on main/master - discover changed releases
-              MERGE_BASE=$(git merge-base HEAD origin/master 2>/dev/null || git merge-base HEAD origin/main 2>/dev/null || echo "HEAD~1")
-              CHANGED_FILES=$(git diff --name-only "${MERGE_BASE}" HEAD -- '*/v*.*.*/release.yaml' | grep -v '/archived/' || true)
+              # Use HEAD~1: after checkout on master, origin/master == HEAD so merge-base
+              # returns HEAD itself and the diff would be empty. HEAD~1 correctly gives
+              # the previous master commit for both merge and squash-merge PRs.
+              CHANGED_FILES=$(git diff --name-only HEAD~1 HEAD -- '*/v*.*.*/release.yaml' | grep -v '/archived/' || true)
 
               if [[ -z "${CHANGED_FILES}" ]]; then
                 echo "No release.yaml files changed, nothing to retag"
