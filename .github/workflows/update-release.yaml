@@ -465,11 +465,16 @@ jobs:
             ANNOUNCEMENT_BACKUP=""
             if [ -f "${PROVIDER_DIR}/${RELEASE_NAME}/README.md" ] && ! grep -q "<< Add description here >>" "${PROVIDER_DIR}/${RELEASE_NAME}/README.md"; then
               # Extract existing README description (line 3, which is the warning/description)
-              README_DESCRIPTION_BACKUP=$(sed -n '3p' "${PROVIDER_DIR}/${RELEASE_NAME}/README.md" || true)
+              # Only backup if line 3 is a real description (not a markdown heading), to avoid
+              # capturing devctl-generated section headers when the placeholder was deleted without replacement
+              _line3=$(sed -n '3p' "${PROVIDER_DIR}/${RELEASE_NAME}/README.md" || true)
+              if [[ -n "$_line3" ]] && [[ "$_line3" != \#* ]]; then
+                README_DESCRIPTION_BACKUP="$_line3"
+              fi
             fi
             if [ -f "${PROVIDER_DIR}/${RELEASE_NAME}/announcement.md" ] && ! grep -q "<< Add description here >>" "${PROVIDER_DIR}/${RELEASE_NAME}/announcement.md"; then
               # Extract existing announcement description (everything after "**. ")
-              ANNOUNCEMENT_BACKUP=$(sed -n '1p' "${PROVIDER_DIR}/${RELEASE_NAME}/announcement.md" | sed 's/.*\*\*\. //' || true)
+              ANNOUNCEMENT_BACKUP=$(sed -n '1p' "${PROVIDER_DIR}/${RELEASE_NAME}/announcement.md" | sed 's/.*\*\*\. *//' || true)
             fi
 
             if ! output=$(eval "$DEVCTL_COMMAND" 2>&1 | uniq); then
