@@ -39,16 +39,16 @@ Called automatically after a major release PR is created (both consolidated and 
 | `version` | yes | Release version (e.g. `v35.0.0`) |
 | `pr_numbers` | yes | Comma-separated PR numbers |
 | `github_token` | yes | GitHub token for API access |
+| `project_token` | no | GitHub token with project write permissions (for adding issues to GitHub Projects) |
 
 **What it does**:
 
 1. Maps providers to teams (see table above)
 2. For each team, checks for an existing open issue (deduplication)
 3. Creates a new issue in `giantswarm/roadmap` with:
-   - Labels: `controller-readiness` + team label (e.g. `team/phoenix`)
+   - Labels: `controller-readiness`, `release/$VERSION`, and team label (e.g. `team/phoenix`)
    - Checklist of controller apps to update
-   - CC to the team
-4. Adds the issue to GitHub Project #273 (Roadmap board) with Team and Status fields
+4. Adds the issue to GitHub Project #273 (Roadmap board) and sets the Team field
 5. Posts a tracking comment on the release PR:
 
 ```markdown
@@ -87,6 +87,7 @@ The weekly bump job (`bump-open-releases.yaml`) excludes PRs that have **both** 
 5. If **all** issues are closed:
    - Posts `/update-release` on the PR (triggers a full component bump with new controller versions)
    - Updates the tracking comment statuses from "open" to "closed"
+   - Adds a `CONTROLLER_READINESS_RESOLVED` marker to prevent re-triggering on subsequent runs
 
 ## Lifecycle
 
