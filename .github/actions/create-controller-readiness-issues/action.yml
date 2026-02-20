@@ -29,113 +29,87 @@ runs:
         VERSION: ${{ inputs.version }}
         PR_NUMBERS: ${{ inputs.pr_numbers }}
       run: |
-        echo "=== Controller Readiness Issue Creation ==="
-        echo "Providers: $PROVIDERS"
-        echo "Version: $VERSION"
-        echo "PR numbers: $PR_NUMBERS"
+        echo "Providers: $PROVIDERS | Version: $VERSION | PRs: $PR_NUMBERS"
 
         # =====================================================================
-        # CONFIGURATION
-        # To add a new provider or team, update the mappings below.
-        # EKS is excluded (no cloud controller manager).
+        # CONFIGURATION — to add a provider or team, update the mappings below.
         # =====================================================================
 
-        # GitHub Project integration (giantswarm/roadmap project #273)
+        # GitHub Project #273 (giantswarm/roadmap)
         PROJECT_NODE_ID="PVT_kwDOAHNM9M4ABvWx"
         TEAM_FIELD_ID="PVTSSF_lADOAHNM9M4ABvWxzgBApUw"
 
-        # Provider → team mapping
-        # Format: PROVIDER_TEAM[provider]="team-name"
-        declare -A PROVIDER_TEAM
-        PROVIDER_TEAM[aws]="team-phoenix"
-        PROVIDER_TEAM[azure]="team-phoenix"
-        PROVIDER_TEAM[vsphere]="team-rocket"
-        PROVIDER_TEAM[cloud-director]="team-rocket"
-        # eks: excluded — no cloud controller manager
+        # Provider → team mapping (eks excluded — no cloud controller manager)
+        declare -A PROVIDER_TEAM=(
+          [aws]="team-phoenix" [azure]="team-phoenix"
+          [vsphere]="team-rocket" [cloud-director]="team-rocket"
+        )
 
-        # Team metadata
-        # TEAM_LABEL: GitHub label for the team
-        # TEAM_PROJECT_NAME: name used to match the Team field option in the GitHub Project
-        declare -A TEAM_LABEL_MAP
-        declare -A TEAM_PROJECT_NAME
-        TEAM_LABEL_MAP[team-phoenix]="team/phoenix"
-        TEAM_LABEL_MAP[team-rocket]="team/rocket"
-        TEAM_PROJECT_NAME[team-phoenix]="Phoenix"
-        TEAM_PROJECT_NAME[team-rocket]="Rocket"
+        # Team → GitHub label, Project team name
+        declare -A TEAM_LABEL=(
+          [team-phoenix]="team/phoenix" [team-rocket]="team/rocket"
+        )
+        declare -A TEAM_PROJECT_NAME=(
+          [team-phoenix]="Phoenix" [team-rocket]="Rocket"
+        )
 
-        # Provider display names (used in issue titles and headers)
-        declare -A PROVIDER_DISPLAY
-        PROVIDER_DISPLAY[aws]="AWS"
-        PROVIDER_DISPLAY[azure]="Azure"
-        PROVIDER_DISPLAY[vsphere]="vSphere"
-        PROVIDER_DISPLAY[cloud-director]="Cloud Director"
+        # Provider → display name
+        declare -A PROVIDER_DISPLAY=(
+          [aws]="AWS" [azure]="Azure" [vsphere]="vSphere" [cloud-director]="Cloud Director"
+        )
 
-        # Controller apps per provider (space-separated)
-        # These are the apps that need updating for each new Kubernetes version.
-        declare -A PROVIDER_APPS
-        PROVIDER_APPS[aws]="cloud-provider-aws"
-        PROVIDER_APPS[azure]="azure-cloud-controller-manager azure-cloud-node-manager"
-        PROVIDER_APPS[vsphere]="cloud-provider-vsphere"
-        PROVIDER_APPS[cloud-director]="cloud-provider-cloud-director"
+        # Provider → controller apps that need updating per Kubernetes version (space-separated)
+        declare -A PROVIDER_APPS=(
+          [aws]="cloud-provider-aws"
+          [azure]="azure-cloud-controller-manager azure-cloud-node-manager"
+          [vsphere]="cloud-provider-vsphere"
+          [cloud-director]="cloud-provider-cloud-director"
+        )
 
         # =====================================================================
-        # END CONFIGURATION
-        # =====================================================================
 
-        # Build team → providers mapping from the input provider list
+        # Build team → providers mapping from input
         declare -A TEAM_PROVIDERS
         for provider in $PROVIDERS; do
           team="${PROVIDER_TEAM[$provider]:-}"
-          if [[ -z "$team" ]]; then
-            echo "Skipping $provider - no controller readiness needed"
-            continue
-          fi
+          [[ -z "$team" ]] && echo "Skipping $provider — no controller readiness needed" && continue
           TEAM_PROVIDERS["$team"]+="$provider "
         done
+        [[ ${#TEAM_PROVIDERS[@]} -eq 0 ]] && echo "No teams need controller readiness issues." && exit 0
 
-        if [[ ${#TEAM_PROVIDERS[@]} -eq 0 ]]; then
-          echo "No teams require controller readiness issues. Skipping."
-          exit 0
-        fi
-
-        # Ensure required labels exist in giantswarm/roadmap
+        # Ensure labels exist
         RELEASE_LABEL="release/$VERSION"
         gh label create "controller-readiness" --repo giantswarm/roadmap \
           --description "Controller app readiness tracking for major releases" \
-          --color "C2E0C6" 2>/dev/null || echo "Label 'controller-readiness' already exists."
+          --color "C2E0C6" 2>/dev/null || true
         gh label create "$RELEASE_LABEL" --repo giantswarm/roadmap \
           --description "Related to release $VERSION" \
-          --color "1D76DB" 2>/dev/null || echo "Label '$RELEASE_LABEL' already exists."
+          --color "1D76DB" 2>/dev/null || true
 
-        # Helper: add issue to GitHub Project #273 and set Team field.
+        # Add issue to GitHub Project #273 and set Team field.
         # Uses PROJECT_TOKEN (ISSUE_AUTOMATION) which has project write permissions.
         add_to_project() {
           local issue_number="$1" team_name="$2"
-          if [[ -z "$PROJECT_TOKEN" ]]; then
-            echo "Warning: No project_token provided. Skipping project integration."
-            return
-          fi
-          echo "Adding issue #$issue_number to project #273 (Team: $team_name)..."
+          [[ -z "$PROJECT_TOKEN" ]] && echo "Warning: no project_token, skipping project integration" && return
 
           local node_id item_id option_id
           node_id=$(GH_TOKEN="$PROJECT_TOKEN" gh api graphql -f query='
             query($owner: String!, $repo: String!, $number: Int!) {
               repository(owner: $owner, name: $repo) { issue(number: $number) { id } }
             }' -f owner="giantswarm" -f repo="roadmap" -F number="$issue_number" \
-            --jq '.data.repository.issue.id' 2>/dev/null) || { echo "Warning: Could not get issue node ID"; return; }
+            --jq '.data.repository.issue.id' 2>/dev/null) || { echo "Warning: could not get issue node ID"; return; }
 
           item_id=$(GH_TOKEN="$PROJECT_TOKEN" gh api graphql -f query='
             mutation($projectId: ID!, $contentId: ID!) {
               addProjectV2ItemById(input: {projectId: $projectId, contentId: $contentId}) { item { id } }
             }' -f projectId="$PROJECT_NODE_ID" -f contentId="$node_id" \
-            --jq '.data.addProjectV2ItemById.item.id' 2>/dev/null) || { echo "Warning: Could not add to project"; return; }
-          echo "Added to project: $item_id"
+            --jq '.data.addProjectV2ItemById.item.id' 2>/dev/null) || { echo "Warning: could not add to project"; return; }
 
           option_id=$(GH_TOKEN="$PROJECT_TOKEN" gh api graphql -f query='
             { organization(login: "giantswarm") { projectV2(number: 273) {
               field(name: "Team") { ... on ProjectV2SingleSelectField { options { id name } } }
             }}}' --jq ".data.organization.projectV2.field.options[] | select(.name | contains(\"$team_name\")) | .id" 2>/dev/null) \
-            || { echo "Warning: Could not look up Team option"; return; }
+            || { echo "Warning: could not look up Team option"; return; }
 
           GH_TOKEN="$PROJECT_TOKEN" gh api graphql -f query='
             mutation($projectId: ID!, $itemId: ID!, $fieldId: ID!, $optionId: String!) {
@@ -145,34 +119,14 @@ runs:
               }) { projectV2Item { id } }
             }' -f projectId="$PROJECT_NODE_ID" -f itemId="$item_id" \
                -f fieldId="$TEAM_FIELD_ID" -f optionId="$option_id" 2>/dev/null \
-            && echo "Set Team field to $team_name" \
-            || echo "Warning: Could not set Team field"
-        }
-
-        # Build issue body template
-        build_issue_body() {
-          local display="$1" checklist="$2"
-          cat <<ISSUE_EOF
-        ## Controller Readiness for $display Release $VERSION
-
-        The major release **$VERSION** has been created. The following cloud controller apps need new versions compatible with the Kubernetes version in this release.
-
-        ### Apps to update
-
-        ${checklist}
-        ### Context
-
-        - Release PR: [giantswarm/releases#${PR_NUMBERS}](https://github.com/giantswarm/releases/pull/${PR_NUMBERS})
-        - Once all items are checked off and this issue is closed, the release PR will automatically receive a component bump to pick up the new controller versions.
-        ISSUE_EOF
+            && echo "Added to project #273, Team: $team_name" \
+            || echo "Warning: could not set Team field"
         }
 
         # Process each team
         TRACKING_ROWS=""
         for team in "${!TEAM_PROVIDERS[@]}"; do
-          team_label="${TEAM_LABEL_MAP[$team]}"
-
-          # Build display names (e.g. "AWS, Azure") and checklist
+          # Build display names and checklist
           display_names=()
           CHECKLIST=""
           for provider in ${TEAM_PROVIDERS[$team]}; do
@@ -182,42 +136,48 @@ runs:
             done
           done
           providers_display=$(IFS=', '; echo "${display_names[*]}")
-
-          echo "--- Processing $team ($providers_display) ---"
+          echo "--- $team ($providers_display) ---"
 
           ISSUE_TITLE="Controller readiness: $providers_display Release $VERSION"
-          ISSUE_BODY=$(build_issue_body "$providers_display" "$CHECKLIST")
+          ISSUE_BODY="## Controller Readiness for $providers_display Release $VERSION
 
-          # Check for existing issue (deduplication for re-runs and individual matrix runs)
-          EXISTING_ISSUE=$(gh issue list --repo giantswarm/roadmap \
-            --label "controller-readiness" --label "$team_label" --label "$RELEASE_LABEL" \
+        The major release **$VERSION** has been created. The following cloud controller apps need new versions compatible with the Kubernetes version in this release.
+
+        ### Apps to update
+
+        ${CHECKLIST}
+        ### Context
+
+        - Release PR: [giantswarm/releases#${PR_NUMBERS}](https://github.com/giantswarm/releases/pull/${PR_NUMBERS})
+        - Once all items are checked off and this issue is closed, the release PR will automatically receive a component bump to pick up the new controller versions."
+
+          # Deduplicate: check for existing issue (re-runs / individual matrix runs)
+          EXISTING=$(gh issue list --repo giantswarm/roadmap \
+            --label "controller-readiness" --label "${TEAM_LABEL[$team]}" --label "$RELEASE_LABEL" \
             --state open --json number --jq '.[0].number')
 
-          if [[ -n "$EXISTING_ISSUE" ]]; then
-            ISSUE_NUMBER="$EXISTING_ISSUE"
-            # Check if all apps are already listed (handles individual matrix runs where
-            # e.g. aws creates the issue, then azure runs and needs to add its apps)
-            EXISTING_BODY=$(gh issue view "$EXISTING_ISSUE" --repo giantswarm/roadmap --json body --jq '.body')
+          if [[ -n "$EXISTING" ]]; then
+            ISSUE_NUMBER="$EXISTING"
+            # Update if any checklist items are missing (e.g. azure matrix run after aws created it)
+            EXISTING_BODY=$(gh issue view "$EXISTING" --repo giantswarm/roadmap --json body --jq '.body')
             if echo "$ISSUE_BODY" | grep -F '- [ ]' | while read -r line; do
               echo "$EXISTING_BODY" | grep -qF "$line" || exit 1
             done; then
-              echo "Issue #$EXISTING_ISSUE already up to date."
+              echo "Issue #$EXISTING already up to date."
             else
-              echo "Updating issue #$EXISTING_ISSUE to include: $providers_display"
-              gh issue edit "$EXISTING_ISSUE" --repo giantswarm/roadmap \
-                --title "$ISSUE_TITLE" --body "$ISSUE_BODY"
+              echo "Updating issue #$EXISTING to include: $providers_display"
+              gh issue edit "$EXISTING" --repo giantswarm/roadmap --title "$ISSUE_TITLE" --body "$ISSUE_BODY"
             fi
           else
             ISSUE_URL=$(gh issue create --repo giantswarm/roadmap \
               --title "$ISSUE_TITLE" --body "$ISSUE_BODY" \
-              --label "controller-readiness" --label "$team_label" --label "$RELEASE_LABEL")
+              --label "controller-readiness" --label "${TEAM_LABEL[$team]}" --label "$RELEASE_LABEL")
             ISSUE_NUMBER=$(echo "$ISSUE_URL" | grep -oE '[0-9]+$')
-            echo "Created issue $ISSUE_URL"
+            echo "Created $ISSUE_URL"
             add_to_project "$ISSUE_NUMBER" "${TEAM_PROJECT_NAME[$team]}"
           fi
 
-          providers_list=$(echo "${TEAM_PROVIDERS[$team]}" | xargs | tr ' ' ', ')
-          TRACKING_ROWS+="| $team | $providers_list | giantswarm/roadmap#$ISSUE_NUMBER | open |"$'\n'
+          TRACKING_ROWS+="| $team | $providers_display | giantswarm/roadmap#$ISSUE_NUMBER | open |"$'\n'
         done
 
         # Post/update tracking comment on each release PR
@@ -232,18 +192,13 @@ runs:
         for pr in "${PR_ARRAY[@]}"; do
           pr=$(echo "$pr" | xargs)
           [[ -z "$pr" ]] && continue
-
-          EXISTING_COMMENT_ID=$(gh api "repos/$GITHUB_REPOSITORY/issues/$pr/comments" --paginate \
+          COMMENT_ID=$(gh api "repos/$GITHUB_REPOSITORY/issues/$pr/comments" --paginate \
             --jq '.[] | select(.body | contains("CONTROLLER_READINESS_START")) | .id' | head -1)
-
-          if [[ -n "$EXISTING_COMMENT_ID" ]]; then
-            echo "Updating tracking comment on PR #$pr"
-            gh api "repos/$GITHUB_REPOSITORY/issues/comments/$EXISTING_COMMENT_ID" \
-              -X PATCH -f body="$TRACKING_COMMENT"
+          if [[ -n "$COMMENT_ID" ]]; then
+            gh api "repos/$GITHUB_REPOSITORY/issues/comments/$COMMENT_ID" -X PATCH -f body="$TRACKING_COMMENT"
+            echo "Updated tracking comment on PR #$pr"
           else
-            echo "Posting tracking comment on PR #$pr"
             gh pr comment "$pr" --repo "$GITHUB_REPOSITORY" --body "$TRACKING_COMMENT"
+            echo "Posted tracking comment on PR #$pr"
           fi
         done
-
-        echo "=== Controller readiness issue creation complete ==="
