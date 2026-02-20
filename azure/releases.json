@@ -27,6 +27,13 @@
       "releaseTimestamp": "2026-01-22T09:38:19Z",
       "changelogUrl": "https://github.com/giantswarm/releases/blob/master/azure/v34.0.0/README.md",
       "isStable": true
+    },
+    {
+      "version": "34.1.0",
+      "isDeprecated": false,
+      "releaseTimestamp": "2026-02-20T00:07:18Z",
+      "changelogUrl": "https://github.com/giantswarm/releases/blob/master/azure/v34.1.0/README.md",
+      "isStable": true
     }
   ],
   "sourceUrl": "https://github.com/giantswarm/releases",
