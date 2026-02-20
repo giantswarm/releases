@@ -68,10 +68,15 @@ runs:
           exit 0
         fi
 
-        # Ensure the controller-readiness label exists in giantswarm/roadmap
+        # Ensure required labels exist in giantswarm/roadmap
         gh label create "controller-readiness" --repo giantswarm/roadmap \
           --description "Controller app readiness tracking for major releases" \
           --color "C2E0C6" 2>/dev/null || echo "Label 'controller-readiness' already exists."
+
+        RELEASE_LABEL="release/$VERSION"
+        gh label create "$RELEASE_LABEL" --repo giantswarm/roadmap \
+          --description "Related to release $VERSION" \
+          --color "1D76DB" 2>/dev/null || echo "Label '$RELEASE_LABEL' already exists."
 
         # Build tracking table rows
         TRACKING_ROWS=""
@@ -138,7 +143,7 @@ runs:
             ISSUE_URL=$(gh issue create --repo giantswarm/roadmap \
               --title "$ISSUE_TITLE" \
               --body "$ISSUE_BODY" \
-              --label "controller-readiness" --label "$team_label")
+              --label "controller-readiness" --label "$team_label" --label "$RELEASE_LABEL")
 
             ISSUE_NUMBER=$(echo "$ISSUE_URL" | grep -oE '[0-9]+$')
             echo "Created issue $ISSUE_URL"
