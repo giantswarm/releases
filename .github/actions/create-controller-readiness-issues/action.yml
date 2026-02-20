@@ -171,7 +171,7 @@ runs:
         ${CHECKLIST}
         ### Context
 
-        - Release PRs in [giantswarm/releases](https://github.com/giantswarm/releases/pulls?q=is%3Apr+is%3Aopen+$VERSION)
+        - Release PR: [giantswarm/releases#${PR_NUMBERS}](https://github.com/giantswarm/releases/pull/${PR_NUMBERS})
         - Once all items are checked off and this issue is closed, the release PR will automatically receive a component bump to pick up the new controller versions."
 
               gh issue edit "$EXISTING_ISSUE" --repo giantswarm/roadmap \
@@ -193,7 +193,7 @@ runs:
         ${CHECKLIST}
         ### Context
 
-        - Release PRs in [giantswarm/releases](https://github.com/giantswarm/releases/pulls?q=is%3Apr+is%3Aopen+$VERSION)
+        - Release PR: [giantswarm/releases#${PR_NUMBERS}](https://github.com/giantswarm/releases/pull/${PR_NUMBERS})
         - Once all items are checked off and this issue is closed, the release PR will automatically receive a component bump to pick up the new controller versions."
 
             ISSUE_URL=$(gh issue create --repo giantswarm/roadmap \
