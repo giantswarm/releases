@@ -167,7 +167,7 @@ runs:
               echo "Updating issue #$EXISTING_ISSUE to include apps for: $providers_display"
               # Rebuild the entire body with the complete checklist
               ISSUE_TITLE="Controller readiness: $providers_display Release $VERSION"
-              UPDATED_BODY="## Controller Readiness for $VERSION
+              UPDATED_BODY="## Controller Readiness for Release $VERSION
 
         The major release **$VERSION** has been created. The following cloud controller apps need new versions compatible with the Kubernetes version in this release.
 
@@ -189,7 +189,7 @@ runs:
           else
             ISSUE_TITLE="Controller readiness: $providers_display Release $VERSION"
 
-            ISSUE_BODY="## Controller Readiness for $VERSION
+            ISSUE_BODY="## Controller Readiness for Release $VERSION
 
         The major release **$VERSION** has been created. The following cloud controller apps need new versions compatible with the Kubernetes version in this release.
 
