@@ -192,40 +192,72 @@ runs:
             ISSUE_NUMBER=$(echo "$ISSUE_URL" | grep -oE '[0-9]+$')
             echo "Created issue $ISSUE_URL"
 
-            # Add the issue to GitHub Project #273 (Roadmap board) and set Team field
-            echo "Adding issue to project #273..."
-            ITEM_ID=$(gh project item-add 273 --owner giantswarm --url "$ISSUE_URL" --format json 2>/dev/null | jq -r '.id' || echo "")
+            # Add the issue to GitHub Project #273 (Roadmap board) and set Team field.
+            # Uses GraphQL directly because gh project CLI commands require read:org scope
+            # which may not be available, while GraphQL works with just the project scope.
+            echo "Adding issue to project #273 and setting Team field..."
+            team_project_name="${TEAM_PROJECT_NAME[$team]}"
 
-            if [[ -n "$ITEM_ID" && "$ITEM_ID" != "null" ]]; then
-              echo "Added to project with item ID: $ITEM_ID"
+            # Step 1: Get the issue's node ID
+            ISSUE_NODE_ID=$(gh api graphql -f query='
+              query($owner: String!, $repo: String!, $number: Int!) {
+                repository(owner: $owner, name: $repo) {
+                  issue(number: $number) { id }
+                }
+              }' -f owner="giantswarm" -f repo="roadmap" -F number="$ISSUE_NUMBER" \
+              --jq '.data.repository.issue.id' 2>/dev/null || echo "")
 
-              # Look up project node ID and Team field ID dynamically
-              PROJECT_NODE_ID=$(gh project view 273 --owner giantswarm --format json --jq '.id' 2>/dev/null || echo "")
-              if [[ -n "$PROJECT_NODE_ID" ]]; then
-                TEAM_FIELD_JSON=$(gh project field-list 273 --owner giantswarm --format json 2>/dev/null || echo '{"fields":[]}')
-                TEAM_FIELD_ID=$(echo "$TEAM_FIELD_JSON" | jq -r '.fields[] | select(.name == "Team") | .id')
+            if [[ -z "$ISSUE_NODE_ID" ]]; then
+              echo "Warning: Could not get issue node ID. Skipping project integration."
+            else
+              # Step 2: Add item to project
+              ITEM_ID=$(gh api graphql -f query='
+                mutation($projectId: ID!, $contentId: ID!) {
+                  addProjectV2ItemById(input: {projectId: $projectId, contentId: $contentId}) {
+                    item { id }
+                  }
+                }' -f projectId="PVT_kwDOAHNM9M4ABvWx" -f contentId="$ISSUE_NODE_ID" \
+                --jq '.data.addProjectV2ItemById.item.id' 2>/dev/null || echo "")
 
-                if [[ -n "$TEAM_FIELD_ID" ]]; then
-                  # Find the option ID matching the team name (e.g. "Phoenix" or "Rocket")
-                  team_project_name="${TEAM_PROJECT_NAME[$team]}"
-                  TEAM_OPTION_ID=$(echo "$TEAM_FIELD_JSON" | jq -r --arg name "$team_project_name" '.fields[] | select(.name == "Team") | .options[] | select(.name | contains($name)) | .id')
+              if [[ -n "$ITEM_ID" ]]; then
+                echo "Added to project with item ID: $ITEM_ID"
 
-                  if [[ -n "$TEAM_OPTION_ID" ]]; then
-                    gh project item-edit --project-id "$PROJECT_NODE_ID" --id "$ITEM_ID" \
-                      --field-id "$TEAM_FIELD_ID" --single-select-option-id "$TEAM_OPTION_ID" 2>/dev/null \
-                      && echo "Set Team field to $team_project_name" \
-                      || echo "Warning: Could not set Team field"
-                  else
-                    echo "Warning: Could not find Team option matching '$team_project_name'"
-                  fi
+                # Step 3: Look up the Team option ID matching our team name
+                TEAM_OPTION_ID=$(gh api graphql -f query='
+                  {
+                    organization(login: "giantswarm") {
+                      projectV2(number: 273) {
+                        field(name: "Team") {
+                          ... on ProjectV2SingleSelectField {
+                            options { id name }
+                          }
+                        }
+                      }
+                    }
+                  }' --jq ".data.organization.projectV2.field.options[] | select(.name | contains(\"$team_project_name\")) | .id" 2>/dev/null || echo "")
+
+                if [[ -n "$TEAM_OPTION_ID" ]]; then
+                  # Step 4: Set the Team field
+                  gh api graphql -f query='
+                    mutation($projectId: ID!, $itemId: ID!, $fieldId: ID!, $optionId: String!) {
+                      updateProjectV2ItemFieldValue(input: {
+                        projectId: $projectId,
+                        itemId: $itemId,
+                        fieldId: $fieldId,
+                        value: { singleSelectOptionId: $optionId }
+                      }) { projectV2Item { id } }
+                    }' -f projectId="PVT_kwDOAHNM9M4ABvWx" \
+                       -f itemId="$ITEM_ID" \
+                       -f fieldId="PVTSSF_lADOAHNM9M4ABvWxzgBApUw" \
+                       -f optionId="$TEAM_OPTION_ID" 2>/dev/null \
+                    && echo "Set Team field to $team_project_name" \
+                    || echo "Warning: Could not set Team field"
                 else
-                  echo "Warning: Could not find Team field in project"
+                  echo "Warning: Could not find Team option matching '$team_project_name'"
                 fi
               else
-                echo "Warning: Could not get project node ID"
+                echo "Warning: Could not add issue to project (check token permissions)"
               fi
-            else
-              echo "Warning: Could not add issue to project #273 (check token permissions)"
             fi
           fi
 
