@@ -78,6 +78,17 @@ runs:
           --description "Related to release $VERSION" \
           --color "1D76DB" 2>/dev/null || echo "Label '$RELEASE_LABEL' already exists."
 
+        # Helper: get display name for a provider (e.g. "aws" -> "AWS")
+        provider_display_name() {
+          case "$1" in
+            aws) echo "AWS" ;;
+            azure) echo "Azure" ;;
+            vsphere) echo "vSphere" ;;
+            cloud-director) echo "Cloud Director" ;;
+            *) echo "$1" ;;
+          esac
+        }
+
         # Helper: build checklist items for a given provider
         checklist_for_provider() {
           local p="$1"
@@ -105,7 +116,16 @@ runs:
           providers_list=$(echo "${TEAM_PROVIDERS[$team]}" | xargs | tr ' ' ', ')
           team_label="${TEAM_LABELS[$team]}"
 
-          echo "--- Processing $team (providers: $providers_list) ---"
+          # Build display name list for titles (e.g. "AWS, Azure")
+          providers_display=""
+          for provider in ${TEAM_PROVIDERS[$team]}; do
+            if [[ -n "$providers_display" ]]; then
+              providers_display+=", "
+            fi
+            providers_display+="$(provider_display_name "$provider")"
+          done
+
+          echo "--- Processing $team (providers: $providers_display) ---"
 
           # Build controller app checklist
           CHECKLIST=""
@@ -139,13 +159,9 @@ runs:
             done
 
             if [[ "$NEEDS_UPDATE" == "true" ]]; then
-              echo "Updating issue #$EXISTING_ISSUE to include apps for: $providers_list"
-              # Append missing checklist items before the "### Context" section
-              UPDATED_BODY=$(echo "$EXISTING_BODY" | sed "/### Context/i\\
-        ${CHECKLIST}")
-              # Replace the full checklist section: remove old items and insert complete list
-              # Simpler approach: rebuild the entire body
-              ISSUE_TITLE="Controller readiness: $VERSION ($providers_list)"
+              echo "Updating issue #$EXISTING_ISSUE to include apps for: $providers_display"
+              # Rebuild the entire body with the complete checklist
+              ISSUE_TITLE="Controller readiness: $providers_display Release $VERSION"
               UPDATED_BODY="## Controller Readiness for $VERSION
 
         The major release **$VERSION** has been created. The following cloud controller apps need new versions compatible with the Kubernetes version in this release.
@@ -156,9 +172,7 @@ runs:
         ### Context
 
         - Release PRs in [giantswarm/releases](https://github.com/giantswarm/releases/pulls?q=is%3Apr+is%3Aopen+$VERSION)
-        - Once all items are checked off and this issue is closed, the release PR will automatically receive a component bump to pick up the new controller versions.
-
-        /cc @giantswarm/$team"
+        - Once all items are checked off and this issue is closed, the release PR will automatically receive a component bump to pick up the new controller versions."
 
               gh issue edit "$EXISTING_ISSUE" --repo giantswarm/roadmap \
                 --title "$ISSUE_TITLE" \
@@ -168,7 +182,7 @@ runs:
               echo "Issue #$EXISTING_ISSUE already has all apps listed. No update needed."
             fi
           else
-            ISSUE_TITLE="Controller readiness: $VERSION ($providers_list)"
+            ISSUE_TITLE="Controller readiness: $providers_display Release $VERSION"
 
             ISSUE_BODY="## Controller Readiness for $VERSION
 
@@ -180,9 +194,7 @@ runs:
         ### Context
 
         - Release PRs in [giantswarm/releases](https://github.com/giantswarm/releases/pulls?q=is%3Apr+is%3Aopen+$VERSION)
-        - Once all items are checked off and this issue is closed, the release PR will automatically receive a component bump to pick up the new controller versions.
-
-        /cc @giantswarm/$team"
+        - Once all items are checked off and this issue is closed, the release PR will automatically receive a component bump to pick up the new controller versions."
 
             ISSUE_URL=$(gh issue create --repo giantswarm/roadmap \
               --title "$ISSUE_TITLE" \
