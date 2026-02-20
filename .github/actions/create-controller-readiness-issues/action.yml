@@ -33,24 +33,29 @@ runs:
         # EKS is excluded (no cloud controller manager)
         declare -A TEAM_PROVIDERS
         declare -A TEAM_LABELS
+        declare -A TEAM_PROJECT_NAME
 
         for provider in $PROVIDERS; do
           case "$provider" in
             aws)
               TEAM_PROVIDERS["team-phoenix"]+="aws "
               TEAM_LABELS["team-phoenix"]="team/phoenix"
+              TEAM_PROJECT_NAME["team-phoenix"]="Phoenix"
               ;;
             azure)
               TEAM_PROVIDERS["team-phoenix"]+="azure "
               TEAM_LABELS["team-phoenix"]="team/phoenix"
+              TEAM_PROJECT_NAME["team-phoenix"]="Phoenix"
               ;;
             vsphere)
               TEAM_PROVIDERS["team-rocket"]+="vsphere "
               TEAM_LABELS["team-rocket"]="team/rocket"
+              TEAM_PROJECT_NAME["team-rocket"]="Rocket"
               ;;
             cloud-director)
               TEAM_PROVIDERS["team-rocket"]+="cloud-director "
               TEAM_LABELS["team-rocket"]="team/rocket"
+              TEAM_PROJECT_NAME["team-rocket"]="Rocket"
               ;;
             eks)
               echo "Skipping EKS - no cloud controller manager needed"
@@ -187,13 +192,41 @@ runs:
             ISSUE_NUMBER=$(echo "$ISSUE_URL" | grep -oE '[0-9]+$')
             echo "Created issue $ISSUE_URL"
 
-            # Add the issue to GitHub Project #273 (Roadmap board)
-            # Field assignment (Team, Status) must be done manually or via project automation rules,
-            # because gh project item-edit requires GraphQL node IDs that vary per project.
+            # Add the issue to GitHub Project #273 (Roadmap board) and set Team field
             echo "Adding issue to project #273..."
-            gh project item-add 273 --owner giantswarm --url "$ISSUE_URL" --format json 2>/dev/null \
-              && echo "Added to project." \
-              || echo "Warning: Could not add issue to project #273 (check token permissions)"
+            ITEM_ID=$(gh project item-add 273 --owner giantswarm --url "$ISSUE_URL" --format json 2>/dev/null | jq -r '.id' || echo "")
+
+            if [[ -n "$ITEM_ID" && "$ITEM_ID" != "null" ]]; then
+              echo "Added to project with item ID: $ITEM_ID"
+
+              # Look up project node ID and Team field ID dynamically
+              PROJECT_NODE_ID=$(gh project view 273 --owner giantswarm --format json --jq '.id' 2>/dev/null || echo "")
+              if [[ -n "$PROJECT_NODE_ID" ]]; then
+                TEAM_FIELD_JSON=$(gh project field-list 273 --owner giantswarm --format json 2>/dev/null || echo '{"fields":[]}')
+                TEAM_FIELD_ID=$(echo "$TEAM_FIELD_JSON" | jq -r '.fields[] | select(.name == "Team") | .id')
+
+                if [[ -n "$TEAM_FIELD_ID" ]]; then
+                  # Find the option ID matching the team name (e.g. "Phoenix" or "Rocket")
+                  team_project_name="${TEAM_PROJECT_NAME[$team]}"
+                  TEAM_OPTION_ID=$(echo "$TEAM_FIELD_JSON" | jq -r --arg name "$team_project_name" '.fields[] | select(.name == "Team") | .options[] | select(.name | contains($name)) | .id')
+
+                  if [[ -n "$TEAM_OPTION_ID" ]]; then
+                    gh project item-edit --project-id "$PROJECT_NODE_ID" --id "$ITEM_ID" \
+                      --field-id "$TEAM_FIELD_ID" --single-select-option-id "$TEAM_OPTION_ID" 2>/dev/null \
+                      && echo "Set Team field to $team_project_name" \
+                      || echo "Warning: Could not set Team field"
+                  else
+                    echo "Warning: Could not find Team option matching '$team_project_name'"
+                  fi
+                else
+                  echo "Warning: Could not find Team field in project"
+                fi
+              else
+                echo "Warning: Could not get project node ID"
+              fi
+            else
+              echo "Warning: Could not add issue to project #273 (check token permissions)"
+            fi
           fi
 
           TRACKING_ROWS+="| $team | $providers_list | giantswarm/roadmap#$ISSUE_NUMBER | open |"$'\n'
