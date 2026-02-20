@@ -26,6 +26,13 @@ Documentation for the staged release lifecycle:
 - Freeze stage blocks non-Tenet changes and skips weekly bumps
 - Slack notifications for consolidated releases on stage transitions
 
+### [Controller Readiness Tracking](workflows-controller-readiness.md)
+Documentation for the automated controller readiness tracking system for major releases:
+- **Create Controller Readiness Issues** (composite action) - Creates tracking issues in `giantswarm/roadmap` for teams that own cloud controller apps
+- **Check Controller Readiness** (`check-controller-readiness.yaml`) - Daily check that triggers component bumps when all controllers are ready
+
+When a major release is created, controller apps (e.g., `cloud-provider-aws`, `azure-cloud-controller-manager`) need new versions for the new Kubernetes version. This system automates the tracking and follow-up, holding the release PR in development until controllers are ready.
+
 ### [Pinning Component and App Versions](workflows-pinning-versions.md)
 Documentation for pinning specific component or app versions in releases:
 - **Pin Version** (`pin-version.yaml`) - Pins component/app versions via PR comments
@@ -52,6 +59,7 @@ This workflow retags cluster provider charts (e.g., `cluster-aws:7.2.5` → `34.
 | Update Release PR | On PR comment | ❌ |
 | Release Stage | On PR comment (`/stage`) | ❌ |
 | Bump Open Releases | Monday 9:00 AM UTC | ✅ |
+| Check Controller Readiness | Daily 8:00 AM UTC | ✅ |
 | Deprecate Releases | Monday 6:00 AM UTC | ✅ |
 | Archive Releases | Monday 10:00 AM UTC | ✅ |
 | Retag Cluster Charts (CircleCI) | On merge to main/master | ✅ |

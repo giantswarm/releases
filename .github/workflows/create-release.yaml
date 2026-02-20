@@ -538,6 +538,15 @@ jobs:
           pr_number: ${{ steps.create_pr.outputs.pull-request-number }}
           github_token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
 
+      - name: Create controller readiness issues
+        if: steps.create_pr.outputs.pull-request-number != ''
+        uses: ./.github/actions/create-controller-readiness-issues
+        with:
+          providers: ${{ steps.filter_providers.outputs.filtered_providers }}
+          version: ${{ steps.determine_next_release.outputs.version }}
+          pr_numbers: ${{ steps.create_pr.outputs.pull-request-number }}
+          github_token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+
   minor_release_consolidated:
     name: "Minor Release (Consolidated)"
     needs: [dispatcher, minor_release_decider]
@@ -818,6 +827,15 @@ jobs:
         uses: ./.github/actions/trigger-e2e-tests
         with:
           pr_number: ${{ steps.create_pr.outputs.pull-request-number }}
+          github_token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+
+      - name: Create controller readiness issues
+        if: steps.create_pr.outputs.pull-request-number != ''
+        uses: ./.github/actions/create-controller-readiness-issues
+        with:
+          providers: ${{ matrix.provider }}
+          version: ${{ steps.determine_next_release.outputs.version }}
+          pr_numbers: ${{ steps.create_pr.outputs.pull-request-number }}
           github_token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
 
   minor_release_individual:
