@@ -531,12 +531,19 @@ jobs:
           github_token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
           anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
 
-      - name: Trigger e2e tests
-        if: steps.check_pr.outputs.PR_EXISTS == 'false' && steps.k8s_check.outputs.VERSION_EXISTS == 'true' && steps.create_pr.outputs.pull-request-number
-        uses: ./.github/actions/trigger-e2e-tests
+      # e2e tests are not triggered for major releases because controllers are not yet updated.
+      # The check-controller-readiness workflow will post /update-release once controllers are ready,
+      # and e2e tests will run after that component bump.
+
+      - name: Create controller readiness issues
+        if: steps.create_pr.outputs.pull-request-number != ''
+        uses: ./.github/actions/create-controller-readiness-issues
         with:
-          pr_number: ${{ steps.create_pr.outputs.pull-request-number }}
+          providers: ${{ steps.filter_providers.outputs.filtered_providers }}
+          version: ${{ steps.determine_next_release.outputs.version }}
+          pr_numbers: ${{ steps.create_pr.outputs.pull-request-number }}
           github_token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+          project_token: ${{ secrets.ISSUE_AUTOMATION }}
 
   minor_release_consolidated:
     name: "Minor Release (Consolidated)"
@@ -813,12 +820,19 @@ jobs:
           github_token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
           anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
 
-      - name: Trigger e2e tests
-        if: steps.check_pr.outputs.PR_EXISTS == 'false' && steps.create_pr.outputs.pull-request-number
-        uses: ./.github/actions/trigger-e2e-tests
+      # e2e tests are not triggered for major releases because controllers are not yet updated.
+      # The check-controller-readiness workflow will post /update-release once controllers are ready,
+      # and e2e tests will run after that component bump.
+
+      - name: Create controller readiness issues
+        if: steps.create_pr.outputs.pull-request-number != ''
+        uses: ./.github/actions/create-controller-readiness-issues
         with:
-          pr_number: ${{ steps.create_pr.outputs.pull-request-number }}
+          providers: ${{ matrix.provider }}
+          version: ${{ steps.determine_next_release.outputs.version }}
+          pr_numbers: ${{ steps.create_pr.outputs.pull-request-number }}
           github_token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+          project_token: ${{ secrets.ISSUE_AUTOMATION }}
 
   minor_release_individual:
     name: "Minor Release (Individual)"
