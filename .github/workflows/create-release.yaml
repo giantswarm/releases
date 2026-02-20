@@ -543,6 +543,7 @@ jobs:
           version: ${{ steps.determine_next_release.outputs.version }}
           pr_numbers: ${{ steps.create_pr.outputs.pull-request-number }}
           github_token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+          project_token: ${{ secrets.ISSUE_AUTOMATION }}
 
   minor_release_consolidated:
     name: "Minor Release (Consolidated)"
@@ -831,6 +832,7 @@ jobs:
           version: ${{ steps.determine_next_release.outputs.version }}
           pr_numbers: ${{ steps.create_pr.outputs.pull-request-number }}
           github_token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+          project_token: ${{ secrets.ISSUE_AUTOMATION }}
 
   minor_release_individual:
     name: "Minor Release (Individual)"

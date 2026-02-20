@@ -13,6 +13,10 @@ inputs:
   github_token:
     description: 'GitHub token for API access'
     required: true
+  project_token:
+    description: 'GitHub token with project write permissions (for adding issues to GitHub Projects)'
+    required: false
+    default: ''
 runs:
   using: "composite"
   steps:
@@ -20,6 +24,7 @@ runs:
       shell: bash
       env:
         GH_TOKEN: ${{ inputs.github_token }}
+        PROJECT_TOKEN: ${{ inputs.project_token }}
         PROVIDERS: ${{ inputs.providers }}
         VERSION: ${{ inputs.version }}
         PR_NUMBERS: ${{ inputs.pr_numbers }}
@@ -205,70 +210,74 @@ runs:
             echo "Created issue $ISSUE_URL"
 
             # Add the issue to GitHub Project #273 (Roadmap board) and set Team field.
-            # Uses GraphQL directly because gh project CLI commands require read:org scope
-            # which may not be available, while GraphQL works with just the project scope.
-            echo "Adding issue to project #273 and setting Team field..."
-            team_project_name="${TEAM_PROJECT_NAME[$team]}"
-
-            # Step 1: Get the issue's node ID
-            ISSUE_NODE_ID=$(gh api graphql -f query='
-              query($owner: String!, $repo: String!, $number: Int!) {
-                repository(owner: $owner, name: $repo) {
-                  issue(number: $number) { id }
-                }
-              }' -f owner="giantswarm" -f repo="roadmap" -F number="$ISSUE_NUMBER" \
-              --jq '.data.repository.issue.id' 2>/dev/null || echo "")
-
-            if [[ -z "$ISSUE_NODE_ID" ]]; then
-              echo "Warning: Could not get issue node ID. Skipping project integration."
+            # Uses a separate PROJECT_TOKEN (ISSUE_AUTOMATION) with project write permissions.
+            # The default GH_TOKEN (TAYLORBOT_GITHUB_ACTION) lacks the 'project' scope.
+            if [[ -z "$PROJECT_TOKEN" ]]; then
+              echo "Warning: No project_token provided. Skipping project integration."
             else
-              # Step 2: Add item to project
-              ITEM_ID=$(gh api graphql -f query='
-                mutation($projectId: ID!, $contentId: ID!) {
-                  addProjectV2ItemById(input: {projectId: $projectId, contentId: $contentId}) {
-                    item { id }
+              echo "Adding issue to project #273 and setting Team field..."
+              team_project_name="${TEAM_PROJECT_NAME[$team]}"
+
+              # Step 1: Get the issue's node ID
+              ISSUE_NODE_ID=$(GH_TOKEN="$PROJECT_TOKEN" gh api graphql -f query='
+                query($owner: String!, $repo: String!, $number: Int!) {
+                  repository(owner: $owner, name: $repo) {
+                    issue(number: $number) { id }
                   }
-                }' -f projectId="PVT_kwDOAHNM9M4ABvWx" -f contentId="$ISSUE_NODE_ID" \
-                --jq '.data.addProjectV2ItemById.item.id' 2>/dev/null || echo "")
+                }' -f owner="giantswarm" -f repo="roadmap" -F number="$ISSUE_NUMBER" \
+                --jq '.data.repository.issue.id' 2>/dev/null || echo "")
 
-              if [[ -n "$ITEM_ID" ]]; then
-                echo "Added to project with item ID: $ITEM_ID"
+              if [[ -z "$ISSUE_NODE_ID" ]]; then
+                echo "Warning: Could not get issue node ID. Skipping project integration."
+              else
+                # Step 2: Add item to project
+                ITEM_ID=$(GH_TOKEN="$PROJECT_TOKEN" gh api graphql -f query='
+                  mutation($projectId: ID!, $contentId: ID!) {
+                    addProjectV2ItemById(input: {projectId: $projectId, contentId: $contentId}) {
+                      item { id }
+                    }
+                  }' -f projectId="PVT_kwDOAHNM9M4ABvWx" -f contentId="$ISSUE_NODE_ID" \
+                  --jq '.data.addProjectV2ItemById.item.id' 2>/dev/null || echo "")
 
-                # Step 3: Look up the Team option ID matching our team name
-                TEAM_OPTION_ID=$(gh api graphql -f query='
-                  {
-                    organization(login: "giantswarm") {
-                      projectV2(number: 273) {
-                        field(name: "Team") {
-                          ... on ProjectV2SingleSelectField {
-                            options { id name }
+                if [[ -n "$ITEM_ID" ]]; then
+                  echo "Added to project with item ID: $ITEM_ID"
+
+                  # Step 3: Look up the Team option ID matching our team name
+                  TEAM_OPTION_ID=$(GH_TOKEN="$PROJECT_TOKEN" gh api graphql -f query='
+                    {
+                      organization(login: "giantswarm") {
+                        projectV2(number: 273) {
+                          field(name: "Team") {
+                            ... on ProjectV2SingleSelectField {
+                              options { id name }
+                            }
                           }
                         }
                       }
-                    }
-                  }' --jq ".data.organization.projectV2.field.options[] | select(.name | contains(\"$team_project_name\")) | .id" 2>/dev/null || echo "")
+                    }' --jq ".data.organization.projectV2.field.options[] | select(.name | contains(\"$team_project_name\")) | .id" 2>/dev/null || echo "")
 
-                if [[ -n "$TEAM_OPTION_ID" ]]; then
-                  # Step 4: Set the Team field
-                  gh api graphql -f query='
-                    mutation($projectId: ID!, $itemId: ID!, $fieldId: ID!, $optionId: String!) {
-                      updateProjectV2ItemFieldValue(input: {
-                        projectId: $projectId,
-                        itemId: $itemId,
-                        fieldId: $fieldId,
-                        value: { singleSelectOptionId: $optionId }
-                      }) { projectV2Item { id } }
-                    }' -f projectId="PVT_kwDOAHNM9M4ABvWx" \
-                       -f itemId="$ITEM_ID" \
-                       -f fieldId="PVTSSF_lADOAHNM9M4ABvWxzgBApUw" \
-                       -f optionId="$TEAM_OPTION_ID" 2>/dev/null \
-                    && echo "Set Team field to $team_project_name" \
-                    || echo "Warning: Could not set Team field"
+                  if [[ -n "$TEAM_OPTION_ID" ]]; then
+                    # Step 4: Set the Team field
+                    GH_TOKEN="$PROJECT_TOKEN" gh api graphql -f query='
+                      mutation($projectId: ID!, $itemId: ID!, $fieldId: ID!, $optionId: String!) {
+                        updateProjectV2ItemFieldValue(input: {
+                          projectId: $projectId,
+                          itemId: $itemId,
+                          fieldId: $fieldId,
+                          value: { singleSelectOptionId: $optionId }
+                        }) { projectV2Item { id } }
+                      }' -f projectId="PVT_kwDOAHNM9M4ABvWx" \
+                         -f itemId="$ITEM_ID" \
+                         -f fieldId="PVTSSF_lADOAHNM9M4ABvWxzgBApUw" \
+                         -f optionId="$TEAM_OPTION_ID" 2>/dev/null \
+                      && echo "Set Team field to $team_project_name" \
+                      || echo "Warning: Could not set Team field"
+                  else
+                    echo "Warning: Could not find Team option matching '$team_project_name'"
+                  fi
                 else
-                  echo "Warning: Could not find Team option matching '$team_project_name'"
+                  echo "Warning: Could not add issue to project (check token permissions)"
                 fi
-              else
-                echo "Warning: Could not add issue to project (check token permissions)"
               fi
             fi
           fi
