@@ -68,6 +68,11 @@ runs:
           exit 0
         fi
 
+        # Ensure the controller-readiness label exists in giantswarm/roadmap
+        gh label create "controller-readiness" --repo giantswarm/roadmap \
+          --description "Controller app readiness tracking for major releases" \
+          --color "C2E0C6" 2>/dev/null || echo "Label 'controller-readiness' already exists."
+
         # Build tracking table rows
         TRACKING_ROWS=""
 
