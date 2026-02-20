@@ -40,11 +40,17 @@ jobs:
             echo "--- Checking PR #$PR_NUMBER ($BRANCH_NAME) ---"
 
             # Get PR comments and find the tracking comment
-            TRACKING_COMMENT=$(gh api "repos/$GITHUB_REPOSITORY/issues/$PR_NUMBER/comments" \
+            TRACKING_COMMENT=$(gh api "repos/$GITHUB_REPOSITORY/issues/$PR_NUMBER/comments" --paginate \
               --jq '.[] | select(.body | contains("CONTROLLER_READINESS_START")) | .body' | head -1)
 
             if [[ -z "$TRACKING_COMMENT" ]]; then
               echo "No controller readiness tracking comment found on PR #$PR_NUMBER. Skipping."
+              continue
+            fi
+
+            # Skip if already resolved (guard against re-triggering /update-release every day)
+            if echo "$TRACKING_COMMENT" | grep -q "CONTROLLER_READINESS_RESOLVED"; then
+              echo "Controller readiness already resolved for PR #$PR_NUMBER. Skipping."
               continue
             fi
 
@@ -79,18 +85,21 @@ jobs:
                 --body "/update-release"
               echo "Posted /update-release on PR #$PR_NUMBER"
 
-              # Update the tracking comment to reflect closed status
-              COMMENT_ID=$(gh api "repos/$GITHUB_REPOSITORY/issues/$PR_NUMBER/comments" \
+              # Update the tracking comment: mark statuses as closed and add resolved marker
+              COMMENT_ID=$(gh api "repos/$GITHUB_REPOSITORY/issues/$PR_NUMBER/comments" --paginate \
                 --jq '.[] | select(.body | contains("CONTROLLER_READINESS_START")) | .id' | head -1)
 
               if [[ -n "$COMMENT_ID" ]]; then
-                # Get existing comment and update statuses to closed
-                UPDATED_BODY=$(gh api "repos/$GITHUB_REPOSITORY/issues/comments/$COMMENT_ID" \
-                  --jq '.body' | sed 's/| open |/| closed |/g')
+                CURRENT_BODY=$(gh api "repos/$GITHUB_REPOSITORY/issues/comments/$COMMENT_ID" --jq '.body')
+                # Replace "| open |" with "| closed |" in the status column
+                UPDATED_BODY=$(echo "$CURRENT_BODY" | sed 's/| open |/| closed |/g')
+                # Add resolved marker so we don't re-trigger on next cron run
+                UPDATED_BODY="${UPDATED_BODY}
+          <!-- CONTROLLER_READINESS_RESOLVED -->"
 
                 gh api "repos/$GITHUB_REPOSITORY/issues/comments/$COMMENT_ID" \
                   -X PATCH -f body="$UPDATED_BODY"
-                echo "Updated tracking comment statuses to closed."
+                echo "Updated tracking comment: statuses set to closed, resolved marker added."
               fi
             else
               echo "Not all issues are closed yet for PR #$PR_NUMBER. Waiting."

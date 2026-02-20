@@ -33,29 +33,24 @@ runs:
         # EKS is excluded (no cloud controller manager)
         declare -A TEAM_PROVIDERS
         declare -A TEAM_LABELS
-        declare -A TEAM_PROJECT_FIELD
 
         for provider in $PROVIDERS; do
           case "$provider" in
             aws)
               TEAM_PROVIDERS["team-phoenix"]+="aws "
               TEAM_LABELS["team-phoenix"]="team/phoenix"
-              TEAM_PROJECT_FIELD["team-phoenix"]="Phoenix 🔥"
               ;;
             azure)
               TEAM_PROVIDERS["team-phoenix"]+="azure "
               TEAM_LABELS["team-phoenix"]="team/phoenix"
-              TEAM_PROJECT_FIELD["team-phoenix"]="Phoenix 🔥"
               ;;
             vsphere)
               TEAM_PROVIDERS["team-rocket"]+="vsphere "
               TEAM_LABELS["team-rocket"]="team/rocket"
-              TEAM_PROJECT_FIELD["team-rocket"]="Rocket 🚀"
               ;;
             cloud-director)
               TEAM_PROVIDERS["team-rocket"]+="cloud-director "
               TEAM_LABELS["team-rocket"]="team/rocket"
-              TEAM_PROJECT_FIELD["team-rocket"]="Rocket 🚀"
               ;;
             eks)
               echo "Skipping EKS - no cloud controller manager needed"
@@ -78,67 +73,111 @@ runs:
           --description "Related to release $VERSION" \
           --color "1D76DB" 2>/dev/null || echo "Label '$RELEASE_LABEL' already exists."
 
+        # Helper: build checklist items for a given provider
+        checklist_for_provider() {
+          local p="$1"
+          case "$p" in
+            aws)
+              echo "- [ ] \`cloud-provider-aws\` — updated for Kubernetes in $VERSION"
+              ;;
+            azure)
+              echo "- [ ] \`azure-cloud-controller-manager\` — updated for Kubernetes in $VERSION"
+              echo "- [ ] \`azure-cloud-node-manager\` — updated for Kubernetes in $VERSION"
+              ;;
+            vsphere)
+              echo "- [ ] \`cloud-provider-vsphere\` — updated for Kubernetes in $VERSION"
+              ;;
+            cloud-director)
+              echo "- [ ] \`cloud-provider-cloud-director\` — updated for Kubernetes in $VERSION"
+              ;;
+          esac
+        }
+
         # Build tracking table rows
         TRACKING_ROWS=""
 
         for team in "${!TEAM_PROVIDERS[@]}"; do
           providers_list=$(echo "${TEAM_PROVIDERS[$team]}" | xargs | tr ' ' ', ')
           team_label="${TEAM_LABELS[$team]}"
-          team_project_field="${TEAM_PROJECT_FIELD[$team]}"
 
           echo "--- Processing $team (providers: $providers_list) ---"
 
-          # Build controller app checklist for the issue body
+          # Build controller app checklist
           CHECKLIST=""
           for provider in ${TEAM_PROVIDERS[$team]}; do
-            case "$provider" in
-              aws)
-                CHECKLIST+="- [ ] \`cloud-provider-aws\` — updated for Kubernetes in $VERSION"$'\n'
-                ;;
-              azure)
-                CHECKLIST+="- [ ] \`azure-cloud-controller-manager\` — updated for Kubernetes in $VERSION"$'\n'
-                CHECKLIST+="- [ ] \`azure-cloud-node-manager\` — updated for Kubernetes in $VERSION"$'\n'
-                ;;
-              vsphere)
-                CHECKLIST+="- [ ] \`cloud-provider-vsphere\` — updated for Kubernetes in $VERSION"$'\n'
-                ;;
-              cloud-director)
-                CHECKLIST+="- [ ] \`cloud-provider-cloud-director\` — updated for Kubernetes in $VERSION"$'\n'
-                ;;
-            esac
+            CHECKLIST+="$(checklist_for_provider "$provider")"$'\n'
           done
 
-          ISSUE_TITLE="Controller readiness: $VERSION ($providers_list)"
-
-          # Check for existing issue (deduplication)
+          # Check for existing issue (deduplication for re-runs and individual matrix runs)
           EXISTING_ISSUE=$(gh issue list --repo giantswarm/roadmap \
-            --label "controller-readiness" --label "$team_label" \
-            --search "$VERSION" --state open \
-            --json number,title --jq ".[] | select(.title | contains(\"$VERSION\")) | .number" | head -1)
+            --label "controller-readiness" --label "$team_label" --label "$RELEASE_LABEL" \
+            --state open \
+            --json number --jq '.[0].number')
 
           if [[ -n "$EXISTING_ISSUE" ]]; then
-            echo "Found existing issue #$EXISTING_ISSUE for $team. Skipping creation."
+            echo "Found existing issue #$EXISTING_ISSUE for $team."
             ISSUE_NUMBER="$EXISTING_ISSUE"
             ISSUE_URL="https://github.com/giantswarm/roadmap/issues/$EXISTING_ISSUE"
-          else
-            # Create the issue
-            ISSUE_BODY=$(cat <<EOF
-        ## Controller Readiness for $VERSION
+
+            # Check if the current provider's apps are already listed (handles individual matrix runs
+            # where aws creates the issue, then azure runs and finds it but azure apps are missing)
+            EXISTING_BODY=$(gh issue view "$EXISTING_ISSUE" --repo giantswarm/roadmap --json body --jq '.body')
+            NEEDS_UPDATE=false
+            for provider in ${TEAM_PROVIDERS[$team]}; do
+              ITEMS="$(checklist_for_provider "$provider")"
+              # Check if any checklist item from this provider is missing
+              FIRST_ITEM=$(echo "$ITEMS" | head -1)
+              if ! echo "$EXISTING_BODY" | grep -qF "$FIRST_ITEM"; then
+                NEEDS_UPDATE=true
+                break
+              fi
+            done
+
+            if [[ "$NEEDS_UPDATE" == "true" ]]; then
+              echo "Updating issue #$EXISTING_ISSUE to include apps for: $providers_list"
+              # Append missing checklist items before the "### Context" section
+              UPDATED_BODY=$(echo "$EXISTING_BODY" | sed "/### Context/i\\
+        ${CHECKLIST}")
+              # Replace the full checklist section: remove old items and insert complete list
+              # Simpler approach: rebuild the entire body
+              ISSUE_TITLE="Controller readiness: $VERSION ($providers_list)"
+              UPDATED_BODY="## Controller Readiness for $VERSION
 
         The major release **$VERSION** has been created. The following cloud controller apps need new versions compatible with the Kubernetes version in this release.
 
         ### Apps to update
 
-        $CHECKLIST
-
+        ${CHECKLIST}
         ### Context
 
         - Release PRs in [giantswarm/releases](https://github.com/giantswarm/releases/pulls?q=is%3Apr+is%3Aopen+$VERSION)
         - Once all items are checked off and this issue is closed, the release PR will automatically receive a component bump to pick up the new controller versions.
 
-        /cc @giantswarm/$team
-        EOF
-        )
+        /cc @giantswarm/$team"
+
+              gh issue edit "$EXISTING_ISSUE" --repo giantswarm/roadmap \
+                --title "$ISSUE_TITLE" \
+                --body "$UPDATED_BODY"
+              echo "Updated issue #$EXISTING_ISSUE"
+            else
+              echo "Issue #$EXISTING_ISSUE already has all apps listed. No update needed."
+            fi
+          else
+            ISSUE_TITLE="Controller readiness: $VERSION ($providers_list)"
+
+            ISSUE_BODY="## Controller Readiness for $VERSION
+
+        The major release **$VERSION** has been created. The following cloud controller apps need new versions compatible with the Kubernetes version in this release.
+
+        ### Apps to update
+
+        ${CHECKLIST}
+        ### Context
+
+        - Release PRs in [giantswarm/releases](https://github.com/giantswarm/releases/pulls?q=is%3Apr+is%3Aopen+$VERSION)
+        - Once all items are checked off and this issue is closed, the release PR will automatically receive a component bump to pick up the new controller versions.
+
+        /cc @giantswarm/$team"
 
             ISSUE_URL=$(gh issue create --repo giantswarm/roadmap \
               --title "$ISSUE_TITLE" \
@@ -149,40 +188,24 @@ runs:
             echo "Created issue $ISSUE_URL"
 
             # Add the issue to GitHub Project #273 (Roadmap board)
+            # Field assignment (Team, Status) must be done manually or via project automation rules,
+            # because gh project item-edit requires GraphQL node IDs that vary per project.
             echo "Adding issue to project #273..."
-            ITEM_ID=$(gh project item-add 273 --owner giantswarm --url "$ISSUE_URL" --format json 2>/dev/null | jq -r '.id' || echo "")
-
-            if [[ -n "$ITEM_ID" && "$ITEM_ID" != "null" ]]; then
-              echo "Added to project with item ID: $ITEM_ID"
-
-              # Set Team field
-              gh project item-edit --project-id 273 --id "$ITEM_ID" \
-                --field-id "Team" --text "$team_project_field" 2>/dev/null || \
-                echo "Warning: Could not set Team field (field may not exist or have different ID)"
-
-              # Set Status field to Inbox
-              gh project item-edit --project-id 273 --id "$ITEM_ID" \
-                --field-id "Status" --single-select-option-id "Inbox" 2>/dev/null || \
-                echo "Warning: Could not set Status field (field may not exist or have different ID)"
-            else
-              echo "Warning: Could not add issue to project #273"
-            fi
+            gh project item-add 273 --owner giantswarm --url "$ISSUE_URL" --format json 2>/dev/null \
+              && echo "Added to project." \
+              || echo "Warning: Could not add issue to project #273 (check token permissions)"
           fi
 
           TRACKING_ROWS+="| $team | $providers_list | giantswarm/roadmap#$ISSUE_NUMBER | open |"$'\n'
         done
 
         # Post tracking comment on each release PR
-        TRACKING_COMMENT=$(cat <<EOF
-        <!-- CONTROLLER_READINESS_START -->
+        TRACKING_COMMENT="<!-- CONTROLLER_READINESS_START -->
         ## Controller readiness tracker
 
         | Team | Providers | Issue | Status |
         |------|-----------|-------|--------|
-        ${TRACKING_ROWS}
-        <!-- CONTROLLER_READINESS_END -->
-        EOF
-        )
+        ${TRACKING_ROWS}<!-- CONTROLLER_READINESS_END -->"
 
         IFS=',' read -ra PR_ARRAY <<< "$PR_NUMBERS"
         for pr_number in "${PR_ARRAY[@]}"; do
@@ -194,7 +217,7 @@ runs:
           echo "Posting tracking comment on PR #$pr_number..."
 
           # Check for existing tracking comment
-          EXISTING_COMMENT_ID=$(gh api "repos/$GITHUB_REPOSITORY/issues/$pr_number/comments" \
+          EXISTING_COMMENT_ID=$(gh api "repos/$GITHUB_REPOSITORY/issues/$pr_number/comments" --paginate \
             --jq '.[] | select(.body | contains("CONTROLLER_READINESS_START")) | .id' | head -1)
 
           if [[ -n "$EXISTING_COMMENT_ID" ]]; then
