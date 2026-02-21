@@ -340,6 +340,10 @@ to all Giant Swarm installations.
 
 ## vSphere
 
+- v35
+  - v35.0
+    - [v35.0.0](https://github.com/giantswarm/releases/tree/master/vsphere/v35.0.0)
+
 - v34
   - v34.0
     - [v34.0.0](https://github.com/giantswarm/releases/tree/master/vsphere/v34.0.0)
