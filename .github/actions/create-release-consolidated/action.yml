@@ -47,22 +47,15 @@ runs:
         for provider in ${{ inputs.providers }}; do
           echo "--- Creating release for $provider ---"
 
-          # Add a separator before each provider except the first one
-          if [ "$first_provider" = true ]; then
-            first_provider=false
-          else
-            echo "" >> $LOG_FILE
-            echo "---" >> $LOG_FILE
-            echo "" >> $LOG_FILE
-          fi
-
           # Capitalize provider name for the heading
           PROVIDER_UPPER=$(echo "$provider" | awk '{print toupper($0)}')
-          echo "${PROVIDER_UPPER}" >> $LOG_FILE
-          echo "" >> $LOG_FILE
 
           # Determine base version for this provider
           BASE_VERSION=$(./tools/determine-next-release.sh "$provider" "${{ inputs.release_type }}" "${{ inputs.version_override }}" | grep '^base=' | cut -d'=' -f2)
+
+          # Capture per-provider output
+          PROVIDER_LOG="/tmp/release_output_${provider}.log"
+          touch "$PROVIDER_LOG"
 
           # Retry logic (up to 3 attempts)
           n=0
@@ -72,7 +65,7 @@ runs:
               --base "$BASE_VERSION" \
               --name "${{ inputs.version }}" \
               --provider "$provider" \
-              --bumpall --overwrite -y --output markdown --changes-only 2>&1 | tee -a $LOG_FILE && break
+              --bumpall --overwrite -y --output markdown --changes-only 2>&1 | tee "$PROVIDER_LOG" && break
             n=$((n+1))
             if [ "$n" -ge 3 ]; then
                 echo "The command has failed 3 times in a row. Aborting."
@@ -81,6 +74,34 @@ runs:
             echo "Command failed. Retrying in 15 seconds..."
             sleep 15
           done
+
+          # Extract key component versions for the summary line
+          K8S_LINE=$(grep -i '^| kubernetes ' "$PROVIDER_LOG" | head -1 || true)
+          K8S_TO=$(echo "$K8S_LINE" | awk -F'|' '{gsub(/[* ]/, "", $4); print $4}' || true)
+          FLATCAR_LINE=$(grep -i '^| flatcar ' "$PROVIDER_LOG" | head -1 || true)
+          FLATCAR_TO=$(echo "$FLATCAR_LINE" | awk -F'|' '{gsub(/[* ]/, "", $4); print $4}' || true)
+          CLUSTER_LINE=$(grep -i '^| cluster-' "$PROVIDER_LOG" | head -1 || true)
+          CLUSTER_NAME=$(echo "$CLUSTER_LINE" | awk -F'|' '{gsub(/ /, "", $2); print $2}' || true)
+          CLUSTER_TO=$(echo "$CLUSTER_LINE" | awk -F'|' '{gsub(/[* ]/, "", $4); print $4}' || true)
+
+          SUMMARY_PARTS=""
+          [[ -n "$K8S_TO" ]] && SUMMARY_PARTS="K8s $K8S_TO"
+          [[ -n "$FLATCAR_TO" ]] && SUMMARY_PARTS="${SUMMARY_PARTS:+$SUMMARY_PARTS, }Flatcar $FLATCAR_TO"
+          [[ -n "$CLUSTER_TO" ]] && SUMMARY_PARTS="${SUMMARY_PARTS:+$SUMMARY_PARTS, }$CLUSTER_NAME $CLUSTER_TO"
+
+          # Wrap in collapsible section
+          if [ "$first_provider" = true ]; then
+            first_provider=false
+          else
+            echo "" >> $LOG_FILE
+          fi
+
+          echo "<details>" >> $LOG_FILE
+          echo "<summary><strong>${PROVIDER_UPPER}</strong> — ${SUMMARY_PARTS:-see details}</summary>" >> $LOG_FILE
+          echo "" >> $LOG_FILE
+          cat "$PROVIDER_LOG" >> $LOG_FILE
+          echo "" >> $LOG_FILE
+          echo "</details>" >> $LOG_FILE
         done
 
         # Output log content to env (for use in PR body)

@@ -470,7 +470,26 @@ to all Giant Swarm installations.
   - v32.0
     - [v32.0.0](https://github.com/giantswarm/releases/tree/master/eks/archived/v32.0.0)
 
-# Running tests against PRs
+# PR Commands
+
+## Summarize Upstream Changes
+
+To generate an AI-powered summary of upstream Kubernetes and Flatcar breaking changes, deprecations, and urgent upgrade notes, add a comment with:
+
+`/summarize-ai`
+
+This will:
+
+* Extract Kubernetes and Flatcar version ranges from the release README.md
+* Fetch upstream changelogs (Kubernetes urgent upgrade notes + deprecations, Flatcar changes)
+* Summarize the most impactful changes using AI
+* Post a comment with a suggested description and a ready-to-use `/update-readme` command
+
+The summary is only generated when there is a **minor version change** in Kubernetes or Flatcar. Patch-only upgrades are skipped.
+
+To target a specific provider:
+
+`/summarize-ai --provider aws`
 
 ## Workload Cluster End-to-End Tests
 

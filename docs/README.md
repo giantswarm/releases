@@ -12,6 +12,9 @@ Documentation for workflows that create and maintain releases:
 
 These workflows automate the release drafting process and provide commands for updating components and apps.
 
+### [Summarize Upstream Changes](workflows-creating-and-updating-releases.md#summarize)
+- **Summarize** (`summarize-ai.yaml`) - AI-powered summary of upstream Kubernetes/Flatcar breaking changes via `/summarize-ai` slash command
+
 ### [Deprecating and Archiving Releases](workflows-deprecating-and-archiving-releases.md)
 Documentation for workflows that manage the end-of-life process for releases:
 - **Deprecate Releases** (`deprecate-releases.yaml`) - Marks outdated releases as deprecated
@@ -57,6 +60,7 @@ This workflow retags cluster provider charts (e.g., `cluster-aws:7.2.5` → `34.
 |----------|----------|----------------|
 | Create Release PR | 1st of month 6:00 AM UTC | ✅ |
 | Update Release PR | On PR comment | ❌ |
+| Summarize Upstream Changes | On PR comment (`/summarize-ai`) | ❌ |
 | Release Stage | On PR comment (`/stage`) | ❌ |
 | Bump Open Releases | Monday 9:00 AM UTC | ✅ |
 | Check Controller Readiness | Daily 8:00 AM UTC | ✅ |

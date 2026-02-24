@@ -220,6 +220,7 @@ Examples:
 - `/update-release --provider aws --component flatcar@4152.2.3`
 - `/update-release --provider azure --app azuredisk-csi-driver@1.32.9`
 - `/update-readme --provider aws "Description here"`
+- `/summarize-ai` (AI summary of upstream K8s/Flatcar breaking changes)
 ```
 
 #### Individual Release PR
@@ -232,6 +233,7 @@ Examples:
 - `/update-release --component flatcar@4152.2.3`
 - `/update-release --app aws-ebs-csi-driver@3.0.5`
 - `/update-readme "Description here"`
+- `/summarize-ai` (AI summary of upstream K8s/Flatcar breaking changes)
 ```
 
 ---
@@ -241,7 +243,7 @@ Examples:
 **Purpose**: Responds to slash commands in PR comments to update release files.
 
 #### Trigger
-- Issue comment containing: `/update-release`, `/update-readme`, or `/update-announcement`
+- Issue comment containing: `/update-release` or `/update-readme`
 - Only on pull requests
 - Only in giantswarm/releases repository
 
@@ -278,7 +280,7 @@ Options:
 **Behavior**:
 - **With specific versions**: Uses `--update-existing --regenerate-readme` (targeted update)
 - **Without versions**: Uses `--bumpall` (updates everything to latest)
-- **Preserves descriptions**: Backs up and restores README/announcement descriptions
+- **Preserves descriptions**: Backs up and restores README descriptions
 
 ##### `/update-readme`
 Updates the README.md description (line 3).
@@ -294,19 +296,22 @@ Updates the README.md description (line 3).
 /update-readme --provider aws "CAPA-specific changes here."
 ```
 
-##### `/update-announcement`
-Updates the announcement.md with a brief summary.
+##### `/summarize-ai` (`summarize-ai.yaml`)
+
+Generates an AI-powered summary of upstream Kubernetes and Flatcar breaking changes for the release README description.
 
 **Syntax**:
 ```bash
-/update-announcement [--provider PROVIDER] "Brief summary"
+/summarize-ai [--provider PROVIDER]
 ```
 
-**Examples**:
-```bash
-/update-announcement "Critical security fixes and stability improvements."
-/update-announcement --provider vsphere "CAPV workload cluster updates."
-```
+**How it works**:
+1. Reads the release README.md to find Kubernetes/Flatcar version ranges
+2. Fetches upstream changelogs (K8s Urgent Upgrade Notes + Deprecations, Flatcar Changes)
+3. Sends to Claude for a customer-friendly summary
+4. Posts a PR comment with the suggested description and a ready-to-copy `/update-readme` command
+
+Skips for patch-only upgrades (no minor version change) since those rarely contain breaking changes.
 
 ---
 
@@ -336,8 +341,7 @@ For component/app updates:
 - Restores preserved descriptions
 
 For description updates:
-- Updates README.md line 3 OR
-- Updates announcement.md line 1 with proper format
+- Updates README.md line 3 with the provided description
 
 #### 5. Commit Changes
 - Configures Git with bot identity
