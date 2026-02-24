@@ -418,11 +418,14 @@ jobs:
             README_DESCRIPTION_BACKUP=""
             if [ -f "${PROVIDER_DIR}/${RELEASE_NAME}/README.md" ] && ! grep -q "<< Add description here >>" "${PROVIDER_DIR}/${RELEASE_NAME}/README.md"; then
               # Extract existing README description (line 3, which is the warning/description)
-              # Only backup if line 3 is a real description (not a markdown heading), to avoid
-              # capturing devctl-generated section headers when the placeholder was deleted without replacement
               _line3=$(sed -n '3p' "${PROVIDER_DIR}/${RELEASE_NAME}/README.md" || true)
               if [[ -n "$_line3" ]] && [[ "$_line3" != \#* ]]; then
+                # Real description found — back it up for restore after devctl
                 README_DESCRIPTION_BACKUP="$_line3"
+              else
+                # Line 3 is empty or a heading (e.g. "## Changes compared to ...") — no description was set.
+                # Clear it before devctl runs to prevent duplicate headings when devctl regenerates the README.
+                sed -i '3s/.*//' "${PROVIDER_DIR}/${RELEASE_NAME}/README.md"
               fi
             fi
 

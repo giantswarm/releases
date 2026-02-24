@@ -315,7 +315,13 @@ jobs:
             README_DESCRIPTION_BACKUP=""
             ANNOUNCEMENT_BACKUP=""
             if [ -f "${PROVIDER_DIR}/${RELEASE_NAME}/README.md" ] && ! grep -q "<< Add description here >>" "${PROVIDER_DIR}/${RELEASE_NAME}/README.md"; then
-              README_DESCRIPTION_BACKUP=$(sed -n '3p' "${PROVIDER_DIR}/${RELEASE_NAME}/README.md" || true)
+              _line3=$(sed -n '3p' "${PROVIDER_DIR}/${RELEASE_NAME}/README.md" || true)
+              if [[ -n "$_line3" ]] && [[ "$_line3" != \#* ]]; then
+                README_DESCRIPTION_BACKUP="$_line3"
+              else
+                # Line 3 is empty or a heading — clear it to prevent duplicate headings after devctl regeneration
+                sed -i '3s/.*//' "${PROVIDER_DIR}/${RELEASE_NAME}/README.md"
+              fi
             fi
             if [ -f "${PROVIDER_DIR}/${RELEASE_NAME}/announcement.md" ] && ! grep -q "<< Add description here >>" "${PROVIDER_DIR}/${RELEASE_NAME}/announcement.md"; then
               ANNOUNCEMENT_BACKUP=$(sed -n '1p' "${PROVIDER_DIR}/${RELEASE_NAME}/announcement.md" | sed 's/.*\*\*\. //' || true)
