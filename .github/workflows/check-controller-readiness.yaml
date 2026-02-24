@@ -1,0 +1,85 @@
+name: Check Controller Readiness
+
+on:
+  schedule:
+    - cron: '0 8 * * *' # Run daily at 08:00 UTC
+  workflow_dispatch:
+
+jobs:
+  check-readiness:
+    name: "Check Controller Readiness"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check readiness and trigger updates
+        env:
+          GH_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+        run: |
+          # Find open PRs with both release/major and stage/development labels
+          PR_NUMBERS=$(gh pr list --repo "$GITHUB_REPOSITORY" --state open \
+            --label "release/major" --label "stage/development" \
+            --json number --jq '.[].number')
+
+          if [[ -z "$PR_NUMBERS" ]]; then
+            echo "No open major release PRs in development stage found."
+            exit 0
+          fi
+
+          echo "Found major release PRs: $PR_NUMBERS"
+
+          for PR_NUMBER in $PR_NUMBERS; do
+            echo ""
+            echo "--- Checking PR #$PR_NUMBER ---"
+
+            # Fetch tracking comment body and ID in one call
+            COMMENT_JSON=$(gh api "repos/$GITHUB_REPOSITORY/issues/$PR_NUMBER/comments" --paginate \
+              --jq '[.[] | select(.body | contains("CONTROLLER_READINESS_START")) | {id, body}] | first')
+
+            if [[ -z "$COMMENT_JSON" || "$COMMENT_JSON" == "null" ]]; then
+              echo "No tracking comment found. Skipping."
+              continue
+            fi
+
+            COMMENT_ID=$(echo "$COMMENT_JSON" | jq -r '.id')
+            COMMENT_BODY=$(echo "$COMMENT_JSON" | jq -r '.body')
+
+            # Skip if already resolved (guard against re-triggering /update-release every day)
+            if echo "$COMMENT_BODY" | grep -q "CONTROLLER_READINESS_RESOLVED"; then
+              echo "Already resolved. Skipping."
+              continue
+            fi
+
+            # Extract issue references (giantswarm/roadmap#NNN)
+            ISSUE_REFS=$(echo "$COMMENT_BODY" | grep -oE 'giantswarm/roadmap#[0-9]+' | sort -u)
+            if [[ -z "$ISSUE_REFS" ]]; then
+              echo "No issue references found. Skipping."
+              continue
+            fi
+
+            ALL_CLOSED=true
+            while IFS= read -r ref; do
+              ISSUE_NUM=$(echo "$ref" | grep -oE '[0-9]+$')
+              ISSUE_STATE=$(gh issue view "$ISSUE_NUM" --repo giantswarm/roadmap --json state --jq '.state')
+              echo "  $ref: $ISSUE_STATE"
+              [[ "$ISSUE_STATE" != "CLOSED" ]] && ALL_CLOSED=false
+            done <<< "$ISSUE_REFS"
+
+            if [[ "$ALL_CLOSED" != "true" ]]; then
+              echo "Not all issues closed yet. Waiting."
+              continue
+            fi
+
+            echo "All controller readiness issues are closed!"
+
+            # Post /update-release to trigger component bump
+            gh pr comment "$PR_NUMBER" --repo "$GITHUB_REPOSITORY" --body "/update-release"
+            echo "Posted /update-release on PR #$PR_NUMBER"
+
+            # Update tracking comment: mark statuses as closed + add resolved marker
+            UPDATED_BODY=$(echo "$COMMENT_BODY" | sed 's/| open |/| closed |/g')
+            UPDATED_BODY="${UPDATED_BODY}
+          <!-- CONTROLLER_READINESS_RESOLVED -->"
+
+            gh api "repos/$GITHUB_REPOSITORY/issues/comments/$COMMENT_ID" \
+              -X PATCH -f body="$UPDATED_BODY"
+            echo "Tracking comment updated."
+          done
