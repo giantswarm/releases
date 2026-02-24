@@ -460,6 +460,10 @@ to all Giant Swarm installations.
 
 ## EKS
 
+- v34
+  - v34.0
+    - [v34.0.0](https://github.com/giantswarm/releases/tree/master/eks/v34.0.0)
+
 - v33
   - v33.0
     - [v33.0.0](https://github.com/giantswarm/releases/tree/master/eks/v33.0.0)

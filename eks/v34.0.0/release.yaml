@@ -1,0 +1,24 @@
+apiVersion: release.giantswarm.io/v1alpha1
+kind: Release
+metadata:
+  name: eks-34.0.0
+spec:
+  apps:
+  - name: aws-ebs-csi-driver
+    version: 4.1.1
+  - name: priority-classes
+    version: 0.3.0
+  - name: teleport-kube-agent
+    version: 0.10.8
+  components:
+  - name: cluster-eks
+    catalog: cluster
+    version: 1.2.1
+  - name: flatcar
+    version: 4459.2.3
+  - name: kubernetes
+    version: 1.34.4
+  - name: os-tooling
+    version: 1.26.4
+  date: "2026-02-24T08:50:53Z"
+  state: active
