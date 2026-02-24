@@ -43,7 +43,7 @@ Available providers: `aws`, `azure`, `cloud-director`, `eks`, `vsphere`.
 **Add descriptions:**
 
 *   Generate an AI summary of upstream Kubernetes/Flatcar breaking changes:
-    `/summarize`
+    `/summarize-ai`
 
 *   Update README.md for specific provider:
     `/update-readme --provider aws "This release includes component updates and improvements."`

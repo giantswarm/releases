@@ -220,7 +220,7 @@ Examples:
 - `/update-release --provider aws --component flatcar@4152.2.3`
 - `/update-release --provider azure --app azuredisk-csi-driver@1.32.9`
 - `/update-readme --provider aws "Description here"`
-- `/summarize` (AI summary of upstream K8s/Flatcar breaking changes)
+- `/summarize-ai` (AI summary of upstream K8s/Flatcar breaking changes)
 ```
 
 #### Individual Release PR
@@ -233,7 +233,7 @@ Examples:
 - `/update-release --component flatcar@4152.2.3`
 - `/update-release --app aws-ebs-csi-driver@3.0.5`
 - `/update-readme "Description here"`
-- `/summarize` (AI summary of upstream K8s/Flatcar breaking changes)
+- `/summarize-ai` (AI summary of upstream K8s/Flatcar breaking changes)
 ```
 
 ---
@@ -296,13 +296,13 @@ Updates the README.md description (line 3).
 /update-readme --provider aws "CAPA-specific changes here."
 ```
 
-##### `/summarize` (`summarize.yaml`)
+##### `/summarize-ai` (`summarize-ai.yaml`)
 
 Generates an AI-powered summary of upstream Kubernetes and Flatcar breaking changes for the release README description.
 
 **Syntax**:
 ```bash
-/summarize [--provider PROVIDER]
+/summarize-ai [--provider PROVIDER]
 ```
 
 **How it works**:

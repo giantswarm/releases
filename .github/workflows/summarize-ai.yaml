@@ -6,7 +6,7 @@ on:
 
 jobs:
   summarize:
-    if: github.event.issue.pull_request && startsWith(github.event.comment.body, '/summarize') && github.repository == 'giantswarm/releases'
+    if: github.event.issue.pull_request && startsWith(github.event.comment.body, '/summarize-ai') && github.repository == 'giantswarm/releases'
     runs-on: ubuntu-latest
     env:
       GH_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}

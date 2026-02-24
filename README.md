@@ -476,7 +476,7 @@ to all Giant Swarm installations.
 
 To generate an AI-powered summary of upstream Kubernetes and Flatcar breaking changes, deprecations, and urgent upgrade notes, add a comment with:
 
-`/summarize`
+`/summarize-ai`
 
 This will:
 
@@ -489,7 +489,7 @@ The summary is only generated when there is a **minor version change** in Kubern
 
 To target a specific provider:
 
-`/summarize --provider aws`
+`/summarize-ai --provider aws`
 
 ## Workload Cluster End-to-End Tests
 

@@ -44,7 +44,7 @@ To update the release files in this PR, comment with `/update-release` and provi
 **Add descriptions:**
 
 *   Generate an AI summary of upstream Kubernetes/Flatcar breaking changes:
-    `/summarize`
+    `/summarize-ai`
 
 *   Update README.md with detailed description:
     `/update-readme "This release includes component updates and improvements."`
