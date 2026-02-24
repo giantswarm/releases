@@ -192,7 +192,10 @@ Runs `tools/update-readme.sh` to:
 - Uses Anthropic API to analyze component changes
 - Posts AI-generated breaking changes report to PR
 
-#### 7. Create Pull Request
+#### 7. Create Controller Readiness Issues (Major Only)
+For major releases, creates tracking issues in `giantswarm/roadmap` for teams that own cloud controller apps. See [Controller Readiness Tracking](workflows-controller-readiness.md) for full details.
+
+#### 8. Create Pull Request
 Creates PR with:
 - **Title**: `"[Provider]: Release vX.Y.Z."`
 - **Body**: Instructions for updating the release + stage dashboard
@@ -390,7 +393,8 @@ The bot posts structured comments showing what changed:
    - Searches for PRs with branch pattern: `release-v[0-9]+\.[0-9]+\.[0-9]+`
    - Excludes PRs created within the last 24 hours (to avoid bumping newly created monthly release PRs)
    - Excludes PRs with the `stage/freeze` label (frozen releases should not receive automatic bumps)
-   - Manual runs can target specific PR number and bypass the 24-hour filter
+   - Excludes PRs with both `release/major` and `stage/development` labels (major releases waiting for controller readiness — see [Controller Readiness Tracking](workflows-controller-readiness.md))
+   - Manual runs can target specific PR number and bypass all filters
 
 2. **Post Update Command**
    - Comments `/update-release` on each PR
