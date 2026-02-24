@@ -355,7 +355,7 @@ The weekly bump process (`bump-open-releases.yaml`) respects pins:
 
 - `/update-release`: Update components/apps without pinning for future releases
 - `/update-readme`: Update release description
-- `/update-announcement`: Update announcement text
+- `/summarize`: Generate AI summary of upstream Kubernetes/Flatcar breaking changes
 
 ## Technical Details
 
