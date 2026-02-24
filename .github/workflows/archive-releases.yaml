@@ -252,6 +252,13 @@ jobs:
                 echo "WARNING: $RELEASES_JSON_FILE not found for provider $PROVIDER_ROOT_DIR."
               fi
             fi
+
+            # Commit provider changes to prevent them from being lost
+            # when next provider's validation creates temp branches
+            if [ -s "$MOVED_RELEASES_TEMP_FILE" ]; then
+              git add -A
+              git commit -m "Archive deprecated releases for $PROVIDER_ROOT_DIR"
+            fi
           done
 
           # Generate PR body section

@@ -39,8 +39,39 @@ runs:
           --provider "${{ inputs.provider }}" \
           --bumpall --overwrite -y --output markdown --changes-only 2>&1 | tee /tmp/release_output.log
 
-        LOG_CONTENT=$(cat /tmp/release_output.log)
+        # Post-process output: keep warnings and components visible, collapse apps table
+        RAW=$(cat /tmp/release_output.log)
+
+        # Extract warnings (lines starting with ⚠️ or whitespace-indented lines after them)
+        WARNINGS=$(echo "$RAW" | awk '/^⚠️/{p=1} p{print} /^$/ && p{p=0}')
+
+        # Extract components table (starts with "| COMPONENT NAME")
+        COMPONENTS=$(echo "$RAW" | awk '/^\| COMPONENT NAME/{found=1} found{print} found && /^$/{exit}')
+
+        # Extract apps table (starts with "| APP NAME")
+        APPS=$(echo "$RAW" | awk '/^\| APP NAME/{found=1} found && /^\| COMPONENT NAME/{exit} found{print}')
+        APP_COUNT=$(echo "$APPS" | grep -c '^|' | awk '{print $1 - 2}')  # subtract header + separator
+        [[ "$APP_COUNT" -lt 0 ]] && APP_COUNT=0
+
+        # Build formatted output
+        FORMATTED=""
+
+        if [[ -n "$WARNINGS" ]]; then
+          FORMATTED="${WARNINGS}"$'\n\n'
+        fi
+
+        if [[ -n "$COMPONENTS" ]]; then
+          FORMATTED="${FORMATTED}${COMPONENTS}"$'\n\n'
+        fi
+
+        if [[ -n "$APPS" ]]; then
+          FORMATTED="${FORMATTED}<details>"$'\n'
+          FORMATTED="${FORMATTED}<summary><strong>Apps</strong> (${APP_COUNT} updated)</summary>"$'\n\n'
+          FORMATTED="${FORMATTED}${APPS}"$'\n\n'
+          FORMATTED="${FORMATTED}</details>"
+        fi
+
         echo "LOG_CONTENT<<EOF" >> "$GITHUB_ENV"
-        echo "$LOG_CONTENT" >> "$GITHUB_ENV"
+        echo "$FORMATTED" >> "$GITHUB_ENV"
         echo "EOF" >> "$GITHUB_ENV"
 
