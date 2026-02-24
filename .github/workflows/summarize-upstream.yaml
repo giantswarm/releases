@@ -1,0 +1,347 @@
+name: Summarize Upstream Changes (Comment Trigger)
+
+on:
+  issue_comment:
+    types: [created]
+
+jobs:
+  summarize:
+    if: github.event.issue.pull_request && startsWith(github.event.comment.body, '/summarize-upstream') && github.repository == 'giantswarm/releases'
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+    permissions:
+      contents: read
+      pull-requests: write
+
+    steps:
+      - name: Add reaction to indicate processing
+        uses: actions/github-script@v8
+        with:
+          github-token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+          script: |
+            github.rest.reactions.createForIssueComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              comment_id: ${{ github.event.comment.id }},
+              content: 'eyes'
+            })
+
+      - name: Get PR branch name
+        id: get_branch
+        uses: actions/github-script@v8
+        with:
+          github-token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+          result-encoding: string
+          script: |
+            const pr = await github.rest.pulls.get({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: ${{ github.event.issue.number }}
+            });
+            return pr.data.head.ref;
+
+      - name: Checkout PR branch
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ steps.get_branch.outputs.result }}
+
+      - name: Get provider lists
+        id: providers
+        uses: ./.github/actions/get-providers
+
+      - name: Extract version ranges from README
+        id: extract
+        run: |
+          BRANCH_NAME="${{ steps.get_branch.outputs.result }}"
+
+          # Check for --provider flag
+          COMMENT_PROVIDER=$(echo "${{ github.event.comment.body }}" | grep -oP '(?<=--provider(=| ))[a-zA-Z-]+' || true)
+
+          if [[ -n "$COMMENT_PROVIDER" ]]; then
+            PROVIDERS_LIST="$COMMENT_PROVIDER"
+          else
+            PR_PROVIDERS=$(gh pr view ${{ github.event.issue.number }} --json files --jq '.files[].path' | cut -d'/' -f1 | sort -u | xargs)
+            VALID_PROVIDERS="${{ steps.providers.outputs.provider_dirs }}"
+            PROVIDERS_LIST=""
+            for provider in $PR_PROVIDERS; do
+              if [[ " $VALID_PROVIDERS " =~ " $provider " ]]; then
+                PROVIDERS_LIST="$PROVIDERS_LIST $provider"
+              fi
+            done
+            PROVIDERS_LIST=$(echo "$PROVIDERS_LIST" | xargs)
+          fi
+
+          echo "providers=$PROVIDERS_LIST" >> "$GITHUB_OUTPUT"
+
+          # Determine release version from branch
+          RELEASE_NAME=$(echo "$BRANCH_NAME" | sed -n 's/release-\(v[0-9.]*\).*/\1/p')
+          echo "release=$RELEASE_NAME" >> "$GITHUB_OUTPUT"
+
+          # Find README and extract Kubernetes/Flatcar version ranges
+          README_CONTENT=""
+          for PROVIDER_DIR in $PROVIDERS_LIST; do
+            README_FILE="$PROVIDER_DIR/$RELEASE_NAME/README.md"
+            if [ -f "$README_FILE" ]; then
+              README_CONTENT=$(cat "$README_FILE")
+              echo "Found README at $README_FILE"
+              break
+            fi
+          done
+
+          if [ -z "$README_CONTENT" ]; then
+            echo "No README.md found for release $RELEASE_NAME"
+            echo "has_versions=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          # Extract Kubernetes version range: "Kubernetes from v1.33.1 to [v1.34.0](...)"
+          K8S_FROM=$(echo "$README_CONTENT" | grep -oP 'Kubernetes from v?\K[\d.]+' || true)
+          K8S_TO=$(echo "$README_CONTENT" | grep -oP 'Kubernetes from v?[\d.]+ to \[?v?\K[\d.]+' || true)
+
+          # Extract Flatcar version range: "Flatcar from v4152.2.3 to [v4230.0.0](...)"
+          FLATCAR_FROM=$(echo "$README_CONTENT" | grep -oP 'Flatcar from v?\K[\d.]+' || true)
+          FLATCAR_TO=$(echo "$README_CONTENT" | grep -oP 'Flatcar from v?[\d.]+ to \[?v?\K[\d.]+' || true)
+
+          echo "k8s_from=$K8S_FROM" >> "$GITHUB_OUTPUT"
+          echo "k8s_to=$K8S_TO" >> "$GITHUB_OUTPUT"
+          echo "flatcar_from=$FLATCAR_FROM" >> "$GITHUB_OUTPUT"
+          echo "flatcar_to=$FLATCAR_TO" >> "$GITHUB_OUTPUT"
+
+          if [[ -n "$K8S_FROM" && -n "$K8S_TO" ]] || [[ -n "$FLATCAR_FROM" && -n "$FLATCAR_TO" ]]; then
+            echo "has_versions=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "has_versions=false" >> "$GITHUB_OUTPUT"
+          fi
+
+          echo "Kubernetes: $K8S_FROM -> $K8S_TO"
+          echo "Flatcar: $FLATCAR_FROM -> $FLATCAR_TO"
+
+      - name: Fetch upstream changelogs and summarize
+        if: steps.extract.outputs.has_versions == 'true'
+        id: summarize
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          UPSTREAM_CONTENT=""
+
+          # Fetch Kubernetes changelog if minor version changed
+          K8S_FROM="${{ steps.extract.outputs.k8s_from }}"
+          K8S_TO="${{ steps.extract.outputs.k8s_to }}"
+
+          if [[ -n "$K8S_FROM" && -n "$K8S_TO" ]]; then
+            FROM_MINOR=$(echo "$K8S_FROM" | cut -d. -f2)
+            TO_MINOR=$(echo "$K8S_TO" | cut -d. -f2)
+            TO_MAJOR=$(echo "$K8S_TO" | cut -d. -f1)
+
+            if [[ "$FROM_MINOR" != "$TO_MINOR" ]]; then
+              echo "Kubernetes minor version changed ($FROM_MINOR -> $TO_MINOR), fetching changelogs..."
+
+              for MINOR in $(seq $((FROM_MINOR + 1)) $TO_MINOR); do
+                CHANGELOG_URL="https://raw.githubusercontent.com/kubernetes/kubernetes/master/CHANGELOG/CHANGELOG-${TO_MAJOR}.${MINOR}.md"
+                echo "Fetching $CHANGELOG_URL..."
+
+                K8S_CHANGELOG=$(curl -sf "$CHANGELOG_URL" || true)
+                if [ -n "$K8S_CHANGELOG" ]; then
+                  # Extract Urgent Upgrade Notes and Deprecation sections for the .0 release
+                  TARGET_VERSION="${TO_MAJOR}.${MINOR}.0"
+                  HEADER="# v${TARGET_VERSION}"
+
+                  # Use awk to extract relevant sections
+                  URGENT_SECTION=$(echo "$K8S_CHANGELOG" | awk -v header="$HEADER" '
+                    $0 == header { found=1; next }
+                    found && /^# v/ { exit }
+                    found && /^## Urgent Upgrade Notes/ { in_urgent=1; next }
+                    in_urgent && /^## / { in_urgent=0 }
+                    in_urgent && /^\(No, really/ { next }
+                    in_urgent && NF { print }
+                  ')
+
+                  DEPRECATION_SECTION=$(echo "$K8S_CHANGELOG" | awk -v header="$HEADER" '
+                    $0 == header { found=1; next }
+                    found && /^# v/ { exit }
+                    found && /^### Deprecation/ { in_dep=1; next }
+                    in_dep && /^###/ { in_dep=0 }
+                    in_dep && NF { print }
+                  ')
+
+                  if [ -n "$URGENT_SECTION" ] || [ -n "$DEPRECATION_SECTION" ]; then
+                    UPSTREAM_CONTENT="${UPSTREAM_CONTENT}
+
+          ## Kubernetes v${TARGET_VERSION}
+          "
+                    if [ -n "$URGENT_SECTION" ]; then
+                      UPSTREAM_CONTENT="${UPSTREAM_CONTENT}
+          ### Urgent Upgrade Notes
+          ${URGENT_SECTION}
+          "
+                    fi
+                    if [ -n "$DEPRECATION_SECTION" ]; then
+                      UPSTREAM_CONTENT="${UPSTREAM_CONTENT}
+          ### Deprecations
+          ${DEPRECATION_SECTION}
+          "
+                    fi
+                  fi
+                fi
+              done
+            else
+              echo "Kubernetes patch-only upgrade ($K8S_FROM -> $K8S_TO), skipping."
+            fi
+          fi
+
+          # Fetch Flatcar changelog if major version changed
+          FLATCAR_FROM="${{ steps.extract.outputs.flatcar_from }}"
+          FLATCAR_TO="${{ steps.extract.outputs.flatcar_to }}"
+
+          if [[ -n "$FLATCAR_FROM" && -n "$FLATCAR_TO" ]]; then
+            FROM_MAJOR=$(echo "$FLATCAR_FROM" | cut -d. -f1)
+            TO_MAJOR=$(echo "$FLATCAR_TO" | cut -d. -f1)
+
+            if [[ "$FROM_MAJOR" != "$TO_MAJOR" ]]; then
+              echo "Flatcar major version changed ($FROM_MAJOR -> $TO_MAJOR), fetching release notes..."
+
+              FLATCAR_JSON=$(curl -sf "https://www.flatcar.org/releases-json/releases-stable.json" || true)
+              if [ -n "$FLATCAR_JSON" ]; then
+                # Extract Changes sections for relevant versions using jq
+                FLATCAR_CHANGES=$(echo "$FLATCAR_JSON" | jq -r --arg from "$FLATCAR_FROM" --arg to "$FLATCAR_TO" '
+                  to_entries
+                  | map(select(.value.channel == "stable"))
+                  | map(select(
+                      (.key | split(".") | map(tonumber)) as $ver |
+                      ($from | split(".") | map(tonumber)) as $fv |
+                      ($to | split(".") | map(tonumber)) as $tv |
+                      ($ver[0] > $fv[0] or ($ver[0] == $fv[0] and ($ver[1] > $fv[1] or ($ver[1] == $fv[1] and $ver[2] > $fv[2])))) and
+                      ($ver[0] < $tv[0] or ($ver[0] == $tv[0] and ($ver[1] < $tv[1] or ($ver[1] == $tv[1] and $ver[2] <= $tv[2]))))
+                    ))
+                  | sort_by(.key | split(".") | map(tonumber)) | reverse
+                  | .[] | "### Flatcar \(.key)\n\(.value.release_notes // "")"
+                ' 2>/dev/null || true)
+
+                if [ -n "$FLATCAR_CHANGES" ]; then
+                  UPSTREAM_CONTENT="${UPSTREAM_CONTENT}
+
+          ## Flatcar Changes (v${FLATCAR_FROM} -> v${FLATCAR_TO})
+
+          ${FLATCAR_CHANGES}
+          "
+                fi
+              fi
+            else
+              echo "Flatcar patch-only upgrade ($FLATCAR_FROM -> $FLATCAR_TO), skipping."
+            fi
+          fi
+
+          if [ -z "$UPSTREAM_CONTENT" ]; then
+            echo "No upstream breaking changes or deprecations found to summarize."
+            echo "has_summary=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          echo "has_summary=true" >> "$GITHUB_OUTPUT"
+
+          # Save upstream content for reference
+          echo "$UPSTREAM_CONTENT" > /tmp/upstream_content.md
+          echo "Collected $(wc -c < /tmp/upstream_content.md) bytes of upstream content"
+
+          # Build prompt and call Anthropic API
+          PROMPT='You are a technical writer for Giant Swarm, a managed Kubernetes platform provider.
+
+          Below are upstream changelog sections (Kubernetes deprecations/urgent upgrade notes and/or Flatcar changes) relevant to a workload cluster release upgrade.
+
+          Produce a **README description** (2-4 sentences) that is concise, customer-facing, and suitable for the top of a release README. Focus on the most impactful changes customers need to know about.
+
+          Guidelines:
+          - Focus on what BREAKS or what customers MUST do (deprecated APIs, removed features, required migrations)
+          - Use backticks for technical terms (API versions, flags, resource names)
+          - Be specific: say "The `flowcontrol.apiserver.k8s.io/v1beta3` API is removed" not "some APIs were deprecated"
+          - If there are no breaking changes, summarize the most notable improvements
+          - Do NOT include boilerplate like "This release includes..." — get straight to the point
+          - For Flatcar, focus on changes that affect container workloads (cgroup changes, kernel updates, systemd changes)
+          - Keep it actionable: what does the customer need to know or do?
+          - Output ONLY the description text, no markers or headers'
+
+          ESCAPED_CONTENT=$(jq -Rs . < /tmp/upstream_content.md)
+          ESCAPED_PROMPT=$(echo "$PROMPT" | jq -Rs .)
+
+          FULL_CONTENT=$(jq -n \
+            --argjson prompt "$ESCAPED_PROMPT" \
+            --argjson content "$ESCAPED_CONTENT" \
+            '$prompt + "\n\n## Upstream Changelog Sections\n\n" + $content')
+
+          REQUEST_BODY=$(jq -n \
+            --argjson content "$FULL_CONTENT" \
+            '{
+              model: "claude-sonnet-4-5-20250929",
+              max_tokens: 1024,
+              messages: [{role: "user", content: $content}]
+            }')
+
+          RESPONSE=$(curl -s -X POST "https://api.anthropic.com/v1/messages" \
+            -H "Content-Type: application/json" \
+            -H "x-api-key: $ANTHROPIC_API_KEY" \
+            -H "anthropic-version: 2023-06-01" \
+            -d "$REQUEST_BODY")
+
+          AI_TEXT=$(echo "$RESPONSE" | jq -r '.content[0].text // empty')
+
+          if [ -z "$AI_TEXT" ]; then
+            echo "AI returned empty response"
+            echo "$RESPONSE" | jq .
+            echo "has_summary=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          echo "$AI_TEXT" > /tmp/ai_summary.txt
+
+      - name: Post summary comment
+        if: steps.summarize.outputs.has_summary == 'true'
+        uses: actions/github-script@v8
+        with:
+          github-token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+          script: |
+            const fs = require('fs');
+            const summary = fs.readFileSync('/tmp/ai_summary.txt', 'utf8').trim();
+
+            let body = '### Upstream Summary\n\n';
+            body += '**Suggested README description:**\n\n';
+            body += '> ' + summary.replace(/\n/g, '\n> ') + '\n\n';
+            body += '---\n\n';
+            body += 'To apply, use:\n\n';
+            body += '```\n';
+            body += `/update-readme ${summary.replace(/\n/g, ' ')}\n`;
+            body += '```\n\n';
+            body += '> **Note:** Review and edit the suggested text before applying. This is AI-generated and may need adjustments.\n';
+
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: ${{ github.event.issue.number }},
+              body: body
+            });
+
+      - name: Post no-content comment
+        if: steps.extract.outputs.has_versions != 'true' || (steps.summarize.outputs.has_summary != 'true' && steps.extract.outputs.has_versions == 'true')
+        uses: actions/github-script@v8
+        with:
+          github-token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+          script: |
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: ${{ github.event.issue.number }},
+              body: 'No upstream breaking changes or deprecations found to summarize. This typically means the Kubernetes and Flatcar upgrades are patch-only (no minor version change).'
+            });
+
+      - name: Add success reaction
+        if: always()
+        uses: actions/github-script@v8
+        with:
+          github-token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+          script: |
+            github.rest.reactions.createForIssueComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              comment_id: ${{ github.event.comment.id }},
+              content: '+1'
+            })

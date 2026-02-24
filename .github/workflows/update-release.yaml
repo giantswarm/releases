@@ -7,7 +7,7 @@ on:
 jobs:
   update-release:
     # This job only runs for pull request comments
-    if: github.event.issue.pull_request && (startsWith(github.event.comment.body, '/update-release') || startsWith(github.event.comment.body, '/update-readme') || startsWith(github.event.comment.body, '/update-announcement')) && github.repository == 'giantswarm/releases'
+    if: github.event.issue.pull_request && (startsWith(github.event.comment.body, '/update-release') || startsWith(github.event.comment.body, '/update-readme')) && github.repository == 'giantswarm/releases'
     runs-on: ubuntu-latest
     env:
       OPSCTL_GITHUB_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
@@ -174,18 +174,6 @@ jobs:
             # Use base64 encoding to safely pass description with special characters
             echo "description=$(echo "$DESCRIPTION" | base64 -w 0)" >> "$GITHUB_OUTPUT"
             DEVCTL_ARGS=""
-          elif [[ "$COMMENT_CONTENT" == *"/update-announcement"* ]]; then
-            echo "description_only=true" >> "$GITHUB_OUTPUT"
-            echo "update_type=announcement" >> "$GITHUB_OUTPUT"
-            # Extract description safely from file
-            if [[ "$COMMENT_CONTENT" == *"--provider"* ]]; then
-              DESCRIPTION=$(echo "$COMMENT_CONTENT" | sed -E 's|.*--provider[= ]+[a-zA-Z-]+ +||' | sed 's/^"//' | sed 's/"$//')
-            else
-              DESCRIPTION=$(echo "$COMMENT_CONTENT" | sed -E 's|/update-announcement +||' | sed 's/^"//' | sed 's/"$//')
-            fi
-            # Use base64 encoding to safely pass description with special characters
-            echo "description=$(echo "$DESCRIPTION" | base64 -w 0)" >> "$GITHUB_OUTPUT"
-            DEVCTL_ARGS=""
           else
             echo "description_only=false" >> "$GITHUB_OUTPUT"
             # Extract devctl arguments, excluding the /update-release command and any --provider flag
@@ -256,65 +244,31 @@ jobs:
               continue
             fi
 
-            if [[ "$UPDATE_TYPE" == "readme" ]]; then
-              # Update README.md
-              README_FILE="$PROVIDER_DIR/$RELEASE_NAME/README.md"
-              if [ -f "$README_FILE" ]; then
-                # Backup the entire README.md content before making changes
-                README_BACKUP=$(cat "$README_FILE")
+            # Update README.md
+            README_FILE="$PROVIDER_DIR/$RELEASE_NAME/README.md"
+            if [ -f "$README_FILE" ]; then
+              # Backup the entire README.md content before making changes
+              README_BACKUP=$(cat "$README_FILE")
 
-                if grep -q "<< Add description here >>" "$README_FILE"; then
-                  # Replace placeholder
-                  sed -i "s/<< Add description here >>/$DESCRIPTION/g" "$README_FILE"
-                  echo "Added description to README.md"
-                else
-                  # Replace the warning/description section (line 3, after title and blank line)
-                  sed -i "3c\\$DESCRIPTION" "$README_FILE"
-                  echo "Updated existing description in README.md"
-                fi
-
-                # Verify the change was made correctly and restore if needed
-                if ! grep -q "$DESCRIPTION" "$README_FILE"; then
-                  echo "Description update failed, restoring original content"
-                  echo "$README_BACKUP" > "$README_FILE"
-                fi
+              if grep -q "<< Add description here >>" "$README_FILE"; then
+                # Replace placeholder
+                sed -i "s/<< Add description here >>/$DESCRIPTION/g" "$README_FILE"
+                echo "Added description to README.md"
+              else
+                # Replace the warning/description section (line 3, after title and blank line)
+                sed -i "3c\\$DESCRIPTION" "$README_FILE"
+                echo "Updated existing description in README.md"
               fi
-              # README updates are usually short, keep them expanded
-              LOG_PART="### README updated for ${PROVIDER_DIR^^}\n\n"
-              LOG_PART="${LOG_PART}📝 **README Description**: $DESCRIPTION\n\n"
 
-            elif [[ "$UPDATE_TYPE" == "announcement" ]]; then
-              # Update announcement.md
-              ANNOUNCEMENT_FILE="$PROVIDER_DIR/$RELEASE_NAME/announcement.md"
-              if [ -f "$ANNOUNCEMENT_FILE" ]; then
-                # Determine provider name
-                PROVIDER_NAME=""
-                if [[ "$PROVIDER_DIR" == "capa" ]]; then
-                  PROVIDER_NAME="CAPA"
-                elif [[ "$PROVIDER_DIR" == "azure" ]]; then
-                  PROVIDER_NAME="Azure"
-                elif [[ "$PROVIDER_DIR" == "vsphere" ]]; then
-                  PROVIDER_NAME="vSphere"
-                elif [[ "$PROVIDER_DIR" == "cloud-director" ]]; then
-                  PROVIDER_NAME="VMware Cloud Director"
-                elif [[ "$PROVIDER_DIR" == "eks" ]]; then
-                  PROVIDER_NAME="EKS"
-                else
-                  PROVIDER_NAME=$(echo "$PROVIDER_DIR" | tr 'a-z' 'A-Z')
-                fi
-
-                # Always recreate line 1 with the proper format
-                RELEASE_VERSION=$(echo "$RELEASE_NAME" | sed 's/v//')
-                NEW_LINE_1="**Workload cluster release v${RELEASE_VERSION} for ${PROVIDER_NAME} is available**. $DESCRIPTION"
-
-                # Replace line 1 completely
-                sed -i "1c\\$NEW_LINE_1" "$ANNOUNCEMENT_FILE"
-                echo "Updated announcement.md with new description"
+              # Verify the change was made correctly and restore if needed
+              if ! grep -q "$DESCRIPTION" "$README_FILE"; then
+                echo "Description update failed, restoring original content"
+                echo "$README_BACKUP" > "$README_FILE"
               fi
-              # Announcement updates are usually short, keep them expanded
-              LOG_PART="### Announcement updated for ${PROVIDER_DIR^^}\n\n"
-              LOG_PART="${LOG_PART}📢 **Announcement**: $DESCRIPTION\n\n"
             fi
+            # README updates are usually short, keep them expanded
+            LOG_PART="### README updated for ${PROVIDER_DIR^^}\n\n"
+            LOG_PART="${LOG_PART}📝 **README Description**: $DESCRIPTION\n\n"
 
             FULL_LOG_CONTENT="${FULL_LOG_CONTENT}${LOG_PART}"
           done
@@ -460,9 +414,8 @@ jobs:
               RELEASES_JSON_BACKUP=$(cat "${PROVIDER_DIR}/releases.json")
             fi
 
-            # Backup existing descriptions before devctl overwrites them
+            # Backup existing README description before devctl overwrites it
             README_DESCRIPTION_BACKUP=""
-            ANNOUNCEMENT_BACKUP=""
             if [ -f "${PROVIDER_DIR}/${RELEASE_NAME}/README.md" ] && ! grep -q "<< Add description here >>" "${PROVIDER_DIR}/${RELEASE_NAME}/README.md"; then
               # Extract existing README description (line 3, which is the warning/description)
               # Only backup if line 3 is a real description (not a markdown heading), to avoid
@@ -471,10 +424,6 @@ jobs:
               if [[ -n "$_line3" ]] && [[ "$_line3" != \#* ]]; then
                 README_DESCRIPTION_BACKUP="$_line3"
               fi
-            fi
-            if [ -f "${PROVIDER_DIR}/${RELEASE_NAME}/announcement.md" ] && ! grep -q "<< Add description here >>" "${PROVIDER_DIR}/${RELEASE_NAME}/announcement.md"; then
-              # Extract existing announcement description (everything after "**. ")
-              ANNOUNCEMENT_BACKUP=$(sed -n '1p' "${PROVIDER_DIR}/${RELEASE_NAME}/announcement.md" | sed 's/.*\*\*\. *//' || true)
             fi
 
             if ! output=$(eval "$DEVCTL_COMMAND" 2>&1 | uniq); then
@@ -672,29 +621,6 @@ jobs:
             if [[ -n "$README_DESCRIPTION_BACKUP" ]]; then
               sed -i "3c\\$README_DESCRIPTION_BACKUP" "${PROVIDER_DIR}/${RELEASE_NAME}/README.md"
               echo "Restored description in README.md"
-            fi
-            if [[ -n "$ANNOUNCEMENT_BACKUP" ]]; then
-              # Determine provider name for restore
-              PROVIDER_NAME=""
-              if [[ "$PROVIDER_DIR" == "capa" ]]; then
-                PROVIDER_NAME="CAPA"
-              elif [[ "$PROVIDER_DIR" == "azure" ]]; then
-                PROVIDER_NAME="Azure"
-              elif [[ "$PROVIDER_DIR" == "vsphere" ]]; then
-                PROVIDER_NAME="vSphere"
-              elif [[ "$PROVIDER_DIR" == "cloud-director" ]]; then
-                PROVIDER_NAME="VMware Cloud Director"
-              elif [[ "$PROVIDER_DIR" == "eks" ]]; then
-                PROVIDER_NAME="EKS"
-              else
-                PROVIDER_NAME=$(echo "$PROVIDER_DIR" | tr 'a-z' 'A-Z')
-              fi
-
-              # Recreate line 1 with proper format when restoring
-              RELEASE_VERSION=$(echo "$RELEASE_NAME" | sed 's/v//')
-              NEW_LINE_1="**Workload cluster release v${RELEASE_VERSION} for ${PROVIDER_NAME} is available**. $ANNOUNCEMENT_BACKUP"
-              sed -i "1c\\$NEW_LINE_1" "${PROVIDER_DIR}/${RELEASE_NAME}/announcement.md"
-              echo "Restored description in announcement.md"
             fi
           done
 
