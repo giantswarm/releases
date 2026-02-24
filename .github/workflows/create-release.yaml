@@ -536,7 +536,7 @@ jobs:
       # and e2e tests will run after that component bump.
 
       - name: Create controller readiness issues
-        if: steps.create_pr.outputs.pull-request-number != ''
+        if: steps.create_pr.outputs.pull-request-number != '' && needs.dispatcher.outputs.is_manual != 'true'
         uses: ./.github/actions/create-controller-readiness-issues
         with:
           providers: ${{ steps.filter_providers.outputs.filtered_providers }}
@@ -825,7 +825,7 @@ jobs:
       # and e2e tests will run after that component bump.
 
       - name: Create controller readiness issues
-        if: steps.create_pr.outputs.pull-request-number != ''
+        if: steps.create_pr.outputs.pull-request-number != '' && needs.dispatcher.outputs.is_manual != 'true'
         uses: ./.github/actions/create-controller-readiness-issues
         with:
           providers: ${{ matrix.provider }}
