@@ -32,7 +32,7 @@ to all Giant Swarm installations.
   - v32.1
     - [v32.1.0](https://github.com/giantswarm/releases/tree/master/capa/archived/v32.1.0)
   - v32.0
-    - [v32.0.0](https://github.com/giantswarm/releases/tree/master/capa/v32.0.0)
+    - [v32.0.0](https://github.com/giantswarm/releases/tree/master/capa/archived/v32.0.0)
 
 - v31
   - v31.1
