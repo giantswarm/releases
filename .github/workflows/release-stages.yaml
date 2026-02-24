@@ -318,8 +318,8 @@ jobs:
               content: '+1'
             })
 
-      - name: Trigger /summarize-ai on freeze
-        if: steps.validate.outputs.valid == 'true' && steps.validate.outputs.target_stage == 'freeze'
+      - name: Trigger /summarize-ai on freeze (major releases only)
+        if: steps.validate.outputs.valid == 'true' && steps.validate.outputs.target_stage == 'freeze' && contains(steps.pr_details.outputs.labels, 'release/major')
         uses: actions/github-script@v8
         with:
           github-token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
