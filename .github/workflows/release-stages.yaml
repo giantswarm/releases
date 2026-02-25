@@ -318,6 +318,19 @@ jobs:
               content: '+1'
             })
 
+      - name: Trigger /summarize-ai on freeze (major releases only)
+        if: steps.validate.outputs.valid == 'true' && steps.validate.outputs.target_stage == 'freeze' && contains(steps.pr_details.outputs.labels, 'release/major')
+        uses: actions/github-script@v8
+        with:
+          github-token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+          script: |
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: ${{ github.event.issue.number }},
+              body: '/summarize-ai'
+            });
+
       - name: Post summary comment
         if: steps.validate.outputs.valid == 'true'
         uses: actions/github-script@v8
