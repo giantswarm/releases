@@ -69,6 +69,13 @@
       "releaseTimestamp": "2026-07-23T07:17:35Z",
       "changelogUrl": "https://github.com/giantswarm/releases/blob/master/capa/v34.5.0/README.md",
       "isStable": true
+    },
+    {
+      "version": "35.0.0",
+      "isDeprecated": false,
+      "releaseTimestamp": "2026-08-19T15:40:41Z",
+      "changelogUrl": "https://github.com/giantswarm/releases/blob/master/capa/v35.0.0/README.md",
+      "isStable": true
     }
   ],
   "sourceUrl": "https://github.com/giantswarm/releases",
