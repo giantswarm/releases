@@ -2,9 +2,12 @@ commonAnnotations:
   giantswarm.io/docs: https://docs.giantswarm.io/use-the-api/management-api/crd/releases.release.giantswarm.io
 resources:
 - v32.1.0
+- v33.2.0
 - v33.3.0
+- v34.0.0
 - v34.1.0
 - v34.1.1
+- v35.0.0
 transformers:
 - |
   apiVersion: builtin
