@@ -6,7 +6,11 @@ on:
 
 jobs:
   summarize:
-    if: github.event.issue.pull_request && startsWith(github.event.comment.body, '/summarize-ai') && github.repository == 'giantswarm/releases'
+    if: >-
+      github.event.issue.pull_request &&
+      startsWith(github.event.comment.body, '/summarize-ai') &&
+      github.repository == 'giantswarm/releases' &&
+      (github.event.comment.author_association == 'MEMBER' || github.event.comment.author_association == 'OWNER' || github.event.comment.author_association == 'COLLABORATOR')
     runs-on: ubuntu-latest
     env:
       GH_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
@@ -52,11 +56,13 @@ jobs:
 
       - name: Extract version ranges from README
         id: extract
+        env:
+          COMMENT_BODY: ${{ github.event.comment.body }}
         run: |
           BRANCH_NAME="${{ steps.get_branch.outputs.result }}"
 
           # Check for --provider flag
-          COMMENT_PROVIDER=$(echo "${{ github.event.comment.body }}" | grep -oP '(?<=--provider(=| ))[a-zA-Z-]+' || true)
+          COMMENT_PROVIDER=$(echo "$COMMENT_BODY" | grep -oP '(?<=--provider(=| ))[a-zA-Z-]+' || true)
 
           if [[ -n "$COMMENT_PROVIDER" ]]; then
             PROVIDERS_LIST="$COMMENT_PROVIDER"
