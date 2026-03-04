@@ -7,7 +7,11 @@ on:
 jobs:
   pin-version:
     # This job only runs for pull request comments starting with /pin-version
-    if: github.event.issue.pull_request && startsWith(github.event.comment.body, '/pin-version') && github.repository == 'giantswarm/releases'
+    if: >-
+      github.event.issue.pull_request &&
+      startsWith(github.event.comment.body, '/pin-version') &&
+      github.repository == 'giantswarm/releases' &&
+      (github.event.comment.author_association == 'MEMBER' || github.event.comment.author_association == 'OWNER' || github.event.comment.author_association == 'COLLABORATOR')
     runs-on: ubuntu-latest
     env:
       OPSCTL_GITHUB_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}

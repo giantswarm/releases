@@ -6,7 +6,11 @@ on:
 
 jobs:
   release-stage:
-    if: github.event.issue.pull_request && startsWith(github.event.comment.body, '/stage') && github.repository == 'giantswarm/releases'
+    if: >-
+      github.event.issue.pull_request &&
+      startsWith(github.event.comment.body, '/stage') &&
+      github.repository == 'giantswarm/releases' &&
+      (github.event.comment.author_association == 'MEMBER' || github.event.comment.author_association == 'OWNER' || github.event.comment.author_association == 'COLLABORATOR')
     runs-on: ubuntu-latest
     env:
       GH_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
