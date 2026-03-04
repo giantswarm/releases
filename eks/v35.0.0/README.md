@@ -72,12 +72,12 @@
 - cluster-autoscaler from v1.34.1-1 to v1.24.3
 - coredns-extensions from v0.1.2 to v0.1.3
 - k8s-dns-node-cache from v2.9.1 to v2.9.2
-- karpenter from v1.4.0 to v2.0.0
+- karpenter from v1.4.0 to v2.1.0
 - karpenter-taint-remover from v1.0.1 to v1.0.2
 - metrics-server from v2.7.0 to v2.8.0
 - net-exporter from v1.23.0 to v1.23.1
 - node-exporter from v1.20.10 to v1.20.11
-- observability-bundle from v2.5.0 to v2.6.0
+- observability-bundle from v2.5.0 to v2.7.0
 - observability-policies from v0.0.3 to v0.0.4
 - priority-classes from v0.3.0 to v0.3.1
 - prometheus-blackbox-exporter from v0.5.0 to v0.5.1
@@ -147,10 +147,12 @@
 
 - Upgrade application to version 1.26.7 (includes coredns 1.13.1)
 
-### karpenter [v1.4.0...v2.0.0](https://github.com/giantswarm/karpenter-app/compare/v1.4.0...v2.0.0)
+### karpenter [v1.4.0...v2.1.0](https://github.com/giantswarm/karpenter-app/compare/v1.4.0...v2.1.0)
 
 #### Added
 
+- Add `PodLogs` and `PodMonitor` custom resources for observability data ingestion.
+- Deployment: Add HTTP proxy support.
 - Add e2e tests for this app.
 - Add `karpenter-bundle` chart that consolidates `karpenter-app` and `karpenter-crossplane-resources` into a single deployable bundle. The bundle includes:
   - HelmRelease and OCIRepository for deploying karpenter to workload clusters
@@ -191,11 +193,20 @@
 
 - Removed duplicated `app` label which is already added by the selector helper.
 
-### observability-bundle [v2.5.0...v2.6.0](https://github.com/giantswarm/observability-bundle/compare/v2.5.0...v2.6.0)
+### observability-bundle [v2.5.0...v2.7.0](https://github.com/giantswarm/observability-bundle/compare/v2.5.0...v2.7.0)
 
 #### Added
 
-- Add KSM metrics for Gateway API resources
+- Add KSM metrics for Envoy Gateway resources.
+- Add `application.giantswarm.io/team` annotation from HelmReleases as label to KSM emitted metrics.
+- Add KSM metrics for Gateway API resources.
+
+#### Changed
+
+- Change team annotation in `Chart.yaml` to OpenContainers format (`io.giantswarm.application.team`).
+- Update alloy-app to 0.17.1
+- Update kube-prometheus-stack to 20.0.0
+- Update prometheus-operator-crd to 20.0.0
 
 ### observability-policies [v0.0.3...v0.0.4](https://github.com/giantswarm/observability-policies-app/compare/v0.0.3...v0.0.4)
 

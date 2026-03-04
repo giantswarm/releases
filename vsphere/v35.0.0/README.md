@@ -45,10 +45,11 @@
 - etcd-defrag from v1.2.3 to v1.2.4
 - etcd-k8s-res-count-exporter from v1.10.12 to v1.10.14
 - k8s-dns-node-cache from v2.9.1 to v2.9.2
+- kube-vip from v0.2.0 to v0.3.0
 - metrics-server from v2.7.0 to v2.8.0
 - net-exporter from v1.23.0 to v1.23.1
 - node-exporter from v1.20.10 to v1.20.11
-- observability-bundle from v2.5.0 to v2.6.0
+- observability-bundle from v2.5.0 to v2.7.0
 - observability-policies from v0.0.3 to v0.0.4
 - priority-classes from v0.3.0 to v0.3.1
 - security-bundle from v1.16.1 to v1.17.0
@@ -120,6 +121,14 @@
 
 - Upgrade application to version 1.26.7 (includes coredns 1.13.1)
 
+### kube-vip [v0.2.0...v0.3.0](https://github.com/giantswarm/kube-vip-app/compare/v0.2.0...v0.3.0)
+
+#### Changed
+
+- Improve Chart.yaml metadata and management.
+- PolicyException: Use Kyverno-native API instead of Giant Swarm abstraction.
+- DaemonSet: Ensure leading `v` when defaulting to `.Chart.AppVersion`.
+
 ### metrics-server [v2.7.0...v2.8.0](https://github.com/giantswarm/metrics-server-app/compare/v2.7.0...v2.8.0)
 
 #### Changed
@@ -144,11 +153,20 @@
 
 - Removed duplicated `app` label which is already added by the selector helper.
 
-### observability-bundle [v2.5.0...v2.6.0](https://github.com/giantswarm/observability-bundle/compare/v2.5.0...v2.6.0)
+### observability-bundle [v2.5.0...v2.7.0](https://github.com/giantswarm/observability-bundle/compare/v2.5.0...v2.7.0)
 
 #### Added
 
-- Add KSM metrics for Gateway API resources
+- Add KSM metrics for Envoy Gateway resources.
+- Add `application.giantswarm.io/team` annotation from HelmReleases as label to KSM emitted metrics.
+- Add KSM metrics for Gateway API resources.
+
+#### Changed
+
+- Change team annotation in `Chart.yaml` to OpenContainers format (`io.giantswarm.application.team`).
+- Update alloy-app to 0.17.1
+- Update kube-prometheus-stack to 20.0.0
+- Update prometheus-operator-crd to 20.0.0
 
 ### observability-policies [v0.0.3...v0.0.4](https://github.com/giantswarm/observability-policies-app/compare/v0.0.3...v0.0.4)
 

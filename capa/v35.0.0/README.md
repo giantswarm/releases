@@ -6,12 +6,13 @@
 
 ### Components
 
-- cluster-aws from v7.2.5 to v7.3.0
+- cluster-aws from v7.2.5 to v7.5.0
+- cluster from v5.1.2 to v5.3.0
 - Flatcar from v4459.2.2 to [v4459.2.3](https://www.flatcar.org/releases/#release-4459.2.3)
 - Kubernetes from v1.34.3 to [v1.35.2](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.35.md#v1.35.2)
 - os-tooling from v1.26.3 to v1.26.4
 
-### cluster-aws [v7.2.5...v7.3.0](https://github.com/giantswarm/cluster-aws/compare/v7.2.5...v7.3.0)
+### cluster-aws [v7.2.5...v7.5.0](https://github.com/giantswarm/cluster-aws/compare/v7.2.5...v7.5.0)
 
 #### Added
 
@@ -22,15 +23,30 @@
 
 #### Changed
 
+- Apps: Enable `rbac-bootstrap` as a default HelmRelease app.
+- Values: Use container registries from `cluster` chart.
+- Karpenter: Provide proxy configuration.
+- AWS EBS CSI Driver & Karpenter: Reduce interval and enable drift detection.\
 - Install the `aws-ebs-csi-driver-bundle` that contains the `aws-ebs-csi-driver` app, together with the crossplane resources to manage the AWS IAM Roles required by the app.
 - Install the `karpenter-bundle` that contains the `karpenter` app, together with the crossplane custom resources to manage the AWS resources required by `karpenter`.
 - Use `cluster` chart values for Karpenter kubelet `systemReserved` and `kubeReserved` configuration instead of hardcoded values.
 - Set correct `maxPods` value for karpenter node pools, based on the configured `nodeCidrMaskSize`, but capped at 110 pods.
 - Always install the `karpenter-bundle`, regardless of whether karpenter node pools are configured. This is useful when deleting karpenter node pools, because otherwise the karpenter app was being removed and karpenter did not have time to clean up the node pools.
+- Allow CertManager to use DNS challenges on non-private clusters.
 
 #### Fixed
 
 - Install node-termination-handler bundle even if falling back to default node pools. No workers could come up without NTH, so `nodePools: {}` (= use default node pools) did not create a working cluster.
+
+### cluster [v5.1.2...v5.3.0](https://github.com/giantswarm/cluster/compare/v5.1.2...v5.3.0)
+
+#### Added
+
+- Apps: Add `rbac-bootstrap` as a default HelmRelease app with a default ClusterRoleBinding for `giantswarm:giantswarm-admins`.
+
+#### Changed
+
+- Apps: Use OCIRepository source for `rbac-bootstrap` HelmRelease.
 
 ### Apps
 
@@ -49,12 +65,12 @@
 - irsa-servicemonitors from v0.1.0 to v0.1.1
 - k8s-audit-metrics from v0.10.11 to v0.10.13
 - k8s-dns-node-cache from v2.9.1 to v2.9.2
-- karpenter from v1.4.0 to v2.0.0
+- karpenter from v1.4.0 to v2.1.0
 - karpenter-taint-remover from v1.0.1 to v1.0.2
 - metrics-server from v2.7.0 to v2.8.0
 - net-exporter from v1.23.0 to v1.23.1
 - node-exporter from v1.20.10 to v1.20.11
-- observability-bundle from v2.5.0 to v2.6.0
+- observability-bundle from v2.5.0 to v2.7.0
 - observability-policies from v0.0.3 to v0.0.4
 - priority-classes from v0.3.0 to v0.3.1
 - prometheus-blackbox-exporter from v0.5.0 to v0.5.1
@@ -195,10 +211,12 @@
 
 - Upgrade application to version 1.26.7 (includes coredns 1.13.1)
 
-### karpenter [v1.4.0...v2.0.0](https://github.com/giantswarm/karpenter-app/compare/v1.4.0...v2.0.0)
+### karpenter [v1.4.0...v2.1.0](https://github.com/giantswarm/karpenter-app/compare/v1.4.0...v2.1.0)
 
 #### Added
 
+- Add `PodLogs` and `PodMonitor` custom resources for observability data ingestion.
+- Deployment: Add HTTP proxy support.
 - Add e2e tests for this app.
 - Add `karpenter-bundle` chart that consolidates `karpenter-app` and `karpenter-crossplane-resources` into a single deployable bundle. The bundle includes:
   - HelmRelease and OCIRepository for deploying karpenter to workload clusters
@@ -239,11 +257,20 @@
 
 - Removed duplicated `app` label which is already added by the selector helper.
 
-### observability-bundle [v2.5.0...v2.6.0](https://github.com/giantswarm/observability-bundle/compare/v2.5.0...v2.6.0)
+### observability-bundle [v2.5.0...v2.7.0](https://github.com/giantswarm/observability-bundle/compare/v2.5.0...v2.7.0)
 
 #### Added
 
-- Add KSM metrics for Gateway API resources
+- Add KSM metrics for Envoy Gateway resources.
+- Add `application.giantswarm.io/team` annotation from HelmReleases as label to KSM emitted metrics.
+- Add KSM metrics for Gateway API resources.
+
+#### Changed
+
+- Change team annotation in `Chart.yaml` to OpenContainers format (`io.giantswarm.application.team`).
+- Update alloy-app to 0.17.1
+- Update kube-prometheus-stack to 20.0.0
+- Update prometheus-operator-crd to 20.0.0
 
 ### observability-policies [v0.0.3...v0.0.4](https://github.com/giantswarm/observability-policies-app/compare/v0.0.3...v0.0.4)
 
