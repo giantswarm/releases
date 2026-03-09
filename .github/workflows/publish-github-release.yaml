@@ -8,12 +8,6 @@ on:
     paths:
       - "*/v*.*.*/release.yaml"
   workflow_dispatch:
-    inputs:
-      announce:
-        description: 'Also trigger customer-facing Slack announcements (via announce-release workflow)'
-        required: false
-        type: boolean
-        default: false
 
 jobs:
   get-releases:
@@ -113,29 +107,6 @@ jobs:
 
           # Create release.
           gh release create --target "${GITHUB_REF_NAME}" "${tag}" --title "${title}" --notes-file "${notes}" ${files[@]} ${prerelease}
-
-      - name: Trigger customer-facing announcements
-        if: ${{ inputs.announce == true }}
-        env:
-          GH_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
-          release: ${{ matrix.release }}
-          version: ${{ steps.get-provider-version.outputs.version }}
-        run: |
-          # Construct announce workflow input field from directory name
-          # Input names match directory names: provider_capa, provider_azure, etc.
-          dir_name="${release%/v*.*.*}"
-          INPUT_FIELD="provider_${dir_name//-/_}"
-
-          # Skip pre-releases
-          if [[ "${version}" == v*.*.*-* ]]; then
-            echo "Pre-release detected, skipping announce trigger."
-            exit 0
-          fi
-
-          echo "Triggering announce-release workflow for $dir_name ($INPUT_FIELD) version $version"
-          gh workflow run announce-release.yaml \
-            -f "${INPUT_FIELD}=true" \
-            -f "version=${version}"
 
   notify-news-product:
     name: Notify news-product
