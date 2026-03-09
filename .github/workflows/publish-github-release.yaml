@@ -44,6 +44,10 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v6
 
+      - name: Get provider lists
+        id: providers
+        uses: ./.github/actions/get-providers
+
       - name: Get provider & version
         id: get-provider-version
         env:
@@ -53,13 +57,9 @@ jobs:
           provider="${release%/v*.*.*}"
           version="${release#${provider}/}"
 
-          # Map provider.
-          # TODO: Remove once `capa` gets renamed to `aws`.
-          case "${provider}" in
-            capa)
-              provider="aws"
-              ;;
-          esac
+          # Map directory name to API name using centralized map
+          DIR_TO_API='${{ steps.providers.outputs.dir_to_api }}'
+          provider=$(echo "$DIR_TO_API" | jq -r --arg d "$provider" '.[$d] // $d')
 
           # Store provider & version.
           echo provider="${provider}" >> "${GITHUB_OUTPUT}"
@@ -91,27 +91,12 @@ jobs:
           version: ${{ steps.get-provider-version.outputs.version }}
           tag: ${{ steps.get-release.outputs.tag }}
         run: |
-          # Map title.
-          case "${provider}" in
-            aws)
-              title="AWS ${version}"
-              ;;
-            azure)
-              title="Azure ${version}"
-              ;;
-            cloud-director)
-              title="VMware Cloud Director ${version}"
-              ;;
-            eks)
-              title="EKS ${version}"
-              ;;
-            vsphere)
-              title="vSphere ${version}"
-              ;;
-            *)
-              title="${provider} ${version}"
-              ;;
-          esac
+          # Map title using centralized display names
+          # The display_names map uses directory names as keys, so we need to look up by directory
+          dir_name="${release%/v*.*.*}"
+          DISPLAY_NAMES='${{ steps.providers.outputs.display_names }}'
+          display=$(echo "$DISPLAY_NAMES" | jq -r --arg d "$dir_name" '.[$d] // $d')
+          title="${display} ${version}"
 
           # Define notes & files.
           notes="${release}/README.md"
@@ -122,3 +107,101 @@ jobs:
 
           # Create release.
           gh release create --target "${GITHUB_REF_NAME}" "${tag}" --title "${title}" --notes-file "${notes}" ${files[@]} ${prerelease}
+
+  notify-news-product:
+    name: Notify news-product
+    runs-on: ubuntu-latest
+    needs: [get-releases, create-release]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - name: Get provider lists
+        id: providers
+        uses: ./.github/actions/get-providers
+
+      - name: Build consolidated message
+        id: build-message
+        env:
+          RELEASES: ${{ needs.get-releases.outputs.releases }}
+          GH_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+        run: |
+          DISPLAY_NAMES='${{ steps.providers.outputs.display_names }}'
+
+          # Group releases by version and collect provider display names
+          declare -A VERSION_PROVIDERS
+          declare -A VERSION_TAGS
+
+          for release in $(echo "$RELEASES" | jq -r '.[]'); do
+            dir_name="${release%/v*.*.*}"
+            version="${release#${dir_name}/}"
+
+            # Skip pre-releases
+            if [[ "${version}" == v*.*.*-* ]]; then
+              continue
+            fi
+
+            # Check if this release was actually created (not pre-existing)
+            api_name=$(echo '${{ steps.providers.outputs.dir_to_api }}' | jq -r --arg d "$dir_name" '.[$d] // $d')
+            tag="${api_name}/${version}"
+            created_at=$(gh release view "$tag" --json createdAt --jq '.createdAt' 2>/dev/null || echo "")
+
+            if [[ -z "$created_at" ]]; then
+              continue
+            fi
+
+            # Check if it was created recently (within the last 30 minutes)
+            created_ts=$(date -d "$created_at" +%s 2>/dev/null || date -jf "%Y-%m-%dT%H:%M:%SZ" "$created_at" +%s 2>/dev/null || echo "0")
+            now_ts=$(date +%s)
+            age=$(( now_ts - created_ts ))
+            if [[ $age -gt 1800 ]]; then
+              continue
+            fi
+
+            display=$(echo "$DISPLAY_NAMES" | jq -r --arg d "$dir_name" '.[$d] // $d')
+
+            if [[ -n "${VERSION_PROVIDERS[$version]:-}" ]]; then
+              VERSION_PROVIDERS[$version]="${VERSION_PROVIDERS[$version]}, ${display}"
+            else
+              VERSION_PROVIDERS[$version]="$display"
+            fi
+            VERSION_TAGS[$version]="${VERSION_TAGS[$version]:-} <https://github.com/${{ github.repository }}/releases/tag/${tag}|${display}>"
+          done
+
+          if [[ ${#VERSION_PROVIDERS[@]} -eq 0 ]]; then
+            echo "No new releases to announce."
+            echo "has_message=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          echo "has_message=true" >> "$GITHUB_OUTPUT"
+
+          # Build message for the first (typically only) version
+          for version in "${!VERSION_PROVIDERS[@]}"; do
+            providers="${VERSION_PROVIDERS[$version]}"
+            tags="${VERSION_TAGS[$version]}"
+
+            MESSAGE=":loudspeaker: *Release ${version} — Published*\n\nWorkload cluster release ${version} has been published for ${providers}.\n\n*View releases:* ${tags}"
+
+            echo "slack_message<<EOF" >> "$GITHUB_OUTPUT"
+            echo -e "$MESSAGE" >> "$GITHUB_OUTPUT"
+            echo "EOF" >> "$GITHUB_OUTPUT"
+
+            echo "slack_text=Release ${version} published for ${providers}" >> "$GITHUB_OUTPUT"
+            break
+          done
+
+      - name: Post to news-product
+        if: steps.build-message.outputs.has_message == 'true'
+        uses: slackapi/slack-github-action@v2.1.1
+        with:
+          method: chat.postMessage
+          token: ${{ secrets.SLACK_BOT_TOKEN }}
+          payload: |
+            channel: news-product
+            text: ${{ toJSON(steps.build-message.outputs.slack_text) }}
+            blocks:
+              - type: "section"
+                text:
+                  type: "mrkdwn"
+                  text: ${{ toJSON(steps.build-message.outputs.slack_message) }}

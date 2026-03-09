@@ -277,10 +277,14 @@ jobs:
           PIN_TYPE="${{ steps.parse_command.outputs.pin_type }}"
           PIN_SPEC="${{ steps.parse_command.outputs.pin_spec }}"
 
-          # Translate capa -> aws for directory lookups
-          if [[ " ${PROVIDERS_TO_UPDATE} " =~ " aws " ]]; then
-            PROVIDERS_TO_UPDATE=$(echo "${PROVIDERS_TO_UPDATE}" | sed 's/aws/capa/g')
-          fi
+          # Convert API names to directory names using the centralized map
+          API_TO_DIR='${{ steps.providers.outputs.api_to_dir }}'
+          CONVERTED=""
+          for p in $PROVIDERS_TO_UPDATE; do
+            DIR=$(echo "$API_TO_DIR" | jq -r --arg p "$p" '.[$p] // $p')
+            CONVERTED="$CONVERTED $DIR"
+          done
+          PROVIDERS_TO_UPDATE=$(echo "$CONVERTED" | xargs)
 
           # Determine release name from branch
           RELEASE_NAME=$(echo "$BRANCH_NAME" | sed -n 's/release-\(v[0-9.]*\).*/\1/p')
@@ -297,11 +301,9 @@ jobs:
             PROVIDER_DIR=$PROVIDER
             echo "Processing provider: $PROVIDER_DIR"
 
-            # Translate for devctl
-            DEVCTL_PROVIDER=$PROVIDER
-            if [ "$PROVIDER" == "capa" ]; then
-              DEVCTL_PROVIDER="aws"
-            fi
+            # Map directory name to API/devctl name
+            DIR_TO_API='${{ steps.providers.outputs.dir_to_api }}'
+            DEVCTL_PROVIDER=$(echo "$DIR_TO_API" | jq -r --arg d "$PROVIDER" '.[$d] // $d')
 
             # Check if release directory exists
             if [ ! -d "$PROVIDER_DIR/$RELEASE_NAME" ]; then
@@ -356,15 +358,8 @@ jobs:
               echo "Restored description in README.md"
             fi
             if [[ -n "$ANNOUNCEMENT_BACKUP" ]]; then
-              PROVIDER_NAME=""
-              case "$PROVIDER_DIR" in
-                capa) PROVIDER_NAME="CAPA" ;;
-                azure) PROVIDER_NAME="Azure" ;;
-                vsphere) PROVIDER_NAME="vSphere" ;;
-                cloud-director) PROVIDER_NAME="VMware Cloud Director" ;;
-                eks) PROVIDER_NAME="EKS" ;;
-                *) PROVIDER_NAME=$(echo "$PROVIDER_DIR" | tr 'a-z' 'A-Z') ;;
-              esac
+              DISPLAY_NAMES='${{ steps.providers.outputs.display_names }}'
+              PROVIDER_NAME=$(echo "$DISPLAY_NAMES" | jq -r --arg d "$PROVIDER_DIR" '.[$d] // ($d | ascii_upcase)')
 
               RELEASE_VERSION=$(echo "$RELEASE_NAME" | sed 's/v//')
               NEW_LINE_1="**Workload cluster release v${RELEASE_VERSION} for ${PROVIDER_NAME} is available**. $ANNOUNCEMENT_BACKUP"
@@ -389,10 +384,14 @@ jobs:
           PIN_VERSION="${{ steps.parse_command.outputs.pin_version }}"
           UNTIL="${{ steps.parse_command.outputs.until }}"
 
-          # Translate capa -> aws for directory lookups
-          if [[ " ${PROVIDERS_TO_UPDATE} " =~ " aws " ]]; then
-            PROVIDERS_TO_UPDATE=$(echo "${PROVIDERS_TO_UPDATE}" | sed 's/aws/capa/g')
-          fi
+          # Convert API names to directory names using the centralized map
+          API_TO_DIR='${{ steps.providers.outputs.api_to_dir }}'
+          CONVERTED=""
+          for p in $PROVIDERS_TO_UPDATE; do
+            DIR=$(echo "$API_TO_DIR" | jq -r --arg p "$p" '.[$p] // $p')
+            CONVERTED="$CONVERTED $DIR"
+          done
+          PROVIDERS_TO_UPDATE=$(echo "$CONVERTED" | xargs)
 
           # Parse version components (remove 'v' prefix if present)
           VERSION_NO_V=$(echo "$RELEASE_NAME" | sed 's/^v//')
