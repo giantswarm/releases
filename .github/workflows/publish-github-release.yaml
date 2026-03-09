@@ -149,17 +149,12 @@ jobs:
         id: providers
         uses: ./.github/actions/get-providers
 
-      - name: Post consolidated Slack message
+      - name: Build consolidated message
+        id: build-message
         env:
-          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
           RELEASES: ${{ needs.get-releases.outputs.releases }}
           GH_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
         run: |
-          if [[ -z "$SLACK_BOT_TOKEN" ]]; then
-            echo "Slack bot token not configured. Skipping notification."
-            exit 0
-          fi
-
           DISPLAY_NAMES='${{ steps.providers.outputs.display_names }}'
 
           # Group releases by version and collect provider display names
@@ -204,26 +199,38 @@ jobs:
 
           if [[ ${#VERSION_PROVIDERS[@]} -eq 0 ]]; then
             echo "No new releases to announce."
+            echo "has_message=false" >> "$GITHUB_OUTPUT"
             exit 0
           fi
 
-          # Post one message per version
+          echo "has_message=true" >> "$GITHUB_OUTPUT"
+
+          # Build message for the first (typically only) version
           for version in "${!VERSION_PROVIDERS[@]}"; do
             providers="${VERSION_PROVIDERS[$version]}"
             tags="${VERSION_TAGS[$version]}"
 
-            MESSAGE=":loudspeaker: *Release ${version} — Published*\n\n"
-            MESSAGE+="Workload cluster release ${version} has been published for ${providers}.\n\n"
-            MESSAGE+="*View releases:* ${tags}"
+            MESSAGE=":loudspeaker: *Release ${version} — Published*\n\nWorkload cluster release ${version} has been published for ${providers}.\n\n*View releases:* ${tags}"
 
-            echo "Posting to #news-product: Release ${version} for ${providers}"
-            curl -s -X POST "https://slack.com/api/chat.postMessage" \
-              -H "Authorization: Bearer $SLACK_BOT_TOKEN" \
-              -H "Content-Type: application/json; charset=utf-8" \
-              -d "$(jq -n \
-                --arg channel "news-product" \
-                --arg text "Release ${version} published for ${providers}" \
-                --arg mrkdwn "$MESSAGE" \
-                '{channel: $channel, text: $text, blocks: [{type: "section", text: {type: "mrkdwn", text: $mrkdwn}}]}'
-              )"
+            echo "slack_message<<EOF" >> "$GITHUB_OUTPUT"
+            echo -e "$MESSAGE" >> "$GITHUB_OUTPUT"
+            echo "EOF" >> "$GITHUB_OUTPUT"
+
+            echo "slack_text=Release ${version} published for ${providers}" >> "$GITHUB_OUTPUT"
+            break
           done
+
+      - name: Post to news-product
+        if: steps.build-message.outputs.has_message == 'true'
+        uses: slackapi/slack-github-action@v2.1.1
+        with:
+          method: chat.postMessage
+          token: ${{ secrets.SLACK_BOT_TOKEN }}
+          payload: |
+            channel: news-product
+            text: ${{ toJSON(steps.build-message.outputs.slack_text) }}
+            blocks:
+              - type: "section"
+                text:
+                  type: "mrkdwn"
+                  text: ${{ toJSON(steps.build-message.outputs.slack_message) }}
