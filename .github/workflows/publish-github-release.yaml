@@ -114,46 +114,6 @@ jobs:
           # Create release.
           gh release create --target "${GITHUB_REF_NAME}" "${tag}" --title "${title}" --notes-file "${notes}" ${files[@]} ${prerelease}
 
-      - name: Notify news-product Slack channel
-        if: ${{ ! fromJSON(steps.get-release.outputs.exists) || inputs.announce }}
-        env:
-          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
-          release: ${{ matrix.release }}
-          provider: ${{ steps.get-provider-version.outputs.provider }}
-          version: ${{ steps.get-provider-version.outputs.version }}
-          tag: ${{ steps.get-release.outputs.tag }}
-        run: |
-          # Skip if Slack is not configured
-          if [[ -z "$SLACK_BOT_TOKEN" ]]; then
-            echo "Slack bot token not configured. Skipping notification."
-            exit 0
-          fi
-
-          # Skip pre-releases
-          if [[ "${version}" == v*.*.*-* ]]; then
-            echo "Pre-release detected, skipping Slack notification."
-            exit 0
-          fi
-
-          # Get display name from centralized map
-          dir_name="${release%/v*.*.*}"
-          DISPLAY_NAMES='${{ steps.providers.outputs.display_names }}'
-          display=$(echo "$DISPLAY_NAMES" | jq -r --arg d "$dir_name" '.[$d] // $d')
-
-          RELEASE_URL="https://github.com/${{ github.repository }}/releases/tag/${tag}"
-          MESSAGE="*${display} ${version}* has been published.\n<${RELEASE_URL}|View release on GitHub>"
-
-          echo "Posting to #news-product: ${display} ${version}"
-          curl -s -X POST "https://slack.com/api/chat.postMessage" \
-            -H "Authorization: Bearer $SLACK_BOT_TOKEN" \
-            -H "Content-Type: application/json; charset=utf-8" \
-            -d "$(jq -n \
-              --arg channel "news-product" \
-              --arg text "${display} ${version} has been published" \
-              --arg mrkdwn "$MESSAGE" \
-              '{channel: $channel, text: $text, blocks: [{type: "section", text: {type: "mrkdwn", text: $mrkdwn}}]}'
-            )"
-
       - name: Trigger customer-facing announcements
         if: ${{ inputs.announce == true }}
         env:
@@ -176,3 +136,94 @@ jobs:
           gh workflow run announce-release.yaml \
             -f "${INPUT_FIELD}=true" \
             -f "version=${version}"
+
+  notify-news-product:
+    name: Notify news-product
+    runs-on: ubuntu-latest
+    needs: [get-releases, create-release]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - name: Get provider lists
+        id: providers
+        uses: ./.github/actions/get-providers
+
+      - name: Post consolidated Slack message
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+          RELEASES: ${{ needs.get-releases.outputs.releases }}
+          GH_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+        run: |
+          if [[ -z "$SLACK_BOT_TOKEN" ]]; then
+            echo "Slack bot token not configured. Skipping notification."
+            exit 0
+          fi
+
+          DISPLAY_NAMES='${{ steps.providers.outputs.display_names }}'
+
+          # Group releases by version and collect provider display names
+          declare -A VERSION_PROVIDERS
+          declare -A VERSION_TAGS
+
+          for release in $(echo "$RELEASES" | jq -r '.[]'); do
+            dir_name="${release%/v*.*.*}"
+            version="${release#${dir_name}/}"
+
+            # Skip pre-releases
+            if [[ "${version}" == v*.*.*-* ]]; then
+              continue
+            fi
+
+            # Check if this release was actually created (not pre-existing)
+            api_name=$(echo '${{ steps.providers.outputs.dir_to_api }}' | jq -r --arg d "$dir_name" '.[$d] // $d')
+            tag="${api_name}/${version}"
+            created_at=$(gh release view "$tag" --json createdAt --jq '.createdAt' 2>/dev/null || echo "")
+
+            if [[ -z "$created_at" ]]; then
+              continue
+            fi
+
+            # Check if it was created recently (within the last 30 minutes)
+            created_ts=$(date -d "$created_at" +%s 2>/dev/null || date -jf "%Y-%m-%dT%H:%M:%SZ" "$created_at" +%s 2>/dev/null || echo "0")
+            now_ts=$(date +%s)
+            age=$(( now_ts - created_ts ))
+            if [[ $age -gt 1800 ]]; then
+              continue
+            fi
+
+            display=$(echo "$DISPLAY_NAMES" | jq -r --arg d "$dir_name" '.[$d] // $d')
+
+            if [[ -n "${VERSION_PROVIDERS[$version]:-}" ]]; then
+              VERSION_PROVIDERS[$version]="${VERSION_PROVIDERS[$version]}, ${display}"
+            else
+              VERSION_PROVIDERS[$version]="$display"
+            fi
+            VERSION_TAGS[$version]="${VERSION_TAGS[$version]:-} <https://github.com/${{ github.repository }}/releases/tag/${tag}|${display}>"
+          done
+
+          if [[ ${#VERSION_PROVIDERS[@]} -eq 0 ]]; then
+            echo "No new releases to announce."
+            exit 0
+          fi
+
+          # Post one message per version
+          for version in "${!VERSION_PROVIDERS[@]}"; do
+            providers="${VERSION_PROVIDERS[$version]}"
+            tags="${VERSION_TAGS[$version]}"
+
+            MESSAGE=":loudspeaker: *Release ${version} — Published*\n\n"
+            MESSAGE+="Workload cluster release ${version} has been published for ${providers}.\n\n"
+            MESSAGE+="*View releases:* ${tags}"
+
+            echo "Posting to #news-product: Release ${version} for ${providers}"
+            curl -s -X POST "https://slack.com/api/chat.postMessage" \
+              -H "Authorization: Bearer $SLACK_BOT_TOKEN" \
+              -H "Content-Type: application/json; charset=utf-8" \
+              -d "$(jq -n \
+                --arg channel "news-product" \
+                --arg text "Release ${version} published for ${providers}" \
+                --arg mrkdwn "$MESSAGE" \
+                '{channel: $channel, text: $text, blocks: [{type: "section", text: {type: "mrkdwn", text: $mrkdwn}}]}'
+              )"
+          done
