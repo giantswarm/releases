@@ -178,10 +178,9 @@ jobs:
               ANNOUNCEMENT_TEXT="This is a test announcement for version ${{ inputs.version }}"
             else
               # Map provider name to repo directory name
-              REPO_DIR="$PROVIDER"
-              if [[ "$PROVIDER" == "capz" ]]; then
-                REPO_DIR="azure"
-              fi
+              # The announce workflow uses input names like "capa", "capz", etc.
+              declare -A ANNOUNCE_TO_DIR=(["capa"]="capa" ["capz"]="azure" ["cloud-director"]="cloud-director" ["vsphere"]="vsphere" ["eks"]="eks")
+              REPO_DIR="${ANNOUNCE_TO_DIR[$PROVIDER]:-$PROVIDER}"
 
               LINK="https://raw.githubusercontent.com/giantswarm/releases/master/$REPO_DIR/${{ inputs.version }}/announcement.md"
               echo "Downloading from: $LINK"

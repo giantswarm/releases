@@ -272,24 +272,9 @@ jobs:
               PROVIDER_ARCHIVES=$(echo -e "$OVERALL_MOVED_RELEASES" | grep "^${PROVIDER}:" || echo "")
               
               if [[ -n "$PROVIDER_ARCHIVES" ]]; then
-                # Set provider display name
-                case "$PROVIDER" in
-                  capa)
-                    DISPLAY_NAME="CAPA"
-                    ;;
-                  azure)
-                    DISPLAY_NAME="CAPZ"
-                    ;;
-                  vsphere)
-                    DISPLAY_NAME="CAPV"
-                    ;;
-                  cloud-director)
-                    DISPLAY_NAME="CAPVCD"
-                    ;;
-                  *)
-                    DISPLAY_NAME=$(echo "$PROVIDER" | tr '[:lower:]' '[:upper:]')
-                    ;;
-                esac
+                # Get display name from centralized CAPI names map
+                CAPI_NAMES='${{ steps.providers.outputs.capi_names }}'
+                DISPLAY_NAME=$(echo "$CAPI_NAMES" | jq -r --arg p "$PROVIDER" '.[$p] // ($p | ascii_upcase)')
                 
                 PR_BODY_SECTION="${PR_BODY_SECTION}#### ${DISPLAY_NAME}\n\n"
                 

@@ -143,24 +143,9 @@ jobs:
                 PROVIDER_DEPRECATED_FILES=$(echo "$DEPRECATED_RELEASE_YAML_FILES" | grep "^${PROVIDER}/" || echo "")
                 
                 if [[ -n "$PROVIDER_DEPRECATED_FILES" ]]; then
-                  # Set provider display name
-                  case "$PROVIDER" in
-                    capa)
-                      DISPLAY_NAME="CAPA"
-                      ;;
-                    azure)
-                      DISPLAY_NAME="CAPZ"
-                      ;;
-                    vsphere)
-                      DISPLAY_NAME="CAPV"
-                      ;;
-                    cloud-director)
-                      DISPLAY_NAME="CAPVCD"
-                      ;;
-                    *)
-                      DISPLAY_NAME=$(echo "$PROVIDER" | tr '[:lower:]' '[:upper:]')
-                      ;;
-                  esac
+                  # Get display name from centralized CAPI names map
+                  CAPI_NAMES='${{ steps.providers.outputs.capi_names }}'
+                  DISPLAY_NAME=$(echo "$CAPI_NAMES" | jq -r --arg p "$PROVIDER" '.[$p] // ($p | ascii_upcase)')
                   
                   PR_BODY="${PR_BODY}#### ${DISPLAY_NAME}\n\n"
                   

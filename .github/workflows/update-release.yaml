@@ -224,10 +224,14 @@ jobs:
           # Decode description from base64
           DESCRIPTION=$(echo "$DESCRIPTION_B64" | base64 -d)
 
-          # For `devctl`, the provider for the `capa` directory is `aws`.
-          if [[ " ${PROVIDERS_TO_UPDATE} " =~ " aws " ]]; then
-            PROVIDERS_TO_UPDATE=$(echo "${PROVIDERS_TO_UPDATE}" | sed 's/aws/capa/g')
-          fi
+          # Convert API names to directory names using the centralized map
+          API_TO_DIR='${{ steps.providers.outputs.api_to_dir }}'
+          CONVERTED=""
+          for p in $PROVIDERS_TO_UPDATE; do
+            DIR=$(echo "$API_TO_DIR" | jq -r --arg p "$p" '.[$p] // $p')
+            CONVERTED="$CONVERTED $DIR"
+          done
+          PROVIDERS_TO_UPDATE=$(echo "$CONVERTED" | xargs)
 
           # Determine the release name from the branch.
           RELEASE_NAME=$(echo "$BRANCH_NAME" | sed -n 's/release-\(v[0-9.]*\).*/\1/p')
@@ -299,11 +303,14 @@ jobs:
             CHANGE_PREFIX="User-requested changes"
           fi
 
-          # For `devctl`, the provider for the `capa` directory is `aws`.
-          # We must translate `aws` to `capa` for directory lookups.
-          if [[ " ${PROVIDERS_TO_UPDATE} " =~ " aws " ]]; then
-            PROVIDERS_TO_UPDATE=$(echo "${PROVIDERS_TO_UPDATE}" | sed 's/aws/capa/g')
-          fi
+          # Convert API names to directory names using the centralized map
+          API_TO_DIR='${{ steps.providers.outputs.api_to_dir }}'
+          CONVERTED=""
+          for p in $PROVIDERS_TO_UPDATE; do
+            DIR=$(echo "$API_TO_DIR" | jq -r --arg p "$p" '.[$p] // $p')
+            CONVERTED="$CONVERTED $DIR"
+          done
+          PROVIDERS_TO_UPDATE=$(echo "$CONVERTED" | xargs)
 
           # 1. Determine the release name from the branch.
           RELEASE_NAME=$(echo "$BRANCH_NAME" | sed -n 's/release-\(v[0-9.]*\).*/\1/p')
@@ -320,10 +327,9 @@ jobs:
             PROVIDER_DIR=$PROVIDER
             echo "Processing provider: $PROVIDER_DIR"
 
-            # For `devctl`, the provider for the `capa` directory is `aws`.
-            if [ "$PROVIDER" == "capa" ]; then
-                PROVIDER="aws"
-            fi
+            # Map directory name to API/devctl name
+            DIR_TO_API='${{ steps.providers.outputs.dir_to_api }}'
+            PROVIDER=$(echo "$DIR_TO_API" | jq -r --arg d "$PROVIDER" '.[$d] // $d')
 
             # Check if release directory for the given release name exists for the provider in the current branch
             if [ ! -d "$PROVIDER_DIR/$RELEASE_NAME" ]; then
@@ -665,11 +671,9 @@ jobs:
           # Collect valid providers (those that have the release directory)
           VALID_PROVIDERS=""
           for PROVIDER_DIR in $PROVIDERS_TO_UPDATE; do
-            # Translate capa -> aws for directory lookup
-            CHECK_DIR=$PROVIDER_DIR
-            if [[ "$PROVIDER_DIR" == "aws" ]]; then
-              CHECK_DIR="capa"
-            fi
+            # Convert API name to directory name for lookup
+            API_TO_DIR='${{ steps.providers.outputs.api_to_dir }}'
+            CHECK_DIR=$(echo "$API_TO_DIR" | jq -r --arg p "$PROVIDER_DIR" '.[$p] // $p')
 
             echo "Checking if release exists for provider: $CHECK_DIR, version: $RELEASE_NAME"
 

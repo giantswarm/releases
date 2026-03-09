@@ -168,6 +168,10 @@ jobs:
               labels: [`stage/${targetStage}`]
             });
 
+      - name: Checkout code
+        if: steps.validate.outputs.valid == 'true' && steps.validate.outputs.target_stage == 'active'
+        uses: actions/checkout@v6
+
       - name: Request reviewers on active stage
         if: steps.validate.outputs.valid == 'true' && steps.validate.outputs.target_stage == 'active'
         uses: actions/github-script@v8
@@ -187,6 +191,13 @@ jobs:
             } catch (e) {
               console.log(`Warning: Could not request all team reviewers: ${e.message}`);
             }
+
+      - name: Trigger E2E tests on active stage
+        if: steps.validate.outputs.valid == 'true' && steps.validate.outputs.target_stage == 'active'
+        uses: ./.github/actions/trigger-e2e-tests
+        with:
+          pr_number: ${{ github.event.issue.number }}
+          github_token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
 
       - name: Send Slack notification
         if: steps.validate.outputs.valid == 'true' && steps.validate.outputs.is_consolidated == 'true'
@@ -322,8 +333,8 @@ jobs:
               content: '+1'
             })
 
-      - name: Trigger /summarize-ai on freeze (major releases only)
-        if: steps.validate.outputs.valid == 'true' && steps.validate.outputs.target_stage == 'freeze' && contains(steps.pr_details.outputs.labels, 'release/major')
+      - name: Trigger /summarize-ai on freeze
+        if: steps.validate.outputs.valid == 'true' && steps.validate.outputs.target_stage == 'freeze'
         uses: actions/github-script@v8
         with:
           github-token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
@@ -351,6 +362,7 @@ jobs:
               body += `Release ${version} is now in the **Active** stage.\n\n`;
               body += `- Product teams have been requested as reviewers\n`;
               body += `- Teams can now bump components, run tests, and add changes\n`;
+              body += `- E2E tests have been triggered automatically\n`;
               if (isConsolidated) {
                 body += `- A Slack notification has been sent to the release channel\n`;
               }

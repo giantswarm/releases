@@ -8,6 +8,12 @@ on:
     paths:
       - "*/v*.*.*/release.yaml"
   workflow_dispatch:
+    inputs:
+      announce:
+        description: 'Also trigger customer-facing Slack announcements (via announce-release workflow)'
+        required: false
+        type: boolean
+        default: false
 
 jobs:
   get-releases:
@@ -44,6 +50,10 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v6
 
+      - name: Get provider lists
+        id: providers
+        uses: ./.github/actions/get-providers
+
       - name: Get provider & version
         id: get-provider-version
         env:
@@ -53,13 +63,9 @@ jobs:
           provider="${release%/v*.*.*}"
           version="${release#${provider}/}"
 
-          # Map provider.
-          # TODO: Remove once `capa` gets renamed to `aws`.
-          case "${provider}" in
-            capa)
-              provider="aws"
-              ;;
-          esac
+          # Map directory name to API name using centralized map
+          DIR_TO_API='${{ steps.providers.outputs.dir_to_api }}'
+          provider=$(echo "$DIR_TO_API" | jq -r --arg d "$provider" '.[$d] // $d')
 
           # Store provider & version.
           echo provider="${provider}" >> "${GITHUB_OUTPUT}"
@@ -91,27 +97,12 @@ jobs:
           version: ${{ steps.get-provider-version.outputs.version }}
           tag: ${{ steps.get-release.outputs.tag }}
         run: |
-          # Map title.
-          case "${provider}" in
-            aws)
-              title="AWS ${version}"
-              ;;
-            azure)
-              title="Azure ${version}"
-              ;;
-            cloud-director)
-              title="VMware Cloud Director ${version}"
-              ;;
-            eks)
-              title="EKS ${version}"
-              ;;
-            vsphere)
-              title="vSphere ${version}"
-              ;;
-            *)
-              title="${provider} ${version}"
-              ;;
-          esac
+          # Map title using centralized display names
+          # The display_names map uses directory names as keys, so we need to look up by directory
+          dir_name="${release%/v*.*.*}"
+          DISPLAY_NAMES='${{ steps.providers.outputs.display_names }}'
+          display=$(echo "$DISPLAY_NAMES" | jq -r --arg d "$dir_name" '.[$d] // $d')
+          title="${display} ${version}"
 
           # Define notes & files.
           notes="${release}/README.md"
@@ -122,3 +113,71 @@ jobs:
 
           # Create release.
           gh release create --target "${GITHUB_REF_NAME}" "${tag}" --title "${title}" --notes-file "${notes}" ${files[@]} ${prerelease}
+
+      - name: Notify news-product Slack channel
+        if: ${{ ! fromJSON(steps.get-release.outputs.exists) || inputs.announce }}
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+          release: ${{ matrix.release }}
+          provider: ${{ steps.get-provider-version.outputs.provider }}
+          version: ${{ steps.get-provider-version.outputs.version }}
+          tag: ${{ steps.get-release.outputs.tag }}
+        run: |
+          # Skip if Slack is not configured
+          if [[ -z "$SLACK_BOT_TOKEN" ]]; then
+            echo "Slack bot token not configured. Skipping notification."
+            exit 0
+          fi
+
+          # Skip pre-releases
+          if [[ "${version}" == v*.*.*-* ]]; then
+            echo "Pre-release detected, skipping Slack notification."
+            exit 0
+          fi
+
+          # Get display name from centralized map
+          dir_name="${release%/v*.*.*}"
+          DISPLAY_NAMES='${{ steps.providers.outputs.display_names }}'
+          display=$(echo "$DISPLAY_NAMES" | jq -r --arg d "$dir_name" '.[$d] // $d')
+
+          RELEASE_URL="https://github.com/${{ github.repository }}/releases/tag/${tag}"
+          MESSAGE="*${display} ${version}* has been published.\n<${RELEASE_URL}|View release on GitHub>"
+
+          echo "Posting to #news-product: ${display} ${version}"
+          curl -s -X POST "https://slack.com/api/chat.postMessage" \
+            -H "Authorization: Bearer $SLACK_BOT_TOKEN" \
+            -H "Content-Type: application/json; charset=utf-8" \
+            -d "$(jq -n \
+              --arg channel "news-product" \
+              --arg text "${display} ${version} has been published" \
+              --arg mrkdwn "$MESSAGE" \
+              '{channel: $channel, text: $text, blocks: [{type: "section", text: {type: "mrkdwn", text: $mrkdwn}}]}'
+            )"
+
+      - name: Trigger customer-facing announcements
+        if: ${{ inputs.announce == true }}
+        env:
+          GH_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+          release: ${{ matrix.release }}
+          version: ${{ steps.get-provider-version.outputs.version }}
+        run: |
+          # Map directory name to announce workflow input field name using centralized map
+          dir_name="${release%/v*.*.*}"
+          ANNOUNCE_INPUTS='${{ steps.providers.outputs.announce_inputs }}'
+          INPUT_FIELD=$(echo "$ANNOUNCE_INPUTS" | jq -r --arg d "$dir_name" '.[$d] // empty')
+
+          if [[ -z "$INPUT_FIELD" ]]; then
+            echo "Unknown provider directory '$dir_name', skipping announce trigger."
+            exit 0
+          fi
+
+          # Skip pre-releases
+          if [[ "${version}" == v*.*.*-* ]]; then
+            echo "Pre-release detected, skipping announce trigger."
+            exit 0
+          fi
+
+          echo "Triggering announce-release workflow for $dir_name ($INPUT_FIELD) version $version"
+          gh workflow run announce-release.yaml \
+            -f "${INPUT_FIELD}=true" \
+            -f "version=${version}"

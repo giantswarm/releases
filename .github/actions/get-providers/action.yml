@@ -1,23 +1,39 @@
 name: 'Get Provider Lists'
-description: 'Provides centralized provider lists (space-separated, convert as needed)'
+description: 'Provides centralized provider lists and name mappings'
 outputs:
   all_providers:
-    description: 'All providers (space-separated): aws azure cloud-director eks vsphere. Convert to comma: tr " " ",". Convert to JSON: tr " " "\n" | jq -R . | jq -sc .'
+    description: 'All API provider names (space-separated)'
     value: 'aws azure cloud-director eks vsphere'
   provider_dirs:
-    description: 'Provider directory names (space-separated, uses "capa" not "aws"): azure capa cloud-director eks vsphere'
+    description: 'Provider directory names (space-separated, uses "capa" not "aws")'
     value: 'azure capa cloud-director eks vsphere'
+  dir_to_api:
+    description: 'JSON map: directory name → API/devctl name'
+    value: '{"capa":"aws","azure":"azure","cloud-director":"cloud-director","eks":"eks","vsphere":"vsphere"}'
+  api_to_dir:
+    description: 'JSON map: API/devctl name → directory name'
+    value: '{"aws":"capa","azure":"azure","cloud-director":"cloud-director","eks":"eks","vsphere":"vsphere"}'
+  display_names:
+    description: 'JSON map: directory name → human display name'
+    value: '{"capa":"AWS","azure":"Azure","cloud-director":"VMware Cloud Director","eks":"EKS","vsphere":"vSphere"}'
+  capi_names:
+    description: 'JSON map: directory name → CAPI-style display name'
+    value: '{"capa":"CAPA","azure":"CAPZ","cloud-director":"CAPVCD","eks":"EKS","vsphere":"CAPV"}'
+  announce_inputs:
+    description: 'JSON map: directory name → announce-release workflow_dispatch input field name'
+    value: '{"capa":"provider_capa","azure":"provider_capz","cloud-director":"provider_cloud_director","eks":"provider_eks","vsphere":"provider_vsphere"}'
 runs:
   using: "composite"
   steps:
     - name: Provider lists are available as outputs
       shell: bash
       run: |
-        echo "Provider lists loaded (space-separated, convert as needed):"
+        echo "Provider lists and mappings loaded:"
         echo "  - all_providers: aws azure cloud-director eks vsphere"
         echo "  - provider_dirs: azure capa cloud-director eks vsphere"
-        echo ""
-        echo "Conversion examples:"
-        echo "  - To comma: echo 'aws azure' | tr ' ' ','"
-        echo "  - To JSON: echo 'aws azure' | tr ' ' '\n' | jq -R . | jq -sc ."
+        echo "  - dir_to_api: directory name → API name (JSON)"
+        echo "  - api_to_dir: API name → directory name (JSON)"
+        echo "  - display_names: directory name → human display name (JSON)"
+        echo "  - capi_names: directory name → CAPI-style display name (JSON)"
+        echo "  - announce_inputs: directory name → announce workflow input field (JSON)"
 
