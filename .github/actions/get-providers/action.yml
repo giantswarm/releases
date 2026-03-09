@@ -19,9 +19,6 @@ outputs:
   capi_names:
     description: 'JSON map: directory name → CAPI-style display name'
     value: '{"capa":"CAPA","azure":"CAPZ","cloud-director":"CAPVCD","eks":"EKS","vsphere":"CAPV"}'
-  announce_inputs:
-    description: 'JSON map: directory name → announce-release workflow_dispatch input field name'
-    value: '{"capa":"provider_capa","azure":"provider_capz","cloud-director":"provider_cloud_director","eks":"provider_eks","vsphere":"provider_vsphere"}'
 runs:
   using: "composite"
   steps:
@@ -35,5 +32,4 @@ runs:
         echo "  - api_to_dir: API name → directory name (JSON)"
         echo "  - display_names: directory name → human display name (JSON)"
         echo "  - capi_names: directory name → CAPI-style display name (JSON)"
-        echo "  - announce_inputs: directory name → announce workflow input field (JSON)"
 

@@ -161,15 +161,10 @@ jobs:
           release: ${{ matrix.release }}
           version: ${{ steps.get-provider-version.outputs.version }}
         run: |
-          # Map directory name to announce workflow input field name using centralized map
+          # Construct announce workflow input field from directory name
+          # Input names match directory names: provider_capa, provider_azure, etc.
           dir_name="${release%/v*.*.*}"
-          ANNOUNCE_INPUTS='${{ steps.providers.outputs.announce_inputs }}'
-          INPUT_FIELD=$(echo "$ANNOUNCE_INPUTS" | jq -r --arg d "$dir_name" '.[$d] // empty')
-
-          if [[ -z "$INPUT_FIELD" ]]; then
-            echo "Unknown provider directory '$dir_name', skipping announce trigger."
-            exit 0
-          fi
+          INPUT_FIELD="provider_${dir_name//-/_}"
 
           # Skip pre-releases
           if [[ "${version}" == v*.*.*-* ]]; then

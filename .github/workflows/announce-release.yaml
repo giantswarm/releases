@@ -13,7 +13,7 @@ on:
         required: false
         type: boolean
         default: false
-      provider_capz:
+      provider_azure:
         description: 'Include Azure (CAPZ) provider'
         required: false
         type: boolean
@@ -70,13 +70,13 @@ jobs:
           PROVIDERS_ALL="${{ inputs.provider_all }}"
 
           # Build list of selected providers
+          # Input names match directory names (capa, azure, cloud-director, eks, vsphere)
           SELECTED_PROVIDERS=()
           if [[ "$PROVIDERS_ALL" == "true" ]]; then
-             # If 'all' is selected, include real providers (exclude test)
-             SELECTED_PROVIDERS+=("capa" "capz" "cloud-director" "vsphere" "eks")
+             SELECTED_PROVIDERS+=("capa" "azure" "cloud-director" "vsphere" "eks")
           else
              [[ "${{ inputs.provider_capa }}" == "true" ]] && SELECTED_PROVIDERS+=("capa")
-             [[ "${{ inputs.provider_capz }}" == "true" ]] && SELECTED_PROVIDERS+=("capz")
+             [[ "${{ inputs.provider_azure }}" == "true" ]] && SELECTED_PROVIDERS+=("azure")
              [[ "${{ inputs.provider_cloud_director }}" == "true" ]] && SELECTED_PROVIDERS+=("cloud-director")
              [[ "${{ inputs.provider_vsphere }}" == "true" ]] && SELECTED_PROVIDERS+=("vsphere")
              [[ "${{ inputs.provider_eks }}" == "true" ]] && SELECTED_PROVIDERS+=("eks")
@@ -87,6 +87,9 @@ jobs:
              echo "No providers selected"
              exit 1
           fi
+
+          # Map directory names to installations provider names (only azure differs)
+          declare -A DIR_TO_INSTALL=(["azure"]="capz")
 
           # Array to store provider-channel pairs
           declare -a provider_channel_pairs=()
@@ -116,6 +119,9 @@ jobs:
             provider_channel_pairs+=("{\"provider\":\"$provider\",\"channel\":\"noise-releases\"}")
             provider_channel_pairs+=("{\"provider\":\"$provider\",\"channel\":\"sig-product\"}")
 
+            # Map to installations provider name for matching
+            install_provider="${DIR_TO_INSTALL[$provider]:-$provider}"
+
             # Find installation-specific channels for this provider
             while read -r installation; do
               FILE_PATH="$installation/cluster.yaml"
@@ -123,8 +129,7 @@ jobs:
                 INSTALLATION_PROVIDER=$(yq -r ".provider" $FILE_PATH)
                 HAS_SLACK=$(yq 'has("slack")' $FILE_PATH)
 
-                # Check if this installation matches current provider
-                if [[ "$provider" == "$INSTALLATION_PROVIDER" ]]; then
+                if [[ "$install_provider" == "$INSTALLATION_PROVIDER" ]]; then
                   if [[ "$HAS_SLACK" == "true" ]]; then
                     CHANNEL=$(yq -r '.slack.support[0]' "$FILE_PATH")
                     provider_channel_pairs+=("{\"provider\":\"$provider\",\"channel\":\"$CHANNEL\"}")
@@ -149,14 +154,14 @@ jobs:
         run: |
           # Build list of selected providers
           PROVIDERS_ALL="${{ inputs.provider_all }}"
+          # Input names match directory names (capa, azure, cloud-director, eks, vsphere)
           SELECTED_PROVIDERS=()
 
           if [[ "$PROVIDERS_ALL" == "true" ]]; then
-             # If 'all' is selected, include real providers (exclude test)
-             SELECTED_PROVIDERS+=("capa" "capz" "cloud-director" "vsphere" "eks")
+             SELECTED_PROVIDERS+=("capa" "azure" "cloud-director" "vsphere" "eks")
           else
              [[ "${{ inputs.provider_capa }}" == "true" ]] && SELECTED_PROVIDERS+=("capa")
-             [[ "${{ inputs.provider_capz }}" == "true" ]] && SELECTED_PROVIDERS+=("capz")
+             [[ "${{ inputs.provider_azure }}" == "true" ]] && SELECTED_PROVIDERS+=("azure")
              [[ "${{ inputs.provider_cloud_director }}" == "true" ]] && SELECTED_PROVIDERS+=("cloud-director")
              [[ "${{ inputs.provider_vsphere }}" == "true" ]] && SELECTED_PROVIDERS+=("vsphere")
              [[ "${{ inputs.provider_eks }}" == "true" ]] && SELECTED_PROVIDERS+=("eks")
@@ -177,10 +182,8 @@ jobs:
             if [[ "$PROVIDER" == "test" ]]; then
               ANNOUNCEMENT_TEXT="This is a test announcement for version ${{ inputs.version }}"
             else
-              # Map provider name to repo directory name
-              # The announce workflow uses input names like "capa", "capz", etc.
-              declare -A ANNOUNCE_TO_DIR=(["capa"]="capa" ["capz"]="azure" ["cloud-director"]="cloud-director" ["vsphere"]="vsphere" ["eks"]="eks")
-              REPO_DIR="${ANNOUNCE_TO_DIR[$PROVIDER]:-$PROVIDER}"
+              # Provider names now match directory names directly
+              REPO_DIR="$PROVIDER"
 
               LINK="https://raw.githubusercontent.com/giantswarm/releases/master/$REPO_DIR/${{ inputs.version }}/announcement.md"
               echo "Downloading from: $LINK"
