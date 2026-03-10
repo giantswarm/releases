@@ -2,6 +2,8 @@
 
 # Giant Swarm Workload Cluster Releases
 
+CAPZ Controller testing!
+
 This repository contains workload cluster release notes and changelogs.
 
 Workload cluster releases can be in
