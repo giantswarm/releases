@@ -1,11 +1,12 @@
 apiVersion: release.giantswarm.io/v1alpha1
 kind: Release
 metadata:
-  name: aws-35.0.0
+  name: aws-35.0.0-test35
 spec:
   apps:
   - name: aws-ebs-csi-driver
-    version: 5.0.0
+    catalog: default-test
+    version: 4.1.1-ab80d2e3debbf80e693d69e11b72494af0908577
     dependsOn:
     - cloud-provider-aws
   - name: aws-ebs-csi-driver-servicemonitors
@@ -13,7 +14,8 @@ spec:
     dependsOn:
     - prometheus-operator-crd
   - name: aws-nth-bundle
-    version: 1.23.1
+    catalog: default-test
+    version: 1.3.0-ab19cf01f3221e8c8bf4d81ecf000c8fb580fddf
   - name: aws-pod-identity-webhook
     version: 2.2.0
     dependsOn:
@@ -44,7 +46,8 @@ spec:
     dependsOn:
     - prometheus-operator-crd
   - name: cloud-provider-aws
-    version: 2.1.0
+    catalog: default-test
+    version: 2.1.0-671a9af06962874c1cecd8baaa10de9586635d5c
     dependsOn:
     - vertical-pod-autoscaler-crd
   - name: cluster-autoscaler
@@ -84,7 +87,8 @@ spec:
     dependsOn:
     - kyverno-crds
   - name: karpenter
-    version: 2.1.0
+    catalog: default-test
+    version: 2.1.0-6dc17e86bcd47b58260bdc4cd60c6bf6522cfaff
   - name: karpenter-crossplane-resources
     version: 0.5.1
   - name: karpenter-taint-remover
@@ -148,4 +152,4 @@ spec:
   - name: os-tooling
     version: 1.26.4
   date: "2026-03-13T10:02:32Z"
-  state: testing
+  state: preview
