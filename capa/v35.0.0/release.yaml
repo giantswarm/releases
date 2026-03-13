@@ -6,7 +6,7 @@ spec:
   apps:
   - name: aws-ebs-csi-driver
     catalog: default-test
-    version: 4.1.1-ab80d2e3debbf80e693d69e11b72494af0908577
+    version: 4.1.1-d908db9d2dc3a11a34d05f9b0995425c7ddaea51
     dependsOn:
     - cloud-provider-aws
   - name: aws-ebs-csi-driver-servicemonitors
@@ -144,7 +144,7 @@ spec:
   components:
   - name: cluster-aws
     catalog: cluster
-    version: 7.4.0
+    version: 7.6.1
   - name: flatcar
     version: 4459.2.3
   - name: kubernetes
