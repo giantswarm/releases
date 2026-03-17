@@ -1,7 +1,7 @@
 apiVersion: release.giantswarm.io/v1alpha1
 kind: Release
 metadata:
-  name: aws-35.0.0-test35
+  name: aws-35.0.0
 spec:
   apps:
   - name: aws-ebs-csi-driver
