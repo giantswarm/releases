@@ -88,7 +88,7 @@ spec:
     - kyverno-crds
   - name: karpenter
     catalog: default-test
-    version: 2.2.0-92275600fe179979ccd41eba8f4cacdf2f9363d8
+    version: 2.1.0-6dc17e86bcd47b58260bdc4cd60c6bf6522cfaff
   - name: karpenter-crossplane-resources
     version: 0.5.1
   - name: karpenter-taint-remover
