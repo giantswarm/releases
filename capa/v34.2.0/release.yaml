@@ -1,7 +1,7 @@
 apiVersion: release.giantswarm.io/v1alpha1
 kind: Release
 metadata:
-  name: aws-34.2.0
+  name: aws-34.2.0-jose
 spec:
   apps:
   - name: aws-ebs-csi-driver
@@ -25,7 +25,7 @@ spec:
   - name: cert-manager
     version: 3.11.0
     dependsOn:
-    - alloy-logs
+    - alloy-podlogs-crds
     - prometheus-operator-crd
   - name: cert-manager-crossplane-resources
     catalog: cluster
@@ -109,7 +109,8 @@ spec:
   - name: node-problem-detector
     version: 0.5.2
   - name: observability-bundle
-    version: 2.8.0
+    catalog: default-test
+    version: 2.8.0-c0a5fcff8a85fe58bffda0f58fcfa7744ac37fa0
     dependsOn:
     - coredns
   - name: observability-policies
