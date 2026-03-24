@@ -110,7 +110,7 @@ spec:
   - name: node-problem-detector
     version: 0.5.2
   - name: observability-bundle
-    version: 2.8.0-f30e88a36f856ace50a2fc5e26d1fc054d46448d
+    version: 2.8.0-0e4bb95483902a1509e282a0896ee5720ddef006
     catalog: default-test
     dependsOn:
     - coredns
