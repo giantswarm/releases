@@ -6,11 +6,6 @@ spec:
   apps:
   - name: aws-ebs-csi-driver
     version: 4.2.0
-  - name: aws-efs-csi-driver-bundle
-    catalog: giantswarm-test
-    version: 3.2.0-4f6ccaf22d41aa8dc72f9d1d38bea9369bfadfb6
-    dependsOn:
-    - cloud-provider-aws
   - name: aws-ebs-csi-driver-servicemonitors
     version: 0.1.2
     dependsOn:
