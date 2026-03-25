@@ -4,6 +4,8 @@
 
 ### Apps
 
-- aws-ebs-csi-driver from v4.1.1 to v5.0.0
-- aws-nth-bundle from v1.3.0 to v1.23.1
+- aws-ebs-csi-driver from v4.1.1 to v4.2.0
+- aws-efs-csi-driver-bundle v3.3.0 (new)
+- aws-nth-bundle from v1.3.0 to v1.4.0
 - cloud-provider-aws from v2.0.0 to v2.1.0
+- karpenter from v2.1.0 to v2.3.0

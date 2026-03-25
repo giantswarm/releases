@@ -5,8 +5,7 @@ metadata:
 spec:
   apps:
   - name: aws-ebs-csi-driver
-    catalog: default-test
-    version: 4.1.2-79857ccea4f40f4a2c1f3d3e8d3c0918f35324be
+    version: 4.2.0
   - name: aws-efs-csi-driver-bundle
     catalog: giantswarm-test
     version: 3.2.0-4f6ccaf22d41aa8dc72f9d1d38bea9369bfadfb6
@@ -17,8 +16,7 @@ spec:
     dependsOn:
     - prometheus-operator-crd
   - name: aws-nth-bundle
-    catalog: default-test
-    version: 1.3.0-3df1c10fc81ef469f947d09aca39ba0fe09d2711
+    version: 1.4.0
   - name: aws-pod-identity-webhook
     version: 2.2.0
     dependsOn:
@@ -49,8 +47,7 @@ spec:
     dependsOn:
     - prometheus-operator-crd
   - name: cloud-provider-aws
-    catalog: default-test
-    version: 2.1.0-671a9af06962874c1cecd8baaa10de9586635d5c
+    version: 2.1.0
     dependsOn:
     - vertical-pod-autoscaler-crd
   - name: cluster-autoscaler
@@ -90,8 +87,7 @@ spec:
     dependsOn:
     - kyverno-crds
   - name: karpenter
-    catalog: default-test
-    version: 2.2.0-ac27f8ab93520a17b7b419e91dee195549dd6836
+    version: 2.3.0
   - name: karpenter-crossplane-resources
     version: 0.5.1
   - name: karpenter-taint-remover
