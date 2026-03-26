@@ -295,8 +295,10 @@ func overrideApp(release *Release, appOverride ReleaseSpecApp) {
 			continue
 		}
 		if appOverride.Catalog == "" {
-			// keep current catalog, if the new one is not set
 			appOverride.Catalog = app.Catalog
+		}
+		if len(appOverride.DependsOn) == 0 {
+			appOverride.DependsOn = app.DependsOn
 		}
 		release.Spec.Apps[i] = appOverride
 		break

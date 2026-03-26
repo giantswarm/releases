@@ -163,3 +163,100 @@ var _ = Describe("Builder", func() {
 		server.Close()
 	})
 })
+
+var _ = Describe("overrideApp", func() {
+	It("preserves dependsOn when override has empty list", func() {
+		release := &Release{
+			Spec: ReleaseSpec{
+				Apps: []ReleaseSpecApp{
+					{
+						Name:      "cert-exporter",
+						Version:   "2.9.15",
+						Catalog:   "default",
+						DependsOn: []string{"kyverno-crds"},
+					},
+				},
+			},
+		}
+
+		overrideApp(release, ReleaseSpecApp{
+			Name:      "cert-exporter",
+			Version:   "2.9.16",
+			DependsOn: []string{},
+		})
+
+		Expect(release.Spec.Apps[0].Version).To(Equal("2.9.16"))
+		Expect(release.Spec.Apps[0].DependsOn).To(Equal([]string{"kyverno-crds"}))
+	})
+
+	It("preserves dependsOn with multiple dependencies", func() {
+		release := &Release{
+			Spec: ReleaseSpec{
+				Apps: []ReleaseSpecApp{
+					{
+						Name:      "security-bundle",
+						Version:   "1.16.1",
+						Catalog:   "giantswarm",
+						DependsOn: []string{"prometheus-operator-crd", "kyverno-crds"},
+					},
+				},
+			},
+		}
+
+		overrideApp(release, ReleaseSpecApp{
+			Name:      "security-bundle",
+			Version:   "1.17.0",
+			DependsOn: []string{},
+		})
+
+		Expect(release.Spec.Apps[0].Version).To(Equal("1.17.0"))
+		Expect(release.Spec.Apps[0].DependsOn).To(Equal([]string{"prometheus-operator-crd", "kyverno-crds"}))
+	})
+
+	It("allows overriding dependsOn when explicitly provided", func() {
+		release := &Release{
+			Spec: ReleaseSpec{
+				Apps: []ReleaseSpecApp{
+					{
+						Name:      "cert-exporter",
+						Version:   "2.9.15",
+						Catalog:   "default",
+						DependsOn: []string{"kyverno-crds"},
+					},
+				},
+			},
+		}
+
+		overrideApp(release, ReleaseSpecApp{
+			Name:      "cert-exporter",
+			Version:   "2.9.16",
+			DependsOn: []string{"new-dependency"},
+		})
+
+		Expect(release.Spec.Apps[0].Version).To(Equal("2.9.16"))
+		Expect(release.Spec.Apps[0].DependsOn).To(Equal([]string{"new-dependency"}))
+	})
+
+	It("preserves catalog when override has empty catalog", func() {
+		release := &Release{
+			Spec: ReleaseSpec{
+				Apps: []ReleaseSpecApp{
+					{
+						Name:    "coredns",
+						Version: "1.29.1",
+						Catalog: "default",
+					},
+				},
+			},
+		}
+
+		overrideApp(release, ReleaseSpecApp{
+			Name:    "coredns",
+			Version: "1.29.2",
+			Catalog: "",
+		})
+
+		Expect(release.Spec.Apps[0].Version).To(Equal("1.29.2"))
+		Expect(release.Spec.Apps[0].Catalog).To(Equal("default"))
+	})
+})
