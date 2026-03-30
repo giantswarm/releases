@@ -14,7 +14,7 @@ orbs:
 parameters:
   provider:
     type: enum
-    enum: ["", "capa", "azure", "vsphere", "cloud-director", "eks"]
+    enum: ["", "capa", "azure", "vsphere", "cloud-director", "eks", "proxmox"]
     default: ""
   release_version:
     type: string

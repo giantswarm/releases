@@ -35,6 +35,9 @@ case $PROVIDER in
   "eks")
     HEADING_SEARCH_STRING="## EKS"
     ;;
+  "proxmox")
+    HEADING_SEARCH_STRING="## Proxmox"
+    ;;
   *)
     echo "Error: Unknown provider '$PROVIDER'. Please add it to the case statement in tools/update-readme.sh" >&2
     exit 1

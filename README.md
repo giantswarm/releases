@@ -482,6 +482,8 @@ to all Giant Swarm installations.
   - v32.0
     - [v32.0.0](https://github.com/giantswarm/releases/tree/master/eks/archived/v32.0.0)
 
+## Proxmox
+
 # PR Commands
 
 ## Summarize Upstream Changes

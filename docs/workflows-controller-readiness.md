@@ -20,6 +20,7 @@ When a major release is created (e.g., v35.0.0 for a new Kubernetes version), cl
 | vsphere | team-rocket | `cloud-provider-vsphere` |
 | cloud-director | team-rocket | `cloud-provider-cloud-director` |
 | eks | _(excluded)_ | No cloud controller manager needed |
+| proxmox | team-rocket | `cloud-provider-proxmox` |
 
 One issue is created per team (not per provider). If a release includes both aws and azure, team-phoenix gets a single issue listing both.
 

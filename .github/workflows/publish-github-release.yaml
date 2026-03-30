@@ -26,7 +26,7 @@ jobs:
           shopt -s nullglob
 
           # Get releases.
-          echo releases="$(jq --null-input --args '$ARGS.positional' --compact-output -- {azure,capa,cloud-director,eks,vsphere}/v*.*.*)" >> "${GITHUB_OUTPUT}"
+          echo releases="$(jq --null-input --args '$ARGS.positional' --compact-output -- {azure,capa,cloud-director,eks,proxmox,vsphere}/v*.*.*)" >> "${GITHUB_OUTPUT}"
 
     outputs:
       releases: ${{ steps.get-releases.outputs.releases }}

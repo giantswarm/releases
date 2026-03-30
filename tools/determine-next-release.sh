@@ -132,6 +132,9 @@ if [ -n "$PROVIDER" ]; then
     "eks")
       PROVIDER_ACRONYM="EKS"
       ;;
+    "proxmox")
+      PROVIDER_ACRONYM="CAPMOX"
+      ;;
     *)
       PROVIDER_ACRONYM=$(echo "$PROVIDER" | tr 'a-z' 'A-Z')
       ;;

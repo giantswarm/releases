@@ -27,7 +27,7 @@ These workflows automate the end-of-life process for releases by:
    - Requires Go 1.25+
 
 2. **Process Each Provider**
-   - Iterates through: `azure`, `capa`, `vsphere`, `cloud-director`, `eks`
+   - Iterates through: `azure`, `capa`, `vsphere`, `cloud-director`, `eks`, `proxmox`
    - Runs the deprecation tool with Grafana API key for usage validation
    - The tool determines which releases should be deprecated based on:
      - Whether they're currently in use (checked via Grafana metrics)
@@ -218,7 +218,7 @@ If workflow leaves untracked files (like compiled binaries):
 ### Provider List
 Both workflows process these providers:
 ```bash
-azure capa vsphere cloud-director eks
+azure capa vsphere cloud-director eks proxmox
 ```
 
 To add a new provider, update the `PROVIDERS` variable in both workflow files.
