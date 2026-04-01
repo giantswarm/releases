@@ -186,7 +186,7 @@ jobs:
       - name: Create Pull Request
         if: ${{ steps.changed-files.outputs.has_changes == 'true' }}
         id: create-pr
-        uses: peter-evans/create-pull-request@00418193b417f888dbf1d993c5c0d31d27fdc7de
+        uses: peter-evans/create-pull-request@8170bccad11c0df62542c04dcaefe36d342dfd39
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           commit-message: "CAPI: Deprecate outdated releases"
