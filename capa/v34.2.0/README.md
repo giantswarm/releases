@@ -10,7 +10,7 @@
 - cluster from v5.1.2 to v6.1.0
 - Flatcar from v4459.2.3 to [v4459.2.4](https://www.flatcar.org/releases/#release-4459.2.4)
 - Kubernetes from v1.34.5 to [v1.34.6](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.34.md#v1.34.6)
-- os-tooling from v1.26.4 to v1.27.0
+- os-tooling from v1.26.4 to v1.27.2
 
 ### cluster-aws [v7.4.0...v8.1.0](https://github.com/giantswarm/cluster-aws/compare/v7.4.0...v8.1.0)
 
@@ -62,7 +62,8 @@
 - cert-exporter from v2.9.16 to v2.10.0
 - cert-manager-crossplane-resources from v0.1.0 to v0.1.1
 - cloud-provider-aws from v2.0.0 to v2.1.0
-- coredns from v1.29.1 to v1.29.2
+- cluster-autoscaler from v1.34.3-1 to v1.34.3-2
+- coredns from v1.29.1 to v1.30.0
 - etcd-defrag from v1.2.4 to v1.2.5
 - karpenter from v2.1.0 to v2.3.0
 - observability-bundle from v2.6.0 to v2.8.0
@@ -130,7 +131,26 @@
 
 - Bump to upstream image v1.35.0
 
-### coredns [v1.29.1...v1.29.2](https://github.com/giantswarm/coredns-app/compare/v1.29.1...v1.29.2)
+### cluster-autoscaler [v1.34.3-1...v1.34.3-2](https://github.com/giantswarm/cluster-autoscaler-app/compare/v1.34.3-1...v1.34.3-2)
+
+#### Added
+
+- Validate that `managementCluster` (when `isManagementCluster=true`) or `clusterID` (otherwise) are set, failing early with a clear error message.
+- Add support for CAPI mode (`kubeconfig-incluster`): run cluster-autoscaler on the management cluster using a pre-existing kubeconfig to connect to the workload cluster.
+- Add `clusterAPI` values section for configuring CAPI mode (autodiscovery, kubeconfig secret, configmaps namespace).
+- Add `rbac.clusterScoped` toggle to support namespace-scoped RBAC (no ClusterRole/ClusterRoleBinding) for CAPI deployments.
+
+#### Changed
+
+- Migrate test infrastructure from pipenv to uv.
+- Deploy the Kyverno policy exception in the `policy-exceptions` Namespace.
+- Deploy the Kyverno PolicyException as a Helm `pre-install,pre-upgrade` hook so it takes effect before chart resources are created.
+
+### coredns [v1.29.1...v1.30.0](https://github.com/giantswarm/coredns-app/compare/v1.29.1...v1.30.0)
+
+#### Added
+
+- Add `coredns-adopter` job to adopt default CoreDNS resources on EKS clusters (disabled by default).
 
 #### Changed
 
