@@ -30,6 +30,7 @@ Inputs:
   - provider_azure: Include Azure/CAPZ
   - provider_cloud_director: Include Cloud Director/CAPVCD
   - provider_eks: Include EKS
+  - provider_proxmox: Include Proxmox/CAPMOX
   - provider_vsphere: Include vSphere/CAPV
 ```
 
@@ -477,6 +478,7 @@ The workflows use different naming conventions in different contexts:
 | `vsphere/` | `vsphere` | CAPV |
 | `cloud-director/` | `cloud-director` | CAPVCD |
 | `eks/` | `eks` | EKS |
+| `proxmox/` | `proxmox` | CAPMOX |
 
 **Translation**: The workflows automatically translate between `capa` (directory) and `aws` (devctl) as needed.
 

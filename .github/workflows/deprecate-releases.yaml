@@ -18,6 +18,7 @@ on:
       - "capa/**"
       - "cloud-director/**"
       - "eks/**"
+      - "proxmox/**"
       - "vsphere/**"
 
 jobs:

@@ -27,7 +27,7 @@ This release PR follows a staged lifecycle managed via PR labels:
 
 To update the release files in this PR, comment with `/update-release` and provide arguments directly to `devctl`. For consolidated releases, you **must** specify which provider you are updating.
 
-Available providers: `aws`, `azure`, `cloud-director`, `eks`, `vsphere`.
+Available providers: `aws`, `azure`, `cloud-director`, `eks`, `proxmox`, `vsphere`.
 
 **Examples:**
 

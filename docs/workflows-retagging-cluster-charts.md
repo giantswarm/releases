@@ -65,7 +65,7 @@ When `release.yaml` files are changed and merged, the setup job discovers them v
 1. Go to [CircleCI project](https://app.circleci.com/pipelines/github/giantswarm/releases)
 2. Click "Trigger Pipeline"
 3. Add parameters:
-   - `provider`: `capa`, `azure`, `vsphere`, `cloud-director`, or `eks`
+   - `provider`: `capa`, `azure`, `vsphere`, `cloud-director`, `eks` or `proxmox`
    - `release_version`: e.g., `v34.0.0`
 
 **Via API:**
@@ -85,6 +85,7 @@ curl -X POST https://circleci.com/api/v2/project/gh/giantswarm/releases/pipeline
 | `vsphere` | `cluster-vsphere` | `release-vsphere` |
 | `cloud-director` | `cluster-cloud-director` | `release-cloud-director` |
 | `eks` | `cluster-eks` | `release-eks` |
+| `proxmox` | `cluster-proxmox` | `release-proxmox` |
 
 ## Related
 
