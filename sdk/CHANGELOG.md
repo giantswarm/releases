@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- Preserve `dependsOn` when overriding an app with an empty dependency list.
 - Fix `getResourceNameParts` from cutting `cloud-director` 
 
 ## [0.9.0] - 2024-11-06

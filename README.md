@@ -411,7 +411,7 @@ to all Giant Swarm installations.
   - v34.1
     - [v34.1.0](https://github.com/giantswarm/releases/tree/master/cloud-director/v34.1.0)
   - v34.0
-    - [v34.0.0](https://github.com/giantswarm/releases/tree/master/cloud-director/v34.0.0)
+    - [v34.0.0](https://github.com/giantswarm/releases/tree/master/cloud-director/archived/v34.0.0)
 
 - v33
   - v33.2
@@ -485,6 +485,8 @@ to all Giant Swarm installations.
     - [v32.1.0](https://github.com/giantswarm/releases/tree/master/eks/v32.1.0)
   - v32.0
     - [v32.0.0](https://github.com/giantswarm/releases/tree/master/eks/archived/v32.0.0)
+
+## Proxmox
 
 # PR Commands
 

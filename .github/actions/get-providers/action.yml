@@ -3,22 +3,22 @@ description: 'Provides centralized provider lists and name mappings'
 outputs:
   all_providers:
     description: 'All API provider names (space-separated)'
-    value: 'aws azure cloud-director eks vsphere'
+    value: 'aws azure cloud-director eks proxmox vsphere'
   provider_dirs:
     description: 'Provider directory names (space-separated, uses "capa" not "aws")'
-    value: 'azure capa cloud-director eks vsphere'
+    value: 'azure capa cloud-director eks proxmox vsphere'
   dir_to_api:
     description: 'JSON map: directory name → API/devctl name'
-    value: '{"capa":"aws","azure":"azure","cloud-director":"cloud-director","eks":"eks","vsphere":"vsphere"}'
+    value: '{"capa":"aws","azure":"azure","cloud-director":"cloud-director","eks":"eks","proxmox":"proxmox","vsphere":"vsphere"}'
   api_to_dir:
     description: 'JSON map: API/devctl name → directory name'
-    value: '{"aws":"capa","azure":"azure","cloud-director":"cloud-director","eks":"eks","vsphere":"vsphere"}'
+    value: '{"aws":"capa","azure":"azure","cloud-director":"cloud-director","eks":"eks","proxmox":"proxmox","vsphere":"vsphere"}'
   display_names:
     description: 'JSON map: directory name → human display name'
-    value: '{"capa":"AWS","azure":"Azure","cloud-director":"VMware Cloud Director","eks":"EKS","vsphere":"vSphere"}'
+    value: '{"capa":"AWS","azure":"Azure","cloud-director":"VMware Cloud Director","eks":"EKS","proxmox":"Proxmox","vsphere":"vSphere"}'
   capi_names:
     description: 'JSON map: directory name → CAPI-style display name'
-    value: '{"capa":"CAPA","azure":"CAPZ","cloud-director":"CAPVCD","eks":"EKS","vsphere":"CAPV"}'
+    value: '{"capa":"CAPA","azure":"CAPZ","cloud-director":"CAPVCD","eks":"EKS","proxmox":"CAPMOX","vsphere":"CAPV"}'
 runs:
   using: "composite"
   steps:
@@ -26,8 +26,8 @@ runs:
       shell: bash
       run: |
         echo "Provider lists and mappings loaded:"
-        echo "  - all_providers: aws azure cloud-director eks vsphere"
-        echo "  - provider_dirs: azure capa cloud-director eks vsphere"
+        echo "  - all_providers: aws azure cloud-director eks proxmox vsphere"
+        echo "  - provider_dirs: azure capa cloud-director eks proxmox vsphere"
         echo "  - dir_to_api: directory name → API name (JSON)"
         echo "  - api_to_dir: API name → directory name (JSON)"
         echo "  - display_names: directory name → human display name (JSON)"

@@ -42,7 +42,7 @@ runs:
         # Provider → team mapping (eks excluded — no cloud controller manager)
         declare -A PROVIDER_TEAM=(
           [aws]="team-phoenix" [azure]="team-phoenix"
-          [vsphere]="team-rocket" [cloud-director]="team-rocket"
+          [vsphere]="team-rocket" [cloud-director]="team-rocket" [proxmox]="team-rocket"
         )
 
         # Team → GitHub label, Project team name
@@ -55,7 +55,7 @@ runs:
 
         # Provider → display name
         declare -A PROVIDER_DISPLAY=(
-          [aws]="AWS" [azure]="Azure" [vsphere]="vSphere" [cloud-director]="Cloud Director"
+          [aws]="AWS" [azure]="Azure" [vsphere]="vSphere" [cloud-director]="Cloud Director" [proxmox]="Proxmox"
         )
 
         # Provider → controller apps that need updating per Kubernetes version (space-separated)
@@ -64,6 +64,7 @@ runs:
           [azure]="azure-cloud-controller-manager azure-cloud-node-manager"
           [vsphere]="cloud-provider-vsphere"
           [cloud-director]="cloud-provider-cloud-director"
+          [proxmox]="cloud-provider-proxmox"
         )
 
         # =====================================================================

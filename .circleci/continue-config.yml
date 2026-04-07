@@ -58,6 +58,7 @@ jobs:
               vsphere)      SOURCE_CHART="cluster-vsphere";       TARGET_CHART="release-vsphere" ;;
               cloud-director) SOURCE_CHART="cluster-cloud-director"; TARGET_CHART="release-cloud-director" ;;
               eks)          SOURCE_CHART="cluster-eks";           TARGET_CHART="release-eks" ;;
+              proxmox)      SOURCE_CHART="cluster-proxmox";       TARGET_CHART="release-proxmox" ;;
               *) echo "Unknown provider: ${PROVIDER}"; exit 1 ;;
             esac
 

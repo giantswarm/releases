@@ -37,6 +37,11 @@ on:
         required: false
         type: boolean
         default: false
+      provider_proxmox:
+        description: 'Include Proxmox (CAPMOX) provider'
+        required: false
+        type: boolean
+        default: false
       provider_vsphere:
         description: 'Include vSphere (CAPV) provider'
         required: false
@@ -95,6 +100,9 @@ jobs:
               fi
               if [[ "${{ github.event.inputs.provider_cloud_director }}" == 'true' ]]; then
                 SELECTED_PROVIDERS="${SELECTED_PROVIDERS}cloud-director,"
+              fi
+              if [[ "${{ github.event.inputs.provider_proxmox }}" == 'true' ]]; then
+                SELECTED_PROVIDERS="${SELECTED_PROVIDERS}proxmox,"
               fi
               if [[ "${{ github.event.inputs.provider_vsphere }}" == 'true' ]]; then
                 SELECTED_PROVIDERS="${SELECTED_PROVIDERS}vsphere,"

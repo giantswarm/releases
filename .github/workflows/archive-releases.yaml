@@ -20,6 +20,7 @@ on:
       - "capa/**"
       - "cloud-director/**"
       - "eks/**"
+      - "proxmox/**"
       - "vsphere/**"
 
 jobs:
@@ -312,7 +313,7 @@ jobs:
       - name: Create Pull Request
         if: steps.archive_script.outputs.has_archived_releases == 'true'
         id: create-pr
-        uses: peter-evans/create-pull-request@36d7c8468b48f9c2f8f29e260e82f10d4b90d2bd
+        uses: peter-evans/create-pull-request@8170bccad11c0df62542c04dcaefe36d342dfd39
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           commit-message: "CAPI: Archive deprecated releases"
