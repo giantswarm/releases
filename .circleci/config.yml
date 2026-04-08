@@ -105,8 +105,8 @@ jobs:
               echo "${CHANGED_FILES}"
               echo ""
 
-              SHORT_SHA=$(git rev-parse --short HEAD)
-              echo "${SHORT_SHA}" > /tmp/pr_sha
+              COMMIT_SHA=$(git rev-parse HEAD)
+              echo "${COMMIT_SHA}" > /tmp/pr_sha
 
               rm -f /tmp/releases.txt
               for file in ${CHANGED_FILES}; do

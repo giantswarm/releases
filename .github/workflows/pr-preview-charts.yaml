@@ -55,7 +55,7 @@ jobs:
               return;
             }
 
-            const shortSha = context.payload.pull_request.head.sha.substring(0, 7);
+            const commitSha = context.payload.pull_request.head.sha;
 
             let body = '<!-- pr-preview-charts -->\n';
             body += '**Preview release charts**\n\n';
@@ -68,7 +68,7 @@ jobs:
               const chart = CHART_MAP[provider];
               if (!chart) continue;
               const display = DISPLAY_MAP[provider] || provider;
-              const chartVersion = `${version.replace(/^v/, '')}-${shortSha}`;
+              const chartVersion = `${version.replace(/^v/, '')}-${commitSha}`;
               body += `| ${display} | \`${chart}\` | \`oci://gsoci.azurecr.io/cluster-catalog/${chart}:${chartVersion}\` |\n`;
               pullCommands.push(`helm pull oci://gsoci.azurecr.io/cluster-catalog/${chart} --version ${chartVersion}`);
             }
