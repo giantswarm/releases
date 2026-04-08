@@ -7,12 +7,12 @@ on:
       - '*/v*.*.*/release.yaml'
 
 jobs:
-  comment-chart-refs:
+  preview-chart-refs:
     runs-on: ubuntu-latest
     permissions:
-      pull-requests: write
+      checks: write
     steps:
-      - name: Post chart references
+      - name: Create check with chart references
         uses: actions/github-script@v8
         with:
           script: |
@@ -57,11 +57,9 @@ jobs:
 
             const commitSha = context.payload.pull_request.head.sha;
 
-            let body = '<!-- pr-preview-charts -->\n';
-            body += '**Preview release charts**\n\n';
-            body += 'Once CI completes, the following preview charts will be available for testing:\n\n';
-            body += '| Provider | Chart | OCI reference |\n';
-            body += '|----------|-------|---------------|\n';
+            let summary = 'Once CI completes, the following preview charts will be available for testing:\n\n';
+            summary += '| Provider | Chart | OCI reference |\n';
+            summary += '|----------|-------|---------------|\n';
 
             const pullCommands = [];
             for (const { provider, version } of releases) {
@@ -69,35 +67,24 @@ jobs:
               if (!chart) continue;
               const display = DISPLAY_MAP[provider] || provider;
               const chartVersion = `${version.replace(/^v/, '')}-${commitSha}`;
-              body += `| ${display} | \`${chart}\` | \`oci://gsoci.azurecr.io/cluster-catalog/${chart}:${chartVersion}\` |\n`;
+              summary += `| ${display} | \`${chart}\` | \`oci://gsoci.azurecr.io/cluster-catalog/${chart}:${chartVersion}\` |\n`;
               pullCommands.push(`helm pull oci://gsoci.azurecr.io/cluster-catalog/${chart} --version ${chartVersion}`);
             }
 
-            body += '\n```bash\n';
-            body += pullCommands.join('\n');
-            body += '\n```\n';
-            body += '\n> Preview charts are published only for releases with state `active` or `wip`.\n';
+            summary += '\n```bash\n';
+            summary += pullCommands.join('\n');
+            summary += '\n```\n';
+            summary += '\n> Preview charts are published only for releases with state `active` or `wip`.\n';
 
-            // Find and update existing comment, or create a new one
-            const comments = await github.paginate(github.rest.issues.listComments, {
+            await github.rest.checks.create({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              issue_number: context.payload.pull_request.number,
+              name: 'Preview Charts',
+              head_sha: commitSha,
+              status: 'completed',
+              conclusion: 'success',
+              output: {
+                title: `Preview charts for ${releases.length} release(s)`,
+                summary,
+              },
             });
-            const existing = comments.find(c => c.body && c.body.includes('<!-- pr-preview-charts -->'));
-
-            if (existing) {
-              await github.rest.issues.updateComment({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                comment_id: existing.id,
-                body,
-              });
-            } else {
-              await github.rest.issues.createComment({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                issue_number: context.payload.pull_request.number,
-                body,
-              });
-            }
