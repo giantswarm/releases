@@ -1,0 +1,103 @@
+name: PR Preview Charts
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+    paths:
+      - '*/v*.*.*/release.yaml'
+
+jobs:
+  comment-chart-refs:
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+    steps:
+      - name: Post chart references
+        uses: actions/github-script@v8
+        with:
+          script: |
+            const CHART_MAP = {
+              'capa': 'release-aws',
+              'azure': 'release-azure',
+              'vsphere': 'release-vsphere',
+              'cloud-director': 'release-cloud-director',
+              'eks': 'release-eks',
+              'proxmox': 'release-proxmox',
+            };
+
+            const DISPLAY_MAP = {
+              'capa': 'AWS',
+              'azure': 'Azure',
+              'vsphere': 'vSphere',
+              'cloud-director': 'VMware Cloud Director',
+              'eks': 'EKS',
+              'proxmox': 'Proxmox',
+            };
+
+            const files = await github.paginate(github.rest.pulls.listFiles, {
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: context.payload.pull_request.number,
+            });
+
+            const releasePattern = /^([^/]+)\/(v\d+\.\d+\.\d+)\/release\.yaml$/;
+            const releases = [];
+            for (const file of files) {
+              if (file.filename.includes('/archived/')) continue;
+              const match = file.filename.match(releasePattern);
+              if (match) {
+                releases.push({ provider: match[1], version: match[2] });
+              }
+            }
+
+            if (releases.length === 0) {
+              console.log('No release.yaml changes found');
+              return;
+            }
+
+            const shortSha = context.payload.pull_request.head.sha.substring(0, 7);
+
+            let body = '<!-- pr-preview-charts -->\n';
+            body += '**Preview release charts**\n\n';
+            body += 'Once CI completes, the following preview charts will be available for testing:\n\n';
+            body += '| Provider | Chart | OCI reference |\n';
+            body += '|----------|-------|---------------|\n';
+
+            const pullCommands = [];
+            for (const { provider, version } of releases) {
+              const chart = CHART_MAP[provider];
+              if (!chart) continue;
+              const display = DISPLAY_MAP[provider] || provider;
+              const chartVersion = `${version.replace(/^v/, '')}-${shortSha}`;
+              body += `| ${display} | \`${chart}\` | \`oci://gsoci.azurecr.io/cluster-catalog/${chart}:${chartVersion}\` |\n`;
+              pullCommands.push(`helm pull oci://gsoci.azurecr.io/cluster-catalog/${chart} --version ${chartVersion}`);
+            }
+
+            body += '\n```bash\n';
+            body += pullCommands.join('\n');
+            body += '\n```\n';
+            body += '\n> Preview charts are published only for releases with state `active` or `wip`.\n';
+
+            // Find and update existing comment, or create a new one
+            const comments = await github.paginate(github.rest.issues.listComments, {
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.payload.pull_request.number,
+            });
+            const existing = comments.find(c => c.body && c.body.includes('<!-- pr-preview-charts -->'));
+
+            if (existing) {
+              await github.rest.issues.updateComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: existing.id,
+                body,
+              });
+            } else {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.payload.pull_request.number,
+                body,
+              });
+            }

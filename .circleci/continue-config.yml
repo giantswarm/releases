@@ -42,6 +42,9 @@ jobs:
         type: string
       release_version:
         type: string
+      chart_version:
+        type: string
+        default: ""
     steps:
       - checkout
       - install-yq
@@ -51,6 +54,13 @@ jobs:
             PROVIDER="<< parameters.provider >>"
             RELEASE_VERSION="<< parameters.release_version >>"
             RELEASE_VERSION_CLEAN="${RELEASE_VERSION#v}"
+
+            # For PR preview builds, use the provided chart version for the OCI tag
+            # while keeping RELEASE_VERSION_CLEAN for global.release.version
+            CHART_PUBLISH_VERSION="${RELEASE_VERSION_CLEAN}"
+            if [[ -n "<< parameters.chart_version >>" ]]; then
+              CHART_PUBLISH_VERSION="<< parameters.chart_version >>"
+            fi
 
             case "${PROVIDER}" in
               capa)         SOURCE_CHART="cluster-aws";           TARGET_CHART="release-aws" ;;
@@ -77,12 +87,13 @@ jobs:
             fi
 
             echo "Provider: ${PROVIDER}"
-            echo "Source: ${SOURCE_CHART}:${CHART_VERSION} → Target: ${TARGET_CHART}:${RELEASE_VERSION_CLEAN}"
+            echo "Source: ${SOURCE_CHART}:${CHART_VERSION} → Target: ${TARGET_CHART}:${CHART_PUBLISH_VERSION}"
 
             echo "export SOURCE_CHART='${SOURCE_CHART}'" >> "$BASH_ENV"
             echo "export TARGET_CHART='${TARGET_CHART}'" >> "$BASH_ENV"
             echo "export CHART_VERSION='${CHART_VERSION}'" >> "$BASH_ENV"
             echo "export RELEASE_VERSION_CLEAN='${RELEASE_VERSION_CLEAN}'" >> "$BASH_ENV"
+            echo "export CHART_PUBLISH_VERSION='${CHART_PUBLISH_VERSION}'" >> "$BASH_ENV"
       - login-oci-registry
       - run:
           name: Pull and retag chart
@@ -98,12 +109,12 @@ jobs:
             mv "${SOURCE_CHART}" "${TARGET_CHART}"
 
             yq -i ".name = \"${TARGET_CHART}\"" "${TARGET_CHART}/Chart.yaml"
-            yq -i ".version = \"${RELEASE_VERSION_CLEAN}\"" "${TARGET_CHART}/Chart.yaml"
+            yq -i ".version = \"${CHART_PUBLISH_VERSION}\"" "${TARGET_CHART}/Chart.yaml"
             yq -i ".global.release.version = \"${RELEASE_VERSION_CLEAN}\"" "${TARGET_CHART}/values.yaml"
 
-            echo "Chart name: $(yq '.name' "${TARGET_CHART}/Chart.yaml")"
-            echo "Chart version: $(yq '.version' "${TARGET_CHART}/Chart.yaml")"
-            echo "global.release.version: $(yq '.global.release.version' "${TARGET_CHART}/values.yaml")"
+            echo "Chart name:              $(yq '.name' "${TARGET_CHART}/Chart.yaml")"
+            echo "Chart version (OCI tag): $(yq '.version' "${TARGET_CHART}/Chart.yaml")"
+            echo "global.release.version:  $(yq '.global.release.version' "${TARGET_CHART}/values.yaml")"
 
             mkdir -p ~/project/helm
             mv "${TARGET_CHART}" ~/project/helm/release-chart
