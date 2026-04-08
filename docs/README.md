@@ -48,6 +48,7 @@ Use this when you need to keep a specific version temporarily or long-term.
 ### [Retagging Cluster Provider Charts](workflows-retagging-cluster-charts.md)
 Documentation for the chart retagging workflow that enables automated cluster upgrades:
 - **Auto-Retag** (CircleCI) - Automatically retags charts when releases are merged
+- **PR Preview Builds** (CircleCI + GitHub Actions) - Publishes SHA-suffixed preview charts from PRs for testing
 - **Manual Retag** (CircleCI) - Manually trigger retagging for specific provider/version
 
 This workflow retags cluster provider charts (e.g., `cluster-aws:7.2.5` → `34.0.0`) and injects `global.release.version` into `values.yaml`, enabling Flux to upgrade clusters by simply updating the App CR's `.spec.version` field.
@@ -67,6 +68,7 @@ This workflow retags cluster provider charts (e.g., `cluster-aws:7.2.5` → `34.
 | Deprecate Releases | Monday 6:00 AM UTC | ✅ |
 | Archive Releases | Monday 10:00 AM UTC | ✅ |
 | Retag Cluster Charts (CircleCI) | On merge to main/master | ✅ |
+| PR Preview Charts (CircleCI + GHA) | On PR with release.yaml changes | ❌ |
 
 ## External Resources
 
