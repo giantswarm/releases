@@ -86,9 +86,47 @@ jobs:
                 exit 0
               fi
             else
-              echo "Not main/master and no manual trigger, nothing to do"
-              circleci-agent step halt
-              exit 0
+              # PR branch — build preview charts for changed releases
+              git fetch origin master --depth=1 2>/dev/null || git fetch origin main --depth=1 2>/dev/null
+              CHANGED_FILES=$(git diff --name-only origin/master HEAD -- '*/v*.*.*/release.yaml' 2>/dev/null \
+                | grep -v '/archived/' || true)
+              if [[ -z "${CHANGED_FILES}" ]]; then
+                CHANGED_FILES=$(git diff --name-only origin/main HEAD -- '*/v*.*.*/release.yaml' 2>/dev/null \
+                  | grep -v '/archived/' || true)
+              fi
+
+              if [[ -z "${CHANGED_FILES}" ]]; then
+                echo "No release.yaml files changed in this PR, nothing to build"
+                circleci-agent step halt
+                exit 0
+              fi
+
+              echo "PR preview build — changed release.yaml files:"
+              echo "${CHANGED_FILES}"
+              echo ""
+
+              COMMIT_SHA=$(git rev-parse HEAD)
+              echo "${COMMIT_SHA}" > /tmp/pr_sha
+
+              rm -f /tmp/releases.txt
+              for file in ${CHANGED_FILES}; do
+                PROVIDER=$(echo "${file}" | cut -d'/' -f1)
+                VERSION=$(echo "${file}" | cut -d'/' -f2)
+
+                RELEASE_STATE=$(yq '.spec.state' "${file}")
+                if [[ "${RELEASE_STATE}" != "active" && "${RELEASE_STATE}" != "wip" ]]; then
+                  echo "Skipping ${PROVIDER}/${VERSION}: state '${RELEASE_STATE}' (not active or wip)"
+                  continue
+                fi
+
+                echo "${PROVIDER}:${VERSION}" >> /tmp/releases.txt
+              done
+
+              if [[ ! -s /tmp/releases.txt ]]; then
+                echo "No active/wip releases to build"
+                circleci-agent step halt
+                exit 0
+              fi
             fi
 
             echo ""
@@ -105,13 +143,26 @@ jobs:
             # Append dynamic workflow entries using yq for proper YAML formatting
             yq -i '.workflows.retag.jobs = []' /tmp/continue-config.yml
 
+            # Detect PR preview builds
+            PR_SHA=""
+            if [[ -f /tmp/pr_sha ]]; then
+              PR_SHA=$(cat /tmp/pr_sha)
+              echo "PR preview build, SHA: ${PR_SHA}"
+            fi
+
             while IFS=: read -r provider version; do
+              CHART_VERSION=""
+              if [[ -n "${PR_SHA}" ]]; then
+                CHART_VERSION="${version#v}-${PR_SHA}"
+              fi
+
               yq -i ".workflows.retag.jobs += [
                 {\"prepare-retag-chart\": {
                   \"name\": \"prepare-${provider}-${version}\",
                   \"context\": \"architect\",
                   \"provider\": \"${provider}\",
-                  \"release_version\": \"${version}\"
+                  \"release_version\": \"${version}\",
+                  \"chart_version\": \"${CHART_VERSION}\"
                 }},
                 {\"architect/push-to-app-catalog\": {
                   \"name\": \"push-${provider}-${version}\",
@@ -151,6 +202,19 @@ workflows:
           filters:
             branches:
               only:
+                - main
+                - master
+
+  # PR preview builds: on any branch except main/master, builds charts with SHA-suffixed versions
+  pr-retag-setup:
+    when:
+      equal: ["", << pipeline.parameters.provider >>]
+    jobs:
+      - setup-retag:
+          context: architect
+          filters:
+            branches:
+              ignore:
                 - main
                 - master
 
