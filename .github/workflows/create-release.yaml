@@ -417,6 +417,7 @@ jobs:
           ./tools/determine-next-release.sh "" "major" ${{ needs.major_release_decider.outputs.version_override }}
 
       - name: Install devctl
+        id: install_devctl
         uses: ./.github/actions/install-devctl
         with:
           github_token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
@@ -568,6 +569,7 @@ jobs:
           ./tools/determine-next-release.sh "" "minor" ${{ needs.minor_release_decider.outputs.version_override }}
 
       - name: Install devctl
+        id: install_devctl
         uses: ./.github/actions/install-devctl
         with:
           github_token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
@@ -722,6 +724,7 @@ jobs:
           ./tools/determine-next-release.sh "${{ matrix.provider }}" "major" ${{ needs.major_release_decider.outputs.version_override }}
 
       - name: Install devctl
+        id: install_devctl
         uses: ./.github/actions/install-devctl
         with:
           github_token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
@@ -847,6 +850,7 @@ jobs:
           ./tools/determine-next-release.sh "${{ matrix.provider }}" "minor" ${{ needs.minor_release_decider.outputs.version_override }}
 
       - name: Install devctl
+        id: install_devctl
         uses: ./.github/actions/install-devctl
         with:
           github_token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
@@ -982,6 +986,7 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v6
       - name: Install devctl
+        id: install_devctl
         uses: ./.github/actions/install-devctl
         with:
           github_token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
@@ -1096,6 +1101,7 @@ jobs:
           ./tools/determine-next-release.sh "" "patch" ${{ needs.patch_release_decider.outputs.version_override }}
 
       - name: Install devctl
+        id: install_devctl
         uses: ./.github/actions/install-devctl
         with:
           github_token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
