@@ -50,8 +50,8 @@ runs:
 
         # Extract apps table (starts with "| APP NAME")
         APPS=$(echo "$RAW" | awk '/^\| APP NAME/{found=1} found && /^\| COMPONENT NAME/{exit} found{print}')
-        APP_COUNT=$(echo "$APPS" | grep -c '^|' | awk '{print $1 - 2}')  # subtract header + separator
-        [[ "$APP_COUNT" -lt 0 ]] && APP_COUNT=0
+        APP_COUNT=$(echo "$APPS" | grep -c '^|' || true)  # grep returns 1 if no matches
+        APP_COUNT=$((APP_COUNT > 2 ? APP_COUNT - 2 : 0))  # subtract header + separator
 
         # Build formatted output
         FORMATTED=""
