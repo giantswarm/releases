@@ -215,7 +215,7 @@ jobs:
 
       - name: Post /skip-ci comment
         if: ${{ steps.changed-files.outputs.has_changes == 'true' && steps.create-pr.outputs.pull-request-number }}
-        uses: actions/github-script@v8
+        uses: actions/github-script@v9
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |

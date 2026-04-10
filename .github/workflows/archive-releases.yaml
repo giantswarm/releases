@@ -334,7 +334,7 @@ jobs:
 
       - name: Post /skip-ci comment
         if: steps.archive_script.outputs.has_archived_releases == 'true' && steps.create-pr.outputs.pull-request-number
-        uses: actions/github-script@v8
+        uses: actions/github-script@v9
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |

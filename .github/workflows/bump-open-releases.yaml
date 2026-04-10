@@ -58,7 +58,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Post /update-release comment to trigger component bump
-        uses: actions/github-script@v8
+        uses: actions/github-script@v9
         with:
           # Use TAYLORBOT_GITHUB_ACTION to enable workflow chaining
           # (default github.token cannot trigger other workflows due to GitHub security restrictions)

@@ -23,7 +23,7 @@ jobs:
 
     steps:
       - name: Add reaction to comment to indicate processing
-        uses: actions/github-script@v8
+        uses: actions/github-script@v9
         with:
           github-token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
           script: |
@@ -36,7 +36,7 @@ jobs:
 
       - name: Get PR branch name
         id: get_branch
-        uses: actions/github-script@v8
+        uses: actions/github-script@v9
         with:
           github-token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
           result-encoding: string
@@ -221,7 +221,7 @@ jobs:
 
       - name: Post error if command invalid
         if: steps.parse_command.outputs.error
-        uses: actions/github-script@v8
+        uses: actions/github-script@v9
         with:
           github-token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
           script: |
@@ -470,7 +470,7 @@ jobs:
 
       - name: Add success reaction
         if: success() && !steps.parse_command.outputs.error
-        uses: actions/github-script@v8
+        uses: actions/github-script@v9
         with:
           github-token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
           script: |
@@ -483,7 +483,7 @@ jobs:
 
       - name: Post result comment
         if: success() && !steps.parse_command.outputs.error
-        uses: actions/github-script@v8
+        uses: actions/github-script@v9
         with:
           github-token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
           script: |
