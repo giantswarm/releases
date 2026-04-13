@@ -30,7 +30,7 @@ jobs:
         uses: ./.github/actions/get-providers
 
       - name: Add reaction to comment to indicate that the bot is working on the update
-        uses: actions/github-script@v8
+        uses: actions/github-script@v9
         with:
           github-token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
           script: |
@@ -43,7 +43,7 @@ jobs:
 
       - name: Get PR branch name
         id: get_branch
-        uses: actions/github-script@v8
+        uses: actions/github-script@v9
         with:
           github-token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
           result-encoding: string
@@ -57,7 +57,7 @@ jobs:
 
       - name: Check release stage and gate access
         id: check_stage
-        uses: actions/github-script@v8
+        uses: actions/github-script@v9
         with:
           github-token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
           script: |
@@ -105,7 +105,7 @@ jobs:
 
       - name: Post rejection comment during freeze
         if: steps.check_stage.outputs.stage == 'freeze' && steps.check_stage.outputs.allowed == 'false'
-        uses: actions/github-script@v8
+        uses: actions/github-script@v9
         with:
           github-token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
           script: |
@@ -131,7 +131,7 @@ jobs:
 
       - name: Detect if automatic bump or manual update
         id: detect_source
-        uses: actions/github-script@v8
+        uses: actions/github-script@v9
         with:
           github-token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
           script: |
@@ -717,7 +717,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
 
       - name: Add success reaction
-        uses: actions/github-script@v8
+        uses: actions/github-script@v9
         with:
           github-token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
           script: |
@@ -729,7 +729,7 @@ jobs:
             })
       - name: Post devctl output as a comment
         if: env.DEVCTL_OUTPUT_COMMENT != ''
-        uses: actions/github-script@v8
+        uses: actions/github-script@v9
         with:
           github-token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
           script: |
