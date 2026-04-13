@@ -6,13 +6,13 @@
 
 ### Components
 
-- cluster-aws from v7.4.0 to v8.1.0
-- cluster from v5.1.2 to v6.1.0
+- cluster-aws from v7.4.0 to v8.2.0
+- cluster from v5.1.2 to v6.3.0
 - Flatcar from v4459.2.3 to [v4459.2.4](https://www.flatcar.org/releases/#release-4459.2.4)
 - Kubernetes from v1.34.5 to [v1.34.6](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.34.md#v1.34.6)
-- os-tooling from v1.26.4 to v1.27.2
+- os-tooling from v1.26.4 to v1.28.0
 
-### cluster-aws [v7.4.0...v8.1.0](https://github.com/giantswarm/cluster-aws/compare/v7.4.0...v8.1.0)
+### cluster-aws [v7.4.0...v8.2.0](https://github.com/giantswarm/cluster-aws/compare/v7.4.0...v8.2.0)
 
 #### Added
 
@@ -33,16 +33,21 @@
 
 - Set `appName` before `catalog` lookup in `aws-nth-app` template to ensure correct catalog resolution from Release CR.
 
-### cluster [v5.1.2...v6.1.0](https://github.com/giantswarm/cluster/compare/v5.1.2...v6.1.0)
+### cluster [v5.1.2...v6.3.0](https://github.com/giantswarm/cluster/compare/v5.1.2...v6.3.0)
 
 #### Added
 
+- Apps: Deploy `cluster-autoscaler` inCluster in Azure.
+- MachineDeployment: Add CAPI autoscaler annotations (`cluster-api-autoscaler-node-group-min-size`/`max-size`) when `minSize`/`maxSize` are set on a node pool (only in Azure).
 - Apps: Add Cluster Autoscaler Crossplane Resources.
 - Control Plane: Add Kamaji control plane support with `KamajiControlPlane` resource, Kamaji etcd HelmRelease, automation RBAC, and cleanup jobs. ([#740](https://github.com/giantswarm/cluster/pull/740))
 - Apps: Add `rbac-bootstrap` as a default HelmRelease app with a default ClusterRoleBinding for `giantswarm:giantswarm-admins`.
 
 #### Changed
 
+- Configure `observability-bundle` with the management cluster name.
+- Apps: Skip `kyverno-crds` dependency for `cluster-autoscaler` when deployed inCluster.
+- Apps: Add cluster-probes HelmRelease to deploy ServiceMonitors for probing workload cluster API server endpoint from the management cluster. Configurable via `global.apps.clusterProbes` with default module `http_2xx_insecure` for self-signed certificates.
 - Helpers: Use `.Chart.AppVersion` in `app.kubernetes.io/version` label.
 - Cluster API: Migrate to API `v1beta2`.
 - Apps: Use OCIRepository source for `rbac-bootstrap` HelmRelease.
@@ -59,7 +64,8 @@
 
 - aws-ebs-csi-driver from v4.1.1 to v4.2.0
 - aws-nth-bundle from v1.3.0 to v1.4.0
-- cert-exporter from v2.9.16 to v2.10.0
+- cert-exporter from v2.9.16 to v2.10.1
+- cert-manager from v3.11.0 to v3.12.0
 - cert-manager-crossplane-resources from v0.1.0 to v0.1.1
 - cloud-provider-aws from v2.0.0 to v2.1.0
 - cluster-autoscaler from v1.34.3-1 to v1.34.3-2
@@ -109,7 +115,7 @@
 - Add `io.giantswarm.application.audience: all` annotation to publish the app to the customer Backstage catalog.
 - Migrate chart metadata annotations to `io.giantswarm.application.*` format.
 
-### cert-exporter [v2.9.16...v2.10.0](https://github.com/giantswarm/cert-exporter/compare/v2.9.16...v2.10.0)
+### cert-exporter [v2.9.16...v2.10.1](https://github.com/giantswarm/cert-exporter/compare/v2.9.16...v2.10.1)
 
 #### Added
 
@@ -118,6 +124,21 @@
 #### Changed
 
 - Values: Tune resources.
+
+#### Fixed
+
+- Parse all PEM blocks in secrets and certificate files, not just the first one. This fixes false alerts when multiple certificates are concatenated (e.g. Kyverno webhook cert rotation).
+
+### cert-manager [v3.11.0...v3.12.0](https://github.com/giantswarm/cert-manager-app/compare/v3.11.0...v3.12.0)
+
+#### Added
+
+- Add control plane node toleration to CA injector deployment.
+
+#### Removed
+
+- Remove PodSecurityPolicy (PSP) and related resources.
+- Remove Giant Swarm PSP to PSS migration logic.
 
 ### cert-manager-crossplane-resources [v0.1.0...v0.1.1](https://github.com/giantswarm/cert-manager-crossplane-resources/compare/v0.1.0...v0.1.1)
 
