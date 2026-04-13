@@ -19,7 +19,7 @@ runs:
       run: |
         mkdir -p /tmp/devctl_install && cd /tmp/devctl_install
         LATEST_DEVCTL_TAG=$(gh release view --repo giantswarm/devctl --json tagName --jq '.tagName')
-        echo "version=${LATEST_DEVCTL_TAG}" >> $GITHUB_OUTPUT
+        echo "version=${LATEST_DEVCTL_TAG#v}" >> $GITHUB_OUTPUT
         ASSET_NAME="devctl-${LATEST_DEVCTL_TAG}-linux-amd64.tar.gz"
         gh release download --repo giantswarm/devctl "$LATEST_DEVCTL_TAG" --pattern "$ASSET_NAME"
         tar -xzf "$ASSET_NAME"

@@ -59,6 +59,23 @@ When `release.yaml` files are changed and merged, the setup job discovers them v
 - Excludes archived releases (paths containing `/archived/`)
 - Only processes releases with `state: active` (skips deprecated)
 
+### PR Preview Builds
+
+When a pull request is opened or updated with `release.yaml` changes, CircleCI automatically builds and pushes preview charts with a commit-SHA-suffixed version. For example, a PR touching `capa/v35.0.0/release.yaml` at commit `44f40dd5fc...` will publish:
+
+```
+oci://gsoci.azurecr.io/cluster-catalog/release-aws:35.0.0-44f40dd5fcafa0d8daec81e4ab14ecd0fd444694
+```
+
+This allows testing the release chart before merging, using the same workflow as other app repos (open a PR → chart is pushed → deploy it manually).
+
+**Key details:**
+- The OCI tag uses the SHA-suffixed version (e.g., `35.0.0-<sha>`) so it doesn't collide with the final release version
+- `global.release.version` inside the chart is set to the real release version (e.g., `35.0.0`), not the SHA-suffixed one
+- Both `active` and `wip` state releases are built (unlike the merge flow which only processes `active`)
+- A GitHub Actions workflow (`pr-preview-charts.yaml`) creates a "Preview Charts" check run on the PR with the OCI references
+- Preview charts follow the same retention policy as other PR-built charts in the registry
+
 ### Manual (via CircleCI)
 
 **Via UI:**

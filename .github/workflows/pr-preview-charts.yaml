@@ -1,0 +1,90 @@
+name: PR Preview Charts
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+    paths:
+      - '*/v*.*.*/release.yaml'
+
+jobs:
+  preview-chart-refs:
+    runs-on: ubuntu-latest
+    permissions:
+      checks: write
+    steps:
+      - name: Create check with chart references
+        uses: actions/github-script@v8
+        with:
+          script: |
+            const CHART_MAP = {
+              'capa': 'release-aws',
+              'azure': 'release-azure',
+              'vsphere': 'release-vsphere',
+              'cloud-director': 'release-cloud-director',
+              'eks': 'release-eks',
+              'proxmox': 'release-proxmox',
+            };
+
+            const DISPLAY_MAP = {
+              'capa': 'AWS',
+              'azure': 'Azure',
+              'vsphere': 'vSphere',
+              'cloud-director': 'VMware Cloud Director',
+              'eks': 'EKS',
+              'proxmox': 'Proxmox',
+            };
+
+            const files = await github.paginate(github.rest.pulls.listFiles, {
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: context.payload.pull_request.number,
+            });
+
+            const releasePattern = /^([^/]+)\/(v\d+\.\d+\.\d+)\/release\.yaml$/;
+            const releases = [];
+            for (const file of files) {
+              if (file.filename.includes('/archived/')) continue;
+              const match = file.filename.match(releasePattern);
+              if (match) {
+                releases.push({ provider: match[1], version: match[2] });
+              }
+            }
+
+            if (releases.length === 0) {
+              console.log('No release.yaml changes found');
+              return;
+            }
+
+            const commitSha = context.payload.pull_request.head.sha;
+
+            let summary = 'Once CI completes, the following preview charts will be available for testing:\n\n';
+            summary += '| Provider | Chart | OCI reference |\n';
+            summary += '|----------|-------|---------------|\n';
+
+            const pullCommands = [];
+            for (const { provider, version } of releases) {
+              const chart = CHART_MAP[provider];
+              if (!chart) continue;
+              const display = DISPLAY_MAP[provider] || provider;
+              const chartVersion = `${version.replace(/^v/, '')}-${commitSha}`;
+              summary += `| ${display} | \`${chart}\` | \`oci://gsoci.azurecr.io/cluster-catalog/${chart}:${chartVersion}\` |\n`;
+              pullCommands.push(`helm pull oci://gsoci.azurecr.io/cluster-catalog/${chart} --version ${chartVersion}`);
+            }
+
+            summary += '\n```bash\n';
+            summary += pullCommands.join('\n');
+            summary += '\n```\n';
+            summary += '\n> Preview charts are published only for releases with state `active` or `wip`.\n';
+
+            await github.rest.checks.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              name: 'Preview Charts',
+              head_sha: commitSha,
+              status: 'completed',
+              conclusion: 'success',
+              output: {
+                title: `Preview charts for ${releases.length} release(s)`,
+                summary,
+              },
+            });
