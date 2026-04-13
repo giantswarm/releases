@@ -104,12 +104,12 @@ spec:                                                              spec:
   components:                                                        components:
   - name: cluster-vsphere                                            - name: cluster-vsphere
     catalog: cluster                                                   catalog: cluster
-    version: 4.1.4                                              |      version: 4.1.5
+    version: 4.1.4                                                     version: 4.1.4
   - name: flatcar                                                    - name: flatcar
     version: 4459.2.3                                                  version: 4459.2.3
   - name: kubernetes                                                 - name: kubernetes
     version: 1.34.5                                                    version: 1.34.5
   - name: os-tooling                                                 - name: os-tooling
     version: 1.26.4                                                    version: 1.26.4
-  date: "2026-03-03T20:47:10Z"                                  |    date: "2026-04-09T14:34:41Z"
+  date: "2026-03-03T20:47:10Z"                                  |    date: "2026-04-13T09:41:14Z"
   state: active                                                      state: active
