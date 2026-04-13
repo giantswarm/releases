@@ -24,7 +24,7 @@
     {
       "version": "34.0.1",
       "isDeprecated": false,
-      "releaseTimestamp": "2026-04-09T14:35:09Z",
+      "releaseTimestamp": "2026-04-13T09:41:12Z",
       "changelogUrl": "https://github.com/giantswarm/releases/blob/master/vsphere/v34.0.1/README.md",
       "isStable": true
     },
