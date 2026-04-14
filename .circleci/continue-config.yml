@@ -55,8 +55,8 @@ jobs:
             RELEASE_VERSION="<< parameters.release_version >>"
             RELEASE_VERSION_CLEAN="${RELEASE_VERSION#v}"
 
-            # For PR preview builds, use the provided chart version for the OCI tag
-            # while keeping RELEASE_VERSION_CLEAN for global.release.version
+            # For PR preview builds, use the provided chart version (with SHA suffix)
+            # for both the OCI tag and global.release.version
             CHART_PUBLISH_VERSION="${RELEASE_VERSION_CLEAN}"
             if [[ -n "<< parameters.chart_version >>" ]]; then
               CHART_PUBLISH_VERSION="<< parameters.chart_version >>"
@@ -110,7 +110,20 @@ jobs:
 
             yq -i ".name = \"${TARGET_CHART}\"" "${TARGET_CHART}/Chart.yaml"
             yq -i ".version = \"${CHART_PUBLISH_VERSION}\"" "${TARGET_CHART}/Chart.yaml"
-            yq -i ".global.release.version = \"${RELEASE_VERSION_CLEAN}\"" "${TARGET_CHART}/values.yaml"
+            yq -i ".global.release.version = \"${CHART_PUBLISH_VERSION}\"" "${TARGET_CHART}/values.yaml"
+
+            # For PR preview builds, include the Release CR in the chart with
+            # the SHA-suffixed name so it gets created when the chart is installed.
+            # Without this, the cluster chart lookup for the Release CR would fail
+            # because the gitops-applied Release CR uses the clean version name.
+            if [[ "${CHART_PUBLISH_VERSION}" != "${RELEASE_VERSION_CLEAN}" ]]; then
+              RELEASE_CR=~/project/<< parameters.provider >>/<< parameters.release_version >>/release.yaml
+              cp "${RELEASE_CR}" "${TARGET_CHART}/templates/release-cr.yaml"
+              CURRENT_NAME=$(yq '.metadata.name' "${TARGET_CHART}/templates/release-cr.yaml")
+              NEW_NAME="${CURRENT_NAME/${RELEASE_VERSION_CLEAN}/${CHART_PUBLISH_VERSION}}"
+              yq -i ".metadata.name = \"${NEW_NAME}\"" "${TARGET_CHART}/templates/release-cr.yaml"
+              echo "Included Release CR:     ${NEW_NAME}"
+            fi
 
             echo "Chart name:              $(yq '.name' "${TARGET_CHART}/Chart.yaml")"
             echo "Chart version (OCI tag): $(yq '.version' "${TARGET_CHART}/Chart.yaml")"
