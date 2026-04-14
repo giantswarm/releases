@@ -110,7 +110,7 @@ jobs:
 
             yq -i ".name = \"${TARGET_CHART}\"" "${TARGET_CHART}/Chart.yaml"
             yq -i ".version = \"${CHART_PUBLISH_VERSION}\"" "${TARGET_CHART}/Chart.yaml"
-            yq -i ".global.release.version = \"${RELEASE_VERSION_CLEAN}\"" "${TARGET_CHART}/values.yaml"
+            yq -i ".global.release.version = \"${CHART_PUBLISH_VERSION}\"" "${TARGET_CHART}/values.yaml"
 
             echo "Chart name:              $(yq '.name' "${TARGET_CHART}/Chart.yaml")"
             echo "Chart version (OCI tag): $(yq '.version' "${TARGET_CHART}/Chart.yaml")"
