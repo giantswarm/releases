@@ -405,6 +405,7 @@ to all Giant Swarm installations.
 
 - v34
   - v34.1
+    - [v34.1.1](https://github.com/giantswarm/releases/tree/master/cloud-director/v34.1.1)
     - [v34.1.0](https://github.com/giantswarm/releases/tree/master/cloud-director/v34.1.0)
   - v34.0
     - [v34.0.0](https://github.com/giantswarm/releases/tree/master/cloud-director/archived/v34.0.0)
