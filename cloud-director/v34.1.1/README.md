@@ -1,7 +1,5 @@
 # :zap: Giant Swarm Release v34.1.1 for VMware Cloud Director :zap:
 
-<< Add description here >>
-
 ## Changes compared to v34.1.0
 
 ### Components
@@ -13,4 +11,3 @@
 #### Fixed
 
 - Fix ntpd failing permanently on boot due to systemd rate limiting (**node rolling**).
-
