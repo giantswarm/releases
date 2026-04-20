@@ -1,9 +1,8 @@
 # :zap: Giant Swarm Release v34.0.1 for EKS :zap:
 
-This patch release fixes an issue with the adoption the coredns service.
+This patch release fixes an issue with the adoption of the CoreDNS service.
 
 ## Changes compared to v34.0.0
-
 
 ### Apps
 
