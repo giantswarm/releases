@@ -119,4 +119,4 @@ spec:                                                              spec:
   - name: os-tooling                                                 - name: os-tooling
     version: 1.26.4                                                    version: 1.26.4
   date: "2026-02-24T08:50:53Z"                                  |    date: "2026-04-20T08:52:16Z"
-  state: active                                                      state: active
+  state: deprecated                                             |    state: active
