@@ -18,9 +18,11 @@ type Detector struct {
 	componentMappingDone bool
 
 	// Caches to avoid redundant fetches in consolidated PRs
-	flatcarCache    map[string]string // "fromVer->toVer" -> changelog
-	kubernetesCache map[string]string // "fromVer->toVer" -> changelog
-	componentCache  map[string]string // "component@fromVer->toVer" -> diff
+	flatcarCache     map[string]string // "fromVer->toVer" -> changelog
+	kubernetesCache  map[string]string // "fromVer->toVer" -> changelog
+	componentCache   map[string]string // "component@fromVer->toVer" -> diff
+	etcdVersionCache map[string]string // k8sVersion -> etcdVersion (from kubeadm constants)
+	etcdCache        map[string]string // "fromEtcd->toEtcd" -> filtered changelog
 }
 
 // NewDetector creates a new Detector instance
@@ -39,6 +41,8 @@ func NewDetector(anthropicAPIKey, githubToken string) (*Detector, error) {
 		flatcarCache:         make(map[string]string),
 		kubernetesCache:      make(map[string]string),
 		componentCache:       make(map[string]string),
+		etcdVersionCache:     make(map[string]string),
+		etcdCache:            make(map[string]string),
 	}, nil
 }
 
@@ -234,6 +238,12 @@ func (d *Detector) logContentSummary(externalChanges, componentDiffs map[string]
 		fmt.Println("⚠️  Kubernetes changelog: NOT FETCHED")
 	}
 
+	if etcdContent, ok := externalChanges["Etcd"]; ok {
+		fmt.Printf("Etcd changelog: %d chars (preview: %s...)\n", len(etcdContent), truncate(etcdContent, 100))
+	} else {
+		fmt.Println("Etcd changelog: not applicable (same bundled version) or not fetched")
+	}
+
 	fmt.Printf("Component diffs: %d components\n", len(componentDiffs))
 	for name := range componentDiffs {
 		fmt.Printf("  - %s\n", name)
@@ -376,6 +386,9 @@ func buildExternalChangelogsSection(externalChanges map[string]string) string {
 		limit := 10000
 		if component == "Kubernetes" {
 			limit = 50000 // K8s changelogs need more space for Urgent Upgrade Notes and detailed API changes
+		}
+		if component == "Etcd" {
+			limit = 25000 // Etcd CHANGELOG slice spans multiple patches — bug-fix lines are the signal
 		}
 
 		if len(changelog) > limit {
