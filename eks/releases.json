@@ -15,10 +15,10 @@
       "isStable": true
     },
     {
-      "version": "34.0.0",
+      "version": "34.0.1",
       "isDeprecated": false,
-      "releaseTimestamp": "2026-02-24T08:50:53Z",
-      "changelogUrl": "https://github.com/giantswarm/releases/blob/master/eks/v34.0.0/README.md",
+      "releaseTimestamp": "2026-04-20T08:52:16Z",
+      "changelogUrl": "https://github.com/giantswarm/releases/blob/master/eks/v34.0.1/README.md",
       "isStable": true
     }
   ],

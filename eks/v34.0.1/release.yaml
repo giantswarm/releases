@@ -1,7 +1,7 @@
 apiVersion: release.giantswarm.io/v1alpha1
 kind: Release
 metadata:
-  name: eks-34.0.0
+  name: eks-34.0.1
 spec:
   apps:
   - name: aws-ebs-csi-driver
@@ -41,7 +41,7 @@ spec:
     dependsOn:
     - kyverno-crds
   - name: coredns
-    version: 1.29.1
+    version: 1.30.0
     dependsOn:
     - cilium
   - name: coredns-extensions
@@ -118,5 +118,5 @@ spec:
     version: 1.34.4
   - name: os-tooling
     version: 1.26.4
-  date: "2026-02-24T08:50:53Z"
+  date: "2026-04-20T08:52:16Z"
   state: active
