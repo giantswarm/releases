@@ -20,7 +20,7 @@ jobs:
 
     steps:
       - name: Add reaction to indicate processing
-        uses: actions/github-script@v8
+        uses: actions/github-script@v9
         with:
           github-token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
           script: |
@@ -33,7 +33,7 @@ jobs:
 
       - name: Get PR branch name
         id: get_branch
-        uses: actions/github-script@v8
+        uses: actions/github-script@v9
         with:
           github-token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
           result-encoding: string
@@ -302,7 +302,7 @@ jobs:
 
       - name: Post summary comment
         if: steps.summarize.outputs.has_summary == 'true'
-        uses: actions/github-script@v8
+        uses: actions/github-script@v9
         with:
           github-token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
           script: |
@@ -328,7 +328,7 @@ jobs:
 
       - name: Post no-content comment
         if: steps.extract.outputs.has_versions != 'true' || (steps.summarize.outputs.has_summary != 'true' && steps.extract.outputs.has_versions == 'true')
-        uses: actions/github-script@v8
+        uses: actions/github-script@v9
         with:
           github-token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
           script: |
@@ -341,7 +341,7 @@ jobs:
 
       - name: Add success reaction
         if: always()
-        uses: actions/github-script@v8
+        uses: actions/github-script@v9
         with:
           github-token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
           script: |

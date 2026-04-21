@@ -23,7 +23,7 @@ jobs:
 
     steps:
       - name: Add reaction to comment to indicate processing
-        uses: actions/github-script@v8
+        uses: actions/github-script@v9
         with:
           github-token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
           script: |
@@ -36,7 +36,7 @@ jobs:
 
       - name: Get PR branch name
         id: get_branch
-        uses: actions/github-script@v8
+        uses: actions/github-script@v9
         with:
           github-token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
           result-encoding: string
@@ -221,7 +221,7 @@ jobs:
 
       - name: Post error if command invalid
         if: steps.parse_command.outputs.error
-        uses: actions/github-script@v8
+        uses: actions/github-script@v9
         with:
           github-token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
           script: |
@@ -317,9 +317,8 @@ jobs:
             BASE_VERSION=$(./tools/determine-next-release.sh "$DEVCTL_PROVIDER" "patch" "$RELEASE_NAME" | grep '^base=' | cut -d'=' -f2)
             echo "Determined base version: $BASE_VERSION"
 
-            # Backup existing descriptions
+            # Backup existing README description (announcement.md is static and regenerated correctly by devctl)
             README_DESCRIPTION_BACKUP=""
-            ANNOUNCEMENT_BACKUP=""
             if [ -f "${PROVIDER_DIR}/${RELEASE_NAME}/README.md" ] && ! grep -q "<< Add description here >>" "${PROVIDER_DIR}/${RELEASE_NAME}/README.md"; then
               _line3=$(sed -n '3p' "${PROVIDER_DIR}/${RELEASE_NAME}/README.md" || true)
               if [[ -n "$_line3" ]] && [[ "$_line3" != \#* ]]; then
@@ -328,9 +327,6 @@ jobs:
                 # Line 3 is empty or a heading — clear it to prevent duplicate headings after devctl regeneration
                 sed -i '3s/.*//' "${PROVIDER_DIR}/${RELEASE_NAME}/README.md"
               fi
-            fi
-            if [ -f "${PROVIDER_DIR}/${RELEASE_NAME}/announcement.md" ] && ! grep -q "<< Add description here >>" "${PROVIDER_DIR}/${RELEASE_NAME}/announcement.md"; then
-              ANNOUNCEMENT_BACKUP=$(sed -n '1p' "${PROVIDER_DIR}/${RELEASE_NAME}/announcement.md" | sed 's/.*\*\*\. //' || true)
             fi
 
             # Build devctl command
@@ -352,19 +348,10 @@ jobs:
               FULL_LOG_CONTENT="${FULL_LOG_CONTENT}${LOG_PART}"
             fi
 
-            # Restore descriptions
+            # Restore README description
             if [[ -n "$README_DESCRIPTION_BACKUP" ]]; then
               sed -i "3c\\$README_DESCRIPTION_BACKUP" "${PROVIDER_DIR}/${RELEASE_NAME}/README.md"
               echo "Restored description in README.md"
-            fi
-            if [[ -n "$ANNOUNCEMENT_BACKUP" ]]; then
-              DISPLAY_NAMES='${{ steps.providers.outputs.display_names }}'
-              PROVIDER_NAME=$(echo "$DISPLAY_NAMES" | jq -r --arg d "$PROVIDER_DIR" '.[$d] // ($d | ascii_upcase)')
-
-              RELEASE_VERSION=$(echo "$RELEASE_NAME" | sed 's/v//')
-              NEW_LINE_1="**Workload cluster release v${RELEASE_VERSION} for ${PROVIDER_NAME} is available**. $ANNOUNCEMENT_BACKUP"
-              sed -i "1c\\$NEW_LINE_1" "${PROVIDER_DIR}/${RELEASE_NAME}/announcement.md"
-              echo "Restored description in announcement.md"
             fi
           done
 
@@ -470,7 +457,7 @@ jobs:
 
       - name: Add success reaction
         if: success() && !steps.parse_command.outputs.error
-        uses: actions/github-script@v8
+        uses: actions/github-script@v9
         with:
           github-token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
           script: |
@@ -483,7 +470,7 @@ jobs:
 
       - name: Post result comment
         if: success() && !steps.parse_command.outputs.error
-        uses: actions/github-script@v8
+        uses: actions/github-script@v9
         with:
           github-token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
           script: |

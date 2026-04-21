@@ -20,7 +20,7 @@ jobs:
 
     steps:
       - name: Add reaction to comment to indicate processing
-        uses: actions/github-script@v8
+        uses: actions/github-script@v9
         with:
           github-token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
           script: |
@@ -33,7 +33,7 @@ jobs:
 
       - name: Get PR details
         id: pr_details
-        uses: actions/github-script@v8
+        uses: actions/github-script@v9
         with:
           github-token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
           script: |
@@ -57,7 +57,7 @@ jobs:
 
       - name: Parse and validate stage transition
         id: validate
-        uses: actions/github-script@v8
+        uses: actions/github-script@v9
         with:
           github-token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
           script: |
@@ -116,7 +116,7 @@ jobs:
 
       - name: Post error if validation failed
         if: steps.validate.outputs.error
-        uses: actions/github-script@v8
+        uses: actions/github-script@v9
         with:
           github-token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
           script: |
@@ -138,7 +138,7 @@ jobs:
 
       - name: Swap stage labels
         if: steps.validate.outputs.valid == 'true'
-        uses: actions/github-script@v8
+        uses: actions/github-script@v9
         with:
           github-token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
           script: |
@@ -174,7 +174,7 @@ jobs:
 
       - name: Request reviewers on active stage
         if: steps.validate.outputs.valid == 'true' && steps.validate.outputs.target_stage == 'active'
-        uses: actions/github-script@v8
+        uses: actions/github-script@v9
         with:
           github-token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
           script: |
@@ -217,8 +217,8 @@ jobs:
           PR_TITLE="${{ steps.pr_details.outputs.title }}"
 
           if [[ "$TARGET_STAGE" == "active" ]]; then
-            SLACK_TITLE="Release ${VERSION} — Active"
-            SLACK_BODY="Release ${VERSION} is now in the *Active* stage. Product teams can now review, bump components, and run tests.\n\n*Release PR:* <${PR_URL}|${PR_TITLE}>"
+            SLACK_TITLE="Release ${VERSION} — Active Review"
+            SLACK_BODY="Release ${VERSION} PR is now in stage: *Active Review*. Product teams can now review, bump components, and run tests.\n\n*Release PR:* <${PR_URL}|${PR_TITLE}>"
             HELP_BLOCK='{
               "type": "section",
               "text": {
@@ -228,7 +228,7 @@ jobs:
             }'
           elif [[ "$TARGET_STAGE" == "freeze" ]]; then
             SLACK_TITLE="Release ${VERSION} — Freeze"
-            SLACK_BODY="Release ${VERSION} has entered *Freeze*. Only bugfixes and critical patches are allowed.\n\n*Release PR:* <${PR_URL}|${PR_TITLE}>"
+            SLACK_BODY="Release ${VERSION} PR is now in stage: *Freeze*. Only bugfixes and critical patches are allowed.\n\n*Release PR:* <${PR_URL}|${PR_TITLE}>"
             HELP_BLOCK=""
           fi
 
@@ -267,7 +267,7 @@ jobs:
 
       - name: Update PR body stage dashboard
         if: steps.validate.outputs.valid == 'true'
-        uses: actions/github-script@v8
+        uses: actions/github-script@v9
         with:
           github-token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
           script: |
@@ -322,7 +322,7 @@ jobs:
 
       - name: Add success reaction
         if: steps.validate.outputs.valid == 'true'
-        uses: actions/github-script@v8
+        uses: actions/github-script@v9
         with:
           github-token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
           script: |
@@ -335,7 +335,7 @@ jobs:
 
       - name: Trigger /summarize-ai on freeze
         if: steps.validate.outputs.valid == 'true' && steps.validate.outputs.target_stage == 'freeze'
-        uses: actions/github-script@v8
+        uses: actions/github-script@v9
         with:
           github-token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
           script: |
@@ -348,7 +348,7 @@ jobs:
 
       - name: Post summary comment
         if: steps.validate.outputs.valid == 'true'
-        uses: actions/github-script@v8
+        uses: actions/github-script@v9
         with:
           github-token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
           script: |

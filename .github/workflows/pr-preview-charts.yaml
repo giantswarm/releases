@@ -13,7 +13,7 @@ jobs:
       checks: write
     steps:
       - name: Create check with chart references
-        uses: actions/github-script@v8
+        uses: actions/github-script@v9
         with:
           script: |
             const CHART_MAP = {
