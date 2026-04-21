@@ -217,8 +217,8 @@ jobs:
           PR_TITLE="${{ steps.pr_details.outputs.title }}"
 
           if [[ "$TARGET_STAGE" == "active" ]]; then
-            SLACK_TITLE="Release ${VERSION} — Active"
-            SLACK_BODY="Release ${VERSION} is now in the *Active* stage. Product teams can now review, bump components, and run tests.\n\n*Release PR:* <${PR_URL}|${PR_TITLE}>"
+            SLACK_TITLE="Release ${VERSION} — Active Review"
+            SLACK_BODY="Release ${VERSION} PR is now in stage: *Active Review*. Product teams can now review, bump components, and run tests.\n\n*Release PR:* <${PR_URL}|${PR_TITLE}>"
             HELP_BLOCK='{
               "type": "section",
               "text": {
@@ -228,7 +228,7 @@ jobs:
             }'
           elif [[ "$TARGET_STAGE" == "freeze" ]]; then
             SLACK_TITLE="Release ${VERSION} — Freeze"
-            SLACK_BODY="Release ${VERSION} has entered *Freeze*. Only bugfixes and critical patches are allowed.\n\n*Release PR:* <${PR_URL}|${PR_TITLE}>"
+            SLACK_BODY="Release ${VERSION} PR is now in stage: *Freeze*. Only bugfixes and critical patches are allowed.\n\n*Release PR:* <${PR_URL}|${PR_TITLE}>"
             HELP_BLOCK=""
           fi
 

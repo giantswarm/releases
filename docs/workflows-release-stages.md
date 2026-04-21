@@ -98,11 +98,11 @@ Detection: consolidated releases have branch pattern `release-vX.Y.Z`, while ind
 
 ### On `/stage active`
 
-> "Release VERSION is now in the Active stage. Product teams can now review, bump components, and run tests."
+> "Release VERSION PR is now in stage: Active Review. Product teams can now review, bump components, and run tests."
 
 ### On `/stage freeze`
 
-> "Release VERSION has entered Freeze. Only bugfixes and critical patches are allowed."
+> "Release VERSION PR is now in stage: Freeze. Only bugfixes and critical patches are allowed."
 
 ## Workflow Details
 
