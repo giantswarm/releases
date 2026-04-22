@@ -253,7 +253,36 @@ Analyze the provided release information and identify any breaking changes. Cons
    
    **Check context**: If upgrading 1.33.5→1.34.1, only report changes NEW in 1.34
 
-3. **Component Changes** (Apps and Components) - Review diffs even without "BREAKING" keyword
+3. **Etcd Changes** - Bundled etcd version comes from kubeadm, NOT from release.yaml
+
+   The "Etcd" section in the context is derived by resolving kubeadm's
+   `+"`SupportedEtcdVersion`"+` map for the from/to Kubernetes tags. If that
+   section is present, etcd changed under the hood during this upgrade and
+   MUST be reviewed regardless of whether release.yaml mentions etcd.
+
+   **PRIORITY 1 - MINOR-VERSION BUMP** (Critical):
+   - If the section header contains "ETCD MINOR-VERSION BUMP", treat this as
+     a critical finding. Minor etcd jumps (e.g. 3.5 -> 3.6) can change the
+     on-disk storage version, WAL format, or default server flags. In the
+     past, a 3.5 -> 3.6 kubeadm switch has left customer clusters unable to
+     achieve quorum during control-plane rollover. Always surface.
+
+   **PRIORITY 2 - Bug-fix lines that describe quorum, consensus, or data
+   integrity issues** (Critical):
+   - "Fix Race between read index and leader change"
+   - "Fix Stale reads caused by process pausing"
+   - "Data corruption", "WAL", "snapshot", "split-brain"
+   - These indicate the PREVIOUS version had a bug that could surface
+     during the upgrade window. Report them.
+
+   **PRIORITY 3 - Security advisories (CVEs)**:
+   - Report any CVE mentioned in the etcd section as high/critical depending
+     on scope.
+
+   **DO NOT** report generic dependency bumps (golang.org/x/net, otel SDK)
+   unless they carry a CVE note.
+
+4. **Component Changes** (Apps and Components) - Review diffs even without "BREAKING" keyword
    
    **What to look for in component diffs:**
    - **Configuration changes**: 
@@ -289,7 +318,7 @@ Analyze the provided release information and identify any breaking changes. Cons
    - **Minor bumps** (X.Y → X.Y+1 or X.Y+2): Often include configuration or behavior changes
    - **Patch bumps** (X.Y.Z → X.Y.Z+1): Usually safe, but still check for important fixes
 
-4. **Dependency Changes**
+5. **Dependency Changes**
    - Major version bumps that indicate breaking changes
    - Check nested dependencies (e.g., if cluster-azure uses cluster chart)
    - For Giant Swarm components (cluster-*, *-app), minor version bumps often include important changes
