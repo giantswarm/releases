@@ -146,9 +146,49 @@ func (d *Detector) fetchExternalChangelogs(ctx context.Context, changes []Versio
 
 		result[change.Component] = content
 		fmt.Printf("✓ Fetched %s changelog (%d bytes)\n", change.Component, len(content))
+
+		// For Kubernetes changes, also resolve the bundled etcd versions via
+		// kubeadm and fetch the etcd CHANGELOG when it differs. This covers
+		// the case where release.yaml doesn't declare etcd but kubeadm bumps
+		// it under the hood — the source of the v33→v34 quorum incident.
+		if change.Component == "Kubernetes" {
+			d.fetchEtcdForK8sChange(ctx, change, result)
+		}
 	}
 
 	return result, nil
+}
+
+// fetchEtcdForK8sChange resolves the bundled etcd version from kubeadm for the
+// from/to Kubernetes versions and, if they differ, adds the relevant etcd
+// CHANGELOG slice to result under the "Etcd" key.
+func (d *Detector) fetchEtcdForK8sChange(ctx context.Context, change VersionChange, result map[string]string) {
+	fromEtcd, err := d.resolveEtcdVersionForK8s(ctx, change.FromVersion)
+	if err != nil {
+		fmt.Printf("Warning: could not resolve etcd version for Kubernetes v%s: %v\n", change.FromVersion, err)
+		return
+	}
+	toEtcd, err := d.resolveEtcdVersionForK8s(ctx, change.ToVersion)
+	if err != nil {
+		fmt.Printf("Warning: could not resolve etcd version for Kubernetes v%s: %v\n", change.ToVersion, err)
+		return
+	}
+
+	fmt.Printf("  → kubeadm bundles etcd v%s (k8s v%s) -> etcd v%s (k8s v%s)\n",
+		fromEtcd, change.FromVersion, toEtcd, change.ToVersion)
+
+	if fromEtcd == toEtcd {
+		return
+	}
+
+	changelog, err := d.fetchEtcdChangelog(ctx, fromEtcd, toEtcd)
+	if err != nil {
+		fmt.Printf("Warning: Failed to fetch etcd changelog: %v\n", err)
+		return
+	}
+
+	result["Etcd"] = changelog
+	fmt.Printf("✓ Fetched etcd changelog v%s -> v%s (%d bytes)\n", fromEtcd, toEtcd, len(changelog))
 }
 
 // processFlatcarChangelog extracts Flatcar release notes from JSON
