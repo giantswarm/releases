@@ -115,6 +115,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
 
       - name: Get provider lists
         id: providers
@@ -125,14 +127,35 @@ jobs:
         env:
           RELEASES: ${{ needs.get-releases.outputs.releases }}
           GH_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+          GITHUB_EVENT_BEFORE: ${{ github.event.before }}
         run: |
           DISPLAY_NAMES='${{ steps.providers.outputs.display_names }}'
+
+          # Only announce releases whose release.yaml was ADDED in the
+          # commits of this push. Subsequent pushes that only modify the
+          # same release.yaml (e.g. deprecate/archive) must not re-announce.
+          if [[ -z "$GITHUB_EVENT_BEFORE" || "$GITHUB_EVENT_BEFORE" =~ ^0+$ ]]; then
+            # workflow_dispatch or initial push: fall back to the HEAD commit.
+            RANGE="${GITHUB_SHA}^..${GITHUB_SHA}"
+          else
+            RANGE="${GITHUB_EVENT_BEFORE}..${GITHUB_SHA}"
+          fi
+
+          declare -A ADDED_RELEASES
+          while IFS= read -r f; do
+            [[ -z "$f" ]] && continue
+            ADDED_RELEASES["${f%/release.yaml}"]=1
+          done < <(git diff --name-only --diff-filter=A "$RANGE" -- ':(glob)*/v*.*.*/release.yaml' 2>/dev/null || true)
 
           # Group releases by version and collect provider display names
           declare -A VERSION_PROVIDERS
           declare -A VERSION_TAGS
 
           for release in $(echo "$RELEASES" | jq -r '.[]'); do
+            if [[ -z "${ADDED_RELEASES[$release]:-}" ]]; then
+              continue
+            fi
+
             dir_name="${release%/v*.*.*}"
             version="${release#${dir_name}/}"
 
@@ -141,23 +164,8 @@ jobs:
               continue
             fi
 
-            # Check if this release was actually created (not pre-existing)
             api_name=$(echo '${{ steps.providers.outputs.dir_to_api }}' | jq -r --arg d "$dir_name" '.[$d] // $d')
             tag="${api_name}/${version}"
-            created_at=$(gh release view "$tag" --json createdAt --jq '.createdAt' 2>/dev/null || echo "")
-
-            if [[ -z "$created_at" ]]; then
-              continue
-            fi
-
-            # Check if it was created recently (within the last 30 minutes)
-            created_ts=$(date -d "$created_at" +%s 2>/dev/null || date -jf "%Y-%m-%dT%H:%M:%SZ" "$created_at" +%s 2>/dev/null || echo "0")
-            now_ts=$(date +%s)
-            age=$(( now_ts - created_ts ))
-            if [[ $age -gt 1800 ]]; then
-              continue
-            fi
-
             display=$(echo "$DISPLAY_NAMES" | jq -r --arg d "$dir_name" '.[$d] // $d')
 
             if [[ -n "${VERSION_PROVIDERS[$version]:-}" ]]; then
