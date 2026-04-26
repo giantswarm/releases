@@ -9,6 +9,7 @@ spec:
     catalog: default-test
     dependsOn:
     - cloud-provider-aws
+    - kyverno-crds
   - name: aws-ebs-csi-driver-servicemonitors
     version: 0.1.2
     dependsOn:
@@ -16,6 +17,9 @@ spec:
   - name: aws-nth-bundle
     version: 1.4.0-dc8ab8e297d392fd29661974373925636cd1a05d
     catalog: default-test
+    dependsOn:
+    - cloud-provider-aws
+    - kyverno-crds
   - name: aws-pod-identity-webhook
     version: 2.2.0
     dependsOn:
@@ -115,8 +119,6 @@ spec:
   - name: observability-bundle
     version: 2.8.0-8c02518864cd3160663d6bcc537c14bc083a26f9
     catalog: default-test
-    dependsOn:
-    - coredns
   - name: observability-policies
     version: 0.0.4
     dependsOn:
