@@ -131,7 +131,7 @@ spec:
     - prometheus-operator-crd
   - name: security-bundle
     catalog: default-test
-    version: 1.17.0-f2f06a0661fe71b2ac90c6bdefb6727b885a28ff
+    version: 1.17.0-a1ef9f19d8c02c4cd64a5fef5e44e2a86bb248c6
     dependsOn:
     - prometheus-operator-crd
   - name: teleport-kube-agent
