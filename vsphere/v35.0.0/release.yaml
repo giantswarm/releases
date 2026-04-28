@@ -5,11 +5,11 @@ metadata:
 spec:
   apps:
   - name: cert-exporter
-    version: 2.10.0
+    version: 2.10.1
     dependsOn:
     - kyverno-crds
   - name: cert-manager
-    version: 3.11.0
+    version: 3.13.0
     dependsOn:
     - alloy-logs
     - prometheus-operator-crd
@@ -24,11 +24,11 @@ spec:
     dependsOn:
     - prometheus-operator-crd
   - name: cloud-provider-vsphere
-    version: 2.3.0
+    version: 2.4.0
     dependsOn:
     - cilium
   - name: coredns
-    version: 1.29.1
+    version: 1.30.0
     dependsOn:
     - cilium
   - name: coredns-extensions
@@ -36,7 +36,7 @@ spec:
     dependsOn:
     - vertical-pod-autoscaler-crd
   - name: etcd-defrag
-    version: 1.2.4
+    version: 1.2.6
     dependsOn:
     - kyverno-crds
   - name: etcd-k8s-res-count-exporter
@@ -44,7 +44,7 @@ spec:
     dependsOn:
     - kyverno-crds
   - name: k8s-dns-node-cache
-    version: 2.9.2
+    version: 2.11.0
     dependsOn:
     - kyverno-crds
   - name: kube-vip
@@ -84,7 +84,7 @@ spec:
     version: 0.3.1
   - name: security-bundle
     catalog: giantswarm
-    version: 1.17.0
+    version: 1.17.1
     dependsOn:
     - prometheus-operator-crd
   - name: teleport-kube-agent
@@ -104,12 +104,12 @@ spec:
   components:
   - name: cluster-vsphere
     catalog: cluster
-    version: 6.0.0
+    version: 6.3.0
   - name: flatcar
-    version: 4459.2.4
+    version: 4593.2.0
   - name: kubernetes
-    version: 1.35.2
+    version: 1.35.4
   - name: os-tooling
-    version: 1.26.4
-  date: "2026-03-10T14:41:25Z"
+    version: 1.28.0
+  date: "2026-04-28T08:51:39Z"
   state: active

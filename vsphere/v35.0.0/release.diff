@@ -5,11 +5,11 @@ metadata:                                                          metadata:
 spec:                                                              spec:
   apps:                                                              apps:
   - name: cert-exporter                                              - name: cert-exporter
-    version: 2.9.16                                             |      version: 2.10.0
+    version: 2.9.16                                             |      version: 2.10.1
     dependsOn:                                                         dependsOn:
     - kyverno-crds                                                     - kyverno-crds
   - name: cert-manager                                               - name: cert-manager
-    version: 3.11.0                                                    version: 3.11.0
+    version: 3.11.0                                             |      version: 3.13.0
     dependsOn:                                                         dependsOn:
     - alloy-logs                                                       - alloy-logs
     - prometheus-operator-crd                                          - prometheus-operator-crd
@@ -24,11 +24,11 @@ spec:                                                              spec:
     dependsOn:                                                         dependsOn:
     - prometheus-operator-crd                                          - prometheus-operator-crd
   - name: cloud-provider-vsphere                                     - name: cloud-provider-vsphere
-    version: 2.2.0                                              |      version: 2.3.0
+    version: 2.2.0                                              |      version: 2.4.0
     dependsOn:                                                         dependsOn:
     - cilium                                                           - cilium
   - name: coredns                                                    - name: coredns
-    version: 1.29.1                                                    version: 1.29.1
+    version: 1.29.1                                             |      version: 1.30.0
     dependsOn:                                                         dependsOn:
     - cilium                                                           - cilium
   - name: coredns-extensions                                         - name: coredns-extensions
@@ -36,7 +36,7 @@ spec:                                                              spec:
     dependsOn:                                                         dependsOn:
     - vertical-pod-autoscaler-crd                                      - vertical-pod-autoscaler-crd
   - name: etcd-defrag                                                - name: etcd-defrag
-    version: 1.2.4                                                     version: 1.2.4
+    version: 1.2.4                                              |      version: 1.2.6
     dependsOn:                                                         dependsOn:
     - kyverno-crds                                                     - kyverno-crds
   - name: etcd-k8s-res-count-exporter                                - name: etcd-k8s-res-count-exporter
@@ -44,7 +44,7 @@ spec:                                                              spec:
     dependsOn:                                                         dependsOn:
     - kyverno-crds                                                     - kyverno-crds
   - name: k8s-dns-node-cache                                         - name: k8s-dns-node-cache
-    version: 2.9.2                                                     version: 2.9.2
+    version: 2.9.2                                              |      version: 2.11.0
     dependsOn:                                                         dependsOn:
     - kyverno-crds                                                     - kyverno-crds
   - name: kube-vip                                                   - name: kube-vip
@@ -84,7 +84,7 @@ spec:                                                              spec:
     version: 0.3.1                                                     version: 0.3.1
   - name: security-bundle                                            - name: security-bundle
     catalog: giantswarm                                                catalog: giantswarm
-    version: 1.17.0                                                    version: 1.17.0
+    version: 1.17.0                                             |      version: 1.17.1
     dependsOn:                                                         dependsOn:
     - prometheus-operator-crd                                          - prometheus-operator-crd
   - name: teleport-kube-agent                                        - name: teleport-kube-agent
@@ -104,12 +104,12 @@ spec:                                                              spec:
   components:                                                        components:
   - name: cluster-vsphere                                            - name: cluster-vsphere
     catalog: cluster                                                   catalog: cluster
-    version: 4.1.4                                              |      version: 6.0.0
+    version: 4.1.4                                              |      version: 6.3.0
   - name: flatcar                                                    - name: flatcar
-    version: 4459.2.3                                           |      version: 4459.2.4
+    version: 4459.2.3                                           |      version: 4593.2.0
   - name: kubernetes                                                 - name: kubernetes
-    version: 1.34.5                                             |      version: 1.35.2
+    version: 1.34.5                                             |      version: 1.35.4
   - name: os-tooling                                                 - name: os-tooling
-    version: 1.26.4                                                    version: 1.26.4
-  date: "2026-03-03T20:47:10Z"                                  |    date: "2026-03-10T14:41:25Z"
+    version: 1.26.4                                             |      version: 1.28.0
+  date: "2026-03-03T20:47:10Z"                                  |    date: "2026-04-28T08:51:39Z"
   state: active                                                      state: active

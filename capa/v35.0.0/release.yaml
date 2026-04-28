@@ -5,7 +5,7 @@ metadata:
 spec:
   apps:
   - name: aws-ebs-csi-driver
-    version: 4.1.2
+    version: 4.2.0
     dependsOn:
     - cloud-provider-aws
   - name: aws-ebs-csi-driver-servicemonitors
@@ -13,23 +13,23 @@ spec:
     dependsOn:
     - prometheus-operator-crd
   - name: aws-nth-bundle
-    version: 1.3.0
+    version: 1.4.0
   - name: aws-pod-identity-webhook
     version: 2.2.0
     dependsOn:
     - cert-manager
   - name: cert-exporter
-    version: 2.10.0
+    version: 2.10.1
     dependsOn:
     - kyverno-crds
   - name: cert-manager
-    version: 3.11.0
+    version: 3.13.0
     dependsOn:
     - alloy-logs
     - prometheus-operator-crd
   - name: cert-manager-crossplane-resources
     catalog: cluster
-    version: 0.1.0
+    version: 0.1.1
   - name: chart-operator-extensions
     version: 1.1.3
     dependsOn:
@@ -52,7 +52,7 @@ spec:
     dependsOn:
     - kyverno-crds
   - name: coredns
-    version: 1.29.1
+    version: 1.30.0
     dependsOn:
     - cilium
   - name: coredns-extensions
@@ -60,7 +60,7 @@ spec:
     dependsOn:
     - vertical-pod-autoscaler-crd
   - name: etcd-defrag
-    version: 1.2.4
+    version: 1.2.6
     dependsOn:
     - kyverno-crds
   - name: etcd-k8s-res-count-exporter
@@ -80,11 +80,11 @@ spec:
     dependsOn:
     - kyverno-crds
   - name: k8s-dns-node-cache
-    version: 2.9.2
+    version: 2.11.0
     dependsOn:
     - kyverno-crds
   - name: karpenter
-    version: 2.2.0
+    version: 2.3.0
   - name: karpenter-crossplane-resources
     version: 0.5.1
   - name: karpenter-taint-remover
@@ -124,7 +124,7 @@ spec:
     - prometheus-operator-crd
   - name: security-bundle
     catalog: giantswarm
-    version: 1.17.0
+    version: 1.17.1
     dependsOn:
     - prometheus-operator-crd
   - name: teleport-kube-agent
@@ -140,12 +140,12 @@ spec:
   components:
   - name: cluster-aws
     catalog: cluster
-    version: 7.6.0
+    version: 8.3.0
   - name: flatcar
-    version: 4459.2.4
+    version: 4593.2.0
   - name: kubernetes
-    version: 1.35.2
+    version: 1.35.4
   - name: os-tooling
-    version: 1.26.4
-  date: "2026-04-16T07:48:11Z"
+    version: 1.28.0
+  date: "2026-04-28T08:50:49Z"
   state: active

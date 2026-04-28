@@ -2,14 +2,15 @@
 
 << Add description here >>
 
-## Changes compared to v34.0.0
+## Changes compared to v34.0.1
 
 ### Components
 
 - cluster-eks from v1.2.1 to v1.3.0
 - cluster from v4.0.2 to v5.3.0
-- Flatcar from v4459.2.3 to [v4459.2.4](https://www.flatcar.org/releases/#release-4459.2.4)
-- Kubernetes from v1.34.4 to [v1.35.2](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.35.md#v1.35.2)
+- Flatcar from v4459.2.3 to [v4593.2.0](https://www.flatcar.org/releases/#release-4593.2.0)
+- Kubernetes from v1.34.4 to [v1.35.4](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.35.md#v1.35.4)
+- os-tooling from v1.26.4 to v1.28.0
 
 ### cluster-eks [v1.2.1...v1.3.0](https://github.com/giantswarm/cluster-eks/compare/v1.2.1...v1.3.0)
 
@@ -64,17 +65,19 @@
 
 ### Apps
 
-- aws-ebs-csi-driver from v4.1.1 to v4.1.2
+- aws-ebs-csi-driver from v4.1.1 to v4.2.0
 - aws-ebs-csi-driver-servicemonitors from v0.1.0 to v0.1.2
-- cert-exporter from v2.9.15 to v2.10.0
-- cert-manager from v3.9.4 to v3.11.0
+- aws-nth-bundle from v1.3.0 to v1.4.0
+- cert-exporter from v2.9.15 to v2.10.1
+- cert-manager from v3.9.4 to v3.13.0
+- cert-manager-crossplane-resources from v0.1.0 to v0.1.1
 - chart-operator-extensions from v1.1.2 to v1.1.3
-- cilium from v1.3.4 to v1.4.1
+- cilium from v1.3.4 to v1.4.3
 - cilium-servicemonitors from v0.1.3 to v0.1.4
 - cluster-autoscaler from v1.34.1-1 to v1.24.3
 - coredns-extensions from v0.1.2 to v0.1.3
-- k8s-dns-node-cache from v2.9.1 to v2.9.2
-- karpenter from v1.4.0 to v2.2.0
+- k8s-dns-node-cache from v2.9.1 to v2.11.0
+- karpenter from v1.4.0 to v2.3.0
 - karpenter-taint-remover from v1.0.1 to v1.0.2
 - metrics-server from v2.7.0 to v2.8.0
 - net-exporter from v1.23.0 to v1.23.1
@@ -83,15 +86,37 @@
 - observability-policies from v0.0.3 to v0.0.4
 - priority-classes from v0.3.0 to v0.3.1
 - prometheus-blackbox-exporter from v0.5.0 to v0.7.0
-- security-bundle from v1.16.1 to v1.17.0
+- security-bundle from v1.16.1 to v1.17.1
 - vertical-pod-autoscaler from v6.1.1 to v6.1.2
 - vertical-pod-autoscaler-crd from v4.1.1 to v4.1.2
 
-### aws-ebs-csi-driver [v4.1.1...v4.1.2](https://github.com/giantswarm/aws-ebs-csi-driver-app/compare/v4.1.1...v4.1.2)
+### aws-ebs-csi-driver [v4.1.1...v4.2.0](https://github.com/giantswarm/aws-ebs-csi-driver-app/compare/v4.1.1...v4.2.0)
+
+#### :warning: Breaking Changes
+
+- **Workload chart renamed** from `aws-ebs-csi-driver-app` to `aws-ebs-csi-driver`. The OCI catalog artifact name changes accordingly.
+- **Bundle values restructured**: upstream chart values are now under the `upstream:` key in the bundle `values.yaml`. The `giantswarm.workloadValues` helper handles the transformation automatically, so bundle users only need to place overrides under `upstream:` in their App CR ConfigMap.
+- **Direct workload chart install**: if installing the workload chart directly (without the bundle), all upstream values must be under the `upstream:` key, and extras (`verticalPodAutoscaler`, `networkPolicy`, `global.podSecurityStandards`) are at the top level.
+
+#### Added
+
+- Add VPA templates for controller (Deployment) and node (DaemonSet).
+- Add Kyverno PolicyException template for Pod Security Standards.
+- Add `ignorePaths` to `.kube-linter.yaml` for upstream subchart.
+- Forward `verticalPodAutoscaler`, `networkPolicy`, and `global.podSecurityStandards` as extras.
 
 #### Changed
 
+- Add `io.giantswarm.application.audience: all` annotation to publish the app to the customer Backstage catalog.
+- Migrate chart metadata annotations to `io.giantswarm.application.*` format for both the app and bundle charts.
 - Update ABS config to replace `.appVersion` in Chart.yaml with version detected by ABS.
+- Migrate from forked upstream chart to unmodified upstream as Helm dependency (alias `upstream`).
+- Restructure bundle values into explicit BUNDLE-ONLY / UPSTREAM / EXTRAS sections.
+- Extract `giantswarm.combineImage` and `giantswarm.setValues` into separate reusable helpers.
+- Add `clusterID` derivation from release name as fallback.
+- Use `clusterID` helper consistently across all bundle templates.
+- Gate NetworkPolicy templates with `networkPolicy.enabled`.
+- Rewrite README with architecture diagram, terminology table, value flow, and upgrade notes.
 
 #### Fixed
 
@@ -107,7 +132,15 @@
 
 - Remove duplicate `application.giantswarm.io/team` label in PodMonitor that caused install failure. The label is already included via the common labels helper.
 
-### cert-exporter [v2.9.15...v2.10.0](https://github.com/giantswarm/cert-exporter/compare/v2.9.15...v2.10.0)
+### aws-nth-bundle [v1.3.0...v1.4.0](https://github.com/giantswarm/aws-nth-bundle/compare/v1.3.0...v1.4.0)
+
+#### Changed
+
+- Migrate sub-apps from App CRs to Flux HelmRelease CRs.
+- Add `io.giantswarm.application.audience: all` annotation to publish the app to the customer Backstage catalog.
+- Migrate chart metadata annotations to `io.giantswarm.application.*` format.
+
+### cert-exporter [v2.9.15...v2.10.1](https://github.com/giantswarm/cert-exporter/compare/v2.9.15...v2.10.1)
 
 #### Added
 
@@ -118,17 +151,37 @@
 - Values: Tune resources.
 - Go: Update dependencies.
 
-### cert-manager [v3.9.4...v3.11.0](https://github.com/giantswarm/cert-manager-app/compare/v3.9.4...v3.11.0)
+#### Fixed
+
+- Parse all PEM blocks in secrets and certificate files, not just the first one. This fixes false alerts when multiple certificates are concatenated (e.g. Kyverno webhook cert rotation).
+
+### cert-manager [v3.9.4...v3.13.0](https://github.com/giantswarm/cert-manager-app/compare/v3.9.4...v3.13.0)
 
 #### Added
 
+- Add control plane node toleration to CA injector deployment.
 - Add Vertical Pod Autoscaler (VPA) support for webhook pods.
 - Add `io.giantswarm.application.audience` and `io.giantswarm.application.managed` chart annotations for Backstage visibility.
 - Add PodLogs for log collection.
 
+#### Changed
+
+- Upgrade cert-manager to v1.19.4.
+
 #### Fixed
 
 - Fix `controller` Vertical Pod Autoscaler (VPA) resource syntax.
+
+#### Removed
+
+- Remove PodSecurityPolicy (PSP) and related resources.
+- Remove Giant Swarm PSP to PSS migration logic.
+
+### cert-manager-crossplane-resources [v0.1.0...v0.1.1](https://github.com/giantswarm/cert-manager-crossplane-resources/compare/v0.1.0...v0.1.1)
+
+#### Changed
+
+- Update `architect-orb` to v6.15.0.
 
 ### chart-operator-extensions [v1.1.2...v1.1.3](https://github.com/giantswarm/chart-operator-extensions/compare/v1.1.2...v1.1.3)
 
@@ -136,10 +189,12 @@
 
 - Migrate Chart.yaml annotations to new format as per https://docs.giantswarm.io/reference/platform-api/chart-metadata/
 
-### cilium [v1.3.4...v1.4.1](https://github.com/giantswarm/cilium-app/compare/v1.3.4...v1.4.1)
+### cilium [v1.3.4...v1.4.3](https://github.com/giantswarm/cilium-app/compare/v1.3.4...v1.4.3)
 
 #### Changed
 
+- Upgrade Cilium to [v1.19.3](https://github.com/cilium/cilium/releases/tag/v1.19.3).
+- Upgrade Cilium to [v1.19.2](https://github.com/cilium/cilium/releases/tag/v1.19.2).
 - Upgrade Cilium to [v1.19.1](https://github.com/cilium/cilium/releases/tag/v1.19.1).
 - Upgrade Cilium to [v1.19.0](https://github.com/cilium/cilium/releases/tag/v1.19.0).
 - Update chart icon to use Giant Swarm-hosted Cilium icon.
@@ -158,13 +213,18 @@
 - Change ScaleDownUtilizationThreshold default from 0.5 to 0.7
 - Update cluster-autoscaler to version `1.24.3`.
 
-### k8s-dns-node-cache [v2.9.1...v2.9.2](https://github.com/giantswarm/k8s-dns-node-cache-app/compare/v2.9.1...v2.9.2)
+### k8s-dns-node-cache [v2.9.1...v2.11.0](https://github.com/giantswarm/k8s-dns-node-cache-app/compare/v2.9.1...v2.11.0)
+
+#### Added
+
+- Add `configmap.log.enabled` helm value to toggle CoreDNS query logging (default: `false`).
+- Make `AAAA NOERROR` configurable for IPv6.
 
 #### Changed
 
 - Upgrade application to version 1.26.7 (includes coredns 1.13.1)
 
-### karpenter [v1.4.0...v2.2.0](https://github.com/giantswarm/karpenter-app/compare/v1.4.0...v2.2.0)
+### karpenter [v1.4.0...v2.3.0](https://github.com/giantswarm/karpenter-app/compare/v1.4.0...v2.3.0)
 
 #### Added
 
@@ -178,12 +238,24 @@
 
 #### Changed
 
+- Migrate workload chart to use unmodified upstream Karpenter v1.8.1 chart as a Helm dependency (`alias: upstream`), eliminating fork maintenance.
+- Bundle chart: add `giantswarm.workloadValues` transformer to route values under `upstream:` key with extras (`podLogs`, `global`) at top level.
+- Bundle chart: convert proxy settings to `controller.env` entries for upstream compatibility.
+- Bundle chart: add `giantswarm.combineImage` helper to merge split `registry`+`repository` into single `repository` path.
+- Restructure bundle `values.yaml` into annotated BUNDLE-ONLY / UPSTREAM / EXTRAS sections.
+- Add `io.giantswarm.application.audience: all` annotation to publish the app to the customer Backstage catalog.
+- Migrate chart metadata annotations to `io.giantswarm.application.*` format for both the karpenter and karpenter-bundle charts.
 - Update ABS config to replace `.appVersion` in Chart.yaml with version detected by ABS.
 
 #### Fixed
 
 - Use `.Chart.AppVersion` instead of `.Chart.Version` for OCIRepository tag.
 - Use only `clustertest` v3 instead of v2 and v3. We also upgraded to `apptest-framework` v3 due to this.
+
+#### Removed
+
+- Remove all forked upstream templates from workload chart (replaced by upstream dependency).
+- Remove `vendir.yml`, `vendir.lock.yml`, `vendor/` directory, and `Makefile.custom.mk`.
 
 ### karpenter-taint-remover [v1.0.1...v1.0.2](https://github.com/giantswarm/capa-karpenter-taint-remover/compare/v1.0.1...v1.0.2)
 
@@ -255,10 +327,22 @@
 - Set `priorityClassName` to `system-node-critical` to ensure DaemonSet pods are scheduled even on full nodes.
 - Migrate to App Build Suite (ABS) for Helm chart building.
 
-### security-bundle [v1.16.1...v1.17.0](https://github.com/giantswarm/security-bundle/compare/v1.16.1...v1.17.0)
+### security-bundle [v1.16.1...v1.17.1](https://github.com/giantswarm/security-bundle/compare/v1.16.1...v1.17.1)
+
+#### Added
+
+- Add `io.giantswarm.application.audience` and `io.giantswarm.application.managed` chart annotations for Backstage visibility.
 
 #### Changed
 
+- Update `falco` (app) to v0.11.2.
+- Update `gel` (app) to v1.0.2.
+- Update `kubescape` (app) to v0.0.6.
+- Update `reports-server` (app) to v0.1.3.
+- Update `starboard-exporter` (app) to v1.0.3.
+- Update `trivy` (app) to v0.14.2.
+- Update `trivy-operator` (app) to v0.12.2.
+- Migrate chart annotations to OCI-compatible format.
 - Update `kyverno` (app) to v0.23.0.
 - Update `kyverno-crds` (app) to v1.16.0.
 - Update `reports-server` (app) to v0.1.0.

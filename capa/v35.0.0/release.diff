@@ -5,7 +5,7 @@ metadata:                                                          metadata:
 spec:                                                              spec:
   apps:                                                              apps:
   - name: aws-ebs-csi-driver                                         - name: aws-ebs-csi-driver
-    version: 4.1.1                                              |      version: 4.1.2
+    version: 4.1.1                                              |      version: 4.2.0
     dependsOn:                                                         dependsOn:
     - cloud-provider-aws                                               - cloud-provider-aws
   - name: aws-ebs-csi-driver-servicemonitors                         - name: aws-ebs-csi-driver-servicemonitors
@@ -13,23 +13,23 @@ spec:                                                              spec:
     dependsOn:                                                         dependsOn:
     - prometheus-operator-crd                                          - prometheus-operator-crd
   - name: aws-nth-bundle                                             - name: aws-nth-bundle
-    version: 1.3.0                                                     version: 1.3.0
+    version: 1.3.0                                              |      version: 1.4.0
   - name: aws-pod-identity-webhook                                   - name: aws-pod-identity-webhook
     version: 2.2.0                                                     version: 2.2.0
     dependsOn:                                                         dependsOn:
     - cert-manager                                                     - cert-manager
   - name: cert-exporter                                              - name: cert-exporter
-    version: 2.9.16                                             |      version: 2.10.0
+    version: 2.9.16                                             |      version: 2.10.1
     dependsOn:                                                         dependsOn:
     - kyverno-crds                                                     - kyverno-crds
   - name: cert-manager                                               - name: cert-manager
-    version: 3.11.0                                                    version: 3.11.0
+    version: 3.11.0                                             |      version: 3.13.0
     dependsOn:                                                         dependsOn:
     - alloy-logs                                                       - alloy-logs
     - prometheus-operator-crd                                          - prometheus-operator-crd
   - name: cert-manager-crossplane-resources                          - name: cert-manager-crossplane-resources
     catalog: cluster                                                   catalog: cluster
-    version: 0.1.0                                                     version: 0.1.0
+    version: 0.1.0                                              |      version: 0.1.1
   - name: chart-operator-extensions                                  - name: chart-operator-extensions
     version: 1.1.3                                                     version: 1.1.3
     dependsOn:                                                         dependsOn:
@@ -52,7 +52,7 @@ spec:                                                              spec:
     dependsOn:                                                         dependsOn:
     - kyverno-crds                                                     - kyverno-crds
   - name: coredns                                                    - name: coredns
-    version: 1.29.1                                                    version: 1.29.1
+    version: 1.29.1                                             |      version: 1.30.0
     dependsOn:                                                         dependsOn:
     - cilium                                                           - cilium
   - name: coredns-extensions                                         - name: coredns-extensions
@@ -60,7 +60,7 @@ spec:                                                              spec:
     dependsOn:                                                         dependsOn:
     - vertical-pod-autoscaler-crd                                      - vertical-pod-autoscaler-crd
   - name: etcd-defrag                                                - name: etcd-defrag
-    version: 1.2.4                                                     version: 1.2.4
+    version: 1.2.4                                              |      version: 1.2.6
     dependsOn:                                                         dependsOn:
     - kyverno-crds                                                     - kyverno-crds
   - name: etcd-k8s-res-count-exporter                                - name: etcd-k8s-res-count-exporter
@@ -80,11 +80,11 @@ spec:                                                              spec:
     dependsOn:                                                         dependsOn:
     - kyverno-crds                                                     - kyverno-crds
   - name: k8s-dns-node-cache                                         - name: k8s-dns-node-cache
-    version: 2.9.2                                                     version: 2.9.2
+    version: 2.9.2                                              |      version: 2.11.0
     dependsOn:                                                         dependsOn:
     - kyverno-crds                                                     - kyverno-crds
   - name: karpenter                                                  - name: karpenter
-    version: 2.1.0                                              |      version: 2.2.0
+    version: 2.1.0                                              |      version: 2.3.0
   - name: karpenter-crossplane-resources                             - name: karpenter-crossplane-resources
     version: 0.5.1                                                     version: 0.5.1
   - name: karpenter-taint-remover                                    - name: karpenter-taint-remover
@@ -124,7 +124,7 @@ spec:                                                              spec:
     - prometheus-operator-crd                                          - prometheus-operator-crd
   - name: security-bundle                                            - name: security-bundle
     catalog: giantswarm                                                catalog: giantswarm
-    version: 1.17.0                                                    version: 1.17.0
+    version: 1.17.0                                             |      version: 1.17.1
     dependsOn:                                                         dependsOn:
     - prometheus-operator-crd                                          - prometheus-operator-crd
   - name: teleport-kube-agent                                        - name: teleport-kube-agent
@@ -140,12 +140,12 @@ spec:                                                              spec:
   components:                                                        components:
   - name: cluster-aws                                                - name: cluster-aws
     catalog: cluster                                                   catalog: cluster
-    version: 7.4.0                                              |      version: 7.6.0
+    version: 7.4.0                                              |      version: 8.3.0
   - name: flatcar                                                    - name: flatcar
-    version: 4459.2.3                                           |      version: 4459.2.4
+    version: 4459.2.3                                           |      version: 4593.2.0
   - name: kubernetes                                                 - name: kubernetes
-    version: 1.34.5                                             |      version: 1.35.2
+    version: 1.34.5                                             |      version: 1.35.4
   - name: os-tooling                                                 - name: os-tooling
-    version: 1.26.4                                                    version: 1.26.4
-  date: "2026-03-02T15:01:14Z"                                  |    date: "2026-04-16T07:48:11Z"
+    version: 1.26.4                                             |      version: 1.28.0
+  date: "2026-03-02T15:01:14Z"                                  |    date: "2026-04-28T08:50:49Z"
   state: active                                                      state: active
