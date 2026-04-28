@@ -1,8 +1,16 @@
 releases:
+- name: ">= 34.2.0 < 35.0.0"
+  requests:
+  - name: security-bundle
+    version: ">= 1.17.1 < 1.18.0"
 - name: "< 34.0.0"
   requests:
   - name: cluster-azure
     version: "< 5.0.0"
+- name: ">= 33.3.0 < 34.0.0"
+  requests:
+  - name: security-bundle
+    version: ">= 1.17.1 < 1.18.0"
 - name: ">= 32.0.0"
   requests:
   - name: cilium
