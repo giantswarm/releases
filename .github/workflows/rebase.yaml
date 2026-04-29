@@ -1,0 +1,181 @@
+name: Rebase (Comment Trigger)
+
+# /rebase rebases the PR branch onto master and auto-resolves merge
+# conflicts in */releases.json and */kustomization.yaml by taking the
+# union of entries and re-sorting by semver. Any conflict outside those
+# two files aborts the rebase and leaves the PR untouched.
+
+on:
+  issue_comment:
+    types: [created]
+
+jobs:
+  rebase:
+    if: >-
+      github.event.issue.pull_request &&
+      startsWith(github.event.comment.body, '/rebase') &&
+      github.repository == 'giantswarm/releases' &&
+      (github.event.comment.author_association == 'MEMBER' || github.event.comment.author_association == 'OWNER' || github.event.comment.author_association == 'COLLABORATOR')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+      - name: Add eyes reaction
+        uses: actions/github-script@v9
+        with:
+          github-token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+          script: |
+            github.rest.reactions.createForIssueComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              comment_id: ${{ github.event.comment.id }},
+              content: 'eyes'
+            })
+
+      - name: Get PR branch
+        id: pr
+        uses: actions/github-script@v9
+        with:
+          github-token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+          script: |
+            const pr = await github.rest.pulls.get({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: ${{ github.event.issue.number }}
+            });
+            core.setOutput('branch', pr.data.head.ref);
+            core.setOutput('base', pr.data.base.ref);
+            core.setOutput('head_repo_full_name', pr.data.head.repo.full_name);
+            core.setOutput('same_repo', pr.data.head.repo.full_name === `${context.repo.owner}/${context.repo.repo}`);
+
+      - name: Refuse forks
+        if: steps.pr.outputs.same_repo != 'true'
+        uses: actions/github-script@v9
+        with:
+          github-token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+          script: |
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: ${{ github.event.issue.number }},
+              body: '`/rebase` is only supported for PRs from branches in this repo (not forks).'
+            });
+            await github.rest.reactions.createForIssueComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              comment_id: ${{ github.event.comment.id }},
+              content: '-1'
+            });
+            core.setFailed('fork PR');
+
+      - name: Checkout PR branch
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ steps.pr.outputs.branch }}
+          fetch-depth: 0
+          token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version-file: tools/rebase-resolver/go.mod
+
+      - name: Build resolver
+        run: |
+          cd tools/rebase-resolver
+          go build -o /tmp/rebase-resolver .
+
+      - name: Rebase onto base branch
+        id: rebase
+        env:
+          BASE: ${{ steps.pr.outputs.base }}
+        run: |
+          set -u
+          git config --global user.name 'taylorbot'
+          git config --global user.email 'dev@giantswarm.io'
+          git fetch origin "$BASE"
+
+          # Avoid editor prompts during rebase --continue.
+          export GIT_EDITOR=true
+          export GIT_SEQUENCE_EDITOR=true
+
+          if git rebase "origin/$BASE"; then
+            echo "status=clean" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          # Loop: try to auto-resolve each conflict stop with the resolver.
+          # If the resolver exits non-zero, it means there are conflicts in
+          # files it doesn't handle — abort the rebase and fail.
+          while [ -d .git/rebase-merge ] || [ -d .git/rebase-apply ]; do
+            if ! /tmp/rebase-resolver; then
+              echo "Resolver could not handle all conflicts, aborting rebase."
+              git rebase --abort || true
+              echo "status=unresolvable" >> "$GITHUB_OUTPUT"
+              exit 1
+            fi
+
+            if git diff --cached --quiet; then
+              # Resolver left nothing staged; this commit is now empty.
+              git rebase --skip || { git rebase --abort || true; exit 1; }
+            else
+              git rebase --continue || { git rebase --abort || true; exit 1; }
+            fi
+          done
+
+          echo "status=resolved" >> "$GITHUB_OUTPUT"
+
+      - name: Push rebased branch
+        if: steps.rebase.outputs.status == 'clean' || steps.rebase.outputs.status == 'resolved'
+        env:
+          BRANCH: ${{ steps.pr.outputs.branch }}
+        run: |
+          git push --force-with-lease origin "HEAD:$BRANCH"
+
+      - name: Comment success
+        if: steps.rebase.outputs.status == 'clean' || steps.rebase.outputs.status == 'resolved'
+        uses: actions/github-script@v9
+        with:
+          github-token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+          script: |
+            const status = '${{ steps.rebase.outputs.status }}';
+            const note = status === 'resolved'
+              ? 'Auto-resolved conflicts in `releases.json` / `kustomization.yaml` by taking the union and re-sorting by semver.'
+              : 'Rebased cleanly, no conflicts.';
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: ${{ github.event.issue.number }},
+              body: `:arrows_counterclockwise: Rebased onto \`${{ steps.pr.outputs.base }}\`.\n\n${note}`
+            });
+            await github.rest.reactions.createForIssueComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              comment_id: ${{ github.event.comment.id }},
+              content: '+1'
+            });
+
+      - name: Comment failure
+        if: failure()
+        uses: actions/github-script@v9
+        with:
+          github-token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+          script: |
+            const status = '${{ steps.rebase.outputs.status }}';
+            const body = status === 'unresolvable'
+              ? ':warning: **Rebase failed.**\n\nThere are conflicts in files outside `releases.json` / `kustomization.yaml` that I cannot safely auto-resolve. Please rebase manually.\n\nCheck the [workflow run](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}) for details.'
+              : ':warning: **Rebase failed.** See the [workflow run](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}) for details.';
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: ${{ github.event.issue.number }},
+              body: body
+            });
+            await github.rest.reactions.createForIssueComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              comment_id: ${{ github.event.comment.id }},
+              content: '-1'
+            });
