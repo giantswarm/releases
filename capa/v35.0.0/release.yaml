@@ -21,7 +21,8 @@ spec:
     - cloud-provider-aws
     - kyverno-crds
   - name: aws-pod-identity-webhook
-    version: 2.2.0
+    catalog: default-test
+    version: 2.2.0-e6844730181e4caf4769d30ef66274b9d477b84e
     dependsOn:
     - cert-manager
   - name: cert-exporter
