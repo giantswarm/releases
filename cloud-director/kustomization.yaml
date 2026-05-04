@@ -6,6 +6,7 @@ resources:
 - v34.1.0
 - v34.1.1
 - v34.1.2
+- v34.2.0
 transformers:
 - |
   apiVersion: builtin
