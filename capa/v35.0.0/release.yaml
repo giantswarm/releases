@@ -5,7 +5,7 @@ metadata:
 spec:
   apps:
   - name: aws-ebs-csi-driver
-    version: 4.2.0-f4142fd1ead2ee925574ca452f57b997b48402bd
+    version: 4.2.0
     catalog: default-test
     dependsOn:
     - cloud-provider-aws
