@@ -3,7 +3,7 @@ module github.com/giantswarm/releases/sdk
 go 1.26.0
 
 require (
-	github.com/Masterminds/semver/v3 v3.4.0
+	github.com/Masterminds/semver/v3 v3.5.0
 	github.com/giantswarm/microerror v0.4.1
 	github.com/google/go-github/v85 v85.0.0
 	github.com/onsi/ginkgo/v2 v2.28.3
