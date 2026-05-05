@@ -16,7 +16,7 @@ spec:
     dependsOn:
     - prometheus-operator-crd
   - name: aws-nth-bundle
-    version: 1.4.0-dc8ab8e297d392fd29661974373925636cd1a05d
+    version: 1.5.0
     catalog: default-test
     dependsOn:
     - cloud-provider-aws
