@@ -105,6 +105,81 @@ func TestParseCodeownersTeam(t *testing.T) {
 	}
 }
 
+func TestBuildTeamIssuesPayload(t *testing.T) {
+	findings := []FindingWithProvider{
+		{
+			Finding: Finding{
+				Severity: "high",
+				Title:    "`cilium` v1.3.4 does not declare support for Kubernetes v1.35.0",
+				Action:   "Bump cilium",
+				Team:     "team-cabbage",
+				AppName:  "cilium",
+			},
+			Provider: "aws",
+			Version:  "v35.0.0",
+		},
+		{
+			// Same app+team as above from a different provider — should dedupe.
+			Finding: Finding{
+				Severity: "high",
+				Title:    "`cilium` v1.3.4 does not declare support for Kubernetes v1.35.0",
+				Action:   "Bump cilium",
+				Team:     "team-cabbage",
+				AppName:  "cilium",
+			},
+			Provider: "azure",
+			Version:  "v35.0.0",
+		},
+		{
+			Finding: Finding{
+				Severity: "high",
+				Title:    "`cloud-provider-aws` v2.0.0 needs a new release for Kubernetes v1.35.0",
+				Action:   "Bump cloud-provider-aws",
+				Team:     "team-phoenix",
+				AppName:  "cloud-provider-aws",
+			},
+			Provider: "aws",
+			Version:  "v35.0.0",
+		},
+		{
+			// Finding without team — should be excluded.
+			Finding: Finding{
+				Severity:  "high",
+				Title:     "Kubernetes 1.35 deprecates v1beta1 FlowSchema",
+				Component: "Kubernetes",
+			},
+			Provider: "aws",
+			Version:  "v35.0.0",
+		},
+	}
+
+	payload := BuildTeamIssuesPayload(findings, "1.35.0")
+
+	if payload.KubernetesVersion != "1.35.0" {
+		t.Errorf("KubernetesVersion = %q, want %q", payload.KubernetesVersion, "1.35.0")
+	}
+	if payload.Version != "v35.0.0" {
+		t.Errorf("Version = %q, want %q", payload.Version, "v35.0.0")
+	}
+	if len(payload.Teams) != 2 {
+		t.Fatalf("Teams length = %d, want 2 (cabbage + phoenix)", len(payload.Teams))
+	}
+
+	// Sorted alphabetically: cabbage, phoenix
+	if payload.Teams[0].Team != "team-cabbage" {
+		t.Errorf("Teams[0] = %q, want team-cabbage", payload.Teams[0].Team)
+	}
+	if len(payload.Teams[0].Apps) != 1 {
+		t.Errorf("team-cabbage apps = %d, want 1 (deduped)", len(payload.Teams[0].Apps))
+	}
+	if payload.Teams[0].Apps[0].Version != "1.3.4" {
+		t.Errorf("cilium version = %q, want 1.3.4", payload.Teams[0].Apps[0].Version)
+	}
+	if payload.Teams[1].Team != "team-phoenix" {
+		t.Errorf("Teams[1] = %q, want team-phoenix", payload.Teams[1].Team)
+	}
+}
+
 func TestImplicitlyK8sCoupledAppsContainsCloudControllers(t *testing.T) {
 	required := []string{
 		"cloud-provider-aws",

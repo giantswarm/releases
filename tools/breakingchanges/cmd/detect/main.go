@@ -73,6 +73,28 @@ func main() {
 		os.Exit(1)
 	}
 
+	// Emit team-grouped issue payload for the issue-creation workflow step.
+	// The K8s version is the same across consolidated providers, so any
+	// release's YAML works as the source.
+	var k8sVersion string
+	for _, r := range releases {
+		if v := breakingchanges.ExtractKubernetesVersion(r.YAML); v != "" {
+			k8sVersion = v
+			break
+		}
+	}
+	teamPayload := breakingchanges.BuildTeamIssuesPayload(allFindings, k8sVersion)
+	if len(teamPayload.Teams) > 0 {
+		payloadBytes, err := json.MarshalIndent(teamPayload, "", "  ")
+		if err != nil {
+			fmt.Printf("Warning: failed to marshal team-issues payload: %v\n", err)
+		} else if err := os.WriteFile("team-issues.json", payloadBytes, 0644); err != nil {
+			fmt.Printf("Warning: failed to write team-issues.json: %v\n", err)
+		} else {
+			fmt.Printf("Wrote team-issues.json with %d team(s)\n", len(teamPayload.Teams))
+		}
+	}
+
 	// Set GitHub Actions output (using environment file method)
 	githubOutput := os.Getenv("GITHUB_OUTPUT")
 	if githubOutput != "" {

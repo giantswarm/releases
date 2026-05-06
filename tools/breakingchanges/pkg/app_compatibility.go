@@ -12,6 +12,21 @@ import (
 	"github.com/giantswarm/releases/sdk/api/v1alpha1"
 )
 
+// ExtractKubernetesVersion returns the target Kubernetes version declared in
+// a release.yaml. Empty string if it can't be parsed. Used by the cmd binary
+// to populate the JSON payload it writes for the issue-creation step.
+func ExtractKubernetesVersion(yamlContent string) string {
+	var rel v1alpha1.Release
+	if err := yaml.Unmarshal([]byte(yamlContent), &rel); err != nil {
+		return ""
+	}
+	v, err := rel.GetKubernetesVersion()
+	if err != nil {
+		return ""
+	}
+	return v
+}
+
 // implicitlyK8sCoupledApps lists apps known to need a new release for every
 // Kubernetes minor bump but which don't (yet) declare kubeVersion in their
 // chart. Each entry should be temporary: the long-term fix is to add a
