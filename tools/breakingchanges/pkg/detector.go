@@ -18,11 +18,13 @@ type Detector struct {
 	componentMappingDone bool
 
 	// Caches to avoid redundant fetches in consolidated PRs
-	flatcarCache     map[string]string // "fromVer->toVer" -> changelog
-	kubernetesCache  map[string]string // "fromVer->toVer" -> changelog
-	componentCache   map[string]string // "component@fromVer->toVer" -> diff
-	etcdVersionCache map[string]string // k8sVersion -> etcdVersion (from kubeadm constants)
-	etcdCache        map[string]string // "fromEtcd->toEtcd" -> filtered changelog
+	flatcarCache     map[string]string     // "fromVer->toVer" -> changelog
+	kubernetesCache  map[string]string     // "fromVer->toVer" -> changelog
+	componentCache   map[string]string     // "component@fromVer->toVer" -> diff
+	etcdVersionCache map[string]string     // k8sVersion -> etcdVersion (from kubeadm constants)
+	etcdCache        map[string]string     // "fromEtcd->toEtcd" -> filtered changelog
+	chartCache       map[string]*chartYAML // "app@version" -> parsed Chart.yaml (nil = negative cache)
+	helmIndexCache   map[string]*helmIndex // index.yaml URL -> parsed index (nil = negative cache)
 }
 
 // NewDetector creates a new Detector instance
@@ -43,6 +45,8 @@ func NewDetector(anthropicAPIKey, githubToken string) (*Detector, error) {
 		componentCache:       make(map[string]string),
 		etcdVersionCache:     make(map[string]string),
 		etcdCache:            make(map[string]string),
+		chartCache:           make(map[string]*chartYAML),
+		helmIndexCache:       make(map[string]*helmIndex),
 	}, nil
 }
 
@@ -136,6 +140,19 @@ func (d *Detector) AnalyzeMultipleReleases(ctx context.Context, releases []Relea
 		}
 	}
 
+	// Append deterministic app/Helm-chart kubeVersion findings per release.
+	// These don't go through the LLM — they're hard facts derived from the
+	// Chart.yaml the release pins.
+	for _, release := range releases {
+		for _, f := range d.checkAppKubernetesCompatibility(ctx, release) {
+			findingsWithProviders = append(findingsWithProviders, FindingWithProvider{
+				Finding:  f,
+				Provider: release.Provider,
+				Version:  release.Version,
+			})
+		}
+	}
+
 	fmt.Printf("\n✓ Consolidated analysis complete. Found %d breaking change(s) affecting %d provider(s)\n",
 		len(findings), len(releases))
 
@@ -168,6 +185,9 @@ func (d *Detector) AnalyzeRelease(ctx context.Context, release Release) ([]Findi
 
 	// Send to LLM for analysis
 	findings := d.analyzeAndAnnotateFindings(ctx, analysisContext, release)
+
+	// Append deterministic app/Helm-chart kubeVersion findings.
+	findings = append(findings, d.checkAppKubernetesCompatibility(ctx, release)...)
 
 	fmt.Printf("\n✓ Analysis complete. Found %d breaking change(s)\n", len(findings))
 	return findings, nil
