@@ -55,6 +55,72 @@ func TestEvaluateKubeVersionConstraint(t *testing.T) {
 	}
 }
 
+func TestParseCodeownersTeam(t *testing.T) {
+	cases := []struct {
+		name    string
+		content string
+		want    string
+	}{
+		{
+			name:    "single team",
+			content: "* @giantswarm/team-phoenix",
+			want:    "team-phoenix",
+		},
+		{
+			name: "skips comments and blank lines",
+			content: `# Owners
+# of this repo
+
+* @giantswarm/team-rocket
+`,
+			want: "team-rocket",
+		},
+		{
+			name:    "scoped path before team",
+			content: "/helm/ @giantswarm/team-cabbage",
+			want:    "team-cabbage",
+		},
+		{
+			name:    "first non-comment line wins",
+			content: "*.go @giantswarm/team-phoenix\n*.md @giantswarm/team-rocket",
+			want:    "team-phoenix",
+		},
+		{
+			name:    "no giantswarm team handle",
+			content: "* @some-user",
+			want:    "",
+		},
+		{
+			name:    "empty",
+			content: "",
+			want:    "",
+		},
+	}
+	for _, tc := range cases {
+		t.Run(tc.name, func(t *testing.T) {
+			if got := parseCodeownersTeam(tc.content); got != tc.want {
+				t.Errorf("parseCodeownersTeam = %q, want %q", got, tc.want)
+			}
+		})
+	}
+}
+
+func TestImplicitlyK8sCoupledAppsContainsCloudControllers(t *testing.T) {
+	required := []string{
+		"cloud-provider-aws",
+		"azure-cloud-controller-manager",
+		"azure-cloud-node-manager",
+		"cloud-provider-vsphere",
+		"cloud-provider-cloud-director",
+		"cloud-provider-proxmox",
+	}
+	for _, app := range required {
+		if !implicitlyK8sCoupledApps[app] {
+			t.Errorf("expected %q in implicitlyK8sCoupledApps fallback", app)
+		}
+	}
+}
+
 func TestIsExternalHelmRepo(t *testing.T) {
 	cases := map[string]bool{
 		"https://helm.cilium.io": true,

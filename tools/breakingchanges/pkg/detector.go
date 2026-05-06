@@ -25,6 +25,7 @@ type Detector struct {
 	etcdCache        map[string]string     // "fromEtcd->toEtcd" -> filtered changelog
 	chartCache       map[string]*chartYAML // "app@version" -> parsed Chart.yaml (nil = negative cache)
 	helmIndexCache   map[string]*helmIndex // index.yaml URL -> parsed index (nil = negative cache)
+	teamCache        map[string]string     // app name -> owning team (from CODEOWNERS, "" = unknown)
 }
 
 // NewDetector creates a new Detector instance
@@ -47,6 +48,7 @@ func NewDetector(anthropicAPIKey, githubToken string) (*Detector, error) {
 		etcdCache:            make(map[string]string),
 		chartCache:           make(map[string]*chartYAML),
 		helmIndexCache:       make(map[string]*helmIndex),
+		teamCache:            make(map[string]string),
 	}, nil
 }
 

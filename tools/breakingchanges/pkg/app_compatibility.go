@@ -3,6 +3,7 @@ package breakingchanges
 import (
 	"context"
 	"fmt"
+	"regexp"
 	"strings"
 
 	"github.com/Masterminds/semver/v3"
@@ -10,6 +11,19 @@ import (
 
 	"github.com/giantswarm/releases/sdk/api/v1alpha1"
 )
+
+// implicitlyK8sCoupledApps lists apps known to need a new release for every
+// Kubernetes minor bump but which don't (yet) declare kubeVersion in their
+// chart. Each entry should be temporary: the long-term fix is to add a
+// kubeVersion declaration to the corresponding chart and remove the entry.
+var implicitlyK8sCoupledApps = map[string]bool{
+	"cloud-provider-aws":             true,
+	"azure-cloud-controller-manager": true,
+	"azure-cloud-node-manager":       true,
+	"cloud-provider-vsphere":         true,
+	"cloud-provider-cloud-director":  true,
+	"cloud-provider-proxmox":         true,
+}
 
 // App Kubernetes-compatibility check.
 //
@@ -71,43 +85,138 @@ func (d *Detector) checkAppKubernetesCompatibility(ctx context.Context, release 
 		return nil
 	}
 
-	fmt.Printf("\nChecking app kubeVersion compatibility against Kubernetes v%s...\n", target.String())
+	// Detect whether this release crosses a Kubernetes minor boundary.
+	// The fallback list (implicitlyK8sCoupledApps) only fires on minor bumps
+	// since cloud-controllers don't need a new release for a patch upgrade.
+	isMinorBump := false
+	for _, vc := range extractKubernetesVersion(release.README) {
+		fromMinor := parseK8sMinorVersion(vc.FromVersion)
+		toMinor := parseK8sMinorVersion(vc.ToVersion)
+		if fromMinor != 0 && toMinor != 0 && fromMinor != toMinor {
+			isMinorBump = true
+		}
+		break
+	}
+
+	fmt.Printf("\nChecking app kubeVersion compatibility against Kubernetes v%s (minor bump: %v)...\n", target.String(), isMinorBump)
 
 	var findings []Finding
 	for _, app := range rel.Spec.Apps {
-		findings = append(findings, d.checkAppCharts(ctx, app, target)...)
+		findings = append(findings, d.checkAppCharts(ctx, app, target, isMinorBump)...)
 	}
 	fmt.Printf("✓ App compatibility check complete: %d finding(s)\n", len(findings))
 	return findings
 }
 
-func (d *Detector) checkAppCharts(ctx context.Context, app v1alpha1.ReleaseSpecApp, target *semver.Version) []Finding {
+func (d *Detector) checkAppCharts(ctx context.Context, app v1alpha1.ReleaseSpecApp, target *semver.Version, isK8sMinorBump bool) []Finding {
 	chart := d.fetchGSAppChart(ctx, app.Name, app.Version)
-	if chart == nil {
-		return nil
-	}
 
 	var findings []Finding
-	if chart.KubeVersion != "" {
+	hasDeclaredConstraint := false
+
+	if chart != nil && chart.KubeVersion != "" {
+		hasDeclaredConstraint = true
 		if f := evaluateKubeVersionConstraint(chart.KubeVersion, target, app.Name, app.Version, "Helm chart kubeVersion (giantswarm app)"); f != nil {
 			findings = append(findings, *f)
 		}
 	}
-	for _, dep := range chart.Dependencies {
-		if !isExternalHelmRepo(dep.Repository) {
-			continue
-		}
-		depKubeVer := d.fetchUpstreamKubeVersion(ctx, dep.Repository, dep.Name, dep.Version)
-		if depKubeVer == "" {
-			continue
-		}
-		component := fmt.Sprintf("%s (upstream %s)", app.Name, dep.Name)
-		source := fmt.Sprintf("Upstream chart kubeVersion (%s %s from %s)", dep.Name, dep.Version, dep.Repository)
-		if f := evaluateKubeVersionConstraint(depKubeVer, target, component, dep.Version, source); f != nil {
-			findings = append(findings, *f)
+	if chart != nil {
+		for _, dep := range chart.Dependencies {
+			if !isExternalHelmRepo(dep.Repository) {
+				continue
+			}
+			depKubeVer := d.fetchUpstreamKubeVersion(ctx, dep.Repository, dep.Name, dep.Version)
+			if depKubeVer == "" {
+				continue
+			}
+			hasDeclaredConstraint = true
+			component := fmt.Sprintf("%s (upstream %s)", app.Name, dep.Name)
+			source := fmt.Sprintf("Upstream chart kubeVersion (%s %s from %s)", dep.Name, dep.Version, dep.Repository)
+			if f := evaluateKubeVersionConstraint(depKubeVer, target, component, dep.Version, source); f != nil {
+				findings = append(findings, *f)
+			}
 		}
 	}
+
+	// Fallback for apps known to be implicitly coupled to Kubernetes that
+	// don't (yet) declare kubeVersion. Only fires on minor bumps.
+	if !hasDeclaredConstraint && isK8sMinorBump && implicitlyK8sCoupledApps[app.Name] {
+		findings = append(findings, makeImplicitlyCoupledFinding(app, target))
+	}
+
+	// Resolve owning team for any findings produced for this app.
+	if len(findings) > 0 {
+		team := d.fetchAppTeam(ctx, app.Name)
+		for i := range findings {
+			findings[i].Team = team
+			findings[i].AppName = app.Name
+		}
+	}
+
 	return findings
+}
+
+// makeImplicitlyCoupledFinding produces a finding for an app on the implicit
+// fallback list when no declared kubeVersion was found and the release crosses
+// a Kubernetes minor.
+func makeImplicitlyCoupledFinding(app v1alpha1.ReleaseSpecApp, target *semver.Version) Finding {
+	return Finding{
+		Severity:    "high",
+		Component:   app.Name,
+		Title:       fmt.Sprintf("`%s` v%s needs a new release for Kubernetes v%s", app.Name, app.Version, target.String()),
+		Description: fmt.Sprintf("`%s` is implicitly coupled to Kubernetes (no declared `kubeVersion`) and a new release is required for every Kubernetes minor bump.", app.Name),
+		Impact:      fmt.Sprintf("Cluster components managed by `%s` may not function correctly on Kubernetes v%s.", app.Name, target.String()),
+		Action:      fmt.Sprintf("Bump `%s` to a release built against Kubernetes v%s; long-term, add a `kubeVersion` to the chart so this fallback can be removed.", app.Name, target.String()),
+		Confidence:  "high",
+		Source:      "Implicit Kubernetes coupling (fallback list)",
+		RawText:     fmt.Sprintf("app %s has no declared kubeVersion", app.Name),
+	}
+}
+
+// fetchAppTeam looks up the owning team for an app by reading CODEOWNERS in
+// the giantswarm app repo. The first @giantswarm/team-* handle wins (the GS
+// convention is one team per repo). Returns "" when no team can be resolved.
+func (d *Detector) fetchAppTeam(ctx context.Context, appName string) string {
+	if cached, ok := d.teamCache[appName]; ok {
+		return cached
+	}
+
+	for _, repo := range d.candidateRepositories(appName) {
+		for _, branch := range []string{"main", "master"} {
+			for _, path := range []string{"CODEOWNERS", ".github/CODEOWNERS", "docs/CODEOWNERS"} {
+				url := fmt.Sprintf("https://raw.githubusercontent.com/giantswarm/%s/%s/%s", repo, branch, path)
+				body, err := d.fetchURL(ctx, url)
+				if err != nil {
+					continue
+				}
+				if team := parseCodeownersTeam(body); team != "" {
+					d.teamCache[appName] = team
+					return team
+				}
+			}
+		}
+	}
+
+	d.teamCache[appName] = ""
+	return ""
+}
+
+// codeownersTeamRe matches the first @giantswarm/team-* handle on a line.
+var codeownersTeamRe = regexp.MustCompile(`@giantswarm/(team-[A-Za-z0-9_-]+)`)
+
+// parseCodeownersTeam extracts the first @giantswarm/team-* handle from a
+// CODEOWNERS file body. Comment lines and blank lines are skipped.
+func parseCodeownersTeam(content string) string {
+	for _, line := range strings.Split(content, "\n") {
+		trimmed := strings.TrimSpace(line)
+		if trimmed == "" || strings.HasPrefix(trimmed, "#") {
+			continue
+		}
+		if match := codeownersTeamRe.FindStringSubmatch(trimmed); len(match) >= 2 {
+			return match[1]
+		}
+	}
+	return ""
 }
 
 // evaluateKubeVersionConstraint returns a Finding when the chart's kubeVersion
