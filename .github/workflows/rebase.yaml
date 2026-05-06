@@ -109,6 +109,13 @@ jobs:
           # Loop: try to auto-resolve each conflict stop with the resolver.
           # If the resolver exits non-zero, it means there are conflicts in
           # files it doesn't handle — abort the rebase and fail.
+          #
+          # `git rebase --continue` / `--skip` exits non-zero when it pauses
+          # again on a new conflict in a later commit. That is not a fatal
+          # error — the next loop iteration will run the resolver against the
+          # new conflicts. The loop terminates when `.git/rebase-merge` is
+          # gone (rebase finished) or when the resolver bails out.
+          last_head=""
           while [ -d .git/rebase-merge ] || [ -d .git/rebase-apply ]; do
             if ! /tmp/rebase-resolver; then
               echo "Resolver could not handle all conflicts, aborting rebase."
@@ -119,10 +126,22 @@ jobs:
 
             if git diff --cached --quiet; then
               # Resolver left nothing staged; this commit is now empty.
-              git rebase --skip || { git rebase --abort || true; exit 1; }
+              git rebase --skip || true
             else
-              git rebase --continue || { git rebase --abort || true; exit 1; }
+              git rebase --continue || true
             fi
+
+            # Safety net: detect a stuck rebase (no progress between
+            # iterations) so we don't spin forever if git ever exits
+            # non-zero for a non-conflict reason we didn't anticipate.
+            current_head="$(git rev-parse HEAD)"
+            if [ "$current_head" = "$last_head" ] && { [ -d .git/rebase-merge ] || [ -d .git/rebase-apply ]; }; then
+              echo "Rebase made no progress between iterations, aborting."
+              git rebase --abort || true
+              echo "status=unresolvable" >> "$GITHUB_OUTPUT"
+              exit 1
+            fi
+            last_head="$current_head"
           done
 
           echo "status=resolved" >> "$GITHUB_OUTPUT"
