@@ -1,15 +1,17 @@
 package breakingchanges
 
 type Finding struct {
-	Severity    string `json:"severity"`    // critical, high, medium, low
-	Component   string `json:"component"`   // e.g., "flatcar", "kubernetes", "cluster-azure"
-	Title       string `json:"title"`       // Brief description
-	Description string `json:"description"` // Detailed explanation
-	Impact      string `json:"impact"`      // Who/what is affected
-	Action      string `json:"action"`      // What users need to do
-	Confidence  string `json:"confidence"`  // high, medium, low
-	Source      string `json:"source"`      // Where this was found
-	RawText     string `json:"raw_text"`    // Original text that triggered detection
+	Severity    string `json:"severity"`       // critical, high, medium, low
+	Component   string `json:"component"`      // e.g., "flatcar", "kubernetes", "cluster-azure"
+	Title       string `json:"title"`          // Brief description
+	Description string `json:"description"`    // Detailed explanation
+	Impact      string `json:"impact"`         // Who/what is affected
+	Action      string `json:"action"`         // What users need to do
+	Confidence  string `json:"confidence"`     // high, medium, low
+	Source      string `json:"source"`         // Where this was found
+	RawText     string `json:"raw_text"`       // Original text that triggered detection
+	Team        string `json:"team,omitempty"` // Owning team (resolved from CODEOWNERS), set for app-compat findings
+	AppName     string `json:"app,omitempty"`  // App name (set for app-compat findings, used for team grouping)
 }
 
 type Release struct {
@@ -34,4 +36,3 @@ type ComponentMapping struct {
 	ChangelogURL   string // URL template for CHANGELOG
 	TagURL         string // URL template for releases
 }
-
