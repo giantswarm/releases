@@ -422,7 +422,11 @@ func formatGroupedFinding(index int, gf GroupedFinding) string {
 	}
 
 	sb.WriteString(fmt.Sprintf("#### %d. %s\n\n", index, f.Title))
-	sb.WriteString(fmt.Sprintf("`%s`%s\n\n", f.Component, confidence))
+	teamBadge := ""
+	if f.Team != "" {
+		teamBadge = fmt.Sprintf(" · owner: `%s`", f.Team)
+	}
+	sb.WriteString(fmt.Sprintf("`%s`%s%s\n\n", f.Component, teamBadge, confidence))
 
 	// Description
 	if f.Description != "" {
