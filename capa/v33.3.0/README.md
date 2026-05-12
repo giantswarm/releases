@@ -1,6 +1,6 @@
 # :zap: Giant Swarm Release v33.3.0 for CAPA :zap:
 
-<< Add description here >>
+Mitigates the "Dirty Frag" Linux kernel vulnerabilities (esp4/esp6, rxrpc) that could allow local privilege escalation and container escape on affected nodes.
 
 ## Changes compared to v33.2.0
 
