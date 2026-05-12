@@ -1,7 +1,7 @@
 apiVersion: release.giantswarm.io/v1alpha1
 kind: Release
 metadata:
-  name: capa-31.2.0
+  name: aws-31.2.0
 spec:
   apps:
   - name: aws-ebs-csi-driver
@@ -146,5 +146,5 @@ spec:
     version: 1.31.11
   - name: os-tooling
     version: 1.26.1
-  date: "2026-05-12T16:28:18Z"
+  date: "2026-05-12T16:33:09Z"
   state: active
