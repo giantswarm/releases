@@ -7,4 +7,5 @@ Mitigates the "Dirty Frag" Linux kernel vulnerabilities (esp4/esp6, rxrpc) that 
 ### Components
 
 - Flatcar from v4459.2.4 to [v4593.2.1](https://www.flatcar.org/releases/#release-4593.2.1)
+- os-tooling from v1.28.0 to v1.31.0
 
