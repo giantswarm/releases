@@ -145,6 +145,6 @@ spec:
   - name: kubernetes
     version: 1.31.11
   - name: os-tooling
-    version: 1.26.1
-  date: "2026-05-12T16:33:09Z"
+    version: 1.31.0
+  date: "2026-05-13T07:37:33Z"
   state: active

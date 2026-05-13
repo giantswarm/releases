@@ -9,6 +9,7 @@ Mitigates the "Dirty Frag" Linux kernel vulnerabilities (esp4/esp6, rxrpc) that 
 - cluster-aws from v3.6.2 to v3.8.0
 - cluster from v2.5.1 to v2.6.1
 - Flatcar from v4152.2.3 to [v4593.2.1](https://www.flatcar.org/releases/#release-4593.2.1)
+- os-tooling from v1.26.1 to v1.31.0
 
 ### cluster-aws [v3.6.2...v3.8.0](https://github.com/giantswarm/cluster-aws/compare/v3.6.2...v3.8.0)
 
