@@ -143,6 +143,6 @@ spec:                                                              spec:
   - name: kubernetes                                                 - name: kubernetes
     version: 1.33.6                                                    version: 1.33.6
   - name: os-tooling                                                 - name: os-tooling
-    version: 1.26.2                                                    version: 1.26.2
-  date: "2026-04-21T13:45:36Z"                                  |    date: "2026-05-12T16:50:17Z"
+    version: 1.26.2                                             |      version: 1.31.0
+  date: "2026-04-21T13:45:36Z"                                  |    date: "2026-05-13T07:34:25Z"
   state: active                                                      state: active
