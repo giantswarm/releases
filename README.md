@@ -180,7 +180,7 @@ to all Giant Swarm installations.
   - v33.2
     - [v33.2.0](https://github.com/giantswarm/releases/tree/master/azure/v33.2.0)
   - v33.1
-    - [v33.1.1](https://github.com/giantswarm/releases/tree/master/azure/v33.1.1)
+    - [v33.1.1](https://github.com/giantswarm/releases/tree/master/azure/archived/v33.1.1)
     - [v33.1.0](https://github.com/giantswarm/releases/tree/master/azure/archived/v33.1.0)
   - v33.0
     - [v33.0.1](https://github.com/giantswarm/releases/tree/master/azure/archived/v33.0.1)
@@ -371,7 +371,7 @@ to all Giant Swarm installations.
   - v33.2
     - [v33.2.0](https://github.com/giantswarm/releases/tree/master/vsphere/v33.2.0)
   - v33.1
-    - [v33.1.1](https://github.com/giantswarm/releases/tree/master/vsphere/v33.1.1)
+    - [v33.1.1](https://github.com/giantswarm/releases/tree/master/vsphere/archived/v33.1.1)
     - [v33.1.0](https://github.com/giantswarm/releases/tree/master/vsphere/archived/v33.1.0)
   - v33.0
     - [v33.0.1](https://github.com/giantswarm/releases/tree/master/vsphere/archived/v33.0.1)
