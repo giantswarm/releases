@@ -152,7 +152,7 @@ spec:
   components:
   - name: cluster-aws
     catalog: cluster-test
-    version: 8.3.0-27e3b92580f001e74c935a29e606809758be8579
+    version: 8.4.0-23bad6e9a174c7a3846883fd00fe750c395f7fa9
   - name: flatcar
     version: 4459.2.3
   - name: kubernetes
