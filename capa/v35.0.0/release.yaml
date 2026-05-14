@@ -122,7 +122,7 @@ spec:
   - name: node-problem-detector
     version: 0.5.2
   - name: observability-bundle
-    version: 2.8.0-43591965ee7698d5dc39b870b3abbdf16d393309
+    version: 2.8.0-1a9d7e0337ae4d9f299f6b836f051ab78edc2c98
     catalog: default-test
   - name: observability-policies
     version: 0.0.4
@@ -136,7 +136,7 @@ spec:
     - prometheus-operator-crd
   - name: security-bundle
     catalog: default-test
-    version: 1.17.0-a1ef9f19d8c02c4cd64a5fef5e44e2a86bb248c6
+    version: 1.17.1-600105329acd516d03960156ba3f19e8e8d9a014
     dependsOn:
     - prometheus-operator-crd
   - name: teleport-kube-agent
