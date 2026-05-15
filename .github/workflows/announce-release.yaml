@@ -198,8 +198,8 @@ jobs:
               if wget -q "$LINK" -O "announcement_${PROVIDER}.md"; then
                 ANNOUNCEMENT_TEXT=$(cat "announcement_${PROVIDER}.md")
               else
-                echo "Failed to download announcement for $PROVIDER from $LINK"
-                ANNOUNCEMENT_TEXT="Release announcement not available for $PROVIDER ${{ inputs.version }}"
+                echo "No announcement found for $PROVIDER ${{ inputs.version }} - skipping"
+                continue
               fi
             fi
 
@@ -242,8 +242,9 @@ jobs:
           ANNOUNCEMENT=$(echo "$ANNOUNCEMENTS" | jq -r ".[\"$PROVIDER\"]")
 
           if [[ "$ANNOUNCEMENT" == "null" || -z "$ANNOUNCEMENT" ]]; then
-            echo "No announcement found for provider: $PROVIDER"
-            exit 1
+            echo "No announcement found for provider: $PROVIDER - skipping Slack post"
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+            exit 0
           fi
 
           # Convert standard Markdown to Slack mrkdwn:
@@ -257,6 +258,7 @@ jobs:
           echo "EOF" >> "$GITHUB_OUTPUT"
 
       - name: Write announcements
+        if: steps.get_provider_announcement.outputs.skip != 'true'
         uses: slackapi/slack-github-action@v3.0.3
         with:
           method: chat.postMessage
