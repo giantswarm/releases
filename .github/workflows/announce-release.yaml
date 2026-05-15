@@ -59,7 +59,7 @@ jobs:
     outputs:
       provider_channels: ${{ steps.collect.outputs.provider_channels }}
     env:
-      GH_TOKEN: ${{ secrets.ANNOUNCE_NOTIFY_TOKEN }}
+      GH_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
     steps:
       - name: Checkout installations code
         uses: actions/checkout@v6
@@ -67,7 +67,7 @@ jobs:
           repository: giantswarm/installations
           path: installations
           ref: master
-          token: ${{ secrets.ANNOUNCE_NOTIFY_TOKEN }}
+          token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
       - name: Collect channels
         id: collect
         run: |
