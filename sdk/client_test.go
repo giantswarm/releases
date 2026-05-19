@@ -55,7 +55,7 @@ var _ = Describe("Client", func() {
 
 		// Now create Release client
 		httpTestClient := server.Client()
-		gitHubClient, err := github.NewClient(httpTestClient).WithEnterpriseURLs(gitHubApiBaseName, "")
+		gitHubClient, err := github.NewClient(github.WithHTTPClient(httpTestClient), github.WithEnterpriseURLs(gitHubApiBaseName, gitHubApiBaseName))
 		Expect(err).NotTo(HaveOccurred())
 
 		releasesClient, err = NewClientWithGitHubClient(gitHubClient)

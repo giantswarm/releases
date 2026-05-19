@@ -30,7 +30,10 @@ func NewClientWithHttpClient(httpClient *http.Client) (*Client, error) {
 	if httpClient == nil {
 		return nil, microerror.Maskf(InvalidConfigError, "gitHubClient must be specified")
 	}
-	gitHubClient := github.NewClient(httpClient)
+	gitHubClient, err := github.NewClient(github.WithHTTPClient(httpClient))
+	if err != nil {
+		return nil, microerror.Mask(err)
+	}
 
 	return &Client{
 		gitHubClient,
@@ -50,9 +53,13 @@ func NewClientWithGitHubClient(gitHubClient *github.Client) (*Client, error) {
 // NewClientWithGitHubToken creates a releases Client that is internally using a GitHub client which is created with the specified
 // GitHub token.
 func NewClientWithGitHubToken(gitHubToken string) *Client {
-	gitHubClient := github.NewClient(nil)
+	var opts []github.ClientOptionsFunc
 	if gitHubToken != "" {
-		gitHubClient = gitHubClient.WithAuthToken(gitHubToken)
+		opts = append(opts, github.WithAuthToken(gitHubToken))
+	}
+	gitHubClient, err := github.NewClient(opts...)
+	if err != nil {
+		panic(fmt.Sprintf("failed to create GitHub client: %v", err))
 	}
 
 	return &Client{
