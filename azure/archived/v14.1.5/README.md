@@ -70,6 +70,3 @@ _Nothing has changed._
 - React to `Preempt`, `Reboot` and `Redeploy` events to drain nodes properly.
 #### Change
 - Use the `NotBefore` field from the event to calculate drain timeout.
-
-
-

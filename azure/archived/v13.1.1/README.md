@@ -10,6 +10,3 @@ There is no need to upgrade existing workload clusters to this release.
 
 #### Fixed
 - Ensure the management cluster's network space is never used for workload clusters.
-
-
-

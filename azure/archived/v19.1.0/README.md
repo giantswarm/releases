@@ -229,6 +229,3 @@ _Nothing has changed._
 #### Changed
 - Update to `kyverno` (app) version 0.14.7, introducing exception mechanisms for `chart-operator` and restricting wildcards for Kinds.
 - Disabled the default apps `falco`, `trivy`, `trivy-operator` and `starboard-exporter`. This apps can be manually enabled.
-
-
-

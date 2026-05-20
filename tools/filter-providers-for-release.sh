@@ -140,4 +140,3 @@ if [ ${#INCLUDED_PROVIDERS[@]} -eq 0 ]; then
     echo "ERROR: No providers can be included in this release!"
     exit 1
 fi
-

@@ -152,4 +152,3 @@ func deduplicateVersionChanges(changes []VersionChange) []VersionChange {
 
 	return deduplicated
 }
-

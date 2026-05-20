@@ -196,6 +196,3 @@ Not found
 
 #### Changed
 - Disable PSPs for k8s 1.25 and newer.
-
-
-

@@ -207,4 +207,3 @@ Please refer to the [upstream changelog](https://www.flatcar.org/releases/#stabl
 
 #### Added
 - First release featuring upstream version 1.21.4.
-

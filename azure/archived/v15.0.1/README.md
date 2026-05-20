@@ -23,6 +23,3 @@ _Nothing has changed._
 _Nothing has changed._
 #### Removed
 _Nothing has changed._
-
-
-

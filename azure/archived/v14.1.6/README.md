@@ -8,5 +8,3 @@ This release downgrades Flatcar Container Linux in order to debug connectivity i
 ### containerlinux [2605.12.0](https://www.flatcar-linux.org/releases/#release-2605.12.0)
 
 Reverted flatcar to previous version.
-
-

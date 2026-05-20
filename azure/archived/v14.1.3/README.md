@@ -28,6 +28,3 @@ The draining process of the nodes has been improved as well.
 - Ensure to wait long enough when draining a node before considering the node drained.
 #### Changed
 - Change drain timeout to 15 minutes.
-
-
-

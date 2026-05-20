@@ -74,4 +74,3 @@ runs:
         echo "LOG_CONTENT<<EOF" >> "$GITHUB_ENV"
         echo "$FORMATTED" >> "$GITHUB_ENV"
         echo "EOF" >> "$GITHUB_ENV"
-

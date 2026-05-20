@@ -43,4 +43,3 @@ This release updates the components, keeping them up to date with Vintage AWS v2
 #### Changed
 - Fix regression setting Policy BPF Max map policyMapMax back to 65536 from 16384.
 - Upgrade cilium to v1.15.6.
-

@@ -163,5 +163,3 @@ if $version_inserted; then
 else
     echo "Warning: Could not automatically insert ${RELEASE_VERSION} into README.md. Manual update required." >&2
 fi
-
-

@@ -27,4 +27,3 @@ Mitigates the "Dirty Frag" Linux kernel vulnerabilities (esp4/esp6, rxrpc) that 
 #### Changed
 
 - Values: Fix schema. ([#580](https://github.com/giantswarm/cluster/pull/580))
-

@@ -585,4 +585,3 @@ Updates README.md with new release version in the appropriate table.
 - `tools/update-readme.sh`: README updates
 - `tools/check-new-k8s-version-exists.sh`: K8s version validation
 - `tools/breakingchanges/`: Breaking change detection
-

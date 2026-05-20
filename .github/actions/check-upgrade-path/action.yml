@@ -41,4 +41,3 @@ runs:
           echo "No providers specified, skipping upgrade path check"
           echo "has_warning=false" >> "$GITHUB_OUTPUT"
         fi
-
