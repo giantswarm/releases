@@ -26,6 +26,3 @@ Warning: to avoid downtimes in the ingress-based workloads, before upgrading to 
 
 #### Fixed
 - Disable helm hook for new installations of the chart.
-
-
-

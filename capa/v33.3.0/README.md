@@ -15,4 +15,3 @@ Mitigates the "Dirty Frag" Linux kernel vulnerabilities (esp4/esp6, rxrpc) that 
 #### Changed
 
 - Support newer Flatcar versions which require a larger root volume size. For ease of migration, enforce at least 15 GB even if a smaller, explicit size is specified in chart values.
-

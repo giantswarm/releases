@@ -100,6 +100,3 @@ _Nothing has changed._
 
 #### Add
 - Allow `application.giantswarm.io/team` label.
-
-
-

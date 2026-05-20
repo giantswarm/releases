@@ -11,5 +11,3 @@ This is a bug fix release to handle a problem during upgrades we found in releas
 #### Added
 
 - Deal with AzureClusterConfig CR to avoid cluster operator conflict.
-
-

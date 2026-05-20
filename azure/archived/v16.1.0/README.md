@@ -112,6 +112,3 @@ Please check details in the [upstream changelog page](https://github.com/etcd-io
 
 #### Added
 - Added basic prometheus exporter.
-
-
-

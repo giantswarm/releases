@@ -35,4 +35,3 @@ Please analyse the release notes of all components upgrades below:
 - Check changelog starting from [1.3.0](https://github.com/giantswarm/node-exporter-app/blob/master/CHANGELOG.md#170---2020-11-26)
 ### net-exporter [1.9.2](https://github.com/giantswarm/net-exporter/blob/master/CHANGELOG.md#192---2020-08-21)
 - Check changelog starting from [1.9.0](https://github.com/giantswarm/net-exporter/blob/master/CHANGELOG.md#192---2020-08-21)
-

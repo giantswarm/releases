@@ -9,6 +9,3 @@ This release provides security hardening of app-operator to tighten RBAC permiss
 
 #### Fixed
 - Add missing permissions for `apps/deployments`.
-
-
-

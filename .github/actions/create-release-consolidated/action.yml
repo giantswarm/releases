@@ -115,4 +115,3 @@ runs:
         echo "PROVIDER_LABELS<<EOF" >> "$GITHUB_OUTPUT"
         echo "$PROVIDER_LABELS" >> "$GITHUB_OUTPUT"
         echo "EOF" >> "$GITHUB_OUTPUT"
-

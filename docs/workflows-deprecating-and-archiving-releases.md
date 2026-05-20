@@ -236,4 +236,3 @@ To add a new provider, update the `PROVIDERS` variable in both workflow files.
 - `tools/check-release-archive.sh`: Safety validation for archiving
 - `<provider>/releases.json`: Provider-specific release metadata
 - `<provider>/<version>/release.yaml`: Individual release configuration
-

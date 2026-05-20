@@ -53,6 +53,3 @@ _Nothing has changed._
 - Remove support for Kubernetes <= 1.18.
 #### Fixed
 - Fix dry-run option.
-
-
-

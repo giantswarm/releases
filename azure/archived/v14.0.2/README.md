@@ -12,6 +12,3 @@ Upgrade from 14.0.1 to 14.0.2 will only roll the apps.
 - Ensure to wait long enough when draining a node before considering the node drained.
 #### Changed
 - Change drain timeout to 15 minutes.
-
-
-

@@ -188,6 +188,3 @@ Updated from version 1.19.10.
 #### Changed
 - Update cluster-autoscaler to version 1.20.0.
 - Set docker.io as the default registry
-
-
-

@@ -35,6 +35,3 @@ This Workload Cluster release upgrades Kubernetes to 1.21.5 in order to fix [CVE
 - google.golang.org/protobuf: v1.25.0 → v1.26.0
 #### Removed
 - github.com/willf/bitset: [v1.1.11](https://github.com/willf/bitset/tree/v1.1.11)
-
-
-

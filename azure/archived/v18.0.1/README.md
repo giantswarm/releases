@@ -9,6 +9,3 @@ Upgrading to this release from 18.0.0 will not require rolling of nodes.
 
 #### Fixed
 - Use `AzureConfig`'s `Spec.Azure.VirtualNetwork.CalicoSubnetCIDR` field for Calico CIDR rather than `Spec.Cluster.Calico.Subnet`.
-
-
-

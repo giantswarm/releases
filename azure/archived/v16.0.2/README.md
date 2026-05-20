@@ -87,5 +87,3 @@ This release includes the fix for the following Linux Kernel CVE advisories: CVE
 #### Fixed
 
 - Fix RBAC for cluster autoscaler 1.21.
-
-

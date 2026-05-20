@@ -211,6 +211,3 @@ Upgraded from 1.7.0.
 This upgrade provides an improved helm chart.
 
 Please refer to the [changelog](https://github.com/giantswarm/kube-state-metrics-app/blob/master/CHANGELOG.md) for all the details.
-
-
-

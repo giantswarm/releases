@@ -119,6 +119,3 @@ _Changes since **Stable 3374.2.2**_
 #### Changed
 - Upgrade `prometheus-operator-app` to 3.0.0.
 - Upgrade `prometheus-operator-crd` to 3.0.0.
-
-
-
