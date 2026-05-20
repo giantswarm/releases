@@ -6,7 +6,7 @@ import (
 	"time"
 
 	"github.com/Masterminds/semver/v3"
-	"github.com/google/go-github/v86/github"
+	"github.com/google/go-github/v87/github"
 	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
 
@@ -22,7 +22,7 @@ var _ = Describe("Builder", func() {
 
 		// Now create Release client
 		httpTestClient := server.Client()
-		gitHubClient, err := github.NewClient(httpTestClient).WithEnterpriseURLs(gitHubApiBaseName, "")
+		gitHubClient, err := github.NewClient(github.WithHTTPClient(httpTestClient), github.WithEnterpriseURLs(gitHubApiBaseName, gitHubApiBaseName))
 		Expect(err).NotTo(HaveOccurred())
 
 		releasesClient, err := NewClientWithGitHubClient(gitHubClient)

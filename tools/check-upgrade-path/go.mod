@@ -1,6 +1,6 @@
 module github.com/giantswarm/releases/tools/check-upgrade-path
 
-go 1.25.5
+go 1.26.3
 
 require (
 	github.com/Masterminds/semver/v3 v3.5.0
