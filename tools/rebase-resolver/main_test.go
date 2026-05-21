@@ -23,7 +23,7 @@ const theirsReleases = `{
 }`
 
 func TestMergeReleasesJSON_UnionAndSort(t *testing.T) {
-	merged, err := mergeReleasesJSON([]byte(oursReleases), []byte(theirsReleases))
+	merged, err := mergeReleasesJSON(nil, []byte(oursReleases), []byte(theirsReleases))
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
@@ -47,7 +47,7 @@ func TestMergeReleasesJSON_PrefersTheirsOnVersionCollision(t *testing.T) {
 	ours := `{"releases": [{"version": "1.0.0", "isDeprecated": false, "releaseTimestamp": "2020", "changelogUrl": "old", "isStable": false}]}`
 	theirs := `{"releases": [{"version": "1.0.0", "isDeprecated": true,  "releaseTimestamp": "2021", "changelogUrl": "new", "isStable": true}]}`
 
-	merged, err := mergeReleasesJSON([]byte(ours), []byte(theirs))
+	merged, err := mergeReleasesJSON(nil, []byte(ours), []byte(theirs))
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
@@ -69,7 +69,7 @@ func TestMergeReleasesJSON_SortsBySemverNotLex(t *testing.T) {
 	ours := `{"releases": [{"version": "9.0.0", "isDeprecated": false, "releaseTimestamp": "", "changelogUrl": "", "isStable": true}]}`
 	theirs := `{"releases": [{"version": "10.0.0", "isDeprecated": false, "releaseTimestamp": "", "changelogUrl": "", "isStable": true}]}`
 
-	merged, err := mergeReleasesJSON([]byte(ours), []byte(theirs))
+	merged, err := mergeReleasesJSON(nil, []byte(ours), []byte(theirs))
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
@@ -77,6 +77,111 @@ func TestMergeReleasesJSON_SortsBySemverNotLex(t *testing.T) {
 	_ = json.Unmarshal(merged, &got)
 	if got.Releases[0].Version != "9.0.0" || got.Releases[1].Version != "10.0.0" {
 		t.Errorf("semver sort wrong, got %s then %s", got.Releases[0].Version, got.Releases[1].Version)
+	}
+}
+
+// Regression for "rebase reintroduces archived releases": when base
+// (ours) removes an entry that was in the ancestor and the PR
+// (theirs) didn't touch it, the entry must stay removed.
+func TestMergeReleasesJSON_3way_DropsEntryRemovedByBase(t *testing.T) {
+	ancestor := `{"releases": [
+    {"version": "33.1.1", "isDeprecated": false, "releaseTimestamp": "", "changelogUrl": "", "isStable": true},
+    {"version": "33.2.0", "isDeprecated": false, "releaseTimestamp": "", "changelogUrl": "", "isStable": true}
+  ]}`
+	ours := `{"releases": [
+    {"version": "33.2.0", "isDeprecated": false, "releaseTimestamp": "", "changelogUrl": "", "isStable": true}
+  ]}`
+	theirs := `{"releases": [
+    {"version": "33.1.1", "isDeprecated": false, "releaseTimestamp": "", "changelogUrl": "", "isStable": true},
+    {"version": "33.2.0", "isDeprecated": false, "releaseTimestamp": "", "changelogUrl": "", "isStable": true},
+    {"version": "35.0.0", "isDeprecated": false, "releaseTimestamp": "", "changelogUrl": "", "isStable": true}
+  ]}`
+
+	merged, err := mergeReleasesJSON([]byte(ancestor), []byte(ours), []byte(theirs))
+	if err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+	var got releasesFile
+	if err := json.Unmarshal(merged, &got); err != nil {
+		t.Fatalf("invalid JSON: %v", err)
+	}
+	versions := make([]string, len(got.Releases))
+	for i, r := range got.Releases {
+		versions[i] = r.Version
+	}
+	want := []string{"33.2.0", "35.0.0"}
+	if !equalSlices(versions, want) {
+		t.Errorf("versions = %v, want %v (33.1.1 was archived on base and must stay archived)", versions, want)
+	}
+}
+
+func TestMergeReleasesJSON_3way_DropsEntryRemovedByPR(t *testing.T) {
+	ancestor := `{"releases": [
+    {"version": "1.0.0", "isDeprecated": false, "releaseTimestamp": "", "changelogUrl": "", "isStable": true},
+    {"version": "2.0.0", "isDeprecated": false, "releaseTimestamp": "", "changelogUrl": "", "isStable": true}
+  ]}`
+	ours := `{"releases": [
+    {"version": "1.0.0", "isDeprecated": false, "releaseTimestamp": "", "changelogUrl": "", "isStable": true},
+    {"version": "2.0.0", "isDeprecated": false, "releaseTimestamp": "", "changelogUrl": "", "isStable": true}
+  ]}`
+	theirs := `{"releases": [
+    {"version": "2.0.0", "isDeprecated": false, "releaseTimestamp": "", "changelogUrl": "", "isStable": true}
+  ]}`
+
+	merged, err := mergeReleasesJSON([]byte(ancestor), []byte(ours), []byte(theirs))
+	if err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+	var got releasesFile
+	if err := json.Unmarshal(merged, &got); err != nil {
+		t.Fatalf("invalid JSON: %v", err)
+	}
+	versions := make([]string, len(got.Releases))
+	for i, r := range got.Releases {
+		versions[i] = r.Version
+	}
+	want := []string{"2.0.0"}
+	if !equalSlices(versions, want) {
+		t.Errorf("versions = %v, want %v (PR removed 1.0.0; deletion must be honored)", versions, want)
+	}
+}
+
+// Regression for "trailing top-level metadata fields disappear on
+// rebase": sourceUrl, changelogUrl, homepage must round-trip.
+func TestMergeReleasesJSON_PreservesTopLevelMetadata(t *testing.T) {
+	ours := `{
+  "releases": [
+    {"version": "1.0.0", "isDeprecated": false, "releaseTimestamp": "", "changelogUrl": "x", "isStable": true}
+  ],
+  "sourceUrl": "https://github.com/giantswarm/releases",
+  "changelogUrl": "https://github.com/giantswarm/releases/blob/main/README.md",
+  "homepage": "https://giantswarm.io"
+}`
+	theirs := `{
+  "releases": [
+    {"version": "2.0.0", "isDeprecated": false, "releaseTimestamp": "", "changelogUrl": "x", "isStable": true}
+  ],
+  "sourceUrl": "https://github.com/giantswarm/releases",
+  "changelogUrl": "https://github.com/giantswarm/releases/blob/main/README.md",
+  "homepage": "https://giantswarm.io"
+}`
+
+	merged, err := mergeReleasesJSON(nil, []byte(ours), []byte(theirs))
+	if err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+	var got releasesFile
+	if err := json.Unmarshal(merged, &got); err != nil {
+		t.Fatalf("invalid JSON: %v", err)
+	}
+	if got.SourceUrl != "https://github.com/giantswarm/releases" {
+		t.Errorf("sourceUrl not preserved: %q", got.SourceUrl)
+	}
+	if got.ChangelogUrl != "https://github.com/giantswarm/releases/blob/main/README.md" {
+		t.Errorf("changelogUrl not preserved: %q", got.ChangelogUrl)
+	}
+	if got.Homepage != "https://giantswarm.io" {
+		t.Errorf("homepage not preserved: %q", got.Homepage)
 	}
 }
 
@@ -103,7 +208,7 @@ transformers:
 `
 
 func TestMergeKustomization_UnionAndSort(t *testing.T) {
-	merged, err := mergeKustomization([]byte(oursKustomization), []byte(theirsKustomization))
+	merged, err := mergeKustomization(nil, []byte(oursKustomization), []byte(theirsKustomization))
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
@@ -111,7 +216,7 @@ func TestMergeKustomization_UnionAndSort(t *testing.T) {
 	var got struct {
 		CommonAnnotations map[string]string `yaml:"commonAnnotations"`
 		Resources         []string          `yaml:"resources"`
-		Transformers     []string          `yaml:"transformers"`
+		Transformers      []string          `yaml:"transformers"`
 	}
 	if err := yaml.Unmarshal(merged, &got); err != nil {
 		t.Fatalf("merged output is not valid YAML: %v\n%s", err, merged)
@@ -134,12 +239,11 @@ func TestMergeKustomization_PreservesColumnZeroListStyle(t *testing.T) {
 	ours := "commonAnnotations:\n  giantswarm.io/docs: x\nresources:\n- v33.1.4\n- v33.2.0\ntransformers:\n- |\n  apiVersion: builtin\n"
 	theirs := "commonAnnotations:\n  giantswarm.io/docs: x\nresources:\n- v33.1.4\n- v34.0.0\ntransformers:\n- |\n  apiVersion: builtin\n"
 
-	merged, err := mergeKustomization([]byte(ours), []byte(theirs))
+	merged, err := mergeKustomization(nil, []byte(ours), []byte(theirs))
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
 	got := string(merged)
-	// The merged resources must be at column zero, not indented.
 	want := "resources:\n- v33.1.4\n- v33.2.0\n- v34.0.0\ntransformers:"
 	if !strings.Contains(got, want) {
 		t.Errorf("expected column-zero list style preserved.\n--- want contains ---\n%s\n--- got ---\n%s", want, got)
@@ -150,7 +254,7 @@ func TestMergeKustomization_DedupSameVersion(t *testing.T) {
 	ours := "resources:\n- v1.0.0\n- v2.0.0\n"
 	theirs := "resources:\n- v1.0.0\n- v2.0.0\n- v3.0.0\n"
 
-	merged, err := mergeKustomization([]byte(ours), []byte(theirs))
+	merged, err := mergeKustomization(nil, []byte(ours), []byte(theirs))
 	if err != nil {
 		t.Fatalf("unexpected error: %v", err)
 	}
@@ -161,6 +265,48 @@ func TestMergeKustomization_DedupSameVersion(t *testing.T) {
 	want := []string{"v1.0.0", "v2.0.0", "v3.0.0"}
 	if !equalSlices(got.Resources, want) {
 		t.Errorf("resources = %v, want %v", got.Resources, want)
+	}
+}
+
+// Regression for "rebase reintroduces archived resources" in the
+// kustomization.yaml resources list.
+func TestMergeKustomization_3way_DropsResourceRemovedByBase(t *testing.T) {
+	ancestor := "resources:\n- v33.1.1\n- v33.2.0\n"
+	ours := "resources:\n- v33.2.0\n"
+	theirs := "resources:\n- v33.1.1\n- v33.2.0\n- v35.0.0\n"
+
+	merged, err := mergeKustomization([]byte(ancestor), []byte(ours), []byte(theirs))
+	if err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+	var got struct {
+		Resources []string `yaml:"resources"`
+	}
+	if err := yaml.Unmarshal(merged, &got); err != nil {
+		t.Fatalf("invalid YAML: %v", err)
+	}
+	want := []string{"v33.2.0", "v35.0.0"}
+	if !equalSlices(got.Resources, want) {
+		t.Errorf("resources = %v, want %v (v33.1.1 was archived on base)", got.Resources, want)
+	}
+}
+
+func TestMergeKustomization_3way_DropsResourceRemovedByPR(t *testing.T) {
+	ancestor := "resources:\n- v1.0.0\n- v2.0.0\n"
+	ours := "resources:\n- v1.0.0\n- v2.0.0\n- v3.0.0\n"
+	theirs := "resources:\n- v2.0.0\n"
+
+	merged, err := mergeKustomization([]byte(ancestor), []byte(ours), []byte(theirs))
+	if err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+	var got struct {
+		Resources []string `yaml:"resources"`
+	}
+	_ = yaml.Unmarshal(merged, &got)
+	want := []string{"v2.0.0", "v3.0.0"}
+	if !equalSlices(got.Resources, want) {
+		t.Errorf("resources = %v, want %v (PR removed v1.0.0)", got.Resources, want)
 	}
 }
 
