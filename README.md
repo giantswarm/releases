@@ -443,6 +443,8 @@ to all Giant Swarm installations.
 ## VMware Cloud Director
 
 - v34
+  - v34.4
+    - [v34.4.0](https://github.com/giantswarm/releases/tree/master/cloud-director/v34.4.0)
   - v34.3
     - [v34.3.0](https://github.com/giantswarm/releases/tree/master/cloud-director/v34.3.0)
   - v34.2
