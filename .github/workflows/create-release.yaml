@@ -67,7 +67,7 @@ jobs:
       force_consolidated: ${{ steps.dispatcher.outputs.force_consolidated }}
       provider_count: ${{ steps.dispatcher.outputs.provider_count }}
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
 
       - name: Get provider lists
         id: providers
@@ -186,7 +186,7 @@ jobs:
       version_override: ${{ needs.dispatcher.outputs.version_override }}
       release_type: ${{ needs.dispatcher.outputs.release_type }}
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
       - id: decider
         run: |
           IS_MANUAL='${{ needs.dispatcher.outputs.is_manual }}'
@@ -282,7 +282,7 @@ jobs:
       version_override: ${{ needs.dispatcher.outputs.version_override }}
       release_type: ${{ needs.dispatcher.outputs.release_type }}
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
       - id: decider
         run: |
           IS_MANUAL='${{ needs.dispatcher.outputs.is_manual }}'
@@ -377,7 +377,7 @@ jobs:
       version_override: ${{ needs.dispatcher.outputs.version_override }}
       release_type: ${{ needs.dispatcher.outputs.release_type }}
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
       - id: decider
         run: |
           IS_MANUAL='${{ needs.dispatcher.outputs.is_manual }}'
@@ -408,7 +408,7 @@ jobs:
     outputs:
       pr_url: ${{ steps.create_pr.outputs.pull-request-url }}
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
       - name: Determine next release version
         id: determine_next_release
         run: |
@@ -490,7 +490,7 @@ jobs:
       - name: Create Pull Request
         id: create_pr
         if: steps.check_pr.outputs.PR_EXISTS == 'false' && (needs.dispatcher.outputs.release_type != 'major' || steps.k8s_check.outputs.VERSION_EXISTS == 'true')
-        uses: peter-evans/create-pull-request@v8
+        uses: peter-evans/create-pull-request@5f6978faf089d4d20b00c7766989d076bb2fc7f1 # v8
         with:
           token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
           draft: ${{ needs.dispatcher.outputs.is_manual == 'true' }}
@@ -561,7 +561,7 @@ jobs:
     outputs:
       pr_url: ${{ steps.create_pr.outputs.pull-request-url }}
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
       - name: Determine next release version
         id: determine_next_release
         run: |
@@ -639,7 +639,7 @@ jobs:
       - name: Create Pull Request
         id: create_pr
         if: steps.check_pr.outputs.PR_EXISTS == 'false'
-        uses: peter-evans/create-pull-request@v8
+        uses: peter-evans/create-pull-request@5f6978faf089d4d20b00c7766989d076bb2fc7f1 # v8
         with:
           token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
           draft: ${{ needs.dispatcher.outputs.is_manual == 'true' }}
@@ -715,7 +715,7 @@ jobs:
     outputs:
       pr_url: ${{ steps.create_pr.outputs.pull-request-url }}
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
       - name: Determine next release version
         id: determine_next_release
         run: |
@@ -780,7 +780,7 @@ jobs:
       - name: Create Pull Request
         id: create_pr
         if: steps.check_pr.outputs.PR_EXISTS == 'false' && (needs.dispatcher.outputs.release_type != 'major' || steps.k8s_check.outputs.VERSION_EXISTS == 'true')
-        uses: peter-evans/create-pull-request@v8
+        uses: peter-evans/create-pull-request@5f6978faf089d4d20b00c7766989d076bb2fc7f1 # v8
         with:
           token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
           draft: ${{ needs.dispatcher.outputs.is_manual == 'true' }}
@@ -841,7 +841,7 @@ jobs:
     outputs:
       pr_url: ${{ steps.create_pr.outputs.pull-request-url }}
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
       - name: Determine next release version
         id: determine_next_release
         run: |
@@ -904,7 +904,7 @@ jobs:
       - name: Create Pull Request
         id: create_pr
         if: steps.check_pr.outputs.PR_EXISTS == 'false'
-        uses: peter-evans/create-pull-request@v8
+        uses: peter-evans/create-pull-request@5f6978faf089d4d20b00c7766989d076bb2fc7f1 # v8
         with:
           token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
           draft: ${{ needs.dispatcher.outputs.is_manual == 'true' }}
@@ -983,7 +983,7 @@ jobs:
       GH_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
     steps:
       - name: Check out code
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
       - name: Install devctl
         id: install_devctl
         uses: ./.github/actions/install-devctl
@@ -1035,7 +1035,7 @@ jobs:
       - name: Create Pull Request
         id: create_pr
         if: steps.check_pr.outputs.PR_EXISTS == 'false'
-        uses: peter-evans/create-pull-request@v8
+        uses: peter-evans/create-pull-request@5f6978faf089d4d20b00c7766989d076bb2fc7f1 # v8
         with:
           token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
           draft: true
@@ -1093,7 +1093,7 @@ jobs:
     outputs:
       pr_url: ${{ steps.create_pr.outputs.pull-request-url }}
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
       - name: Determine next release version
         id: determine_next_release
         run: |
@@ -1163,7 +1163,7 @@ jobs:
       - name: Create Pull Request
         id: create_pr
         if: steps.check_pr.outputs.PR_EXISTS == 'false'
-        uses: peter-evans/create-pull-request@v8
+        uses: peter-evans/create-pull-request@5f6978faf089d4d20b00c7766989d076bb2fc7f1 # v8
         with:
           token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
           draft: true
@@ -1232,7 +1232,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: "Checkout code"
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
 
       - name: "Prepare Slack announcement"
         id: prepare_announcement
