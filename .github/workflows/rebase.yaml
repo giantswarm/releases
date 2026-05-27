@@ -23,7 +23,7 @@ jobs:
 
     steps:
       - name: Add eyes reaction
-        uses: actions/github-script@v9
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9
         with:
           github-token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
           script: |
@@ -36,7 +36,7 @@ jobs:
 
       - name: Get PR branch
         id: pr
-        uses: actions/github-script@v9
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9
         with:
           github-token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
           script: |
@@ -52,7 +52,7 @@ jobs:
 
       - name: Refuse forks
         if: steps.pr.outputs.same_repo != 'true'
-        uses: actions/github-script@v9
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9
         with:
           github-token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
           script: |
@@ -78,7 +78,7 @@ jobs:
           token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
 
       - name: Set up Go
-        uses: actions/setup-go@v5
+        uses: actions/setup-go@40f1582b2485089dde7abd97c1529aa768e1baff # v5
         with:
           go-version-file: tools/rebase-resolver/go.mod
 
@@ -155,7 +155,7 @@ jobs:
 
       - name: Comment success
         if: steps.rebase.outputs.status == 'clean' || steps.rebase.outputs.status == 'resolved'
-        uses: actions/github-script@v9
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9
         with:
           github-token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
           script: |
@@ -178,7 +178,7 @@ jobs:
 
       - name: Comment failure
         if: failure()
-        uses: actions/github-script@v9
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9
         with:
           github-token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
           script: |

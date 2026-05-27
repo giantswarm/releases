@@ -23,7 +23,7 @@ jobs:
 
     steps:
       - name: Add reaction to comment to indicate processing
-        uses: actions/github-script@v9
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9
         with:
           github-token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
           script: |
@@ -36,7 +36,7 @@ jobs:
 
       - name: Get PR branch name
         id: get_branch
-        uses: actions/github-script@v9
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9
         with:
           github-token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
           result-encoding: string
@@ -58,7 +58,7 @@ jobs:
         uses: ./.github/actions/get-providers
 
       - name: Set up Go
-        uses: actions/setup-go@v5
+        uses: actions/setup-go@40f1582b2485089dde7abd97c1529aa768e1baff # v5
         with:
           go-version: '1.26'
 
@@ -221,7 +221,7 @@ jobs:
 
       - name: Post error if command invalid
         if: steps.parse_command.outputs.error
-        uses: actions/github-script@v9
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9
         with:
           github-token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
           script: |
@@ -457,7 +457,7 @@ jobs:
 
       - name: Add success reaction
         if: success() && !steps.parse_command.outputs.error
-        uses: actions/github-script@v9
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9
         with:
           github-token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
           script: |
@@ -470,7 +470,7 @@ jobs:
 
       - name: Post result comment
         if: success() && !steps.parse_command.outputs.error
-        uses: actions/github-script@v9
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9
         with:
           github-token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
           script: |
