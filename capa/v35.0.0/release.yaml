@@ -145,8 +145,8 @@ spec:
     version: 4.1.2
   components:
   - name: cluster-aws
-    catalog: cluster
-    version: 8.5.0
+    catalog: cluster-test
+    version: 8.5.0-28c2de2447bccc2b90e097b56f5c6e6b3ee7045b
   - name: flatcar
     version: 4593.2.1
   - name: kubernetes
