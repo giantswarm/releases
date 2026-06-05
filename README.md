@@ -378,7 +378,7 @@ to all Giant Swarm installations.
   - v34.4
     - [v34.4.0](https://github.com/giantswarm/releases/tree/master/vsphere/v34.4.0)
   - v34.3
-    - [v34.3.0](https://github.com/giantswarm/releases/tree/master/vsphere/v34.3.0)
+    - [v34.3.0](https://github.com/giantswarm/releases/tree/master/vsphere/archived/v34.3.0)
   - v34.2
     - [v34.2.0](https://github.com/giantswarm/releases/tree/master/vsphere/v34.2.0)
   - v34.1
