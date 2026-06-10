@@ -28,11 +28,11 @@ spec:
     dependsOn:
     - cert-manager
   - name: cert-exporter
-    version: 2.9.16
+    version: 2.10.1
     dependsOn:
     - kyverno-crds
   - name: cert-manager
-    version: 3.11.0
+    version: 3.13.0
     dependsOn:
     - alloy-podlogs-crds
     - prometheus-operator-crd
@@ -44,7 +44,7 @@ spec:
     dependsOn:
     - prometheus-operator-crd
   - name: cilium
-    version: 1.4.1
+    version: 1.4.3
   - name: cilium-crossplane-resources
     catalog: cluster
     version: 0.2.1
@@ -53,17 +53,17 @@ spec:
     dependsOn:
     - prometheus-operator-crd
   - name: cloud-provider-aws
-    version: 2.0.0
+    version: 2.1.0
     dependsOn:
     - vertical-pod-autoscaler-crd
   - name: cluster-autoscaler
-    version: 1.34.3-1
+    version: 1.34.3-2
     dependsOn:
     - kyverno-crds
   - name: cluster-autoscaler-crossplane-resources
     version: 1.0.0
   - name: coredns
-    version: 1.29.1
+    version: 1.30.0
     dependsOn:
     - cilium
   - name: coredns-extensions
@@ -71,7 +71,7 @@ spec:
     dependsOn:
     - vertical-pod-autoscaler-crd
   - name: etcd-defrag
-    version: 1.2.4
+    version: 1.2.6
     dependsOn:
     - kyverno-crds
   - name: etcd-k8s-res-count-exporter
@@ -91,7 +91,7 @@ spec:
     dependsOn:
     - kyverno-crds
   - name: k8s-dns-node-cache
-    version: 2.9.2
+    version: 2.11.0
     dependsOn:
     - kyverno-crds
   - name: karpenter
@@ -131,7 +131,7 @@ spec:
   - name: priority-classes
     version: 0.3.1
   - name: prometheus-blackbox-exporter
-    version: 0.5.1
+    version: 0.7.0
     dependsOn:
     - prometheus-operator-crd
   - name: security-bundle
@@ -154,10 +154,10 @@ spec:
     catalog: cluster-test
     version: 8.6.1-dev.migrate-app--elmreleases.2026-06-10.15-07-30.had1fbe7
   - name: flatcar
-    version: 4459.2.3
+    version: 4593.2.1
   - name: kubernetes
-    version: 1.34.5
+    version: 1.34.7
   - name: os-tooling
-    version: 1.26.4
+    version: 1.31.1
   date: "2026-03-02T15:01:14Z"
   state: active
