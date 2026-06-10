@@ -2,13 +2,16 @@
 // */kustomization.yaml files left behind by `git rebase origin/master`.
 //
 // Both files are ordered lists keyed by semver. A conflict between two
-// release PRs is almost always a bookkeeping clash, not a semantic one, so
-// the correct merged result is the union of entries sorted by semver.
+// release PRs is almost always a bookkeeping clash, not a semantic one,
+// so the correct merged result is a 3-way merge against the common
+// ancestor: the union of entries minus anything that either side
+// removed relative to the ancestor, sorted by semver.
 //
-// The tool reads the "ours" (stage 2) and "theirs" (stage 3) versions from
-// the git index, merges them, writes the result, and `git add`s the file.
-// Any conflict in a file this tool doesn't know how to resolve is left
-// alone and reported on stderr with a non-zero exit code.
+// The tool reads the "base" (stage 1, common ancestor), "ours"
+// (stage 2) and "theirs" (stage 3) versions from the git index, merges
+// them, writes the result, and `git add`s the file. Any conflict in a
+// file this tool doesn't know how to resolve is left alone and
+// reported on stderr with a non-zero exit code.
 package main
 
 import (
@@ -33,8 +36,15 @@ type releaseEntry struct {
 	IsStable         bool   `json:"isStable"`
 }
 
+// releasesFile mirrors the on-disk shape of every <provider>/releases.json
+// in this repo. The trailing metadata fields after `releases` are part of
+// the file and must round-trip; otherwise every rebase silently strips
+// them.
 type releasesFile struct {
-	Releases []releaseEntry `json:"releases"`
+	Releases     []releaseEntry `json:"releases"`
+	SourceUrl    string         `json:"sourceUrl,omitempty"`
+	ChangelogUrl string         `json:"changelogUrl,omitempty"`
+	Homepage     string         `json:"homepage,omitempty"`
 }
 
 func main() {
@@ -105,14 +115,33 @@ func readStage(path string, stage int) ([]byte, error) {
 	return out, nil
 }
 
+// readStageOptional returns the stage's contents if present, or nil if
+// the stage doesn't exist (the typical case for stage 1 when the file
+// was added on both sides without a common ancestor).
+func readStageOptional(path string, stage int) ([]byte, error) {
+	cmd := exec.Command("git", "show", fmt.Sprintf(":%d:%s", stage, path))
+	cmd.Stderr = nil // swallow "exists on disk but not in the index" noise
+	out, err := cmd.Output()
+	if err != nil {
+		// Treat any error as "stage absent". The downstream merge falls
+		// back to 2-way union, which is the right behavior when there's
+		// no ancestor to compare against.
+		return nil, nil
+	}
+	return out, nil
+}
+
 func gitAdd(path string) error {
 	return exec.Command("git", "add", "--", path).Run()
 }
 
-// resolveReleasesJSON merges the "ours" and "theirs" copies of
-// releases.json by union-of-entries (keyed on version), sorted ascending
-// by semver, and writes the result back to disk.
+// resolveReleasesJSON 3-way-merges the ancestor, ours, and theirs copies
+// of releases.json and writes the result back to disk.
 func resolveReleasesJSON(path string) error {
+	ancestor, err := readStageOptional(path, 1)
+	if err != nil {
+		return err
+	}
 	ours, err := readStage(path, 2)
 	if err != nil {
 		return err
@@ -122,7 +151,7 @@ func resolveReleasesJSON(path string) error {
 		return err
 	}
 
-	merged, err := mergeReleasesJSON(ours, theirs)
+	merged, err := mergeReleasesJSON(ancestor, ours, theirs)
 	if err != nil {
 		return err
 	}
@@ -133,34 +162,68 @@ func resolveReleasesJSON(path string) error {
 	return gitAdd(path)
 }
 
-func mergeReleasesJSON(ours, theirs []byte) ([]byte, error) {
-	var a, b releasesFile
-	if err := json.Unmarshal(ours, &a); err != nil {
+// mergeReleasesJSON 3-way merges the releases list. An entry that
+// existed in the ancestor but is missing from either ours or theirs is
+// treated as deliberately deleted and dropped from the result. Versions
+// added on either side are included. On a same-version collision
+// between ours and theirs, theirs wins (the PR's intent).
+//
+// The trailing metadata fields (sourceUrl, changelogUrl, homepage) are
+// taken from ours so they round-trip when otherwise stripped by the
+// JSON encoder.
+func mergeReleasesJSON(ancestor, ours, theirs []byte) ([]byte, error) {
+	var a, o, t releasesFile
+	if len(ancestor) > 0 {
+		if err := json.Unmarshal(ancestor, &a); err != nil {
+			return nil, fmt.Errorf("parse ancestor: %v", err)
+		}
+	}
+	if err := json.Unmarshal(ours, &o); err != nil {
 		return nil, fmt.Errorf("parse ours: %v", err)
 	}
-	if err := json.Unmarshal(theirs, &b); err != nil {
+	if err := json.Unmarshal(theirs, &t); err != nil {
 		return nil, fmt.Errorf("parse theirs: %v", err)
 	}
 
-	byVersion := make(map[string]releaseEntry)
-	for _, r := range a.Releases {
-		byVersion[r.Version] = r
+	aMap := indexReleases(a.Releases)
+	oMap := indexReleases(o.Releases)
+	tMap := indexReleases(t.Releases)
+
+	versions := make(map[string]struct{}, len(oMap)+len(tMap))
+	for v := range oMap {
+		versions[v] = struct{}{}
 	}
-	// On same-version conflict, prefer "theirs" (the PR's version) since
-	// that's the author's intent and rebase semantics.
-	for _, r := range b.Releases {
-		byVersion[r.Version] = r
+	for v := range tMap {
+		versions[v] = struct{}{}
 	}
 
-	merged := make([]releaseEntry, 0, len(byVersion))
-	for _, r := range byVersion {
-		merged = append(merged, r)
+	merged := make([]releaseEntry, 0, len(versions))
+	for v := range versions {
+		_, inA := aMap[v]
+		oe, inO := oMap[v]
+		te, inT := tMap[v]
+
+		if inA && (!inO || !inT) {
+			// Deleted by one side relative to the ancestor; honor the
+			// deletion. This is what makes archive PRs land cleanly.
+			continue
+		}
+		if inT {
+			merged = append(merged, te)
+		} else {
+			merged = append(merged, oe)
+		}
 	}
 	sort.Slice(merged, func(i, j int) bool {
 		return semverLess(merged[i].Version, merged[j].Version)
 	})
 
-	out := releasesFile{Releases: merged}
+	out := releasesFile{
+		Releases:     merged,
+		SourceUrl:    o.SourceUrl,
+		ChangelogUrl: o.ChangelogUrl,
+		Homepage:     o.Homepage,
+	}
 	buf := &bytes.Buffer{}
 	enc := json.NewEncoder(buf)
 	enc.SetIndent("", "  ")
@@ -171,12 +234,21 @@ func mergeReleasesJSON(ours, theirs []byte) ([]byte, error) {
 	return buf.Bytes(), nil
 }
 
-// resolveKustomization merges the "ours" and "theirs" copies of
-// kustomization.yaml. Only the `resources` list is re-merged; all other
-// fields are taken from "ours" (master), because kustomization
-// scaffolding changes are made separately from release adds and should
-// not be re-derived here.
+func indexReleases(rs []releaseEntry) map[string]releaseEntry {
+	m := make(map[string]releaseEntry, len(rs))
+	for _, r := range rs {
+		m[r.Version] = r
+	}
+	return m
+}
+
+// resolveKustomization 3-way-merges the ancestor, ours, and theirs
+// copies of kustomization.yaml and writes the result.
 func resolveKustomization(path string) error {
+	ancestor, err := readStageOptional(path, 1)
+	if err != nil {
+		return err
+	}
 	ours, err := readStage(path, 2)
 	if err != nil {
 		return err
@@ -186,7 +258,7 @@ func resolveKustomization(path string) error {
 		return err
 	}
 
-	merged, err := mergeKustomization(ours, theirs)
+	merged, err := mergeKustomization(ancestor, ours, theirs)
 	if err != nil {
 		return err
 	}
@@ -198,11 +270,18 @@ func resolveKustomization(path string) error {
 }
 
 // mergeKustomization rewrites only the top-level `resources:` list block
-// of "ours", replacing it with the semver-sorted union of resources from
-// both sides. Every byte outside that block is preserved verbatim, so
-// comments, formatting, and the quirk of column-zero list items are
-// retained — avoiding cosmetic diffs on every rebase.
-func mergeKustomization(ours, theirs []byte) ([]byte, error) {
+// of "ours", replacing it with the 3-way-merged result. Every byte
+// outside that block is preserved verbatim, so comments, formatting,
+// and the column-zero list style are retained.
+func mergeKustomization(ancestor, ours, theirs []byte) ([]byte, error) {
+	var ancestorResources []string
+	if len(ancestor) > 0 {
+		r, err := extractResources(ancestor)
+		if err != nil {
+			return nil, fmt.Errorf("parse ancestor: %v", err)
+		}
+		ancestorResources = r
+	}
 	oursResources, err := extractResources(ours)
 	if err != nil {
 		return nil, fmt.Errorf("parse ours: %v", err)
@@ -212,8 +291,51 @@ func mergeKustomization(ours, theirs []byte) ([]byte, error) {
 		return nil, fmt.Errorf("parse theirs: %v", err)
 	}
 
-	union := sortedUnion(append(oursResources, theirsResources...))
-	return rewriteResourcesBlock(ours, union)
+	merged := merge3Strings(ancestorResources, oursResources, theirsResources)
+	return rewriteResourcesBlock(ours, merged)
+}
+
+// merge3Strings 3-way merges three sets of strings. Items present in
+// the ancestor but missing from either ours or theirs are dropped
+// (honoring the deletion). Items added on either side are included.
+// The result is sorted by semver.
+func merge3Strings(ancestor, ours, theirs []string) []string {
+	aSet := toSet(ancestor)
+	oSet := toSet(ours)
+	tSet := toSet(theirs)
+
+	union := make(map[string]struct{}, len(oSet)+len(tSet))
+	for s := range oSet {
+		union[s] = struct{}{}
+	}
+	for s := range tSet {
+		union[s] = struct{}{}
+	}
+
+	out := make([]string, 0, len(union))
+	for s := range union {
+		if _, inA := aSet[s]; inA {
+			if _, inO := oSet[s]; !inO {
+				continue
+			}
+			if _, inT := tSet[s]; !inT {
+				continue
+			}
+		}
+		out = append(out, s)
+	}
+	sort.Slice(out, func(i, j int) bool {
+		return semverLess(out[i], out[j])
+	})
+	return out
+}
+
+func toSet(items []string) map[string]struct{} {
+	m := make(map[string]struct{}, len(items))
+	for _, s := range items {
+		m[s] = struct{}{}
+	}
+	return m
 }
 
 func extractResources(data []byte) ([]string, error) {
@@ -293,22 +415,6 @@ func rewriteResourcesBlock(doc []byte, resources []string) ([]byte, error) {
 
 func isIndented(s string) bool {
 	return len(s) > 0 && (s[0] == ' ' || s[0] == '\t')
-}
-
-func sortedUnion(items []string) []string {
-	seen := make(map[string]struct{}, len(items))
-	out := make([]string, 0, len(items))
-	for _, s := range items {
-		if _, ok := seen[s]; ok {
-			continue
-		}
-		seen[s] = struct{}{}
-		out = append(out, s)
-	}
-	sort.Slice(out, func(i, j int) bool {
-		return semverLess(out[i], out[j])
-	})
-	return out
 }
 
 // semverLess compares two version strings lexicographically by semver.

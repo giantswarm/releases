@@ -20,7 +20,7 @@ jobs:
       pr_count: ${{ steps.find_prs.outputs.pr_count }}
     steps:
       - name: Checkout code
-        uses: actions/checkout@v6
+        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
 
       - name: Find open release PRs
         id: find_prs
@@ -58,7 +58,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Post /update-release comment to trigger component bump
-        uses: actions/github-script@v9
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9
         with:
           # Use TAYLORBOT_GITHUB_ACTION to enable workflow chaining
           # (default github.token cannot trigger other workflows due to GitHub security restrictions)
