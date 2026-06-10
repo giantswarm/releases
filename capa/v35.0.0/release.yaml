@@ -122,8 +122,8 @@ spec:
   - name: node-problem-detector
     version: 0.5.2
   - name: observability-bundle
-    version: 2.8.0-1a9d7e0337ae4d9f299f6b836f051ab78edc2c98
-    catalog: default-test
+    version: 3.0.0
+    catalog: default
   - name: observability-policies
     version: 0.0.4
     dependsOn:
@@ -135,8 +135,8 @@ spec:
     dependsOn:
     - prometheus-operator-crd
   - name: security-bundle
-    catalog: default-test
-    version: 1.17.1-600105329acd516d03960156ba3f19e8e8d9a014
+    catalog: default
+    version: 2.0.0
     dependsOn:
     - prometheus-operator-crd
   - name: teleport-kube-agent
@@ -152,7 +152,7 @@ spec:
   components:
   - name: cluster-aws
     catalog: cluster-test
-    version: 8.4.0-f1dc9f0877efaf13ee4c252b5337bbd79913beef
+    version: 8.6.1-dev.migrate-app--elmreleases.2026-06-10.15-07-30.had1fbe7
   - name: flatcar
     version: 4459.2.3
   - name: kubernetes
