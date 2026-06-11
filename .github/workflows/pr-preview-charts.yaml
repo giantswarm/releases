@@ -17,6 +17,7 @@ jobs:
         with:
           script: |
             const CHART_MAP = {
+              'aks': 'release-aks',
               'capa': 'release-aws',
               'azure': 'release-azure',
               'vsphere': 'release-vsphere',
@@ -26,6 +27,7 @@ jobs:
             };
 
             const DISPLAY_MAP = {
+              'aks': 'AKS',
               'capa': 'AWS',
               'azure': 'Azure',
               'vsphere': 'vSphere',

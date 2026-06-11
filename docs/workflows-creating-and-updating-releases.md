@@ -26,6 +26,7 @@ Inputs:
   - release_type: major | minor | patch
   - version: Specific version (e.g., v30.0.1) - overrides release_type
   - provider_all: Include all providers (default: true)
+  - provider_aks: Include AKS
   - provider_aws: Include AWS/CAPA
   - provider_azure: Include Azure/CAPZ
   - provider_cloud_director: Include Cloud Director/CAPVCD
@@ -479,6 +480,7 @@ The workflows use different naming conventions in different contexts:
 | `cloud-director/` | `cloud-director` | CAPVCD |
 | `eks/` | `eks` | EKS |
 | `proxmox/` | `proxmox` | CAPMOX |
+| `aks/` | `aks` | AKS |
 
 **Translation**: The workflows automatically translate between `capa` (directory) and `aws` (devctl) as needed.
 

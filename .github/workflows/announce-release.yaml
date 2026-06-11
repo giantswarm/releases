@@ -8,6 +8,11 @@ on:
         required: false
         type: boolean
         default: false
+      provider_aks:
+        description: 'Include AKS provider'
+        required: false
+        type: boolean
+        default: false
       provider_capa:
         description: 'Include AWS (CAPA) provider'
         required: false
@@ -75,11 +80,12 @@ jobs:
           PROVIDERS_ALL="${{ inputs.provider_all }}"
 
           # Build list of selected providers
-          # Input names match directory names (capa, azure, cloud-director, eks, proxmox, vsphere)
+          # Input names match directory names (aks, capa, azure, cloud-director, eks, proxmox, vsphere)
           SELECTED_PROVIDERS=()
           if [[ "$PROVIDERS_ALL" == "true" ]]; then
-             SELECTED_PROVIDERS+=("capa" "azure" "cloud-director" "vsphere" "eks" "proxmox")
+             SELECTED_PROVIDERS+=("aks" "capa" "azure" "cloud-director" "vsphere" "eks" "proxmox")
           else
+             [[ "${{ inputs.provider_aks }}" == "true" ]] && SELECTED_PROVIDERS+=("aks")
              [[ "${{ inputs.provider_capa }}" == "true" ]] && SELECTED_PROVIDERS+=("capa")
              [[ "${{ inputs.provider_azure }}" == "true" ]] && SELECTED_PROVIDERS+=("azure")
              [[ "${{ inputs.provider_cloud_director }}" == "true" ]] && SELECTED_PROVIDERS+=("cloud-director")
@@ -160,12 +166,13 @@ jobs:
         run: |
           # Build list of selected providers
           PROVIDERS_ALL="${{ inputs.provider_all }}"
-          # Input names match directory names (capa, azure, cloud-director, eks, proxmox, vsphere)
+          # Input names match directory names (aks, capa, azure, cloud-director, eks, proxmox, vsphere)
           SELECTED_PROVIDERS=()
 
           if [[ "$PROVIDERS_ALL" == "true" ]]; then
-             SELECTED_PROVIDERS+=("capa" "azure" "cloud-director" "vsphere" "eks" "proxmox")
+             SELECTED_PROVIDERS+=("aks" "capa" "azure" "cloud-director" "vsphere" "eks" "proxmox")
           else
+             [[ "${{ inputs.provider_aks }}" == "true" ]] && SELECTED_PROVIDERS+=("aks")
              [[ "${{ inputs.provider_capa }}" == "true" ]] && SELECTED_PROVIDERS+=("capa")
              [[ "${{ inputs.provider_azure }}" == "true" ]] && SELECTED_PROVIDERS+=("azure")
              [[ "${{ inputs.provider_cloud_director }}" == "true" ]] && SELECTED_PROVIDERS+=("cloud-director")

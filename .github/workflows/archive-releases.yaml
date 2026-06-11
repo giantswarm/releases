@@ -16,6 +16,7 @@ on:
       - "main"
     paths:
       - ".github/workflows/archive-releases.yaml"
+      - "aks/**"
       - "azure/**"
       - "capa/**"
       - "cloud-director/**"

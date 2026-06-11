@@ -82,7 +82,7 @@ This allows testing the release chart before merging, using the same workflow as
 1. Go to [CircleCI project](https://app.circleci.com/pipelines/github/giantswarm/releases)
 2. Click "Trigger Pipeline"
 3. Add parameters:
-   - `provider`: `capa`, `azure`, `vsphere`, `cloud-director`, `eks` or `proxmox`
+   - `provider`: `capa`, `azure`, `vsphere`, `cloud-director`, `eks`, `proxmox` or `aks`
    - `release_version`: e.g., `v34.0.0`
 
 **Via API:**
@@ -103,6 +103,7 @@ curl -X POST https://circleci.com/api/v2/project/gh/giantswarm/releases/pipeline
 | `cloud-director` | `cluster-cloud-director` | `release-cloud-director` |
 | `eks` | `cluster-eks` | `release-eks` |
 | `proxmox` | `cluster-proxmox` | `release-proxmox` |
+| `aks` | `cluster-aks` | `release-aks` |
 
 ## Related
 

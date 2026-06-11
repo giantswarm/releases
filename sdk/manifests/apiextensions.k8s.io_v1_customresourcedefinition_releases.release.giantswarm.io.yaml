@@ -62,7 +62,7 @@ spec:
           metadata:
             properties:
               name:
-                pattern: ^(((aws|azure|vsphere|cloud-director|eks)-)|v)(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(-[\.0-9a-zA-Z]*)?$
+                pattern: ^(((aws|azure|vsphere|cloud-director|eks|proxmox|aks)-)|v)(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(-[\.0-9a-zA-Z]*)?$
                 type: string
             type: object
           spec:
