@@ -22,6 +22,9 @@ const (
 
 	// ProviderProxmox represents the new Proxmox provider which is implemented with Cluster API.
 	ProviderProxmox Provider = "proxmox"
+
+	// ProviderAKS represents the new AKS provider which is implemented with Cluster API.
+	ProviderAKS Provider = "aks"
 )
 
 var SupportedProviders = []Provider{
@@ -31,6 +34,7 @@ var SupportedProviders = []Provider{
 	ProviderCloudDirector,
 	ProviderEKS,
 	ProviderProxmox,
+	ProviderAKS,
 }
 
 type Provider string

@@ -17,6 +17,11 @@ on:
         required: false
         type: boolean
         default: true
+      provider_aks:
+        description: 'Include AKS provider'
+        required: false
+        type: boolean
+        default: false
       provider_aws:
         description: 'Include AWS (CAPA) provider'
         required: false
@@ -89,6 +94,9 @@ jobs:
               SELECTED_PROVIDERS=$(echo "${{ steps.providers.outputs.all_providers }}" | tr ' ' ',')
             else
               # Build list from individual provider selections
+              if [[ "${{ github.event.inputs.provider_aks }}" == 'true' ]]; then
+                SELECTED_PROVIDERS="${SELECTED_PROVIDERS}aks,"
+              fi
               if [[ "${{ github.event.inputs.provider_aws }}" == 'true' ]]; then
                 SELECTED_PROVIDERS="${SELECTED_PROVIDERS}aws,"
               fi

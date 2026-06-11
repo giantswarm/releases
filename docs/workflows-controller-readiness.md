@@ -21,6 +21,7 @@ When a major release is created (e.g., v35.0.0 for a new Kubernetes version), cl
 | cloud-director | team-rocket | `cloud-provider-cloud-director` |
 | eks | _(excluded)_ | No cloud controller manager needed |
 | proxmox | team-rocket | `cloud-provider-proxmox` |
+| aks | _(excluded)_ | No cloud controller manager needed |
 
 One issue is created per team (not per provider). If a release includes both aws and azure, team-phoenix gets a single issue listing both.
 
@@ -113,7 +114,7 @@ Major release PR created
 
 ### Issues not created
 
-- Check that providers other than `eks` are included in the release
+- Check that providers other than `eks` and `aks` are included in the release
 - Check the workflow logs for the "Create controller readiness issues" step
 - Verify the `controller-readiness` label exists in `giantswarm/roadmap`
 

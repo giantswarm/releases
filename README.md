@@ -534,6 +534,8 @@ to all Giant Swarm installations.
 
 ## Proxmox
 
+## AKS
+
 # PR Commands
 
 ## Summarize Upstream Changes

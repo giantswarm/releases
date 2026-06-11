@@ -149,7 +149,7 @@ func findReleases(provider string, archived bool) ([]v1alpha1.Release, error) {
 		if err != nil {
 			return nil, microerror.Mask(err)
 		}
-		if strings.Contains(release.Name, "azure") || strings.Contains(release.Name, "aws") || strings.Contains(release.Name, "vsphere") || strings.Contains(release.Name, "eks") || strings.Contains(release.Name, "proxmox") {
+		if strings.Contains(release.Name, "azure") || strings.Contains(release.Name, "aws") || strings.Contains(release.Name, "vsphere") || strings.Contains(release.Name, "eks") || strings.Contains(release.Name, "proxmox") || strings.Contains(release.Name, "aks") {
 			parts := strings.Split(release.Name, "-")
 			release.Name = "v" + parts[len(parts)-1] //
 		}
@@ -238,6 +238,10 @@ func Test_Releases(t *testing.T) {
 		{
 			provider: "proxmox",
 			name:     "case 5: proxmox releases are valid",
+		},
+		{
+			provider: "aks",
+			name:     "case 6: aks releases are valid",
 		},
 	}
 
