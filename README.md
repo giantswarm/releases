@@ -28,7 +28,7 @@ to all Giant Swarm installations.
   - v33.4
     - [v33.4.0](https://github.com/giantswarm/releases/tree/master/capa/v33.4.0)
   - v33.3
-    - [v33.3.0](https://github.com/giantswarm/releases/tree/master/capa/v33.3.0)
+    - [v33.3.0](https://github.com/giantswarm/releases/tree/master/capa/archived/v33.3.0)
   - v33.2
     - [v33.2.0](https://github.com/giantswarm/releases/tree/master/capa/archived/v33.2.0)
   - v33.1
@@ -382,7 +382,7 @@ to all Giant Swarm installations.
   - v34.2
     - [v34.2.0](https://github.com/giantswarm/releases/tree/master/vsphere/v34.2.0)
   - v34.1
-    - [v34.1.1](https://github.com/giantswarm/releases/tree/master/vsphere/v34.1.1)
+    - [v34.1.1](https://github.com/giantswarm/releases/tree/master/vsphere/archived/v34.1.1)
     - [v34.1.0](https://github.com/giantswarm/releases/tree/master/vsphere/archived/v34.1.0)
   - v34.0
     - [v34.0.0](https://github.com/giantswarm/releases/tree/master/vsphere/v34.0.0)
