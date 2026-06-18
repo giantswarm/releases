@@ -536,6 +536,10 @@ to all Giant Swarm installations.
 
 ## AKS
 
+- v35
+  - v35.0
+    - [v35.0.0](https://github.com/giantswarm/releases/tree/master/aks/v35.0.0)
+
 # PR Commands
 
 ## Summarize Upstream Changes
