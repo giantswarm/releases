@@ -1,0 +1,14 @@
+{
+  "releases": [
+    {
+      "version": "35.0.0",
+      "isDeprecated": false,
+      "releaseTimestamp": "2026-06-18T16:37:01Z",
+      "changelogUrl": "https://github.com/giantswarm/releases/blob/master/aks/v35.0.0/README.md",
+      "isStable": true
+    }
+  ],
+  "sourceUrl": "https://github.com/giantswarm/releases",
+  "changelogUrl": "https://github.com/giantswarm/releases/blob/main/README.md",
+  "homepage": "https://giantswarm.io"
+}
