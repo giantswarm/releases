@@ -72,7 +72,7 @@ jobs:
       force_consolidated: ${{ steps.dispatcher.outputs.force_consolidated }}
       provider_count: ${{ steps.dispatcher.outputs.provider_count }}
     steps:
-      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
 
       - name: Get provider lists
         id: providers
@@ -194,7 +194,7 @@ jobs:
       version_override: ${{ needs.dispatcher.outputs.version_override }}
       release_type: ${{ needs.dispatcher.outputs.release_type }}
     steps:
-      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
       - id: decider
         run: |
           IS_MANUAL='${{ needs.dispatcher.outputs.is_manual }}'
@@ -290,7 +290,7 @@ jobs:
       version_override: ${{ needs.dispatcher.outputs.version_override }}
       release_type: ${{ needs.dispatcher.outputs.release_type }}
     steps:
-      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
       - id: decider
         run: |
           IS_MANUAL='${{ needs.dispatcher.outputs.is_manual }}'
@@ -385,7 +385,7 @@ jobs:
       version_override: ${{ needs.dispatcher.outputs.version_override }}
       release_type: ${{ needs.dispatcher.outputs.release_type }}
     steps:
-      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
       - id: decider
         run: |
           IS_MANUAL='${{ needs.dispatcher.outputs.is_manual }}'
@@ -416,7 +416,7 @@ jobs:
     outputs:
       pr_url: ${{ steps.create_pr.outputs.pull-request-url }}
     steps:
-      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
       - name: Determine next release version
         id: determine_next_release
         run: |
@@ -569,7 +569,7 @@ jobs:
     outputs:
       pr_url: ${{ steps.create_pr.outputs.pull-request-url }}
     steps:
-      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
       - name: Determine next release version
         id: determine_next_release
         run: |
@@ -723,7 +723,7 @@ jobs:
     outputs:
       pr_url: ${{ steps.create_pr.outputs.pull-request-url }}
     steps:
-      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
       - name: Determine next release version
         id: determine_next_release
         run: |
@@ -849,7 +849,7 @@ jobs:
     outputs:
       pr_url: ${{ steps.create_pr.outputs.pull-request-url }}
     steps:
-      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
       - name: Determine next release version
         id: determine_next_release
         run: |
@@ -991,7 +991,7 @@ jobs:
       GH_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
     steps:
       - name: Check out code
-        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
       - name: Install devctl
         id: install_devctl
         uses: ./.github/actions/install-devctl
@@ -1101,7 +1101,7 @@ jobs:
     outputs:
       pr_url: ${{ steps.create_pr.outputs.pull-request-url }}
     steps:
-      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+      - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
       - name: Determine next release version
         id: determine_next_release
         run: |
@@ -1240,7 +1240,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: "Checkout code"
-        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
 
       - name: "Prepare Slack announcement"
         id: prepare_announcement
