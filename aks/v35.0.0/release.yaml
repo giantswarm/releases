@@ -78,7 +78,7 @@ spec:
       dependsOn:
         - prometheus-operator-crd
       name: security-bundle
-      version: 2.1.0
+      version: 1.17.1
     - catalog: default
       dependsOn:
         - prometheus-operator-crd
