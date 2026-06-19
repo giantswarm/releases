@@ -58,7 +58,7 @@ spec:
       version: 1.20.11
     - catalog: default
       name: observability-bundle
-      version: 3.0.1
+      version: 2.9.0
     - catalog: default
       dependsOn:
         - kyverno-crds
