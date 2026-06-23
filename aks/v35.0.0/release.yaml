@@ -4,100 +4,100 @@ metadata:
   name: aks-35.0.0
 spec:
   apps:
-    - catalog: default
+    - name: cert-exporter
+      catalog: default
+      version: 2.11.0
       dependsOn:
         - kyverno-crds
-      name: cert-exporter
-      version: 2.11.0
-    - catalog: default
+    - name: cert-manager
+      catalog: default
+      version: 3.13.0
       dependsOn:
         - alloy-logs
         - prometheus-operator-crd
-      name: cert-manager
-      version: 3.13.0
-    - catalog: default
-      dependsOn:
-        - prometheus-operator-crd
-      name: chart-operator-extensions
+    - name: chart-operator-extensions
+      catalog: default
       version: 1.1.3
-    - catalog: default
       dependsOn:
         - prometheus-operator-crd
-      name: cilium-servicemonitors
+    - name: cilium-servicemonitors
+      catalog: default
       version: 0.1.4
-    - catalog: default
-      name: azure-aks-extras
+      dependsOn:
+        - prometheus-operator-crd
+    - name: azure-aks-extras
+      catalog: default
       version: 0.1.0
-    - catalog: default
-      dependsOn:
-        - prometheus-operator-crd
-      name: external-dns
+    - name: external-dns
+      catalog: default
       version: 3.5.0
-    - catalog: default
       dependsOn:
-        - kyverno-crds
-      name: k8s-audit-metrics
+        - prometheus-operator-crd
+    - name: k8s-audit-metrics
+      catalog: default
       version: 0.10.13
-    - catalog: default
       dependsOn:
         - kyverno-crds
-      name: k8s-dns-node-cache
+    - name: k8s-dns-node-cache
+      catalog: default
       version: 2.11.0
-    - catalog: default
       dependsOn:
-        - prometheus-operator-crd
-      name: net-exporter
+        - kyverno-crds
+    - name: net-exporter
+      catalog: default
       version: 1.24.0
-    - catalog: cluster
-      name: network-policies
-      version: 0.2.0
-    - catalog: default
-      dependsOn:
-        - kyverno-crds
-      name: node-exporter
-      version: 1.20.11
-    - catalog: default
-      name: observability-bundle
-      version: 2.9.1
-    - catalog: default
-      dependsOn:
-        - kyverno-crds
-      name: observability-policies
-      version: 0.0.4
-    - catalog: default
-      name: priority-classes
-      version: 0.3.1
-    - catalog: default
       dependsOn:
         - prometheus-operator-crd
-      name: prometheus-blackbox-exporter
+    - name: network-policies
+      catalog: cluster
+      version: 0.2.0
+    - name: node-exporter
+      catalog: default
+      version: 1.20.11
+      dependsOn:
+        - kyverno-crds
+    - name: observability-bundle
+      catalog: default
+      version: 2.9.1
+    - name: observability-policies
+      catalog: default
+      version: 0.0.4
+      dependsOn:
+        - kyverno-crds
+    - name: priority-classes
+      catalog: default
+      version: 0.3.1
+    - name: prometheus-blackbox-exporter
+      catalog: default
       version: 0.8.0
+      dependsOn:
+        - prometheus-operator-crd
     - name: rbac-bootstrap
       version: 0.3.0
-    - catalog: giantswarm
-      dependsOn:
-        - prometheus-operator-crd
-      name: security-bundle
+    - name: security-bundle
+      catalog: giantswarm
       version: 1.17.1
-    - catalog: default
       dependsOn:
         - prometheus-operator-crd
-      name: teleport-kube-agent
+    - name: teleport-kube-agent
+      catalog: default
       version: 0.11.1
-    - catalog: default
       dependsOn:
         - prometheus-operator-crd
-      name: vertical-pod-autoscaler
+    - name: vertical-pod-autoscaler
+      catalog: default
       version: 6.1.2
-    - catalog: default
-      name: vertical-pod-autoscaler-crd
+      dependsOn:
+        - prometheus-operator-crd
+    - name: vertical-pod-autoscaler-crd
+      catalog: default
       version: 4.1.2
   components:
-    - catalog: cluster
-      name: cluster-aks
+    - name: cluster-aks
+      catalog: cluster
       version: 0.1.0
-    - catalog: control-plane-catalog
-      name: kubernetes
+    - name: kubernetes
+      catalog: control-plane-catalog
       version: 1.35.5
   date: "2026-06-18T16:37:01Z"
   state: active
