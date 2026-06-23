@@ -4,6 +4,8 @@ metadata:
   name: aks-35.0.0
 spec:
   apps:
+  - name: azure-aks-extras
+    version: 0.1.0
   - name: cert-exporter
     version: 2.11.0
     dependsOn:
@@ -21,8 +23,6 @@ spec:
     version: 0.1.4
     dependsOn:
     - prometheus-operator-crd
-  - name: azure-aks-extras
-    version: 0.1.0
   - name: external-dns
     version: 3.5.0
     dependsOn:
@@ -80,7 +80,6 @@ spec:
     catalog: cluster
     version: 0.1.0
   - name: kubernetes
-    catalog: control-plane-catalog
     version: 1.35.5
   date: "2026-06-18T16:37:01Z"
   state: active
