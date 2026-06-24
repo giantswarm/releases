@@ -188,9 +188,9 @@ to all Giant Swarm installations.
     - [v34.2.0](https://github.com/giantswarm/releases/tree/master/azure/v34.2.0)
   - v34.1
     - [v34.1.1](https://github.com/giantswarm/releases/tree/master/azure/archived/v34.1.1)
-    - [v34.1.0](https://github.com/giantswarm/releases/tree/master/azure/v34.1.0)
+    - [v34.1.0](https://github.com/giantswarm/releases/tree/master/azure/archived/v34.1.0)
   - v34.0
-    - [v34.0.0](https://github.com/giantswarm/releases/tree/master/azure/v34.0.0)
+    - [v34.0.0](https://github.com/giantswarm/releases/tree/master/azure/archived/v34.0.0)
 
 - v33
   - v33.2
