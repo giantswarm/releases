@@ -56,6 +56,16 @@ on:
         type: string
         description: 'Semver formatted version for the announcement being made (e.g. v34.0.0)'
         required: true
+      node_image_channel:
+        type: string
+        description: 'Channel for the vSphere node image template notification'
+        required: false
+        default: 'C061GTDF682'
+      skip_announcements:
+        type: boolean
+        description: 'Skip release announcements (testing: e.g. only send the node image notification)'
+        required: false
+        default: false
 
 jobs:
   gather_channels:
@@ -234,6 +244,7 @@ jobs:
   send_messages:
     name: Send Messages
     runs-on: ubuntu-latest
+    if: ${{ !inputs.skip_announcements }}
     needs: [gather_channels, get_announcement]
     strategy:
       matrix:
@@ -278,3 +289,94 @@ jobs:
                 text:
                   type: "mrkdwn"
                   text: ${{ toJSON(steps.get_provider_announcement.outputs.announcement) }}
+
+  notify_node_image:
+    name: Notify vSphere node image template
+    runs-on: ubuntu-latest
+    # Some vSphere installations cannot use the image distribution operator (IDO)
+    # and must upload the node image template to vCenter manually.
+    if: ${{ inputs.provider_all || inputs.provider_vsphere }}
+    steps:
+      - name: Determine node image requirement
+        id: check
+        run: |
+          VERSION="${{ inputs.version }}"
+          LINK="https://raw.githubusercontent.com/giantswarm/releases/master/vsphere/${VERSION}/release.diff"
+          echo "Downloading release.diff from: $LINK"
+
+          if ! wget -q "$LINK" -O release.diff; then
+            echo "No release.diff found for vsphere ${VERSION} - skipping node image notification"
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          # release.diff is a side-by-side diff: old release on the left, new on the right.
+          # Isolate the components section (everything between 'components:' and 'date:').
+          COMPONENTS=$(awk '/^  components:/{f=1;next} /^  date:/{f=0} f' release.diff)
+
+          # A change to flatcar, kubernetes or os-tooling requires a new node image template.
+          CHANGED=false
+          declare -A NEWV
+          for comp in flatcar kubernetes os-tooling; do
+            # The version line immediately follows the component name line. It carries the old
+            # version (left column) and the new version (right column) on the same line.
+            VLINE=$(echo "$COMPONENTS" | grep -A1 -E "name: ${comp}( |$)" | grep 'version:' | head -1)
+            OLD=$(echo "$VLINE" | grep -oE 'version: [^[:space:]]+' | head -1 | awk '{print $2}')
+            NEW=$(echo "$VLINE" | grep -oE 'version: [^[:space:]]+' | tail -1 | awk '{print $2}')
+            NEWV[$comp]="$NEW"
+            echo "${comp}: ${OLD} -> ${NEW}"
+            if [[ "$OLD" != "$NEW" ]]; then
+              CHANGED=true
+            fi
+          done
+
+          if [[ "$CHANGED" != "true" ]]; then
+            echo "No flatcar/kubernetes/os-tooling change for vsphere ${VERSION} - no node image needed"
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          FLATCAR="${NEWV[flatcar]}"
+          KUBERNETES="${NEWV[kubernetes]}"
+          TOOLING="${NEWV[os-tooling]}"
+
+          TEMPLATE="flatcar-stable-${FLATCAR}-kube-${KUBERNETES}-tooling-${TOOLING}-gs"
+          OVA="flatcar-stable-${FLATCAR}-kube-v${KUBERNETES}.ova"
+          URL="https://gs-public-capi-vm-images.s3.eu-central-1.amazonaws.com/capv/${TEMPLATE}/${OVA}"
+
+          MESSAGE=$(cat <<MSGEOF
+          :announcement: <@U08523GL56D> *please upload the new VM template for release* \`${VERSION}\`
+
+          - Log in to vCenter
+          - In the VM templates Folder > *Deploy OVF Template*
+          - *URL*: \`${URL}\`
+          - *VM name*: \`${TEMPLATE}\`  (don't forget \`-gs\`)
+          - *Compute resource*: First cluster where templates have no suffix.
+          - Set disk to *thin provisioned*
+          - Once uploaded, *Convert the VM to template*.
+
+          Repeat the operation for each vSphere cluster and *append the site name to the template*. (e.g. \`flatcar-stable-4152.2.3-kube-1.31.9-tooling-1.26.1-gs-lille\` for Lille cluster).
+          MSGEOF
+          )
+
+          {
+            echo "message<<GHEOF"
+            echo "$MESSAGE"
+            echo "GHEOF"
+          } >> "$GITHUB_OUTPUT"
+          echo "skip=false" >> "$GITHUB_OUTPUT"
+
+      - name: Send node image template notification
+        if: steps.check.outputs.skip != 'true'
+        uses: slackapi/slack-github-action@45a88b9581bfab2566dc881e2cd66d334e621e2c # v3.0.3
+        with:
+          method: chat.postMessage
+          token: ${{ secrets.SLACK_BOT_TOKEN }}
+          payload: |
+            channel: ${{ inputs.node_image_channel }}
+            text: ${{ toJSON(steps.check.outputs.message) }}
+            blocks:
+              - type: "section"
+                text:
+                  type: "mrkdwn"
+                  text: ${{ toJSON(steps.check.outputs.message) }}
