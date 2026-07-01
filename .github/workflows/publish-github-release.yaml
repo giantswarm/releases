@@ -134,6 +134,9 @@ jobs:
           # Only announce releases whose release.yaml was ADDED in the
           # commits of this push. Subsequent pushes that only modify the
           # same release.yaml (e.g. deprecate/archive) must not re-announce.
+          # A release moved back OUT of archived/ (un-archive) must also not
+          # re-announce: with rename detection it is classified as a rename
+          # (R), not an addition (A), and is therefore skipped.
           if [[ -z "$GITHUB_EVENT_BEFORE" || "$GITHUB_EVENT_BEFORE" =~ ^0+$ ]]; then
             # workflow_dispatch or initial push: fall back to the HEAD commit.
             RANGE="${GITHUB_SHA}^..${GITHUB_SHA}"
@@ -141,11 +144,16 @@ jobs:
             RANGE="${GITHUB_EVENT_BEFORE}..${GITHUB_SHA}"
           fi
 
+          # Enable rename detection (-M) and include the archived/ path in the
+          # pathspec so git can see both endpoints of an un-archive move and
+          # pair them into a rename instead of reporting a bare addition.
           declare -A ADDED_RELEASES
           while IFS= read -r f; do
             [[ -z "$f" ]] && continue
+            # Ignore archived paths; only announce live release directories.
+            [[ "$f" == */archived/* ]] && continue
             ADDED_RELEASES["${f%/release.yaml}"]=1
-          done < <(git diff --name-only --diff-filter=A "$RANGE" -- ':(glob)*/v*.*.*/release.yaml' 2>/dev/null || true)
+          done < <(git diff --name-only --diff-filter=A -M "$RANGE" -- ':(glob)*/v*.*.*/release.yaml' ':(glob)*/archived/v*.*.*/release.yaml' 2>/dev/null || true)
 
           # Group releases by version and collect provider display names
           declare -A VERSION_PROVIDERS
