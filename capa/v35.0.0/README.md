@@ -76,6 +76,7 @@
 - aws-nth-bundle from v1.4.0 to v2.1.0
 - aws-pod-identity-webhook from v2.2.0 to v2.3.0
 - cert-exporter from v2.10.1 to v2.11.1
+- cert-manager from v3.13.0 to v4.0.1
 - cilium from v1.4.3 to v1.4.5
 - cilium-crossplane-resources from v0.2.1 to v0.2.2
 - cluster-autoscaler from v1.34.3-2 to v2.0.2
@@ -88,9 +89,10 @@
 - karpenter-taint-remover from v1.0.2 to v1.1.0
 - net-exporter from v1.23.1 to v1.24.0
 - network-policies from v0.1.3 to v0.2.0
-- observability-bundle from v2.8.0 to v2.9.1
+- observability-bundle from v2.8.0 to v3.3.0
 - prometheus-blackbox-exporter from v0.7.0 to v0.8.0
 - Added rbac-bootstrap v0.3.0
+- security-bundle from v1.17.1 to v2.1.0
 - teleport-kube-agent from v0.10.8 to v0.11.1
 
 ### aws-ebs-csi-driver [v4.1.2...v4.3.0](https://github.com/giantswarm/aws-ebs-csi-driver-app/compare/v4.1.2...v4.3.0)
@@ -150,6 +152,14 @@
 
 - Add a `serialnumber` label to the `cert_exporter_not_after` and `cert_exporter_secret_not_after` metrics so concatenated certificates no longer collide into identical series. The collision made the registry fail `Gather()`, which blanked out the entire `/metrics` endpoint (regression from v2.10.1).
 - Serve `/metrics` with `ContinueOnError` so a single problematic metric can no longer fail the whole scrape.
+
+### cert-manager [v3.13.0...v4.0.1](https://github.com/giantswarm/cert-manager-app/compare/v3.13.0...v4.0.1)
+
+#### Changed
+
+- Improved proxy settings by adding a proxy ConfigMap and setting upstream `envFrom` values for `controller`, `webhook` and `cainjector`.
+- **Breaking:** Helm values to be passed to the upstream `cert-manager` chart will now need to use the `cert-manager` path instead of root. For example, the value `crds.enabled: true` must now be set with `cert-manager.crds.enabled: true`.
+- Moved vendored chart to `helm/cert-manager/charts/` and adapted sync scripts to follow new structure.
 
 ### cilium [v1.4.3...v1.4.5](https://github.com/giantswarm/cilium-app/compare/v1.4.3...v1.4.5)
 
@@ -286,17 +296,25 @@
 
 - Deprecated the .Values.kamaji in favour of the more generic .Values.konnectivityAgent to control the behaviour for the `konnectivity-agent`.
 
-### observability-bundle [v2.8.0...v2.9.1](https://github.com/giantswarm/observability-bundle/compare/v2.8.0...v2.9.1)
+### observability-bundle [v2.8.0...v3.3.0](https://github.com/giantswarm/observability-bundle/compare/v2.8.0...v3.3.0)
 
 #### Added
 
+- Add KSM metrics for Gateway API `ListenerSet` and `ReferenceGrant` resources.
 - Add Backstage audience annotations.
 - Add managementCluster: "" as a top-level value (populated from the cluster chart via defaultValues)
 - Moves full KSM metricRelabelings ownership from kube-prometheus-stack-app into observability-bundle
 
 #### Changed
 
-- Update `alloy-app` to 0.20.1
+- Update Gateway API KSM configs to `v1` for `Gateway`, `GatewayClass`, `HTTPRoute`, `GRPCRoute`, `TLSRoute` and `BackendTLSPolicy`.
+- Update `kube-prometheus-stack` and `prometheus-operator-crd` to 22.0.0
+- Update `alloy-app` to 0.21.0
+- HelmReleases: honor the App platform `priority` field (1-150, default 25) on `extraConfigs` entries. `spec.valuesFrom` now reproduces the App platform merge order — all configMaps before all secrets (a secret always overrides a configMap), each kind ordered by priority around the user-config layer — preserving the App CR merge semantics after the migration. ([giantswarm#36096](https://github.com/giantswarm/giantswarm/issues/36096))
+- Migrate sub-apps from App CRs to Flux HelmRelease CRs.
+- Remove 'cluster-values' ConfigMap reference from HelmReleases.
+- Add new `alloy-podlogs-crds` chart.
+- Update alloy-app to 0.20.0
 - Update dependency kube-prometheus-stack-app and prometheus-operator-crd to v21.0.0
 - Update alloy-app to 0.19.0
 
@@ -316,6 +334,24 @@
 #### Changed
 
 - Migrate chart metadata annotations to OCI-compatible format.
+
+### security-bundle [v1.17.1...v2.1.0](https://github.com/giantswarm/security-bundle/compare/v1.17.1...v2.1.0)
+
+#### Changed
+
+- Update `cloudnative-pg` (app) to v0.1.0.
+- Update `trivy` (app) to v0.15.0.
+- Update `falco` (app) to v0.12.0.
+- HelmReleases: honor the App platform `priority` field (1-150, default 25) on `extraConfigs` entries. `spec.valuesFrom` now reproduces the App platform merge order — all configMaps before all secrets (a secret always overrides a configMap), each kind ordered by priority around the user-config layer — preserving the App CR merge semantics after the migration. ([giantswarm#36096](https://github.com/giantswarm/giantswarm/issues/36096))
+- Migrate sub-apps from App CRs to Flux HelmRelease CRs.
+- No longer pass the 'cluster-values' ConfigMap to the applications inside the bundle.
+- Update `kyverno` (app) to v0.24.2.
+  - This release includes a new Kyverno minor version. Please refer to the upstream release notes for the latest changes:
+  - https://github.com/kyverno/kyverno/releases/tag/v1.17.0
+- Update `kyverno-crds` (app) to v1.17.0.
+- Update `kyverno-policies` (app) to v0.25.0.
+- Update `kyverno-policy-operator` (app) to v0.2.2.
+- Update `kubescape` (app) to v0.1.0.
 
 ### teleport-kube-agent [v0.10.8...v0.11.1](https://github.com/giantswarm/teleport-kube-agent-app/compare/v0.10.8...v0.11.1)
 
