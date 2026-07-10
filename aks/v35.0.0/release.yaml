@@ -76,7 +76,7 @@ spec:
   components:
   - name: cluster-aks
     catalog: cluster
-    version: 0.1.0
+    version: 0.2.0
   - name: kubernetes
     version: 1.35.5
   date: "2026-06-18T16:37:01Z"
