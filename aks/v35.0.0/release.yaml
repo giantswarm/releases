@@ -58,8 +58,6 @@ spec:
     version: 0.8.0
     dependsOn:
     - prometheus-operator-crd
-  - name: rbac-bootstrap
-    version: 0.3.0
   - name: security-bundle
     catalog: giantswarm
     version: 1.17.1
