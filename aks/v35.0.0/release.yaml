@@ -27,6 +27,9 @@ spec:
     version: 3.5.0
     dependsOn:
     - prometheus-operator-crd
+  - name: external-dns-crossplane-resources
+    version: 0.2.1-dev.external-dn--ad-identity.2026-07-14.09-31-39.h2b7b02b
+    catalog: default
   - name: k8s-audit-metrics
     version: 0.10.13
     dependsOn:
@@ -76,7 +79,7 @@ spec:
   components:
   - name: cluster-aks
     catalog: cluster
-    version: 0.2.0
+    version: 0.2.1-dev.external-dn--ad-identity.2026-07-14.12-30-40.h0350444
   - name: kubernetes
     version: 1.35.5
   date: "2026-06-18T16:37:01Z"
