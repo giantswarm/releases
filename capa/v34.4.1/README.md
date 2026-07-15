@@ -11,4 +11,3 @@
 #### Added
 
 - Add `global.connectivity.certManager.createIamRole` toggle (default `true`) to let customers opt out of provisioning the cert-manager IAM role via crossplane and bring their own role.
-
