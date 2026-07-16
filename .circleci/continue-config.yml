@@ -129,3 +129,70 @@ jobs:
           paths:
             - helm/release-chart
             - .abs
+
+  # Push the retagged chart WITHOUT letting the architect orb re-version it.
+  #
+  # The architect/push-to-app-catalog job runs `VERSION=$(gitsemver get)` and
+  # overrides the chart version with it. On a branch build that resolves to
+  # `0.0.0-dev.<branch>.<timestamp>`, which clobbers the clean release version
+  # (e.g. 34.4.0) that prepare-retag-chart stamps into Chart.yaml — so no clean
+  # semver tag ever gets published. We instead package with ABS (which keeps the
+  # Chart.yaml version) and push via the lower-level architect/push-helm command.
+  push-retag-chart:
+    executor: architect/app-build-suite
+    parameters:
+      provider:
+        type: string
+      release_version:
+        type: string
+      chart_version:
+        type: string
+        default: ""
+    steps:
+      - checkout
+      - architect/tools-info:
+          show_abs_version: true
+          show_architect_version: false
+          show_go_version: false
+      - architect/determine-catalog-name:
+          app_catalog: cluster-catalog
+          app_catalog_test: cluster-catalog
+          on_tag: false
+      - attach_workspace:
+          at: .
+      - run:
+          name: Package retagged chart (preserve stamped version)
+          command: |
+            set -euo pipefail
+
+            # Expected OCI tag: PR previews use chart_version (<ver>-<sha>);
+            # merges to master use the clean release version.
+            EXPECTED="<< parameters.chart_version >>"
+            if [[ -z "${EXPECTED}" ]]; then
+              EXPECTED="$(echo '<< parameters.release_version >>' | sed 's/^v//')"
+            fi
+
+            # No --override-chart-version: ABS uses the version stamped into
+            # Chart.yaml by prepare-retag-chart.
+            mkdir build
+            python -m app_build_suite \
+              --chart-dir ./helm/release-chart \
+              --destination build \
+              --generate-metadata \
+              --catalog-base-url "https://giantswarm.github.io/$(cat .app_catalog_name)/" \
+              --keep-chart-changes
+
+            # Guard against a silent regression: refuse to push if the packaged
+            # chart was re-versioned away from the expected release version.
+            tgz=$(find build -maxdepth 1 -name '*.tgz' | head -1)
+            echo "Packaged: ${tgz}"
+            if ! echo "${tgz}" | grep -q "\-${EXPECTED}\.tgz$"; then
+              echo "ERROR: packaged chart version does not match expected '${EXPECTED}'." >&2
+              echo "Refusing to push a mis-versioned chart." >&2
+              exit 1
+            fi
+      - architect/push-helm:
+          chart: release-chart
+          force-public: true
+          push_to_appcatalog: true
+          push_to_oci_registry: true
