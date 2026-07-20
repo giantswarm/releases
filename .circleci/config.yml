@@ -164,20 +164,13 @@ jobs:
                   \"release_version\": \"${version}\",
                   \"chart_version\": \"${CHART_VERSION}\"
                 }},
-                {\"architect/push-to-app-catalog\": {
+                {\"push-retag-chart\": {
                   \"name\": \"push-${provider}-${version}\",
                   \"context\": \"architect\",
                   \"requires\": [\"prepare-${provider}-${version}\"],
-                  \"attach_workspace\": true,
-                  \"chart\": \"release-chart\",
-                  \"explicit_allow_chart_name_mismatch\": true,
-                  \"executor\": \"app-build-suite\",
-                  \"app_catalog\": \"cluster-catalog\",
-                  \"app_catalog_test\": \"cluster-catalog\",
-                  \"push_to_appcatalog\": true,
-                  \"push_to_oci_registry\": true,
-                  \"force-public\": true,
-                  \"on_tag\": false
+                  \"provider\": \"${provider}\",
+                  \"release_version\": \"${version}\",
+                  \"chart_version\": \"${CHART_VERSION}\"
                 }}
               ]" /tmp/continue-config.yml
             done < /tmp/releases.txt
