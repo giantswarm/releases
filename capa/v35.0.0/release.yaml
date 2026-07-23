@@ -1,0 +1,159 @@
+apiVersion: release.giantswarm.io/v1alpha1
+kind: Release
+metadata:
+  name: aws-35.0.0
+spec:
+  apps:
+  - name: aws-ebs-csi-driver
+    version: 4.3.0
+    dependsOn:
+    - aws-pod-identity-webhook
+    - kyverno-crds
+    - vertical-pod-autoscaler-crd
+  - name: aws-ebs-csi-driver-servicemonitors
+    version: 0.1.2
+    dependsOn:
+    - prometheus-operator-crd
+  - name: aws-nth-bundle
+    version: 2.1.1
+  - name: aws-pod-identity-webhook
+    version: 2.3.0
+    dependsOn:
+    - cert-manager
+  - name: cert-exporter
+    version: 2.11.1
+    dependsOn:
+    - kyverno-crds
+    - vertical-pod-autoscaler-crd
+  - name: cert-manager
+    version: 4.1.1
+    dependsOn:
+    - alloy-podlogs-crds
+    - prometheus-operator-crd
+  - name: cert-manager-crossplane-resources
+    version: 0.1.1
+  - name: chart-operator-extensions
+    version: 1.1.3
+    dependsOn:
+    - prometheus-operator-crd
+  - name: cilium
+    version: 1.4.5
+  - name: cilium-crossplane-resources
+    version: 0.2.2
+  - name: cilium-servicemonitors
+    version: 0.2.0
+    dependsOn:
+    - prometheus-operator-crd
+  - name: cloud-provider-aws
+    version: 2.1.0
+    dependsOn:
+    - vertical-pod-autoscaler-crd
+  - name: cluster-autoscaler
+    version: 2.0.3
+    dependsOn:
+    - aws-pod-identity-webhook
+    - kyverno-crds
+    - vertical-pod-autoscaler-crd
+  - name: cluster-autoscaler-crossplane-resources
+    version: 1.0.0
+  - name: coredns
+    version: 1.31.0
+    dependsOn:
+    - cilium
+  - name: coredns-extensions
+    version: 0.1.3
+    dependsOn:
+    - vertical-pod-autoscaler-crd
+  - name: etcd-defrag
+    version: 1.2.9
+    dependsOn:
+    - kyverno-crds
+  - name: etcd-k8s-res-count-exporter
+    version: 1.10.14
+    dependsOn:
+    - kyverno-crds
+  - name: external-dns
+    version: 3.5.0
+    dependsOn:
+    - prometheus-operator-crd
+  - name: external-dns-crossplane-resources
+    version: 0.4.0
+  - name: irsa-servicemonitors
+    version: 0.1.1
+    dependsOn:
+    - prometheus-operator-crd
+  - name: k8s-audit-metrics
+    version: 0.10.13
+    dependsOn:
+    - kyverno-crds
+  - name: k8s-dns-node-cache
+    version: 2.11.0
+    dependsOn:
+    - kyverno-crds
+  - name: karpenter
+    version: 2.4.0
+    dependsOn:
+    - alloy-podlogs-crds
+  - name: karpenter-taint-remover
+    version: 1.1.0
+    dependsOn:
+    - alloy-podlogs-crds
+  - name: metrics-server
+    version: 2.8.0
+    dependsOn:
+    - kyverno-crds
+  - name: net-exporter
+    version: 1.24.0
+    dependsOn:
+    - prometheus-operator-crd
+  - name: network-policies
+    version: 0.2.0
+    dependsOn:
+    - cilium
+  - name: node-exporter
+    version: 1.20.11
+    dependsOn:
+    - kyverno-crds
+  - name: node-problem-detector
+    version: 0.5.2
+    dependsOn:
+    - kyverno-crds
+    - prometheus-operator-crd
+  - name: observability-bundle
+    version: 3.3.0
+  - name: observability-policies
+    version: 0.0.4
+    dependsOn:
+    - kyverno-crds
+  - name: priority-classes
+    version: 0.3.1
+  - name: prometheus-blackbox-exporter
+    version: 0.8.0
+    dependsOn:
+    - prometheus-operator-crd
+  - name: rbac-bootstrap
+    version: 0.3.0
+  - name: security-bundle
+    version: 2.1.0
+  - name: teleport-kube-agent
+    version: 0.11.1
+    dependsOn:
+    - prometheus-operator-crd
+  - name: vertical-pod-autoscaler
+    version: 6.1.2
+    dependsOn:
+    - prometheus-operator-crd
+  - name: vertical-pod-autoscaler-crd
+    version: 4.1.2
+  components:
+  - name: cluster-aws
+    catalog: cluster-test
+    version: 8.9.2-dev.migrate-app--elmreleases.2026-07-23.12-57-02.h0e41549
+  - name: flatcar
+    version: 4593.2.4
+  - name: kubernetes
+    version: 1.35.7
+  - name: os-tooling
+    version: 1.33.1
+  date: "2026-07-23T12:59:24Z"
+  state: active
