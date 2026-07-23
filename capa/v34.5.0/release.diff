@@ -144,8 +144,8 @@ spec:                                                              spec:
   - name: flatcar                                                    - name: flatcar
     version: 4593.2.2                                           |      version: 4593.2.4
   - name: kubernetes                                                 - name: kubernetes
-    version: 1.34.7                                             |      version: 1.34.9
+    version: 1.34.7                                             |      version: 1.34.10
   - name: os-tooling                                                 - name: os-tooling
     version: 1.31.0                                             |      version: 1.33.1
-  date: "2026-07-14T16:12:08Z"                                  |    date: "2026-07-21T10:17:42Z"
+  date: "2026-07-14T16:12:08Z"                                  |    date: "2026-07-23T09:17:35Z"
   state: active                                                      state: active
