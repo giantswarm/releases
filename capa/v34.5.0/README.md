@@ -1,6 +1,6 @@
 # :zap: Giant Swarm Release v34.5.0 for CAPA :zap:
 
-## Changes compared to v34.4.1
+This release includes a containerd fix for a security vulnerability, and also bumps Kubernetes to v1.34.10 for the latest bugfixes and Flatcar to v4593.2.4.
 
 ### Components
 
