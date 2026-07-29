@@ -66,6 +66,17 @@ jobs:
 
             echo "INFO: Processing provider directory: $PROVIDER_ROOT_DIR"
 
+            # Releases above the lowest active release must stay available even when
+            # deprecated, because clusters on that lower release may still need them as
+            # an intermediate upgrade step.
+            # See https://github.com/giantswarm/roadmap/issues/4325
+            ARCHIVE_FLOOR=$(./tools/lowest-active-release.sh "$PROVIDER_ROOT_DIR")
+            if [ -n "$ARCHIVE_FLOOR" ]; then
+              echo "INFO: Archive floor for $PROVIDER_ROOT_DIR is $ARCHIVE_FLOOR (lowest active release)"
+            else
+              echo "INFO: $PROVIDER_ROOT_DIR has no active releases, no archive floor applies"
+            fi
+
             MOVED_RELEASES_TEMP_FILE=$(mktemp -p "$TEMP_DIR")
 
             find "$PROVIDER_ROOT_DIR" -maxdepth 1 -mindepth 1 -type d -name 'v*.*.*' -print0 | sort -z | while IFS= read -r -d $'\0' release_dir_path; do
@@ -90,10 +101,18 @@ jobs:
                 
                 # Check if this release is safe to archive using Grafana metrics
                 VERSION=$(echo "$RELEASE_NAME" | sed 's/^v//')
-                
+
+                # Skip anything above the archive floor before doing the more expensive
+                # validation below.
+                if [ -n "$ARCHIVE_FLOOR" ] && [ "$VERSION" != "$ARCHIVE_FLOOR" ] && \
+                   [ "$(printf '%s\n%s\n' "$VERSION" "$ARCHIVE_FLOOR" | sort -V | head -n1)" = "$ARCHIVE_FLOOR" ]; then
+                  echo "INFO: Release $RELEASE_NAME stays available: a smaller active release ($ARCHIVE_FLOOR) still exists. Skipping."
+                  continue
+                fi
+
                 # Use the existing validation script to check if it's safe
                 echo "INFO: Checking if $PROVIDER_ROOT_DIR/$VERSION is safe to archive..."
-                
+
                 # Create archive directory if it doesn't exist
                 if [ ! -d "$ARCHIVE_PARENT_DIR" ]; then
                   mkdir -p "$ARCHIVE_PARENT_DIR"
@@ -115,7 +134,7 @@ jobs:
                   echo "INFO: Release $RELEASE_NAME is safe to archive."
                   echo "$PROVIDER_ROOT_DIR:$RELEASE_NAME" >> "$MOVED_RELEASES_TEMP_FILE"
                 else
-                  echo "WARNING: Release $RELEASE_NAME is still in use and cannot be archived. Skipping."
+                  echo "WARNING: Release $RELEASE_NAME cannot be archived yet. Skipping."
                 fi
                 
                 # Switch back to original branch and clean up
@@ -323,7 +342,12 @@ jobs:
             ## Automated Release Archiving for CAPI
 
             This PR archives deprecated releases across all CAPI providers.
-            Archived releases are moved from `<provider>/<version>` to `<provider>/archived/<version>`.
+            Archived releases are moved from `<provider>/<version>` to `<provider>/archived/<version>`,
+            which removes them from the management clusters and makes them unusable as an upgrade target.
+
+            A deprecated release is only archived once no smaller active release exists for that provider.
+            Clusters on a lower release may still need it as an intermediate upgrade step, so it stays
+            available until the lower release is archived itself.
 
             ${{ steps.archive_script.outputs.archived_releases_pr_body_section }}
           branch: auto-archive-capi-releases
