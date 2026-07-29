@@ -194,7 +194,10 @@ func checkReleasesInUse(releases []*ReleaseInfo, apiKey string, provider string,
 		"queries": []map[string]interface{}{
 			{
 				"refId": "A",
-				"expr":  fmt.Sprintf(`sum(aggregation:giantswarm:cluster_release_version{provider="%s", release_version=~".*", installation=~".*", cluster_type=~".*", customer=~".*"}) by (release_version)`, apiProvider),
+				// A 7 day lookback keeps a release from looking unused just because its
+				// metrics were briefly missing: a scrape gap, an unreachable management
+				// cluster, or a dev cluster that is shut down over the weekend.
+				"expr": fmt.Sprintf(`sum(max_over_time(aggregation:giantswarm:cluster_release_version{provider="%s", release_version=~".*", installation=~".*", cluster_type=~".*", customer=~".*"}[7d])) by (release_version)`, apiProvider),
 				"datasource": map[string]string{
 					"uid":  "000000006",
 					"type": "prometheus",

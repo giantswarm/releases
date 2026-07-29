@@ -203,6 +203,10 @@ jobs:
             - Latest of supported major versions
             - Required for upgrade path
 
+            Deprecating a release does not affect cluster upgrades: it stays registered on the
+            management clusters and remains usable as an upgrade target. Availability only ends
+            when a release is archived, which requires that no smaller active release exists.
+
             ${{ steps.changed-files.outputs.pr_body_changed_files_section }}
 
             ## Verify in Grafana

@@ -24,10 +24,56 @@ fi
 
 # Array to store active releases (still in use)
 declare -a active_releases
-# Array to store provider versions 
-declare -a provider_versions
-# Track providers which are already queried
-declare -a queried_providers
+# Releases blocked because a smaller active release still exists
+declare -a below_floor_releases
+# Releases blocked because they were never deprecated
+declare -a still_active_releases
+
+# Caches, kept as "key|value" records so this stays compatible with bash 3.2 (macOS)
+# which has no associative arrays.
+in_use_records=""    # "provider|version" per line, versions currently in use
+queried_providers="" # "provider" per line, providers already queried
+floor_records=""     # "provider|floor" per line, empty floor means none applies
+
+# Compare two semver versions, true if $1 > $2
+version_gt() {
+  [[ "$1" != "$2" ]] && [[ "$(printf '%s\n%s\n' "$1" "$2" | sort -V | head -n1)" == "$2" ]]
+}
+
+# Resolve the archive floor for a provider into ARCHIVE_FLOOR, determining it only
+# once per provider. Sets an empty value when no floor applies. This assigns to a
+# global instead of printing, so that the cache survives across calls.
+ARCHIVE_FLOOR=""
+resolve_archive_floor() {
+  local provider=$1
+
+  if ! printf '%s\n' "$floor_records" | grep -q "^${provider}|"; then
+    local floor
+    floor=$("$(dirname "$0")/lowest-active-release.sh" "$provider")
+    floor_records="${floor_records}${provider}|${floor}"$'\n'
+
+    if [[ -n "$floor" ]]; then
+      echo "Archive floor for $provider is $floor (lowest active release)"
+    else
+      echo "Provider $provider has no active releases, no archive floor applies"
+    fi
+  fi
+
+  ARCHIVE_FLOOR=$(printf '%s\n' "$floor_records" | grep "^${provider}|" | head -n1 | cut -d'|' -f2)
+}
+
+# Check whether a version sits above the provider's archive floor, i.e. whether a
+# smaller active release still exists. Such releases must stay available even when
+# deprecated, because clusters on the lower release may still need them as an
+# intermediate upgrade step. See https://github.com/giantswarm/roadmap/issues/4325
+is_above_archive_floor() {
+  local provider=$1
+  local version=$2
+
+  resolve_archive_floor "$provider"
+
+  [[ -n "$ARCHIVE_FLOOR" ]] && version_gt "$version" "$ARCHIVE_FLOOR"
+}
 
 # Get all active versions for a provider
 get_active_versions() {
@@ -41,12 +87,15 @@ get_active_versions() {
   
   echo "Fetching currently used versions for provider $provider..."
   
-  # Grafana DataSource Query with error handling
+  # Grafana DataSource Query with error handling.
+  # The 7d lookback keeps a release from looking unused just because its metrics were
+  # briefly missing: a scrape gap, an unreachable management cluster, or a dev cluster
+  # that is shut down over the weekend.
   response=$(curl --silent --fail --show-error --location --request POST 'https://giantswarm.grafana.net/api/ds/query' \
     -H 'Content-Type: application/json' \
     -H 'Accept: application/json' \
     -H "Authorization: Bearer $GRAFANA_API_KEY" \
-    -d "{\"from\":\"now-5m\",\"to\":\"now\",\"queries\":[{\"refId\":\"A\",\"expr\":\"sum(aggregation:giantswarm:cluster_release_version{provider=\\\"$api_provider\\\", release_version=~\\\".*\\\", installation=~\\\".*\\\", cluster_type=~\\\".*\\\", customer=~\\\".*\\\"}) by (release_version)\",\"datasource\":{\"uid\":\"000000006\",\"type\":\"prometheus\"}}]}" 2>&1)
+    -d "{\"from\":\"now-5m\",\"to\":\"now\",\"queries\":[{\"refId\":\"A\",\"expr\":\"sum(max_over_time(aggregation:giantswarm:cluster_release_version{provider=\\\"$api_provider\\\", release_version=~\\\".*\\\", installation=~\\\".*\\\", cluster_type=~\\\".*\\\", customer=~\\\".*\\\"}[7d])) by (release_version)\",\"datasource\":{\"uid\":\"000000006\",\"type\":\"prometheus\"}}]}" 2>&1)
   
   # Check for curl failures
   if [[ $? -ne 0 ]]; then
@@ -76,9 +125,12 @@ get_active_versions() {
   echo "$used_versions"
   
   # Store the result
-  provider_versions["$provider"]="$used_versions"
-  queried_providers+=("$provider")
-  
+  while IFS= read -r used_version; do
+    [[ -z "$used_version" ]] && continue
+    in_use_records="${in_use_records}${provider}|${used_version}"$'\n'
+  done <<< "$used_versions"
+  queried_providers="${queried_providers}${provider}"$'\n'
+
   return 0
 }
 
@@ -88,19 +140,15 @@ is_version_in_use() {
   local version=$2
   
   # If we haven't queried this provider yet, do it now
-  if ! echo "${queried_providers[@]}" | grep -q "$provider"; then
+  if ! printf '%s\n' "$queried_providers" | grep -qxF "$provider"; then
     if ! get_active_versions "$provider"; then
       # If API call failed, assume version is in use to be safe
       return 0
     fi
   fi
-  
+
   # Check if the version is in the list of used versions
-  if echo "${provider_versions[$provider]}" | grep -q "^$version$"; then
-    return 0
-  else
-    return 1
-  fi
+  printf '%s\n' "$in_use_records" | grep -qxF "${provider}|${version}"
 }
 
 # Process renamed files
@@ -143,17 +191,58 @@ fi
 for version_entry in "${versions_to_check[@]}"; do
   provider=$(echo "$version_entry" | cut -d'/' -f1)
   version=$(echo "$version_entry" | cut -d'/' -f2)
-  
+
+  # Only deprecated releases may be archived. The archive floor below is derived from
+  # the active releases, so archiving one straight from active would move the floor
+  # instead of being blocked by it.
+  archived_release_yaml="$provider/archived/v$version/release.yaml"
+  if [[ -f "$archived_release_yaml" ]] && grep -q -E "^\s*state:\s*active\s*$" "$archived_release_yaml"; then
+    still_active_releases+=("$provider/$version")
+    continue
+  fi
+
   if is_version_in_use "$provider" "$version"; then
     active_releases+=("$provider/$version")
+    continue
+  fi
+
+  if is_above_archive_floor "$provider" "$version"; then
+    below_floor_releases+=("$provider/$version")
   fi
 done
 
+blocked=false
+
+if [ ${#still_active_releases[@]} -gt 0 ]; then
+  blocked=true
+  echo "::error:: The following releases cannot be archived because they are still active."
+  echo "::error:: A release has to be deprecated before it can be archived."
+  for release in "${still_active_releases[@]}"; do
+    echo "  - $release"
+  done
+fi
+
 if [ ${#active_releases[@]} -gt 0 ]; then
+  blocked=true
   echo "::error:: The following releases cannot be archived because they are still in use:"
   for release in "${active_releases[@]}"; do
     echo "  - $release"
   done
+fi
+
+if [ ${#below_floor_releases[@]} -gt 0 ]; then
+  blocked=true
+  echo "::error:: The following releases cannot be archived because a smaller active release still exists."
+  echo "::error:: Clusters on the lower release may still need them as an intermediate upgrade step."
+  echo "::error:: They can stay deprecated, but must remain available until the lower release is archived."
+  for release in "${below_floor_releases[@]}"; do
+    provider=$(echo "$release" | cut -d'/' -f1)
+    resolve_archive_floor "$provider"
+    echo "  - $release (lowest active release for $provider is $ARCHIVE_FLOOR)"
+  done
+fi
+
+if [ "$blocked" = true ]; then
   exit 1
 fi
 
