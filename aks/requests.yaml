@@ -1,1 +1,5 @@
-releases: []
+releases: 
+- name: ">= 35.0.0"
+  requests:
+  - name: cilium-servicemonitors
+    version: ">= 0.2.0"
