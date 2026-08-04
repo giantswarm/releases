@@ -104,6 +104,19 @@ The `check_run` trigger re-evaluates coverage as each suite finishes, filtered t
 
 `check_run` and `issue_comment` always use the workflow file from the default branch, so changes only take effect once merged. Use `workflow_dispatch` with a PR number to evaluate a PR on demand.
 
+### What you see in the Checks tab
+
+The workflow produces two rows, which are easy to mistake for duplicates:
+
+| Row | Meaning |
+|-----|---------|
+| `E2E Coverage / Publish coverage report` | The job that ran the script. Green just means the evaluation completed. |
+| `E2E Coverage` | The gate. Its title carries the result, e.g. `12/21 expected suites covered · stage/development`, and this is the check the PR gatekeeper requires. |
+
+The gate row is often prefixed with an unrelated workflow name, such as `gitleaks / E2E Coverage`. GitHub groups check runs by check suite and names the group after the first workflow that ran in it. A check run created through the REST API is adopted by an existing suite for the same app and commit rather than getting its own, and the workflow run that creates it reports against a different commit (the merge ref for `pull_request`, the default branch for `workflow_dispatch`). The grouping is cosmetic: `pr-gatekeeper` and branch protection both resolve checks by name, not by suite. Giving the check its own group would require publishing it from a dedicated GitHub App.
+
+Unrelated to this workflow, `gitleaks` also appears twice on every PR in this repo, because `zz_generated.gitleaks.yaml` is generated with both `push` and `pull_request` triggers.
+
 ### Implementation
 
 The logic lives in `.github/scripts/e2e-coverage.js` and talks to the REST API directly rather than through `actions/github-script`, whose pinned SHA trips the repo's gitleaks rule (it matches any long alphanumeric run next to the word "github").
