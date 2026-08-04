@@ -1,0 +1,73 @@
+name: E2E Coverage
+
+# Enforces that the *extended* set of E2E test suites has run and passed for every new
+# release in a PR before it can be merged.
+#
+# Background: `releases-test-suites` selects suites based on the release stage, so a PR in
+# `stage/development` only runs standard + upgrade + upgrade-major. Releases were getting
+# merged from that stage, meaning the variant suites (private, china, cilium-eni-mode,
+# on-capa, on-capz) never ran at all. See giantswarm/roadmap#4334.
+#
+# This workflow publishes a single `E2E Coverage` check run that only succeeds once every
+# expected suite has passed, regardless of the stage the PR is currently in.
+# `pr-gatekeeper` (Heimdall) requires that check before merge.
+#
+# Coverage is tied to the release *content* rather than to the head SHA: a suite that
+# passed on an earlier commit still counts as long as no new release's `release.yaml` has
+# changed since. README, announcement and release.diff edits therefore don't force a
+# re-run, while bumping a component or app does.
+#
+# NOTE: the `check_run` and `issue_comment` triggers always use the workflow file from the
+# default branch, so changes here only take effect once merged.
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review, labeled, unlabeled]
+  check_run:
+    types: [completed]
+  issue_comment:
+    types: [created]
+  workflow_dispatch:
+    inputs:
+      pr_number:
+        description: 'PR number to evaluate coverage for'
+        required: true
+        type: string
+
+permissions:
+  checks: write
+  contents: read
+  issues: read
+  pull-requests: read
+
+concurrency:
+  # Serialise per PR so concurrent suite completions don't race on the check run.
+  group: e2e-coverage-${{ github.event.pull_request.number || github.event.issue.number || github.event.check_run.pull_requests[0].number || inputs.pr_number || github.run_id }}
+  cancel-in-progress: false
+
+jobs:
+  coverage:
+    name: Evaluate E2E coverage
+    runs-on: ubuntu-latest
+    # Only react to events that can change the outcome. Ignoring our own check run is what
+    # keeps this workflow from re-triggering itself indefinitely.
+    if: |
+      (github.event_name == 'pull_request' || github.event_name == 'workflow_dispatch')
+      || (github.event_name == 'check_run' && startsWith(github.event.check_run.name, 'Release Tests / '))
+      || (github.event_name == 'issue_comment' && github.event.issue.pull_request != null && contains(github.event.comment.body, '/waive-suite'))
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Get provider lists
+        id: providers
+        uses: ./.github/actions/get-providers
+
+      - name: Evaluate coverage and publish check run
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          CAPI_NAMES: ${{ steps.providers.outputs.capi_names }}
+          PR_NUMBER: ${{ inputs.pr_number }}
+        run: node .github/scripts/e2e-coverage.js

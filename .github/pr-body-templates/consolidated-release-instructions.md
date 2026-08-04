@@ -104,6 +104,16 @@ For conformance tests:
 
 `/run conformance-tests PROVIDER=capa RELEASE_VERSION=29.1.0`
 
+**Required coverage:** which suites run by default depends on the release stage, so the variant suites (`private`, `china`, `cilium-eni-mode`, `on-capa`, `on-capz`) only start automatically once this PR reaches `stage/freeze`. The `E2E Coverage` check requires the **full** set for every new release regardless of stage, lists what is still outstanding with a ready-to-paste command, and must be green before merging.
+
+If a suite genuinely cannot pass — for example because its test environment is down — waive it with a reason:
+
+`/waive-suite capa/china Beijing environment down, see giantswarm/roadmap#1234`
+
+A reason is required. The waiver applies to that one suite only and becomes void as soon as a release in this PR changes.
+
+See [E2E Test Coverage](https://github.com/giantswarm/releases/blob/master/docs/workflows-e2e-coverage.md) for details.
+
 </details>
 
 <details>

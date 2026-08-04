@@ -33,6 +33,8 @@ You can also limit which tests are run:
 
 `/run releases-test-suites TARGET_SUITES=./providers/capa/standard`
 
+Which suites run by default depends on the release stage, so the variant suites (`private`, `china`, `cilium-eni-mode`, `on-capa`, `on-capz`) only run once the PR reaches `stage/freeze`. The `E2E Coverage` check requires the full set for every new release regardless of stage and lists what is still outstanding, so check it before merging. If a suite cannot pass, waive it with a reason using `/waive-suite <provider>/<suite> <reason>`.
+
 If you want to trigger conformance tests, you can do so by adding a comment similar to the following:
 
 `/run conformance-tests PROVIDER=capa RELEASE_VERSION=29.1.0`
