@@ -587,6 +587,22 @@ The `upgrade` tests will first install a cluster using the latest previously pub
 
 The workload cluster E2E tests are enforced by our PR gatekeeper to ensure they are passing before PRs are allowed to be merged.
 
+### Test coverage requirements
+
+Which suites `/run releases-test-suites` picks depends on the release stage (`stage/development` runs `standard`, `upgrade` and `upgrade-major`, while the variant suites such as `private`, `china`, `cilium-eni-mode`, `on-capa` and `on-capz` only run at `stage/freeze`). To make sure a release is never merged without the variant suites having run at all, the `E2E Coverage` check requires the **full** set of suites for every new release in the PR, whatever stage the PR is currently in.
+
+The check lists every expected suite per provider along with a ready-to-use trigger comment for the ones still outstanding. It only turns green once they have all passed, and the PR gatekeeper requires it before merge.
+
+It also names the stage the PR is currently in, which suites a plain `/run releases-test-suites` covers in that stage, and the command to advance to the next one (`/stage active`, then `/stage freeze` — stages move one step at a time). Suites that the current stage does not run are marked accordingly, so a missing result is never mistaken for a problem.
+
+Results stay valid while the release content stays the same: a suite that passed on an earlier commit still counts, and only a change to a new release's `release.yaml` (a component or app bump) invalidates it. Editing a README, announcement or `release.diff` does not force a re-run.
+
+If a suite genuinely cannot pass — for example because its test environment is down — it can be waived with a reason:
+
+`/waive-suite capa/china Beijing environment down, see giantswarm/roadmap#1234`
+
+Waivers are recorded in the `E2E Coverage` check output, apply to that one suite only, and become void as soon as a release in the PR changes.
+
 ## Conformance Tests
 
 To trigger the CNCF Conformance tests for a new Release added in a PR, add a comment with something similar to the following:
