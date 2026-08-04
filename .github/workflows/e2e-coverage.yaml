@@ -47,7 +47,10 @@ concurrency:
 
 jobs:
   coverage:
-    name: Evaluate E2E coverage
+    # This job only publishes the report. The gate itself is the `E2E Coverage` check run,
+    # so the job name is deliberately subordinate to keep the two rows distinguishable in
+    # the Checks tab.
+    name: Publish coverage report
     runs-on: ubuntu-latest
     # Only react to events that can change the outcome. Ignoring our own check run is what
     # keeps this workflow from re-triggering itself indefinitely.
