@@ -29,6 +29,14 @@ Documentation for the staged release lifecycle:
 - Freeze stage blocks non-Tenet changes and skips weekly bumps
 - Slack notifications for consolidated releases on stage transitions
 
+### [E2E Test Coverage](workflows-e2e-coverage.md)
+Documentation for the test coverage merge gate:
+- **E2E Coverage** (`e2e-coverage.yaml`) - Requires the full suite set for every new release in a PR, whatever stage it is in
+- **Waivers** - `/waive-suite <provider>/<suite> <reason>` for suites that genuinely cannot pass
+- Coverage is tied to the release content, so results survive README edits but not component bumps
+
+Because `releases-test-suites` selects suites by stage, releases merged before Freeze used to skip the variant suites (`private`, `china`, `cilium-eni-mode`, `on-capa`, `on-capz`) entirely. This check makes that impossible to do unnoticed.
+
 ### [Controller Readiness Tracking](workflows-controller-readiness.md)
 Documentation for the automated controller readiness tracking system for major releases:
 - **Create Controller Readiness Issues** (composite action) - Creates tracking issues in `giantswarm/roadmap` for teams that own cloud controller apps
@@ -63,6 +71,7 @@ This workflow retags cluster provider charts (e.g., `cluster-aws:7.2.5` → `34.
 | Update Release PR | On PR comment | ❌ |
 | Summarize Upstream Changes | On PR comment (`/summarize-ai`) | ❌ |
 | Release Stage | On PR comment (`/stage`) | ❌ |
+| E2E Coverage | On PR update, suite completion, `/waive-suite` | ✅ |
 | Bump Open Releases | Monday 9:00 AM UTC | ✅ |
 | Check Controller Readiness | Daily 8:00 AM UTC | ✅ |
 | Deprecate Releases | Monday 6:00 AM UTC | ✅ |

@@ -64,6 +64,10 @@ The `stage/development` label is informational only. It signals that Tenet is wo
 
 All users can make changes during the Active stage.
 
+### Merge gating is separate
+
+Stages do not gate merging. The `E2E Coverage` check requires the full test suite set for every new release regardless of stage — see [E2E Test Coverage](workflows-e2e-coverage.md). Reaching Freeze still matters for coverage: it stops `/update-release` and the weekly bump from changing the release content and invalidating results that already passed.
+
 ### Freeze (hard gate)
 
 During Freeze:
@@ -142,3 +146,4 @@ Created via `gh label create`:
 - `.github/workflows/bump-open-releases.yaml`: Excludes frozen PRs from weekly bump
 - `.github/pr-body-templates/consolidated-release-instructions.md`: Stage command docs
 - `.github/pr-body-templates/individual-release-instructions.md`: Stage command docs
+- `docs/workflows-e2e-coverage.md`: Test coverage merge gate and how it relates to stages

@@ -601,7 +601,9 @@ If a suite genuinely cannot pass — for example because its test environment is
 
 `/waive-suite capa/china Beijing environment down, see giantswarm/roadmap#1234`
 
-Waivers are recorded in the `E2E Coverage` check output, apply to that one suite only, and become void as soon as a release in the PR changes.
+A reason is required, and the waiver must come from an organisation member. Waivers are recorded in the `E2E Coverage` check output, apply to that one suite only, and become void as soon as a release in the PR changes.
+
+Full details are in [docs/workflows-e2e-coverage.md](docs/workflows-e2e-coverage.md).
 
 ## Conformance Tests
 
