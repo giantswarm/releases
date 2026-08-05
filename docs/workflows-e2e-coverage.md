@@ -36,9 +36,12 @@ Coverage is tied to the release **content**, not to the head commit:
 - A suite that passed on an earlier commit of the PR still counts, as long as no newly added `release.yaml` has changed since.
 - Editing a README, announcement or `release.diff` does **not** invalidate results.
 - Changing a component or app version — via `/update-release`, `/pin-version`, or the weekly `bump-open-releases.yaml` job — **does** invalidate them, because the suites then tested different content. They have to run again.
-- Changes limited to `spec.date` or `spec.state` do **not** invalidate them. Both describe the release rather than what gets installed: `devctl` rewrites the timestamp on every generation, so an `/update-release` that picks up no new versions still produces a diff, and the state (`active`, `preview`, `deprecated`) is lifecycle metadata. Any other change in the file still counts.
+- Changes limited to `spec.date` or `spec.state` do **not** invalidate them. Both describe the release rather than what gets installed: `devctl` rewrites the timestamp on every generation, so an `/update-release` that picks up no new versions still produces a change, and the state (`active`, `preview`, `deprecated`) is lifecycle metadata. Any other change still counts.
+- Force-pushing the release branch does **not** lose results. Suite check runs stay attached to the commit they ran on, and those commits are recovered from the PR timeline's `head_ref_force_pushed` events.
 
-Results are also lost if the release branch is force-pushed, because check runs are attached to a commit and the previous commits are no longer part of the PR. Adding commits (which is what `/update-release` does) is fine.
+Matching is done by fingerprinting rather than by diffing commits: the tracked `release.yaml` files are fetched at a commit, `date` and `state` lines are stripped, and the rest is hashed. Diffing does not work across a force-push, because the compare API reports diverged commits against their merge base, which makes every release file look rewritten.
+
+Scanning walks the candidate commits newest first and stops at the first one whose content differs, since release content moves forward. At most 25 commits are examined, and hitting that limit is written to the workflow log.
 
 Reaching Freeze early therefore protects coverage: `stage/freeze` restricts `/update-release` to Team Tenet and excludes the PR from the weekly bump, so results stop being invalidated underneath you.
 

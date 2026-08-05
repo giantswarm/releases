@@ -17,6 +17,7 @@
 //   CAPI_NAMES         - JSON map of provider directory → CAPI name
 //   PR_NUMBER          - PR to evaluate (workflow_dispatch only)
 
+const crypto = require('crypto')
 const fs = require('fs')
 
 const API_ROOT = 'https://api.github.com'
@@ -74,6 +75,11 @@ const listCheckRuns = (ref, checkName) => paginate(
   (data) => data.check_runs,
 )
 
+// Release PRs can accumulate a long history of force-pushed heads. Scanning is bounded so
+// one evaluation cannot exhaust the token's request budget; reaching the limit is logged
+// rather than silently truncating.
+const MAX_COMMITS_SCANNED = 25
+
 const main = async () => {
   const CHECK_NAME = 'E2E Coverage'
   const SUITE_CHECK_PREFIX = 'Release Tests / '
@@ -121,7 +127,6 @@ const main = async () => {
   }
 
   const FAILED_CONCLUSIONS = ['failure', 'timed_out', 'cancelled', 'action_required', 'stale']
-
 
   // --- Resolve the PR this run is about -----------------------------------------
   let prNumber
@@ -237,49 +242,118 @@ const main = async () => {
     return
   }
 
-  // --- Coverage stays valid until the release content changes -------------------
-  // Walk the PR's commits newest first and stop at the first one whose release
-  // content differs from head. Suites that passed on the commits in between still
-  // count, so README/announcement-only commits don't invalidate coverage.
-  const commits = await paginate(`/pulls/${prNumber}/commits`)
-
-  // Two fields in a release.yaml describe the release rather than what gets installed,
-  // so changing them cannot alter a test result:
+  // --- Which commits carry the release content being merged? --------------------
+  // Suite results are attached to a commit, so they have to be matched to the content
+  // they tested. That is done by fingerprinting the release files rather than by diffing
+  // commits: release branches get force-pushed, and for diverged commits the compare API
+  // reports against the merge base, which makes every release.yaml look rewritten.
+  //
+  // Two fields are stripped before hashing because they describe the release rather than
+  // what gets installed, so they cannot change a test result:
   //
   //   * `date` - devctl rewrites it on every generation (pkg/release/create.go), so even
-  //     an /update-release that picks up no new versions leaves a diff.
-  //   * `state` - active, preview or deprecated. Lifecycle metadata, not content.
-  //
-  // Everything else - component and app versions in particular - still invalidates.
-  const METADATA_FIELDS = /^[+-]\s*(date|state):/
+  //     an /update-release that picks up no new versions produces a change.
+  //   * `state` - active, preview or deprecated. Lifecycle metadata.
+  const METADATA_FIELDS = /^\s*(date|state):/
 
-  const isMetadataOnlyDiff = (patch) => {
-    // No patch means the diff was too large to include - assume the content changed.
-    if (!patch) return false
-    const changedLines = patch
+  const releaseFiles = [...releaseYamlPaths].sort()
+
+  const fileFingerprint = async (filename, sha) => {
+    let file
+    try {
+      file = await api(`/contents/${filename}?ref=${sha}`)
+    } catch (error) {
+      // The release doesn't exist at this commit, so its content cannot match.
+      return null
+    }
+    const content = Buffer.from(file.content || '', file.encoding === 'base64' ? 'base64' : 'utf8')
+      .toString('utf8')
       .split('\n')
-      .filter(line => /^[+-]/.test(line) && !/^(\+\+\+|---)/.test(line))
-    return changedLines.length > 0 && changedLines.every(line => METADATA_FIELDS.test(line))
+      .filter(line => !METADATA_FIELDS.test(line))
+      .join('\n')
+    return crypto.createHash('sha256').update(content).digest('hex')
   }
 
-  const releaseContentChanged = async (sha) => {
-    const comparison = await api(`/compare/${sha}...${headSha}`)
-    return (comparison.files || [])
-      .filter(file => releaseYamlPaths.has(file.filename))
-      .some(file => !isMetadataOnlyDiff(file.patch))
+  const headFingerprints = new Map()
+  for (const filename of releaseFiles) {
+    headFingerprints.set(filename, await fileFingerprint(filename, headSha))
   }
 
+  // Compares file by file and stops at the first difference, so a commit whose content
+  // has moved on usually costs a single request rather than one per release.
+  const hasSameContentAsHead = async (sha) => {
+    for (const filename of releaseFiles) {
+      if (await fileFingerprint(filename, sha) !== headFingerprints.get(filename)) return false
+    }
+    return true
+  }
+
+  // Candidates are the PR's own commits plus the commits its branch was force-pushed
+  // away from - the timeline records those, and their check runs are still reachable.
+  const candidates = new Map() // sha → timestamp the commit became part of this PR
+  for (const commit of await paginate(`/pulls/${prNumber}/commits`)) {
+    candidates.set(commit.sha, commit.commit.committer.date)
+  }
+  for (const event of await paginate(`/issues/${prNumber}/timeline`)) {
+    if (event.event === 'head_ref_force_pushed' && event.commit_id) {
+      candidates.set(event.commit_id, event.created_at)
+    }
+  }
+  candidates.set(headSha, candidates.get(headSha) || new Date(0).toISOString())
+
+  // The suite check runs that could possibly matter, so a commit carrying nothing new can
+  // be skipped without paying for a content comparison.
+  const wantedCheckNames = new Set()
+  for (const provider of releases.keys()) {
+    for (const suite of EXPECTED_SUITES[provider]) {
+      wantedCheckNames.add(SUITE_CHECK_PREFIX + CHECK_NAME_FORMATS[suite].replace('{capi}', capiNames[provider] || provider))
+    }
+  }
+
+  const checkRunsBySha = new Map()
   const validShas = []
-  let contentChangedAt = null
-  for (const commit of [...commits].reverse()) {
-    if (commit.sha !== headSha && await releaseContentChanged(commit.sha)) {
-      // This commit, and anything older, predates the current release content.
-      contentChangedAt = new Date(commit.commit.committer.date)
+  const seenSuites = new Set()
+  let contentSince = null
+  let scanned = 0
+
+  // Newest first, so the most recent result for a suite is seen first.
+  const ordered = [...candidates.entries()].sort((a, b) => b[1].localeCompare(a[1]))
+
+  for (const [sha, timestamp] of ordered) {
+    if (sha !== headSha && seenSuites.size >= wantedCheckNames.size) {
+      log(`Every expected suite already has a result - stopping after ${scanned} commit(s)`)
       break
     }
-    validShas.push(commit.sha)
+    if (sha !== headSha && scanned >= MAX_COMMITS_SCANNED) {
+      log(`Reached the ${MAX_COMMITS_SCANNED} commit scan limit - older results from this PR are not counted`)
+      break
+    }
+
+    scanned++
+    const runs = await listCheckRuns(sha)
+
+    if (sha !== headSha) {
+      // Only worth a content comparison if it carries a result we don't have yet.
+      const adds = runs.some(run => wantedCheckNames.has(run.name) && !seenSuites.has(run.name))
+      if (!adds) continue
+      if (!await hasSameContentAsHead(sha)) {
+        // Release content moves forward, so anything older than this carries content that
+        // has since been superseded. Stopping here keeps the number of requests small. The
+        // theoretical miss - content reverted to an earlier state - only costs a re-run.
+        log(`Ignoring results from ${sha.substring(0, 7)} and older: release content differs from head`)
+        break
+      }
+      log(`Counting results from ${sha.substring(0, 7)}: identical release content`)
+    }
+
+    for (const run of runs) {
+      if (wantedCheckNames.has(run.name)) seenSuites.add(run.name)
+    }
+    checkRunsBySha.set(sha, runs)
+    validShas.push(sha)
+    if (!contentSince || timestamp < contentSince) contentSince = timestamp
   }
-  if (!validShas.includes(headSha)) validShas.unshift(headSha)
+
   log(`Counting results from ${validShas.length} commit(s) holding the current release content`)
 
   // --- Collect suite results across those commits -------------------------------
@@ -291,8 +365,7 @@ const main = async () => {
   // gatekeeper requires separately.
   const suiteResults = new Map() // check name → { conclusion, url, sha }
   for (const sha of validShas) {
-    const checkRuns = await listCheckRuns(sha)
-    const byStartedAt = checkRuns
+    const byStartedAt = (checkRunsBySha.get(sha) || [])
       .filter(run => run.name.startsWith(SUITE_CHECK_PREFIX))
       .sort((a, b) => new Date(b.started_at) - new Date(a.started_at))
 
@@ -305,14 +378,15 @@ const main = async () => {
 
   // --- Waivers ------------------------------------------------------------------
   // `/waive-suite <provider>/<suite> <reason>` from an org member waives one suite.
-  // A waiver is void once the release content changes, same as a test result.
+  // A waiver is void once the release content changes, same as a test result: only
+  // comments made after the current content first appeared are honoured.
   const comments = await paginate(`/issues/${prNumber}/comments`)
 
   const waivers = new Map() // `${providerDir}/${suite}` → { user, reason }
   const waiverPattern = /^\/waive-suite\s+(?:\.\/providers\/)?([a-z-]+)\/([a-z0-9-]+)\s+(.+)$/i
   for (const comment of comments) {
     if (!['OWNER', 'MEMBER', 'COLLABORATOR'].includes(comment.author_association)) continue
-    if (contentChangedAt && new Date(comment.created_at) < contentChangedAt) continue
+    if (contentSince && new Date(comment.created_at) < new Date(contentSince)) continue
     for (const line of (comment.body || '').split(/\r?\n/)) {
       const match = line.trim().match(waiverPattern)
       if (!match) continue
