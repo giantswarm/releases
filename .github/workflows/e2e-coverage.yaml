@@ -39,6 +39,7 @@ permissions:
   contents: read
   issues: read
   pull-requests: read
+  statuses: write
 
 concurrency:
   # Serialise per PR so concurrent suite completions don't race on the check run.

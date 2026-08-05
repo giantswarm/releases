@@ -81,9 +81,11 @@ Per-suite rows are reported as `✅ passed`, `⚠️ waived`, `❌ <conclusion>`
 
 ## Enforcement
 
-The check is required by [pr-gatekeeper](https://github.com/giantswarm/pr-gatekeeper) (Heimdall) for this repo, and Heimdall is the required status check on `master`.
+The check run is required by [pr-gatekeeper](https://github.com/giantswarm/pr-gatekeeper) (Heimdall) for this repo, and Heimdall is a required status check on `master`.
 
 Note that a `/skip-ci <reason>` comment bypasses **all** Heimdall requirements, including this one. When that happens Heimdall records who skipped it and why, and the `E2E Coverage` output still shows which suites never ran.
+
+To make coverage impossible to skip, add the `E2E Coverage` **commit status** to the required status checks on `master`. Branch protection evaluates it directly, so `/skip-ci` — which only affects Heimdall's own verdict — cannot bypass it.
 
 ## Workflow details
 
@@ -106,14 +108,17 @@ The `check_run` trigger re-evaluates coverage as each suite finishes, filtered t
 
 ### What you see in the Checks tab
 
-The workflow produces two rows, which are easy to mistake for duplicates:
+The result is published twice, so the workflow contributes three rows:
 
 | Row | Meaning |
 |-----|---------|
+| `E2E Coverage` (commit status) | The gate, as a top-level row next to the `ci/circleci: ...` rows. Shows the tally, e.g. `12/21 expected suites covered · stage/development`, and links to the full report. |
+| `gitleaks / E2E Coverage` (check run) | The same result with the full per-provider report. This is the check `pr-gatekeeper` requires. |
 | `E2E Coverage / Publish coverage report` | The job that ran the script. Green just means the evaluation completed. |
-| `E2E Coverage` | The gate. Its title carries the result, e.g. `12/21 expected suites covered · stage/development`, and this is the check the PR gatekeeper requires. |
 
-The gate row is often prefixed with an unrelated workflow name, such as `gitleaks / E2E Coverage`. GitHub groups check runs by check suite and names the group after the first workflow that ran in it. A check run created through the REST API is adopted by an existing suite for the same app and commit rather than getting its own, and the workflow run that creates it reports against a different commit (the merge ref for `pull_request`, the default branch for `workflow_dispatch`). The grouping is cosmetic: `pr-gatekeeper` and branch protection both resolve checks by name, not by suite. Giving the check its own group would require publishing it from a dedicated GitHub App.
+Why both: a check run can hold a markdown report but cannot control where it appears. GitHub adopts API-created check runs into an existing check suite for the same app and commit, and names the group after the first workflow that ran in it — so the check ends up filed under an unrelated workflow such as `gitleaks`, which is easy to miss. A commit status is always its own row and can be required in branch protection directly, but carries only a 140-character description, so it links to the check run for the detail.
+
+Status states map to the check states above: `pending` while suites are missing, `success` when complete, `failure` when an expected suite failed.
 
 Unrelated to this workflow, `gitleaks` also appears twice on every PR in this repo, because `zz_generated.gitleaks.yaml` is generated with both `push` and `pull_request` triggers.
 
