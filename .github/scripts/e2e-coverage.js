@@ -243,9 +243,25 @@ const main = async () => {
   // count, so README/announcement-only commits don't invalidate coverage.
   const commits = await paginate(`/pulls/${prNumber}/commits`)
 
+  // devctl sets spec.date to the current time on every generation (see
+  // devctl pkg/release/create.go), so even an /update-release that picks up no new
+  // versions leaves a diff. A timestamp is not something the tests can observe, so a
+  // date-only diff must not invalidate results. `spec.state` is deliberately not
+  // ignored: it is a meaningful change, unlike a generated timestamp.
+  const isDateOnlyDiff = (patch) => {
+    // No patch means the diff was too large to include - assume the content changed.
+    if (!patch) return false
+    const changedLines = patch
+      .split('\n')
+      .filter(line => /^[+-]/.test(line) && !/^(\+\+\+|---)/.test(line))
+    return changedLines.length > 0 && changedLines.every(line => /^[+-]\s*date:\s*"/.test(line))
+  }
+
   const releaseContentChanged = async (sha) => {
     const comparison = await api(`/compare/${sha}...${headSha}`)
-    return (comparison.files || []).some(file => releaseYamlPaths.has(file.filename))
+    return (comparison.files || [])
+      .filter(file => releaseYamlPaths.has(file.filename))
+      .some(file => !isDateOnlyDiff(file.patch))
   }
 
   const validShas = []

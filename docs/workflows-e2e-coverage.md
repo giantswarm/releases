@@ -36,6 +36,9 @@ Coverage is tied to the release **content**, not to the head commit:
 - A suite that passed on an earlier commit of the PR still counts, as long as no newly added `release.yaml` has changed since.
 - Editing a README, announcement or `release.diff` does **not** invalidate results.
 - Changing a component or app version — via `/update-release`, `/pin-version`, or the weekly `bump-open-releases.yaml` job — **does** invalidate them, because the suites then tested different content. They have to run again.
+- A change to `spec.date` alone does **not** invalidate them. `devctl` rewrites that timestamp on every generation, so an `/update-release` that picks up no new versions still produces a diff; the tests cannot observe a timestamp. Any other change in the file, including `spec.state`, still counts.
+
+Results are also lost if the release branch is force-pushed, because check runs are attached to a commit and the previous commits are no longer part of the PR. Adding commits (which is what `/update-release` does) is fine.
 
 Reaching Freeze early therefore protects coverage: `stage/freeze` restricts `/update-release` to Team Tenet and excludes the PR from the weekly bump, so results stop being invalidated underneath you.
 
