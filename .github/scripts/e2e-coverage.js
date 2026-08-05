@@ -169,19 +169,43 @@ const main = async () => {
   const headSha = pr.head.sha
   log(`Evaluating coverage for PR #${prNumber} at ${headSha}`)
 
-  // Always update the existing check run instead of creating another one with the
-  // same name: pr-gatekeeper refuses to evaluate a name that matches several runs.
+  // The result is published twice, because the two mechanisms are good at different
+  // things:
+  //
+  //   * A check run carries the full per-provider report, but GitHub adopts API-created
+  //     check runs into an existing check suite for this app and commit, so it ends up
+  //     grouped under an unrelated workflow (`gitleaks / E2E Coverage`) and is easy to
+  //     miss in the Checks tab.
+  //   * A commit status is always its own top-level row - like the `ci/circleci: ...`
+  //     rows - so it is easy to find, and it can be required in branch protection
+  //     directly rather than only through pr-gatekeeper. It carries no markdown, so its
+  //     `target_url` points at the check run holding the detail.
+  //
+  // The check run is updated in place rather than recreated, because pr-gatekeeper
+  // refuses to evaluate a name that matches several runs on one commit.
   const publish = async ({ status, conclusion, title, summary }) => {
     const existing = await listCheckRuns(headSha, CHECK_NAME)
     const checkPayload = { status, output: { title, summary } }
     if (conclusion) checkPayload.conclusion = conclusion
 
+    let checkRun
     if (existing.length > 0) {
       const newest = existing.sort((a, b) => new Date(b.started_at) - new Date(a.started_at))[0]
-      await api(`/check-runs/${newest.id}`, 'PATCH', checkPayload)
+      checkRun = await api(`/check-runs/${newest.id}`, 'PATCH', checkPayload)
     } else {
-      await api('/check-runs', 'POST', { name: CHECK_NAME, head_sha: headSha, ...checkPayload })
+      checkRun = await api('/check-runs', 'POST', { name: CHECK_NAME, head_sha: headSha, ...checkPayload })
     }
+
+    // Statuses have no in-progress state; `pending` is the equivalent and blocks just the
+    // same. Descriptions are limited to 140 characters.
+    const state = conclusion === 'success' ? 'success' : (conclusion ? 'failure' : 'pending')
+    await api(`/statuses/${headSha}`, 'POST', {
+      context: CHECK_NAME,
+      state,
+      description: title.length > 140 ? `${title.slice(0, 137)}...` : title,
+      target_url: checkRun && checkRun.html_url ? checkRun.html_url : undefined,
+    })
+    log(`Published status ${CHECK_NAME}=${state}`)
   }
 
   // --- Which new releases does this PR add? -------------------------------------
