@@ -549,7 +549,7 @@ to all Giant Swarm installations.
   - v35.1
     - [v35.1.0](https://github.com/giantswarm/releases/tree/master/aks/v35.1.0)
   - v35.0
-    - [v35.0.0](https://github.com/giantswarm/releases/tree/master/aks/v35.0.0)
+    - [v35.0.0](https://github.com/giantswarm/releases/tree/master/aks/archived/v35.0.0)
 
 # PR Commands
 
