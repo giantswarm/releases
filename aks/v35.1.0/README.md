@@ -1,16 +1,17 @@
 # :zap: Giant Swarm Release v35.1.0 for  :zap:
 
-
+## Changes compared to v35.0.0
 
 ### Components
 
-- cluster-aks from v0.3.0 to v0.4.0
+- cluster-aks from v0.3.0 to v0.5.0
 - Kubernetes from v1.35.5 to [v1.35.7](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.35.md#v1.35.7)
 
-### cluster-aks [v0.3.0...v0.4.0](https://github.com/giantswarm/cluster-aks/compare/v0.3.0...v0.4.0)
+### cluster-aks [v0.3.0...v0.5.0](https://github.com/giantswarm/cluster-aks/compare/v0.3.0...v0.5.0)
 
 #### Added
 
+- Add default tag `giantswarm-cluster` to all resources.
 - Allow adding custom tags to resources using `providerSpecific.additionalResourceTags` value.
 
 ### Apps

@@ -82,8 +82,8 @@ spec:                                                              spec:
   components:                                                        components:
   - name: cluster-aks                                                - name: cluster-aks
     catalog: cluster                                                   catalog: cluster
-    version: 0.3.0                                              |      version: 0.4.0
+    version: 0.3.0                                              |      version: 0.5.0
   - name: kubernetes                                                 - name: kubernetes
     version: 1.35.5                                             |      version: 1.35.7
-  date: "2026-06-18T16:37:01Z"                                  |    date: "2026-08-06T11:57:43Z"
+  date: "2026-06-18T16:37:01Z"                                  |    date: "2026-08-06T12:11:24Z"
   state: active                                                      state: active
