@@ -17,6 +17,7 @@
 
 - cert-exporter from v2.11.0 to v2.12.0
 - cert-manager from v3.13.0 to v4.1.1
+- Added cert-manager-crossplane-resources v0.2.0
 - cilium-servicemonitors from v0.1.4 to v0.2.0
 - external-dns-crossplane-resources from v0.3.0 to v0.4.0
 - observability-bundle from v2.9.1 to v3.3.0
@@ -51,6 +52,12 @@
 - Improved proxy settings by adding a proxy ConfigMap and setting upstream `envFrom` values for `controller`, `webhook` and `cainjector`.
 - **Breaking:** Helm values to be passed to the upstream `cert-manager` chart will now need to use the `cert-manager` path instead of root. For example, the value `crds.enabled: true` must now be set with `cert-manager.crds.enabled: true`.
 - Moved vendored chart to `helm/cert-manager/charts/` and adapted sync scripts to follow new structure.
+
+### cert-manager-crossplane-resources [v0.2.0](https://github.com/giantswarm/cert-manager-crossplane-resources/releases/tag/v0.2.0)
+
+#### Added
+
+- Add `WorkloadIdentity` resource for AKS provider.
 
 ### cilium-servicemonitors [v0.1.4...v0.2.0](https://github.com/giantswarm/cilium-servicemonitors-app/compare/v0.1.4...v0.2.0)
 
