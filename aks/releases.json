@@ -6,6 +6,13 @@
       "releaseTimestamp": "2026-08-06T12:11:24Z",
       "changelogUrl": "https://github.com/giantswarm/releases/blob/master/aks/v35.1.0/README.md",
       "isStable": true
+    },
+    {
+      "version": "36.0.0",
+      "isDeprecated": false,
+      "releaseTimestamp": "2026-08-19T17:25:09Z",
+      "changelogUrl": "https://github.com/giantswarm/releases/blob/master/aks/v36.0.0/README.md",
+      "isStable": true
     }
   ],
   "sourceUrl": "https://github.com/giantswarm/releases",
