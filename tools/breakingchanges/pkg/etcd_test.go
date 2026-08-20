@@ -37,6 +37,24 @@ func TestParseSupportedEtcdVersion(t *testing.T) {
 	}
 }
 
+func TestParseSupportedEtcdVersionSkewRelative(t *testing.T) {
+	// k8s 1.35.x computes the map keys instead of writing literals.
+	constantsGo := `
+	SupportedEtcdVersion = map[uint8]string{
+		uint8(getSkewedKubernetesVersion(-2).Minor()): "3.5.24-0",
+		uint8(getSkewedKubernetesVersion(-1).Minor()): "3.6.6-0",
+		uint8(getSkewedKubernetesVersion(0).Minor()):  "3.6.6-0",
+	}
+`
+	got, err := parseSupportedEtcdVersion(constantsGo, 35)
+	if err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+	if want := "3.6.6"; got != want {
+		t.Errorf("got %q, want %q", got, want)
+	}
+}
+
 func TestStripEtcdImageSuffix(t *testing.T) {
 	cases := map[string]string{
 		"3.6.4-0": "3.6.4",

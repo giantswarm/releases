@@ -43,22 +43,46 @@ func (d *Detector) resolveEtcdVersionForK8s(ctx context.Context, k8sVersion stri
 }
 
 // parseSupportedEtcdVersion extracts the etcd version for a given Kubernetes
-// minor from the text of kubeadm's constants.go. Handles the standard map
-// layout: `SupportedEtcdVersion = map[uint8]string{ 34: "3.6.4-0", ... }`.
+// minor from the text of kubeadm's constants.go. Two map layouts exist:
+//
+//	literal keys (k8s <= 1.34, and again from 1.36):
+//	  SupportedEtcdVersion = map[uint8]string{ 34: "3.6.4-0", ... }
+//
+//	skew-relative keys (k8s 1.35.x):
+//	  SupportedEtcdVersion = map[uint8]string{
+//	      uint8(getSkewedKubernetesVersion(-1).Minor()): "3.6.6-0", ...
+//	  }
+//
+// In the skew-relative form the keys are computed from the file's own
+// Kubernetes minor, so offset 0 is the entry for k8sMinor. That holds because
+// the caller always fetches constants.go at the tag for that exact Kubernetes
+// version, making the file's own minor equal to k8sMinor.
 func parseSupportedEtcdVersion(constantsGo string, k8sMinor int) (string, error) {
 	blockRe := regexp.MustCompile(`(?s)SupportedEtcdVersion\s*=\s*map\[uint8\]string\s*\{(.*?)\}`)
 	blockMatch := blockRe.FindStringSubmatch(constantsGo)
 	if len(blockMatch) < 2 {
 		return "", fmt.Errorf("SupportedEtcdVersion map not found in constants.go")
 	}
+	block := blockMatch[1]
 
 	entryRe := regexp.MustCompile(`(?m)^\s*(\d+)\s*:\s*"([^"]+)"`)
-	for _, match := range entryRe.FindAllStringSubmatch(blockMatch[1], -1) {
+	for _, match := range entryRe.FindAllStringSubmatch(block, -1) {
 		minor, err := strconv.Atoi(match[1])
 		if err != nil {
 			continue
 		}
 		if minor == k8sMinor {
+			return stripEtcdImageSuffix(match[2]), nil
+		}
+	}
+
+	skewRe := regexp.MustCompile(`getSkewedKubernetesVersion\(\s*(-?\d+)\s*\)\.Minor\(\)[^:]*:\s*"([^"]+)"`)
+	for _, match := range skewRe.FindAllStringSubmatch(block, -1) {
+		offset, err := strconv.Atoi(match[1])
+		if err != nil {
+			continue
+		}
+		if offset == 0 {
 			return stripEtcdImageSuffix(match[2]), nil
 		}
 	}
