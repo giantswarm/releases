@@ -192,6 +192,7 @@ to all Giant Swarm installations.
 
 - v34
   - v34.5
+    - [v34.5.1](https://github.com/giantswarm/releases/tree/master/azure/v34.5.1)
     - [v34.5.0](https://github.com/giantswarm/releases/tree/master/azure/v34.5.0)
   - v34.4
     - [v34.4.0](https://github.com/giantswarm/releases/tree/master/azure/v34.4.0)
