@@ -1,9 +1,34 @@
 apiVersion: release.giantswarm.io/v1alpha1                         apiVersion: release.giantswarm.io/v1alpha1
 kind: Release                                                      kind: Release
 metadata:                                                          metadata:
-  name: cloud-director-34.5.0                                   |    name: cloud-director-35.0.0
+  name: azure-34.5.0                                            |    name: azure-35.0.0
 spec:                                                              spec:
   apps:                                                              apps:
+  - name: azure-cloud-controller-manager                             - name: azure-cloud-controller-manager
+    version: 2.1.0                                                     version: 2.1.0
+    dependsOn:                                                         dependsOn:
+                                                                >      - cilium
+    - vertical-pod-autoscaler-crd                                      - vertical-pod-autoscaler-crd
+  - name: azure-cloud-node-manager                                   - name: azure-cloud-node-manager
+    version: 2.1.0                                                     version: 2.1.0
+    dependsOn:                                                         dependsOn:
+                                                                >      - cilium
+                                                                >      - kyverno-crds
+    - vertical-pod-autoscaler-crd                                      - vertical-pod-autoscaler-crd
+  - name: azuredisk-csi-driver                                       - name: azuredisk-csi-driver
+    version: 2.1.0                                                     version: 2.1.0
+    dependsOn:                                                         dependsOn:
+    - azure-cloud-controller-manager                                   - azure-cloud-controller-manager
+    - azure-cloud-node-manager                                         - azure-cloud-node-manager
+                                                                >      - cilium
+                                                                >      - kyverno-crds
+                                                                >      - vertical-pod-autoscaler-crd
+  - name: azurefile-csi-driver                                       - name: azurefile-csi-driver
+    version: 2.0.0                                                     version: 2.0.0
+    dependsOn:                                                         dependsOn:
+    - azure-cloud-controller-manager                                   - azure-cloud-controller-manager
+    - azure-cloud-node-manager                                         - azure-cloud-node-manager
+                                                                >      - cilium
   - name: cert-exporter                                              - name: cert-exporter
     version: 2.10.1                                             |      version: 2.12.0
     dependsOn:                                                         dependsOn:
@@ -28,10 +53,8 @@ spec:                                                              spec:
     version: 0.1.4                                              |      version: 0.2.0
     dependsOn:                                                         dependsOn:
     - prometheus-operator-crd                                          - prometheus-operator-crd
-  - name: cloud-provider-cloud-director                              - name: cloud-provider-cloud-director
-    version: 0.5.0                                              |      version: 0.5.2
-    dependsOn:                                                         dependsOn:
-    - cilium                                                           - cilium
+                                                                >    - name: cluster-autoscaler
+                                                                >      version: 2.0.4
   - name: coredns                                                    - name: coredns
     version: 1.30.0                                             |      version: 1.32.0
     dependsOn:                                                         dependsOn:
@@ -46,6 +69,19 @@ spec:                                                              spec:
     - kyverno-crds                                                     - kyverno-crds
   - name: etcd-k8s-res-count-exporter                                - name: etcd-k8s-res-count-exporter
     version: 1.10.14                                                   version: 1.10.14
+    dependsOn:                                                         dependsOn:
+                                                                >      - cilium
+    - kyverno-crds                                                     - kyverno-crds
+                                                                >      - prometheus-operator-crd
+                                                                >      - vertical-pod-autoscaler-crd
+  - name: external-dns                                               - name: external-dns
+    version: 3.4.0                                              |      version: 3.5.0
+    dependsOn:                                                         dependsOn:
+                                                                >      - cilium
+    - prometheus-operator-crd                                          - prometheus-operator-crd
+                                                                >      - vertical-pod-autoscaler-crd
+  - name: k8s-audit-metrics                                          - name: k8s-audit-metrics
+    version: 0.10.13                                                   version: 0.10.13
     dependsOn:                                                         dependsOn:
                                                                 >      - cilium
     - kyverno-crds                                                     - kyverno-crds
@@ -90,6 +126,11 @@ spec:                                                              spec:
     - kyverno-crds                                                     - kyverno-crds
   - name: priority-classes                                           - name: priority-classes
     version: 0.3.1                                                     version: 0.3.1
+  - name: prometheus-blackbox-exporter                               - name: prometheus-blackbox-exporter
+    version: 0.7.0                                              |      version: 0.9.0
+    dependsOn:                                                         dependsOn:
+    - prometheus-operator-crd                                          - prometheus-operator-crd
+                                                                >      - vertical-pod-autoscaler-crd
                                                                 >    - name: rbac-bootstrap
                                                                 >      version: 0.3.0
   - name: security-bundle                                            - name: security-bundle
@@ -111,16 +152,16 @@ spec:                                                              spec:
   - name: vertical-pod-autoscaler-crd                                - name: vertical-pod-autoscaler-crd
     version: 4.1.2                                                     version: 4.1.2
   components:                                                        components:
-  - name: cluster-cloud-director                                     - name: cluster-cloud-director
+  - name: cluster-azure                                              - name: cluster-azure
     catalog: cluster                                                   catalog: cluster
-    version: 3.2.3                                              |      version: 7.0.0
+    version: 5.4.2                                              |      version: 9.0.0
                                                                 >    - name: containerd
                                                                 >      version: 2.3.2
   - name: flatcar                                                    - name: flatcar
-    version: 4593.2.4                                           |      version: 4593.2.5
+    version: 4593.2.4                                                  version: 4593.2.4
   - name: kubernetes                                                 - name: kubernetes
     version: 1.34.10                                            |      version: 1.35.8
   - name: os-tooling                                                 - name: os-tooling
     version: 1.33.1                                             |      version: 1.34.0
-  date: "2026-07-23T09:16:22Z"                                  |    date: "2026-08-22T20:27:58Z"
-  state: active                                                      state: active
+  date: "2026-07-23T09:16:21Z"                                  |    date: "2026-08-22T20:27:10Z"
+  state: active                                                 |    state: deprecated
