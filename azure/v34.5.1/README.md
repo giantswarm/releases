@@ -5,7 +5,6 @@
 ### Components
 
 - cluster-azure from v5.4.2 to v5.4.3
-- Added containerd [v2.3.2](https://github.com/containerd/containerd/releases/tag/v2.3.2)
 
 ### cluster-azure [v5.4.2...v5.4.3](https://github.com/giantswarm/cluster-azure/compare/v5.4.2...v5.4.3)
 

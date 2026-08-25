@@ -119,8 +119,6 @@ spec:                                                              spec:
   - name: cluster-azure                                              - name: cluster-azure
     catalog: cluster                                                   catalog: cluster
     version: 5.4.2                                              |      version: 5.4.3
-                                                                >    - name: containerd
-                                                                >      version: 2.3.2
   - name: flatcar                                                    - name: flatcar
     version: 4593.2.4                                                  version: 4593.2.4
   - name: kubernetes                                                 - name: kubernetes
