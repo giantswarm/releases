@@ -4,14 +4,14 @@
 
 ### Components
 
-- cluster-aws from v7.7.3 to v10.0.0
+- cluster-aws from v7.7.3 to v10.0.1
 - cluster from v5.3.2 to v8.0.0
 - Added containerd [v2.3.2](https://github.com/containerd/containerd/releases/tag/v2.3.2)
 - Flatcar from v4593.2.4 to [v4593.2.5](https://www.flatcar.org/releases/#release-4593.2.5)
 - Kubernetes from v1.34.10 to [v1.35.8](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.35.md#v1.35.8)
 - os-tooling from v1.33.1 to v1.34.0
 
-### cluster-aws [v7.7.3...v10.0.0](https://github.com/giantswarm/cluster-aws/compare/v7.7.3...v10.0.0)
+### cluster-aws [v7.7.3...v10.0.1](https://github.com/giantswarm/cluster-aws/compare/v7.7.3...v10.0.1)
 
 #### Added
 
@@ -40,6 +40,7 @@
 
 #### Fixed
 
+- Fix AWS API authentication for cluster-autoscaler by using the correct IAM role name. The `-role` suffix got removed when switching over from operator-created IAM objects to [cluster-autoscaler-crossplane-resources](https://github.com/giantswarm/cluster-autoscaler-crossplane-resources).
 - Correct taint key for ARM instances.
 - Allow numbers in Karpenter pool CPU limit (`global.nodePools.*.limits.cpu`).
 
