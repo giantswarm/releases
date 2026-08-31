@@ -118,7 +118,7 @@ spec:
   components:
   - name: cluster-azure
     catalog: cluster
-    version: 5.4.4
+    version: 5.4.2
   - name: containerd
     version: 2.3.2
   - name: flatcar
@@ -127,5 +127,5 @@ spec:
     version: 1.34.10
   - name: os-tooling
     version: 1.33.1
-  date: "2026-08-27T11:06:47Z"
+  date: "2026-08-31T09:18:58Z"
   state: active
