@@ -5,6 +5,7 @@ resources:
 - v34.2.0
 - v34.4.0
 - v34.5.0
+- v34.5.1
 - v35.0.1
 transformers:
 - |
