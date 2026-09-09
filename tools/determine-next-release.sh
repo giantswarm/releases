@@ -15,8 +15,15 @@ ALL_RELEASES=""
 
 if [ -z "$PROVIDER" ]; then
   # Scan all provider directories to find the absolute latest release
-  if [ "$RELEASE_TYPE" != "major" ] && [ "$RELEASE_TYPE" != "minor" ]; then
-    echo "Error: An empty provider is only allowed for 'major' or 'minor' release types."
+  if [ "$RELEASE_TYPE" = "patch" ]; then
+    # Consolidated patch releases span several providers, so there is no single
+    # provider directory to derive the version from. It has to be given explicitly.
+    if [ -z "$VERSION_OVERRIDE" ]; then
+      echo "Error: A consolidated patch release requires an explicit version."
+      exit 1
+    fi
+  elif [ "$RELEASE_TYPE" != "major" ] && [ "$RELEASE_TYPE" != "minor" ]; then
+    echo "Error: An empty provider is only allowed for 'major', 'minor' or 'patch' release types."
     exit 1
   fi
   PROVIDER_DIRS=$(ls -d */ | grep -v -E '^(app|sdk|tools|archived)$' | tr '\n' ' ')
@@ -56,7 +63,14 @@ if [ -n "$VERSION_OVERRIDE" ]; then
     PREVIOUS_PATCH=$((PATCH - 1))
     LATEST_RELEASE="v${MAJOR}.${MINOR}.${PREVIOUS_PATCH}"
     # Verify that the base release exists
-    if [ ! -d "${PROVIDER_DIR}/${LATEST_RELEASE}" ]; then
+    if [ -z "$PROVIDER" ]; then
+      # Consolidated release: the base only has to exist for at least one provider.
+      # The per-provider calls check their own base version.
+      if ! echo "$ALL_RELEASES" | grep -q -x "$LATEST_RELEASE"; then
+        echo "Error: Base release ${LATEST_RELEASE} for backport not found for any provider."
+        exit 1
+      fi
+    elif [ ! -d "${PROVIDER_DIR}/${LATEST_RELEASE}" ]; then
       echo "Error: Base release ${LATEST_RELEASE} for backport not found."
       exit 1
     fi
