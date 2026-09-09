@@ -12,6 +12,16 @@ PROVIDERS=("$@")
 MAJOR_VERSIONS=()
 LATEST_MAJOR=""
 
+# Emit a key=value pair on stdout AND to $GITHUB_OUTPUT. Callers in
+# .github/workflows/create-release.yaml parse these off stdout, so writing
+# only to $GITHUB_OUTPUT would leave them empty.
+emit() {
+    echo "$1"
+    if [ -n "${GITHUB_OUTPUT-}" ]; then
+        echo "$1" >> "$GITHUB_OUTPUT"
+    fi
+}
+
 echo "Checking if latest major version is fully merged for providers: ${PROVIDERS[*]}"
 
 for provider in "${PROVIDERS[@]}"; do
@@ -72,21 +82,15 @@ if [ -n "$CONSOLIDATED_PR" ]; then
     if [[ "$PR_STATE" == "MERGED" ]]; then
         echo "Found merged consolidated PR for v$NEXT_MAJOR.0.0: #$PR_NUMBER"
         echo "Major version v$NEXT_MAJOR is now available."
-        echo "merged=true"
-        if [ -n "${GITHUB_OUTPUT-}" ]; then
-            echo "merged=true" >> "$GITHUB_OUTPUT"
-            echo "latest_major=$NEXT_MAJOR" >> "$GITHUB_OUTPUT"
-            echo "next_major=$((NEXT_MAJOR + 1))" >> "$GITHUB_OUTPUT"
-        fi
+        emit "merged=true"
+        emit "latest_major=$NEXT_MAJOR"
+        emit "next_major=$((NEXT_MAJOR + 1))"
     else
         echo "Found $PR_STATE consolidated PR for v$NEXT_MAJOR.0.0: #$PR_NUMBER"
         echo "Major version v$LATEST_MAJOR is not fully merged yet."
-        echo "merged=false"
-        if [ -n "${GITHUB_OUTPUT-}" ]; then
-            echo "merged=false" >> "$GITHUB_OUTPUT"
-            echo "latest_major=$LATEST_MAJOR" >> "$GITHUB_OUTPUT"
-            echo "next_major=$NEXT_MAJOR" >> "$GITHUB_OUTPUT"
-        fi
+        emit "merged=false"
+        emit "latest_major=$LATEST_MAJOR"
+        emit "next_major=$NEXT_MAJOR"
     fi
 elif [ ${#INDIVIDUAL_PRS[@]} -gt 0 ]; then
     # Check if all individual PRs are merged
@@ -104,29 +108,20 @@ elif [ ${#INDIVIDUAL_PRS[@]} -gt 0 ]; then
     if [[ "$ALL_MERGED" == "true" ]]; then
         echo "All individual PRs for v$NEXT_MAJOR.0.0 are merged."
         echo "Major version v$NEXT_MAJOR is now available."
-        echo "merged=true"
-        if [ -n "${GITHUB_OUTPUT-}" ]; then
-            echo "merged=true" >> "$GITHUB_OUTPUT"
-            echo "latest_major=$NEXT_MAJOR" >> "$GITHUB_OUTPUT"
-            echo "next_major=$((NEXT_MAJOR + 1))" >> "$GITHUB_OUTPUT"
-        fi
+        emit "merged=true"
+        emit "latest_major=$NEXT_MAJOR"
+        emit "next_major=$((NEXT_MAJOR + 1))"
     else
         echo "Not all individual PRs for v$NEXT_MAJOR.0.0 are merged yet."
         echo "Major version v$LATEST_MAJOR is not fully merged yet."
-        echo "merged=false"
-        if [ -n "${GITHUB_OUTPUT-}" ]; then
-            echo "merged=false" >> "$GITHUB_OUTPUT"
-            echo "latest_major=$LATEST_MAJOR" >> "$GITHUB_OUTPUT"
-            echo "next_major=$NEXT_MAJOR" >> "$GITHUB_OUTPUT"
-        fi
+        emit "merged=false"
+        emit "latest_major=$LATEST_MAJOR"
+        emit "next_major=$NEXT_MAJOR"
     fi
 else
     echo "No PRs found for v$NEXT_MAJOR.0.0"
     echo "Major version v$LATEST_MAJOR is fully merged."
-    echo "merged=true"
-    if [ -n "${GITHUB_OUTPUT-}" ]; then
-        echo "merged=true" >> "$GITHUB_OUTPUT"
-        echo "latest_major=$LATEST_MAJOR" >> "$GITHUB_OUTPUT"
-        echo "next_major=$NEXT_MAJOR" >> "$GITHUB_OUTPUT"
-    fi
+    emit "merged=true"
+    emit "latest_major=$LATEST_MAJOR"
+    emit "next_major=$NEXT_MAJOR"
 fi
