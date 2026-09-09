@@ -120,19 +120,18 @@ runs:
             checklist+="  - $action"$'\n'
           done < <(echo "$apps_json" | jq -c '.[]')
 
-          cat <<EOF
-## App readiness for $VERSION
-
-These apps need attention before $VERSION can ship. Check off each one as it is bumped to a compatible version. The release PR will receive a component bump once this issue is closed.
-
-### Apps to update
-
-$checklist
-### Context
-
-- Release PR: [giantswarm/releases#${PR_NUMBERS}](https://github.com/giantswarm/releases/pull/${PR_NUMBERS})
-- Detection: \`tools/breakingchanges\` (Helm \`kubeVersion\` + implicit-coupling fallback)
-EOF
+          # Assembled with string concatenation rather than a heredoc: heredoc
+          # bodies must start at column 0, which would break out of this
+          # `run: |` YAML block scalar.
+          local body=""
+          body+="## App readiness for $VERSION"$'\n\n'
+          body+="These apps need attention before $VERSION can ship. Check off each one as it is bumped to a compatible version. The release PR will receive a component bump once this issue is closed."$'\n\n'
+          body+="### Apps to update"$'\n\n'
+          body+="$checklist"$'\n'
+          body+="### Context"$'\n\n'
+          body+="- Release PR: [giantswarm/releases#${PR_NUMBERS}](https://github.com/giantswarm/releases/pull/${PR_NUMBERS})"$'\n'
+          body+="- Detection: \`tools/breakingchanges\` (Helm \`kubeVersion\` + implicit-coupling fallback)"$'\n'
+          printf '%s' "$body"
         }
 
         TRACKING_ROWS=""

@@ -1,25 +1,9 @@
 apiVersion: release.giantswarm.io/v1alpha1                         apiVersion: release.giantswarm.io/v1alpha1
 kind: Release                                                      kind: Release
 metadata:                                                          metadata:
-  name: aws-34.5.0                                              |    name: aws-35.0.0
+  name: vsphere-34.5.0                                          |    name: vsphere-35.0.1
 spec:                                                              spec:
   apps:                                                              apps:
-  - name: aws-ebs-csi-driver                                         - name: aws-ebs-csi-driver
-    version: 4.1.2                                              |      version: 4.3.1
-    dependsOn:                                                  <
-    - cloud-provider-aws                                        <
-  - name: aws-ebs-csi-driver-servicemonitors                         - name: aws-ebs-csi-driver-servicemonitors
-    version: 0.1.2                                                     version: 0.1.2
-    dependsOn:                                                         dependsOn:
-    - prometheus-operator-crd                                          - prometheus-operator-crd
-  - name: aws-nth-bundle                                             - name: aws-nth-bundle
-    version: 1.4.0                                              |      version: 2.1.1
-  - name: aws-pod-identity-webhook                                   - name: aws-pod-identity-webhook
-    version: 2.2.0                                              |      version: 2.3.0
-    dependsOn:                                                         dependsOn:
-    - cert-manager                                                     - cert-manager
-                                                                >      - prometheus-operator-crd
-                                                                >      - vertical-pod-autoscaler-crd
   - name: cert-exporter                                              - name: cert-exporter
     version: 2.10.1                                             |      version: 2.12.0
     dependsOn:                                                         dependsOn:
@@ -34,36 +18,20 @@ spec:                                                              spec:
                                                                 >      - cilium
     - prometheus-operator-crd                                          - prometheus-operator-crd
                                                                 >      - vertical-pod-autoscaler-crd
-  - name: cert-manager-crossplane-resources                          - name: cert-manager-crossplane-resources
-    catalog: cluster                                            |      version: 0.2.0
-    version: 0.1.1                                              <
   - name: chart-operator-extensions                                  - name: chart-operator-extensions
     version: 1.1.3                                                     version: 1.1.3
     dependsOn:                                                         dependsOn:
     - prometheus-operator-crd                                          - prometheus-operator-crd
   - name: cilium                                                     - name: cilium
     version: 1.4.3                                              |      version: 1.5.1
-  - name: cilium-crossplane-resources                                - name: cilium-crossplane-resources
-    catalog: cluster                                            |      version: 0.2.2
-    version: 0.2.1                                              <
   - name: cilium-servicemonitors                                     - name: cilium-servicemonitors
     version: 0.1.4                                              |      version: 0.2.0
     dependsOn:                                                         dependsOn:
     - prometheus-operator-crd                                          - prometheus-operator-crd
-  - name: cloud-provider-aws                                         - name: cloud-provider-aws
-    version: 2.1.0                                                     version: 2.1.0
+  - name: cloud-provider-vsphere                                     - name: cloud-provider-vsphere
+    version: 2.4.0                                              |      version: 2.5.1
     dependsOn:                                                         dependsOn:
-                                                                >      - cilium
-    - vertical-pod-autoscaler-crd                                      - vertical-pod-autoscaler-crd
-  - name: cluster-autoscaler                                         - name: cluster-autoscaler
-    version: 1.34.3-2                                           |      version: 2.0.4
-    dependsOn:                                                         dependsOn:
-                                                                >      - cilium
-    - kyverno-crds                                                     - kyverno-crds
-                                                                >      - prometheus-operator-crd
-                                                                >      - vertical-pod-autoscaler-crd
-                                                                >    - name: cluster-autoscaler-crossplane-resources
-                                                                >      version: 1.0.0
+    - cilium                                                           - cilium
   - name: coredns                                                    - name: coredns
     version: 1.30.0                                             |      version: 1.32.0
     dependsOn:                                                         dependsOn:
@@ -83,37 +51,23 @@ spec:                                                              spec:
     - kyverno-crds                                                     - kyverno-crds
                                                                 >      - prometheus-operator-crd
                                                                 >      - vertical-pod-autoscaler-crd
-  - name: external-dns                                               - name: external-dns
-    version: 3.4.0                                              |      version: 3.5.0
-    dependsOn:                                                         dependsOn:
-                                                                >      - cilium
-    - prometheus-operator-crd                                          - prometheus-operator-crd
-                                                                >      - vertical-pod-autoscaler-crd
-                                                                >    - name: external-dns-crossplane-resources
-                                                                >      version: 0.4.0
-  - name: irsa-servicemonitors                                       - name: irsa-servicemonitors
-    version: 0.1.1                                              |      version: 0.2.0
-    dependsOn:                                                         dependsOn:
-    - prometheus-operator-crd                                          - prometheus-operator-crd
-  - name: k8s-audit-metrics                                          - name: k8s-audit-metrics
-    version: 0.10.13                                                   version: 0.10.13
-    dependsOn:                                                         dependsOn:
-                                                                >      - cilium
-    - kyverno-crds                                                     - kyverno-crds
-                                                                >      - prometheus-operator-crd
-                                                                >      - vertical-pod-autoscaler-crd
   - name: k8s-dns-node-cache                                         - name: k8s-dns-node-cache
     version: 2.11.0                                                    version: 2.11.0
     dependsOn:                                                         dependsOn:
                                                                 >      - cilium
     - kyverno-crds                                                     - kyverno-crds
                                                                 >      - prometheus-operator-crd
-  - name: karpenter                                                  - name: karpenter
-    version: 2.3.0                                              |      version: 2.4.1
-  - name: karpenter-crossplane-resources                        <
-    version: 0.5.1                                              <
-  - name: karpenter-taint-remover                                    - name: karpenter-taint-remover
-    version: 1.0.2                                              |      version: 1.1.0
+  - name: kube-vip                                                   - name: kube-vip
+    version: 0.3.0                                                     version: 0.3.0
+    dependsOn:                                                         dependsOn:
+    - cilium                                                           - cilium
+                                                                >      - cloud-provider-vsphere
+                                                                >      - kyverno-crds
+  - name: kube-vip-cloud-provider                                    - name: kube-vip-cloud-provider
+    version: 0.3.0                                              |      version: 0.3.2
+    dependsOn:                                                         dependsOn:
+    - cilium                                                           - cilium
+                                                                >      - cloud-provider-vsphere
   - name: metrics-server                                             - name: metrics-server
     version: 2.8.0                                                     version: 2.8.0
     dependsOn:                                                         dependsOn:
@@ -137,26 +91,16 @@ spec:                                                              spec:
     - kyverno-crds                                                     - kyverno-crds
                                                                 >      - prometheus-operator-crd
                                                                 >      - vertical-pod-autoscaler-crd
-  - name: node-problem-detector                                      - name: node-problem-detector
-    version: 0.5.2                                                     version: 0.5.2
-  - name: observability-bundle                                  <
-    version: 2.8.0                                              <
-    dependsOn:                                                         dependsOn:
-    - coredns                                                   |      - kyverno-crds
-                                                                >      - prometheus-operator-crd
-                                                                >    - name: observability-bundle
-                                                                >      version: 3.3.1
+  - name: observability-bundle                                       - name: observability-bundle
+    version: 2.8.0                                              |      version: 3.3.1
+    dependsOn:                                                  <
+    - coredns                                                   <
   - name: observability-policies                                     - name: observability-policies
     version: 0.0.4                                                     version: 0.0.4
     dependsOn:                                                         dependsOn:
     - kyverno-crds                                                     - kyverno-crds
   - name: priority-classes                                           - name: priority-classes
     version: 0.3.1                                                     version: 0.3.1
-  - name: prometheus-blackbox-exporter                               - name: prometheus-blackbox-exporter
-    version: 0.7.0                                              |      version: 0.9.0
-    dependsOn:                                                         dependsOn:
-    - prometheus-operator-crd                                          - prometheus-operator-crd
-                                                                >      - vertical-pod-autoscaler-crd
                                                                 >    - name: rbac-bootstrap
                                                                 >      version: 0.3.0
   - name: security-bundle                                            - name: security-bundle
@@ -177,10 +121,15 @@ spec:                                                              spec:
                                                                 >      - vertical-pod-autoscaler-crd
   - name: vertical-pod-autoscaler-crd                                - name: vertical-pod-autoscaler-crd
     version: 4.1.2                                                     version: 4.1.2
+  - name: vsphere-csi-driver                                         - name: vsphere-csi-driver
+    version: 3.4.3                                              |      version: 3.4.6
+    dependsOn:                                                         dependsOn:
+    - cilium                                                           - cilium
+                                                                >      - cloud-provider-vsphere
   components:                                                        components:
-  - name: cluster-aws                                                - name: cluster-aws
+  - name: cluster-vsphere                                            - name: cluster-vsphere
     catalog: cluster                                                   catalog: cluster
-    version: 7.7.3                                              |      version: 10.0.0
+    version: 5.1.4                                              |      version: 9.0.0
                                                                 >    - name: containerd
                                                                 >      version: 2.3.2
   - name: flatcar                                                    - name: flatcar
@@ -189,5 +138,5 @@ spec:                                                              spec:
     version: 1.34.10                                            |      version: 1.35.8
   - name: os-tooling                                                 - name: os-tooling
     version: 1.33.1                                             |      version: 1.34.0
-  date: "2026-07-23T09:17:35Z"                                  |    date: "2026-08-22T20:26:37Z"
+  date: "2026-07-23T09:16:18Z"                                  |    date: "2026-08-25T15:45:16Z"
   state: active                                                      state: active

@@ -1,9 +1,34 @@
 apiVersion: release.giantswarm.io/v1alpha1
 kind: Release
 metadata:
-  name: cloud-director-35.0.0
+  name: azure-35.0.1
 spec:
   apps:
+  - name: azure-cloud-controller-manager
+    version: 2.1.0
+    dependsOn:
+    - cilium
+    - vertical-pod-autoscaler-crd
+  - name: azure-cloud-node-manager
+    version: 2.1.0
+    dependsOn:
+    - cilium
+    - kyverno-crds
+    - vertical-pod-autoscaler-crd
+  - name: azuredisk-csi-driver
+    version: 2.1.0
+    dependsOn:
+    - azure-cloud-controller-manager
+    - azure-cloud-node-manager
+    - cilium
+    - kyverno-crds
+    - vertical-pod-autoscaler-crd
+  - name: azurefile-csi-driver
+    version: 2.0.0
+    dependsOn:
+    - azure-cloud-controller-manager
+    - azure-cloud-node-manager
+    - cilium
   - name: cert-exporter
     version: 2.12.0
     dependsOn:
@@ -28,10 +53,8 @@ spec:
     version: 0.2.0
     dependsOn:
     - prometheus-operator-crd
-  - name: cloud-provider-cloud-director
-    version: 0.5.2
-    dependsOn:
-    - cilium
+  - name: cluster-autoscaler
+    version: 2.0.4
   - name: coredns
     version: 1.32.0
     dependsOn:
@@ -46,6 +69,19 @@ spec:
     - kyverno-crds
   - name: etcd-k8s-res-count-exporter
     version: 1.10.14
+    dependsOn:
+    - cilium
+    - kyverno-crds
+    - prometheus-operator-crd
+    - vertical-pod-autoscaler-crd
+  - name: external-dns
+    version: 3.5.0
+    dependsOn:
+    - cilium
+    - prometheus-operator-crd
+    - vertical-pod-autoscaler-crd
+  - name: k8s-audit-metrics
+    version: 0.10.13
     dependsOn:
     - cilium
     - kyverno-crds
@@ -87,6 +123,11 @@ spec:
     - kyverno-crds
   - name: priority-classes
     version: 0.3.1
+  - name: prometheus-blackbox-exporter
+    version: 0.9.0
+    dependsOn:
+    - prometheus-operator-crd
+    - vertical-pod-autoscaler-crd
   - name: rbac-bootstrap
     version: 0.3.0
   - name: security-bundle
@@ -105,16 +146,16 @@ spec:
   - name: vertical-pod-autoscaler-crd
     version: 4.1.2
   components:
-  - name: cluster-cloud-director
+  - name: cluster-azure
     catalog: cluster
-    version: 7.0.0
+    version: 9.0.0
   - name: containerd
     version: 2.3.2
   - name: flatcar
-    version: 4593.2.5
+    version: 4593.2.4
   - name: kubernetes
     version: 1.35.8
   - name: os-tooling
     version: 1.34.0
-  date: "2026-08-22T20:27:58Z"
+  date: "2026-08-25T15:46:05Z"
   state: active
