@@ -83,6 +83,6 @@ spec:
     catalog: cluster
     version: 0.5.1-dev.renovate-cluster-8-x.2026-09-10.12-16-04.hb650619
   - name: kubernetes
-    version: 1.35.8
-  date: "2026-09-10T12:18:05Z"
+    version: 1.35.7
+  date: "2026-09-10T14:00:30Z"
   state: active
