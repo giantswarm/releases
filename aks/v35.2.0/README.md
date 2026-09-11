@@ -1,4 +1,4 @@
-# :zap: Giant Swarm Release v35.2.0 for  :zap:
+# :zap: Giant Swarm Release v35.2.0 for AKS :zap:
 
 ## Changes compared to v35.1.0
 
@@ -10,7 +10,29 @@
 
 #### Changed
 
-- Update teleport node labels - add `ins=` label and remove `cluster=` label condition check, such that MC nodes have this label.
+- Chart: Update `cluster` to v8.2.0.
+
+#### Fixed
+
+- Sanitize the `app.kubernetes.io/version` label value so it is always a valid Kubernetes label. New dev builds are longer and might trigger a validation failure in some cases.
+- Configure `observability-bundle` and `security-bundle` HelmReleases dependencies to not include `cilium`, since it's not installed on AKS.
+
+### cluster [v7.0.0...v8.2.0](https://github.com/giantswarm/cluster/compare/v7.0.0...v8.2.0)
+
+#### Added
+
+- Add `preKubeadmCommandsTemplateName` and `postKubeadmCommandsTemplateName` hooks under `providerIntegration.controlPlane.kubeadmConfig` and `providerIntegration.workers.kubeadmConfig`. They name a provider template that renders a YAML list of additional kubeadm commands, once for the control plane and once per node pool for workers.
+- Add `internal.advancedConfiguration.kubelet.evictionHard` values. Providers need them to tell autoscalers such as Karpenter how much of a node's resources is allocatable.
+- SELinux: Add `global.components.selinux.writablePolicyStore` value (default `true`) to allow loading additional SELinux policies.
+
+#### Changed
+
+- SELinux: Keep AVC audit logs (required for SELinux policy generation).
+- SELinux: Relabel the whole filesystem except read-only `/usr` (previously only `/etc/kubernetes`).
+- SELinux: Correctly label CA certificates in `/etc/ssl/certs` for mounting into containers.
+- App to HR Migration: Skip v35.0.0 pre-releases and update `docker-kubectl` to v1.36.4.
+- Chart: Rework HelmRelease clean-up job.
+- Chart: Migrate Apps to HelmReleases.
 
 ### Apps
 
