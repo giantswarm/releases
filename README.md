@@ -188,6 +188,8 @@ to all Giant Swarm installations.
 ## Azure
 
 - v35
+  - v35.1
+    - [v35.1.0](https://github.com/giantswarm/releases/tree/master/azure/v35.1.0)
   - v35.0
     - [v35.0.1](https://github.com/giantswarm/releases/tree/master/azure/v35.0.1)
     - [v35.0.0](https://github.com/giantswarm/releases/tree/master/azure/archived/v35.0.0)
