@@ -10,7 +10,7 @@
     {
       "version": "35.2.0",
       "isDeprecated": false,
-      "releaseTimestamp": "2026-09-10T14:50:47Z",
+      "releaseTimestamp": "2026-09-14T09:18:58Z",
       "changelogUrl": "https://github.com/giantswarm/releases/blob/master/aks/v35.2.0/README.md",
       "isStable": true
     }
