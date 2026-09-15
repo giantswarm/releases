@@ -5,7 +5,6 @@
 ### Components
 
 - cluster-aks from v0.5.0 to v0.6.0
-- Kubernetes from v1.35.7 to [v1.35.8](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.35.md#v1.35.8)
 
 ### cluster-aks [v0.5.0...v0.6.0](https://github.com/giantswarm/cluster-aks/compare/v0.5.0...v0.6.0)
 
