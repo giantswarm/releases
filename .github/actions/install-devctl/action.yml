@@ -1,5 +1,5 @@
 name: 'Install devctl'
-description: 'Installs the latest version of devctl'
+description: 'Installs the newest devctl release that ships the linux-amd64 binary'
 inputs:
   github_token:
     description: 'The GitHub token to use for authentication'
@@ -18,9 +18,24 @@ runs:
         GH_TOKEN: ${{ inputs.github_token }}
       run: |
         mkdir -p /tmp/devctl_install && cd /tmp/devctl_install
-        LATEST_DEVCTL_TAG=$(gh release view --repo giantswarm/devctl --json tagName --jq '.tagName')
-        echo "version=${LATEST_DEVCTL_TAG#v}" >> $GITHUB_OUTPUT
         ASSET_NAME="devctl-linux-amd64"
+        # The newest release is not always usable: its CircleCI tag build attaches the binaries after the
+        # GitHub release exists, and a failed build leaves a release without assets (v8.57.11–v8.57.13 on
+        # 2026-09-15 broke every Create Release PR run). Take the newest release that has the binary.
+        LATEST_DEVCTL_TAG=""
+        for tag in $(gh release list --repo giantswarm/devctl --exclude-drafts --exclude-pre-releases --limit 20 --json tagName --jq '.[].tagName'); do
+          if gh release view --repo giantswarm/devctl "$tag" --json assets --jq '.assets[].name' | grep -qx "$ASSET_NAME"; then
+            LATEST_DEVCTL_TAG="$tag"
+            break
+          fi
+          echo "::warning::devctl release $tag has no $ASSET_NAME asset, skipping"
+        done
+        if [[ -z "$LATEST_DEVCTL_TAG" ]]; then
+          echo "::error::no devctl release among the last 20 carries $ASSET_NAME"
+          exit 1
+        fi
+        echo "Installing devctl $LATEST_DEVCTL_TAG"
+        echo "version=${LATEST_DEVCTL_TAG#v}" >> $GITHUB_OUTPUT
         gh release download --repo giantswarm/devctl "$LATEST_DEVCTL_TAG" --pattern "$ASSET_NAME"
         chmod +x "$ASSET_NAME"
         sudo mv "$ASSET_NAME" /usr/local/bin/devctl
