@@ -33,4 +33,3 @@
 - SELinux: Correctly label CA certificates in `/etc/ssl/certs` for mounting into containers.
 - App to HR Migration: Skip v35.0.0 pre-releases and update `docker-kubectl` to v1.36.4.
 - Chart: Rework HelmRelease clean-up job.
-
