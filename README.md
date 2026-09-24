@@ -571,7 +571,7 @@ to all Giant Swarm installations.
   - v35.3
     - [v35.3.0](https://github.com/giantswarm/releases/tree/master/aks/v35.3.0)
   - v35.2
-    - [v35.2.0](https://github.com/giantswarm/releases/tree/master/aks/v35.2.0)
+    - [v35.2.0](https://github.com/giantswarm/releases/tree/master/aks/archived/v35.2.0)
   - v35.1
     - [v35.1.0](https://github.com/giantswarm/releases/tree/master/aks/archived/v35.1.0)
   - v35.0
