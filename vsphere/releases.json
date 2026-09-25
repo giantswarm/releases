@@ -2,7 +2,7 @@
   "releases": [
     {
       "version": "33.2.0",
-      "isDeprecated": false,
+      "isDeprecated": true,
       "releaseTimestamp": "2026-04-21T14:34:42Z",
       "changelogUrl": "https://github.com/giantswarm/releases/blob/master/vsphere/v33.2.0/README.md",
       "isStable": true
