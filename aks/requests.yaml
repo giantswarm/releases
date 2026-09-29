@@ -1,5 +1,5 @@
 releases:
-    - name: '<= 35.2.0'
-      requests:
-        - name: kubernetes
-          version: '1.35.7'
+- name: "<= 35.2.0"
+  requests:
+  - name: kubernetes
+    version: "1.35.7"
