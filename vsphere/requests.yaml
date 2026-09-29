@@ -1,4 +1,8 @@
 releases:
+- name: ">= 35.0.0 < 36.0.0"
+  requests:
+  - name: cilium
+    version: ">= 1.5.0 < 1.6.0"
 - name: ">= 34.2.0 < 35.0.0"
   requests:
   - name: security-bundle
