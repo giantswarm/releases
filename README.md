@@ -2,6 +2,8 @@
 
 # Giant Swarm Workload Cluster Releases
 
+CAPI: Testing giantswarm/cluster-api-app#394.
+
 This repository contains workload cluster release notes and changelogs.
 
 Workload cluster releases can be in
