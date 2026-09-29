@@ -16,6 +16,8 @@ to all Giant Swarm installations.
     - [v36.0.0](https://github.com/giantswarm/releases/tree/master/capa/v36.0.0)
 
 - v35
+  - v35.2
+    - [v35.2.0](https://github.com/giantswarm/releases/tree/master/capa/v35.2.0)
   - v35.1
     - [v35.1.1](https://github.com/giantswarm/releases/tree/master/capa/v35.1.1)
     - [v35.1.0](https://github.com/giantswarm/releases/tree/master/capa/v35.1.0)
@@ -199,6 +201,8 @@ to all Giant Swarm installations.
     - [v36.0.0](https://github.com/giantswarm/releases/tree/master/azure/v36.0.0)
 
 - v35
+  - v35.2
+    - [v35.2.0](https://github.com/giantswarm/releases/tree/master/azure/v35.2.0)
   - v35.1
     - [v35.1.1](https://github.com/giantswarm/releases/tree/master/azure/v35.1.1)
     - [v35.1.0](https://github.com/giantswarm/releases/tree/master/azure/v35.1.0)
@@ -408,6 +412,8 @@ to all Giant Swarm installations.
     - [v36.0.0](https://github.com/giantswarm/releases/tree/master/vsphere/v36.0.0)
 
 - v35
+  - v35.2
+    - [v35.2.0](https://github.com/giantswarm/releases/tree/master/vsphere/v35.2.0)
   - v35.1
     - [v35.1.1](https://github.com/giantswarm/releases/tree/master/vsphere/v35.1.1)
   - v35.0
@@ -489,6 +495,8 @@ to all Giant Swarm installations.
     - [v36.0.0](https://github.com/giantswarm/releases/tree/master/cloud-director/v36.0.0)
 
 - v35
+  - v35.2
+    - [v35.2.0](https://github.com/giantswarm/releases/tree/master/cloud-director/v35.2.0)
   - v35.1
     - [v35.1.1](https://github.com/giantswarm/releases/tree/master/cloud-director/v35.1.1)
   - v35.0
