@@ -484,6 +484,10 @@ to all Giant Swarm installations.
 
 ## VMware Cloud Director
 
+- v37
+  - v37.0
+    - [v37.0.0](https://github.com/giantswarm/releases/tree/master/cloud-director/v37.0.0)
+
 - v36
   - v36.0
     - [v36.0.0](https://github.com/giantswarm/releases/tree/master/cloud-director/v36.0.0)
