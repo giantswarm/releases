@@ -44,6 +44,12 @@ Documentation for the automated controller readiness tracking system for major r
 
 When a major release is created, controller apps (e.g., `cloud-provider-aws`, `azure-cloud-controller-manager`) need new versions for the new Kubernetes version. This system automates the tracking and follow-up, holding the release PR in development until controllers are ready.
 
+### [Release KPIs](workflows-release-kpis.md)
+Documentation for the release process KPIs:
+- **Release KPIs** (`release-kpis.yaml`) - Computes lead time (open → merge) for every merged release PR and the delay from the planned merge date for scheduled releases
+- Data is embedded into the [CAPI Release KPIs Dashboard](https://giantswarm.grafana.net/d/capi-release-kpis/capi-release-kpis) in Grafana Cloud, which the workflow publishes
+- `create-release.yaml` records the planned merge date in the body of scheduled release PRs
+
 ### [Pinning Component and App Versions](workflows-pinning-versions.md)
 Documentation for pinning specific component or app versions in releases:
 - **Pin Version** (`pin-version.yaml`) - Pins component/app versions via PR comments
@@ -76,6 +82,7 @@ This workflow retags cluster provider charts (e.g., `cluster-aws:7.2.5` → `34.
 | Check Controller Readiness | Daily 8:00 AM UTC | ✅ |
 | Deprecate Releases | Monday 6:00 AM UTC | ✅ |
 | Archive Releases | Monday 10:00 AM UTC | ✅ |
+| Release KPIs | Daily 7:00 AM UTC, on release PR merge, on dashboard changes | ✅ |
 | Retag Cluster Charts (CircleCI) | On merge to main/master | ✅ |
 | PR Preview Charts (CircleCI + GHA) | On PR with release.yaml changes | ❌ |
 
@@ -83,3 +90,4 @@ This workflow retags cluster provider charts (e.g., `cluster-aws:7.2.5` → `34.
 
 - [CAPI Release Drafting Guide](https://intranet.giantswarm.io/docs/product/releases/capi/capi-release-drafting/) - Complete guide for drafting CAPI releases
 - [CAPI Releases Dashboard](https://giantswarm.grafana.net/d/be9a0bh8mbwn4e/capi-releases) - Live metrics for release usage
+- [CAPI Release KPIs Dashboard](https://giantswarm.grafana.net/d/capi-release-kpis/capi-release-kpis) - Lead time for release and delay from the planned merge date

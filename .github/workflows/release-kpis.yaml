@@ -1,0 +1,115 @@
+# This workflow collects release KPIs (lead time for release) from merged
+# release PRs and publishes them to the CAPI Release KPIs dashboard in Grafana
+# Cloud. The data is embedded into the dashboard, so no extra storage is needed.
+#
+# See https://github.com/giantswarm/roadmap/issues/4382
+
+name: Release KPIs
+
+on:
+  schedule:
+    - cron: "0 7 * * *" # Daily at 7:00 AM UTC
+
+  # Allow manual triggering
+  workflow_dispatch:
+
+  # Refresh right after a release PR is merged
+  pull_request:
+    types: [closed]
+    branches:
+      - "master"
+      - "main"
+
+  # Publish dashboard changes
+  push:
+    branches:
+      - "master"
+      - "main"
+    paths:
+      - ".github/workflows/release-kpis.yaml"
+      - "tools/release-kpis/**"
+
+permissions:
+  contents: read
+  pull-requests: read
+
+concurrency:
+  group: release-kpis
+  cancel-in-progress: false
+
+jobs:
+  release-kpis:
+    runs-on: ubuntu-latest
+    # Release PRs always come from branches of this repository. PRs from forks
+    # have no access to secrets, so they are left to the daily run.
+    if: |
+      github.event_name != 'pull_request' ||
+      (github.event.pull_request.merged == true &&
+       github.event.pull_request.head.repo.full_name == github.repository &&
+       contains(github.event.pull_request.title, ': Release v'))
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          # Release PRs are found in the history of the default branch. After a
+          # merge, check out the base branch instead of the PR merge ref.
+          ref: ${{ github.event_name == 'pull_request' && github.event.pull_request.base.ref || '' }}
+          fetch-depth: 0
+
+      - name: Set up Go
+        uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
+        with:
+          go-version: "1.27"
+
+      - name: Build KPI tool
+        run: |
+          cd tools
+          go build -o "$GITHUB_WORKSPACE/release-kpis" ./release-kpis
+
+      - name: Collect release lead times
+        run: |
+          ./release-kpis -repo "$GITHUB_REPOSITORY" -repo-dir . -ref HEAD -output "$RUNNER_TEMP/release-lead-time.json" -verbose
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Write job summary
+        run: |
+          {
+            echo "### Release lead time (last 10 merged release PRs)"
+            echo
+            echo "| PR | Provider | Version | Type | Lead time (days) | Planned merge | Delay (days) |"
+            echo "|----|----------|---------|------|------------------|---------------|--------------|"
+            jq -r '.releases[-10:] | reverse[] |
+              "| [#\(.number)](\(.url)) | \(.provider) | \(.version) | \(.release_type) | \(.lead_time_days) | \(.planned_merge_date // "-") | \(.delay_days // "-") |"' \
+              "$RUNNER_TEMP/release-lead-time.json"
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Publish dashboard to Grafana
+        run: |
+          set -eo pipefail
+
+          DASHBOARD_JSON="$RUNNER_TEMP/dashboard.json"
+
+          # Embed the data into the Infinity targets of the dashboard template.
+          # The other panels read it from there through the Dashboard datasource.
+          jq --slurpfile data "$RUNNER_TEMP/release-lead-time.json" \
+            '(.panels[].targets[] | select(.datasource.type == "yesoreyeram-infinity-datasource"))
+               |= (.source = "inline" | .data = ($data[0] | tojson))
+             | {dashboard: ., folderUid: "", overwrite: true, message: "Updated by the Release KPIs workflow"}' \
+            tools/release-kpis/dashboard.json > "$DASHBOARD_JSON"
+
+          RESPONSE=$(curl --silent --show-error --fail-with-body --request POST \
+            --header "Authorization: Bearer $GRAFANA_API_KEY" \
+            --header "Content-Type: application/json" \
+            --data @"$DASHBOARD_JSON" \
+            https://giantswarm.grafana.net/api/dashboards/db) || {
+            echo "::error:: Failed to upload dashboard: $RESPONSE"
+            exit 1
+          }
+
+          DASHBOARD_URL="https://giantswarm.grafana.net$(echo "$RESPONSE" | jq -r .url)"
+          echo "Published dashboard: $DASHBOARD_URL"
+          echo "[Open the CAPI Release KPIs dashboard]($DASHBOARD_URL)" >> "$GITHUB_STEP_SUMMARY"
+        env:
+          GRAFANA_API_KEY: ${{ secrets.GRAFANA_API_KEY }}

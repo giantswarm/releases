@@ -1,0 +1,843 @@
+{
+  "uid": "capi-release-kpis",
+  "title": "CAPI Release KPIs",
+  "description": "Release process KPIs. Lead time for release is computed from merged release PRs by the Release KPIs workflow in giantswarm/releases, which embeds the data into this dashboard. Edit tools/release-kpis/dashboard.json in that repository instead of this dashboard, the workflow overwrites it. See https://github.com/giantswarm/roadmap/issues/4382",
+  "tags": [
+    "owner:team-tenet",
+    "releases",
+    "kpi"
+  ],
+  "editable": true,
+  "graphTooltip": 1,
+  "timezone": "utc",
+  "time": {
+    "from": "now-1y",
+    "to": "now"
+  },
+  "refresh": "",
+  "schemaVersion": 39,
+  "version": 1,
+  "links": [
+    {
+      "title": "CAPI Releases",
+      "type": "link",
+      "url": "https://giantswarm.grafana.net/d/be9a0bh8mbwn4e/capi-releases",
+      "targetBlank": true
+    },
+    {
+      "title": "Release KPIs workflow",
+      "type": "link",
+      "url": "https://github.com/giantswarm/releases/actions/workflows/release-kpis.yaml",
+      "targetBlank": true
+    },
+    {
+      "title": "Roadmap issue",
+      "type": "link",
+      "url": "https://github.com/giantswarm/roadmap/issues/4382",
+      "targetBlank": true
+    }
+  ],
+  "templating": {
+    "list": []
+  },
+  "annotations": {
+    "list": []
+  },
+  "panels": [
+    {
+      "id": 7,
+      "type": "table",
+      "title": "Merged release PRs",
+      "datasource": {
+        "type": "yesoreyeram-infinity-datasource",
+        "uid": "bdeczbud7da80f"
+      },
+      "description": "All merged release PRs with their lead time. Planned merge date and delay are only set for scheduled releases. This panel holds the embedded data; the other panels read it from here.",
+      "gridPos": {
+        "h": 14,
+        "w": 24,
+        "x": 0,
+        "y": 14
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "yesoreyeram-infinity-datasource",
+            "uid": "bdeczbud7da80f"
+          },
+          "type": "json",
+          "source": "inline",
+          "format": "table",
+          "parser": "backend",
+          "root_selector": "releases",
+          "columns": [
+            {
+              "selector": "number",
+              "text": "PR",
+              "type": "number"
+            },
+            {
+              "selector": "url",
+              "text": "url",
+              "type": "string"
+            },
+            {
+              "selector": "provider",
+              "text": "provider",
+              "type": "string"
+            },
+            {
+              "selector": "version",
+              "text": "version",
+              "type": "string"
+            },
+            {
+              "selector": "release_type",
+              "text": "release_type",
+              "type": "string"
+            },
+            {
+              "selector": "author",
+              "text": "author",
+              "type": "string"
+            },
+            {
+              "selector": "created_at",
+              "text": "created_at",
+              "type": "timestamp"
+            },
+            {
+              "selector": "merged_at",
+              "text": "merged_at",
+              "type": "timestamp"
+            },
+            {
+              "selector": "lead_time_days",
+              "text": "lead_time_days",
+              "type": "number"
+            },
+            {
+              "selector": "automated",
+              "text": "automated",
+              "type": "boolean"
+            },
+            {
+              "selector": "planned_merge_date",
+              "text": "planned_merge_date",
+              "type": "string"
+            },
+            {
+              "selector": "delay_days",
+              "text": "delay_days",
+              "type": "number"
+            }
+          ],
+          "filters": [],
+          "data": ""
+        }
+      ],
+      "transformations": [
+        {
+          "id": "sortBy",
+          "options": {
+            "sort": [
+              {
+                "field": "merged_at",
+                "desc": true
+              }
+            ]
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "url": true
+            },
+            "indexByName": {
+              "PR": 0,
+              "provider": 1,
+              "version": 2,
+              "release_type": 3,
+              "author": 4,
+              "created_at": 5,
+              "merged_at": 6,
+              "lead_time_days": 7,
+              "automated": 8,
+              "planned_merge_date": 9,
+              "delay_days": 10
+            },
+            "renameByName": {
+              "release_type": "type",
+              "created_at": "opened",
+              "merged_at": "merged",
+              "lead_time_days": "lead time (days)",
+              "automated": "scheduled",
+              "planned_merge_date": "planned merge",
+              "delay_days": "delay (days)"
+            }
+          }
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "filterable": true
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "PR"
+            },
+            "properties": [
+              {
+                "id": "links",
+                "value": [
+                  {
+                    "title": "Open pull request",
+                    "targetBlank": true,
+                    "url": "https://github.com/giantswarm/releases/pull/${__value.raw}"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "delay (days)"
+            },
+            "properties": [
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-text"
+                }
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": null
+                    },
+                    {
+                      "color": "orange",
+                      "value": 1
+                    },
+                    {
+                      "color": "red",
+                      "value": 7
+                    }
+                  ]
+                }
+              },
+              {
+                "id": "color",
+                "value": {
+                  "mode": "thresholds"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "options": {
+        "showHeader": true,
+        "cellHeight": "sm",
+        "footer": {
+          "show": false
+        }
+      }
+    },
+    {
+      "id": 1,
+      "type": "stat",
+      "title": "Median lead time: major",
+      "description": "Median open \u2192 merge time of merged major release PRs, in days.",
+      "datasource": {
+        "type": "datasource",
+        "uid": "-- Dashboard --"
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 6,
+        "x": 0,
+        "y": 0
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "datasource",
+            "uid": "-- Dashboard --"
+          },
+          "panelId": 7,
+          "withTransforms": false
+        }
+      ],
+      "transformations": [
+        {
+          "id": "filterByValue",
+          "options": {
+            "type": "include",
+            "match": "all",
+            "filters": [
+              {
+                "fieldName": "release_type",
+                "config": {
+                  "id": "equal",
+                  "options": {
+                    "value": "major"
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "PR": true,
+              "url": true,
+              "provider": true,
+              "version": true,
+              "release_type": true,
+              "author": true,
+              "created_at": true,
+              "merged_at": true,
+              "automated": true,
+              "planned_merge_date": true,
+              "delay_days": true
+            }
+          }
+        },
+        {
+          "id": "reduce",
+          "options": {
+            "mode": "reduceFields",
+            "reducers": [
+              "median"
+            ],
+            "includeTimeField": false
+          }
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "d",
+          "decimals": 1,
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "blue"
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "colorMode": "value",
+        "graphMode": "none",
+        "textMode": "value",
+        "justifyMode": "center"
+      }
+    },
+    {
+      "id": 2,
+      "type": "stat",
+      "title": "Median lead time: minor",
+      "description": "Median open \u2192 merge time of merged minor release PRs, in days.",
+      "datasource": {
+        "type": "datasource",
+        "uid": "-- Dashboard --"
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 6,
+        "x": 6,
+        "y": 0
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "datasource",
+            "uid": "-- Dashboard --"
+          },
+          "panelId": 7,
+          "withTransforms": false
+        }
+      ],
+      "transformations": [
+        {
+          "id": "filterByValue",
+          "options": {
+            "type": "include",
+            "match": "all",
+            "filters": [
+              {
+                "fieldName": "release_type",
+                "config": {
+                  "id": "equal",
+                  "options": {
+                    "value": "minor"
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "PR": true,
+              "url": true,
+              "provider": true,
+              "version": true,
+              "release_type": true,
+              "author": true,
+              "created_at": true,
+              "merged_at": true,
+              "automated": true,
+              "planned_merge_date": true,
+              "delay_days": true
+            }
+          }
+        },
+        {
+          "id": "reduce",
+          "options": {
+            "mode": "reduceFields",
+            "reducers": [
+              "median"
+            ],
+            "includeTimeField": false
+          }
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "d",
+          "decimals": 1,
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "blue"
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "colorMode": "value",
+        "graphMode": "none",
+        "textMode": "value",
+        "justifyMode": "center"
+      }
+    },
+    {
+      "id": 3,
+      "type": "stat",
+      "title": "Median lead time: patch",
+      "description": "Median open \u2192 merge time of merged patch release PRs, in days.",
+      "datasource": {
+        "type": "datasource",
+        "uid": "-- Dashboard --"
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 6,
+        "x": 12,
+        "y": 0
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "datasource",
+            "uid": "-- Dashboard --"
+          },
+          "panelId": 7,
+          "withTransforms": false
+        }
+      ],
+      "transformations": [
+        {
+          "id": "filterByValue",
+          "options": {
+            "type": "include",
+            "match": "all",
+            "filters": [
+              {
+                "fieldName": "release_type",
+                "config": {
+                  "id": "equal",
+                  "options": {
+                    "value": "patch"
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "PR": true,
+              "url": true,
+              "provider": true,
+              "version": true,
+              "release_type": true,
+              "author": true,
+              "created_at": true,
+              "merged_at": true,
+              "automated": true,
+              "planned_merge_date": true,
+              "delay_days": true
+            }
+          }
+        },
+        {
+          "id": "reduce",
+          "options": {
+            "mode": "reduceFields",
+            "reducers": [
+              "median"
+            ],
+            "includeTimeField": false
+          }
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "d",
+          "decimals": 1,
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "blue"
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "colorMode": "value",
+        "graphMode": "none",
+        "textMode": "value",
+        "justifyMode": "center"
+      }
+    },
+    {
+      "id": 4,
+      "type": "stat",
+      "title": "Median delay vs. planned date",
+      "description": "Scheduled releases only (created by automation on the 1st). Negative means merged before the planned date.",
+      "datasource": {
+        "type": "datasource",
+        "uid": "-- Dashboard --"
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 6,
+        "x": 18,
+        "y": 0
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "datasource",
+            "uid": "-- Dashboard --"
+          },
+          "panelId": 7,
+          "withTransforms": false
+        }
+      ],
+      "transformations": [
+        {
+          "id": "filterByValue",
+          "options": {
+            "type": "include",
+            "match": "all",
+            "filters": [
+              {
+                "fieldName": "automated",
+                "config": {
+                  "id": "equal",
+                  "options": {
+                    "value": true
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "PR": true,
+              "url": true,
+              "provider": true,
+              "version": true,
+              "release_type": true,
+              "author": true,
+              "created_at": true,
+              "merged_at": true,
+              "automated": true,
+              "planned_merge_date": true,
+              "lead_time_days": true
+            }
+          }
+        },
+        {
+          "id": "reduce",
+          "options": {
+            "mode": "reduceFields",
+            "reducers": [
+              "median"
+            ],
+            "includeTimeField": false
+          }
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "d",
+          "decimals": 1,
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "blue"
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "colorMode": "value",
+        "graphMode": "none",
+        "textMode": "value",
+        "justifyMode": "center"
+      }
+    },
+    {
+      "id": 5,
+      "type": "timeseries",
+      "title": "Lead time per release",
+      "description": "Open \u2192 merge time of every merged release PR, plotted at its merge date.",
+      "datasource": {
+        "type": "datasource",
+        "uid": "-- Dashboard --"
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 12,
+        "x": 0,
+        "y": 5
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "datasource",
+            "uid": "-- Dashboard --"
+          },
+          "panelId": 7,
+          "withTransforms": false
+        }
+      ],
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "PR": true,
+              "url": true,
+              "provider": true,
+              "author": true,
+              "created_at": true,
+              "automated": true,
+              "planned_merge_date": true,
+              "delay_days": true
+            }
+          }
+        },
+        {
+          "id": "partitionByValues",
+          "options": {
+            "fields": [
+              "release_type"
+            ],
+            "keepFields": false,
+            "naming": {
+              "asLabels": false
+            }
+          }
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "d",
+          "decimals": 1,
+          "custom": {
+            "drawStyle": "bars",
+            "lineWidth": 1,
+            "fillOpacity": 60,
+            "showPoints": "always",
+            "pointSize": 6,
+            "barAlignment": 0,
+            "spanNulls": false
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
+      }
+    },
+    {
+      "id": 6,
+      "type": "timeseries",
+      "title": "Delay from planned merge date",
+      "description": "Only releases with a planned merge date (scheduled releases created on the 1st). Negative means early.",
+      "datasource": {
+        "type": "datasource",
+        "uid": "-- Dashboard --"
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 12,
+        "x": 12,
+        "y": 5
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "datasource",
+            "uid": "-- Dashboard --"
+          },
+          "panelId": 7,
+          "withTransforms": false
+        }
+      ],
+      "transformations": [
+        {
+          "id": "filterByValue",
+          "options": {
+            "type": "include",
+            "match": "all",
+            "filters": [
+              {
+                "fieldName": "automated",
+                "config": {
+                  "id": "equal",
+                  "options": {
+                    "value": true
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "PR": true,
+              "url": true,
+              "provider": true,
+              "author": true,
+              "created_at": true,
+              "automated": true,
+              "planned_merge_date": true,
+              "lead_time_days": true
+            }
+          }
+        },
+        {
+          "id": "partitionByValues",
+          "options": {
+            "fields": [
+              "release_type"
+            ],
+            "keepFields": false,
+            "naming": {
+              "asLabels": false
+            }
+          }
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "d",
+          "decimals": 1,
+          "custom": {
+            "drawStyle": "bars",
+            "lineWidth": 1,
+            "fillOpacity": 60,
+            "showPoints": "always",
+            "pointSize": 6,
+            "barAlignment": 0,
+            "spanNulls": false
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
+      }
+    }
+  ]
+}
