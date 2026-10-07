@@ -198,6 +198,7 @@ to all Giant Swarm installations.
 
 - v36
   - v36.0
+    - [v36.0.1](https://github.com/giantswarm/releases/tree/master/azure/v36.0.1)
     - [v36.0.0](https://github.com/giantswarm/releases/tree/master/azure/v36.0.0)
 
 - v35
