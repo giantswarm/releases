@@ -495,6 +495,21 @@ jobs:
           echo "$CONTENT" >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
 
+      - name: Determine planned merge date
+        id: planned_merge_date
+        if: needs.dispatcher.outputs.is_manual != 'true'
+        run: |
+          # Scheduled releases are created on the 1st of the month and planned to be
+          # merged on the next 1st. The HTML comment is read by the Release KPIs workflow.
+          PLANNED_MERGE_DATE=$(date -u -d "$(date -u +%Y-%m-01) +1 month" +%Y-%m-%d)
+          echo "Planned merge date: $PLANNED_MERGE_DATE"
+          {
+            echo "section<<EOF"
+            echo "📅 **Planned merge date:** ${PLANNED_MERGE_DATE} (scheduled release)"
+            echo "<!-- PLANNED_MERGE_DATE: ${PLANNED_MERGE_DATE} -->"
+            echo "EOF"
+          } >> "$GITHUB_OUTPUT"
+
       - name: Create Pull Request
         id: create_pr
         if: steps.check_pr.outputs.PR_EXISTS == 'false' && (needs.dispatcher.outputs.release_type != 'major' || steps.k8s_check.outputs.VERSION_EXISTS == 'true')
@@ -505,6 +520,8 @@ jobs:
           title: "CAPI: Release ${{ steps.determine_next_release.outputs.version }}."
           body: |
             This PR creates the new CAPI **major release** `${{ steps.determine_next_release.outputs.version }}` for **all providers** (consolidated).
+
+            ${{ steps.planned_merge_date.outputs.section }}
 
             Major releases include new Kubernetes versions, significant platform upgrades, and breaking changes across all CAPI providers.
 
@@ -644,6 +661,21 @@ jobs:
           echo "$CONTENT" >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
 
+      - name: Determine planned merge date
+        id: planned_merge_date
+        if: needs.dispatcher.outputs.is_manual != 'true'
+        run: |
+          # Scheduled releases are created on the 1st of the month and planned to be
+          # merged on the next 1st. The HTML comment is read by the Release KPIs workflow.
+          PLANNED_MERGE_DATE=$(date -u -d "$(date -u +%Y-%m-01) +1 month" +%Y-%m-%d)
+          echo "Planned merge date: $PLANNED_MERGE_DATE"
+          {
+            echo "section<<EOF"
+            echo "📅 **Planned merge date:** ${PLANNED_MERGE_DATE} (scheduled release)"
+            echo "<!-- PLANNED_MERGE_DATE: ${PLANNED_MERGE_DATE} -->"
+            echo "EOF"
+          } >> "$GITHUB_OUTPUT"
+
       - name: Create Pull Request
         id: create_pr
         if: steps.check_pr.outputs.PR_EXISTS == 'false'
@@ -654,6 +686,8 @@ jobs:
           title: "CAPI: Release ${{ steps.determine_next_release.outputs.version }}."
           body: |
             This PR creates the new CAPI **minor release** `${{ steps.determine_next_release.outputs.version }}` for **all providers** (consolidated).
+
+            ${{ steps.planned_merge_date.outputs.section }}
 
             Minor releases include component updates, bug fixes, and feature improvements across all CAPI providers without breaking changes.
 
@@ -785,6 +819,21 @@ jobs:
           echo "$CONTENT" >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
 
+      - name: Determine planned merge date
+        id: planned_merge_date
+        if: needs.dispatcher.outputs.is_manual != 'true'
+        run: |
+          # Scheduled releases are created on the 1st of the month and planned to be
+          # merged on the next 1st. The HTML comment is read by the Release KPIs workflow.
+          PLANNED_MERGE_DATE=$(date -u -d "$(date -u +%Y-%m-01) +1 month" +%Y-%m-%d)
+          echo "Planned merge date: $PLANNED_MERGE_DATE"
+          {
+            echo "section<<EOF"
+            echo "📅 **Planned merge date:** ${PLANNED_MERGE_DATE} (scheduled release)"
+            echo "<!-- PLANNED_MERGE_DATE: ${PLANNED_MERGE_DATE} -->"
+            echo "EOF"
+          } >> "$GITHUB_OUTPUT"
+
       - name: Create Pull Request
         id: create_pr
         if: steps.check_pr.outputs.PR_EXISTS == 'false' && (needs.dispatcher.outputs.release_type != 'major' || steps.k8s_check.outputs.VERSION_EXISTS == 'true')
@@ -795,6 +844,8 @@ jobs:
           title: "${{ steps.determine_next_release.outputs.provider_acronym }}: Release ${{ steps.determine_next_release.outputs.version }}."
           body: |
             This PR creates the new **major release** `${{ steps.determine_next_release.outputs.version }}` for **${{ matrix.provider }}** only.
+
+            ${{ steps.planned_merge_date.outputs.section }}
 
             Major releases include new Kubernetes versions, significant platform upgrades, and breaking changes.
 
@@ -909,6 +960,21 @@ jobs:
           echo "$CONTENT" >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
 
+      - name: Determine planned merge date
+        id: planned_merge_date
+        if: needs.dispatcher.outputs.is_manual != 'true'
+        run: |
+          # Scheduled releases are created on the 1st of the month and planned to be
+          # merged on the next 1st. The HTML comment is read by the Release KPIs workflow.
+          PLANNED_MERGE_DATE=$(date -u -d "$(date -u +%Y-%m-01) +1 month" +%Y-%m-%d)
+          echo "Planned merge date: $PLANNED_MERGE_DATE"
+          {
+            echo "section<<EOF"
+            echo "📅 **Planned merge date:** ${PLANNED_MERGE_DATE} (scheduled release)"
+            echo "<!-- PLANNED_MERGE_DATE: ${PLANNED_MERGE_DATE} -->"
+            echo "EOF"
+          } >> "$GITHUB_OUTPUT"
+
       - name: Create Pull Request
         id: create_pr
         if: steps.check_pr.outputs.PR_EXISTS == 'false'
@@ -919,6 +985,8 @@ jobs:
           title: "${{ steps.determine_next_release.outputs.provider_acronym }}: Release ${{ steps.determine_next_release.outputs.version }}."
           body: |
             This PR creates the new **minor release** `${{ steps.determine_next_release.outputs.version }}` for **${{ matrix.provider }}** only.
+
+            ${{ steps.planned_merge_date.outputs.section }}
 
             Minor releases include component updates, bug fixes, and feature improvements without breaking changes.
 
