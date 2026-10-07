@@ -158,4 +158,4 @@ spec:
   - name: os-tooling
     version: 1.35.0
   date: "2026-09-24T20:18:41Z"
-  state: active
+  state: deprecated
