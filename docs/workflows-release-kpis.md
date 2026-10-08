@@ -24,9 +24,12 @@ For every release PR the data set records:
 | `version`, `release_type` | Release version and `major` / `minor` / `patch`, taken from the `release/*` label or, for older PRs without a label, derived from the version. A PR releasing several versions reports the one shared by most providers |
 | `created_at`, `merged_at` | When the PR was opened and merged |
 | `lead_time_days` | `merged_at - created_at` in days |
+| `merged_month`, `merged_quarter` | `2026-09` and `2026-Q3`, for grouping by period |
+| `development_days`, `active_days`, `freeze_days` | Days spent in each release stage, from the `stage/*` label events. Only for PRs that went through the stages, since February 2026 |
 | `automated` | `true` when the PR was created by the scheduled automation on the 1st of the month |
 | `planned_merge_date` | Only for automated releases: the next 1st of the month after the PR was created |
 | `delay_days` | Only for automated releases: `merged_at - planned_merge_date` in days, negative when merged early |
+| `on_time` | Only for automated releases: `1` when merged by the planned date, `0` otherwise, so the mean is the on-time rate |
 
 Manually created releases are merged as soon as possible and have no planned date, so the planned
 merge date and the delay stay empty for them.
@@ -40,7 +43,7 @@ merge date and the delay stay empty for them.
 - On pushes to `master` that change the workflow or `tools/release-kpis/`
 
 **Steps:**
-1. Builds `tools/release-kpis` and runs it: release PRs come from the git history, their dates from the GitHub API
+1. Builds `tools/release-kpis` and runs it: release PRs come from the git history, their dates and stage label events from the GitHub API
 2. Writes a summary table of the last 10 releases to the job summary
 3. Embeds the data into the dashboard template and uploads the dashboard to Grafana Cloud
 
@@ -79,11 +82,14 @@ It uses the Infinity datasource in Grafana Cloud, the same datasource the
 read `<provider>/releases.json`, so no new datasource is needed.
 
 Panels:
-- Median lead time per release type (major, minor, patch)
-- Median delay from the planned merge date (scheduled releases only)
+- Median lead time per release type (major, minor, patch), over all releases
+- Median delay from the planned merge date and the on-time rate (scheduled releases only)
 - Lead time per release over time, split by release type
 - Delay from the planned merge date over time (scheduled releases only)
-- Table of all merged release PRs with links
+- Median lead time per quarter and releases per quarter, split by release type
+- Time per stage (development, active, freeze) for every release that went through the stages
+- Table of all merged release PRs with links. *Inspect → Data* on this panel downloads a CSV.
+- Timestamp of the last data refresh
 
 To change the dashboard, edit the template and merge it. The workflow publishes it on the next
 push to `master`. To try a change before merging, run the workflow steps by hand:
@@ -92,7 +98,7 @@ push to `master`. To try a change before merging, run the workflow steps by hand
 cd tools && go build -o release-kpis ./release-kpis && cd ..
 GITHUB_TOKEN=$(gh auth token) tools/release-kpis -repo-dir . -ref origin/master -output /tmp/release-lead-time.json
 jq --slurpfile data /tmp/release-lead-time.json \
-  '(.panels[].targets[] | select(.datasource.type == "yesoreyeram-infinity-datasource"))
+  '(.panels[].targets[]? | select(.datasource.type == "yesoreyeram-infinity-datasource"))
      |= (.source = "inline" | .data = ($data[0] | tojson))
    | {dashboard: ., folderUid: "", overwrite: true}' tools/release-kpis/dashboard.json \
   | curl --silent --fail-with-body -X POST https://giantswarm.grafana.net/api/dashboards/db \

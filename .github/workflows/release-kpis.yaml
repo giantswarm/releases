@@ -94,8 +94,10 @@ jobs:
           # Embed the data into the Infinity targets of the dashboard template.
           # The other panels read it from there through the Dashboard datasource.
           jq --slurpfile data "$RUNNER_TEMP/release-lead-time.json" \
-            '(.panels[].targets[] | select(.datasource.type == "yesoreyeram-infinity-datasource"))
+            '(.panels[].targets[]? | select(.datasource.type == "yesoreyeram-infinity-datasource"))
                |= (.source = "inline" | .data = ($data[0] | tojson))
+             | (.panels[] | select(.type == "text") | .options.content)
+               |= sub("Last updated: [^.]*\\."; "Last updated: \($data[0].generated_at).")
              | {dashboard: ., folderUid: "", overwrite: true, message: "Updated by the Release KPIs workflow"}' \
             tools/release-kpis/dashboard.json > "$DASHBOARD_JSON"
 

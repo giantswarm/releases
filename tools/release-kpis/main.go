@@ -98,13 +98,27 @@ type Release struct {
 	MergedAt     time.Time `json:"merged_at"`
 	LeadTimeDays float64   `json:"lead_time_days"`
 
+	// MergedMonth and MergedQuarter ("2026-09", "2026-Q3") let the dashboard
+	// group releases by period.
+	MergedMonth   string `json:"merged_month"`
+	MergedQuarter string `json:"merged_quarter"`
+
 	// Automated is true when the PR was created by the scheduled automation on
 	// the 1st of the month. Only those releases have a planned merge date.
 	Automated bool `json:"automated"`
 
-	// PlannedMergeDate and DelayDays are only set for automated releases.
+	// Stage durations in days, from the stage/* labels set by the release
+	// stages workflow. Only set for PRs that went through the stages.
+	DevelopmentDays *float64 `json:"development_days"`
+	ActiveDays      *float64 `json:"active_days"`
+	FreezeDays      *float64 `json:"freeze_days"`
+
+	// PlannedMergeDate, DelayDays and OnTime are only set for automated
+	// releases. OnTime is 1 when the release was merged by its planned date and
+	// 0 otherwise, so that its mean is the on-time rate.
 	PlannedMergeDate *string  `json:"planned_merge_date"`
 	DelayDays        *float64 `json:"delay_days"`
+	OnTime           *int     `json:"on_time"`
 }
 
 // Output is the document written to the output file.
@@ -124,6 +138,15 @@ type pullRequest struct {
 	MergedAt  *time.Time              `json:"merged_at"`
 	User      struct{ Login string }  `json:"user"`
 	Labels    []struct{ Name string } `json:"labels"`
+}
+
+// issueEvent is the subset of the GitHub issue events API response we need.
+type issueEvent struct {
+	Event     string    `json:"event"`
+	CreatedAt time.Time `json:"created_at"`
+	Label     struct {
+		Name string `json:"name"`
+	} `json:"label"`
 }
 
 // releaseVersion is one release added by a PR.
@@ -217,6 +240,17 @@ func main() {
 			log.Printf("Warning: pull request #%d is not merged, skipping", number)
 			continue
 		}
+
+		// Merged PRs keep their last stage label, so only those went through
+		// the release stages and have label events worth fetching.
+		if hasStageLabel(pr) {
+			events, err := client.issueEvents(number)
+			if err != nil {
+				log.Fatalf("Error fetching events of pull request #%d: %v", number, err)
+			}
+			r.DevelopmentDays, r.ActiveDays, r.FreezeDays = stageDurations(pr, events)
+		}
+
 		releases = append(releases, r)
 	}
 
@@ -343,16 +377,18 @@ func toRelease(pr pullRequest, versions []releaseVersion) (Release, bool) {
 	version := mainVersion(versions)
 
 	r := Release{
-		Number:       pr.Number,
-		URL:          pr.HTMLURL,
-		Title:        pr.Title,
-		Provider:     provider(versions),
-		Version:      version.String(),
-		ReleaseType:  releaseType(pr, version),
-		Author:       pr.User.Login,
-		CreatedAt:    created,
-		MergedAt:     merged,
-		LeadTimeDays: days(merged.Sub(created)),
+		Number:        pr.Number,
+		URL:           pr.HTMLURL,
+		Title:         pr.Title,
+		Provider:      provider(versions),
+		Version:       version.String(),
+		ReleaseType:   releaseType(pr, version),
+		Author:        pr.User.Login,
+		CreatedAt:     created,
+		MergedAt:      merged,
+		LeadTimeDays:  days(merged.Sub(created)),
+		MergedMonth:   merged.Format("2006-01"),
+		MergedQuarter: quarter(merged),
 	}
 
 	if planned, ok := plannedMergeDate(pr); ok {
@@ -361,6 +397,11 @@ func toRelease(pr pullRequest, versions []releaseVersion) (Release, bool) {
 		r.PlannedMergeDate = &p
 		d := days(merged.Sub(planned))
 		r.DelayDays = &d
+		onTime := 0
+		if d <= 0 {
+			onTime = 1
+		}
+		r.OnTime = &onTime
 	}
 
 	return r, true
@@ -399,6 +440,48 @@ func mainVersion(versions []releaseVersion) releaseVersion {
 		}
 	}
 	return best
+}
+
+// stageLabelPrefix prefixes the labels set by the release stages workflow:
+// stage/development, stage/active and stage/freeze.
+const stageLabelPrefix = "stage/"
+
+func hasStageLabel(pr pullRequest) bool {
+	for _, l := range pr.Labels {
+		if strings.HasPrefix(l.Name, stageLabelPrefix) {
+			return true
+		}
+	}
+	return false
+}
+
+// stageDurations returns the days a PR spent in the development, active and
+// freeze stage, based on the "labeled" events of the stage/* labels. The PR is
+// in a stage from the moment its label is added until the next stage label is
+// added, or until the PR is merged. Stages that were entered several times are
+// summed up. A stage that was never entered has a duration of zero.
+func stageDurations(pr pullRequest, events []issueEvent) (development, active, freeze *float64) {
+	totals := map[string]time.Duration{}
+	current := ""
+	since := time.Time{}
+
+	for _, e := range events {
+		if e.Event != "labeled" || !strings.HasPrefix(e.Label.Name, stageLabelPrefix) {
+			continue
+		}
+		if current != "" {
+			totals[current] += e.CreatedAt.Sub(since)
+		}
+		current = strings.TrimPrefix(e.Label.Name, stageLabelPrefix)
+		since = e.CreatedAt
+	}
+	if current == "" {
+		return nil, nil, nil
+	}
+	totals[current] += pr.MergedAt.Sub(since)
+
+	d, a, f := days(totals["development"]), days(totals["active"]), days(totals["freeze"])
+	return &d, &a, &f
 }
 
 // releaseType returns major, minor or patch from the release/* label of the
@@ -442,6 +525,12 @@ func plannedMergeDate(pr pullRequest) (time.Time, bool) {
 	return nextFirstOfMonth(created), true
 }
 
+// quarter formats t as "2026-Q3".
+func quarter(t time.Time) string {
+	t = t.UTC()
+	return fmt.Sprintf("%d-Q%d", t.Year(), (int(t.Month())-1)/3+1)
+}
+
 // nextFirstOfMonth returns midnight UTC of the 1st of the month after t.
 func nextFirstOfMonth(t time.Time) time.Time {
 	t = t.UTC()
@@ -464,6 +553,22 @@ func (c *githubClient) pullRequest(number int) (pullRequest, error) {
 	var pr pullRequest
 	err := c.get(fmt.Sprintf("https://api.github.com/repos/%s/pulls/%d", c.repo, number), &pr)
 	return pr, err
+}
+
+// issueEvents lists the events of a pull request, oldest first.
+func (c *githubClient) issueEvents(number int) ([]issueEvent, error) {
+	var result []issueEvent
+	for page := 1; ; page++ {
+		var events []issueEvent
+		u := fmt.Sprintf("https://api.github.com/repos/%s/issues/%d/events?per_page=100&page=%d", c.repo, number, page)
+		if err := c.get(u, &events); err != nil {
+			return nil, err
+		}
+		result = append(result, events...)
+		if len(events) < 100 {
+			return result, nil
+		}
+	}
 }
 
 // pullRequestForCommit returns the merged pull request that contains a commit.
