@@ -185,18 +185,31 @@
           }
         },
         {
+          "id": "filterFieldsByName",
+          "options": {
+            "include": {
+              "names": [
+                "PR",
+                "provider",
+                "version",
+                "release_type",
+                "author",
+                "created_at",
+                "merged_at",
+                "lead_time_days",
+                "development_days",
+                "active_days",
+                "freeze_days",
+                "automated",
+                "planned_merge_date",
+                "delay_days"
+              ]
+            }
+          }
+        },
+        {
           "id": "organize",
           "options": {
-            "excludeByName": {
-              "url": true,
-              "merged_month": true,
-              "merged_quarter": true,
-              "on_time": true,
-              "development_days": true,
-              "active_days": true,
-              "freeze_days": true,
-              "name": true
-            },
             "indexByName": {
               "PR": 0,
               "provider": 1,
@@ -206,15 +219,21 @@
               "created_at": 5,
               "merged_at": 6,
               "lead_time_days": 7,
-              "automated": 8,
-              "planned_merge_date": 9,
-              "delay_days": 10
+              "development_days": 8,
+              "active_days": 9,
+              "freeze_days": 10,
+              "automated": 11,
+              "planned_merge_date": 12,
+              "delay_days": 13
             },
             "renameByName": {
               "release_type": "type",
               "created_at": "opened",
               "merged_at": "merged",
               "lead_time_days": "lead time (days)",
+              "development_days": "development (days)",
+              "active_days": "active (days)",
+              "freeze_days": "freeze (days)",
               "automated": "scheduled",
               "planned_merge_date": "planned merge",
               "delay_days": "delay (days)"
@@ -360,24 +379,12 @@
           }
         },
         {
-          "id": "organize",
+          "id": "filterFieldsByName",
           "options": {
-            "excludeByName": {
-              "PR": true,
-              "url": true,
-              "provider": true,
-              "version": true,
-              "release_type": true,
-              "author": true,
-              "created_at": true,
-              "merged_at": true,
-              "automated": true,
-              "planned_merge_date": true,
-              "delay_days": true,
-              "development_days": true,
-              "active_days": true,
-              "freeze_days": true,
-              "name": true
+            "include": {
+              "names": [
+                "lead_time_days"
+              ]
             }
           }
         },
@@ -463,24 +470,12 @@
           }
         },
         {
-          "id": "organize",
+          "id": "filterFieldsByName",
           "options": {
-            "excludeByName": {
-              "PR": true,
-              "url": true,
-              "provider": true,
-              "version": true,
-              "release_type": true,
-              "author": true,
-              "created_at": true,
-              "merged_at": true,
-              "automated": true,
-              "planned_merge_date": true,
-              "delay_days": true,
-              "development_days": true,
-              "active_days": true,
-              "freeze_days": true,
-              "name": true
+            "include": {
+              "names": [
+                "lead_time_days"
+              ]
             }
           }
         },
@@ -566,24 +561,12 @@
           }
         },
         {
-          "id": "organize",
+          "id": "filterFieldsByName",
           "options": {
-            "excludeByName": {
-              "PR": true,
-              "url": true,
-              "provider": true,
-              "version": true,
-              "release_type": true,
-              "author": true,
-              "created_at": true,
-              "merged_at": true,
-              "automated": true,
-              "planned_merge_date": true,
-              "delay_days": true,
-              "development_days": true,
-              "active_days": true,
-              "freeze_days": true,
-              "name": true
+            "include": {
+              "names": [
+                "lead_time_days"
+              ]
             }
           }
         },
@@ -669,24 +652,12 @@
           }
         },
         {
-          "id": "organize",
+          "id": "filterFieldsByName",
           "options": {
-            "excludeByName": {
-              "PR": true,
-              "url": true,
-              "provider": true,
-              "version": true,
-              "release_type": true,
-              "author": true,
-              "created_at": true,
-              "merged_at": true,
-              "automated": true,
-              "planned_merge_date": true,
-              "lead_time_days": true,
-              "development_days": true,
-              "active_days": true,
-              "freeze_days": true,
-              "name": true
+            "include": {
+              "names": [
+                "delay_days"
+              ]
             }
           }
         },
@@ -772,27 +743,12 @@
           }
         },
         {
-          "id": "organize",
+          "id": "filterFieldsByName",
           "options": {
-            "excludeByName": {
-              "PR": true,
-              "url": true,
-              "provider": true,
-              "version": true,
-              "release_type": true,
-              "author": true,
-              "created_at": true,
-              "merged_at": true,
-              "lead_time_days": true,
-              "merged_month": true,
-              "merged_quarter": true,
-              "automated": true,
-              "planned_merge_date": true,
-              "delay_days": true,
-              "development_days": true,
-              "active_days": true,
-              "freeze_days": true,
-              "name": true
+            "include": {
+              "names": [
+                "on_time"
+              ]
             }
           }
         },
@@ -878,24 +834,14 @@
       ],
       "transformations": [
         {
-          "id": "organize",
+          "id": "filterFieldsByName",
           "options": {
-            "excludeByName": {
-              "PR": true,
-              "url": true,
-              "provider": true,
-              "author": true,
-              "created_at": true,
-              "automated": true,
-              "planned_merge_date": true,
-              "delay_days": true,
-              "merged_month": true,
-              "merged_quarter": true,
-              "on_time": true,
-              "development_days": true,
-              "active_days": true,
-              "freeze_days": true,
-              "name": true
+            "include": {
+              "names": [
+                "merged_at",
+                "lead_time_days",
+                "release_type"
+              ]
             }
           }
         },
@@ -986,24 +932,14 @@
           }
         },
         {
-          "id": "organize",
+          "id": "filterFieldsByName",
           "options": {
-            "excludeByName": {
-              "PR": true,
-              "url": true,
-              "provider": true,
-              "author": true,
-              "created_at": true,
-              "automated": true,
-              "planned_merge_date": true,
-              "lead_time_days": true,
-              "merged_month": true,
-              "merged_quarter": true,
-              "on_time": true,
-              "development_days": true,
-              "active_days": true,
-              "freeze_days": true,
-              "name": true
+            "include": {
+              "names": [
+                "merged_at",
+                "delay_days",
+                "release_type"
+              ]
             }
           }
         },
@@ -1330,25 +1266,21 @@
           }
         },
         {
+          "id": "filterFieldsByName",
+          "options": {
+            "include": {
+              "names": [
+                "name",
+                "development_days",
+                "active_days",
+                "freeze_days"
+              ]
+            }
+          }
+        },
+        {
           "id": "organize",
           "options": {
-            "excludeByName": {
-              "PR": true,
-              "url": true,
-              "provider": true,
-              "release_type": true,
-              "author": true,
-              "created_at": true,
-              "merged_at": true,
-              "lead_time_days": true,
-              "merged_month": true,
-              "merged_quarter": true,
-              "automated": true,
-              "planned_merge_date": true,
-              "delay_days": true,
-              "on_time": true,
-              "version": true
-            },
             "renameByName": {
               "development_days": "development",
               "active_days": "active",
