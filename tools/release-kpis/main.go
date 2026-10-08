@@ -98,13 +98,21 @@ type Release struct {
 	MergedAt     time.Time `json:"merged_at"`
 	LeadTimeDays float64   `json:"lead_time_days"`
 
+	// MergedMonth and MergedQuarter ("2026-09", "2026-Q3") let the dashboard
+	// group releases by period.
+	MergedMonth   string `json:"merged_month"`
+	MergedQuarter string `json:"merged_quarter"`
+
 	// Automated is true when the PR was created by the scheduled automation on
 	// the 1st of the month. Only those releases have a planned merge date.
 	Automated bool `json:"automated"`
 
-	// PlannedMergeDate and DelayDays are only set for automated releases.
+	// PlannedMergeDate, DelayDays and OnTime are only set for automated
+	// releases. OnTime is 1 when the release was merged by its planned date and
+	// 0 otherwise, so that its mean is the on-time rate.
 	PlannedMergeDate *string  `json:"planned_merge_date"`
 	DelayDays        *float64 `json:"delay_days"`
+	OnTime           *int     `json:"on_time"`
 }
 
 // Output is the document written to the output file.
@@ -343,16 +351,18 @@ func toRelease(pr pullRequest, versions []releaseVersion) (Release, bool) {
 	version := mainVersion(versions)
 
 	r := Release{
-		Number:       pr.Number,
-		URL:          pr.HTMLURL,
-		Title:        pr.Title,
-		Provider:     provider(versions),
-		Version:      version.String(),
-		ReleaseType:  releaseType(pr, version),
-		Author:       pr.User.Login,
-		CreatedAt:    created,
-		MergedAt:     merged,
-		LeadTimeDays: days(merged.Sub(created)),
+		Number:        pr.Number,
+		URL:           pr.HTMLURL,
+		Title:         pr.Title,
+		Provider:      provider(versions),
+		Version:       version.String(),
+		ReleaseType:   releaseType(pr, version),
+		Author:        pr.User.Login,
+		CreatedAt:     created,
+		MergedAt:      merged,
+		LeadTimeDays:  days(merged.Sub(created)),
+		MergedMonth:   merged.Format("2006-01"),
+		MergedQuarter: quarter(merged),
 	}
 
 	if planned, ok := plannedMergeDate(pr); ok {
@@ -361,6 +371,11 @@ func toRelease(pr pullRequest, versions []releaseVersion) (Release, bool) {
 		r.PlannedMergeDate = &p
 		d := days(merged.Sub(planned))
 		r.DelayDays = &d
+		onTime := 0
+		if d <= 0 {
+			onTime = 1
+		}
+		r.OnTime = &onTime
 	}
 
 	return r, true
@@ -440,6 +455,12 @@ func plannedMergeDate(pr pullRequest) (time.Time, bool) {
 		return time.Time{}, false
 	}
 	return nextFirstOfMonth(created), true
+}
+
+// quarter formats t as "2026-Q3".
+func quarter(t time.Time) string {
+	t = t.UTC()
+	return fmt.Sprintf("%d-Q%d", t.Year(), (int(t.Month())-1)/3+1)
 }
 
 // nextFirstOfMonth returns midnight UTC of the 1st of the month after t.

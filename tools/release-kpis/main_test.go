@@ -131,6 +131,12 @@ func TestToReleaseScheduledWithMarker(t *testing.T) {
 	if r.DelayDays == nil || *r.DelayDays != -5.8 {
 		t.Errorf("delay = %v, want -5.8", r.DelayDays)
 	}
+	if r.OnTime == nil || *r.OnTime != 1 {
+		t.Errorf("on time = %v, want 1", r.OnTime)
+	}
+	if r.MergedMonth != "2026-09" || r.MergedQuarter != "2026-Q3" {
+		t.Errorf("merged month/quarter = %s/%s, want 2026-09/2026-Q3", r.MergedMonth, r.MergedQuarter)
+	}
 }
 
 func TestToReleaseScheduledWithoutMarker(t *testing.T) {
@@ -147,6 +153,9 @@ func TestToReleaseScheduledWithoutMarker(t *testing.T) {
 	}
 	if r.DelayDays == nil || *r.DelayDays != 143.9 {
 		t.Errorf("delay = %v, want 143.9", r.DelayDays)
+	}
+	if r.OnTime == nil || *r.OnTime != 0 {
+		t.Errorf("on time = %v, want 0", r.OnTime)
 	}
 }
 
@@ -167,7 +176,7 @@ func TestToReleaseManual(t *testing.T) {
 			if !ok {
 				t.Fatal("expected a release")
 			}
-			if r.Automated || r.PlannedMergeDate != nil || r.DelayDays != nil {
+			if r.Automated || r.PlannedMergeDate != nil || r.DelayDays != nil || r.OnTime != nil {
 				t.Errorf("manual release must not have a planned merge date, got %+v", r)
 			}
 		})
@@ -228,5 +237,20 @@ func TestDays(t *testing.T) {
 	}
 	if got := days(-36 * time.Hour); got != -1.5 {
 		t.Errorf("days(-36h) = %v, want -1.5", got)
+	}
+}
+
+func TestQuarter(t *testing.T) {
+	cases := map[string]string{
+		"2026-01-01T00:00:00Z": "2026-Q1",
+		"2026-03-31T23:59:59Z": "2026-Q1",
+		"2026-04-01T00:00:00Z": "2026-Q2",
+		"2026-09-25T04:31:25Z": "2026-Q3",
+		"2026-12-31T23:59:59Z": "2026-Q4",
+	}
+	for in, want := range cases {
+		if got := quarter(ts(in)); got != want {
+			t.Errorf("quarter(%s) = %s, want %s", in, got, want)
+		}
 	}
 }

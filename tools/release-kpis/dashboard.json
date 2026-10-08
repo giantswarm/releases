@@ -57,7 +57,7 @@
         "h": 14,
         "w": 24,
         "x": 0,
-        "y": 14
+        "y": 23
       },
       "targets": [
         {
@@ -118,6 +118,16 @@
               "type": "number"
             },
             {
+              "selector": "merged_month",
+              "text": "merged_month",
+              "type": "string"
+            },
+            {
+              "selector": "merged_quarter",
+              "text": "merged_quarter",
+              "type": "string"
+            },
+            {
               "selector": "automated",
               "text": "automated",
               "type": "boolean"
@@ -130,6 +140,11 @@
             {
               "selector": "delay_days",
               "text": "delay_days",
+              "type": "number"
+            },
+            {
+              "selector": "on_time",
+              "text": "on_time",
               "type": "number"
             }
           ],
@@ -153,7 +168,10 @@
           "id": "organize",
           "options": {
             "excludeByName": {
-              "url": true
+              "url": true,
+              "merged_month": true,
+              "merged_quarter": true,
+              "on_time": true
             },
             "indexByName": {
               "PR": 0,
@@ -188,7 +206,8 @@
               "type": "auto"
             },
             "filterable": true
-          }
+          },
+          "decimals": 1
         },
         "overrides": [
           {
@@ -270,7 +289,7 @@
       },
       "gridPos": {
         "h": 5,
-        "w": 6,
+        "w": 5,
         "x": 0,
         "y": 0
       },
@@ -335,7 +354,7 @@
       ],
       "fieldConfig": {
         "defaults": {
-          "unit": "d",
+          "unit": "suffix: days",
           "decimals": 1,
           "color": {
             "mode": "fixed",
@@ -369,8 +388,8 @@
       },
       "gridPos": {
         "h": 5,
-        "w": 6,
-        "x": 6,
+        "w": 5,
+        "x": 5,
         "y": 0
       },
       "targets": [
@@ -434,7 +453,7 @@
       ],
       "fieldConfig": {
         "defaults": {
-          "unit": "d",
+          "unit": "suffix: days",
           "decimals": 1,
           "color": {
             "mode": "fixed",
@@ -468,8 +487,8 @@
       },
       "gridPos": {
         "h": 5,
-        "w": 6,
-        "x": 12,
+        "w": 5,
+        "x": 10,
         "y": 0
       },
       "targets": [
@@ -533,7 +552,7 @@
       ],
       "fieldConfig": {
         "defaults": {
-          "unit": "d",
+          "unit": "suffix: days",
           "decimals": 1,
           "color": {
             "mode": "fixed",
@@ -567,8 +586,8 @@
       },
       "gridPos": {
         "h": 5,
-        "w": 6,
-        "x": 18,
+        "w": 5,
+        "x": 15,
         "y": 0
       },
       "targets": [
@@ -632,11 +651,131 @@
       ],
       "fieldConfig": {
         "defaults": {
-          "unit": "d",
+          "unit": "suffix: days",
           "decimals": 1,
           "color": {
             "mode": "fixed",
             "fixedColor": "blue"
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "colorMode": "value",
+        "graphMode": "none",
+        "textMode": "value",
+        "justifyMode": "center"
+      }
+    },
+    {
+      "id": 8,
+      "type": "stat",
+      "title": "Scheduled releases merged on time",
+      "description": "Share of scheduled releases (created by automation on the 1st) merged by their planned date.",
+      "datasource": {
+        "type": "datasource",
+        "uid": "-- Dashboard --"
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 4,
+        "x": 20,
+        "y": 0
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "datasource",
+            "uid": "-- Dashboard --"
+          },
+          "panelId": 7,
+          "withTransforms": false
+        }
+      ],
+      "transformations": [
+        {
+          "id": "filterByValue",
+          "options": {
+            "type": "include",
+            "match": "all",
+            "filters": [
+              {
+                "fieldName": "automated",
+                "config": {
+                  "id": "equal",
+                  "options": {
+                    "value": true
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "PR": true,
+              "url": true,
+              "provider": true,
+              "version": true,
+              "release_type": true,
+              "author": true,
+              "created_at": true,
+              "merged_at": true,
+              "lead_time_days": true,
+              "merged_month": true,
+              "merged_quarter": true,
+              "automated": true,
+              "planned_merge_date": true,
+              "delay_days": true
+            }
+          }
+        },
+        {
+          "id": "reduce",
+          "options": {
+            "mode": "reduceFields",
+            "reducers": [
+              "mean"
+            ],
+            "includeTimeField": false
+          }
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percentunit",
+          "decimals": 0,
+          "min": 0,
+          "max": 1,
+          "color": {
+            "mode": "thresholds"
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "red",
+                "value": null
+              },
+              {
+                "color": "orange",
+                "value": 0.5
+              },
+              {
+                "color": "green",
+                "value": 0.8
+              }
+            ]
           }
         },
         "overrides": []
@@ -693,7 +832,10 @@
               "created_at": true,
               "automated": true,
               "planned_merge_date": true,
-              "delay_days": true
+              "delay_days": true,
+              "merged_month": true,
+              "merged_quarter": true,
+              "on_time": true
             }
           }
         },
@@ -712,7 +854,7 @@
       ],
       "fieldConfig": {
         "defaults": {
-          "unit": "d",
+          "unit": "suffix: days",
           "decimals": 1,
           "custom": {
             "drawStyle": "bars",
@@ -794,7 +936,10 @@
               "created_at": true,
               "automated": true,
               "planned_merge_date": true,
-              "lead_time_days": true
+              "lead_time_days": true,
+              "merged_month": true,
+              "merged_quarter": true,
+              "on_time": true
             }
           }
         },
@@ -813,14 +958,14 @@
       ],
       "fieldConfig": {
         "defaults": {
-          "unit": "d",
+          "unit": "suffix: days",
           "decimals": 1,
           "custom": {
-            "drawStyle": "bars",
+            "drawStyle": "points",
             "lineWidth": 1,
-            "fillOpacity": 60,
+            "fillOpacity": 0,
             "showPoints": "always",
-            "pointSize": 6,
+            "pointSize": 9,
             "barAlignment": 0,
             "spanNulls": false
           }
@@ -837,6 +982,215 @@
           "mode": "multi",
           "sort": "none"
         }
+      }
+    },
+    {
+      "id": 9,
+      "type": "barchart",
+      "title": "Median lead time per quarter",
+      "description": "Median open \u2192 merge time of the releases merged in each quarter, per release type. The trend to watch.",
+      "datasource": {
+        "type": "datasource",
+        "uid": "-- Dashboard --"
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 12,
+        "x": 0,
+        "y": 14
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "datasource",
+            "uid": "-- Dashboard --"
+          },
+          "panelId": 7,
+          "withTransforms": false
+        }
+      ],
+      "transformations": [
+        {
+          "id": "groupBy",
+          "options": {
+            "fields": {
+              "merged_quarter": {
+                "operation": "groupby",
+                "aggregations": []
+              },
+              "release_type": {
+                "operation": "groupby",
+                "aggregations": []
+              },
+              "lead_time_days": {
+                "operation": "aggregate",
+                "aggregations": [
+                  "median"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "id": "groupingToMatrix",
+          "options": {
+            "columnField": "release_type",
+            "rowField": "merged_quarter",
+            "valueField": "lead_time_days (median)"
+          }
+        },
+        {
+          "id": "sortBy",
+          "options": {
+            "sort": [
+              {
+                "field": "merged_quarter\\release_type",
+                "desc": false
+              }
+            ]
+          }
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "suffix: days",
+          "decimals": 1,
+          "custom": {
+            "fillOpacity": 80,
+            "lineWidth": 1
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "orientation": "auto",
+        "xTickLabelRotation": 0,
+        "showValue": "auto",
+        "stacking": "none",
+        "groupWidth": 0.7,
+        "barWidth": 0.9,
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
+      }
+    },
+    {
+      "id": 10,
+      "type": "barchart",
+      "title": "Releases per quarter",
+      "description": "Number of release PRs merged in each quarter, per release type.",
+      "datasource": {
+        "type": "datasource",
+        "uid": "-- Dashboard --"
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 12,
+        "x": 12,
+        "y": 14
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "datasource",
+            "uid": "-- Dashboard --"
+          },
+          "panelId": 7,
+          "withTransforms": false
+        }
+      ],
+      "transformations": [
+        {
+          "id": "groupBy",
+          "options": {
+            "fields": {
+              "merged_quarter": {
+                "operation": "groupby",
+                "aggregations": []
+              },
+              "release_type": {
+                "operation": "groupby",
+                "aggregations": []
+              },
+              "PR": {
+                "operation": "aggregate",
+                "aggregations": [
+                  "count"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "id": "groupingToMatrix",
+          "options": {
+            "columnField": "release_type",
+            "rowField": "merged_quarter",
+            "valueField": "PR (count)"
+          }
+        },
+        {
+          "id": "sortBy",
+          "options": {
+            "sort": [
+              {
+                "field": "merged_quarter\\release_type",
+                "desc": false
+              }
+            ]
+          }
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "none",
+          "decimals": 0,
+          "custom": {
+            "fillOpacity": 80,
+            "lineWidth": 1
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "orientation": "auto",
+        "xTickLabelRotation": 0,
+        "showValue": "auto",
+        "stacking": "normal",
+        "groupWidth": 0.7,
+        "barWidth": 0.9,
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
+      }
+    },
+    {
+      "id": 11,
+      "type": "text",
+      "title": "",
+      "gridPos": {
+        "h": 2,
+        "w": 24,
+        "x": 0,
+        "y": 37
+      },
+      "options": {
+        "mode": "markdown",
+        "content": "Data: all merged release PRs since CAPI v25. Last updated: unknown. Use *Inspect \u2192 Data* on the table to download a CSV."
       }
     }
   ]
