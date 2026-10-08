@@ -119,7 +119,7 @@ func TestToReleaseScheduledWithMarker(t *testing.T) {
 	if !ok {
 		t.Fatal("expected a release")
 	}
-	if r.Provider != "CAPI" || r.Version != "v36.0.0" || r.ReleaseType != "major" || r.Author != "taylorbot" {
+	if r.Provider != "CAPI" || r.Version != "v36.0.0" || r.Name != "CAPI v36.0.0" || r.ReleaseType != "major" || r.Author != "taylorbot" {
 		t.Errorf("unexpected row: %+v", r)
 	}
 	if r.LeadTimeDays != 23.9 {

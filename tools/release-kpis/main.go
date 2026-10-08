@@ -91,6 +91,7 @@ type Release struct {
 	Title       string `json:"title"`
 	Provider    string `json:"provider"`
 	Version     string `json:"version"`
+	Name        string `json:"name"` // "CAPA v35.1.0", unique label for charts
 	ReleaseType string `json:"release_type"`
 	Author      string `json:"author"`
 
@@ -376,12 +377,14 @@ func toRelease(pr pullRequest, versions []releaseVersion) (Release, bool) {
 	merged := pr.MergedAt.UTC()
 	version := mainVersion(versions)
 
+	prov := provider(versions)
 	r := Release{
 		Number:        pr.Number,
 		URL:           pr.HTMLURL,
 		Title:         pr.Title,
-		Provider:      provider(versions),
+		Provider:      prov,
 		Version:       version.String(),
+		Name:          prov + " " + version.String(),
 		ReleaseType:   releaseType(pr, version),
 		Author:        pr.User.Login,
 		CreatedAt:     created,

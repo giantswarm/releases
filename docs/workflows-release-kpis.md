@@ -20,6 +20,7 @@ For every release PR the data set records:
 | Field | Description |
 |-------|-------------|
 | `number`, `url`, `title`, `author` | The pull request |
+| `name` | `provider` and `version` joined, e.g. `CAPA v35.1.0`, as a unique label for charts |
 | `provider` | From the release directory: `CAPA`, `CAPZ`, `CAPV`, `CAPVCD`, `EKS`, `AKS`, `CAPMOX`, or `CAPI` when the PR released several providers at once |
 | `version`, `release_type` | Release version and `major` / `minor` / `patch`, taken from the `release/*` label or, for older PRs without a label, derived from the version. A PR releasing several versions reports the one shared by most providers |
 | `created_at`, `merged_at` | When the PR was opened and merged |
