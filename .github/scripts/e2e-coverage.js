@@ -87,37 +87,20 @@ const main = async () => {
   // Directory name → CAPI name used in the per-suite check runs (from get-providers).
   const capiNames = JSON.parse(process.env.CAPI_NAMES)
 
-  // The full ("freeze stage") matrix that releases-test-suites expands to per
-  // provider, keyed by the provider directory in this repo.
-  const EXPECTED_SUITES = {
-    'capa': ['standard', 'upgrade', 'upgrade-major', 'cilium-eni-mode', 'china', 'private'],
-    'azure': ['standard', 'upgrade', 'upgrade-major', 'private'],
-    'vsphere': ['standard', 'upgrade', 'upgrade-major', 'on-capa', 'on-capz'],
-    'cloud-director': ['standard', 'upgrade', 'upgrade-major'],
-    'eks': ['standard', 'upgrade', 'upgrade-major'],
-    // aks and proxmox have no releases-test-suites mapping yet, so nothing is expected.
-    'aks': [],
-    'proxmox': [],
-  }
-
-  // Suite → the check run name produced by check-run-results-to-pr, minus the
-  // prefix. `{capi}` is the provider's CAPI name, e.g. CAPA.
-  const CHECK_NAME_FORMATS = {
-    'standard': '{capi} Standard Suite',
-    'upgrade': '{capi} Upgrade Suite',
-    'upgrade-major': '(Previous Major) {capi} Upgrade Suite',
-    'upgrade-major-first': '(First Previous Major) {capi} Upgrade Suite',
-    'private': '{capi} Private Suite',
-    'china': '{capi} China Suite',
-    'cilium-eni-mode': '{capi} Cilium ENI Mode Suite',
-    'on-capa': '{capi} on CAPA Suite',
-    'on-capz': '{capi} on CAPZ Suite',
-  }
-
-  // Provider directory → the provider name used in cluster-test-suites paths.
-  const SUITE_PATH_PROVIDER = {
-    'capa': 'capa', 'azure': 'capz', 'vsphere': 'capv', 'cloud-director': 'capvcd', 'eks': 'eks',
-  }
+  // Suite definitions are shared with tools/release-kpis, so both stay in sync.
+  //
+  //   * EXPECTED_SUITES: the full ("freeze stage") matrix that releases-test-suites
+  //     expands to per provider, keyed by the provider directory in this repo.
+  //   * CHECK_NAME_FORMATS: suite → the check run name produced by
+  //     check-run-results-to-pr, minus the prefix. `{capi}` is the provider's CAPI
+  //     name, e.g. CAPA.
+  //   * SUITE_PATH_PROVIDER: provider directory → the provider name used in
+  //     cluster-test-suites paths.
+  const {
+    expectedSuites: EXPECTED_SUITES,
+    checkNameFormats: CHECK_NAME_FORMATS,
+    suitePathProviders: SUITE_PATH_PROVIDER,
+  } = require('./e2e-suites.json')
 
   // Waivers may be written with either spelling, e.g. `azure/private` or `capz/private`.
   const PROVIDER_ALIASES = { 'aws': 'capa' }

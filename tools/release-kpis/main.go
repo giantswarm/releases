@@ -26,6 +26,7 @@ import (
 	"net/http"
 	"os"
 	"os/exec"
+	"path/filepath"
 	"regexp"
 	"sort"
 	"strconv"
@@ -114,6 +115,19 @@ type Release struct {
 	ActiveDays      *float64 `json:"active_days"`
 	FreezeDays      *float64 `json:"freeze_days"`
 
+	// Time to all green tests, from the "Release Tests / <suite>" check runs
+	// and the "/run releases-test-suites" comments. Only set for PRs created
+	// after per-suite check runs were introduced.
+	SuitesExpected    int        `json:"suites_expected"`
+	SuitesGreen       int        `json:"suites_green"`
+	SuitesWaived      int        `json:"suites_waived"`
+	TestRuns          int        `json:"test_runs"`
+	TestRunsAutomated int        `json:"test_runs_automated"`
+	TestsFirstRunAt   *time.Time `json:"tests_first_run_at"`
+	AllGreenAt        *time.Time `json:"all_green_at"`
+	TimeToGreenDays   *float64   `json:"time_to_green_days"`
+	TestFrictionDays  *float64   `json:"test_friction_days"`
+
 	// PlannedMergeDate, DelayDays and OnTime are only set for automated
 	// releases. OnTime is 1 when the release was merged by its planned date and
 	// 0 otherwise, so that its mean is the on-time rate.
@@ -180,19 +194,23 @@ type commit struct {
 
 func main() {
 	var (
-		repo     string
-		repoDir  string
-		ref      string
-		minMajor int
-		output   string
-		token    string
-		verbose  bool
+		repo       string
+		repoDir    string
+		ref        string
+		minMajor   int
+		suitesFile string
+		testsSince string
+		output     string
+		token      string
+		verbose    bool
 	)
 
 	flag.StringVar(&repo, "repo", "giantswarm/releases", "GitHub repository in owner/name form")
 	flag.StringVar(&repoDir, "repo-dir", ".", "Local clone of the repository to read the git history from")
 	flag.StringVar(&ref, "ref", "HEAD", "Git ref of the default branch to read the history from")
 	flag.IntVar(&minMajor, "min-major", defaultMinMajor, "Ignore releases below this major version")
+	flag.StringVar(&suitesFile, "suites", ".github/scripts/e2e-suites.json", "E2E suite definitions, relative to -repo-dir")
+	flag.StringVar(&testsSince, "tests-since", "2026-02-01", "Collect test results only for PRs created on or after this date (per-suite check runs did not exist before)")
 	flag.StringVar(&output, "output", "release-lead-time.json", "Path of the JSON file to write")
 	flag.StringVar(&token, "token", os.Getenv("GITHUB_TOKEN"), "GitHub token (defaults to GITHUB_TOKEN)")
 	flag.BoolVar(&verbose, "verbose", false, "Print the collected releases")
@@ -201,6 +219,15 @@ func main() {
 	commits, err := releaseCommits(repoDir, ref)
 	if err != nil {
 		log.Fatalf("Error reading git history: %v", err)
+	}
+
+	defs, err := loadSuiteDefinitions(filepath.Join(repoDir, suitesFile))
+	if err != nil {
+		log.Fatalf("Error loading suite definitions: %v", err)
+	}
+	testsSinceTime, err := time.Parse("2006-01-02", testsSince)
+	if err != nil {
+		log.Fatalf("Error parsing -tests-since: %v", err)
 	}
 
 	client := &githubClient{repo: repo, token: token, http: &http.Client{Timeout: 30 * time.Second}}
@@ -250,6 +277,18 @@ func main() {
 				log.Fatalf("Error fetching events of pull request #%d: %v", number, err)
 			}
 			r.DevelopmentDays, r.ActiveDays, r.FreezeDays = stageDurations(pr, events)
+		}
+
+		if !pr.CreatedAt.Before(testsSinceTime) {
+			wanted := defs.expectedChecks(releaseDirs(versions))
+			res, err := client.collectTestResults(number, wanted, defs)
+			if err != nil {
+				log.Fatalf("Error collecting test results of pull request #%d: %v", number, err)
+			}
+			applyTestResults(&r, wanted, res)
+			if verbose {
+				log.Printf("#%d: %d test runs, %d/%d suites green, %d commits checked", number, r.TestRuns, r.SuitesGreen, r.SuitesExpected, res.checkedShas)
+			}
 		}
 
 		releases = append(releases, r)
@@ -424,6 +463,20 @@ func provider(versions []releaseVersion) string {
 		return p
 	}
 	return strings.ToUpper(versions[0].provider)
+}
+
+// releaseDirs returns the distinct release directories of the versions, sorted.
+func releaseDirs(versions []releaseVersion) []string {
+	seen := map[string]bool{}
+	var dirs []string
+	for _, v := range versions {
+		if !seen[v.provider] {
+			seen[v.provider] = true
+			dirs = append(dirs, v.provider)
+		}
+	}
+	sort.Strings(dirs)
+	return dirs
 }
 
 // mainVersion returns the version released by most providers in a PR, the

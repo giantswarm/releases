@@ -25,7 +25,9 @@ Expected suites per provider directory:
 | `eks` | `standard`, `upgrade`, `upgrade-major` |
 | `aks`, `proxmox` | _none_ — no `releases-test-suites` mapping exists yet |
 
-This mirrors what `releases-test-suites` expands to during Freeze. A suite counts as covered when its per-suite check run (`Release Tests / <suite description>`, published by the `check-run-results-to-pr` Tekton task) has concluded successfully.
+This mirrors what `releases-test-suites` expands to during Freeze. The table is defined in
+[`.github/scripts/e2e-suites.json`](../.github/scripts/e2e-suites.json), which the release KPIs
+tool reads as well. A suite counts as covered when its per-suite check run (`Release Tests / <suite description>`, published by the `check-run-results-to-pr` Tekton task) has concluded successfully.
 
 Only **newly added** releases are considered. A PR that deprecates (modifies) or archives (renames) an existing `release.yaml` requires no coverage and reports `No new releases added`.
 

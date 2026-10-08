@@ -35,6 +35,12 @@
       "type": "link",
       "url": "https://github.com/giantswarm/roadmap/issues/4382",
       "targetBlank": true
+    },
+    {
+      "title": "Roadmap issue: time to green",
+      "type": "link",
+      "url": "https://github.com/giantswarm/roadmap/issues/4385",
+      "targetBlank": true
     }
   ],
   "templating": {
@@ -57,7 +63,7 @@
         "h": 14,
         "w": 24,
         "x": 0,
-        "y": 32
+        "y": 46
       },
       "targets": [
         {
@@ -166,6 +172,51 @@
               "selector": "freeze_days",
               "text": "freeze_days",
               "type": "number"
+            },
+            {
+              "selector": "suites_expected",
+              "text": "suites_expected",
+              "type": "number"
+            },
+            {
+              "selector": "suites_green",
+              "text": "suites_green",
+              "type": "number"
+            },
+            {
+              "selector": "suites_waived",
+              "text": "suites_waived",
+              "type": "number"
+            },
+            {
+              "selector": "test_runs",
+              "text": "test_runs",
+              "type": "number"
+            },
+            {
+              "selector": "test_runs_automated",
+              "text": "test_runs_automated",
+              "type": "number"
+            },
+            {
+              "selector": "tests_first_run_at",
+              "text": "tests_first_run_at",
+              "type": "timestamp"
+            },
+            {
+              "selector": "all_green_at",
+              "text": "all_green_at",
+              "type": "timestamp"
+            },
+            {
+              "selector": "time_to_green_days",
+              "text": "time_to_green_days",
+              "type": "number"
+            },
+            {
+              "selector": "test_friction_days",
+              "text": "test_friction_days",
+              "type": "number"
             }
           ],
           "filters": [],
@@ -200,6 +251,9 @@
                 "development_days",
                 "active_days",
                 "freeze_days",
+                "test_runs",
+                "time_to_green_days",
+                "test_friction_days",
                 "automated",
                 "planned_merge_date",
                 "delay_days"
@@ -222,9 +276,12 @@
               "development_days": 8,
               "active_days": 9,
               "freeze_days": 10,
-              "automated": 11,
-              "planned_merge_date": 12,
-              "delay_days": 13
+              "test_runs": 11,
+              "time_to_green_days": 12,
+              "test_friction_days": 13,
+              "automated": 14,
+              "planned_merge_date": 15,
+              "delay_days": 16
             },
             "renameByName": {
               "release_type": "type",
@@ -236,7 +293,10 @@
               "freeze_days": "freeze (days)",
               "automated": "scheduled",
               "planned_merge_date": "planned merge",
-              "delay_days": "delay (days)"
+              "delay_days": "delay (days)",
+              "test_runs": "test runs",
+              "time_to_green_days": "time to green (days)",
+              "test_friction_days": "test friction (days)"
             }
           }
         }
@@ -819,7 +879,7 @@
         "h": 9,
         "w": 12,
         "x": 0,
-        "y": 5
+        "y": 10
       },
       "targets": [
         {
@@ -899,7 +959,7 @@
         "h": 9,
         "w": 12,
         "x": 12,
-        "y": 5
+        "y": 10
       },
       "targets": [
         {
@@ -997,7 +1057,7 @@
         "h": 9,
         "w": 12,
         "x": 0,
-        "y": 14
+        "y": 19
       },
       "targets": [
         {
@@ -1103,7 +1163,7 @@
         "h": 9,
         "w": 12,
         "x": 12,
-        "y": 14
+        "y": 19
       },
       "targets": [
         {
@@ -1204,7 +1264,7 @@
         "h": 2,
         "w": 24,
         "x": 0,
-        "y": 46
+        "y": 60
       },
       "options": {
         "mode": "markdown",
@@ -1224,7 +1284,7 @@
         "h": 9,
         "w": 24,
         "x": 0,
-        "y": 23
+        "y": 28
       },
       "targets": [
         {
@@ -1293,6 +1353,634 @@
         "defaults": {
           "unit": "suffix: days",
           "decimals": 1,
+          "custom": {
+            "fillOpacity": 80,
+            "lineWidth": 1
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "orientation": "auto",
+        "xField": "name",
+        "xTickLabelRotation": -45,
+        "showValue": "never",
+        "stacking": "normal",
+        "groupWidth": 0.7,
+        "barWidth": 0.9,
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
+      }
+    },
+    {
+      "id": 13,
+      "type": "stat",
+      "title": "Median time to green: major",
+      "description": "PR opened \u2192 first time every expected E2E suite had passed, major releases with per-suite results.",
+      "datasource": {
+        "type": "datasource",
+        "uid": "-- Dashboard --"
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 6,
+        "x": 0,
+        "y": 5
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "datasource",
+            "uid": "-- Dashboard --"
+          },
+          "panelId": 7,
+          "withTransforms": false
+        }
+      ],
+      "transformations": [
+        {
+          "id": "filterByValue",
+          "options": {
+            "type": "include",
+            "match": "all",
+            "filters": [
+              {
+                "fieldName": "all_green_at",
+                "config": {
+                  "id": "isNotNull",
+                  "options": {}
+                }
+              }
+            ]
+          }
+        },
+        {
+          "id": "filterByValue",
+          "options": {
+            "type": "include",
+            "match": "all",
+            "filters": [
+              {
+                "fieldName": "release_type",
+                "config": {
+                  "id": "equal",
+                  "options": {
+                    "value": "major"
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "id": "filterFieldsByName",
+          "options": {
+            "include": {
+              "names": [
+                "time_to_green_days"
+              ]
+            }
+          }
+        },
+        {
+          "id": "reduce",
+          "options": {
+            "mode": "reduceFields",
+            "reducers": [
+              "median"
+            ],
+            "includeTimeField": false
+          }
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "suffix: days",
+          "decimals": 1,
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "purple"
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "colorMode": "value",
+        "graphMode": "none",
+        "textMode": "value",
+        "justifyMode": "center"
+      }
+    },
+    {
+      "id": 14,
+      "type": "stat",
+      "title": "Median time to green: minor",
+      "description": "PR opened \u2192 first time every expected E2E suite had passed, minor releases with per-suite results.",
+      "datasource": {
+        "type": "datasource",
+        "uid": "-- Dashboard --"
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 6,
+        "x": 6,
+        "y": 5
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "datasource",
+            "uid": "-- Dashboard --"
+          },
+          "panelId": 7,
+          "withTransforms": false
+        }
+      ],
+      "transformations": [
+        {
+          "id": "filterByValue",
+          "options": {
+            "type": "include",
+            "match": "all",
+            "filters": [
+              {
+                "fieldName": "all_green_at",
+                "config": {
+                  "id": "isNotNull",
+                  "options": {}
+                }
+              }
+            ]
+          }
+        },
+        {
+          "id": "filterByValue",
+          "options": {
+            "type": "include",
+            "match": "all",
+            "filters": [
+              {
+                "fieldName": "release_type",
+                "config": {
+                  "id": "equal",
+                  "options": {
+                    "value": "minor"
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "id": "filterFieldsByName",
+          "options": {
+            "include": {
+              "names": [
+                "time_to_green_days"
+              ]
+            }
+          }
+        },
+        {
+          "id": "reduce",
+          "options": {
+            "mode": "reduceFields",
+            "reducers": [
+              "median"
+            ],
+            "includeTimeField": false
+          }
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "suffix: days",
+          "decimals": 1,
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "purple"
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "colorMode": "value",
+        "graphMode": "none",
+        "textMode": "value",
+        "justifyMode": "center"
+      }
+    },
+    {
+      "id": 15,
+      "type": "stat",
+      "title": "Median test friction",
+      "description": "First /run releases-test-suites \u2192 first time every expected suite had passed. Initial test friction, all release types.",
+      "datasource": {
+        "type": "datasource",
+        "uid": "-- Dashboard --"
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 6,
+        "x": 12,
+        "y": 5
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "datasource",
+            "uid": "-- Dashboard --"
+          },
+          "panelId": 7,
+          "withTransforms": false
+        }
+      ],
+      "transformations": [
+        {
+          "id": "filterByValue",
+          "options": {
+            "type": "include",
+            "match": "all",
+            "filters": [
+              {
+                "fieldName": "all_green_at",
+                "config": {
+                  "id": "isNotNull",
+                  "options": {}
+                }
+              }
+            ]
+          }
+        },
+        {
+          "id": "filterFieldsByName",
+          "options": {
+            "include": {
+              "names": [
+                "test_friction_days"
+              ]
+            }
+          }
+        },
+        {
+          "id": "reduce",
+          "options": {
+            "mode": "reduceFields",
+            "reducers": [
+              "median"
+            ],
+            "includeTimeField": false
+          }
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "suffix: days",
+          "decimals": 1,
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "purple"
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "colorMode": "value",
+        "graphMode": "none",
+        "textMode": "value",
+        "justifyMode": "center"
+      }
+    },
+    {
+      "id": 16,
+      "type": "stat",
+      "title": "Median test runs per release",
+      "description": "Number of /run releases-test-suites comments per release PR, including the automated weekly runs.",
+      "datasource": {
+        "type": "datasource",
+        "uid": "-- Dashboard --"
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 6,
+        "x": 18,
+        "y": 5
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "datasource",
+            "uid": "-- Dashboard --"
+          },
+          "panelId": 7,
+          "withTransforms": false
+        }
+      ],
+      "transformations": [
+        {
+          "id": "filterByValue",
+          "options": {
+            "type": "include",
+            "match": "all",
+            "filters": [
+              {
+                "fieldName": "all_green_at",
+                "config": {
+                  "id": "isNotNull",
+                  "options": {}
+                }
+              }
+            ]
+          }
+        },
+        {
+          "id": "filterFieldsByName",
+          "options": {
+            "include": {
+              "names": [
+                "test_runs"
+              ]
+            }
+          }
+        },
+        {
+          "id": "reduce",
+          "options": {
+            "mode": "reduceFields",
+            "reducers": [
+              "median"
+            ],
+            "includeTimeField": false
+          }
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "none",
+          "decimals": 0,
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "purple"
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "colorMode": "value",
+        "graphMode": "none",
+        "textMode": "value",
+        "justifyMode": "center"
+      }
+    },
+    {
+      "id": 17,
+      "type": "barchart",
+      "title": "Time to green per release",
+      "description": "Days from PR opened to the first all-green test state, and the test friction part of it (from the first /run). Only releases with per-suite results (since March 2026).",
+      "datasource": {
+        "type": "datasource",
+        "uid": "-- Dashboard --"
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 12,
+        "x": 0,
+        "y": 37
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "datasource",
+            "uid": "-- Dashboard --"
+          },
+          "panelId": 7,
+          "withTransforms": false
+        }
+      ],
+      "transformations": [
+        {
+          "id": "filterByValue",
+          "options": {
+            "type": "include",
+            "match": "all",
+            "filters": [
+              {
+                "fieldName": "all_green_at",
+                "config": {
+                  "id": "isNotNull",
+                  "options": {}
+                }
+              }
+            ]
+          }
+        },
+        {
+          "id": "sortBy",
+          "options": {
+            "sort": [
+              {
+                "field": "merged_at",
+                "desc": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "filterFieldsByName",
+          "options": {
+            "include": {
+              "names": [
+                "name",
+                "time_to_green_days",
+                "test_friction_days"
+              ]
+            }
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "renameByName": {
+              "time_to_green_days": "time to green",
+              "test_friction_days": "test friction"
+            }
+          }
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "suffix: days",
+          "decimals": 1,
+          "custom": {
+            "fillOpacity": 80,
+            "lineWidth": 1
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "orientation": "auto",
+        "xField": "name",
+        "xTickLabelRotation": -45,
+        "showValue": "never",
+        "stacking": "none",
+        "groupWidth": 0.7,
+        "barWidth": 0.9,
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
+      }
+    },
+    {
+      "id": 18,
+      "type": "barchart",
+      "title": "Test runs per release",
+      "description": "/run releases-test-suites comments per release PR, split into manual and automated (weekly bump, stage change) runs.",
+      "datasource": {
+        "type": "datasource",
+        "uid": "-- Dashboard --"
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 12,
+        "x": 12,
+        "y": 37
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "datasource",
+            "uid": "-- Dashboard --"
+          },
+          "panelId": 7,
+          "withTransforms": false
+        }
+      ],
+      "transformations": [
+        {
+          "id": "filterByValue",
+          "options": {
+            "type": "include",
+            "match": "all",
+            "filters": [
+              {
+                "fieldName": "tests_first_run_at",
+                "config": {
+                  "id": "isNotNull",
+                  "options": {}
+                }
+              }
+            ]
+          }
+        },
+        {
+          "id": "sortBy",
+          "options": {
+            "sort": [
+              {
+                "field": "merged_at",
+                "desc": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "filterFieldsByName",
+          "options": {
+            "include": {
+              "names": [
+                "name",
+                "test_runs",
+                "test_runs_automated"
+              ]
+            }
+          }
+        },
+        {
+          "id": "calculateField",
+          "options": {
+            "mode": "binary",
+            "binary": {
+              "left": "test_runs",
+              "operator": "-",
+              "right": "test_runs_automated"
+            },
+            "alias": "manual",
+            "replaceFields": false
+          }
+        },
+        {
+          "id": "filterFieldsByName",
+          "options": {
+            "include": {
+              "names": [
+                "name",
+                "manual",
+                "test_runs_automated"
+              ]
+            }
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "renameByName": {
+              "test_runs_automated": "automated"
+            }
+          }
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "none",
+          "decimals": 0,
           "custom": {
             "fillOpacity": 80,
             "lineWidth": 1

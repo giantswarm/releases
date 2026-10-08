@@ -1,0 +1,30 @@
+{
+  "_comment": "E2E suite definitions shared by .github/scripts/e2e-coverage.js (merge gate) and tools/release-kpis (KPIs). expectedSuites is the full freeze-stage matrix that releases-test-suites expands to per provider directory. checkNameFormats maps a suite to the check run name published by the check-run-results-to-pr Tekton task, minus the 'Release Tests / ' prefix; {capi} is the provider's CAPI name, e.g. CAPA. suitePathProviders maps a provider directory to the provider name used in cluster-test-suites paths.",
+  "expectedSuites": {
+    "capa": ["standard", "upgrade", "upgrade-major", "cilium-eni-mode", "china", "private"],
+    "azure": ["standard", "upgrade", "upgrade-major", "private"],
+    "vsphere": ["standard", "upgrade", "upgrade-major", "on-capa", "on-capz"],
+    "cloud-director": ["standard", "upgrade", "upgrade-major"],
+    "eks": ["standard", "upgrade", "upgrade-major"],
+    "aks": [],
+    "proxmox": []
+  },
+  "checkNameFormats": {
+    "standard": "{capi} Standard Suite",
+    "upgrade": "{capi} Upgrade Suite",
+    "upgrade-major": "(Previous Major) {capi} Upgrade Suite",
+    "upgrade-major-first": "(First Previous Major) {capi} Upgrade Suite",
+    "private": "{capi} Private Suite",
+    "china": "{capi} China Suite",
+    "cilium-eni-mode": "{capi} Cilium ENI Mode Suite",
+    "on-capa": "{capi} on CAPA Suite",
+    "on-capz": "{capi} on CAPZ Suite"
+  },
+  "suitePathProviders": {
+    "capa": "capa",
+    "azure": "capz",
+    "vsphere": "capv",
+    "cloud-director": "capvcd",
+    "eks": "eks"
+  }
+}
