@@ -5,13 +5,9 @@
 
 ### Apps
 
-- cluster-autoscaler from v2.0.4 to v2.1.1
+- cluster-autoscaler from v2.0.4 to v2.0.5
 
-### cluster-autoscaler [v2.0.4...v2.1.1](https://github.com/giantswarm/cluster-autoscaler-app/compare/v2.0.4...v2.1.1)
-
-#### Changed
-
-- Chart: Update to upstream v1.36.1.
+### cluster-autoscaler [v2.0.4...v2.0.5](https://github.com/giantswarm/cluster-autoscaler-app/compare/v2.0.4...v2.0.5)
 
 #### Fixed
 
