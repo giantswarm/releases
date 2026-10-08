@@ -254,3 +254,60 @@ func TestQuarter(t *testing.T) {
 		}
 	}
 }
+
+func labelEvent(event, label, at string) issueEvent {
+	e := issueEvent{Event: event, CreatedAt: ts(at)}
+	e.Label.Name = label
+	return e
+}
+
+func TestStageDurations(t *testing.T) {
+	// Taken from CAPI v36.0.0 (#2426).
+	pr := mergedPR(2426, "CAPI: Release v36.0.0.", "", "taylorbot", "2026-09-01T06:35:58Z", "2026-09-25T04:31:25Z")
+	events := []issueEvent{
+		labelEvent("labeled", "release/major", "2026-09-01T06:36:00Z"),
+		labelEvent("labeled", "stage/development", "2026-09-01T06:36:00Z"),
+		labelEvent("unlabeled", "stage/development", "2026-09-10T10:08:10Z"),
+		labelEvent("labeled", "stage/active", "2026-09-10T10:08:11Z"),
+		labelEvent("unlabeled", "stage/active", "2026-09-24T15:36:08Z"),
+		labelEvent("labeled", "stage/freeze", "2026-09-24T15:36:08Z"),
+	}
+	d, a, f := stageDurations(pr, events)
+	if d == nil || *d != 9.1 {
+		t.Errorf("development = %v, want 9.1", d)
+	}
+	if a == nil || *a != 14.2 {
+		t.Errorf("active = %v, want 14.2", a)
+	}
+	if f == nil || *f != 0.5 {
+		t.Errorf("freeze = %v, want 0.5", f)
+	}
+}
+
+func TestStageDurationsRepeatedStage(t *testing.T) {
+	pr := mergedPR(1, "CAPI: Release v37.0.0.", "", "x", "2026-10-01T00:00:00Z", "2026-10-11T00:00:00Z")
+	events := []issueEvent{
+		labelEvent("labeled", "stage/development", "2026-10-01T00:00:00Z"),
+		labelEvent("labeled", "stage/active", "2026-10-03T00:00:00Z"),
+		labelEvent("labeled", "stage/development", "2026-10-04T00:00:00Z"), // back to development
+		labelEvent("labeled", "stage/freeze", "2026-10-09T00:00:00Z"),
+	}
+	d, a, f := stageDurations(pr, events)
+	if *d != 7 || *a != 1 || *f != 2 {
+		t.Errorf("development/active/freeze = %v/%v/%v, want 7/1/2", *d, *a, *f)
+	}
+}
+
+func TestStageDurationsWithoutStages(t *testing.T) {
+	pr := mergedPR(1, "CAPA: Release v29.0.0.", "", "x", "2024-07-01T00:00:00Z", "2024-07-02T00:00:00Z")
+	if d, a, f := stageDurations(pr, []issueEvent{labelEvent("labeled", "aws", "2024-07-01T00:00:00Z")}); d != nil || a != nil || f != nil {
+		t.Errorf("expected no stage durations, got %v/%v/%v", d, a, f)
+	}
+	if hasStageLabel(pr) {
+		t.Error("PR without stage label reported as having one")
+	}
+	pr.Labels = []struct{ Name string }{{"stage/freeze"}}
+	if !hasStageLabel(pr) {
+		t.Error("PR with stage label not detected")
+	}
+}

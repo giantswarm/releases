@@ -57,7 +57,7 @@
         "h": 14,
         "w": 24,
         "x": 0,
-        "y": 23
+        "y": 32
       },
       "targets": [
         {
@@ -146,6 +146,21 @@
               "selector": "on_time",
               "text": "on_time",
               "type": "number"
+            },
+            {
+              "selector": "development_days",
+              "text": "development_days",
+              "type": "number"
+            },
+            {
+              "selector": "active_days",
+              "text": "active_days",
+              "type": "number"
+            },
+            {
+              "selector": "freeze_days",
+              "text": "freeze_days",
+              "type": "number"
             }
           ],
           "filters": [],
@@ -171,7 +186,10 @@
               "url": true,
               "merged_month": true,
               "merged_quarter": true,
-              "on_time": true
+              "on_time": true,
+              "development_days": true,
+              "active_days": true,
+              "freeze_days": true
             },
             "indexByName": {
               "PR": 0,
@@ -337,7 +355,10 @@
               "merged_at": true,
               "automated": true,
               "planned_merge_date": true,
-              "delay_days": true
+              "delay_days": true,
+              "development_days": true,
+              "active_days": true,
+              "freeze_days": true
             }
           }
         },
@@ -436,7 +457,10 @@
               "merged_at": true,
               "automated": true,
               "planned_merge_date": true,
-              "delay_days": true
+              "delay_days": true,
+              "development_days": true,
+              "active_days": true,
+              "freeze_days": true
             }
           }
         },
@@ -535,7 +559,10 @@
               "merged_at": true,
               "automated": true,
               "planned_merge_date": true,
-              "delay_days": true
+              "delay_days": true,
+              "development_days": true,
+              "active_days": true,
+              "freeze_days": true
             }
           }
         },
@@ -634,7 +661,10 @@
               "merged_at": true,
               "automated": true,
               "planned_merge_date": true,
-              "lead_time_days": true
+              "lead_time_days": true,
+              "development_days": true,
+              "active_days": true,
+              "freeze_days": true
             }
           }
         },
@@ -736,7 +766,10 @@
               "merged_quarter": true,
               "automated": true,
               "planned_merge_date": true,
-              "delay_days": true
+              "delay_days": true,
+              "development_days": true,
+              "active_days": true,
+              "freeze_days": true
             }
           }
         },
@@ -835,7 +868,10 @@
               "delay_days": true,
               "merged_month": true,
               "merged_quarter": true,
-              "on_time": true
+              "on_time": true,
+              "development_days": true,
+              "active_days": true,
+              "freeze_days": true
             }
           }
         },
@@ -939,7 +975,10 @@
               "lead_time_days": true,
               "merged_month": true,
               "merged_quarter": true,
-              "on_time": true
+              "on_time": true,
+              "development_days": true,
+              "active_days": true,
+              "freeze_days": true
             }
           }
         },
@@ -1186,11 +1225,122 @@
         "h": 2,
         "w": 24,
         "x": 0,
-        "y": 37
+        "y": 46
       },
       "options": {
         "mode": "markdown",
         "content": "Data: all merged release PRs since CAPI v25. Last updated: unknown. Use *Inspect \u2192 Data* on the table to download a CSV."
+      }
+    },
+    {
+      "id": 12,
+      "type": "barchart",
+      "title": "Time per stage",
+      "description": "Days each release spent in the development, active and freeze stage, from the stage/* labels. Only releases that went through the stages (since February 2026).",
+      "datasource": {
+        "type": "datasource",
+        "uid": "-- Dashboard --"
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 24,
+        "x": 0,
+        "y": 23
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "datasource",
+            "uid": "-- Dashboard --"
+          },
+          "panelId": 7,
+          "withTransforms": false
+        }
+      ],
+      "transformations": [
+        {
+          "id": "filterByValue",
+          "options": {
+            "type": "include",
+            "match": "all",
+            "filters": [
+              {
+                "fieldName": "development_days",
+                "config": {
+                  "id": "isNotNull",
+                  "options": {}
+                }
+              }
+            ]
+          }
+        },
+        {
+          "id": "sortBy",
+          "options": {
+            "sort": [
+              {
+                "field": "merged_at",
+                "desc": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "PR": true,
+              "url": true,
+              "provider": true,
+              "release_type": true,
+              "author": true,
+              "created_at": true,
+              "merged_at": true,
+              "lead_time_days": true,
+              "merged_month": true,
+              "merged_quarter": true,
+              "automated": true,
+              "planned_merge_date": true,
+              "delay_days": true,
+              "on_time": true
+            },
+            "renameByName": {
+              "development_days": "development",
+              "active_days": "active",
+              "freeze_days": "freeze"
+            }
+          }
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "suffix: days",
+          "decimals": 1,
+          "custom": {
+            "fillOpacity": 80,
+            "lineWidth": 1
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "orientation": "auto",
+        "xField": "version",
+        "xTickLabelRotation": -45,
+        "showValue": "never",
+        "stacking": "normal",
+        "groupWidth": 0.7,
+        "barWidth": 0.9,
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
       }
     }
   ]

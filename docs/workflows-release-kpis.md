@@ -25,6 +25,7 @@ For every release PR the data set records:
 | `created_at`, `merged_at` | When the PR was opened and merged |
 | `lead_time_days` | `merged_at - created_at` in days |
 | `merged_month`, `merged_quarter` | `2026-09` and `2026-Q3`, for grouping by period |
+| `development_days`, `active_days`, `freeze_days` | Days spent in each release stage, from the `stage/*` label events. Only for PRs that went through the stages, since February 2026 |
 | `automated` | `true` when the PR was created by the scheduled automation on the 1st of the month |
 | `planned_merge_date` | Only for automated releases: the next 1st of the month after the PR was created |
 | `delay_days` | Only for automated releases: `merged_at - planned_merge_date` in days, negative when merged early |
@@ -42,7 +43,7 @@ merge date and the delay stay empty for them.
 - On pushes to `master` that change the workflow or `tools/release-kpis/`
 
 **Steps:**
-1. Builds `tools/release-kpis` and runs it: release PRs come from the git history, their dates from the GitHub API
+1. Builds `tools/release-kpis` and runs it: release PRs come from the git history, their dates and stage label events from the GitHub API
 2. Writes a summary table of the last 10 releases to the job summary
 3. Embeds the data into the dashboard template and uploads the dashboard to Grafana Cloud
 
@@ -86,6 +87,7 @@ Panels:
 - Lead time per release over time, split by release type
 - Delay from the planned merge date over time (scheduled releases only)
 - Median lead time per quarter and releases per quarter, split by release type
+- Time per stage (development, active, freeze) for every release that went through the stages
 - Table of all merged release PRs with links. *Inspect → Data* on this panel downloads a CSV.
 - Timestamp of the last data refresh
 
