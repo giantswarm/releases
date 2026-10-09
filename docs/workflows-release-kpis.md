@@ -27,6 +27,12 @@ For every release PR the data set records:
 | `lead_time_days` | `merged_at - created_at` in days |
 | `merged_month`, `merged_quarter` | `2026-09` and `2026-Q3`, for grouping by period |
 | `development_days`, `active_days`, `freeze_days` | Days spent in each release stage, from the `stage/*` label events. Only for PRs that went through the stages, since February 2026 |
+| `suites_expected`, `suites_green`, `suites_waived` | E2E suites expected for the PR's new releases, how many passed or were skipped (`neutral`) at least once, how many were waived with `/waive-suite` |
+| `test_runs`, `test_runs_automated` | Number of `/run releases-test-suites` comments on the PR, and how many of them came from the automation (weekly bump, stage change) |
+| `tests_first_run_at` | Time of the first `/run releases-test-suites` comment |
+| `all_green_at` | First time at which every expected suite had passed, or been waived, at least once |
+| `time_to_green_days` | `all_green_at - created_at` in days |
+| `test_friction_days` | `all_green_at - tests_first_run_at` in days, the initial test friction |
 | `automated` | `true` when the PR was created by the scheduled automation on the 1st of the month |
 | `planned_merge_date` | Only for automated releases: the next 1st of the month after the PR was created |
 | `delay_days` | Only for automated releases: `merged_at - planned_merge_date` in days, negative when merged early |
@@ -34,6 +40,29 @@ For every release PR the data set records:
 
 Manually created releases are merged as soon as possible and have no planned date, so the planned
 merge date and the delay stay empty for them.
+
+## Time to all green tests
+
+Towards https://github.com/giantswarm/roadmap/issues/4385
+
+Every E2E suite run posts a `Release Tests / <suite>` check run on the tested commit, through the
+`check-run-results-to-pr` Tekton task. The tool collects those check runs for every commit that was
+ever the head of a release PR, including commits the branch was force-pushed away from, which the
+PR timeline records. For each expected suite it takes the first successful run; the latest of those
+is `all_green_at`. A suite waived with `/waive-suite` counts as green at the time of the waiver.
+A suite that concluded `neutral` was skipped entirely, for example the plain upgrade suite of a
+major release, which has no previous minor to upgrade from. That is not test friction, so it
+counts as green as well. The merge gate is stricter there and wants a waiver.
+
+Expected suites per provider come from [`.github/scripts/e2e-suites.json`](../.github/scripts/e2e-suites.json),
+the same file the E2E coverage merge gate uses, so the two cannot drift apart.
+
+This is an "ever green" definition: it does not require the passes to be on the same release
+content, as the merge gate does. That is intended. Later component bumps that invalidate results
+are not initial test friction, which is what this KPI measures.
+
+Per-suite check runs exist since March 2026. PRs created before `-tests-since` (default
+`2026-02-01`) get no test data, and PRs whose suites never all passed get `all_green_at` empty.
 
 ## Workflow: Release KPIs (`release-kpis.yaml`)
 
@@ -44,7 +73,7 @@ merge date and the delay stay empty for them.
 - On pushes to `master` that change the workflow or `tools/release-kpis/`
 
 **Steps:**
-1. Builds `tools/release-kpis` and runs it: release PRs come from the git history, their dates and stage label events from the GitHub API
+1. Builds `tools/release-kpis` and runs it: release PRs come from the git history, their dates, stage label events, test runs and suite check runs from the GitHub API
 2. Writes a summary table of the last 10 releases to the job summary
 3. Embeds the data into the dashboard template and uploads the dashboard to Grafana Cloud
 
@@ -89,6 +118,8 @@ Panels:
 - Delay from the planned merge date over time (scheduled releases only)
 - Median lead time per quarter and releases per quarter, split by release type
 - Time per stage (development, active, freeze) for every release that went through the stages
+- Median time to green per release type, median test friction and median test runs per release
+- Time to green and test runs per release
 - Table of all merged release PRs with links. *Inspect → Data* on this panel downloads a CSV.
 - Timestamp of the last data refresh
 
@@ -128,6 +159,10 @@ The tool fetches every release PR from the GitHub API, so a token is needed to s
 **A release is missing:**
 - The PR must be merged and must have added a new `<provider>/vX.Y.Z/release.yaml` file
 - The merge commit subject must end with the PR number, e.g. `(#2426)`, as squash merges do; otherwise the PR is looked up through the commit
+
+**A release has no time to green:**
+- The PR must have been created after `-tests-since` and have `Release Tests / <suite>` check runs
+- Every expected suite from `e2e-suites.json` must have passed or been waived at least once
 
 **A scheduled release has no planned merge date:**
 - The PR body must contain the `PLANNED_MERGE_DATE` marker, or
