@@ -218,7 +218,7 @@ to all Giant Swarm installations.
   - v34.5
     - [v34.5.0](https://github.com/giantswarm/releases/tree/master/azure/v34.5.0)
   - v34.4
-    - [v34.4.0](https://github.com/giantswarm/releases/tree/master/azure/v34.4.0)
+    - [v34.4.0](https://github.com/giantswarm/releases/tree/master/azure/archived/v34.4.0)
   - v34.3
     - [v34.3.0](https://github.com/giantswarm/releases/tree/master/azure/archived/v34.3.0)
   - v34.2
@@ -515,7 +515,7 @@ to all Giant Swarm installations.
   - v34.5
     - [v34.5.0](https://github.com/giantswarm/releases/tree/master/cloud-director/v34.5.0)
   - v34.4
-    - [v34.4.0](https://github.com/giantswarm/releases/tree/master/cloud-director/v34.4.0)
+    - [v34.4.0](https://github.com/giantswarm/releases/tree/master/cloud-director/archived/v34.4.0)
   - v34.3
     - [v34.3.0](https://github.com/giantswarm/releases/tree/master/cloud-director/archived/v34.3.0)
   - v34.2
@@ -523,7 +523,7 @@ to all Giant Swarm installations.
   - v34.1
     - [v34.1.2](https://github.com/giantswarm/releases/tree/master/cloud-director/archived/v34.1.2)
     - [v34.1.1](https://github.com/giantswarm/releases/tree/master/cloud-director/archived/v34.1.1)
-    - [v34.1.0](https://github.com/giantswarm/releases/tree/master/cloud-director/v34.1.0)
+    - [v34.1.0](https://github.com/giantswarm/releases/tree/master/cloud-director/archived/v34.1.0)
   - v34.0
     - [v34.0.0](https://github.com/giantswarm/releases/tree/master/cloud-director/archived/v34.0.0)
 
