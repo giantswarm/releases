@@ -17,6 +17,7 @@
 
 - cert-exporter from v2.12.0 to v2.12.1
 - external-dns from v3.5.0 to v3.6.0
+- k8s-dns-node-cache from v2.11.0 to v2.11.1
 - net-exporter from v1.24.0 to v1.24.1
 - network-policies from v0.3.0 to v0.3.2
 - node-exporter from v1.20.13 to v1.21.0
@@ -52,6 +53,18 @@
 
 #### Fixed
 
+- The `helm.sh/chart` label is valid for long chart versions: the 63-character cut trims the whole trailing run of `-`, `.` and `_`.
+
+### k8s-dns-node-cache [v2.11.0...v2.11.1](https://github.com/giantswarm/k8s-dns-node-cache-app/compare/v2.11.0...v2.11.1)
+
+#### Added
+
+- Chart metadata: add `io.giantswarm.application.managed` annotation (`"true"`).
+- Chart metadata: add `keywords`.
+
+#### Fixed
+
+- Make the DNS Service redirected by the `CiliumLocalRedirectPolicy` configurable.
 - The `helm.sh/chart` label is valid for long chart versions: the 63-character cut trims the whole trailing run of `-`, `.` and `_`.
 
 ### net-exporter [v1.24.0...v1.24.1](https://github.com/giantswarm/net-exporter/compare/v1.24.0...v1.24.1)
