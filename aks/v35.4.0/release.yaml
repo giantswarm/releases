@@ -87,8 +87,8 @@ spec:
     version: 4.1.2
   components:
   - name: cluster-aks
-    version: 0.8.0
+    version: 0.8.1
   - name: kubernetes
     version: 1.35.9
-  date: "2026-10-13T09:55:40Z"
+  date: "2026-10-13T18:35:11Z"
   state: active
