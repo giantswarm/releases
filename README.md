@@ -415,6 +415,7 @@ to all Giant Swarm installations.
 
 - v36
   - v36.1
+    - [v36.1.1](https://github.com/giantswarm/releases/tree/master/vsphere/v36.1.1)
     - [v36.1.0](https://github.com/giantswarm/releases/tree/master/vsphere/v36.1.0)
   - v36.0
     - [v36.0.0](https://github.com/giantswarm/releases/tree/master/vsphere/v36.0.0)
@@ -500,6 +501,7 @@ to all Giant Swarm installations.
 
 - v36
   - v36.1
+    - [v36.1.1](https://github.com/giantswarm/releases/tree/master/cloud-director/v36.1.1)
     - [v36.1.0](https://github.com/giantswarm/releases/tree/master/cloud-director/v36.1.0)
   - v36.0
     - [v36.0.0](https://github.com/giantswarm/releases/tree/master/cloud-director/v36.0.0)
