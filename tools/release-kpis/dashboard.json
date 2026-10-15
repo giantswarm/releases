@@ -123,12 +123,12 @@
         "type": "yesoreyeram-infinity-datasource",
         "uid": "bdeczbud7da80f"
       },
-      "description": "All merged release PRs in the selected time range and providers. Planned merge date and delay are only set for scheduled releases; 'planned by' says whether the date was written by the create-release workflow or estimated from the creation time of an older PR. This panel holds the embedded data; the other panels read it from here.",
+      "description": "All merged release PRs in the selected time range and providers. 'all green' says whether every expected E2E suite had passed or been waived before the merge; 'waived' counts the suites waived with /waive-suite. Planned merge date and delay are only set for scheduled releases; 'planned by' says whether the date was written by the create-release workflow or estimated from the creation time of an older PR. This panel holds the embedded data; the other panels read it from here.",
       "gridPos": {
         "h": 14,
         "w": 24,
         "x": 0,
-        "y": 46
+        "y": 55
       },
       "targets": [
         {
@@ -269,6 +269,26 @@
               "type": "timestamp"
             },
             {
+              "selector": "friction_start_at",
+              "text": "friction_start_at",
+              "type": "timestamp"
+            },
+            {
+              "selector": "active_at",
+              "text": "active_at",
+              "type": "timestamp"
+            },
+            {
+              "selector": "merged_all_green",
+              "text": "merged_all_green",
+              "type": "number"
+            },
+            {
+              "selector": "runs_to_green",
+              "text": "runs_to_green",
+              "type": "number"
+            },
+            {
               "selector": "all_green_at",
               "text": "all_green_at",
               "type": "timestamp"
@@ -353,8 +373,11 @@
                 "active_days",
                 "freeze_days",
                 "test_runs",
+                "runs_to_green",
                 "time_to_green_days",
                 "test_friction_days",
+                "suites_waived",
+                "merged_all_green",
                 "automated",
                 "planned_source",
                 "planned_merge_date",
@@ -379,12 +402,15 @@
               "active_days": 9,
               "freeze_days": 10,
               "test_runs": 11,
-              "time_to_green_days": 12,
-              "test_friction_days": 13,
-              "automated": 14,
-              "planned_source": 15,
-              "planned_merge_date": 16,
-              "delay_days": 17
+              "runs_to_green": 12,
+              "time_to_green_days": 13,
+              "test_friction_days": 14,
+              "suites_waived": 15,
+              "merged_all_green": 16,
+              "automated": 17,
+              "planned_source": 18,
+              "planned_merge_date": 19,
+              "delay_days": 20
             },
             "renameByName": {
               "release_type": "type",
@@ -400,7 +426,10 @@
               "automated": "scheduled",
               "planned_source": "planned by",
               "planned_merge_date": "planned merge",
-              "delay_days": "delay (d)"
+              "delay_days": "delay (d)",
+              "runs_to_green": "runs to green",
+              "suites_waived": "waived",
+              "merged_all_green": "all green"
             }
           }
         }
@@ -520,6 +549,64 @@
               {
                 "id": "unit",
                 "value": "time: YYYY-MM-DD HH:mm"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "runs to green"
+            },
+            "properties": [
+              {
+                "id": "decimals",
+                "value": 0
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "waived"
+            },
+            "properties": [
+              {
+                "id": "decimals",
+                "value": 0
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "all green"
+            },
+            "properties": [
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-text"
+                }
+              },
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "type": "value",
+                    "options": {
+                      "0": {
+                        "text": "no",
+                        "color": "red",
+                        "index": 0
+                      },
+                      "1": {
+                        "text": "yes",
+                        "color": "green",
+                        "index": 1
+                      }
+                    }
+                  }
+                ]
               }
             ]
           }
@@ -2046,11 +2133,11 @@
         "h": 4,
         "w": 24,
         "x": 0,
-        "y": 60
+        "y": 69
       },
       "options": {
         "mode": "markdown",
-        "content": "Data: all merged release PRs since CAPI v25, filtered by the time range (merge date) and the provider variable. Last updated: unknown. Use *Inspect \u2192 Data* on the table to download a CSV.\n\n**Lead time**: PR opened \u2192 merged. **Planned merge date**: written into scheduled release PRs by the create-release workflow; older scheduled PRs only have an estimate (next 1st of the month), shown in the delay chart but not counted in the on-time rate. **Stages**: time between the stage/development, stage/active and stage/freeze labels. **Time to green**: PR opened \u2192 first time every expected E2E suite had passed or been waived. **Test friction**: first `/run releases-test-suites` \u2192 all green, the part of time to green spent on test runs. Per-release charts are capped at 60 days, hover a clipped bar for its value."
+        "content": "Data: all merged release PRs since CAPI v25, filtered by the time range (merge date) and the provider variable. Last updated: unknown. Use *Inspect \u2192 Data* on the table to download a CSV.\n\n**Lead time**: PR opened \u2192 merged. **Planned merge date**: written into scheduled release PRs by the create-release workflow; older scheduled PRs only have an estimate (next 1st of the month), shown in the delay chart but not counted in the on-time rate. **Stages**: time between the stage/development, stage/active and stage/freeze labels. **Time to green**: PR opened \u2192 first time every expected E2E suite had passed or been waived. **Test friction**: first test run after the release entered the active stage \u2192 all green, the part of time to green spent on getting the tests green rather than on assembling the release. **Merged with all suites green**: share of releases whose expected suites had all passed or been waived before the merge; suites that were not yet required when a PR was opened only count if they ran. **Runs until green**: test runs up to the all-green state. Per-release charts are capped at 60 days, hover a clipped bar for its value."
       }
     },
     {
@@ -2209,7 +2296,7 @@
       },
       "gridPos": {
         "h": 5,
-        "w": 6,
+        "w": 5,
         "x": 0,
         "y": 5
       },
@@ -2394,8 +2481,8 @@
       },
       "gridPos": {
         "h": 5,
-        "w": 6,
-        "x": 6,
+        "w": 5,
+        "x": 5,
         "y": 5
       },
       "targets": [
@@ -2572,15 +2659,15 @@
       "id": 15,
       "type": "stat",
       "title": "Median test friction",
-      "description": "First /run releases-test-suites \u2192 first time every expected suite had passed. Initial test friction, all release types. 'releases' is the number of releases the value is computed from.",
+      "description": "Test friction: first test run after the release entered the active stage \u2192 first time every expected suite had passed or been waived. Releases without stage labels use their first manual run. 'releases' is the number of releases the value is computed from.",
       "datasource": {
         "type": "datasource",
         "uid": "-- Dashboard --"
       },
       "gridPos": {
         "h": 5,
-        "w": 6,
-        "x": 12,
+        "w": 5,
+        "x": 10,
         "y": 5
       },
       "targets": [
@@ -2738,16 +2825,16 @@
     {
       "id": 16,
       "type": "stat",
-      "title": "Median test runs per release",
-      "description": "Number of /run releases-test-suites comments per release PR, including the automated weekly runs. 'releases' is the number of releases the value is computed from.",
+      "title": "Median runs until green",
+      "description": "Number of /run releases-test-suites comments up to the first all-green state, including the automated runs. 'releases' is the number of releases the value is computed from.",
       "datasource": {
         "type": "datasource",
         "uid": "-- Dashboard --"
       },
       "gridPos": {
         "h": 5,
-        "w": 6,
-        "x": 18,
+        "w": 5,
+        "x": 15,
         "y": 5
       },
       "targets": [
@@ -2819,7 +2906,7 @@
           "options": {
             "include": {
               "names": [
-                "test_runs"
+                "runs_to_green"
               ]
             }
           }
@@ -2906,7 +2993,7 @@
       "id": 17,
       "type": "barchart",
       "title": "Time to green per release",
-      "description": "Days from PR opened to the first all-green test state (time to green), and the part of it spent on test runs, from the first /run releases-test-suites (test friction). Only releases with per-suite results (since March 2026). The axis is capped at 60 days, hover a clipped bar for its value.",
+      "description": "Days from PR opened to the first all-green test state (time to green), and the part of it after the first test run in the active stage (test friction). Only releases with per-suite results (since March 2026). The axis is capped at 60 days, hover a clipped bar for its value.",
       "datasource": {
         "type": "datasource",
         "uid": "-- Dashboard --"
@@ -3206,6 +3293,490 @@
           "displayMode": "list",
           "placement": "bottom",
           "showLegend": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
+      }
+    },
+    {
+      "id": 19,
+      "type": "stat",
+      "title": "Merged with all suites green",
+      "description": "Share of release PRs with per-suite results that had every expected E2E suite green or waived before the merge. 'releases' is the number of releases the value is computed from.",
+      "datasource": {
+        "type": "datasource",
+        "uid": "-- Dashboard --"
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 4,
+        "x": 20,
+        "y": 5
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "datasource",
+            "uid": "-- Dashboard --"
+          },
+          "panelId": 7,
+          "withTransforms": false
+        }
+      ],
+      "transformations": [
+        {
+          "id": "filterByValue",
+          "options": {
+            "type": "include",
+            "match": "all",
+            "filters": [
+              {
+                "fieldName": "merged_at",
+                "config": {
+                  "id": "greaterOrEqual",
+                  "options": {
+                    "value": "${__from}"
+                  }
+                }
+              },
+              {
+                "fieldName": "merged_at",
+                "config": {
+                  "id": "lowerOrEqual",
+                  "options": {
+                    "value": "${__to}"
+                  }
+                }
+              },
+              {
+                "fieldName": "provider",
+                "config": {
+                  "id": "regex",
+                  "options": {
+                    "value": "^${provider:regex}$"
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "id": "filterByValue",
+          "options": {
+            "type": "include",
+            "match": "all",
+            "filters": [
+              {
+                "fieldName": "suites_expected",
+                "config": {
+                  "id": "greater",
+                  "options": {
+                    "value": 0
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "id": "filterFieldsByName",
+          "options": {
+            "include": {
+              "names": [
+                "merged_all_green"
+              ]
+            }
+          }
+        },
+        {
+          "id": "reduce",
+          "options": {
+            "mode": "reduceFields",
+            "reducers": [
+              "mean",
+              "count"
+            ],
+            "includeTimeField": false
+          }
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percentunit",
+          "decimals": 0,
+          "min": 0,
+          "max": 1,
+          "color": {
+            "mode": "thresholds"
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "red",
+                "value": null
+              },
+              {
+                "color": "orange",
+                "value": 0.5
+              },
+              {
+                "color": "green",
+                "value": 0.8
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/[Mm]edian|[Mm]ean/"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "all green"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/[Cc]ount/"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "releases"
+              },
+              {
+                "id": "unit",
+                "value": "none"
+              },
+              {
+                "id": "decimals",
+                "value": 0
+              },
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "#8e8e8e"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "colorMode": "value",
+        "graphMode": "none",
+        "textMode": "value_and_name",
+        "justifyMode": "center",
+        "orientation": "horizontal"
+      }
+    },
+    {
+      "id": 20,
+      "type": "barchart",
+      "title": "Merged with all suites green per quarter",
+      "description": "Share of the release PRs merged in each quarter that had every expected E2E suite green or waived before the merge. Only releases with per-suite results (since March 2026). The current quarter is marked '(to date)' and still incomplete.",
+      "datasource": {
+        "type": "datasource",
+        "uid": "-- Dashboard --"
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 12,
+        "x": 0,
+        "y": 46
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "datasource",
+            "uid": "-- Dashboard --"
+          },
+          "panelId": 7,
+          "withTransforms": false
+        }
+      ],
+      "transformations": [
+        {
+          "id": "filterByValue",
+          "options": {
+            "type": "include",
+            "match": "all",
+            "filters": [
+              {
+                "fieldName": "merged_at",
+                "config": {
+                  "id": "greaterOrEqual",
+                  "options": {
+                    "value": "${__from}"
+                  }
+                }
+              },
+              {
+                "fieldName": "merged_at",
+                "config": {
+                  "id": "lowerOrEqual",
+                  "options": {
+                    "value": "${__to}"
+                  }
+                }
+              },
+              {
+                "fieldName": "provider",
+                "config": {
+                  "id": "regex",
+                  "options": {
+                    "value": "^${provider:regex}$"
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "id": "filterByValue",
+          "options": {
+            "type": "include",
+            "match": "all",
+            "filters": [
+              {
+                "fieldName": "suites_expected",
+                "config": {
+                  "id": "greater",
+                  "options": {
+                    "value": 0
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "id": "groupBy",
+          "options": {
+            "fields": {
+              "merged_quarter": {
+                "operation": "groupby",
+                "aggregations": []
+              },
+              "merged_all_green": {
+                "operation": "aggregate",
+                "aggregations": [
+                  "mean"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "renameByName": {
+              "merged_quarter": "quarter",
+              "merged_all_green (mean)": "all green"
+            }
+          }
+        },
+        {
+          "id": "sortBy",
+          "options": {
+            "sort": [
+              {
+                "field": "quarter",
+                "desc": false
+              }
+            ]
+          }
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percentunit",
+          "decimals": 0,
+          "min": 0,
+          "max": 1,
+          "custom": {
+            "fillOpacity": 80,
+            "lineWidth": 1
+          },
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "green"
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "orientation": "auto",
+        "xField": "quarter",
+        "xTickLabelRotation": 0,
+        "showValue": "auto",
+        "stacking": "none",
+        "groupWidth": 0.7,
+        "barWidth": 0.9,
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": false
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
+      }
+    },
+    {
+      "id": 21,
+      "type": "barchart",
+      "title": "Runs until green per release",
+      "description": "/run releases-test-suites comments up to the first all-green state, including the automated runs. Only releases that reached all green. The axis is capped at 100 runs, hover a clipped bar for its value.",
+      "datasource": {
+        "type": "datasource",
+        "uid": "-- Dashboard --"
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 12,
+        "x": 12,
+        "y": 46
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "datasource",
+            "uid": "-- Dashboard --"
+          },
+          "panelId": 7,
+          "withTransforms": false
+        }
+      ],
+      "transformations": [
+        {
+          "id": "filterByValue",
+          "options": {
+            "type": "include",
+            "match": "all",
+            "filters": [
+              {
+                "fieldName": "merged_at",
+                "config": {
+                  "id": "greaterOrEqual",
+                  "options": {
+                    "value": "${__from}"
+                  }
+                }
+              },
+              {
+                "fieldName": "merged_at",
+                "config": {
+                  "id": "lowerOrEqual",
+                  "options": {
+                    "value": "${__to}"
+                  }
+                }
+              },
+              {
+                "fieldName": "provider",
+                "config": {
+                  "id": "regex",
+                  "options": {
+                    "value": "^${provider:regex}$"
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "id": "filterByValue",
+          "options": {
+            "type": "include",
+            "match": "all",
+            "filters": [
+              {
+                "fieldName": "all_green_at",
+                "config": {
+                  "id": "isNotNull",
+                  "options": {}
+                }
+              }
+            ]
+          }
+        },
+        {
+          "id": "sortBy",
+          "options": {
+            "sort": [
+              {
+                "field": "merged_at",
+                "desc": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "filterFieldsByName",
+          "options": {
+            "include": {
+              "names": [
+                "name",
+                "runs_to_green"
+              ]
+            }
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "renameByName": {
+              "runs_to_green": "runs until green"
+            }
+          }
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "none",
+          "decimals": 0,
+          "min": 0,
+          "max": 100,
+          "custom": {
+            "fillOpacity": 80,
+            "lineWidth": 1
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "orientation": "auto",
+        "xField": "name",
+        "xTickLabelRotation": -45,
+        "showValue": "never",
+        "stacking": "none",
+        "groupWidth": 0.7,
+        "barWidth": 0.9,
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": false
         },
         "tooltip": {
           "mode": "multi",

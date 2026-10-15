@@ -114,10 +114,12 @@ type Release struct {
 	Automated bool `json:"automated"`
 
 	// Stage durations in days, from the stage/* labels set by the release
-	// stages workflow. Only set for PRs that went through the stages.
-	DevelopmentDays *float64 `json:"development_days"`
-	ActiveDays      *float64 `json:"active_days"`
-	FreezeDays      *float64 `json:"freeze_days"`
+	// stages workflow. Only set for PRs that went through the stages. ActiveAt
+	// is when the PR first entered the active stage.
+	DevelopmentDays *float64   `json:"development_days"`
+	ActiveDays      *float64   `json:"active_days"`
+	FreezeDays      *float64   `json:"freeze_days"`
+	ActiveAt        *time.Time `json:"active_at"`
 
 	// Time to all green tests, from the "Release Tests / <suite>" check runs
 	// and the "/run releases-test-suites" comments. Only set for PRs created
@@ -128,9 +130,15 @@ type Release struct {
 	TestRuns          int        `json:"test_runs"`
 	TestRunsAutomated int        `json:"test_runs_automated"`
 	TestsFirstRunAt   *time.Time `json:"tests_first_run_at"`
+	FrictionStartAt   *time.Time `json:"friction_start_at"`
 	AllGreenAt        *time.Time `json:"all_green_at"`
 	TimeToGreenDays   *float64   `json:"time_to_green_days"`
 	TestFrictionDays  *float64   `json:"test_friction_days"`
+	// MergedAllGreen is 1 when the PR reached all green before the merge and 0
+	// when it was merged without, so that its mean is the all-green rate.
+	// RunsToGreen counts the test runs up to the all-green time.
+	MergedAllGreen *int `json:"merged_all_green"`
+	RunsToGreen    *int `json:"runs_to_green"`
 
 	// PlannedMergeDate, DelayDays and OnTime are only set for automated
 	// releases. OnTime is 1 when the release was merged by its planned date and
@@ -286,6 +294,7 @@ func main() {
 				log.Fatalf("Error fetching events of pull request #%d: %v", number, err)
 			}
 			r.DevelopmentDays, r.ActiveDays, r.FreezeDays = stageDurations(pr, events)
+			r.ActiveAt = stageEnteredAt(events, "active")
 		}
 
 		if !pr.CreatedAt.Before(testsSinceTime) {
@@ -294,7 +303,7 @@ func main() {
 			if err != nil {
 				log.Fatalf("Error collecting test results of pull request #%d: %v", number, err)
 			}
-			applyTestResults(&r, wanted, res)
+			applyTestResults(&r, wanted, defs.requiredSuites(wanted, pr.CreatedAt), res)
 			if verbose {
 				log.Printf("#%d: %d test runs, %d/%d suites green, %d commits checked", number, r.TestRuns, r.SuitesGreen, r.SuitesExpected, res.checkedShas)
 			}
@@ -548,6 +557,17 @@ func stageDurations(pr pullRequest, events []issueEvent) (development, active, f
 
 	d, a, f := days(totals["development"]), days(totals["active"]), days(totals["freeze"])
 	return &d, &a, &f
+}
+
+// stageEnteredAt returns when the given stage label was first applied.
+func stageEnteredAt(events []issueEvent, stage string) *time.Time {
+	for _, e := range events {
+		if e.Event == "labeled" && e.Label.Name == stageLabelPrefix+stage {
+			t := e.CreatedAt.UTC()
+			return &t
+		}
+	}
+	return nil
 }
 
 // releaseType returns major, minor or patch from the release/* label of the
