@@ -28,7 +28,7 @@ For every release PR the data set records:
 | `merged_month`, `merged_quarter` | `2026-09` and `2026-Q3`, for grouping by period |
 | `development_days`, `active_days`, `freeze_days` | Days spent in each release stage, from the `stage/*` label events. Only for PRs that went through the stages, since February 2026 |
 | `suites_expected`, `suites_green`, `suites_waived` | E2E suites expected for the PR's new releases, how many passed or were skipped (`neutral`) at least once, how many were waived with `/waive-suite` |
-| `test_runs`, `test_runs_automated` | Number of `/run releases-test-suites` comments on the PR, and how many of them came from the automation (weekly bump, stage change) |
+| `test_runs`, `test_runs_automated` | Number of `/run releases-test-suites` comments on the PR, and how many of them came from the automation (`giantswarm-release[bot]` or `taylorbot`; weekly bump, stage change) |
 | `tests_first_run_at` | Time of the first `/run releases-test-suites` comment |
 | `all_green_at` | First time at which every expected suite had passed, or been waived, at least once |
 | `time_to_green_days` | `all_green_at - created_at` in days |
@@ -99,7 +99,8 @@ to be merged on the next 1st. For those PRs the workflow now adds a line to the 
 ```
 
 The HTML comment is what the KPI tool reads. PRs created before this marker existed are
-recognised by their creation time instead: created by `taylorbot` on the 1st of the month between
+recognised by their creation time instead: created by the automation (`giantswarm-release[bot]`, or `taylorbot` before the
+switch to the GitHub App) on the 1st of the month between
 06:00 and 09:00 UTC, which is the window of the scheduled run. Manually triggered runs by the same
 bot fall outside that window.
 
@@ -166,4 +167,4 @@ The tool fetches every release PR from the GitHub API, so a token is needed to s
 
 **A scheduled release has no planned merge date:**
 - The PR body must contain the `PLANNED_MERGE_DATE` marker, or
-- for older PRs, it must have been created by `taylorbot` on the 1st between 06:00 and 09:00 UTC
+- for older PRs, it must have been created by `giantswarm-release[bot]` (or `taylorbot` for PRs from before the switch) on the 1st between 06:00 and 09:00 UTC

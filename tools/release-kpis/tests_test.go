@@ -66,6 +66,7 @@ func TestApplyTestResults(t *testing.T) {
 		runs: []issueComment{
 			comment("Gacko", "/run releases-test-suites TARGET_SUITES=./providers/capa/standard", "2026-09-09T08:00:00Z"),
 			comment("taylorbot", "/run releases-test-suites", "2026-09-10T10:00:00Z"),
+			comment("giantswarm-release[bot]", "/run releases-test-suites", "2026-09-10T11:00:00Z"),
 			comment("Gacko", "/run releases-test-suites", "2026-09-11T10:00:00Z"),
 		},
 		waivers: map[string]time.Time{"capa/private": ts("2026-09-12T12:00:00Z")},
@@ -79,8 +80,8 @@ func TestApplyTestResults(t *testing.T) {
 	if r.SuitesExpected != 3 || r.SuitesGreen != 2 || r.SuitesWaived != 1 {
 		t.Errorf("suites expected/green/waived = %d/%d/%d, want 3/2/1", r.SuitesExpected, r.SuitesGreen, r.SuitesWaived)
 	}
-	if r.TestRuns != 3 || r.TestRunsAutomated != 1 {
-		t.Errorf("test runs = %d (%d automated), want 3 (1)", r.TestRuns, r.TestRunsAutomated)
+	if r.TestRuns != 4 || r.TestRunsAutomated != 2 {
+		t.Errorf("test runs = %d (%d automated), want 4 (2)", r.TestRuns, r.TestRunsAutomated)
 	}
 	if r.TestsFirstRunAt == nil || !r.TestsFirstRunAt.Equal(ts("2026-09-09T08:00:00Z")) {
 		t.Errorf("first run = %v", r.TestsFirstRunAt)

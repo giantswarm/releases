@@ -193,7 +193,7 @@ func applyTestResults(r *Release, wanted map[string]string, res testResults) {
 	r.SuitesExpected = len(wanted)
 	r.TestRuns = len(res.runs)
 	for _, run := range res.runs {
-		if run.User.Login == automationUser {
+		if isAutomation(run.User.Login) {
 			r.TestRunsAutomated++
 		}
 	}
