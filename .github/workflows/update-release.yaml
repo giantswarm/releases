@@ -11,17 +11,32 @@ jobs:
       github.event.issue.pull_request &&
       (startsWith(github.event.comment.body, '/update-release') || startsWith(github.event.comment.body, '/update-readme')) &&
       github.repository == 'giantswarm/releases' &&
-      (github.event.comment.author_association == 'MEMBER' || github.event.comment.author_association == 'OWNER' || github.event.comment.author_association == 'COLLABORATOR')
+      (github.event.comment.author_association == 'MEMBER' || github.event.comment.author_association == 'OWNER' || github.event.comment.author_association == 'COLLABORATOR' || github.event.comment.user.login == 'giantswarm-release[bot]')
     runs-on: ubuntu-latest
-    env:
-      OPSCTL_GITHUB_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
-      GH_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
-      DEVCTL_GITHUB_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
     permissions:
       contents: write
       pull-requests: write
 
     steps:
+      - name: Generate giantswarm-release token
+        id: app-token
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1 # v3.2.0
+        with:
+          client-id: ${{ secrets.RELEASE_BOT_CLIENT_ID }}
+          private-key: ${{ secrets.RELEASE_BOT_PRIVATE_KEY }}
+          permission-pull-requests: write
+          permission-issues: write
+      - name: Generate giantswarm-release read token
+        id: read-token
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1 # v3.2.0
+        with:
+          client-id: ${{ secrets.RELEASE_BOT_CLIENT_ID }}
+          private-key: ${{ secrets.RELEASE_BOT_PRIVATE_KEY }}
+          # Read-only, org-wide on purpose: devctl/opsctl look up releases and
+          # tags of arbitrary component repositories.
+          owner: giantswarm # zizmor: ignore[github-app]
+          permission-contents: read
+
       - name: Checkout code
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
@@ -32,7 +47,7 @@ jobs:
       - name: Add reaction to comment to indicate that the bot is working on the update
         uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9
         with:
-          github-token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+          github-token: ${{ steps.app-token.outputs.token }}
           script: |
             github.rest.reactions.createForIssueComment({
               owner: context.repo.owner,
@@ -45,7 +60,7 @@ jobs:
         id: get_branch
         uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9
         with:
-          github-token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+          github-token: ${{ steps.app-token.outputs.token }}
           result-encoding: string
           script: |
             const pr = await github.rest.pulls.get({
@@ -59,7 +74,7 @@ jobs:
         id: check_stage
         uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9
         with:
-          github-token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+          github-token: ${{ steps.app-token.outputs.token }}
           script: |
             const pr = await github.rest.pulls.get({
               owner: context.repo.owner,
@@ -107,7 +122,7 @@ jobs:
         if: steps.check_stage.outputs.stage == 'freeze' && steps.check_stage.outputs.allowed == 'false'
         uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9
         with:
-          github-token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+          github-token: ${{ steps.app-token.outputs.token }}
           script: |
             await github.rest.reactions.createForIssueComment({
               owner: context.repo.owner,
@@ -133,10 +148,10 @@ jobs:
         id: detect_source
         uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9
         with:
-          github-token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+          github-token: ${{ steps.app-token.outputs.token }}
           script: |
             const commentAuthor = context.payload.comment.user.login;
-            const botUsers = ['taylorbot', 'github-actions[bot]'];
+            const botUsers = ['giantswarm-release[bot]', 'taylorbot', 'github-actions[bot]'];
             const isAutomatic = botUsers.includes(commentAuthor);
             
             core.setOutput('is_automatic', isAutomatic.toString());
@@ -154,11 +169,12 @@ jobs:
         id: install_devctl
         uses: ./.github/actions/install-devctl
         with:
-          github_token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+          github_token: ${{ steps.read-token.outputs.token }}
 
       - name: Parse command arguments and determine provider(s)
         id: parse_command
         env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
           COMMENT_BODY: ${{ github.event.comment.body }}
         run: |
           # Use printf to safely handle quotes and special characters
@@ -290,6 +306,10 @@ jobs:
       - name: Recreate release files
         id: recreate_release
         if: success() && steps.parse_command.outputs.description_only != 'true' && (steps.parse_command.outputs.provider || steps.parse_command.outputs.providers_list)
+        env:
+          OPSCTL_GITHUB_TOKEN: ${{ steps.read-token.outputs.token }}
+          DEVCTL_GITHUB_TOKEN: ${{ steps.read-token.outputs.token }}
+          GH_TOKEN: ${{ steps.read-token.outputs.token }}
         run: |
           set -o pipefail
           BRANCH_NAME="${{ steps.get_branch.outputs.result }}"
@@ -713,13 +733,11 @@ jobs:
             git commit -m "chore: Update release files via comment"
             git push
           fi
-        env:
-          GITHUB_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
 
       - name: Add success reaction
         uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9
         with:
-          github-token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+          github-token: ${{ steps.app-token.outputs.token }}
           script: |
             github.rest.reactions.createForIssueComment({
               owner: context.repo.owner,
@@ -731,7 +749,7 @@ jobs:
         if: env.DEVCTL_OUTPUT_COMMENT != ''
         uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9
         with:
-          github-token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+          github-token: ${{ steps.app-token.outputs.token }}
           script: |
             const output = process.env.DEVCTL_OUTPUT_COMMENT;
             github.rest.issues.createComment({
@@ -746,11 +764,11 @@ jobs:
         uses: ./.github/actions/post-upgrade-path-warning
         with:
           pr_number: ${{ github.event.issue.number }}
-          github_token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+          github_token: ${{ steps.app-token.outputs.token }}
 
       - name: Trigger e2e tests
         if: success() && steps.detect_source.outputs.is_automatic == 'true' && steps.parse_command.outputs.description_only != 'true' && steps.parse_command.outputs.devctl_args == '' && steps.check_upgrade_path.outputs.has_warning == 'false'
         uses: ./.github/actions/trigger-e2e-tests
         with:
           pr_number: ${{ github.event.issue.number }}
-          github_token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+          github_token: ${{ steps.app-token.outputs.token }}

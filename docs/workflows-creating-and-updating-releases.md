@@ -404,7 +404,8 @@ The bot posts structured comments showing what changed:
 
 2. **Post Update Command**
    - Comments `/update-release` on each PR
-   - Uses `TAYLORBOT_GITHUB_ACTION` token to trigger workflows
+   - Uses a `giantswarm-release` GitHub App token (not `GITHUB_TOKEN`) so the comment triggers other workflows;
+     `update-release.yaml` accepts the comment because its gate allows `giantswarm-release[bot]`
    - No specific components = bump all to latest
 
 3. **Trigger Update Workflow**
@@ -448,20 +449,28 @@ The initial announcement says the release is in the **Development** stage. Produ
 - Only if PR was successfully created
 - Requires `SLACK_BOT_TOKEN` and `SLACK_CHANNEL_ID` secrets
 
+**Comment commands posted by the automation.** Comments made with the App token have
+`author_association: NONE`, so the gates of the comment-triggered workflows that react to a
+command the automation itself posts also accept `giantswarm-release[bot]`: `update-release.yaml`
+(`/update-release`, posted by bump-open-releases and check-controller-readiness) and
+`summarize-ai.yaml` (`/summarize-ai`, posted by release-stages on freeze). `rebase`, `pin-version`
+and `release-stages` stay limited to org members. The `/run releases-test-suites` comments posted by
+`trigger-e2e-tests` are handled by Tekton, whose pr-comment-filter must allow the App's user ID (342014845).
+
 ---
 
 ## Environment Variables & Secrets
 
 ### Required Secrets
-- `TAYLORBOT_GITHUB_ACTION`: GitHub token with workflow permissions
+- `RELEASE_BOT_CLIENT_ID`, `RELEASE_BOT_PRIVATE_KEY`: Client ID and private key of the `giantswarm-release` GitHub App (org secrets). Each job mints its own short-lived token with `actions/create-github-app-token`, scoped to this repository (plus `giantswarm/roadmap` for readiness issues, and read-only `contents` org-wide for devctl/opsctl lookups). The App has no `actions`, `workflows`, `packages`, `projects` or `administration` permission
 - `ANTHROPIC_API_KEY`: For AI-powered breaking change analysis
 - `GRAFANA_API_KEY`: For checking K8s version availability
 - `SLACK_BOT_TOKEN`: For Slack notifications (optional)
 - `SLACK_CHANNEL_ID`: Target Slack channel (optional)
 
 ### Environment Variables
-- `OPSCTL_GITHUB_TOKEN`: Authentication for opsctl operations
-- `DEVCTL_GITHUB_TOKEN`: Authentication for devctl operations
+- `OPSCTL_GITHUB_TOKEN`: Authentication for opsctl operations (read-only App token, set on the steps that need it)
+- `DEVCTL_GITHUB_TOKEN`: Authentication for devctl operations (read-only App token, set on the steps that need it)
 - `DEVCTL_UNSAFE_FORCE_VERSION`: Forces specific devctl version
 
 ---
@@ -525,7 +534,7 @@ Updates README.md with new release version in the appropriate table.
 ### Release Creation Failed
 
 **DevCtl Errors**:
-- Check `DEVCTL_GITHUB_TOKEN` has correct permissions
+- Check the `giantswarm-release` App is installed on the component repository and the read token step succeeded
 - Verify base version exists in provider directory
 - Review devctl logs in workflow output
 
