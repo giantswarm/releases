@@ -1,7 +1,7 @@
 {
   "uid": "capi-release-kpis",
   "title": "CAPI Release KPIs",
-  "description": "Release process KPIs. Lead time for release is computed from merged release PRs by the Release KPIs workflow in giantswarm/releases, which embeds the data into this dashboard. Edit tools/release-kpis/dashboard.json in that repository instead of this dashboard, the workflow overwrites it. See https://github.com/giantswarm/roadmap/issues/4382",
+  "description": "Release process KPIs, computed from merged release PRs by the Release KPIs workflow in giantswarm/releases, which embeds the data into this dashboard. The time range applies to the merge date of the release PRs. Edit tools/release-kpis/dashboard.json in that repository instead of this dashboard, the workflow overwrites it. See https://github.com/giantswarm/roadmap/issues/4382 and https://github.com/giantswarm/roadmap/issues/4385",
   "tags": [
     "owner:team-tenet",
     "releases",
@@ -44,7 +44,72 @@
     }
   ],
   "templating": {
-    "list": []
+    "list": [
+      {
+        "name": "provider",
+        "label": "Provider",
+        "type": "custom",
+        "query": "CAPI,CAPA,CAPZ,CAPV,CAPVCD,CAPMOX,AKS,EKS",
+        "multi": true,
+        "includeAll": true,
+        "current": {
+          "text": [
+            "All"
+          ],
+          "value": [
+            "$__all"
+          ],
+          "selected": true
+        },
+        "options": [
+          {
+            "text": "All",
+            "value": "$__all",
+            "selected": true
+          },
+          {
+            "text": "CAPI",
+            "value": "CAPI",
+            "selected": false
+          },
+          {
+            "text": "CAPA",
+            "value": "CAPA",
+            "selected": false
+          },
+          {
+            "text": "CAPZ",
+            "value": "CAPZ",
+            "selected": false
+          },
+          {
+            "text": "CAPV",
+            "value": "CAPV",
+            "selected": false
+          },
+          {
+            "text": "CAPVCD",
+            "value": "CAPVCD",
+            "selected": false
+          },
+          {
+            "text": "CAPMOX",
+            "value": "CAPMOX",
+            "selected": false
+          },
+          {
+            "text": "AKS",
+            "value": "AKS",
+            "selected": false
+          },
+          {
+            "text": "EKS",
+            "value": "EKS",
+            "selected": false
+          }
+        ]
+      }
+    ]
   },
   "annotations": {
     "list": []
@@ -58,12 +123,12 @@
         "type": "yesoreyeram-infinity-datasource",
         "uid": "bdeczbud7da80f"
       },
-      "description": "All merged release PRs with their lead time. Planned merge date and delay are only set for scheduled releases. This panel holds the embedded data; the other panels read it from here.",
+      "description": "All merged release PRs in the selected time range and providers. 'all green' says whether every expected E2E suite had passed or been waived before the merge; 'waived' counts the suites waived with /waive-suite. Planned merge date and delay are only set for scheduled releases; 'planned by' says whether the date was written by the create-release workflow or estimated from the creation time of an older PR. This panel holds the embedded data; the other panels read it from here.",
       "gridPos": {
         "h": 14,
         "w": 24,
         "x": 0,
-        "y": 46
+        "y": 55
       },
       "targets": [
         {
@@ -204,6 +269,26 @@
               "type": "timestamp"
             },
             {
+              "selector": "friction_start_at",
+              "text": "friction_start_at",
+              "type": "timestamp"
+            },
+            {
+              "selector": "active_at",
+              "text": "active_at",
+              "type": "timestamp"
+            },
+            {
+              "selector": "merged_all_green",
+              "text": "merged_all_green",
+              "type": "number"
+            },
+            {
+              "selector": "runs_to_green",
+              "text": "runs_to_green",
+              "type": "number"
+            },
+            {
               "selector": "all_green_at",
               "text": "all_green_at",
               "type": "timestamp"
@@ -224,6 +309,42 @@
         }
       ],
       "transformations": [
+        {
+          "id": "filterByValue",
+          "options": {
+            "type": "include",
+            "match": "all",
+            "filters": [
+              {
+                "fieldName": "merged_at",
+                "config": {
+                  "id": "greaterOrEqual",
+                  "options": {
+                    "value": "${__from}"
+                  }
+                }
+              },
+              {
+                "fieldName": "merged_at",
+                "config": {
+                  "id": "lowerOrEqual",
+                  "options": {
+                    "value": "${__to}"
+                  }
+                }
+              },
+              {
+                "fieldName": "provider",
+                "config": {
+                  "id": "regex",
+                  "options": {
+                    "value": "^${provider:regex}$"
+                  }
+                }
+              }
+            ]
+          }
+        },
         {
           "id": "sortBy",
           "options": {
@@ -252,9 +373,13 @@
                 "active_days",
                 "freeze_days",
                 "test_runs",
+                "runs_to_green",
                 "time_to_green_days",
                 "test_friction_days",
+                "suites_waived",
+                "merged_all_green",
                 "automated",
+                "planned_source",
                 "planned_merge_date",
                 "delay_days"
               ]
@@ -277,26 +402,34 @@
               "active_days": 9,
               "freeze_days": 10,
               "test_runs": 11,
-              "time_to_green_days": 12,
-              "test_friction_days": 13,
-              "automated": 14,
-              "planned_merge_date": 15,
-              "delay_days": 16
+              "runs_to_green": 12,
+              "time_to_green_days": 13,
+              "test_friction_days": 14,
+              "suites_waived": 15,
+              "merged_all_green": 16,
+              "automated": 17,
+              "planned_source": 18,
+              "planned_merge_date": 19,
+              "delay_days": 20
             },
             "renameByName": {
               "release_type": "type",
               "created_at": "opened",
               "merged_at": "merged",
-              "lead_time_days": "lead time (days)",
-              "development_days": "development (days)",
-              "active_days": "active (days)",
-              "freeze_days": "freeze (days)",
-              "automated": "scheduled",
-              "planned_merge_date": "planned merge",
-              "delay_days": "delay (days)",
+              "lead_time_days": "lead time (d)",
+              "development_days": "dev (d)",
+              "active_days": "active (d)",
+              "freeze_days": "freeze (d)",
               "test_runs": "test runs",
-              "time_to_green_days": "time to green (days)",
-              "test_friction_days": "test friction (days)"
+              "time_to_green_days": "to green (d)",
+              "test_friction_days": "friction (d)",
+              "automated": "scheduled",
+              "planned_source": "planned by",
+              "planned_merge_date": "planned merge",
+              "delay_days": "delay (d)",
+              "runs_to_green": "runs to green",
+              "suites_waived": "waived",
+              "merged_all_green": "all green"
             }
           }
         }
@@ -346,7 +479,7 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "delay (days)"
+              "options": "delay (d)"
             },
             "properties": [
               {
@@ -382,6 +515,100 @@
                 }
               }
             ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "test runs"
+            },
+            "properties": [
+              {
+                "id": "decimals",
+                "value": 0
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "opened"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "time: YYYY-MM-DD HH:mm"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "merged"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "time: YYYY-MM-DD HH:mm"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "runs to green"
+            },
+            "properties": [
+              {
+                "id": "decimals",
+                "value": 0
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "waived"
+            },
+            "properties": [
+              {
+                "id": "decimals",
+                "value": 0
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "all green"
+            },
+            "properties": [
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-text"
+                }
+              },
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "type": "value",
+                    "options": {
+                      "0": {
+                        "text": "no",
+                        "color": "red",
+                        "index": 0
+                      },
+                      "1": {
+                        "text": "yes",
+                        "color": "green",
+                        "index": 1
+                      }
+                    }
+                  }
+                ]
+              }
+            ]
           }
         ]
       },
@@ -397,7 +624,7 @@
       "id": 1,
       "type": "stat",
       "title": "Median lead time: major",
-      "description": "Median open \u2192 merge time of merged major release PRs, in days.",
+      "description": "Median open \u2192 merge time of merged major release PRs, in days. 'releases' is the number of releases the value is computed from.",
       "datasource": {
         "type": "datasource",
         "uid": "-- Dashboard --"
@@ -420,6 +647,42 @@
         }
       ],
       "transformations": [
+        {
+          "id": "filterByValue",
+          "options": {
+            "type": "include",
+            "match": "all",
+            "filters": [
+              {
+                "fieldName": "merged_at",
+                "config": {
+                  "id": "greaterOrEqual",
+                  "options": {
+                    "value": "${__from}"
+                  }
+                }
+              },
+              {
+                "fieldName": "merged_at",
+                "config": {
+                  "id": "lowerOrEqual",
+                  "options": {
+                    "value": "${__to}"
+                  }
+                }
+              },
+              {
+                "fieldName": "provider",
+                "config": {
+                  "id": "regex",
+                  "options": {
+                    "value": "^${provider:regex}$"
+                  }
+                }
+              }
+            ]
+          }
+        },
         {
           "id": "filterByValue",
           "options": {
@@ -453,7 +716,8 @@
           "options": {
             "mode": "reduceFields",
             "reducers": [
-              "median"
+              "median",
+              "count"
             ],
             "includeTimeField": false
           }
@@ -468,7 +732,47 @@
             "fixedColor": "blue"
           }
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/[Mm]edian|[Mm]ean/"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "median"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/[Cc]ount/"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "releases"
+              },
+              {
+                "id": "unit",
+                "value": "none"
+              },
+              {
+                "id": "decimals",
+                "value": 0
+              },
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "#8e8e8e"
+                }
+              }
+            ]
+          }
+        ]
       },
       "options": {
         "reduceOptions": {
@@ -480,15 +784,16 @@
         },
         "colorMode": "value",
         "graphMode": "none",
-        "textMode": "value",
-        "justifyMode": "center"
+        "textMode": "value_and_name",
+        "justifyMode": "center",
+        "orientation": "horizontal"
       }
     },
     {
       "id": 2,
       "type": "stat",
       "title": "Median lead time: minor",
-      "description": "Median open \u2192 merge time of merged minor release PRs, in days.",
+      "description": "Median open \u2192 merge time of merged minor release PRs, in days. 'releases' is the number of releases the value is computed from.",
       "datasource": {
         "type": "datasource",
         "uid": "-- Dashboard --"
@@ -511,6 +816,42 @@
         }
       ],
       "transformations": [
+        {
+          "id": "filterByValue",
+          "options": {
+            "type": "include",
+            "match": "all",
+            "filters": [
+              {
+                "fieldName": "merged_at",
+                "config": {
+                  "id": "greaterOrEqual",
+                  "options": {
+                    "value": "${__from}"
+                  }
+                }
+              },
+              {
+                "fieldName": "merged_at",
+                "config": {
+                  "id": "lowerOrEqual",
+                  "options": {
+                    "value": "${__to}"
+                  }
+                }
+              },
+              {
+                "fieldName": "provider",
+                "config": {
+                  "id": "regex",
+                  "options": {
+                    "value": "^${provider:regex}$"
+                  }
+                }
+              }
+            ]
+          }
+        },
         {
           "id": "filterByValue",
           "options": {
@@ -544,7 +885,8 @@
           "options": {
             "mode": "reduceFields",
             "reducers": [
-              "median"
+              "median",
+              "count"
             ],
             "includeTimeField": false
           }
@@ -559,7 +901,47 @@
             "fixedColor": "blue"
           }
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/[Mm]edian|[Mm]ean/"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "median"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/[Cc]ount/"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "releases"
+              },
+              {
+                "id": "unit",
+                "value": "none"
+              },
+              {
+                "id": "decimals",
+                "value": 0
+              },
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "#8e8e8e"
+                }
+              }
+            ]
+          }
+        ]
       },
       "options": {
         "reduceOptions": {
@@ -571,15 +953,16 @@
         },
         "colorMode": "value",
         "graphMode": "none",
-        "textMode": "value",
-        "justifyMode": "center"
+        "textMode": "value_and_name",
+        "justifyMode": "center",
+        "orientation": "horizontal"
       }
     },
     {
       "id": 3,
       "type": "stat",
       "title": "Median lead time: patch",
-      "description": "Median open \u2192 merge time of merged patch release PRs, in days.",
+      "description": "Median open \u2192 merge time of merged patch release PRs, in days. 'releases' is the number of releases the value is computed from.",
       "datasource": {
         "type": "datasource",
         "uid": "-- Dashboard --"
@@ -602,6 +985,42 @@
         }
       ],
       "transformations": [
+        {
+          "id": "filterByValue",
+          "options": {
+            "type": "include",
+            "match": "all",
+            "filters": [
+              {
+                "fieldName": "merged_at",
+                "config": {
+                  "id": "greaterOrEqual",
+                  "options": {
+                    "value": "${__from}"
+                  }
+                }
+              },
+              {
+                "fieldName": "merged_at",
+                "config": {
+                  "id": "lowerOrEqual",
+                  "options": {
+                    "value": "${__to}"
+                  }
+                }
+              },
+              {
+                "fieldName": "provider",
+                "config": {
+                  "id": "regex",
+                  "options": {
+                    "value": "^${provider:regex}$"
+                  }
+                }
+              }
+            ]
+          }
+        },
         {
           "id": "filterByValue",
           "options": {
@@ -635,7 +1054,8 @@
           "options": {
             "mode": "reduceFields",
             "reducers": [
-              "median"
+              "median",
+              "count"
             ],
             "includeTimeField": false
           }
@@ -650,7 +1070,47 @@
             "fixedColor": "blue"
           }
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/[Mm]edian|[Mm]ean/"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "median"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/[Cc]ount/"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "releases"
+              },
+              {
+                "id": "unit",
+                "value": "none"
+              },
+              {
+                "id": "decimals",
+                "value": 0
+              },
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "#8e8e8e"
+                }
+              }
+            ]
+          }
+        ]
       },
       "options": {
         "reduceOptions": {
@@ -662,15 +1122,16 @@
         },
         "colorMode": "value",
         "graphMode": "none",
-        "textMode": "value",
-        "justifyMode": "center"
+        "textMode": "value_and_name",
+        "justifyMode": "center",
+        "orientation": "horizontal"
       }
     },
     {
       "id": 4,
       "type": "stat",
       "title": "Median delay vs. planned date",
-      "description": "Scheduled releases only (created by automation on the 1st). Negative means merged before the planned date.",
+      "description": "Scheduled releases whose planned merge date was written into the PR by the create-release workflow (since October 2026). Negative means merged before the planned date. 'releases' is the number of releases the value is computed from.",
       "datasource": {
         "type": "datasource",
         "uid": "-- Dashboard --"
@@ -700,11 +1161,47 @@
             "match": "all",
             "filters": [
               {
-                "fieldName": "automated",
+                "fieldName": "merged_at",
+                "config": {
+                  "id": "greaterOrEqual",
+                  "options": {
+                    "value": "${__from}"
+                  }
+                }
+              },
+              {
+                "fieldName": "merged_at",
+                "config": {
+                  "id": "lowerOrEqual",
+                  "options": {
+                    "value": "${__to}"
+                  }
+                }
+              },
+              {
+                "fieldName": "provider",
+                "config": {
+                  "id": "regex",
+                  "options": {
+                    "value": "^${provider:regex}$"
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "id": "filterByValue",
+          "options": {
+            "type": "include",
+            "match": "all",
+            "filters": [
+              {
+                "fieldName": "planned_source",
                 "config": {
                   "id": "equal",
                   "options": {
-                    "value": true
+                    "value": "workflow"
                   }
                 }
               }
@@ -726,7 +1223,8 @@
           "options": {
             "mode": "reduceFields",
             "reducers": [
-              "median"
+              "median",
+              "count"
             ],
             "includeTimeField": false
           }
@@ -741,7 +1239,47 @@
             "fixedColor": "blue"
           }
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/[Mm]edian|[Mm]ean/"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "median"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/[Cc]ount/"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "releases"
+              },
+              {
+                "id": "unit",
+                "value": "none"
+              },
+              {
+                "id": "decimals",
+                "value": 0
+              },
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "#8e8e8e"
+                }
+              }
+            ]
+          }
+        ]
       },
       "options": {
         "reduceOptions": {
@@ -753,15 +1291,16 @@
         },
         "colorMode": "value",
         "graphMode": "none",
-        "textMode": "value",
-        "justifyMode": "center"
+        "textMode": "value_and_name",
+        "justifyMode": "center",
+        "orientation": "horizontal"
       }
     },
     {
       "id": 8,
       "type": "stat",
-      "title": "Scheduled releases merged on time",
-      "description": "Share of scheduled releases (created by automation on the 1st) merged by their planned date.",
+      "title": "Merged on time",
+      "description": "Share of scheduled releases merged by the planned merge date the create-release workflow wrote into the PR (since October 2026). Older scheduled releases only have an estimated date and are not counted. 'releases' is the number of releases the value is computed from.",
       "datasource": {
         "type": "datasource",
         "uid": "-- Dashboard --"
@@ -791,11 +1330,47 @@
             "match": "all",
             "filters": [
               {
-                "fieldName": "automated",
+                "fieldName": "merged_at",
+                "config": {
+                  "id": "greaterOrEqual",
+                  "options": {
+                    "value": "${__from}"
+                  }
+                }
+              },
+              {
+                "fieldName": "merged_at",
+                "config": {
+                  "id": "lowerOrEqual",
+                  "options": {
+                    "value": "${__to}"
+                  }
+                }
+              },
+              {
+                "fieldName": "provider",
+                "config": {
+                  "id": "regex",
+                  "options": {
+                    "value": "^${provider:regex}$"
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "id": "filterByValue",
+          "options": {
+            "type": "include",
+            "match": "all",
+            "filters": [
+              {
+                "fieldName": "planned_source",
                 "config": {
                   "id": "equal",
                   "options": {
-                    "value": true
+                    "value": "workflow"
                   }
                 }
               }
@@ -817,7 +1392,8 @@
           "options": {
             "mode": "reduceFields",
             "reducers": [
-              "mean"
+              "mean",
+              "count"
             ],
             "includeTimeField": false
           }
@@ -850,7 +1426,47 @@
             ]
           }
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/[Mm]edian|[Mm]ean/"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "on time"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/[Cc]ount/"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "releases"
+              },
+              {
+                "id": "unit",
+                "value": "none"
+              },
+              {
+                "id": "decimals",
+                "value": 0
+              },
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "#8e8e8e"
+                }
+              }
+            ]
+          }
+        ]
       },
       "options": {
         "reduceOptions": {
@@ -862,15 +1478,16 @@
         },
         "colorMode": "value",
         "graphMode": "none",
-        "textMode": "value",
-        "justifyMode": "center"
+        "textMode": "value_and_name",
+        "justifyMode": "center",
+        "orientation": "horizontal"
       }
     },
     {
       "id": 5,
       "type": "timeseries",
       "title": "Lead time per release",
-      "description": "Open \u2192 merge time of every merged release PR, plotted at its merge date.",
+      "description": "Open \u2192 merge time of every merged release PR, plotted at its merge date. The axis is capped at 60 days, hover a clipped bar for its value.",
       "datasource": {
         "type": "datasource",
         "uid": "-- Dashboard --"
@@ -893,6 +1510,42 @@
         }
       ],
       "transformations": [
+        {
+          "id": "filterByValue",
+          "options": {
+            "type": "include",
+            "match": "all",
+            "filters": [
+              {
+                "fieldName": "merged_at",
+                "config": {
+                  "id": "greaterOrEqual",
+                  "options": {
+                    "value": "${__from}"
+                  }
+                }
+              },
+              {
+                "fieldName": "merged_at",
+                "config": {
+                  "id": "lowerOrEqual",
+                  "options": {
+                    "value": "${__to}"
+                  }
+                }
+              },
+              {
+                "fieldName": "provider",
+                "config": {
+                  "id": "regex",
+                  "options": {
+                    "value": "^${provider:regex}$"
+                  }
+                }
+              }
+            ]
+          }
+        },
         {
           "id": "filterFieldsByName",
           "options": {
@@ -921,7 +1574,6 @@
       "fieldConfig": {
         "defaults": {
           "unit": "suffix: days",
-          "decimals": 1,
           "custom": {
             "drawStyle": "bars",
             "lineWidth": 1,
@@ -930,9 +1582,48 @@
             "pointSize": 6,
             "barAlignment": 0,
             "spanNulls": false
-          }
+          },
+          "max": 60,
+          "min": 0
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "major lead_time_days"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "major"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "minor lead_time_days"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "minor"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "patch lead_time_days"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "patch"
+              }
+            ]
+          }
+        ]
       },
       "options": {
         "legend": {
@@ -950,7 +1641,7 @@
       "id": 6,
       "type": "timeseries",
       "title": "Delay from planned merge date",
-      "description": "Only releases with a planned merge date (scheduled releases created on the 1st). Negative means early.",
+      "description": "Scheduled releases only. Negative means early. Dates written by the create-release workflow are shown in green; for older scheduled PRs the date is an estimate (the next 1st of the month after the PR was created) and is shown in grey for context only.",
       "datasource": {
         "type": "datasource",
         "uid": "-- Dashboard --"
@@ -980,6 +1671,42 @@
             "match": "all",
             "filters": [
               {
+                "fieldName": "merged_at",
+                "config": {
+                  "id": "greaterOrEqual",
+                  "options": {
+                    "value": "${__from}"
+                  }
+                }
+              },
+              {
+                "fieldName": "merged_at",
+                "config": {
+                  "id": "lowerOrEqual",
+                  "options": {
+                    "value": "${__to}"
+                  }
+                }
+              },
+              {
+                "fieldName": "provider",
+                "config": {
+                  "id": "regex",
+                  "options": {
+                    "value": "^${provider:regex}$"
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "id": "filterByValue",
+          "options": {
+            "type": "include",
+            "match": "all",
+            "filters": [
+              {
                 "fieldName": "automated",
                 "config": {
                   "id": "equal",
@@ -998,7 +1725,7 @@
               "names": [
                 "merged_at",
                 "delay_days",
-                "release_type"
+                "planned_source"
               ]
             }
           }
@@ -1007,7 +1734,7 @@
           "id": "partitionByValues",
           "options": {
             "fields": [
-              "release_type"
+              "planned_source"
             ],
             "keepFields": false,
             "naming": {
@@ -1019,7 +1746,6 @@
       "fieldConfig": {
         "defaults": {
           "unit": "suffix: days",
-          "decimals": 1,
           "custom": {
             "drawStyle": "points",
             "lineWidth": 1,
@@ -1030,7 +1756,46 @@
             "spanNulls": false
           }
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "workflow delay_days"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "planned by workflow"
+              },
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "green"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "estimated delay_days"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "estimated (older PRs)"
+              },
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "#8e8e8e"
+                }
+              }
+            ]
+          }
+        ]
       },
       "options": {
         "legend": {
@@ -1048,7 +1813,7 @@
       "id": 9,
       "type": "barchart",
       "title": "Median lead time per quarter",
-      "description": "Median open \u2192 merge time of the releases merged in each quarter, per release type. The trend to watch.",
+      "description": "Median open \u2192 merge time of the releases merged in each quarter, per release type. The trend to watch. The current quarter is marked '(to date)' and still incomplete.",
       "datasource": {
         "type": "datasource",
         "uid": "-- Dashboard --"
@@ -1071,6 +1836,42 @@
         }
       ],
       "transformations": [
+        {
+          "id": "filterByValue",
+          "options": {
+            "type": "include",
+            "match": "all",
+            "filters": [
+              {
+                "fieldName": "merged_at",
+                "config": {
+                  "id": "greaterOrEqual",
+                  "options": {
+                    "value": "${__from}"
+                  }
+                }
+              },
+              {
+                "fieldName": "merged_at",
+                "config": {
+                  "id": "lowerOrEqual",
+                  "options": {
+                    "value": "${__to}"
+                  }
+                }
+              },
+              {
+                "fieldName": "provider",
+                "config": {
+                  "id": "regex",
+                  "options": {
+                    "value": "^${provider:regex}$"
+                  }
+                }
+              }
+            ]
+          }
+        },
         {
           "id": "groupBy",
           "options": {
@@ -1123,7 +1924,6 @@
       "fieldConfig": {
         "defaults": {
           "unit": "suffix: days",
-          "decimals": 1,
           "custom": {
             "fillOpacity": 80,
             "lineWidth": 1
@@ -1154,7 +1954,7 @@
       "id": 10,
       "type": "barchart",
       "title": "Releases per quarter",
-      "description": "Number of release PRs merged in each quarter, per release type.",
+      "description": "Number of release PRs merged in each quarter, per release type. Hover a bar for the total. The current quarter is marked '(to date)' and still incomplete.",
       "datasource": {
         "type": "datasource",
         "uid": "-- Dashboard --"
@@ -1177,6 +1977,42 @@
         }
       ],
       "transformations": [
+        {
+          "id": "filterByValue",
+          "options": {
+            "type": "include",
+            "match": "all",
+            "filters": [
+              {
+                "fieldName": "merged_at",
+                "config": {
+                  "id": "greaterOrEqual",
+                  "options": {
+                    "value": "${__from}"
+                  }
+                }
+              },
+              {
+                "fieldName": "merged_at",
+                "config": {
+                  "id": "lowerOrEqual",
+                  "options": {
+                    "value": "${__to}"
+                  }
+                }
+              },
+              {
+                "fieldName": "provider",
+                "config": {
+                  "id": "regex",
+                  "options": {
+                    "value": "^${provider:regex}$"
+                  }
+                }
+              }
+            ]
+          }
+        },
         {
           "id": "groupBy",
           "options": {
@@ -1224,6 +2060,22 @@
               }
             ]
           }
+        },
+        {
+          "id": "calculateField",
+          "options": {
+            "mode": "reduceRow",
+            "reduce": {
+              "reducer": "sum",
+              "include": [
+                "major",
+                "minor",
+                "patch"
+              ]
+            },
+            "alias": "total",
+            "replaceFields": false
+          }
         }
       ],
       "fieldConfig": {
@@ -1235,12 +2087,29 @@
             "lineWidth": 1
           }
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "total"
+            },
+            "properties": [
+              {
+                "id": "custom.hideFrom",
+                "value": {
+                  "viz": true,
+                  "legend": true,
+                  "tooltip": false
+                }
+              }
+            ]
+          }
+        ]
       },
       "options": {
         "orientation": "auto",
         "xTickLabelRotation": 0,
-        "showValue": "auto",
+        "showValue": "never",
         "stacking": "normal",
         "groupWidth": 0.7,
         "barWidth": 0.9,
@@ -1261,21 +2130,21 @@
       "type": "text",
       "title": "",
       "gridPos": {
-        "h": 2,
+        "h": 4,
         "w": 24,
         "x": 0,
-        "y": 60
+        "y": 69
       },
       "options": {
         "mode": "markdown",
-        "content": "Data: all merged release PRs since CAPI v25. Last updated: unknown. Use *Inspect \u2192 Data* on the table to download a CSV."
+        "content": "Data: all merged release PRs since CAPI v25, filtered by the time range (merge date) and the provider variable. Last updated: unknown. Use *Inspect \u2192 Data* on the table to download a CSV.\n\n**Lead time**: PR opened \u2192 merged. **Planned merge date**: written into scheduled release PRs by the create-release workflow; older scheduled PRs only have an estimate (next 1st of the month), shown in the delay chart but not counted in the on-time rate. **Stages**: time between the stage/development, stage/active and stage/freeze labels. **Time to green**: PR opened \u2192 first time every expected E2E suite had passed or been waived. **Test friction**: first test run after the release entered the active stage \u2192 all green, the part of time to green spent on getting the tests green rather than on assembling the release. **Merged with all suites green**: share of releases whose expected suites had all passed or been waived before the merge; suites that were not yet required when a PR was opened only count if they ran. **Runs until green**: test runs up to the all-green state. Per-release charts are capped at 60 days, hover a clipped bar for its value."
       }
     },
     {
       "id": 12,
       "type": "barchart",
       "title": "Time per stage",
-      "description": "Days each release spent in the development, active and freeze stage, from the stage/* labels. Only releases that went through the stages (since February 2026).",
+      "description": "Days each release spent in the development, active and freeze stage, from the stage/* labels. Only releases that went through the stages (since February 2026). The axis is capped at 60 days, hover a clipped bar for its value.",
       "datasource": {
         "type": "datasource",
         "uid": "-- Dashboard --"
@@ -1298,6 +2167,42 @@
         }
       ],
       "transformations": [
+        {
+          "id": "filterByValue",
+          "options": {
+            "type": "include",
+            "match": "all",
+            "filters": [
+              {
+                "fieldName": "merged_at",
+                "config": {
+                  "id": "greaterOrEqual",
+                  "options": {
+                    "value": "${__from}"
+                  }
+                }
+              },
+              {
+                "fieldName": "merged_at",
+                "config": {
+                  "id": "lowerOrEqual",
+                  "options": {
+                    "value": "${__to}"
+                  }
+                }
+              },
+              {
+                "fieldName": "provider",
+                "config": {
+                  "id": "regex",
+                  "options": {
+                    "value": "^${provider:regex}$"
+                  }
+                }
+              }
+            ]
+          }
+        },
         {
           "id": "filterByValue",
           "options": {
@@ -1352,11 +2257,12 @@
       "fieldConfig": {
         "defaults": {
           "unit": "suffix: days",
-          "decimals": 1,
           "custom": {
             "fillOpacity": 80,
             "lineWidth": 1
-          }
+          },
+          "max": 60,
+          "min": 0
         },
         "overrides": []
       },
@@ -1383,14 +2289,14 @@
       "id": 13,
       "type": "stat",
       "title": "Median time to green: major",
-      "description": "PR opened \u2192 first time every expected E2E suite had passed, major releases with per-suite results.",
+      "description": "PR opened \u2192 first time every expected E2E suite had passed, major releases with per-suite results. 'releases' is the number of releases the value is computed from.",
       "datasource": {
         "type": "datasource",
         "uid": "-- Dashboard --"
       },
       "gridPos": {
         "h": 5,
-        "w": 6,
+        "w": 5,
         "x": 0,
         "y": 5
       },
@@ -1406,6 +2312,42 @@
         }
       ],
       "transformations": [
+        {
+          "id": "filterByValue",
+          "options": {
+            "type": "include",
+            "match": "all",
+            "filters": [
+              {
+                "fieldName": "merged_at",
+                "config": {
+                  "id": "greaterOrEqual",
+                  "options": {
+                    "value": "${__from}"
+                  }
+                }
+              },
+              {
+                "fieldName": "merged_at",
+                "config": {
+                  "id": "lowerOrEqual",
+                  "options": {
+                    "value": "${__to}"
+                  }
+                }
+              },
+              {
+                "fieldName": "provider",
+                "config": {
+                  "id": "regex",
+                  "options": {
+                    "value": "^${provider:regex}$"
+                  }
+                }
+              }
+            ]
+          }
+        },
         {
           "id": "filterByValue",
           "options": {
@@ -1455,7 +2397,8 @@
           "options": {
             "mode": "reduceFields",
             "reducers": [
-              "median"
+              "median",
+              "count"
             ],
             "includeTimeField": false
           }
@@ -1470,7 +2413,47 @@
             "fixedColor": "purple"
           }
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/[Mm]edian|[Mm]ean/"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "median"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/[Cc]ount/"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "releases"
+              },
+              {
+                "id": "unit",
+                "value": "none"
+              },
+              {
+                "id": "decimals",
+                "value": 0
+              },
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "#8e8e8e"
+                }
+              }
+            ]
+          }
+        ]
       },
       "options": {
         "reduceOptions": {
@@ -1482,23 +2465,24 @@
         },
         "colorMode": "value",
         "graphMode": "none",
-        "textMode": "value",
-        "justifyMode": "center"
+        "textMode": "value_and_name",
+        "justifyMode": "center",
+        "orientation": "horizontal"
       }
     },
     {
       "id": 14,
       "type": "stat",
       "title": "Median time to green: minor",
-      "description": "PR opened \u2192 first time every expected E2E suite had passed, minor releases with per-suite results.",
+      "description": "PR opened \u2192 first time every expected E2E suite had passed, minor releases with per-suite results. 'releases' is the number of releases the value is computed from.",
       "datasource": {
         "type": "datasource",
         "uid": "-- Dashboard --"
       },
       "gridPos": {
         "h": 5,
-        "w": 6,
-        "x": 6,
+        "w": 5,
+        "x": 5,
         "y": 5
       },
       "targets": [
@@ -1513,6 +2497,42 @@
         }
       ],
       "transformations": [
+        {
+          "id": "filterByValue",
+          "options": {
+            "type": "include",
+            "match": "all",
+            "filters": [
+              {
+                "fieldName": "merged_at",
+                "config": {
+                  "id": "greaterOrEqual",
+                  "options": {
+                    "value": "${__from}"
+                  }
+                }
+              },
+              {
+                "fieldName": "merged_at",
+                "config": {
+                  "id": "lowerOrEqual",
+                  "options": {
+                    "value": "${__to}"
+                  }
+                }
+              },
+              {
+                "fieldName": "provider",
+                "config": {
+                  "id": "regex",
+                  "options": {
+                    "value": "^${provider:regex}$"
+                  }
+                }
+              }
+            ]
+          }
+        },
         {
           "id": "filterByValue",
           "options": {
@@ -1562,7 +2582,8 @@
           "options": {
             "mode": "reduceFields",
             "reducers": [
-              "median"
+              "median",
+              "count"
             ],
             "includeTimeField": false
           }
@@ -1577,7 +2598,47 @@
             "fixedColor": "purple"
           }
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/[Mm]edian|[Mm]ean/"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "median"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/[Cc]ount/"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "releases"
+              },
+              {
+                "id": "unit",
+                "value": "none"
+              },
+              {
+                "id": "decimals",
+                "value": 0
+              },
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "#8e8e8e"
+                }
+              }
+            ]
+          }
+        ]
       },
       "options": {
         "reduceOptions": {
@@ -1589,23 +2650,24 @@
         },
         "colorMode": "value",
         "graphMode": "none",
-        "textMode": "value",
-        "justifyMode": "center"
+        "textMode": "value_and_name",
+        "justifyMode": "center",
+        "orientation": "horizontal"
       }
     },
     {
       "id": 15,
       "type": "stat",
       "title": "Median test friction",
-      "description": "First /run releases-test-suites \u2192 first time every expected suite had passed. Initial test friction, all release types.",
+      "description": "Test friction: first test run after the release entered the active stage \u2192 first time every expected suite had passed or been waived. Releases without stage labels use their first manual run. 'releases' is the number of releases the value is computed from.",
       "datasource": {
         "type": "datasource",
         "uid": "-- Dashboard --"
       },
       "gridPos": {
         "h": 5,
-        "w": 6,
-        "x": 12,
+        "w": 5,
+        "x": 10,
         "y": 5
       },
       "targets": [
@@ -1620,6 +2682,42 @@
         }
       ],
       "transformations": [
+        {
+          "id": "filterByValue",
+          "options": {
+            "type": "include",
+            "match": "all",
+            "filters": [
+              {
+                "fieldName": "merged_at",
+                "config": {
+                  "id": "greaterOrEqual",
+                  "options": {
+                    "value": "${__from}"
+                  }
+                }
+              },
+              {
+                "fieldName": "merged_at",
+                "config": {
+                  "id": "lowerOrEqual",
+                  "options": {
+                    "value": "${__to}"
+                  }
+                }
+              },
+              {
+                "fieldName": "provider",
+                "config": {
+                  "id": "regex",
+                  "options": {
+                    "value": "^${provider:regex}$"
+                  }
+                }
+              }
+            ]
+          }
+        },
         {
           "id": "filterByValue",
           "options": {
@@ -1651,7 +2749,8 @@
           "options": {
             "mode": "reduceFields",
             "reducers": [
-              "median"
+              "median",
+              "count"
             ],
             "includeTimeField": false
           }
@@ -1666,7 +2765,47 @@
             "fixedColor": "purple"
           }
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/[Mm]edian|[Mm]ean/"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "median"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/[Cc]ount/"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "releases"
+              },
+              {
+                "id": "unit",
+                "value": "none"
+              },
+              {
+                "id": "decimals",
+                "value": 0
+              },
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "#8e8e8e"
+                }
+              }
+            ]
+          }
+        ]
       },
       "options": {
         "reduceOptions": {
@@ -1678,23 +2817,24 @@
         },
         "colorMode": "value",
         "graphMode": "none",
-        "textMode": "value",
-        "justifyMode": "center"
+        "textMode": "value_and_name",
+        "justifyMode": "center",
+        "orientation": "horizontal"
       }
     },
     {
       "id": 16,
       "type": "stat",
-      "title": "Median test runs per release",
-      "description": "Number of /run releases-test-suites comments per release PR, including the automated weekly runs.",
+      "title": "Median runs until green",
+      "description": "Number of /run releases-test-suites comments up to the first all-green state, including the automated runs. 'releases' is the number of releases the value is computed from.",
       "datasource": {
         "type": "datasource",
         "uid": "-- Dashboard --"
       },
       "gridPos": {
         "h": 5,
-        "w": 6,
-        "x": 18,
+        "w": 5,
+        "x": 15,
         "y": 5
       },
       "targets": [
@@ -1716,6 +2856,42 @@
             "match": "all",
             "filters": [
               {
+                "fieldName": "merged_at",
+                "config": {
+                  "id": "greaterOrEqual",
+                  "options": {
+                    "value": "${__from}"
+                  }
+                }
+              },
+              {
+                "fieldName": "merged_at",
+                "config": {
+                  "id": "lowerOrEqual",
+                  "options": {
+                    "value": "${__to}"
+                  }
+                }
+              },
+              {
+                "fieldName": "provider",
+                "config": {
+                  "id": "regex",
+                  "options": {
+                    "value": "^${provider:regex}$"
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "id": "filterByValue",
+          "options": {
+            "type": "include",
+            "match": "all",
+            "filters": [
+              {
                 "fieldName": "all_green_at",
                 "config": {
                   "id": "isNotNull",
@@ -1730,7 +2906,7 @@
           "options": {
             "include": {
               "names": [
-                "test_runs"
+                "runs_to_green"
               ]
             }
           }
@@ -1740,7 +2916,8 @@
           "options": {
             "mode": "reduceFields",
             "reducers": [
-              "median"
+              "median",
+              "count"
             ],
             "includeTimeField": false
           }
@@ -1755,7 +2932,47 @@
             "fixedColor": "purple"
           }
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/[Mm]edian|[Mm]ean/"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "median"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/[Cc]ount/"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "releases"
+              },
+              {
+                "id": "unit",
+                "value": "none"
+              },
+              {
+                "id": "decimals",
+                "value": 0
+              },
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "#8e8e8e"
+                }
+              }
+            ]
+          }
+        ]
       },
       "options": {
         "reduceOptions": {
@@ -1767,15 +2984,16 @@
         },
         "colorMode": "value",
         "graphMode": "none",
-        "textMode": "value",
-        "justifyMode": "center"
+        "textMode": "value_and_name",
+        "justifyMode": "center",
+        "orientation": "horizontal"
       }
     },
     {
       "id": 17,
       "type": "barchart",
       "title": "Time to green per release",
-      "description": "Days from PR opened to the first all-green test state, and the test friction part of it (from the first /run). Only releases with per-suite results (since March 2026).",
+      "description": "Days from PR opened to the first all-green test state (time to green), and the part of it after the first test run in the active stage (test friction). Only releases with per-suite results (since March 2026). The axis is capped at 60 days, hover a clipped bar for its value.",
       "datasource": {
         "type": "datasource",
         "uid": "-- Dashboard --"
@@ -1798,6 +3016,42 @@
         }
       ],
       "transformations": [
+        {
+          "id": "filterByValue",
+          "options": {
+            "type": "include",
+            "match": "all",
+            "filters": [
+              {
+                "fieldName": "merged_at",
+                "config": {
+                  "id": "greaterOrEqual",
+                  "options": {
+                    "value": "${__from}"
+                  }
+                }
+              },
+              {
+                "fieldName": "merged_at",
+                "config": {
+                  "id": "lowerOrEqual",
+                  "options": {
+                    "value": "${__to}"
+                  }
+                }
+              },
+              {
+                "fieldName": "provider",
+                "config": {
+                  "id": "regex",
+                  "options": {
+                    "value": "^${provider:regex}$"
+                  }
+                }
+              }
+            ]
+          }
+        },
         {
           "id": "filterByValue",
           "options": {
@@ -1850,11 +3104,12 @@
       "fieldConfig": {
         "defaults": {
           "unit": "suffix: days",
-          "decimals": 1,
           "custom": {
             "fillOpacity": 80,
             "lineWidth": 1
-          }
+          },
+          "max": 60,
+          "min": 0
         },
         "overrides": []
       },
@@ -1881,7 +3136,7 @@
       "id": 18,
       "type": "barchart",
       "title": "Test runs per release",
-      "description": "/run releases-test-suites comments per release PR, split into manual and automated (weekly bump, stage change) runs.",
+      "description": "/run releases-test-suites comments per release PR, split into manual and automated (weekly bump, stage change) runs. The axis is capped at 100 runs, hover a clipped bar for its value.",
       "datasource": {
         "type": "datasource",
         "uid": "-- Dashboard --"
@@ -1904,6 +3159,42 @@
         }
       ],
       "transformations": [
+        {
+          "id": "filterByValue",
+          "options": {
+            "type": "include",
+            "match": "all",
+            "filters": [
+              {
+                "fieldName": "merged_at",
+                "config": {
+                  "id": "greaterOrEqual",
+                  "options": {
+                    "value": "${__from}"
+                  }
+                }
+              },
+              {
+                "fieldName": "merged_at",
+                "config": {
+                  "id": "lowerOrEqual",
+                  "options": {
+                    "value": "${__to}"
+                  }
+                }
+              },
+              {
+                "fieldName": "provider",
+                "config": {
+                  "id": "regex",
+                  "options": {
+                    "value": "^${provider:regex}$"
+                  }
+                }
+              }
+            ]
+          }
+        },
         {
           "id": "filterByValue",
           "options": {
@@ -1984,7 +3275,9 @@
           "custom": {
             "fillOpacity": 80,
             "lineWidth": 1
-          }
+          },
+          "max": 100,
+          "min": 0
         },
         "overrides": []
       },
@@ -2000,6 +3293,490 @@
           "displayMode": "list",
           "placement": "bottom",
           "showLegend": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
+      }
+    },
+    {
+      "id": 19,
+      "type": "stat",
+      "title": "Merged with all suites green",
+      "description": "Share of release PRs with per-suite results that had every expected E2E suite green or waived before the merge. 'releases' is the number of releases the value is computed from.",
+      "datasource": {
+        "type": "datasource",
+        "uid": "-- Dashboard --"
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 4,
+        "x": 20,
+        "y": 5
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "datasource",
+            "uid": "-- Dashboard --"
+          },
+          "panelId": 7,
+          "withTransforms": false
+        }
+      ],
+      "transformations": [
+        {
+          "id": "filterByValue",
+          "options": {
+            "type": "include",
+            "match": "all",
+            "filters": [
+              {
+                "fieldName": "merged_at",
+                "config": {
+                  "id": "greaterOrEqual",
+                  "options": {
+                    "value": "${__from}"
+                  }
+                }
+              },
+              {
+                "fieldName": "merged_at",
+                "config": {
+                  "id": "lowerOrEqual",
+                  "options": {
+                    "value": "${__to}"
+                  }
+                }
+              },
+              {
+                "fieldName": "provider",
+                "config": {
+                  "id": "regex",
+                  "options": {
+                    "value": "^${provider:regex}$"
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "id": "filterByValue",
+          "options": {
+            "type": "include",
+            "match": "all",
+            "filters": [
+              {
+                "fieldName": "suites_expected",
+                "config": {
+                  "id": "greater",
+                  "options": {
+                    "value": 0
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "id": "filterFieldsByName",
+          "options": {
+            "include": {
+              "names": [
+                "merged_all_green"
+              ]
+            }
+          }
+        },
+        {
+          "id": "reduce",
+          "options": {
+            "mode": "reduceFields",
+            "reducers": [
+              "mean",
+              "count"
+            ],
+            "includeTimeField": false
+          }
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percentunit",
+          "decimals": 0,
+          "min": 0,
+          "max": 1,
+          "color": {
+            "mode": "thresholds"
+          },
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "red",
+                "value": null
+              },
+              {
+                "color": "orange",
+                "value": 0.5
+              },
+              {
+                "color": "green",
+                "value": 0.8
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/[Mm]edian|[Mm]ean/"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "all green"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/[Cc]ount/"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "releases"
+              },
+              {
+                "id": "unit",
+                "value": "none"
+              },
+              {
+                "id": "decimals",
+                "value": 0
+              },
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "#8e8e8e"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "colorMode": "value",
+        "graphMode": "none",
+        "textMode": "value_and_name",
+        "justifyMode": "center",
+        "orientation": "horizontal"
+      }
+    },
+    {
+      "id": 20,
+      "type": "barchart",
+      "title": "Merged with all suites green per quarter",
+      "description": "Share of the release PRs merged in each quarter that had every expected E2E suite green or waived before the merge. Only releases with per-suite results (since March 2026). The current quarter is marked '(to date)' and still incomplete.",
+      "datasource": {
+        "type": "datasource",
+        "uid": "-- Dashboard --"
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 12,
+        "x": 0,
+        "y": 46
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "datasource",
+            "uid": "-- Dashboard --"
+          },
+          "panelId": 7,
+          "withTransforms": false
+        }
+      ],
+      "transformations": [
+        {
+          "id": "filterByValue",
+          "options": {
+            "type": "include",
+            "match": "all",
+            "filters": [
+              {
+                "fieldName": "merged_at",
+                "config": {
+                  "id": "greaterOrEqual",
+                  "options": {
+                    "value": "${__from}"
+                  }
+                }
+              },
+              {
+                "fieldName": "merged_at",
+                "config": {
+                  "id": "lowerOrEqual",
+                  "options": {
+                    "value": "${__to}"
+                  }
+                }
+              },
+              {
+                "fieldName": "provider",
+                "config": {
+                  "id": "regex",
+                  "options": {
+                    "value": "^${provider:regex}$"
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "id": "filterByValue",
+          "options": {
+            "type": "include",
+            "match": "all",
+            "filters": [
+              {
+                "fieldName": "suites_expected",
+                "config": {
+                  "id": "greater",
+                  "options": {
+                    "value": 0
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "id": "groupBy",
+          "options": {
+            "fields": {
+              "merged_quarter": {
+                "operation": "groupby",
+                "aggregations": []
+              },
+              "merged_all_green": {
+                "operation": "aggregate",
+                "aggregations": [
+                  "mean"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "renameByName": {
+              "merged_quarter": "quarter",
+              "merged_all_green (mean)": "all green"
+            }
+          }
+        },
+        {
+          "id": "sortBy",
+          "options": {
+            "sort": [
+              {
+                "field": "quarter",
+                "desc": false
+              }
+            ]
+          }
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percentunit",
+          "decimals": 0,
+          "min": 0,
+          "max": 1,
+          "custom": {
+            "fillOpacity": 80,
+            "lineWidth": 1
+          },
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "green"
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "orientation": "auto",
+        "xField": "quarter",
+        "xTickLabelRotation": 0,
+        "showValue": "auto",
+        "stacking": "none",
+        "groupWidth": 0.7,
+        "barWidth": 0.9,
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": false
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
+      }
+    },
+    {
+      "id": 21,
+      "type": "barchart",
+      "title": "Runs until green per release",
+      "description": "/run releases-test-suites comments up to the first all-green state, including the automated runs. Only releases that reached all green. The axis is capped at 100 runs, hover a clipped bar for its value.",
+      "datasource": {
+        "type": "datasource",
+        "uid": "-- Dashboard --"
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 12,
+        "x": 12,
+        "y": 46
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "datasource",
+            "uid": "-- Dashboard --"
+          },
+          "panelId": 7,
+          "withTransforms": false
+        }
+      ],
+      "transformations": [
+        {
+          "id": "filterByValue",
+          "options": {
+            "type": "include",
+            "match": "all",
+            "filters": [
+              {
+                "fieldName": "merged_at",
+                "config": {
+                  "id": "greaterOrEqual",
+                  "options": {
+                    "value": "${__from}"
+                  }
+                }
+              },
+              {
+                "fieldName": "merged_at",
+                "config": {
+                  "id": "lowerOrEqual",
+                  "options": {
+                    "value": "${__to}"
+                  }
+                }
+              },
+              {
+                "fieldName": "provider",
+                "config": {
+                  "id": "regex",
+                  "options": {
+                    "value": "^${provider:regex}$"
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "id": "filterByValue",
+          "options": {
+            "type": "include",
+            "match": "all",
+            "filters": [
+              {
+                "fieldName": "all_green_at",
+                "config": {
+                  "id": "isNotNull",
+                  "options": {}
+                }
+              }
+            ]
+          }
+        },
+        {
+          "id": "sortBy",
+          "options": {
+            "sort": [
+              {
+                "field": "merged_at",
+                "desc": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "filterFieldsByName",
+          "options": {
+            "include": {
+              "names": [
+                "name",
+                "runs_to_green"
+              ]
+            }
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "renameByName": {
+              "runs_to_green": "runs until green"
+            }
+          }
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "none",
+          "decimals": 0,
+          "min": 0,
+          "max": 100,
+          "custom": {
+            "fillOpacity": 80,
+            "lineWidth": 1
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "orientation": "auto",
+        "xField": "name",
+        "xTickLabelRotation": -45,
+        "showValue": "never",
+        "stacking": "none",
+        "groupWidth": 0.7,
+        "barWidth": 0.9,
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": false
         },
         "tooltip": {
           "mode": "multi",

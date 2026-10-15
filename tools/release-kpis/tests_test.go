@@ -19,7 +19,18 @@ func testDefs() suiteDefinitions {
 			"private":  "{capi} Private Suite",
 		},
 		SuitePathProviders: map[string]string{"capa": "capa", "azure": "capz", "cloud-director": "capvcd"},
+		RequiredSince:      "2026-08-04",
+		SuiteRequiredSince: map[string]string{"capa/private": "2026-09-15"},
 	}
+}
+
+// allRequired marks every wanted suite as required.
+func allRequired(wanted map[string]string) map[string]bool {
+	required := map[string]bool{}
+	for key := range wanted {
+		required[key] = true
+	}
+	return required
 }
 
 func TestExpectedChecks(t *testing.T) {
@@ -74,7 +85,7 @@ func TestApplyTestResults(t *testing.T) {
 			"Release Tests / CAPA Upgrade Suite":  ts("2026-09-11T18:00:00Z"),
 		},
 	}
-	applyTestResults(&r, wanted, res)
+	applyTestResults(&r, wanted, allRequired(wanted), res)
 
 	if r.SuitesExpected != 3 || r.SuitesGreen != 2 || r.SuitesWaived != 1 {
 		t.Errorf("suites expected/green/waived = %d/%d/%d, want 3/2/1", r.SuitesExpected, r.SuitesGreen, r.SuitesWaived)
@@ -92,6 +103,91 @@ func TestApplyTestResults(t *testing.T) {
 	if *r.TimeToGreenDays != 11.3 || *r.TestFrictionDays != 3.2 {
 		t.Errorf("time to green/friction = %v/%v, want 11.3/3.2", *r.TimeToGreenDays, *r.TestFrictionDays)
 	}
+	// No stage labels: friction starts at the first manual run, which here is
+	// also the first run.
+	if r.FrictionStartAt == nil || !r.FrictionStartAt.Equal(ts("2026-09-09T08:00:00Z")) {
+		t.Errorf("friction start = %v, want 2026-09-09T08:00:00Z", r.FrictionStartAt)
+	}
+	if r.MergedAllGreen == nil || *r.MergedAllGreen != 1 || r.RunsToGreen == nil || *r.RunsToGreen != 3 {
+		t.Errorf("merged all green/runs to green = %v/%v, want 1/3", r.MergedAllGreen, r.RunsToGreen)
+	}
+}
+
+func TestApplyTestResultsFrictionFromActiveStage(t *testing.T) {
+	wanted := testDefs().expectedChecks([]string{"azure"})
+	active := ts("2026-09-10T09:00:00Z")
+	r := Release{CreatedAt: ts("2026-09-01T06:00:00Z"), ActiveAt: &active}
+	res := testResults{
+		runs: []issueComment{
+			comment("taylorbot", "/run releases-test-suites", "2026-09-02T10:00:00Z"), // weekly bump during development
+			comment("Gacko", "/run releases-test-suites", "2026-09-05T10:00:00Z"),     // manual, still in development
+			comment("taylorbot", "/run releases-test-suites", "2026-09-10T09:05:00Z"), // stage change to active
+			comment("Gacko", "/run releases-test-suites", "2026-09-14T10:00:00Z"),
+		},
+		waivers:    map[string]time.Time{},
+		firstGreen: map[string]time.Time{"Release Tests / CAPZ Standard Suite": ts("2026-09-12T12:00:00Z")},
+	}
+	applyTestResults(&r, wanted, allRequired(wanted), res)
+	if r.FrictionStartAt == nil || !r.FrictionStartAt.Equal(ts("2026-09-10T09:05:00Z")) {
+		t.Fatalf("friction start = %v, want the first run after the active stage", r.FrictionStartAt)
+	}
+	if r.TestFrictionDays == nil || *r.TestFrictionDays != 2.1 {
+		t.Errorf("friction = %v, want 2.1", r.TestFrictionDays)
+	}
+	if r.RunsToGreen == nil || *r.RunsToGreen != 3 {
+		t.Errorf("runs to green = %v, want 3", r.RunsToGreen)
+	}
+}
+
+func TestApplyTestResultsGreenBeforeActiveStage(t *testing.T) {
+	wanted := testDefs().expectedChecks([]string{"azure"})
+	active := ts("2026-09-20T09:00:00Z")
+	r := Release{CreatedAt: ts("2026-09-01T06:00:00Z"), ActiveAt: &active}
+	res := testResults{
+		runs:       []issueComment{comment("taylorbot", "/run releases-test-suites", "2026-09-21T09:00:00Z")},
+		waivers:    map[string]time.Time{},
+		firstGreen: map[string]time.Time{"Release Tests / CAPZ Standard Suite": ts("2026-09-05T12:00:00Z")},
+	}
+	applyTestResults(&r, wanted, allRequired(wanted), res)
+	if r.TestFrictionDays == nil || *r.TestFrictionDays != 0 {
+		t.Errorf("friction = %v, want 0 when green before the friction start", r.TestFrictionDays)
+	}
+}
+
+func TestApplyTestResultsNotRequiredSuites(t *testing.T) {
+	defs := testDefs()
+	wanted := defs.expectedChecks([]string{"capa"})
+	// Created before the merge gate: only suites that ran count.
+	required := defs.requiredSuites(wanted, ts("2026-07-01T06:00:00Z"))
+	for key, v := range required {
+		if v {
+			t.Errorf("%s must not be required before the merge gate", key)
+		}
+	}
+	r := Release{CreatedAt: ts("2026-07-01T06:00:00Z")}
+	res := testResults{
+		runs:       []issueComment{comment("Gacko", "/run releases-test-suites", "2026-07-02T08:00:00Z")},
+		waivers:    map[string]time.Time{},
+		ran:        map[string]bool{"Release Tests / CAPA Standard Suite": true, "Release Tests / CAPA Upgrade Suite": true},
+		firstGreen: map[string]time.Time{"Release Tests / CAPA Standard Suite": ts("2026-07-03T12:00:00Z")},
+	}
+	applyTestResults(&r, wanted, required, res)
+	if r.SuitesExpected != 2 || r.SuitesGreen != 1 {
+		t.Errorf("suites expected/green = %d/%d, want 2/1 (private never ran)", r.SuitesExpected, r.SuitesGreen)
+	}
+	if r.MergedAllGreen == nil || *r.MergedAllGreen != 0 || r.AllGreenAt != nil {
+		t.Errorf("upgrade suite ran but never passed, must not be all green: %+v", r)
+	}
+
+	// Created after the merge gate but before the private suite was required.
+	required = defs.requiredSuites(wanted, ts("2026-09-01T06:00:00Z"))
+	if !required["capa/standard"] || !required["capa/upgrade"] || required["capa/private"] {
+		t.Errorf("unexpected required suites: %v", required)
+	}
+	required = defs.requiredSuites(wanted, ts("2026-09-15T00:00:00Z"))
+	if !required["capa/private"] {
+		t.Errorf("private suite must be required from its required-since date")
+	}
 }
 
 func TestApplyTestResultsIncomplete(t *testing.T) {
@@ -102,9 +198,12 @@ func TestApplyTestResultsIncomplete(t *testing.T) {
 		waivers:    map[string]time.Time{},
 		firstGreen: map[string]time.Time{"Release Tests / CAPA Standard Suite": ts("2026-09-09T12:00:00Z")},
 	}
-	applyTestResults(&r, wanted, res)
-	if r.AllGreenAt != nil || r.TimeToGreenDays != nil || r.TestFrictionDays != nil {
+	applyTestResults(&r, wanted, allRequired(wanted), res)
+	if r.AllGreenAt != nil || r.TimeToGreenDays != nil || r.TestFrictionDays != nil || r.RunsToGreen != nil {
 		t.Errorf("incomplete suites must not produce an all-green time: %+v", r)
+	}
+	if r.MergedAllGreen == nil || *r.MergedAllGreen != 0 {
+		t.Errorf("merged all green = %v, want 0", r.MergedAllGreen)
 	}
 	if r.SuitesGreen != 1 || r.TestRuns != 1 || r.TestsFirstRunAt == nil {
 		t.Errorf("partial counts missing: %+v", r)
@@ -113,8 +212,8 @@ func TestApplyTestResultsIncomplete(t *testing.T) {
 
 func TestApplyTestResultsNoSuitesExpected(t *testing.T) {
 	r := Release{CreatedAt: ts("2026-09-01T06:00:00Z")}
-	applyTestResults(&r, map[string]string{}, testResults{waivers: map[string]time.Time{}, firstGreen: map[string]time.Time{}})
-	if r.AllGreenAt != nil || r.SuitesExpected != 0 {
+	applyTestResults(&r, map[string]string{}, map[string]bool{}, testResults{waivers: map[string]time.Time{}, firstGreen: map[string]time.Time{}})
+	if r.AllGreenAt != nil || r.SuitesExpected != 0 || r.MergedAllGreen != nil {
 		t.Errorf("no expected suites must not produce an all-green time: %+v", r)
 	}
 }
