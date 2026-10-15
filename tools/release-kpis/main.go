@@ -47,6 +47,10 @@ const (
 	scheduledRunEndHour   = 9
 	automationUser        = "taylorbot"
 
+	// Values of Release.PlannedSource.
+	plannedSourceWorkflow  = "workflow"
+	plannedSourceEstimated = "estimated"
+
 	// consolidatedProvider is used for PRs that release several providers at once.
 	consolidatedProvider = "CAPI"
 
@@ -130,7 +134,12 @@ type Release struct {
 
 	// PlannedMergeDate, DelayDays and OnTime are only set for automated
 	// releases. OnTime is 1 when the release was merged by its planned date and
-	// 0 otherwise, so that its mean is the on-time rate.
+	// 0 otherwise, so that its mean is the on-time rate. PlannedSource says
+	// where the date comes from: "workflow" when create-release.yaml wrote it
+	// into the PR, "estimated" when it was derived from the creation time of an
+	// older PR. Estimated dates were never committed to, so the dashboard only
+	// reports delay and on-time rate for workflow dates.
+	PlannedSource    string   `json:"planned_source"`
 	PlannedMergeDate *string  `json:"planned_merge_date"`
 	DelayDays        *float64 `json:"delay_days"`
 	OnTime           *int     `json:"on_time"`
@@ -430,11 +439,12 @@ func toRelease(pr pullRequest, versions []releaseVersion) (Release, bool) {
 		MergedAt:      merged,
 		LeadTimeDays:  days(merged.Sub(created)),
 		MergedMonth:   merged.Format("2006-01"),
-		MergedQuarter: quarter(merged),
+		MergedQuarter: quarterLabel(merged, time.Now()),
 	}
 
-	if planned, ok := plannedMergeDate(pr); ok {
+	if planned, source, ok := plannedMergeDate(pr); ok {
 		r.Automated = true
+		r.PlannedSource = source
 		p := planned.Format("2006-01-02")
 		r.PlannedMergeDate = &p
 		d := days(merged.Sub(planned))
@@ -558,33 +568,45 @@ func releaseType(pr pullRequest, v releaseVersion) string {
 	}
 }
 
-// plannedMergeDate returns the planned merge date of a scheduled release PR.
+// plannedMergeDate returns the planned merge date of a scheduled release PR
+// and its source.
 //
 // The date is taken from the PLANNED_MERGE_DATE marker that create-release.yaml
-// writes into the body of scheduled release PRs. PRs created before the marker
-// existed are recognised by their creation time instead: the automation runs on
-// the 1st of the month at 06:00 UTC as the automation user, and the planned
-// merge date is the next 1st of the month.
-func plannedMergeDate(pr pullRequest) (time.Time, bool) {
+// writes into the body of scheduled release PRs (source "workflow"). PRs
+// created before the marker existed are recognised by their creation time
+// instead: the automation runs on the 1st of the month at 06:00 UTC as the
+// automation user, and the planned merge date is assumed to be the next 1st of
+// the month (source "estimated").
+func plannedMergeDate(pr pullRequest) (time.Time, string, bool) {
 	if m := plannedMergeDateRe.FindStringSubmatch(pr.Body); m != nil {
 		t, err := time.Parse("2006-01-02", m[1])
 		if err == nil {
-			return t, true
+			return t, plannedSourceWorkflow, true
 		}
 	}
 
 	created := pr.CreatedAt.UTC()
 	if pr.User.Login != automationUser || created.Day() != scheduledRunDay ||
 		created.Hour() < scheduledRunStartHour || created.Hour() >= scheduledRunEndHour {
-		return time.Time{}, false
+		return time.Time{}, "", false
 	}
-	return nextFirstOfMonth(created), true
+	return nextFirstOfMonth(created), plannedSourceEstimated, true
 }
 
 // quarter formats t as "2026-Q3".
 func quarter(t time.Time) string {
 	t = t.UTC()
 	return fmt.Sprintf("%d-Q%d", t.Year(), (int(t.Month())-1)/3+1)
+}
+
+// quarterLabel is quarter with a "(to date)" suffix for the quarter now is in,
+// so that the partial current quarter is recognisable next to complete ones.
+func quarterLabel(t, now time.Time) string {
+	q := quarter(t)
+	if q == quarter(now) {
+		return q + " (to date)"
+	}
+	return q
 }
 
 // nextFirstOfMonth returns midnight UTC of the 1st of the month after t.

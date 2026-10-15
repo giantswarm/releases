@@ -25,7 +25,7 @@ For every release PR the data set records:
 | `version`, `release_type` | Release version and `major` / `minor` / `patch`, taken from the `release/*` label or, for older PRs without a label, derived from the version. A PR releasing several versions reports the one shared by most providers |
 | `created_at`, `merged_at` | When the PR was opened and merged |
 | `lead_time_days` | `merged_at - created_at` in days |
-| `merged_month`, `merged_quarter` | `2026-09` and `2026-Q3`, for grouping by period |
+| `merged_month`, `merged_quarter` | `2026-09` and `2026-Q3`, for grouping by period. The current quarter is labelled `2026-Q4 (to date)` because it is still incomplete |
 | `development_days`, `active_days`, `freeze_days` | Days spent in each release stage, from the `stage/*` label events. Only for PRs that went through the stages, since February 2026 |
 | `suites_expected`, `suites_green`, `suites_waived` | E2E suites expected for the PR's new releases, how many passed or were skipped (`neutral`) at least once, how many were waived with `/waive-suite` |
 | `test_runs`, `test_runs_automated` | Number of `/run releases-test-suites` comments on the PR, and how many of them came from the automation (weekly bump, stage change) |
@@ -34,12 +34,15 @@ For every release PR the data set records:
 | `time_to_green_days` | `all_green_at - created_at` in days |
 | `test_friction_days` | `all_green_at - tests_first_run_at` in days, the initial test friction |
 | `automated` | `true` when the PR was created by the scheduled automation on the 1st of the month |
-| `planned_merge_date` | Only for automated releases: the next 1st of the month after the PR was created |
+| `planned_source` | Only for automated releases: `workflow` when `create-release.yaml` wrote the planned merge date into the PR, `estimated` when it was derived from the creation time of an older PR |
+| `planned_merge_date` | Only for automated releases: the date from the PR body, or the next 1st of the month after the PR was created for `estimated` |
 | `delay_days` | Only for automated releases: `merged_at - planned_merge_date` in days, negative when merged early |
 | `on_time` | Only for automated releases: `1` when merged by the planned date, `0` otherwise, so the mean is the on-time rate |
 
 Manually created releases are merged as soon as possible and have no planned date, so the planned
-merge date and the delay stay empty for them.
+merge date and the delay stay empty for them. Estimated dates were never committed to, so the
+dashboard only counts `workflow` dates in the delay and on-time panels and shows the estimated ones
+in the delay chart for context.
 
 ## Time to all green tests
 
@@ -98,10 +101,12 @@ to be merged on the next 1st. For those PRs the workflow now adds a line to the 
 <!-- PLANNED_MERGE_DATE: 2026-11-01 -->
 ```
 
-The HTML comment is what the KPI tool reads. PRs created before this marker existed are
-recognised by their creation time instead: created by `taylorbot` on the 1st of the month between
-06:00 and 09:00 UTC, which is the window of the scheduled run. Manually triggered runs by the same
-bot fall outside that window.
+The HTML comment is what the KPI tool reads (`planned_source: workflow`). PRs created before this
+marker existed are recognised by their creation time instead: created by `taylorbot` on the 1st of
+the month between 06:00 and 09:00 UTC, which is the window of the scheduled run. Manually triggered
+runs by the same bot fall outside that window. For those PRs the planned date is an assumption
+(`planned_source: estimated`), and the dashboard does not count them in the delay and on-time
+panels.
 
 ## Grafana dashboard
 
@@ -111,17 +116,25 @@ It uses the Infinity datasource in Grafana Cloud, the same datasource the
 [CAPI Releases Dashboard](https://giantswarm.grafana.net/d/be9a0bh8mbwn4e/capi-releases) uses to
 read `<provider>/releases.json`, so no new datasource is needed.
 
+Every panel is filtered by the dashboard time range, applied to the merge date of the release PRs,
+and by the `provider` variable. Both are applied with a *Filter data by values* transformation on
+each panel, since the data is embedded rather than queried. The variable is a fixed list, so a new
+provider directory also needs to be added to it in the template.
+
 Panels:
-- Median lead time per release type (major, minor, patch), over all releases
-- Median delay from the planned merge date and the on-time rate (scheduled releases only)
+- Median lead time per release type (major, minor, patch), with the number of releases it is computed from
+- Median delay from the planned merge date and the on-time rate, for scheduled releases whose planned date was written by the workflow
 - Lead time per release over time, split by release type
-- Delay from the planned merge date over time (scheduled releases only)
-- Median lead time per quarter and releases per quarter, split by release type
+- Delay from the planned merge date over time, workflow dates in green and estimated dates in grey
+- Median lead time per quarter and releases per quarter, split by release type. The current quarter is marked *(to date)*
 - Time per stage (development, active, freeze) for every release that went through the stages
-- Median time to green per release type, median test friction and median test runs per release
+- Median time to green per release type, median test friction and median test runs per release, each with the number of releases
 - Time to green and test runs per release
 - Table of all merged release PRs with links. *Inspect → Data* on this panel downloads a CSV.
-- Timestamp of the last data refresh
+- Timestamp of the last data refresh and a glossary of the metrics
+
+The per-release charts cap their axis at 60 days (100 runs for test runs) so that a single long
+release such as v35.0.0 does not flatten the others; the tooltip shows the real value.
 
 To change the dashboard, edit the template and merge it. The workflow publishes it on the next
 push to `master`. To try a change before merging, run the workflow steps by hand:
