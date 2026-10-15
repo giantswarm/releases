@@ -70,10 +70,24 @@ jobs:
             });
             return pr.data.head.ref;
 
+      - name: Generate giantswarm-release token for team lookup
+        id: team-token
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1 # v3.2.0
+        with:
+          client-id: ${{ secrets.RELEASE_BOT_CLIENT_ID }}
+          private-key: ${{ secrets.RELEASE_BOT_PRIVATE_KEY }}
+          # Organization permission, needed for the team-tenet membership lookup below.
+          owner: giantswarm
+          repositories: releases
+          permission-members: read
+
       - name: Check release stage and gate access
         id: check_stage
         uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9
+        env:
+          TEAM_TOKEN: ${{ steps.team-token.outputs.token }}
         with:
+          # app-token reads the PR; team-token (members: read) does the team lookup.
           github-token: ${{ steps.app-token.outputs.token }}
           script: |
             const pr = await github.rest.pulls.get({
@@ -101,7 +115,8 @@ jobs:
             if (stage === 'freeze') {
               // During freeze, only Team Tenet members can make changes
               try {
-                const membership = await github.rest.teams.getMembershipForUserInOrg({
+                const teamClient = github.getOctokit(process.env.TEAM_TOKEN);
+                const membership = await teamClient.rest.teams.getMembershipForUserInOrg({
                   org: context.repo.owner,
                   team_slug: 'team-tenet',
                   username: commentAuthor

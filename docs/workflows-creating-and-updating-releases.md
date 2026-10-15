@@ -462,7 +462,7 @@ and `release-stages` stay limited to org members. The `/run releases-test-suites
 ## Environment Variables & Secrets
 
 ### Required Secrets
-- `RELEASE_BOT_CLIENT_ID`, `RELEASE_BOT_PRIVATE_KEY`: Client ID and private key of the `giantswarm-release` GitHub App (org secrets). Each job mints its own short-lived token with `actions/create-github-app-token`, scoped to this repository (plus `giantswarm/roadmap` for readiness issues, and read-only `contents` org-wide for devctl/opsctl lookups). The App has no `actions`, `workflows`, `packages`, `projects` or `administration` permission
+- `RELEASE_BOT_CLIENT_ID`, `RELEASE_BOT_PRIVATE_KEY`: Client ID and private key of the `giantswarm-release` GitHub App (org secrets). Each job mints its own short-lived token with `actions/create-github-app-token`, scoped to this repository (plus `giantswarm/roadmap` for readiness issues, and read-only `contents` org-wide for devctl/opsctl lookups). The freeze-stage gate in `update-release.yaml` uses a separate token with the organization `members: read` permission to look up `team-tenet` membership. The App has no `actions`, `workflows`, `packages`, `projects` or `administration` permission
 - `ANTHROPIC_API_KEY`: For AI-powered breaking change analysis
 - `GRAFANA_API_KEY`: For checking K8s version availability
 - `SLACK_BOT_TOKEN`: For Slack notifications (optional)
