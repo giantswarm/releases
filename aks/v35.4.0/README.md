@@ -7,10 +7,16 @@ This release adds Giant Swarm's Cilium for the BYO CNI opt-in (`global.connectiv
 
 ### Apps
 
-- Added cilium v1.5.2
+- Added cilium v1.6.1
 
-### cilium [v1.5.2](https://github.com/giantswarm/cilium-app/releases/tag/v1.5.2)
+### cilium [v1.6.1](https://github.com/giantswarm/cilium-app/releases/tag/v1.6.1)
+
+#### Added
+
+- Declare the `io.giantswarm.application.audience` (`all`) and `io.giantswarm.application.managed` (`true`) annotations, completing the [chart metadata standard](https://docs.giantswarm.io/reference/platform-api/chart-metadata/).
 
 #### Changed
 
-- Upgrade Cilium to [v1.19.8](https://github.com/cilium/cilium/releases/tag/v1.19.8).
+- Upgrade Cilium to [v1.20.2](https://github.com/cilium/cilium/releases/tag/v1.20.2).
+- Move the team annotation from the legacy `application.giantswarm.io/team` key to `io.giantswarm.application.team`, in both this chart and the bundled `cilium-giantswarm-cni-customconf` subchart. No template reads `.Chart.Annotations` and no template emits a team label, so rendered output is byte-identical.
+- Point `home` at this repository instead of `https://cilium.io/`, as the standard requires. Upstream remains listed under `sources`.

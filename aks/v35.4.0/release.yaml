@@ -27,7 +27,7 @@ spec:
     dependsOn:
     - prometheus-operator-crd
   - name: cilium
-    version: 1.5.2
+    version: 1.6.1
   - name: cilium-servicemonitors
     version: 0.2.0
     dependsOn:
@@ -102,5 +102,5 @@ spec:
     version: 0.7.0
   - name: kubernetes
     version: 1.35.7
-  date: "2026-10-15T21:54:26Z"
+  date: "2026-10-16T09:21:01Z"
   state: active
