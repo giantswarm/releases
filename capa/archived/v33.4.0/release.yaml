@@ -1,11 +1,11 @@
 apiVersion: release.giantswarm.io/v1alpha1
 kind: Release
 metadata:
-  name: aws-33.1.1
+  name: aws-33.4.0
 spec:
   apps:
   - name: aws-ebs-csi-driver
-    version: 3.3.0
+    version: 3.4.1
     dependsOn:
     - cloud-provider-aws
   - name: aws-ebs-csi-driver-servicemonitors
@@ -135,12 +135,14 @@ spec:
   components:
   - name: cluster-aws
     catalog: cluster
-    version: 6.4.1
+    version: 6.5.1
+  - name: etcd
+    version: 3.5.29
   - name: flatcar
-    version: 4459.2.1
+    version: 4593.2.2
   - name: kubernetes
     version: 1.33.6
   - name: os-tooling
-    version: 1.26.2
-  date: "2025-12-16T15:16:13Z"
-  state: active
+    version: 1.31.0
+  date: "2026-06-02T16:36:21Z"
+  state: deprecated

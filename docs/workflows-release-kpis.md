@@ -25,21 +25,27 @@ For every release PR the data set records:
 | `version`, `release_type` | Release version and `major` / `minor` / `patch`, taken from the `release/*` label or, for older PRs without a label, derived from the version. A PR releasing several versions reports the one shared by most providers |
 | `created_at`, `merged_at` | When the PR was opened and merged |
 | `lead_time_days` | `merged_at - created_at` in days |
-| `merged_month`, `merged_quarter` | `2026-09` and `2026-Q3`, for grouping by period |
-| `development_days`, `active_days`, `freeze_days` | Days spent in each release stage, from the `stage/*` label events. Only for PRs that went through the stages, since February 2026 |
-| `suites_expected`, `suites_green`, `suites_waived` | E2E suites expected for the PR's new releases, how many passed or were skipped (`neutral`) at least once, how many were waived with `/waive-suite` |
+| `merged_month`, `merged_quarter` | `2026-09` and `2026-Q3`, for grouping by period. The current quarter is labelled `2026-Q4 (to date)` because it is still incomplete |
+| `development_days`, `active_days`, `freeze_days`, `active_at` | Days spent in each release stage, from the `stage/*` label events, and when the PR first entered the active stage. Only for PRs that went through the stages, since February 2026 |
+| `suites_expected`, `suites_green`, `suites_waived` | E2E suites expected for the PR's new releases (see below), how many passed or were skipped (`neutral`) at least once, how many were waived with `/waive-suite` |
 | `test_runs`, `test_runs_automated` | Number of `/run releases-test-suites` comments on the PR, and how many of them came from the automation (weekly bump, stage change) |
 | `tests_first_run_at` | Time of the first `/run releases-test-suites` comment |
+| `friction_start_at` | The run the test friction is measured from: the first run after the PR entered the active stage, or the first manual run for PRs without stage labels, or the first run when all runs were automated |
 | `all_green_at` | First time at which every expected suite had passed, or been waived, at least once |
 | `time_to_green_days` | `all_green_at - created_at` in days |
-| `test_friction_days` | `all_green_at - tests_first_run_at` in days, the initial test friction |
+| `test_friction_days` | `all_green_at - friction_start_at` in days, the initial test friction. `0` when the suites were already green before the friction start |
+| `merged_all_green` | For PRs with expected suites: `1` when `all_green_at` is set, `0` when the PR was merged without all suites green, so the mean is the all-green rate |
+| `runs_to_green` | Number of `/run releases-test-suites` comments up to `all_green_at` |
 | `automated` | `true` when the PR was created by the scheduled automation on the 1st of the month |
-| `planned_merge_date` | Only for automated releases: the next 1st of the month after the PR was created |
+| `planned_source` | Only for automated releases: `workflow` when `create-release.yaml` wrote the planned merge date into the PR, `estimated` when it was derived from the creation time of an older PR |
+| `planned_merge_date` | Only for automated releases: the date from the PR body, or the next 1st of the month after the PR was created for `estimated` |
 | `delay_days` | Only for automated releases: `merged_at - planned_merge_date` in days, negative when merged early |
 | `on_time` | Only for automated releases: `1` when merged by the planned date, `0` otherwise, so the mean is the on-time rate |
 
 Manually created releases are merged as soon as possible and have no planned date, so the planned
-merge date and the delay stay empty for them.
+merge date and the delay stay empty for them. Estimated dates were never committed to, so the
+dashboard only counts `workflow` dates in the delay and on-time panels and shows the estimated ones
+in the delay chart for context.
 
 ## Time to all green tests
 
@@ -55,7 +61,18 @@ major release, which has no previous minor to upgrade from. That is not test fri
 counts as green as well. The merge gate is stricter there and wants a waiver.
 
 Expected suites per provider come from [`.github/scripts/e2e-suites.json`](../.github/scripts/e2e-suites.json),
-the same file the E2E coverage merge gate uses, so the two cannot drift apart.
+the same file the E2E coverage merge gate uses, so the two cannot drift apart. The file also
+records since when the matrix is required (`requiredSince`, the day the merge gate landed) and,
+per `<dir>/<suite>`, since when a suite added later is required (`suiteRequiredSince`). A PR
+created before a suite was required only has to be green on it if the suite ran or was waived on
+the PR anyway. Without that rule, adding a suite would retroactively turn every past release into
+one that never reached all green. When you add a suite to `expectedSuites`, add its date to
+`suiteRequiredSince`.
+
+The test friction is measured from the first test run after the PR entered the active stage, not
+from the first run of any kind: the automated weekly runs during development test a release that
+is still being assembled, and the time they take is not test friction. PRs without stage labels
+use their first manual run instead.
 
 This is an "ever green" definition: it does not require the passes to be on the same release
 content, as the merge gate does. That is intended. Later component bumps that invalidate results
@@ -98,10 +115,12 @@ to be merged on the next 1st. For those PRs the workflow now adds a line to the 
 <!-- PLANNED_MERGE_DATE: 2026-11-01 -->
 ```
 
-The HTML comment is what the KPI tool reads. PRs created before this marker existed are
-recognised by their creation time instead: created by `taylorbot` on the 1st of the month between
-06:00 and 09:00 UTC, which is the window of the scheduled run. Manually triggered runs by the same
-bot fall outside that window.
+The HTML comment is what the KPI tool reads (`planned_source: workflow`). PRs created before this
+marker existed are recognised by their creation time instead: created by `taylorbot` on the 1st of
+the month between 06:00 and 09:00 UTC, which is the window of the scheduled run. Manually triggered
+runs by the same bot fall outside that window. For those PRs the planned date is an assumption
+(`planned_source: estimated`), and the dashboard does not count them in the delay and on-time
+panels.
 
 ## Grafana dashboard
 
@@ -111,17 +130,26 @@ It uses the Infinity datasource in Grafana Cloud, the same datasource the
 [CAPI Releases Dashboard](https://giantswarm.grafana.net/d/be9a0bh8mbwn4e/capi-releases) uses to
 read `<provider>/releases.json`, so no new datasource is needed.
 
+Every panel is filtered by the dashboard time range, applied to the merge date of the release PRs,
+and by the `provider` variable. Both are applied with a *Filter data by values* transformation on
+each panel, since the data is embedded rather than queried. The variable is a fixed list, so a new
+provider directory also needs to be added to it in the template.
+
 Panels:
-- Median lead time per release type (major, minor, patch), over all releases
-- Median delay from the planned merge date and the on-time rate (scheduled releases only)
+- Median lead time per release type (major, minor, patch), with the number of releases it is computed from
+- Median delay from the planned merge date and the on-time rate, for scheduled releases whose planned date was written by the workflow
 - Lead time per release over time, split by release type
-- Delay from the planned merge date over time (scheduled releases only)
-- Median lead time per quarter and releases per quarter, split by release type
+- Delay from the planned merge date over time, workflow dates in green and estimated dates in grey
+- Median lead time per quarter and releases per quarter, split by release type. The current quarter is marked *(to date)*
 - Time per stage (development, active, freeze) for every release that went through the stages
-- Median time to green per release type, median test friction and median test runs per release
+- Median time to green per release type, median test friction, median runs until green and the share of releases merged with all suites green, each with the number of releases
 - Time to green and test runs per release
+- Share of releases merged with all suites green per quarter, and runs until green per release
 - Table of all merged release PRs with links. *Inspect → Data* on this panel downloads a CSV.
-- Timestamp of the last data refresh
+- Timestamp of the last data refresh and a glossary of the metrics
+
+The per-release charts cap their axis at 60 days (100 runs for test runs) so that a single long
+release such as v35.0.0 does not flatten the others; the tooltip shows the real value.
 
 To change the dashboard, edit the template and merge it. The workflow publishes it on the next
 push to `master`. To try a change before merging, run the workflow steps by hand:
@@ -162,7 +190,7 @@ The tool fetches every release PR from the GitHub API, so a token is needed to s
 
 **A release has no time to green:**
 - The PR must have been created after `-tests-since` and have `Release Tests / <suite>` check runs
-- Every expected suite from `e2e-suites.json` must have passed or been waived at least once
+- Every expected suite from `e2e-suites.json` must have passed or been waived at least once; `merged_all_green` is `0` for such PRs
 
 **A scheduled release has no planned merge date:**
 - The PR body must contain the `PLANNED_MERGE_DATE` marker, or

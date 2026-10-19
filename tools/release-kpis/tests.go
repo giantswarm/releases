@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"log"
+	"math"
 	"os"
 	"regexp"
 	"sort"
@@ -44,6 +45,15 @@ type suiteDefinitions struct {
 	ExpectedSuites     map[string][]string `json:"expectedSuites"`
 	CheckNameFormats   map[string]string   `json:"checkNameFormats"`
 	SuitePathProviders map[string]string   `json:"suitePathProviders"`
+
+	// RequiredSince is the date (YYYY-MM-DD) from which the full matrix is
+	// required on a release PR, the day the merge gate was introduced.
+	// SuiteRequiredSince overrides it per "<dir>/<suite>" for suites added
+	// later. A PR created before a suite was required only has to be green on
+	// that suite if the suite actually ran on the PR, so that adding a suite
+	// does not retroactively turn past releases red.
+	RequiredSince      string            `json:"requiredSince"`
+	SuiteRequiredSince map[string]string `json:"suiteRequiredSince"`
 }
 
 func loadSuiteDefinitions(path string) (suiteDefinitions, error) {
@@ -76,6 +86,30 @@ func (d suiteDefinitions) expectedChecks(dirs []string) map[string]string {
 		}
 	}
 	return checks
+}
+
+// requiredSuites reports which of the wanted suites ("<dir>/<suite>" keys)
+// were required for a PR created at the given time.
+func (d suiteDefinitions) requiredSuites(wanted map[string]string, created time.Time) map[string]bool {
+	required := map[string]bool{}
+	for key := range wanted {
+		since := d.RequiredSince
+		if s, ok := d.SuiteRequiredSince[key]; ok {
+			since = s
+		}
+		if since == "" {
+			required[key] = true
+			continue
+		}
+		t, err := time.Parse("2006-01-02", since)
+		if err != nil {
+			log.Printf("Warning: invalid required-since date %q for %s, treating the suite as required", since, key)
+			required[key] = true
+			continue
+		}
+		required[key] = !created.Before(t)
+	}
+	return required
 }
 
 // providerDir resolves a provider as written in a /waive-suite command
@@ -118,13 +152,14 @@ type testResults struct {
 	runs        []issueComment       // /run releases-test-suites comments, oldest first
 	waivers     map[string]time.Time // "<dir>/<suite>" -> time of the waiver
 	firstGreen  map[string]time.Time // check run name -> first successful completion
+	ran         map[string]bool      // check run name -> at least one run, whatever the outcome
 	checkedShas int
 }
 
 // collectTestResults gathers the test runs, waivers and first successful suite
 // runs of a PR.
 func (c *githubClient) collectTestResults(number int, wanted map[string]string, defs suiteDefinitions) (testResults, error) {
-	res := testResults{waivers: map[string]time.Time{}, firstGreen: map[string]time.Time{}}
+	res := testResults{waivers: map[string]time.Time{}, firstGreen: map[string]time.Time{}, ran: map[string]bool{}}
 
 	comments, err := c.issueComments(number)
 	if err != nil {
@@ -171,7 +206,11 @@ func (c *githubClient) collectTestResults(number int, wanted map[string]string, 
 		}
 		res.checkedShas++
 		for _, run := range runs {
-			if !isGreen(run.Conclusion) || run.CompletedAt == nil || !wantedNames[run.Name] {
+			if !wantedNames[run.Name] {
+				continue
+			}
+			res.ran[run.Name] = true
+			if !isGreen(run.Conclusion) || run.CompletedAt == nil {
 				continue
 			}
 			if t, ok := res.firstGreen[run.Name]; !ok || run.CompletedAt.Before(t) {
@@ -188,9 +227,12 @@ func isGreen(conclusion string) bool {
 	return conclusion == "success" || conclusion == "neutral"
 }
 
-// applyTestResults fills the test-related fields of a release.
-func applyTestResults(r *Release, wanted map[string]string, res testResults) {
-	r.SuitesExpected = len(wanted)
+// applyTestResults fills the test-related fields of a release. wanted is the
+// full suite matrix for the PR's releases and required says which of those
+// suites the PR had to run; a suite that was not required only counts when it
+// ran or was waived anyway. r.ActiveAt must be set before the call for the
+// test friction to start at the active stage.
+func applyTestResults(r *Release, wanted map[string]string, required map[string]bool, res testResults) {
 	r.TestRuns = len(res.runs)
 	for _, run := range res.runs {
 		if run.User.Login == automationUser {
@@ -201,10 +243,17 @@ func applyTestResults(r *Release, wanted map[string]string, res testResults) {
 		t := res.runs[0].CreatedAt.UTC()
 		r.TestsFirstRunAt = &t
 	}
+	if start := frictionStart(res.runs, r.ActiveAt); start != nil {
+		r.FrictionStartAt = start
+	}
 
 	var allGreen time.Time
 	complete := true
 	for key, name := range wanted {
+		if _, waived := res.waivers[key]; !required[key] && !res.ran[name] && !waived {
+			continue
+		}
+		r.SuitesExpected++
 		t, ok := res.firstGreen[name]
 		if ok {
 			r.SuitesGreen++
@@ -220,7 +269,15 @@ func applyTestResults(r *Release, wanted map[string]string, res testResults) {
 			allGreen = t
 		}
 	}
-	if !complete || len(wanted) == 0 {
+	if r.SuitesExpected == 0 {
+		return
+	}
+	mergedAllGreen := 0
+	if complete {
+		mergedAllGreen = 1
+	}
+	r.MergedAllGreen = &mergedAllGreen
+	if !complete {
 		return
 	}
 
@@ -228,10 +285,44 @@ func applyTestResults(r *Release, wanted map[string]string, res testResults) {
 	r.AllGreenAt = &allGreen
 	d := days(allGreen.Sub(r.CreatedAt))
 	r.TimeToGreenDays = &d
-	if r.TestsFirstRunAt != nil {
-		f := days(allGreen.Sub(*r.TestsFirstRunAt))
+	if r.FrictionStartAt != nil {
+		f := math.Max(0, days(allGreen.Sub(*r.FrictionStartAt)))
 		r.TestFrictionDays = &f
 	}
+	runsToGreen := 0
+	for _, run := range res.runs {
+		if !run.CreatedAt.After(allGreen) {
+			runsToGreen++
+		}
+	}
+	r.RunsToGreen = &runsToGreen
+}
+
+// frictionStart returns the test run the test friction is measured from: the
+// first run after the PR entered the active stage, because the automated runs
+// during development test a release that is still being assembled. PRs that
+// did not go through the stages use the first manual run, or the first run of
+// any kind when every run was automated.
+func frictionStart(runs []issueComment, activeAt *time.Time) *time.Time {
+	if len(runs) == 0 {
+		return nil
+	}
+	if activeAt != nil {
+		for _, run := range runs {
+			if !run.CreatedAt.Before(*activeAt) {
+				t := run.CreatedAt.UTC()
+				return &t
+			}
+		}
+	}
+	for _, run := range runs {
+		if run.User.Login != automationUser {
+			t := run.CreatedAt.UTC()
+			return &t
+		}
+	}
+	t := runs[0].CreatedAt.UTC()
+	return &t
 }
 
 // issueComments lists the comments of a pull request, oldest first.
