@@ -101,6 +101,9 @@ spec:
     - prometheus-operator-crd
   - name: teleport-kube-agent
     version: 0.12.0
+    dependsOn:
+    - cilium
+    - prometheus-operator-crd
   - name: vertical-pod-autoscaler
     version: 6.1.2
     dependsOn:
