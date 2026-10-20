@@ -71,6 +71,8 @@ spec:
     dependsOn:
     - prometheus-operator-crd
     - vertical-pod-autoscaler-crd
+  - name: rbac-bootstrap
+    version: 0.3.0
   - name: security-bundle
     version: 2.4.0
   - name: teleport-kube-agent
