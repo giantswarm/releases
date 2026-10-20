@@ -57,7 +57,7 @@ spec:
     dependsOn:
     - kyverno-crds
   - name: karpenter
-    version: 2.5.0
+    version: 2.6.0
   - name: karpenter-taint-remover
     version: 1.1.0
   - name: metrics-server
