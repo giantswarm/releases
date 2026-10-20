@@ -80,8 +80,7 @@ spec:
   - name: node-problem-detector
     version: 0.5.2
   - name: observability-bundle
-    catalog: default-test
-    version: 3.5.1-r5b1ed9c6t20261019104227h68abf29
+    version: 3.6.0
     dependsOn:
     - coredns
   - name: observability-policies
@@ -113,7 +112,7 @@ spec:
   components:
   - name: cluster-eks
     catalog: cluster-test
-    version: 3.1.1-r19c74f70t20261019112535h7db7921
+    version: 3.1.1-r19c74f70t20261020082836h372a1ad
   - name: containerd
     version: 2.3.2
   - name: flatcar
