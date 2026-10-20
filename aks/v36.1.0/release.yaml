@@ -9,7 +9,6 @@ spec:
   - name: cert-exporter
     version: 2.12.1
     dependsOn:
-    - cilium
     - kyverno-crds
     - prometheus-operator-crd
     - vertical-pod-autoscaler-crd
@@ -17,7 +16,6 @@ spec:
     version: 4.1.2
     dependsOn:
     - alloy-podlogs-crds
-    - cilium
     - prometheus-operator-crd
     - vertical-pod-autoscaler-crd
   - name: cert-manager-crossplane-resources
@@ -33,7 +31,6 @@ spec:
   - name: external-dns
     version: 3.6.0
     dependsOn:
-    - cilium
     - prometheus-operator-crd
     - vertical-pod-autoscaler-crd
   - name: external-dns-crossplane-resources
@@ -41,13 +38,11 @@ spec:
   - name: k8s-dns-node-cache
     version: 2.11.1
     dependsOn:
-    - cilium
     - kyverno-crds
     - prometheus-operator-crd
   - name: net-exporter
     version: 1.24.1
     dependsOn:
-    - cilium
     - prometheus-operator-crd
     - vertical-pod-autoscaler-crd
   - name: network-policies
@@ -78,12 +73,10 @@ spec:
   - name: teleport-kube-agent
     version: 0.12.0
     dependsOn:
-    - cilium
     - prometheus-operator-crd
   - name: vertical-pod-autoscaler
     version: 6.1.2
     dependsOn:
-    - cilium
     - prometheus-operator-crd
     - vertical-pod-autoscaler-crd
   - name: vertical-pod-autoscaler-crd
