@@ -46,6 +46,10 @@ const (
 	scheduledRunStartHour = 6
 	scheduledRunEndHour   = 9
 
+	// Values of Release.PlannedSource.
+	plannedSourceWorkflow  = "workflow"
+	plannedSourceEstimated = "estimated"
+
 	// consolidatedProvider is used for PRs that release several providers at once.
 	consolidatedProvider = "CAPI"
 
@@ -125,10 +129,12 @@ type Release struct {
 	Automated bool `json:"automated"`
 
 	// Stage durations in days, from the stage/* labels set by the release
-	// stages workflow. Only set for PRs that went through the stages.
-	DevelopmentDays *float64 `json:"development_days"`
-	ActiveDays      *float64 `json:"active_days"`
-	FreezeDays      *float64 `json:"freeze_days"`
+	// stages workflow. Only set for PRs that went through the stages. ActiveAt
+	// is when the PR first entered the active stage.
+	DevelopmentDays *float64   `json:"development_days"`
+	ActiveDays      *float64   `json:"active_days"`
+	FreezeDays      *float64   `json:"freeze_days"`
+	ActiveAt        *time.Time `json:"active_at"`
 
 	// Time to all green tests, from the "Release Tests / <suite>" check runs
 	// and the "/run releases-test-suites" comments. Only set for PRs created
@@ -139,13 +145,24 @@ type Release struct {
 	TestRuns          int        `json:"test_runs"`
 	TestRunsAutomated int        `json:"test_runs_automated"`
 	TestsFirstRunAt   *time.Time `json:"tests_first_run_at"`
+	FrictionStartAt   *time.Time `json:"friction_start_at"`
 	AllGreenAt        *time.Time `json:"all_green_at"`
 	TimeToGreenDays   *float64   `json:"time_to_green_days"`
 	TestFrictionDays  *float64   `json:"test_friction_days"`
+	// MergedAllGreen is 1 when the PR reached all green before the merge and 0
+	// when it was merged without, so that its mean is the all-green rate.
+	// RunsToGreen counts the test runs up to the all-green time.
+	MergedAllGreen *int `json:"merged_all_green"`
+	RunsToGreen    *int `json:"runs_to_green"`
 
 	// PlannedMergeDate, DelayDays and OnTime are only set for automated
 	// releases. OnTime is 1 when the release was merged by its planned date and
-	// 0 otherwise, so that its mean is the on-time rate.
+	// 0 otherwise, so that its mean is the on-time rate. PlannedSource says
+	// where the date comes from: "workflow" when create-release.yaml wrote it
+	// into the PR, "estimated" when it was derived from the creation time of an
+	// older PR. Estimated dates were never committed to, so the dashboard only
+	// reports delay and on-time rate for workflow dates.
+	PlannedSource    string   `json:"planned_source"`
 	PlannedMergeDate *string  `json:"planned_merge_date"`
 	DelayDays        *float64 `json:"delay_days"`
 	OnTime           *int     `json:"on_time"`
@@ -292,6 +309,7 @@ func main() {
 				log.Fatalf("Error fetching events of pull request #%d: %v", number, err)
 			}
 			r.DevelopmentDays, r.ActiveDays, r.FreezeDays = stageDurations(pr, events)
+			r.ActiveAt = stageEnteredAt(events, "active")
 		}
 
 		if !pr.CreatedAt.Before(testsSinceTime) {
@@ -300,7 +318,7 @@ func main() {
 			if err != nil {
 				log.Fatalf("Error collecting test results of pull request #%d: %v", number, err)
 			}
-			applyTestResults(&r, wanted, res)
+			applyTestResults(&r, wanted, defs.requiredSuites(wanted, pr.CreatedAt), res)
 			if verbose {
 				log.Printf("#%d: %d test runs, %d/%d suites green, %d commits checked", number, r.TestRuns, r.SuitesGreen, r.SuitesExpected, res.checkedShas)
 			}
@@ -445,11 +463,12 @@ func toRelease(pr pullRequest, versions []releaseVersion) (Release, bool) {
 		MergedAt:      merged,
 		LeadTimeDays:  days(merged.Sub(created)),
 		MergedMonth:   merged.Format("2006-01"),
-		MergedQuarter: quarter(merged),
+		MergedQuarter: quarterLabel(merged, time.Now()),
 	}
 
-	if planned, ok := plannedMergeDate(pr); ok {
+	if planned, source, ok := plannedMergeDate(pr); ok {
 		r.Automated = true
+		r.PlannedSource = source
 		p := planned.Format("2006-01-02")
 		r.PlannedMergeDate = &p
 		d := days(merged.Sub(planned))
@@ -555,6 +574,17 @@ func stageDurations(pr pullRequest, events []issueEvent) (development, active, f
 	return &d, &a, &f
 }
 
+// stageEnteredAt returns when the given stage label was first applied.
+func stageEnteredAt(events []issueEvent, stage string) *time.Time {
+	for _, e := range events {
+		if e.Event == "labeled" && e.Label.Name == stageLabelPrefix+stage {
+			t := e.CreatedAt.UTC()
+			return &t
+		}
+	}
+	return nil
+}
+
 // releaseType returns major, minor or patch from the release/* label of the
 // PR, or from the version when the PR has no such label.
 func releaseType(pr pullRequest, v releaseVersion) string {
@@ -573,33 +603,45 @@ func releaseType(pr pullRequest, v releaseVersion) string {
 	}
 }
 
-// plannedMergeDate returns the planned merge date of a scheduled release PR.
+// plannedMergeDate returns the planned merge date of a scheduled release PR
+// and its source.
 //
 // The date is taken from the PLANNED_MERGE_DATE marker that create-release.yaml
-// writes into the body of scheduled release PRs. PRs created before the marker
-// existed are recognised by their creation time instead: the automation runs on
-// the 1st of the month at 06:00 UTC as the automation user, and the planned
-// merge date is the next 1st of the month.
-func plannedMergeDate(pr pullRequest) (time.Time, bool) {
+// writes into the body of scheduled release PRs (source "workflow"). PRs
+// created before the marker existed are recognised by their creation time
+// instead: the automation runs on the 1st of the month at 06:00 UTC as the
+// automation user, and the planned merge date is assumed to be the next 1st of
+// the month (source "estimated").
+func plannedMergeDate(pr pullRequest) (time.Time, string, bool) {
 	if m := plannedMergeDateRe.FindStringSubmatch(pr.Body); m != nil {
 		t, err := time.Parse("2006-01-02", m[1])
 		if err == nil {
-			return t, true
+			return t, plannedSourceWorkflow, true
 		}
 	}
 
 	created := pr.CreatedAt.UTC()
 	if !isAutomation(pr.User.Login) || created.Day() != scheduledRunDay ||
 		created.Hour() < scheduledRunStartHour || created.Hour() >= scheduledRunEndHour {
-		return time.Time{}, false
+		return time.Time{}, "", false
 	}
-	return nextFirstOfMonth(created), true
+	return nextFirstOfMonth(created), plannedSourceEstimated, true
 }
 
 // quarter formats t as "2026-Q3".
 func quarter(t time.Time) string {
 	t = t.UTC()
 	return fmt.Sprintf("%d-Q%d", t.Year(), (int(t.Month())-1)/3+1)
+}
+
+// quarterLabel is quarter with a "(to date)" suffix for the quarter now is in,
+// so that the partial current quarter is recognisable next to complete ones.
+func quarterLabel(t, now time.Time) string {
+	q := quarter(t)
+	if q == quarter(now) {
+		return q + " (to date)"
+	}
+	return q
 }
 
 // nextFirstOfMonth returns midnight UTC of the 1st of the month after t.
