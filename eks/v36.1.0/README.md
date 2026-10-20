@@ -139,6 +139,7 @@
 - coredns from v1.30.0 to v1.34.0
 - coredns-extensions from v0.1.2 to v0.1.3
 - external-dns from v3.4.0 to v3.6.0
+- Added external-dns-crossplane-resources v0.4.0
 - k8s-dns-node-cache from v2.9.1 to v2.11.1
 - karpenter from v1.4.0 to v2.5.0
 - karpenter-taint-remover from v1.0.1 to v1.1.0
@@ -457,6 +458,24 @@
 #### Fixed
 
 - The `helm.sh/chart` label is valid for long chart versions: the 63-character cut trims the whole trailing run of `-`, `.` and `_`.
+
+### external-dns-crossplane-resources [v0.4.0](https://github.com/giantswarm/external-dns-crossplane-resources/releases/tag/v0.4.0)
+
+#### Added
+
+- Add configurable `serviceAccount.name`/`serviceAccount.namespace` and `azure.mountPath` values.
+
+#### Changed
+
+- Scope AWS values under `aws.*`. Root-level values remain supported as a fallback for backward compatibility.
+- Templatize hardcoded resource, service account and tag values.
+- Scope the IAM trust policy to the exact `serviceAccount` subject instead of a wildcard match.
+- Enable Azure Workload Identity for the `azure` provider in addition to `aks`.
+- Update chart metadata to reflect Azure support.
+
+#### Removed
+
+- Remove unused `baseDomain` value.
 
 ### k8s-dns-node-cache [v2.9.1...v2.11.1](https://github.com/giantswarm/k8s-dns-node-cache-app/compare/v2.9.1...v2.11.1)
 
