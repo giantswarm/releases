@@ -46,6 +46,22 @@ Only AWS breaks the `cluster-<provider>` / `releases/<provider>` naming
 convention (`capa` vs. `aws`). Everything else follows
 `cluster-<provider>` ↔ `releases/<provider>`.
 
+## Running locally
+
+You can use `go run ` to quickly use the `verify-releases` tool locally.
+First make sure that you have the correct repositories checked out as described
+above. Then enter the tool directory and run the command like so:
+
+```shell
+$ go run main.go -base $HOME/Projects/giantswarm -providers aks
+[INFO] aks (cluster-aks / releases/aks)
+[INFO] Version: v36.1.0 | Provider Apps: 20 | Release Apps: 20
+[WARN] Missing from release: [rbac-bootstrap]
+[WARN] Additional in release: [prometheus-blackbox-exporter]
+```
+
+Run `go run main.go -help` to show the help message.
+
 ## Terminology
 
 - **Provider cluster chart**: a Helm chart named `cluster-<provider>`,
