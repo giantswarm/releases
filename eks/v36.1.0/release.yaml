@@ -49,8 +49,7 @@ spec:
     dependsOn:
     - vertical-pod-autoscaler-crd
   - name: external-dns
-    catalog: default-test
-    version: 3.7.1-r1d5529fbt20261021074455h1eb8c00
+    version: 3.7.1
     dependsOn:
     - prometheus-operator-crd
   - name: external-dns-crossplane-resources
