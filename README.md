@@ -15,6 +15,7 @@ to all Giant Swarm installations.
   - v36.1
     - [v36.1.0](https://github.com/giantswarm/releases/tree/master/capa/v36.1.0)
   - v36.0
+    - [v36.0.1](https://github.com/giantswarm/releases/tree/master/capa/v36.0.1)
     - [v36.0.0](https://github.com/giantswarm/releases/tree/master/capa/v36.0.0)
 
 - v35
@@ -204,6 +205,7 @@ to all Giant Swarm installations.
   - v36.1
     - [v36.1.0](https://github.com/giantswarm/releases/tree/master/azure/v36.1.0)
   - v36.0
+    - [v36.0.1](https://github.com/giantswarm/releases/tree/master/azure/v36.0.1)
     - [v36.0.0](https://github.com/giantswarm/releases/tree/master/azure/v36.0.0)
 
 - v35
