@@ -17,7 +17,6 @@ jobs:
           client-id: ${{ secrets.RELEASE_BOT_CLIENT_ID }}
           private-key: ${{ secrets.RELEASE_BOT_PRIVATE_KEY }}
           permission-pull-requests: write
-          permission-issues: write
 
       - name: Check readiness and trigger updates
         env:
