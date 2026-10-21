@@ -23,7 +23,7 @@ parameters:
 jobs:
   validate:
     docker:
-      - image: quay.io/giantswarm/architect
+      - image: gsoci.azurecr.io/giantswarm/architect
     steps:
       - checkout
       - run:

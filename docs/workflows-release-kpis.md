@@ -81,6 +81,28 @@ are not initial test friction, which is what this KPI measures.
 Per-suite check runs exist since March 2026. PRs created before `-tests-since` (default
 `2026-02-01`) get no test data, and PRs whose suites never all passed get `all_green_at` empty.
 
+## Failure rate by suite
+
+Towards https://github.com/giantswarm/roadmap/issues/4398
+
+The same check runs also give the outcome of every suite run. The output has a second list,
+`suite_results`, with one row per release PR and expected suite:
+
+| Field | Description |
+|-------|-------------|
+| `number`, `name`, `provider`, `release_type`, `merged_at`, `merged_quarter` | The release, as in `releases` |
+| `suite`, `check` | The suite as `<dir>/<suite>`, e.g. `capa/china`, and its check run name |
+| `runs`, `successes`, `failures`, `cancelled`, `skipped` | Completed check runs of the suite on the PR by outcome. `failures` counts `failure`, `timed_out`, `action_required` and `stale`; `skipped` counts `neutral` and `skipped`. Reruns on the same commit all count, the tool reads check runs with `filter=all` |
+| `failed` | `1` when the suite failed at least once on the PR, so the mean is the share of releases the suite failed on |
+| `waived` | `1` when the suite was waived with `/waive-suite` |
+| `first_green_at`, `runs_to_green` | The suite's first pass (or its waiver) and the number of runs up to it |
+| `last_to_green` | `1` when this suite's first green set the PR's `all_green_at`, that is, the release waited for it last |
+
+The dashboard aggregates these rows per suite within the selected time range and providers: the
+failure rate (`failures / (failures + successes)`), how many releases waited for the suite last,
+and on what share of releases the suite failed at least once. A failure is whatever the suite run
+reported; infrastructure problems are included, since they slow a release down just the same.
+
 ## Workflow: Release KPIs (`release-kpis.yaml`)
 
 **Triggers:**
@@ -145,6 +167,8 @@ Panels:
 - Median time to green per release type, median test friction, median runs until green and the share of releases merged with all suites green, each with the number of releases
 - Time to green and test runs per release
 - Share of releases merged with all suites green per quarter, and runs until green per release
+- Failure rate by suite, the suite each release waited for last, and the share of releases a suite failed on
+- Table of suite results per release
 - Table of all merged release PRs with links. *Inspect → Data* on this panel downloads a CSV.
 - Timestamp of the last data refresh and a glossary of the metrics
 
@@ -152,14 +176,17 @@ The per-release charts cap their axis at 60 days (100 runs for test runs) so tha
 release such as v35.0.0 does not flatten the others; the tooltip shows the real value.
 
 To change the dashboard, edit the template and merge it. The workflow publishes it on the next
-push to `master`. To try a change before merging, run the workflow steps by hand:
+push to `master`. The two table panels hold the Infinity queries and list their columns
+explicitly; the other panels read from them through the dashboard datasource. A new field is only
+available to the panels once it is in that column list, and the `number` and `name` fields are
+aliased to `PR` and `release` there, so transformations must use those names. To try a change before merging, run the workflow steps by hand:
 
 ```bash
 cd tools && go build -o release-kpis ./release-kpis && cd ..
 GITHUB_TOKEN=$(gh auth token) tools/release-kpis -repo-dir . -ref origin/master -output /tmp/release-lead-time.json
 jq --slurpfile data /tmp/release-lead-time.json \
   '(.panels[].targets[]? | select(.datasource.type == "yesoreyeram-infinity-datasource"))
-     |= (.source = "inline" | .data = ($data[0] | tojson))
+     |= (. as $t | .source = "inline" | .data = ({($t.root_selector): $data[0][$t.root_selector]} | tojson))
    | {dashboard: ., folderUid: "", overwrite: true}' tools/release-kpis/dashboard.json \
   | curl --silent --fail-with-body -X POST https://giantswarm.grafana.net/api/dashboards/db \
       -H "Authorization: Bearer $GRAFANA_API_KEY" -H "Content-Type: application/json" --data @-

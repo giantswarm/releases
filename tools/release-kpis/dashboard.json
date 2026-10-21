@@ -1,7 +1,7 @@
 {
   "uid": "capi-release-kpis",
   "title": "CAPI Release KPIs",
-  "description": "Release process KPIs, computed from merged release PRs by the Release KPIs workflow in giantswarm/releases, which embeds the data into this dashboard. The time range applies to the merge date of the release PRs. Edit tools/release-kpis/dashboard.json in that repository instead of this dashboard, the workflow overwrites it. See https://github.com/giantswarm/roadmap/issues/4382 and https://github.com/giantswarm/roadmap/issues/4385",
+  "description": "Release process KPIs, computed from merged release PRs by the Release KPIs workflow in giantswarm/releases, which embeds the data into this dashboard. The time range applies to the merge date of the release PRs. Edit tools/release-kpis/dashboard.json in that repository instead of this dashboard, the workflow overwrites it. See https://github.com/giantswarm/roadmap/issues/4382 and https://github.com/giantswarm/roadmap/issues/4385 and https://github.com/giantswarm/roadmap/issues/4398",
   "tags": [
     "owner:team-tenet",
     "releases",
@@ -40,6 +40,12 @@
       "title": "Roadmap issue: time to green",
       "type": "link",
       "url": "https://github.com/giantswarm/roadmap/issues/4385",
+      "targetBlank": true
+    },
+    {
+      "title": "Roadmap issue: failure rate by suite",
+      "type": "link",
+      "url": "https://github.com/giantswarm/roadmap/issues/4398",
       "targetBlank": true
     }
   ],
@@ -128,7 +134,7 @@
         "h": 14,
         "w": 24,
         "x": 0,
-        "y": 55
+        "y": 79
       },
       "targets": [
         {
@@ -207,6 +213,11 @@
               "selector": "automated",
               "text": "automated",
               "type": "boolean"
+            },
+            {
+              "selector": "planned_source",
+              "text": "planned_source",
+              "type": "string"
             },
             {
               "selector": "planned_merge_date",
@@ -1237,7 +1248,8 @@
           "color": {
             "mode": "fixed",
             "fixedColor": "blue"
-          }
+          },
+          "noValue": "none yet"
         },
         "overrides": [
           {
@@ -1424,7 +1436,8 @@
                 "value": 0.8
               }
             ]
-          }
+          },
+          "noValue": "none yet"
         },
         "overrides": [
           {
@@ -1738,7 +1751,7 @@
             ],
             "keepFields": false,
             "naming": {
-              "asLabels": false
+              "asLabels": true
             }
           }
         }
@@ -1759,8 +1772,8 @@
         "overrides": [
           {
             "matcher": {
-              "id": "byName",
-              "options": "workflow delay_days"
+              "id": "byRegexp",
+              "options": "/workflow/"
             },
             "properties": [
               {
@@ -1778,8 +1791,8 @@
           },
           {
             "matcher": {
-              "id": "byName",
-              "options": "estimated delay_days"
+              "id": "byRegexp",
+              "options": "/estimated/"
             },
             "properties": [
               {
@@ -2133,11 +2146,11 @@
         "h": 4,
         "w": 24,
         "x": 0,
-        "y": 69
+        "y": 93
       },
       "options": {
         "mode": "markdown",
-        "content": "Data: all merged release PRs since CAPI v25, filtered by the time range (merge date) and the provider variable. Last updated: unknown. Use *Inspect \u2192 Data* on the table to download a CSV.\n\n**Lead time**: PR opened \u2192 merged. **Planned merge date**: written into scheduled release PRs by the create-release workflow; older scheduled PRs only have an estimate (next 1st of the month), shown in the delay chart but not counted in the on-time rate. **Stages**: time between the stage/development, stage/active and stage/freeze labels. **Time to green**: PR opened \u2192 first time every expected E2E suite had passed or been waived. **Test friction**: first test run after the release entered the active stage \u2192 all green, the part of time to green spent on getting the tests green rather than on assembling the release. **Merged with all suites green**: share of releases whose expected suites had all passed or been waived before the merge; suites that were not yet required when a PR was opened only count if they ran. **Runs until green**: test runs up to the all-green state. Per-release charts are capped at 60 days, hover a clipped bar for its value."
+        "content": "Data: all merged release PRs since CAPI v25, filtered by the time range (merge date) and the provider variable. Last updated: unknown. Use *Inspect \u2192 Data* on the table to download a CSV.\n\n**Lead time**: PR opened \u2192 merged. **Planned merge date**: written into scheduled release PRs by the create-release workflow; older scheduled PRs only have an estimate (next 1st of the month), shown in the delay chart but not counted in the on-time rate. **Stages**: time between the stage/development, stage/active and stage/freeze labels. **Time to green**: PR opened \u2192 first time every expected E2E suite had passed or been waived. **Test friction**: first test run after the release entered the active stage \u2192 all green, the part of time to green spent on getting the tests green rather than on assembling the release. **Merged with all suites green**: share of releases whose expected suites had all passed or been waived before the merge; suites that were not yet required when a PR was opened only count if they ran. **Runs until green**: test runs up to the all-green state. **Failure rate by suite**: failed runs of a suite divided by its failed plus passed runs, over the selected releases; every rerun on the same commit counts. **Last suite to go green**: the suite whose first pass or waiver came last on a release. Per-release charts are capped at 60 days, hover a clipped bar for its value."
       }
     },
     {
@@ -3781,6 +3794,976 @@
         "tooltip": {
           "mode": "multi",
           "sort": "none"
+        }
+      }
+    },
+    {
+      "id": 23,
+      "type": "barchart",
+      "title": "Failure rate by suite",
+      "description": "Failed runs divided by failed plus passed runs of each suite, over all selected releases. Cancelled and skipped runs are not counted. Hover for the runs, failures and releases behind the rate. Only releases with per-suite results (since March 2026); v35.0.0 is limited to its last 200 commits. A failure is whatever the suite run reported, infrastructure problems included.",
+      "datasource": {
+        "type": "datasource",
+        "uid": "-- Dashboard --"
+      },
+      "gridPos": {
+        "h": 12,
+        "w": 8,
+        "x": 0,
+        "y": 55
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "datasource",
+            "uid": "-- Dashboard --"
+          },
+          "panelId": 22,
+          "withTransforms": false
+        }
+      ],
+      "transformations": [
+        {
+          "id": "filterByValue",
+          "options": {
+            "type": "include",
+            "match": "all",
+            "filters": [
+              {
+                "fieldName": "merged_at",
+                "config": {
+                  "id": "greaterOrEqual",
+                  "options": {
+                    "value": "${__from}"
+                  }
+                }
+              },
+              {
+                "fieldName": "merged_at",
+                "config": {
+                  "id": "lowerOrEqual",
+                  "options": {
+                    "value": "${__to}"
+                  }
+                }
+              },
+              {
+                "fieldName": "provider",
+                "config": {
+                  "id": "regex",
+                  "options": {
+                    "value": "^${provider:regex}$"
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "id": "groupBy",
+          "options": {
+            "fields": {
+              "suite": {
+                "operation": "groupby",
+                "aggregations": []
+              },
+              "runs": {
+                "operation": "aggregate",
+                "aggregations": [
+                  "sum"
+                ]
+              },
+              "failures": {
+                "operation": "aggregate",
+                "aggregations": [
+                  "sum"
+                ]
+              },
+              "successes": {
+                "operation": "aggregate",
+                "aggregations": [
+                  "sum"
+                ]
+              },
+              "PR": {
+                "operation": "aggregate",
+                "aggregations": [
+                  "count"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "id": "calculateField",
+          "options": {
+            "mode": "binary",
+            "binary": {
+              "left": "failures (sum)",
+              "operator": "+",
+              "right": "successes (sum)"
+            },
+            "alias": "attempts",
+            "replaceFields": false
+          }
+        },
+        {
+          "id": "filterByValue",
+          "options": {
+            "type": "include",
+            "match": "all",
+            "filters": [
+              {
+                "fieldName": "attempts",
+                "config": {
+                  "id": "greater",
+                  "options": {
+                    "value": 0
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "id": "calculateField",
+          "options": {
+            "mode": "binary",
+            "binary": {
+              "left": "failures (sum)",
+              "operator": "/",
+              "right": "attempts"
+            },
+            "alias": "failure rate",
+            "replaceFields": false
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "attempts": true,
+              "successes (sum)": true
+            },
+            "renameByName": {
+              "runs (sum)": "runs",
+              "failures (sum)": "failures",
+              "PR (count)": "releases"
+            }
+          }
+        },
+        {
+          "id": "sortBy",
+          "options": {
+            "sort": [
+              {
+                "field": "failure rate",
+                "desc": true
+              }
+            ]
+          }
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percentunit",
+          "decimals": 0,
+          "min": 0,
+          "custom": {
+            "fillOpacity": 80,
+            "lineWidth": 1
+          },
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "red"
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "runs"
+            },
+            "properties": [
+              {
+                "id": "custom.hideFrom",
+                "value": {
+                  "viz": true,
+                  "legend": true,
+                  "tooltip": false
+                }
+              },
+              {
+                "id": "unit",
+                "value": "none"
+              },
+              {
+                "id": "decimals",
+                "value": 0
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "failures"
+            },
+            "properties": [
+              {
+                "id": "custom.hideFrom",
+                "value": {
+                  "viz": true,
+                  "legend": true,
+                  "tooltip": false
+                }
+              },
+              {
+                "id": "unit",
+                "value": "none"
+              },
+              {
+                "id": "decimals",
+                "value": 0
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "releases"
+            },
+            "properties": [
+              {
+                "id": "custom.hideFrom",
+                "value": {
+                  "viz": true,
+                  "legend": true,
+                  "tooltip": false
+                }
+              },
+              {
+                "id": "unit",
+                "value": "none"
+              },
+              {
+                "id": "decimals",
+                "value": 0
+              }
+            ]
+          }
+        ]
+      },
+      "options": {
+        "orientation": "horizontal",
+        "xField": "suite",
+        "xTickLabelRotation": 0,
+        "showValue": "auto",
+        "stacking": "none",
+        "groupWidth": 0.7,
+        "barWidth": 0.8,
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": false
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
+      }
+    },
+    {
+      "id": 24,
+      "type": "barchart",
+      "title": "Last suite to go green",
+      "description": "Number of releases that waited for this suite last: its first pass or waiver set the release's all-green time. This is the suite that slowed the release down, whether or not it failed often. Only releases with per-suite results (since March 2026); v35.0.0 is limited to its last 200 commits. A failure is whatever the suite run reported, infrastructure problems included.",
+      "datasource": {
+        "type": "datasource",
+        "uid": "-- Dashboard --"
+      },
+      "gridPos": {
+        "h": 12,
+        "w": 8,
+        "x": 8,
+        "y": 55
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "datasource",
+            "uid": "-- Dashboard --"
+          },
+          "panelId": 22,
+          "withTransforms": false
+        }
+      ],
+      "transformations": [
+        {
+          "id": "filterByValue",
+          "options": {
+            "type": "include",
+            "match": "all",
+            "filters": [
+              {
+                "fieldName": "merged_at",
+                "config": {
+                  "id": "greaterOrEqual",
+                  "options": {
+                    "value": "${__from}"
+                  }
+                }
+              },
+              {
+                "fieldName": "merged_at",
+                "config": {
+                  "id": "lowerOrEqual",
+                  "options": {
+                    "value": "${__to}"
+                  }
+                }
+              },
+              {
+                "fieldName": "provider",
+                "config": {
+                  "id": "regex",
+                  "options": {
+                    "value": "^${provider:regex}$"
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "id": "filterByValue",
+          "options": {
+            "type": "include",
+            "match": "all",
+            "filters": [
+              {
+                "fieldName": "last_to_green",
+                "config": {
+                  "id": "equal",
+                  "options": {
+                    "value": 1
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "id": "groupBy",
+          "options": {
+            "fields": {
+              "suite": {
+                "operation": "groupby",
+                "aggregations": []
+              },
+              "PR": {
+                "operation": "aggregate",
+                "aggregations": [
+                  "count"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "renameByName": {
+              "PR (count)": "releases"
+            }
+          }
+        },
+        {
+          "id": "sortBy",
+          "options": {
+            "sort": [
+              {
+                "field": "releases",
+                "desc": true
+              }
+            ]
+          }
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "none",
+          "decimals": 0,
+          "min": 0,
+          "custom": {
+            "fillOpacity": 80,
+            "lineWidth": 1
+          },
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "orange"
+          }
+        },
+        "overrides": []
+      },
+      "options": {
+        "orientation": "horizontal",
+        "xField": "suite",
+        "xTickLabelRotation": 0,
+        "showValue": "auto",
+        "stacking": "none",
+        "groupWidth": 0.7,
+        "barWidth": 0.8,
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": false
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
+      }
+    },
+    {
+      "id": 25,
+      "type": "barchart",
+      "title": "Releases the suite failed on",
+      "description": "Share of the selected releases on which the suite failed at least once, so that one release with many retries does not dominate. Hover for the number of releases. Only releases with per-suite results (since March 2026); v35.0.0 is limited to its last 200 commits. A failure is whatever the suite run reported, infrastructure problems included.",
+      "datasource": {
+        "type": "datasource",
+        "uid": "-- Dashboard --"
+      },
+      "gridPos": {
+        "h": 12,
+        "w": 8,
+        "x": 16,
+        "y": 55
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "datasource",
+            "uid": "-- Dashboard --"
+          },
+          "panelId": 22,
+          "withTransforms": false
+        }
+      ],
+      "transformations": [
+        {
+          "id": "filterByValue",
+          "options": {
+            "type": "include",
+            "match": "all",
+            "filters": [
+              {
+                "fieldName": "merged_at",
+                "config": {
+                  "id": "greaterOrEqual",
+                  "options": {
+                    "value": "${__from}"
+                  }
+                }
+              },
+              {
+                "fieldName": "merged_at",
+                "config": {
+                  "id": "lowerOrEqual",
+                  "options": {
+                    "value": "${__to}"
+                  }
+                }
+              },
+              {
+                "fieldName": "provider",
+                "config": {
+                  "id": "regex",
+                  "options": {
+                    "value": "^${provider:regex}$"
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "id": "groupBy",
+          "options": {
+            "fields": {
+              "suite": {
+                "operation": "groupby",
+                "aggregations": []
+              },
+              "failed": {
+                "operation": "aggregate",
+                "aggregations": [
+                  "mean"
+                ]
+              },
+              "PR": {
+                "operation": "aggregate",
+                "aggregations": [
+                  "count"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "renameByName": {
+              "failed (mean)": "share of releases",
+              "PR (count)": "releases"
+            }
+          }
+        },
+        {
+          "id": "sortBy",
+          "options": {
+            "sort": [
+              {
+                "field": "share of releases",
+                "desc": true
+              }
+            ]
+          }
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percentunit",
+          "decimals": 0,
+          "min": 0,
+          "custom": {
+            "fillOpacity": 80,
+            "lineWidth": 1
+          },
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "red"
+          },
+          "max": 1
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "releases"
+            },
+            "properties": [
+              {
+                "id": "custom.hideFrom",
+                "value": {
+                  "viz": true,
+                  "legend": true,
+                  "tooltip": false
+                }
+              },
+              {
+                "id": "unit",
+                "value": "none"
+              },
+              {
+                "id": "decimals",
+                "value": 0
+              }
+            ]
+          }
+        ]
+      },
+      "options": {
+        "orientation": "horizontal",
+        "xField": "suite",
+        "xTickLabelRotation": 0,
+        "showValue": "auto",
+        "stacking": "none",
+        "groupWidth": 0.7,
+        "barWidth": 0.8,
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": false
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
+      }
+    },
+    {
+      "id": 22,
+      "type": "table",
+      "title": "Suite results per release",
+      "description": "Every expected E2E suite of every release PR with per-suite results, with its completed check runs by outcome. 'failed' means at least one failed run, 'last to green' means the release waited for this suite last. This panel holds the embedded data for the suite panels; they read it from here.",
+      "datasource": {
+        "type": "yesoreyeram-infinity-datasource",
+        "uid": "bdeczbud7da80f"
+      },
+      "gridPos": {
+        "h": 12,
+        "w": 24,
+        "x": 0,
+        "y": 67
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "yesoreyeram-infinity-datasource",
+            "uid": "bdeczbud7da80f"
+          },
+          "type": "json",
+          "source": "inline",
+          "format": "table",
+          "parser": "backend",
+          "root_selector": "suite_results",
+          "columns": [
+            {
+              "selector": "number",
+              "text": "PR",
+              "type": "number"
+            },
+            {
+              "selector": "name",
+              "text": "release",
+              "type": "string"
+            },
+            {
+              "selector": "provider",
+              "text": "provider",
+              "type": "string"
+            },
+            {
+              "selector": "release_type",
+              "text": "release_type",
+              "type": "string"
+            },
+            {
+              "selector": "merged_at",
+              "text": "merged_at",
+              "type": "timestamp"
+            },
+            {
+              "selector": "merged_quarter",
+              "text": "merged_quarter",
+              "type": "string"
+            },
+            {
+              "selector": "suite",
+              "text": "suite",
+              "type": "string"
+            },
+            {
+              "selector": "check",
+              "text": "check",
+              "type": "string"
+            },
+            {
+              "selector": "runs",
+              "text": "runs",
+              "type": "number"
+            },
+            {
+              "selector": "successes",
+              "text": "successes",
+              "type": "number"
+            },
+            {
+              "selector": "failures",
+              "text": "failures",
+              "type": "number"
+            },
+            {
+              "selector": "cancelled",
+              "text": "cancelled",
+              "type": "number"
+            },
+            {
+              "selector": "skipped",
+              "text": "skipped",
+              "type": "number"
+            },
+            {
+              "selector": "failed",
+              "text": "failed",
+              "type": "number"
+            },
+            {
+              "selector": "waived",
+              "text": "waived",
+              "type": "number"
+            },
+            {
+              "selector": "first_green_at",
+              "text": "first_green_at",
+              "type": "timestamp"
+            },
+            {
+              "selector": "runs_to_green",
+              "text": "runs_to_green",
+              "type": "number"
+            },
+            {
+              "selector": "last_to_green",
+              "text": "last_to_green",
+              "type": "number"
+            }
+          ],
+          "filters": [],
+          "data": ""
+        }
+      ],
+      "transformations": [
+        {
+          "id": "filterByValue",
+          "options": {
+            "type": "include",
+            "match": "all",
+            "filters": [
+              {
+                "fieldName": "merged_at",
+                "config": {
+                  "id": "greaterOrEqual",
+                  "options": {
+                    "value": "${__from}"
+                  }
+                }
+              },
+              {
+                "fieldName": "merged_at",
+                "config": {
+                  "id": "lowerOrEqual",
+                  "options": {
+                    "value": "${__to}"
+                  }
+                }
+              },
+              {
+                "fieldName": "provider",
+                "config": {
+                  "id": "regex",
+                  "options": {
+                    "value": "^${provider:regex}$"
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "id": "sortBy",
+          "options": {
+            "sort": [
+              {
+                "field": "merged_at",
+                "desc": true
+              }
+            ]
+          }
+        },
+        {
+          "id": "filterFieldsByName",
+          "options": {
+            "include": {
+              "names": [
+                "PR",
+                "release",
+                "merged_at",
+                "suite",
+                "runs",
+                "successes",
+                "failures",
+                "cancelled",
+                "skipped",
+                "runs_to_green",
+                "failed",
+                "waived",
+                "last_to_green"
+              ]
+            }
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "renameByName": {
+              "merged_at": "merged",
+              "runs_to_green": "runs to green",
+              "last_to_green": "last to green"
+            },
+            "indexByName": {
+              "PR": 0,
+              "merged_at": 2,
+              "suite": 3,
+              "runs": 4,
+              "successes": 5,
+              "failures": 6,
+              "cancelled": 7,
+              "skipped": 8,
+              "failed": 9,
+              "waived": 10,
+              "runs_to_green": 11,
+              "last_to_green": 12,
+              "release": 1
+            }
+          }
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "filterable": true
+          },
+          "decimals": 0
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "PR"
+            },
+            "properties": [
+              {
+                "id": "links",
+                "value": [
+                  {
+                    "title": "Open pull request",
+                    "targetBlank": true,
+                    "url": "https://github.com/giantswarm/releases/pull/${__value.raw}"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "merged"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "time: YYYY-MM-DD HH:mm"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "failed"
+            },
+            "properties": [
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-text"
+                }
+              },
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "type": "value",
+                    "options": {
+                      "0": {
+                        "text": "no",
+                        "color": "#8e8e8e",
+                        "index": 0
+                      },
+                      "1": {
+                        "text": "yes",
+                        "color": "red",
+                        "index": 1
+                      }
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "waived"
+            },
+            "properties": [
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-text"
+                }
+              },
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "type": "value",
+                    "options": {
+                      "0": {
+                        "text": "no",
+                        "color": "#8e8e8e",
+                        "index": 0
+                      },
+                      "1": {
+                        "text": "yes",
+                        "color": "orange",
+                        "index": 1
+                      }
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "last to green"
+            },
+            "properties": [
+              {
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-text"
+                }
+              },
+              {
+                "id": "mappings",
+                "value": [
+                  {
+                    "type": "value",
+                    "options": {
+                      "0": {
+                        "text": "no",
+                        "color": "#8e8e8e",
+                        "index": 0
+                      },
+                      "1": {
+                        "text": "yes",
+                        "color": "orange",
+                        "index": 1
+                      }
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "options": {
+        "showHeader": true,
+        "cellHeight": "sm",
+        "footer": {
+          "show": false
         }
       }
     }
