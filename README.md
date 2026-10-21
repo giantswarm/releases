@@ -19,6 +19,7 @@ to all Giant Swarm installations.
 
 - v35
   - v35.2
+    - [v35.2.3](https://github.com/giantswarm/releases/tree/master/capa/v35.2.3)
     - [v35.2.2](https://github.com/giantswarm/releases/tree/master/capa/v35.2.2)
     - [v35.2.1](https://github.com/giantswarm/releases/tree/master/capa/v35.2.1)
     - [v35.2.0](https://github.com/giantswarm/releases/tree/master/capa/v35.2.0)
@@ -208,6 +209,7 @@ to all Giant Swarm installations.
 
 - v35
   - v35.2
+    - [v35.2.3](https://github.com/giantswarm/releases/tree/master/azure/v35.2.3)
     - [v35.2.2](https://github.com/giantswarm/releases/tree/master/azure/v35.2.2)
     - [v35.2.1](https://github.com/giantswarm/releases/tree/master/azure/v35.2.1)
     - [v35.2.0](https://github.com/giantswarm/releases/tree/master/azure/v35.2.0)
