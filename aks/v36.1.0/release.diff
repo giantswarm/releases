@@ -29,7 +29,7 @@ spec:                                                              spec:
     dependsOn:                                                         dependsOn:
     - prometheus-operator-crd                                          - prometheus-operator-crd
   - name: external-dns                                               - name: external-dns
-    version: 3.5.0                                              |      version: 3.6.0
+    version: 3.5.0                                              |      version: 3.7.0
     dependsOn:                                                         dependsOn:
     - prometheus-operator-crd                                          - prometheus-operator-crd
     - vertical-pod-autoscaler-crd                                      - vertical-pod-autoscaler-crd
@@ -72,6 +72,8 @@ spec:                                                              spec:
     dependsOn:                                                         dependsOn:
     - prometheus-operator-crd                                          - prometheus-operator-crd
     - vertical-pod-autoscaler-crd                                      - vertical-pod-autoscaler-crd
+                                                                >    - name: rbac-bootstrap
+                                                                >      version: 0.3.0
   - name: security-bundle                                            - name: security-bundle
     version: 2.4.0                                                     version: 2.4.0
   - name: teleport-kube-agent                                        - name: teleport-kube-agent
@@ -87,8 +89,9 @@ spec:                                                              spec:
     version: 4.1.2                                                     version: 4.1.2
   components:                                                        components:
   - name: cluster-aks                                                - name: cluster-aks
-    version: 0.7.0                                              |      version: 0.9.0
+    version: 0.7.0                                              |      catalog: cluster
+                                                                >      version: 0.9.0
   - name: kubernetes                                                 - name: kubernetes
-    version: 1.35.7                                             |      version: 1.36.5
-  date: "2026-09-23T11:51:51Z"                                  |    date: "2026-10-19T12:52:14Z"
+    version: 1.35.7                                             |      version: 1.36.4
+  date: "2026-09-23T11:51:51Z"                                  |    date: "2026-10-21T06:42:35Z"
   state: active                                                      state: active
