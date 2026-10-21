@@ -29,7 +29,7 @@ spec:                                                              spec:
     dependsOn:                                                         dependsOn:
     - prometheus-operator-crd                                          - prometheus-operator-crd
   - name: external-dns                                               - name: external-dns
-    version: 3.5.0                                                     version: 3.5.0
+    version: 3.5.0                                              |      version: 3.5.1
     dependsOn:                                                         dependsOn:
     - prometheus-operator-crd                                          - prometheus-operator-crd
     - vertical-pod-autoscaler-crd                                      - vertical-pod-autoscaler-crd
@@ -90,5 +90,5 @@ spec:                                                              spec:
     version: 0.7.0                                                     version: 0.7.0
   - name: kubernetes                                                 - name: kubernetes
     version: 1.35.7                                                    version: 1.35.7
-  date: "2026-09-23T11:51:51Z"                                  |    date: "2026-10-21T13:32:05Z"
+  date: "2026-09-23T11:51:51Z"                                  |    date: "2026-10-21T13:37:37Z"
   state: active                                                      state: active
