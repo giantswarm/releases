@@ -2,10 +2,6 @@
 
 ## Changes compared to v34.0.1
 
-### Components
-
-- Added containerd [v1.7.29](https://github.com/containerd/containerd/releases/tag/v1.7.29)
-
 ### Apps
 
 - external-dns from v3.4.0 to v3.4.1

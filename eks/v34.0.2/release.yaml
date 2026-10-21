@@ -112,8 +112,6 @@ spec:
   - name: cluster-eks
     catalog: cluster
     version: 1.2.1
-  - name: containerd
-    version: 1.7.29
   - name: flatcar
     version: 4459.2.3
   - name: kubernetes
