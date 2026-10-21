@@ -75,7 +75,7 @@ spec:                                                              spec:
     - prometheus-operator-crd                                          - prometheus-operator-crd
     - vertical-pod-autoscaler-crd                                      - vertical-pod-autoscaler-crd
   - name: external-dns                                               - name: external-dns
-    version: 3.5.0                                                     version: 3.5.0
+    version: 3.5.0                                              |      version: 3.5.1
     dependsOn:                                                         dependsOn:
     - cilium                                                           - cilium
     - prometheus-operator-crd                                          - prometheus-operator-crd
@@ -157,5 +157,5 @@ spec:                                                              spec:
     version: 1.36.5                                                    version: 1.36.5
   - name: os-tooling                                                 - name: os-tooling
     version: 1.35.0                                                    version: 1.35.0
-  date: "2026-09-24T20:18:41Z"                                  |    date: "2026-10-21T13:32:08Z"
+  date: "2026-09-24T20:18:41Z"                                  |    date: "2026-10-21T13:37:40Z"
   state: deprecated                                             |    state: active
