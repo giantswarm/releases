@@ -64,7 +64,7 @@
 
 - cert-exporter from v2.12.0 to v2.12.1
 - cert-manager from v4.1.1 to v4.1.2
-- external-dns from v3.5.0 to v3.7.0
+- external-dns from v3.5.0 to v3.7.1
 - k8s-dns-node-cache from v2.11.0 to v2.11.1
 - net-exporter from v1.24.0 to v1.24.1
 - network-policies from v0.3.0 to v0.3.2
@@ -100,7 +100,7 @@
 
 - Trim the `helm.sh/chart` label of the Giant Swarm resources (VPAs, PodLogs, proxy ConfigMap) to end on an alphanumeric character. A long dev version cut at 63 characters could end on a `.`, and the API server rejected the resource.
 
-### external-dns [v3.5.0...v3.7.0](https://github.com/giantswarm/external-dns-app/compare/v3.5.0...v3.7.0)
+### external-dns [v3.5.0...v3.7.1](https://github.com/giantswarm/external-dns-app/compare/v3.5.0...v3.7.1)
 
 #### Added
 
@@ -125,6 +125,7 @@
 
 #### Fixed
 
+- CRD install job: bump the `kubectl-apply-job` dependency to 0.14.0, whose fallback image is `gsoci.azurecr.io/giantswarm/docker-kubectl` instead of `quay.io/giantswarm/docker-kubectl:1.26.0`, which quay.io now refuses with 401.
 - Values schema: accept arbitrary keys again in free-form maps and pass-through Kubernetes objects (annotations, labels, `nodeSelector`, `affinity`, security contexts, probes, resources, `extraArgs` as a map, `tlsConfig`, `secretConfiguration.data`), and `name` in `imagePullSecrets` items. This broke installs, for example with the IRSA `eks.amazonaws.com/role-arn` service account annotation on CAPA.
 - Values schema: accept the `aws` values that cluster-aws still sets. They have no effect.
 - The `helm.sh/chart` label is valid for long chart versions: the 63-character cut trims the whole trailing run of `-`, `.` and `_`.
