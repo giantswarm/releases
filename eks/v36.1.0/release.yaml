@@ -6,10 +6,6 @@ spec:
   apps:
   - name: aws-ebs-csi-driver
     version: 4.3.2
-  - name: aws-ebs-csi-driver-servicemonitors
-    version: 0.1.2
-    dependsOn:
-    - prometheus-operator-crd
   - name: aws-nth-bundle
     version: 2.1.1
   - name: cert-exporter

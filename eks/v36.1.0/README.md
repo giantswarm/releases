@@ -126,7 +126,6 @@
 ### Apps
 
 - aws-ebs-csi-driver from v4.1.1 to v4.3.2
-- aws-ebs-csi-driver-servicemonitors from v0.1.0 to v0.1.2
 - aws-nth-bundle from v1.3.0 to v2.1.1
 - cert-exporter from v2.9.15 to v2.12.1
 - cert-manager from v3.9.4 to v4.1.2
@@ -194,16 +193,6 @@
 - Re-enable metrics, force use of `ServiceMonitor` to avoid rendering without them if CRDs are not installed yet
 - Fix VPA `updateMode` for `ebs-csi-node` DaemonSet from `Auto` to `Initial`. VPA cannot evict DaemonSet pods, so `Auto` mode silently produces recommendations without ever applying them. `Initial` correctly sets resources at pod creation time.
 - Use `.Chart.AppVersion` instead of `.Chart.Version` for OCIRepository tag.
-
-### aws-ebs-csi-driver-servicemonitors [v0.1.0...v0.1.2](https://github.com/giantswarm/aws-ebs-csi-driver-servicemonitors-app/compare/v0.1.0...v0.1.2)
-
-#### Changed
-
-- Migrate to App Build Suite (ABS).
-
-#### Fixed
-
-- Remove duplicate `application.giantswarm.io/team` label in PodMonitor that caused install failure. The label is already included via the common labels helper.
 
 ### aws-nth-bundle [v1.3.0...v2.1.1](https://github.com/giantswarm/aws-nth-bundle/compare/v1.3.0...v2.1.1)
 
