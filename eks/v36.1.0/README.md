@@ -137,7 +137,7 @@
 - cluster-autoscaler from v1.34.1-1 to v2.1.1
 - coredns from v1.30.0 to v1.34.0
 - coredns-extensions from v0.1.2 to v0.1.3
-- external-dns from v3.4.0 to v3.6.0
+- external-dns from v3.4.0 to v3.6.1
 - Added external-dns-crossplane-resources v0.4.0
 - k8s-dns-node-cache from v2.9.1 to v2.11.1
 - karpenter from v1.4.0 to v2.5.0
@@ -414,7 +414,7 @@
 - Render the `health` directive in only the `.` server block. The health plugin is process-wide and can be enabled in just one Server Block, so emitting it in every zone block was invalid. `ready` is kept in every block (its readiness is aggregated across blocks).
 - Correct the `coredns.*.cache.serveStale.refreshMode` schema enum to `immediate`/`verify` (was `immediate`/`background`), matching the CoreDNS cache plugin.
 
-### external-dns [v3.4.0...v3.6.0](https://github.com/giantswarm/external-dns-app/compare/v3.4.0...v3.6.0)
+### external-dns [v3.4.0...v3.6.1](https://github.com/giantswarm/external-dns-app/compare/v3.4.0...v3.6.1)
 
 #### Added
 
@@ -446,6 +446,7 @@
 
 #### Fixed
 
+- CRD install job: bump the `kubectl-apply-job` dependency to 0.14.0, whose fallback image is `gsoci.azurecr.io/giantswarm/docker-kubectl` instead of `quay.io/giantswarm/docker-kubectl:1.26.0`, which quay.io now refuses with 401.
 - The `helm.sh/chart` label is valid for long chart versions: the 63-character cut trims the whole trailing run of `-`, `.` and `_`.
 
 ### external-dns-crossplane-resources [v0.4.0](https://github.com/giantswarm/external-dns-crossplane-resources/releases/tag/v0.4.0)

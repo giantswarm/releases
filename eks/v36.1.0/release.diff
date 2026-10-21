@@ -49,7 +49,7 @@ spec:                                                              spec:
     dependsOn:                                                         dependsOn:
     - vertical-pod-autoscaler-crd                                      - vertical-pod-autoscaler-crd
   - name: external-dns                                               - name: external-dns
-    version: 3.4.0                                              |      version: 3.6.0
+    version: 3.4.0                                              |      version: 3.6.1
     dependsOn:                                                         dependsOn:
     - prometheus-operator-crd                                          - prometheus-operator-crd
                                                                 >    - name: external-dns-crossplane-resources
