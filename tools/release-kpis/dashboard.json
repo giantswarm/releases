@@ -215,6 +215,11 @@
               "type": "boolean"
             },
             {
+              "selector": "planned_source",
+              "text": "planned_source",
+              "type": "string"
+            },
+            {
               "selector": "planned_merge_date",
               "text": "planned_merge_date",
               "type": "string"
@@ -1243,7 +1248,8 @@
           "color": {
             "mode": "fixed",
             "fixedColor": "blue"
-          }
+          },
+          "noValue": "none yet"
         },
         "overrides": [
           {
@@ -1430,7 +1436,8 @@
                 "value": 0.8
               }
             ]
-          }
+          },
+          "noValue": "none yet"
         },
         "overrides": [
           {
@@ -1744,7 +1751,7 @@
             ],
             "keepFields": false,
             "naming": {
-              "asLabels": false
+              "asLabels": true
             }
           }
         }
@@ -1765,8 +1772,8 @@
         "overrides": [
           {
             "matcher": {
-              "id": "byName",
-              "options": "workflow delay_days"
+              "id": "byRegexp",
+              "options": "/workflow/"
             },
             "properties": [
               {
@@ -1784,8 +1791,8 @@
           },
           {
             "matcher": {
-              "id": "byName",
-              "options": "estimated delay_days"
+              "id": "byRegexp",
+              "options": "/estimated/"
             },
             "properties": [
               {
@@ -3879,7 +3886,7 @@
                   "sum"
                 ]
               },
-              "number": {
+              "PR": {
                 "operation": "aggregate",
                 "aggregations": [
                   "count"
@@ -3942,7 +3949,7 @@
             "renameByName": {
               "runs (sum)": "runs",
               "failures (sum)": "failures",
-              "number (count)": "releases"
+              "PR (count)": "releases"
             }
           }
         },
@@ -4155,7 +4162,7 @@
                 "operation": "groupby",
                 "aggregations": []
               },
-              "number": {
+              "PR": {
                 "operation": "aggregate",
                 "aggregations": [
                   "count"
@@ -4168,7 +4175,7 @@
           "id": "organize",
           "options": {
             "renameByName": {
-              "number (count)": "releases"
+              "PR (count)": "releases"
             }
           }
         },
@@ -4296,7 +4303,7 @@
                   "mean"
                 ]
               },
-              "number": {
+              "PR": {
                 "operation": "aggregate",
                 "aggregations": [
                   "count"
@@ -4310,7 +4317,7 @@
           "options": {
             "renameByName": {
               "failed (mean)": "share of releases",
-              "number (count)": "releases"
+              "PR (count)": "releases"
             }
           }
         },
@@ -4587,6 +4594,21 @@
               "merged_at": "merged",
               "runs_to_green": "runs to green",
               "last_to_green": "last to green"
+            },
+            "indexByName": {
+              "PR": 0,
+              "merged_at": 2,
+              "suite": 3,
+              "runs": 4,
+              "successes": 5,
+              "failures": 6,
+              "cancelled": 7,
+              "skipped": 8,
+              "failed": 9,
+              "waived": 10,
+              "runs_to_green": 11,
+              "last_to_green": 12,
+              "release": 1
             }
           }
         }
