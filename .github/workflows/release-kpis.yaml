@@ -83,6 +83,19 @@ jobs:
             jq -r '.releases[-10:] | reverse[] |
               "| [#\(.number)](\(.url)) | \(.provider) | \(.version) | \(.release_type) | \(.lead_time_days) | \(.planned_merge_date // "-") | \(.delay_days // "-") |"' \
               "$RUNNER_TEMP/release-lead-time.json"
+
+            echo
+            echo "Suites with the most failures (releases merged in the last 90 days):"
+            echo
+            echo "| Suite | Runs | Failures | Releases failed on |"
+            echo "|-------|------|----------|--------------------|"
+            jq -r --arg since "$(date -u -d '90 days ago' +%Y-%m-%dT%H:%M:%SZ)" '
+              [.suite_results[] | select(.merged_at >= $since)]
+              | group_by(.suite)
+              | map({suite: .[0].suite, runs: (map(.runs) | add), failures: (map(.failures) | add), releases: (map(.failed) | add)})
+              | sort_by(-.failures, -.releases)[:5][]
+              | "| \(.suite) | \(.runs) | \(.failures) | \(.releases) |"' \
+              "$RUNNER_TEMP/release-lead-time.json"
           } >> "$GITHUB_STEP_SUMMARY"
 
       - name: Publish dashboard to Grafana
@@ -91,11 +104,12 @@ jobs:
 
           DASHBOARD_JSON="$RUNNER_TEMP/dashboard.json"
 
-          # Embed the data into the Infinity targets of the dashboard template.
+          # Embed the data into the Infinity targets of the dashboard template,
+          # each target only gets the top-level key its root selector reads.
           # The other panels read it from there through the Dashboard datasource.
           jq --slurpfile data "$RUNNER_TEMP/release-lead-time.json" \
             '(.panels[].targets[]? | select(.datasource.type == "yesoreyeram-infinity-datasource"))
-               |= (.source = "inline" | .data = ($data[0] | tojson))
+               |= (. as $t | .source = "inline" | .data = ({($t.root_selector): $data[0][$t.root_selector]} | tojson))
              | (.panels[] | select(.type == "text") | .options.content)
                |= sub("Last updated: [^.]*\\."; "Last updated: \($data[0].generated_at).")
              | {dashboard: ., folderUid: "", overwrite: true, message: "Updated by the Release KPIs workflow"}' \
