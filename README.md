@@ -596,6 +596,7 @@ to all Giant Swarm installations.
 
 - v34
   - v34.0
+    - [v34.0.2](https://github.com/giantswarm/releases/tree/master/eks/v34.0.2)
     - [v34.0.1](https://github.com/giantswarm/releases/tree/master/eks/v34.0.1)
     - [v34.0.0](https://github.com/giantswarm/releases/tree/master/eks/archived/v34.0.0)
 
