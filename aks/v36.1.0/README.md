@@ -6,7 +6,7 @@
 
 - cluster-aks from v0.7.0 to v0.9.0
 - cluster from v8.3.0 to v9.0.2
-- Kubernetes from v1.35.7 to [v1.36.5](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.36.md#v1.36.5)
+- Kubernetes from v1.35.7 to [v1.36.4](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.36.md#v1.36.4)
 
 ### cluster-aks [v0.7.0...v0.9.0](https://github.com/giantswarm/cluster-aks/compare/v0.7.0...v0.9.0)
 
@@ -64,13 +64,14 @@
 
 - cert-exporter from v2.12.0 to v2.12.1
 - cert-manager from v4.1.1 to v4.1.2
-- external-dns from v3.5.0 to v3.6.0
+- external-dns from v3.5.0 to v3.7.0
 - k8s-dns-node-cache from v2.11.0 to v2.11.1
 - net-exporter from v1.24.0 to v1.24.1
 - network-policies from v0.3.0 to v0.3.2
 - node-exporter from v1.20.13 to v1.21.0
 - observability-bundle from v3.4.0 to v3.5.0
 - prometheus-blackbox-exporter from v0.9.0 to v0.10.0
+- Added rbac-bootstrap v0.3.0
 
 ### cert-exporter [v2.12.0...v2.12.1](https://github.com/giantswarm/cert-exporter/compare/v2.12.0...v2.12.1)
 
@@ -99,7 +100,7 @@
 
 - Trim the `helm.sh/chart` label of the Giant Swarm resources (VPAs, PodLogs, proxy ConfigMap) to end on an alphanumeric character. A long dev version cut at 63 characters could end on a `.`, and the API server rejected the resource.
 
-### external-dns [v3.5.0...v3.6.0](https://github.com/giantswarm/external-dns-app/compare/v3.5.0...v3.6.0)
+### external-dns [v3.5.0...v3.7.0](https://github.com/giantswarm/external-dns-app/compare/v3.5.0...v3.7.0)
 
 #### Added
 
@@ -108,6 +109,8 @@
 
 #### Changed
 
+- Upgrade external-dns to [v0.23.0](https://github.com/kubernetes-sigs/external-dns/releases/tag/v0.23.0).
+- Sync to upstream helm chart [1.23.0](https://github.com/kubernetes-sigs/external-dns/releases/tag/external-dns-helm-chart-1.23.0).
 - Run the E2E test suites automatically on release PRs by adding `.github/release-pr-body.md`.
 - Upgrade external-dns to [v0.22.0](https://github.com/kubernetes-sigs/external-dns/releases/tag/v0.22.0).
 - Sync to upstream helm chart [1.22.0](https://github.com/kubernetes-sigs/external-dns/releases/tag/external-dns-helm-chart-1.22.0).
@@ -122,6 +125,8 @@
 
 #### Fixed
 
+- Values schema: accept arbitrary keys again in free-form maps and pass-through Kubernetes objects (annotations, labels, `nodeSelector`, `affinity`, security contexts, probes, resources, `extraArgs` as a map, `tlsConfig`, `secretConfiguration.data`), and `name` in `imagePullSecrets` items. This broke installs, for example with the IRSA `eks.amazonaws.com/role-arn` service account annotation on CAPA.
+- Values schema: accept the `aws` values that cluster-aws still sets. They have no effect.
 - The `helm.sh/chart` label is valid for long chart versions: the 63-character cut trims the whole trailing run of `-`, `.` and `_`.
 
 ### k8s-dns-node-cache [v2.11.0...v2.11.1](https://github.com/giantswarm/k8s-dns-node-cache-app/compare/v2.11.0...v2.11.1)
@@ -197,3 +202,14 @@
 
 - Give the internet egress targets a probe deadline above the cross-border baseline: `scrapeTimeout: 20s` on `http-giantswarm`, `egress-github`, `egress-registry` and `egress-grafana`, and a 15s timeout on `http_2xx_or_401`. The exporter applies `min(module timeout, scrapeTimeout - 0.5s offset)`, so the 5s `serviceMonitor.defaults.scrapeTimeout` capped every probe at a 4.5s deadline and raising a module timeout alone had no effect. Installations whose baseline latency is a large fraction of that deadline crossed it on endpoints that were still returning HTTP 200, making `probe_success` report latency rather than reachability.
 - Point the `dns-tcp-internal` and `dns-udp-internal` ServiceMonitors at the `dns_*_internal` modules. They referenced the `_external` modules, so both probed `www.prometheus.io` and in-cluster DNS resolution was never monitored.
+
+### rbac-bootstrap [v0.3.0](https://github.com/giantswarm/rbac-bootstrap-app/releases/tag/v0.3.0)
+
+#### Added
+
+- Add `io.giantswarm.application.managed` chart annotation for Backstage visibility.
+- Add optional `cluster-reader` ClusterRole (off by default, enabled via `clusterReader.enabled: true`) that aggregates into the built-in `view` ClusterRole and grants read access (`get`/`list`/`watch`) on cluster-scoped resources.
+
+#### Changed
+
+- Migrate chart metadata annotations to OCI-compatible format.
