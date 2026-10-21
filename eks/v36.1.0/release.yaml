@@ -45,7 +45,7 @@ spec:
     dependsOn:
     - vertical-pod-autoscaler-crd
   - name: external-dns
-    version: 3.6.1
+    version: 3.7.1
     dependsOn:
     - prometheus-operator-crd
   - name: external-dns-crossplane-resources
@@ -120,5 +120,5 @@ spec:
     version: 1.36.5
   - name: os-tooling
     version: 1.36.0
-  date: "2026-10-21T14:37:59Z"
+  date: "2026-10-15T16:37:46Z"
   state: active
