@@ -58,7 +58,7 @@ spec:
     dependsOn:
     - kyverno-crds
   - name: external-dns
-    version: 3.4.0
+    version: 3.4.1
     dependsOn:
     - prometheus-operator-crd
   - name: k8s-audit-metrics
@@ -127,5 +127,5 @@ spec:
     version: 1.34.10
   - name: os-tooling
     version: 1.33.1
-  date: "2026-10-21T13:31:58Z"
+  date: "2026-10-21T13:37:32Z"
   state: active
