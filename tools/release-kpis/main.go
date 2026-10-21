@@ -155,9 +155,10 @@ type Release struct {
 
 // Output is the document written to the output file.
 type Output struct {
-	GeneratedAt time.Time `json:"generated_at"`
-	Repository  string    `json:"repository"`
-	Releases    []Release `json:"releases"`
+	GeneratedAt  time.Time     `json:"generated_at"`
+	Repository   string        `json:"repository"`
+	Releases     []Release     `json:"releases"`
+	SuiteResults []SuiteResult `json:"suite_results"`
 }
 
 // pullRequest is the subset of the GitHub pulls API response we need.
@@ -275,6 +276,7 @@ func main() {
 	}
 
 	var releases []Release
+	var suiteRows []SuiteResult
 	for number, versions := range added {
 		pr, err := client.pullRequest(number)
 		if err != nil {
@@ -303,7 +305,9 @@ func main() {
 			if err != nil {
 				log.Fatalf("Error collecting test results of pull request #%d: %v", number, err)
 			}
-			applyTestResults(&r, wanted, defs.requiredSuites(wanted, pr.CreatedAt), res)
+			required := defs.requiredSuites(wanted, pr.CreatedAt)
+			applyTestResults(&r, wanted, required, res)
+			suiteRows = append(suiteRows, suiteResults(r, wanted, required, res)...)
 			if verbose {
 				log.Printf("#%d: %d test runs, %d/%d suites green, %d commits checked", number, r.TestRuns, r.SuitesGreen, r.SuitesExpected, res.checkedShas)
 			}
@@ -314,6 +318,9 @@ func main() {
 
 	sort.Slice(releases, func(i, j int) bool {
 		return releases[i].MergedAt.Before(releases[j].MergedAt)
+	})
+	sort.SliceStable(suiteRows, func(i, j int) bool {
+		return suiteRows[i].MergedAt.Before(suiteRows[j].MergedAt)
 	})
 
 	if verbose {
@@ -326,7 +333,7 @@ func main() {
 		}
 	}
 
-	out := Output{GeneratedAt: time.Now().UTC().Truncate(time.Second), Repository: repo, Releases: releases}
+	out := Output{GeneratedAt: time.Now().UTC().Truncate(time.Second), Repository: repo, Releases: releases, SuiteResults: suiteRows}
 	data, err := json.MarshalIndent(out, "", "  ")
 	if err != nil {
 		log.Fatalf("Error encoding output: %v", err)

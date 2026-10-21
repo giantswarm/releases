@@ -149,17 +149,18 @@ type checkRun struct {
 
 // testResults is what the test-related fields of a Release are computed from.
 type testResults struct {
-	runs        []issueComment       // /run releases-test-suites comments, oldest first
-	waivers     map[string]time.Time // "<dir>/<suite>" -> time of the waiver
-	firstGreen  map[string]time.Time // check run name -> first successful completion
-	ran         map[string]bool      // check run name -> at least one run, whatever the outcome
+	runs        []issueComment        // /run releases-test-suites comments, oldest first
+	waivers     map[string]time.Time  // "<dir>/<suite>" -> time of the waiver
+	firstGreen  map[string]time.Time  // check run name -> first successful completion
+	ran         map[string]bool       // check run name -> at least one run, whatever the outcome
+	results     map[string][]checkRun // check run name -> every completed run
 	checkedShas int
 }
 
 // collectTestResults gathers the test runs, waivers and first successful suite
 // runs of a PR.
 func (c *githubClient) collectTestResults(number int, wanted map[string]string, defs suiteDefinitions) (testResults, error) {
-	res := testResults{waivers: map[string]time.Time{}, firstGreen: map[string]time.Time{}, ran: map[string]bool{}}
+	res := testResults{waivers: map[string]time.Time{}, firstGreen: map[string]time.Time{}, ran: map[string]bool{}, results: map[string][]checkRun{}}
 
 	comments, err := c.issueComments(number)
 	if err != nil {
@@ -210,7 +211,11 @@ func (c *githubClient) collectTestResults(number int, wanted map[string]string, 
 				continue
 			}
 			res.ran[run.Name] = true
-			if !isGreen(run.Conclusion) || run.CompletedAt == nil {
+			if run.CompletedAt == nil {
+				continue
+			}
+			res.results[run.Name] = append(res.results[run.Name], run)
+			if !isGreen(run.Conclusion) {
 				continue
 			}
 			if t, ok := res.firstGreen[run.Name]; !ok || run.CompletedAt.Before(t) {
@@ -391,14 +396,16 @@ func (c *githubClient) pullRequestCommits(number int) ([]string, error) {
 	return shas, nil
 }
 
-// checkRuns lists the check runs of a commit.
+// checkRuns lists the check runs of a commit, including earlier runs of the
+// same check that a rerun on the same commit replaced; the API's default
+// "latest" filter would hide those.
 func (c *githubClient) checkRuns(sha string) ([]checkRun, error) {
 	var result []checkRun
 	for page := 1; ; page++ {
 		var res struct {
 			CheckRuns []checkRun `json:"check_runs"`
 		}
-		u := fmt.Sprintf("https://api.github.com/repos/%s/commits/%s/check-runs?per_page=100&page=%d", c.repo, sha, page)
+		u := fmt.Sprintf("https://api.github.com/repos/%s/commits/%s/check-runs?filter=all&per_page=100&page=%d", c.repo, sha, page)
 		if err := c.get(u, &res); err != nil {
 			return nil, err
 		}
