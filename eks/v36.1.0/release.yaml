@@ -53,6 +53,9 @@ spec:
     version: 3.7.1-r1d5529fbt20261021074455h1eb8c00
     dependsOn:
     - prometheus-operator-crd
+  - name: external-dns-crossplane-resources
+    catalog: cluster
+    version: 0.4.0
   - name: k8s-dns-node-cache
     version: 2.11.1
     dependsOn:
