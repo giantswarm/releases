@@ -115,7 +115,7 @@ jobs:
             if (stage === 'freeze') {
               // During freeze, only Team Tenet members can make changes
               try {
-                const teamClient = github.getOctokit(process.env.TEAM_TOKEN);
+                const teamClient = getOctokit(process.env.TEAM_TOKEN);
                 const membership = await teamClient.rest.teams.getMembershipForUserInOrg({
                   org: context.repo.owner,
                   team_slug: 'team-tenet',

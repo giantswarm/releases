@@ -23,8 +23,13 @@ jobs:
         with:
           client-id: ${{ secrets.RELEASE_BOT_CLIENT_ID }}
           private-key: ${{ secrets.RELEASE_BOT_PRIVATE_KEY }}
+          # members: read is an organization permission, so owner is set. It
+          # lets the job resolve the teams it requests as reviewers.
+          owner: giantswarm
+          repositories: releases
           permission-pull-requests: write
           permission-issues: write
+          permission-members: read
 
       - name: Add reaction to comment to indicate processing
         uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9
