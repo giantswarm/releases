@@ -114,7 +114,7 @@ spec:
   components:
   - name: cluster-eks
     catalog: cluster-test
-    version: 3.1.1-r6d8726cdt20261021122826h7c06ddb
+    version: 3.1.1-r6d8726cdt20261022110857hf416e77
   - name: containerd
     version: 2.3.2
   - name: flatcar
