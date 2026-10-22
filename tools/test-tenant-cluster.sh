@@ -2,6 +2,7 @@
 
 installation=$1
 cluster=$2
+helloworld_image=gsoci.azurecr.io/giantswarm/helloworld:0.7.0
 
 read -p "Installation: $installation, Cluster: $cluster.
 Please ensure you have a kubeconfig for the workload cluster before you continue.
@@ -168,7 +169,7 @@ metadata:
   namespace: default
 spec:
   containers:
-  - image: quay.io/giantswarm/helloworld:latest
+  - image: $helloworld_image
     name: helloworld
     volumeMounts:
     - name: mypd
@@ -232,7 +233,7 @@ metadata:
   namespace: default
 spec:
   containers:
-  - image: quay.io/giantswarm/helloworld:latest
+  - image: $helloworld_image
     name: helloworld
     volumeMounts:
     - name: mypd
