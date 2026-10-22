@@ -176,7 +176,10 @@ The per-release charts cap their axis at 60 days (100 runs for test runs) so tha
 release such as v35.0.0 does not flatten the others; the tooltip shows the real value.
 
 To change the dashboard, edit the template and merge it. The workflow publishes it on the next
-push to `master`. To try a change before merging, run the workflow steps by hand:
+push to `master`. The two table panels hold the Infinity queries and list their columns
+explicitly; the other panels read from them through the dashboard datasource. A new field is only
+available to the panels once it is in that column list, and the `number` and `name` fields are
+aliased to `PR` and `release` there, so transformations must use those names. To try a change before merging, run the workflow steps by hand:
 
 ```bash
 cd tools && go build -o release-kpis ./release-kpis && cd ..
