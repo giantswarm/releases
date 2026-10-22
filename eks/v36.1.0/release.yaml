@@ -17,8 +17,8 @@ spec:
     dependsOn:
     - prometheus-operator-crd
   - name: cert-manager-crossplane-resources
-    catalog: cluster
-    version: 0.2.0
+    catalog: cluster-test
+    version: 0.2.1-rc6212a94t20261022184741h8d87783
   - name: chart-operator-extensions
     version: 1.1.3
     dependsOn:
@@ -114,7 +114,7 @@ spec:
   components:
   - name: cluster-eks
     catalog: cluster-test
-    version: 3.1.1-r6d8726cdt20261022110857hf416e77
+    version: 3.1.1-r8a622cd9t20261022185910h63d8894
   - name: containerd
     version: 2.3.2
   - name: flatcar
