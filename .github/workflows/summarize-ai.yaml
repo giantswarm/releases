@@ -10,19 +10,26 @@ jobs:
       github.event.issue.pull_request &&
       startsWith(github.event.comment.body, '/summarize-ai') &&
       github.repository == 'giantswarm/releases' &&
-      (github.event.comment.author_association == 'MEMBER' || github.event.comment.author_association == 'OWNER' || github.event.comment.author_association == 'COLLABORATOR')
+      (github.event.comment.author_association == 'MEMBER' || github.event.comment.author_association == 'OWNER' || github.event.comment.author_association == 'COLLABORATOR' || github.event.comment.user.login == 'giantswarm-release[bot]')
     runs-on: ubuntu-latest
-    env:
-      GH_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
     permissions:
       contents: read
       pull-requests: write
 
     steps:
+      - name: Generate giantswarm-release token
+        id: app-token
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1 # v3.2.0
+        with:
+          client-id: ${{ secrets.RELEASE_BOT_CLIENT_ID }}
+          private-key: ${{ secrets.RELEASE_BOT_PRIVATE_KEY }}
+          permission-pull-requests: write
+          permission-issues: write
+
       - name: Add reaction to indicate processing
         uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9
         with:
-          github-token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+          github-token: ${{ steps.app-token.outputs.token }}
           script: |
             github.rest.reactions.createForIssueComment({
               owner: context.repo.owner,
@@ -35,7 +42,7 @@ jobs:
         id: get_branch
         uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9
         with:
-          github-token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+          github-token: ${{ steps.app-token.outputs.token }}
           result-encoding: string
           script: |
             const pr = await github.rest.pulls.get({
@@ -57,6 +64,7 @@ jobs:
       - name: Extract version ranges from README
         id: extract
         env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
           COMMENT_BODY: ${{ github.event.comment.body }}
         run: |
           BRANCH_NAME="${{ steps.get_branch.outputs.result }}"
@@ -304,7 +312,7 @@ jobs:
         if: steps.summarize.outputs.has_summary == 'true'
         uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9
         with:
-          github-token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+          github-token: ${{ steps.app-token.outputs.token }}
           script: |
             const fs = require('fs');
             const summary = fs.readFileSync('/tmp/ai_summary.txt', 'utf8').trim();
@@ -330,7 +338,7 @@ jobs:
         if: steps.extract.outputs.has_versions != 'true' || (steps.summarize.outputs.has_summary != 'true' && steps.extract.outputs.has_versions == 'true')
         uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9
         with:
-          github-token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+          github-token: ${{ steps.app-token.outputs.token }}
           script: |
             await github.rest.issues.createComment({
               owner: context.repo.owner,
@@ -343,7 +351,7 @@ jobs:
         if: always()
         uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9
         with:
-          github-token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+          github-token: ${{ steps.app-token.outputs.token }}
           script: |
             github.rest.reactions.createForIssueComment({
               owner: context.repo.owner,

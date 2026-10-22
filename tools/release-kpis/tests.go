@@ -240,7 +240,7 @@ func isGreen(conclusion string) bool {
 func applyTestResults(r *Release, wanted map[string]string, required map[string]bool, res testResults) {
 	r.TestRuns = len(res.runs)
 	for _, run := range res.runs {
-		if run.User.Login == automationUser {
+		if isAutomation(run.User.Login) {
 			r.TestRunsAutomated++
 		}
 	}
@@ -321,7 +321,7 @@ func frictionStart(runs []issueComment, activeAt *time.Time) *time.Time {
 		}
 	}
 	for _, run := range runs {
-		if run.User.Login != automationUser {
+		if !isAutomation(run.User.Login) {
 			t := run.CreatedAt.UTC()
 			return &t
 		}

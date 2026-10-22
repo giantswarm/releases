@@ -15,6 +15,9 @@ jobs:
   find-open-release-prs:
     name: "Find Open Release PRs"
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: read
     outputs:
       pr_numbers: ${{ steps.find_prs.outputs.pr_numbers }}
       pr_count: ${{ steps.find_prs.outputs.pr_count }}
@@ -25,7 +28,7 @@ jobs:
       - name: Find open release PRs
         id: find_prs
         env:
-          GH_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+          GH_TOKEN: ${{ github.token }}
         run: |
           if [[ -n "${{ github.event.inputs.pr_number }}" ]]; then
             # Manual run with specific PR
@@ -57,12 +60,21 @@ jobs:
       fail-fast: false
     runs-on: ubuntu-latest
     steps:
+      - name: Generate giantswarm-release token
+        id: app-token
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1 # v3.2.0
+        with:
+          client-id: ${{ secrets.RELEASE_BOT_CLIENT_ID }}
+          private-key: ${{ secrets.RELEASE_BOT_PRIVATE_KEY }}
+          permission-pull-requests: write
+
       - name: Post /update-release comment to trigger component bump
         uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9
         with:
-          # Use TAYLORBOT_GITHUB_ACTION to enable workflow chaining
-          # (default github.token cannot trigger other workflows due to GitHub security restrictions)
-          github-token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+          # Use the giantswarm-release App token to enable workflow chaining
+          # (default github.token cannot trigger other workflows due to GitHub security restrictions).
+          # update-release.yaml accepts this comment because its gate allows giantswarm-release[bot].
+          github-token: ${{ steps.app-token.outputs.token }}
           script: |
             const prNumber = ${{ matrix.pr_number }};
             

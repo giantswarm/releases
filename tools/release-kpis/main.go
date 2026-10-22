@@ -45,7 +45,6 @@ const (
 	scheduledRunDay       = 1
 	scheduledRunStartHour = 6
 	scheduledRunEndHour   = 9
-	automationUser        = "taylorbot"
 
 	// Values of Release.PlannedSource.
 	plannedSourceWorkflow  = "workflow"
@@ -59,6 +58,22 @@ const (
 	// which are not part of this KPI.
 	defaultMinMajor = 25
 )
+
+// automationUsers are the logins that create release PRs and post /run comments
+// on behalf of the automation: the giantswarm-release GitHub App and the
+// taylorbot account it replaces (kept so that history from before the switch is
+// still recognised).
+var automationUsers = []string{"giantswarm-release[bot]", "taylorbot"}
+
+// isAutomation reports whether login belongs to the release automation.
+func isAutomation(login string) bool {
+	for _, u := range automationUsers {
+		if login == u {
+			return true
+		}
+	}
+	return false
+}
 
 var (
 	// providers maps release directories to the provider acronym used in PR titles.
@@ -613,7 +628,7 @@ func plannedMergeDate(pr pullRequest) (time.Time, string, bool) {
 	}
 
 	created := pr.CreatedAt.UTC()
-	if pr.User.Login != automationUser || created.Day() != scheduledRunDay ||
+	if !isAutomation(pr.User.Login) || created.Day() != scheduledRunDay ||
 		created.Hour() < scheduledRunStartHour || created.Hour() >= scheduledRunEndHour {
 		return time.Time{}, "", false
 	}
