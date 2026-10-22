@@ -135,6 +135,7 @@
 - cilium-crossplane-resources from v0.2.1 to v0.2.2
 - cilium-servicemonitors from v0.1.3 to v0.2.0
 - cluster-autoscaler from v1.34.1-1 to v2.1.1
+- Added cluster-autoscaler-crossplane-resources v1.0.0
 - coredns from v1.30.0 to v1.34.0
 - coredns-extensions from v0.1.2 to v0.1.3
 - external-dns from v3.4.0 to v3.6.1
@@ -383,6 +384,16 @@
 
 - RBAC: Allow reading `infrastructure.cluster.x-k8s.io` resources when `clusterAPI.enabled` is set.
 - The `helm.sh/chart` label is valid for long chart versions: the 63-character cut trims the whole trailing run of `-`, `.` and `_`.
+
+### cluster-autoscaler-crossplane-resources [v1.0.0](https://github.com/giantswarm/cluster-autoscaler-crossplane-resources/releases/tag/v1.0.0)
+
+#### Added
+
+- Chart: Add IAM role.
+
+#### Changed
+
+- CircleCI: Push to `cluster-catalog`.
 
 ### coredns [v1.30.0...v1.34.0](https://github.com/giantswarm/coredns-app/compare/v1.30.0...v1.34.0)
 

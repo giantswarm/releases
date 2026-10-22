@@ -36,6 +36,9 @@ spec:
     version: 2.1.1
     dependsOn:
     - kyverno-crds
+  - name: cluster-autoscaler-crossplane-resources
+    catalog: cluster
+    version: 1.0.0
   - name: coredns
     version: 1.34.0
     dependsOn:
