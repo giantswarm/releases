@@ -128,11 +128,9 @@ Why both: a check run can hold a markdown report but cannot control where it app
 
 Status states map to the check states above: `pending` while suites are missing, `success` when complete, `failure` when an expected suite failed.
 
-Unrelated to this workflow, `gitleaks` also appears twice on every PR in this repo, because `zz_generated.gitleaks.yaml` is generated with both `push` and `pull_request` triggers.
-
 ### Implementation
 
-The logic lives in `.github/scripts/e2e-coverage.js` and talks to the REST API directly rather than through `actions/github-script`, whose pinned SHA trips the repo's gitleaks rule (it matches any long alphanumeric run next to the word "github").
+The logic lives in `.github/scripts/e2e-coverage.js` and talks to the REST API directly rather than through `actions/github-script`, whose pinned SHA tripped the repo's former gitleaks v7 rule (it matched any long alphanumeric run next to the word "github").
 
 The check run is always updated in place rather than recreated, because `pr-gatekeeper` refuses to evaluate a check name that matches several runs on the same commit.
 

@@ -10,9 +10,17 @@ jobs:
     name: "Check Controller Readiness"
     runs-on: ubuntu-latest
     steps:
+      - name: Generate giantswarm-release token
+        id: app-token
+        uses: actions/create-github-app-token@64ab729a6294000f5aa4a4bc0b73d1f32bc45510 # v3.3.0
+        with:
+          client-id: ${{ secrets.RELEASE_BOT_CLIENT_ID }}
+          private-key: ${{ secrets.RELEASE_BOT_PRIVATE_KEY }}
+          permission-pull-requests: write
+
       - name: Check readiness and trigger updates
         env:
-          GH_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
         run: |
           # Find open PRs with both release/major and stage/development labels
           PR_NUMBERS=$(gh pr list --repo "$GITHUB_REPOSITORY" --state open \

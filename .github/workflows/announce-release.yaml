@@ -73,16 +73,24 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       provider_channels: ${{ steps.collect.outputs.provider_channels }}
-    env:
-      GH_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
     steps:
+      - name: Generate giantswarm-release token
+        id: app-token
+        uses: actions/create-github-app-token@64ab729a6294000f5aa4a4bc0b73d1f32bc45510 # v3.3.0
+        with:
+          client-id: ${{ secrets.RELEASE_BOT_CLIENT_ID }}
+          private-key: ${{ secrets.RELEASE_BOT_PRIVATE_KEY }}
+          owner: giantswarm
+          repositories: installations
+          permission-contents: read
+
       - name: Checkout installations code
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           repository: giantswarm/installations
           path: installations
           ref: master
-          token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+          token: ${{ steps.app-token.outputs.token }}
       - name: Collect channels
         id: collect
         run: |
