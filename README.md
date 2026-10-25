@@ -618,6 +618,9 @@ to all Giant Swarm installations.
 
 ## AKS
 
+- v36
+  - v36.1
+    - [v36.1.0](https://github.com/giantswarm/releases/tree/master/aks/v36.1.0)
 - v35
   - v35.3
     - [v35.3.0](https://github.com/giantswarm/releases/tree/master/aks/v35.3.0)
