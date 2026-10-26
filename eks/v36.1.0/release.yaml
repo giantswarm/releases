@@ -9,8 +9,7 @@ spec:
   - name: aws-nth-bundle
     version: 2.1.1
   - name: cert-exporter
-    catalog: default-test
-    version: 2.12.2-r5aa25357t20261024082658h446cfd7
+    version: 2.12.1
     dependsOn:
     - kyverno-crds
   - name: cert-manager
@@ -25,8 +24,7 @@ spec:
     dependsOn:
     - prometheus-operator-crd
   - name: cilium
-    catalog: default-test
-    version: 1.6.2-r1d5529fbt20261026111931h1afd52b
+    version: 1.6.2
   - name: cilium-crossplane-resources
     catalog: cluster
     version: 0.2.2
@@ -63,15 +61,13 @@ spec:
   - name: karpenter
     version: 2.6.0
   - name: karpenter-taint-remover
-    catalog: default-test
-    version: 1.1.1-r5aa25357t20261024054506h52c9b7a
+    version: 1.1.0
   - name: metrics-server
     version: 2.8.0
     dependsOn:
     - kyverno-crds
   - name: net-exporter
-    catalog: default-test
-    version: 1.24.2-r1d5529fbt20261022101151h5d3c257
+    version: 1.24.1
     dependsOn:
     - prometheus-operator-crd
   - name: network-policies
@@ -100,8 +96,7 @@ spec:
     dependsOn:
     - prometheus-operator-crd
   - name: security-bundle
-    catalog: default-test
-    version: 2.4.1-r5b1ed9c6t20261020085338h6c382e9
+    version: 2.4.0
     dependsOn:
     - prometheus-operator-crd
   - name: teleport-kube-agent
@@ -110,16 +105,14 @@ spec:
     - cilium
     - prometheus-operator-crd
   - name: vertical-pod-autoscaler
-    catalog: default-test
-    version: 6.1.3-rbf28cd64t20261025101422h38bc5f4
+    version: 6.1.2
     dependsOn:
     - prometheus-operator-crd
   - name: vertical-pod-autoscaler-crd
     version: 4.1.2
   components:
   - name: cluster-eks
-    catalog: cluster-test
-    version: 3.1.1-rbf28cd64t20261026115407hfd650a7
+    version: 4.0.0
   - name: containerd
     version: 2.3.2
   - name: flatcar
