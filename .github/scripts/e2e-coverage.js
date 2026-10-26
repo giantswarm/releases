@@ -6,8 +6,8 @@
 // "Test coverage requirements" section of the README.
 //
 // Run from .github/workflows/e2e-coverage.yaml. Uses the REST API directly rather than
-// actions/github-script: pinning that action's SHA trips the repo's gitleaks rule,
-// which matches any long alphanumeric run next to the word "github".
+// actions/github-script: pinning that action's SHA tripped the repo's former
+// gitleaks v7 rule, which matched any long alphanumeric run next to the word "github".
 //
 // Environment:
 //   GITHUB_TOKEN       - token with checks:write

@@ -22,10 +22,20 @@ jobs:
       pull-requests: write
 
     steps:
+      - name: Generate giantswarm-release token
+        id: app-token
+        uses: actions/create-github-app-token@64ab729a6294000f5aa4a4bc0b73d1f32bc45510 # v3.3.0
+        with:
+          client-id: ${{ secrets.RELEASE_BOT_CLIENT_ID }}
+          private-key: ${{ secrets.RELEASE_BOT_PRIVATE_KEY }}
+          permission-contents: write
+          permission-pull-requests: write
+          permission-issues: write
+
       - name: Add eyes reaction
         uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9
         with:
-          github-token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+          github-token: ${{ steps.app-token.outputs.token }}
           script: |
             github.rest.reactions.createForIssueComment({
               owner: context.repo.owner,
@@ -38,7 +48,7 @@ jobs:
         id: pr
         uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9
         with:
-          github-token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+          github-token: ${{ steps.app-token.outputs.token }}
           script: |
             const pr = await github.rest.pulls.get({
               owner: context.repo.owner,
@@ -54,7 +64,7 @@ jobs:
         if: steps.pr.outputs.same_repo != 'true'
         uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9
         with:
-          github-token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+          github-token: ${{ steps.app-token.outputs.token }}
           script: |
             await github.rest.issues.createComment({
               owner: context.repo.owner,
@@ -75,7 +85,7 @@ jobs:
         with:
           ref: ${{ steps.pr.outputs.branch }}
           fetch-depth: 0
-          token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+          token: ${{ steps.app-token.outputs.token }}
 
       - name: Set up Go
         uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
@@ -93,8 +103,8 @@ jobs:
           BASE: ${{ steps.pr.outputs.base }}
         run: |
           set -u
-          git config --global user.name 'taylorbot'
-          git config --global user.email 'dev@giantswarm.io'
+          git config --global user.name 'giantswarm-release[bot]'
+          git config --global user.email '342014845+giantswarm-release[bot]@users.noreply.github.com'
           git fetch origin "$BASE"
 
           # Avoid editor prompts during rebase --continue.
@@ -157,7 +167,7 @@ jobs:
         if: steps.rebase.outputs.status == 'clean' || steps.rebase.outputs.status == 'resolved'
         uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9
         with:
-          github-token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+          github-token: ${{ steps.app-token.outputs.token }}
           script: |
             const status = '${{ steps.rebase.outputs.status }}';
             const note = status === 'resolved'
@@ -180,7 +190,7 @@ jobs:
         if: failure()
         uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9
         with:
-          github-token: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
+          github-token: ${{ steps.app-token.outputs.token }}
           script: |
             const status = '${{ steps.rebase.outputs.status }}';
             const body = status === 'unresolvable'

@@ -12,10 +12,18 @@ jobs:
   release:
     name: "Create Release"
     runs-on: ubuntu-latest
-    env:
-      GH_TOKEN: ${{ secrets.TAYLORBOT_GITHUB_ACTION }}
     steps:
+      - name: Generate giantswarm-release token
+        id: app-token
+        uses: actions/create-github-app-token@64ab729a6294000f5aa4a4bc0b73d1f32bc45510 # v3.3.0
+        with:
+          client-id: ${{ secrets.RELEASE_BOT_CLIENT_ID }}
+          private-key: ${{ secrets.RELEASE_BOT_PRIVATE_KEY }}
+          permission-contents: write
+
       - name: Create release if it doesn't already exist
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
         run: |
           RELEASE_EXISTS=$(gh release list -R "$GITHUB_REPOSITORY" --json tagName --jq 'map(.tagName == "sdk/${{ github.event.inputs.version }}") | any')
           if [ -z "$PR_EXISTS" ]; then

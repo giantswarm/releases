@@ -165,6 +165,33 @@ func TestToReleaseScheduledWithoutMarker(t *testing.T) {
 	}
 }
 
+func TestToReleaseScheduledByApp(t *testing.T) {
+	// The giantswarm-release GitHub App replaced taylorbot as the PR author.
+	pr := mergedPR(2500, "CAPI: Release v37.0.0.", "", "giantswarm-release[bot]",
+		"2026-10-01T06:24:59Z", "2026-10-20T21:55:48Z")
+
+	r, ok := toRelease(pr, []releaseVersion{v("capa", 37, 0, 0)})
+	if !ok {
+		t.Fatal("expected a release")
+	}
+	if !r.Automated || r.PlannedMergeDate == nil || *r.PlannedMergeDate != "2026-11-01" {
+		t.Fatalf("planned merge date = %v, want 2026-11-01", r.PlannedMergeDate)
+	}
+}
+
+func TestIsAutomation(t *testing.T) {
+	for login, want := range map[string]bool{
+		"taylorbot":               true,
+		"giantswarm-release[bot]": true,
+		"njuettner":               false,
+		"giantswarm-release":      false,
+	} {
+		if got := isAutomation(login); got != want {
+			t.Errorf("isAutomation(%q) = %v, want %v", login, got, want)
+		}
+	}
+}
+
 func TestToReleaseManual(t *testing.T) {
 	cases := []struct {
 		name    string
@@ -174,6 +201,8 @@ func TestToReleaseManual(t *testing.T) {
 		{"human author", "njuettner", "2026-08-01T06:30:00Z"},
 		{"not the first of the month", "taylorbot", "2026-09-23T06:30:00Z"},
 		{"outside the scheduled window", "taylorbot", "2026-09-01T13:42:46Z"},
+		{"app, not the first of the month", "giantswarm-release[bot]", "2026-09-23T06:30:00Z"},
+		{"app, outside the scheduled window", "giantswarm-release[bot]", "2026-09-01T13:42:46Z"},
 	}
 	for _, c := range cases {
 		t.Run(c.name, func(t *testing.T) {
