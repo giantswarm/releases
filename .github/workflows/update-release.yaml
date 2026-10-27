@@ -485,6 +485,11 @@ jobs:
             fi
 
             if ! output=$(eval "$DEVCTL_COMMAND" 2>&1 | uniq); then
+                # Restore everything devctl may have modified or deleted before failing
+                # (--overwrite wipes the release directory first), so a failed run does
+                # not commit partial changes like deleted README/announcement files.
+                git checkout -- "${PROVIDER_DIR}/${RELEASE_NAME}/" "${PROVIDER_DIR}/releases.json" || true
+                git clean -fd -- "${PROVIDER_DIR}/${RELEASE_NAME}/" || true
                 # Error case - always collapse
                 LOG_PART="<details><summary>${CHANGE_PREFIX} for ${PROVIDER_DIR^^}</summary>\n\n"
                 LOG_PART="${LOG_PART}devctl command failed for provider $PROVIDER_DIR.\n\n"
