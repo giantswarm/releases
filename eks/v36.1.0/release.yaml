@@ -52,7 +52,7 @@ spec:
     dependsOn:
     - vertical-pod-autoscaler-crd
   - name: external-dns
-    version: 3.6.1
+    version: 3.7.1
     dependsOn:
     - cilium
     - prometheus-operator-crd
