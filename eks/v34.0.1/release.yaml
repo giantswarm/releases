@@ -79,12 +79,12 @@ spec:
     version: 1.20.10
     dependsOn:
     - kyverno-crds
+    - prometheus-operator-crd
+    - vertical-pod-autoscaler-crd
   - name: node-problem-detector
     version: 0.5.2
   - name: observability-bundle
     version: 2.5.0
-    dependsOn:
-    - coredns
   - name: observability-policies
     version: 0.0.3
     dependsOn:
@@ -95,6 +95,7 @@ spec:
     version: 0.5.0
     dependsOn:
     - prometheus-operator-crd
+    - vertical-pod-autoscaler-crd
   - name: security-bundle
     catalog: giantswarm
     version: 1.16.1
