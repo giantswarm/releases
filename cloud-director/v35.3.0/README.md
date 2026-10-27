@@ -1,0 +1,24 @@
+# :zap: Giant Swarm Release v35.3.0 for VMware Cloud Director :zap:
+
+## Changes compared to v35.2.1
+
+### Components
+
+- cluster-cloud-director from v7.4.2 to v7.5.0
+- cluster from v8.4.2 to v8.5.0
+- Flatcar from v4757.2.1 to [v4757.2.2](https://www.flatcar.org/releases/#release-4757.2.2)
+
+### cluster [v8.4.2...v8.5.0](https://github.com/giantswarm/cluster/compare/v8.4.2...v8.5.0)
+
+#### Added
+
+- Ignition: Expose `sysctl` and `sysfs` configuration per node pool via `kernel.sysctls` (`/etc/sysctl.d/90-node-pool.conf`) and `kernel.sysfs` (`/etc/tmpfiles.d/00-node-pool.conf`). The parameters required by kubelet's `protectKernelDefaults` cannot be set by name, and the Image Builder and Cilium sysctl configuration keeps precedence.
+
+#### Changed
+
+- Ignition: Rename `/etc/sysctl.d/hardening.conf` to `80-hardening.conf` so it sorts after Flatcar's `65-baselayout.conf` but before Image Builder's `99-sysctl.conf` and Cilium's `99-zzz-override_cilium.conf`. Previously the unprefixed file sorted last and overrode both. As a result, nodes now run with `fs.inotify.max_user_watches = 524288` (previously `16384`) and `net.ipv4.conf.all.rp_filter = 0` (previously `1`).
+- Ignition: Clean up sysctl hardening. Drop keys already set by Image Builder or Cilium (`fs.inotify.max_user_watches`, `fs.inotify.max_user_instances`, `net.ipv4.conf.all.rp_filter`, `vm.overcommit_memory`, `kernel.panic`, `kernel.panic_on_oops`). Stop disabling `net.ipv4.tcp_timestamps`, since modern kernels randomize timestamp offsets.
+
+#### Removed
+
+- Ignition: Remove `os-hardening.service`. Its `sysctl -p` duplicated what `systemd-sysctl` already applies at boot. Its `gpasswd` calls had no effect: glibc merges group memberships from `/usr/share/baselayout/group` (via `nss-usrfiles`) regardless of `/etc/group`.
