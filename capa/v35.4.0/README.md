@@ -20,7 +20,6 @@
 
 ### Apps
 
-- cert-manager-crossplane-resources from v0.2.0 to v0.3.0
 - cilium from v1.5.2 to v1.5.4
 - cloud-provider-aws from v2.1.0 to v2.2.0
 - cluster-autoscaler from v2.0.5 to v2.1.1
@@ -31,17 +30,6 @@
 - karpenter from v2.5.0 to v2.6.0
 - network-policies from v0.3.2 to v0.5.0
 - observability-bundle from v3.5.0 to v3.6.0
-
-### cert-manager-crossplane-resources [v0.2.0...v0.3.0](https://github.com/giantswarm/cert-manager-crossplane-resources/compare/v0.2.0...v0.3.0)
-
-#### Added
-
-- Read the AWS account ID, partition, and OIDC domains from the `<clusterName>-crossplane-config` ConfigMap if `providers.aws.accountID`, `providers.aws.partition`, or `providers.aws.oidc.domain` is empty. This supports EKS clusters, whose OIDC domain is only known once the cluster is provisioned. Explicitly set values take precedence over the ConfigMap.
-
-#### Changed
-
-- Restrict AWS provider permissions for `ChangeResourceRecordSets` to TXT records related to acme challenges.
-- Create a dedicated role for azure to reduce permissions to TXT records only.
 
 ### cilium [v1.5.2...v1.5.4](https://github.com/giantswarm/cilium-app/compare/v1.5.2...v1.5.4)
 
