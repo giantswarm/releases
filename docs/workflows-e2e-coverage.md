@@ -4,7 +4,7 @@ This document describes the `E2E Coverage` merge gate (`e2e-coverage.yaml`) and 
 
 ## Overview
 
-`releases-test-suites` picks which test suites to run based on the release stage, so a PR in `stage/development` only runs `standard`, `upgrade` and `upgrade-major`. The variant suites (`private`, `china`, `cilium-eni-mode`, `on-capa`, `on-capz`) only start automatically once the PR reaches `stage/freeze`.
+`releases-test-suites` picks which test suites to run based on the release stage, so a PR in `stage/development` only runs `standard`, `upgrade` and `upgrade-major`. The variant suites (`private`, `china`, `cilium-eni-mode`, `byo-cni`, `on-capa`, `on-capz`) only start automatically once the PR reaches `stage/freeze`.
 
 Releases were being merged before reaching Freeze, which meant those variant suites never ran at all — v34.5.0 was merged from `stage/development` having tested only 12 of the 18 suites expected for its providers.
 
@@ -23,11 +23,18 @@ Expected suites per provider directory:
 | `vsphere` | `standard`, `upgrade`, `upgrade-major`, `on-capa`, `on-capz` |
 | `cloud-director` | `standard`, `upgrade`, `upgrade-major` |
 | `eks` | `standard`, `upgrade`, `upgrade-major` |
-| `aks`, `proxmox` | _none_ — no `releases-test-suites` mapping exists yet |
+| `aks` | `standard`, `upgrade`, `byo-cni` |
+| `proxmox` | _none_ — no `releases-test-suites` mapping exists yet |
 
 This mirrors what `releases-test-suites` expands to during Freeze. The table is defined in
 [`.github/scripts/e2e-suites.json`](../.github/scripts/e2e-suites.json), which the release KPIs
 tool reads as well. A suite counts as covered when its per-suite check run (`Release Tests / <suite description>`, published by the `check-run-results-to-pr` Tekton task) has concluded successfully.
+
+Until `releases-test-suites` expands AKS releases to `byo-cni` at Freeze, trigger it by hand on every AKS release PR, and always when it changes `cilium` or `cluster-aks`:
+
+```
+/run releases-test-suites TARGET_SUITES=./providers/aks/byo-cni
+```
 
 Only **newly added** releases are considered. A PR that deprecates (modifies) or archives (renames) an existing `release.yaml` requires no coverage and reports `No new releases added`.
 
