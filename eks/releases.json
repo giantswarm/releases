@@ -24,7 +24,7 @@
     {
       "version": "36.1.0",
       "isDeprecated": false,
-      "releaseTimestamp": "2026-10-15T14:37:46Z",
+      "releaseTimestamp": "2026-10-28T10:40:41Z",
       "changelogUrl": "https://github.com/giantswarm/releases/blob/master/eks/v36.1.0/README.md",
       "isStable": true
     }

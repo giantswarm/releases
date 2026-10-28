@@ -4,17 +4,27 @@
 
 ### Components
 
-- cluster-eks from v1.2.1 to v3.1.0
-- cluster from v4.0.2 to v7.0.0
+- cluster-eks from v1.2.1 to v4.0.0
+- cluster from v4.0.2 to v9.4.0
 - Added containerd [v2.3.2](https://github.com/containerd/containerd/releases/tag/v2.3.2)
-- Flatcar from v4459.2.3 to [v4757.2.1](https://www.flatcar.org/releases/#release-4757.2.1)
-- Kubernetes from v1.34.4 to [v1.36.5](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.36.md#v1.36.5)
+- Flatcar from v4459.2.3 to [v4757.2.2](https://www.flatcar.org/releases/#release-4757.2.2)
+- Kubernetes from v1.34.4 to [v1.36.6](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.36.md#v1.36.6)
 - os-tooling from v1.26.4 to v1.36.0
 
-### cluster-eks [v1.2.1...v3.1.0](https://github.com/giantswarm/cluster-eks/compare/v1.2.1...v3.1.0)
+### cluster-eks [v1.2.1...v4.0.0](https://github.com/giantswarm/cluster-eks/compare/v1.2.1...v4.0.0)
 
 #### Added
 
+- Add the `giantswarm.io/machine-pool` label to the nodes of each EKS managed node group.
+- Apply `global.nodePools.<name>.customNodeLabels` to the nodes of EKS managed node groups.
+- Enable external-dns and external-dns-crossplane-resources, which creates the external-dns IAM role for the EKS OIDC provider. The OIDC domain is read from the `<cluster>-crossplane-config` ConfigMap.
+- Enable cilium-servicemonitors and net-exporter.
+- Enable the remaining default apps from `cluster-aws` that work on EKS: cert-exporter, cert-manager, chart-operator-extensions, cluster-autoscaler, coredns-extensions, k8s-dns-node-cache, metrics-server, node-exporter, observability-policies, priority-classes, prometheus-blackbox-exporter, security-bundle, vertical-pod-autoscaler, and vertical-pod-autoscaler-crd.
+- Enable cluster-autoscaler-crossplane-resources, which creates the cluster-autoscaler IAM role for the EKS OIDC provider.
+- Enable cert-manager-crossplane-resources, which creates the cert-manager IAM role for the EKS OIDC provider, and let cert-manager solve ACME challenges with Route53 DNS01 challenges.
+- Add `global.nodePools.<pool>.replicas` for Karpenter node pools to keep a fixed number of nodes (static node pool). This is a tech preview of the alpha Karpenter `StaticCapacity` feature and requires a release with Karpenter v1.14.1 and the matching `aws-resolver-rules-operator`.
+- Add `global.nodePools.<pool>.limits.nodes` to cap the number of nodes of a Karpenter node pool.
+- Add the `Balanced` consolidation policy for Karpenter node pools.
 - CI: Run the full set of E2E test suites automatically on release PRs, via `.github/release-pr-body.md`. Towards https://github.com/giantswarm/roadmap/issues/4334
 - Add karpenter support. For a node pool, set `global.nodePools.<name>.type` to `karpenter` to have karpenter manage a pool instead of an EKS managed node group. For now, karpenter can only run on a managed node pool, not on karpenter-provisioned node pools, to ensure it keeps running and doesn't get stopped while doing any provisioning.
 - Deploy the `karpenter-taint-remover` app
@@ -22,6 +32,12 @@
 
 #### Changed
 
+- Karpenter node pools: `customNodeLabels` can no longer override the `giantswarm.io/machine-pool` node label.
+- Fail rendering if a `customNodeLabels` entry is not in `key=value` form.
+- Bump `OCIRepository` resources from the `source.toolkit.fluxcd.io/v1beta2` API to `source.toolkit.fluxcd.io/v1`.
+- Chart: Migrate Apps to HelmReleases. This skips the App to HelmRelease migration of `cluster` v8.x, since there are no live EKS clusters that would need it.
+- Cilium: Tolerate the `karpenter.sh/unregistered` taint for `cilium-operator`, `hubble-relay`, `hubble-ui` and `certgen`, since `cluster` no longer tolerates all taints for them.
+- CoreDNS: Drop the deprecated network values, the `cluster` chart defaults already set them via the new interface.
 - Read the EKS node group update configuration from `global.nodePools.<name>.updateConfig`, where the schema has always documented it
 - aws-ebs-csi-driver: Don't wait for a `cloud-provider-aws` HelmRelease, since the AWS cloud provider is part of the EKS control plane
 - Teleport Kube Agent: Conditionally disable PodMonitors and respect new values schema.
@@ -44,16 +60,30 @@
 
 #### Fixed
 
+- CoreDNS: Don't deploy the `coredns-controlplane` instance, since EKS has no control-plane nodes. `cluster` v7 sets `controlPlane.enabled`, which takes precedence over the deprecated `mastersInstance.enabled` that disabled it before. This requires coredns-app v1.31.0 or newer.
+- Normalize lowercase `extraConfigs[*].kind` values of `global.apps.awsEbsCsiDriver` and `global.apps.karpenter` to the `ConfigMap` and `Secret` kinds that Flux accepts.
+- The `helm.sh/chart` label is valid for long chart versions: the 63-character cut trims the whole trailing run of `-`, `.` and `_`.
+- Make use of Kyverno and VPA CRDs conditional for Alloy components. This requires a newer version of observability-bundle, which takes `apps.<appName>.dependsOn` as a map.
 - Use `.Chart.AppVersion` instead of `.Chart.Version` for `app.kubernetes.io/version` labels.
 - Rename `coreDnsExtensions` config template from `EKSCorednsHelmValues` to `EKSCoreDNSExtensionsHelmValues` to avoid confusion with the `coreDns` template name.
 - Move `coreDns` Helm values config from `apps/` to the helmrelease config file, since coreDns is deployed as a HelmRelease.
 - Use `cluster.providerIntegration.workers.defaultNodePools` of parent chart and define a working default for `replicas` (must be between `minSize` and `maxSize`).
 - Only use `ServiceMonitor` and `VerticalPodAutoscaler` in aws-ebs-csi-driver if needed dependencies are enabled
 
-### cluster [v4.0.2...v7.0.0](https://github.com/giantswarm/cluster/compare/v4.0.2...v7.0.0)
+### cluster [v4.0.2...v9.4.0](https://github.com/giantswarm/cluster/compare/v4.0.2...v9.4.0)
 
 #### Added
 
+- Apps: Add `providerIntegration.apps.<app>.extraConfigs` so provider charts can add templated config maps or secrets to an app's values.
+- Ignition: Expose `sysctl` and `sysfs` configuration per node pool via `kernel.sysctls` (`/etc/sysctl.d/90-node-pool.conf`) and `kernel.sysfs` (`/etc/tmpfiles.d/00-node-pool.conf`). The parameters required by kubelet's `protectKernelDefaults` cannot be set by name, and the Image Builder and Cilium sysctl configuration keeps precedence.
+- Apps: Add `global.connectivity.cni.managed` (default `true`). When `false`, Cilium isn't rendered and is dropped from the dependencies of every app.
+- Workers: Add `nodeLabelsTemplateName` and `taintsTemplateName` hooks under `providerIntegration.workers.kubeadmConfig`. They name provider templates, rendered once per node pool, that add kubelet node labels and taints.
+- Add `filesTemplateName` hook under `providerIntegration.workers.kubeadmConfig`. It names a provider template that renders a YAML list of files, once per node pool, so that a provider can deploy files to selected node pools only. A node pool for which the template renders nothing keeps its `KubeadmConfig` spec, and therefore its spec hash, unchanged.
+- Enable `mergeDefaultEvictionSettings` to keep defaults for eviction like `nodefs.available` and `nodefs.inodesFree` which would otherwise be set to 0. This rolls all nodes.
+- Add the `app.kubernetes.io/component` label with the app name to the resources rendered per app, so they can be listed together.
+- Add `preKubeadmCommandsTemplateName` and `postKubeadmCommandsTemplateName` hooks under `providerIntegration.controlPlane.kubeadmConfig` and `providerIntegration.workers.kubeadmConfig`. They name a provider template that renders a YAML list of additional kubeadm commands, once for the control plane and once per node pool for workers.
+- Add `internal.advancedConfiguration.kubelet.evictionHard` values. Providers need them to tell autoscalers such as Karpenter how much of a node's resources is allocatable.
+- SELinux: Add `global.components.selinux.writablePolicyStore` value (default `true`) to allow loading additional SELinux policies.
 - Add `cert-manager-crossplane-resources` HelmRelease.
 - Feature Gates: Add support for defining maximum Kubernetes version.
 - Apps: Add External DNS Crossplane Resources.
@@ -79,6 +109,19 @@
 
 #### Changed
 
+- Ignition: Rename `/etc/sysctl.d/hardening.conf` to `80-hardening.conf` so it sorts after Flatcar's `65-baselayout.conf` but before Image Builder's `99-sysctl.conf` and Cilium's `99-zzz-override_cilium.conf`. Previously the unprefixed file sorted last and overrode both. As a result, nodes now run with `fs.inotify.max_user_watches = 524288` (previously `16384`) and `net.ipv4.conf.all.rp_filter = 0` (previously `1`).
+- Ignition: Clean up sysctl hardening. Drop keys already set by Image Builder or Cilium (`fs.inotify.max_user_watches`, `fs.inotify.max_user_instances`, `net.ipv4.conf.all.rp_filter`, `vm.overcommit_memory`, `kernel.panic`, `kernel.panic_on_oops`). Stop disabling `net.ipv4.tcp_timestamps`, since modern kernels randomize timestamp offsets.
+- `kubeadm`: Exclude `/etc/.systemd-confext` from `restorecon`.
+- Cilium: Replace the catch-all `- operator: Exists` toleration on `cilium-operator` with an explicit list.
+- Stop deleting and recreating `/etc/ssl/certs` on nodes for fixing SELinux labeling, so any custom certificates placed there directly are preserved.
+- Cilium: Replace the catch-all `- operator: Exists` toleration on the `hubble-relay`, `hubble-ui` and `certgen` components with an explicit list.
+- Enable the `ClusterTrustBundle` and `ClusterTrustBundleProjection` feature gates (Kubernetes 1.33+) and the `PodCertificateRequest` feature gate (Kubernetes 1.35+) by default on kube-apiserver, kube-controller-manager and kubelet.
+- SELinux: Keep AVC audit logs (required for SELinux policy generation).
+- SELinux: Relabel the whole filesystem except read-only `/usr` (previously only `/etc/kubernetes`).
+- SELinux: Correctly label CA certificates in `/etc/ssl/certs` for mounting into containers.
+- App to HR Migration: Skip v35.0.0 pre-releases and update `docker-kubectl` to v1.36.4.
+- Chart: Rework HelmRelease clean-up job.
+- Chart: Migrate Apps to HelmReleases.
 - Migrate `coredns` HelmRelease values to the new `coredns-app` zone-aware interface.
 - Rename the internal `coredns` control plane helper to align with the `controlPlane` values key.
 - Updated `cert-manager` to v4.0.0 and migrated the values to match the new chart's schema.
@@ -114,11 +157,16 @@
 
 #### Removed
 
+- Ignition: Remove `os-hardening.service`. Its `sysctl -p` duplicated what `systemd-sysctl` already applies at boot. Its `gpasswd` calls had no effect: glibc merges group memberships from `/usr/share/baselayout/group` (via `nss-usrfiles`) regardless of `/etc/group`.
+- Apps: Remove the static `aks` exceptions for the Cilium dependency of network policies and CoreDNS.
+- Workers: Remove the `karpenter.sh/unregistered:NoExecute` taint from Karpenter node pools. Provider charts must add it via `taintsTemplateName`.
+- Chart: Remove App to HelmRelease migration.
 - Cluster API: Remove `strategy.rollingUpdate.deletePolicy` from node pools.
 - Remove helm `Job` that cleans up `HelmReleases`. This was needed because we were letting Helm delete the infra cluster and control plane Custom Resources, instead of letting CAPI controllers handle the deletion. This has been fixed, so the `Job` is no longer required.
 
 #### Fixed
 
+- The `helm.sh/chart` label is valid for long chart versions: the 63-character cut trims the whole trailing run of `-`, `.` and `_`.
 - Control Plane: Ensure components start correctly when SELinux is set to enforcing.
 - Apps: Change `rbac-bootstrap` default role from `read-all` to `view` and add additional groups for token forwarded cases.
 - Cleanup job now also deletes HelmChart CRs to prevent leftover resources when suspending HelmReleases during cluster deletion.
@@ -126,28 +174,27 @@
 ### Apps
 
 - aws-ebs-csi-driver from v4.1.1 to v4.3.2
+- aws-ebs-csi-driver-servicemonitors from v0.1.0 to v0.1.2
 - aws-nth-bundle from v1.3.0 to v2.1.1
 - cert-exporter from v2.9.15 to v2.12.1
 - cert-manager from v3.9.4 to v4.1.2
-- cert-manager-crossplane-resources from v0.1.0 to v0.2.0
+- cert-manager-crossplane-resources from v0.1.0 to v0.3.0
 - chart-operator-extensions from v1.1.2 to v1.1.3
-- cilium from v1.3.4 to v1.6.1
+- cilium from v1.3.4 to v1.6.2
 - cilium-crossplane-resources from v0.2.1 to v0.2.2
 - cilium-servicemonitors from v0.1.3 to v0.2.0
 - cluster-autoscaler from v1.34.1-1 to v2.1.1
-- Added cluster-autoscaler-crossplane-resources v1.0.0
-- coredns from v1.30.0 to v1.34.0
+- coredns from v1.30.0 to v1.35.0
 - coredns-extensions from v0.1.2 to v0.1.3
-- external-dns from v3.4.0 to v3.6.1
-- Added external-dns-crossplane-resources v0.4.0
+- external-dns from v3.4.0 to v3.7.1
 - k8s-dns-node-cache from v2.9.1 to v2.11.1
-- karpenter from v1.4.0 to v2.5.0
+- karpenter from v1.4.0 to v2.6.0
 - karpenter-taint-remover from v1.0.1 to v1.1.0
 - metrics-server from v2.7.0 to v2.8.0
 - net-exporter from v1.23.0 to v1.24.1
-- network-policies from v0.1.3 to v0.3.2
+- network-policies from v0.1.3 to v0.5.0
 - node-exporter from v1.20.10 to v1.21.0
-- observability-bundle from v2.5.0 to v3.5.0
+- observability-bundle from v2.5.0 to v3.6.0
 - observability-policies from v0.0.3 to v0.0.4
 - priority-classes from v0.3.0 to v0.3.1
 - prometheus-blackbox-exporter from v0.5.0 to v0.10.0
@@ -194,6 +241,16 @@
 - Re-enable metrics, force use of `ServiceMonitor` to avoid rendering without them if CRDs are not installed yet
 - Fix VPA `updateMode` for `ebs-csi-node` DaemonSet from `Auto` to `Initial`. VPA cannot evict DaemonSet pods, so `Auto` mode silently produces recommendations without ever applying them. `Initial` correctly sets resources at pod creation time.
 - Use `.Chart.AppVersion` instead of `.Chart.Version` for OCIRepository tag.
+
+### aws-ebs-csi-driver-servicemonitors [v0.1.0...v0.1.2](https://github.com/giantswarm/aws-ebs-csi-driver-servicemonitors-app/compare/v0.1.0...v0.1.2)
+
+#### Changed
+
+- Migrate to App Build Suite (ABS).
+
+#### Fixed
+
+- Remove duplicate `application.giantswarm.io/team` label in PodMonitor that caused install failure. The label is already included via the common labels helper.
 
 ### aws-nth-bundle [v1.3.0...v2.1.1](https://github.com/giantswarm/aws-nth-bundle/compare/v1.3.0...v2.1.1)
 
@@ -274,14 +331,17 @@
 - Trim the `helm.sh/chart` label of the Giant Swarm resources (VPAs, PodLogs, proxy ConfigMap) to end on an alphanumeric character. A long dev version cut at 63 characters could end on a `.`, and the API server rejected the resource.
 - Fix `controller` Vertical Pod Autoscaler (VPA) resource syntax.
 
-### cert-manager-crossplane-resources [v0.1.0...v0.2.0](https://github.com/giantswarm/cert-manager-crossplane-resources/compare/v0.1.0...v0.2.0)
+### cert-manager-crossplane-resources [v0.1.0...v0.3.0](https://github.com/giantswarm/cert-manager-crossplane-resources/compare/v0.1.0...v0.3.0)
 
 #### Added
 
+- Read the AWS account ID, partition, and OIDC domains from the `<clusterName>-crossplane-config` ConfigMap if `providers.aws.accountID`, `providers.aws.partition`, or `providers.aws.oidc.domain` is empty. This supports EKS clusters, whose OIDC domain is only known once the cluster is provisioned. Explicitly set values take precedence over the ConfigMap.
 - Add `WorkloadIdentity` resource for AKS provider.
 
 #### Changed
 
+- Restrict AWS provider permissions for `ChangeResourceRecordSets` to TXT records related to acme challenges.
+- Create a dedicated role for azure to reduce permissions to TXT records only.
 - Update `architect-orb` to v6.15.0.
 
 ### chart-operator-extensions [v1.1.2...v1.1.3](https://github.com/giantswarm/chart-operator-extensions/compare/v1.1.2...v1.1.3)
@@ -290,7 +350,7 @@
 
 - Migrate Chart.yaml annotations to new format as per https://docs.giantswarm.io/reference/platform-api/chart-metadata/
 
-### cilium [v1.3.4...v1.6.1](https://github.com/giantswarm/cilium-app/compare/v1.3.4...v1.6.1)
+### cilium [v1.3.4...v1.6.2](https://github.com/giantswarm/cilium-app/compare/v1.3.4...v1.6.2)
 
 #### Added
 
@@ -299,9 +359,15 @@
 
 #### Changed
 
+- Upgrade Cilium to [v1.20.4](https://github.com/cilium/cilium/releases/tag/v1.20.4).
+- Envoy xDS mode defaults to `split` again, following upstream ([cilium/cilium#49383](https://github.com/cilium/cilium/pull/49383)).
+- Restore upstream `cilium-operator` tolerations instead of tolerating all taints.
+- Exclude the Lens namespace label `k8slens-edit-resource-version` from identity computation.
+- Upgrade Cilium to [v1.19.9](https://github.com/cilium/cilium/releases/tag/v1.19.9).
 - Upgrade Cilium to [v1.20.2](https://github.com/cilium/cilium/releases/tag/v1.20.2).
 - Move the team annotation from the legacy `application.giantswarm.io/team` key to
 - Point `home` at this repository instead of `https://cilium.io/`, as the standard requires.
+- Upgrade Cilium to [v1.19.8](https://github.com/cilium/cilium/releases/tag/v1.19.8).
 - Upgrade Cilium to [v1.20.1](https://github.com/cilium/cilium/releases/tag/v1.20.1) from v1.19.7. Please review the upstream [1.20 upgrade notes](https://docs.cilium.io/en/v1.20/operations/upgrade/) before rolling this out.
 - Serve the ztunnel image from `gsoci.azurecr.io/giantswarm/cilium-ztunnel` instead of pulling it from upstream. Cilium v1.20 moved this image from `docker.io/istio/ztunnel` to `quay.io/cilium/ztunnel:v1.0.0`, and our mirror carries exactly that digest, so it no longer has to be allow-listed in `sync/unmirrored-images.txt`. Only used by `encryption.type=ztunnel`, which we do not support.
 - Upgrade Cilium to [v1.19.7](https://github.com/cilium/cilium/releases/tag/v1.19.7).
@@ -385,20 +451,11 @@
 - RBAC: Allow reading `infrastructure.cluster.x-k8s.io` resources when `clusterAPI.enabled` is set.
 - The `helm.sh/chart` label is valid for long chart versions: the 63-character cut trims the whole trailing run of `-`, `.` and `_`.
 
-### cluster-autoscaler-crossplane-resources [v1.0.0](https://github.com/giantswarm/cluster-autoscaler-crossplane-resources/releases/tag/v1.0.0)
+### coredns [v1.30.0...v1.35.0](https://github.com/giantswarm/coredns-app/compare/v1.30.0...v1.35.0)
 
 #### Added
 
-- Chart: Add IAM role.
-
-#### Changed
-
-- CircleCI: Push to `cluster-catalog`.
-
-### coredns [v1.30.0...v1.34.0](https://github.com/giantswarm/coredns-app/compare/v1.30.0...v1.34.0)
-
-#### Added
-
+- Support the forward `max_age` option (#528)
 - Chart metadata: add `io.giantswarm.application.managed` annotation (`"true"`).
 - Chart metadata: add `keywords`.
 - Wire up the full set of CoreDNS `forward`, `cache`, and `kubernetes` block parameters in the structured zone config:
@@ -408,6 +465,8 @@
 
 #### Changed
 
+- Update `coredns` image to [1.15.0](https://github.com/coredns/coredns/releases/tag/v1.15.0).
+- Update gsoci.azurecr.io/giantswarm/docker-kubectl to v1.37.1 (#520)
 - Update `coredns` image to [1.14.7](https://github.com/coredns/coredns/releases/tag/v1.14.7).
 - Update `coredns` image to [1.14.6](https://github.com/coredns/coredns/releases/tag/v1.14.6).
 - Run the E2E test suites automatically on release PRs by adding `.github/release-pr-body.md`.
@@ -420,12 +479,14 @@
 
 #### Fixed
 
+- Render forward integer options when set to `0` (#528)
+- Validate `additionalZones` cache, forward, kubernetes, log and loadbalance blocks against the public and cluster zone schemas (#528)
 - The `helm.sh/chart` label is valid for long chart versions: the 63-character cut trims the whole trailing run of `-`, `.` and `_`.
 - Honor the deprecated `configmap.log`, `loadbalancePolicy` and `configmap.cache` again. Since 1.31.0 `coredns.<zone>.log`, `coredns.<zone>.loadbalance` and `coredns.<zone>.cache.success.ttl` shipped defaults that shadowed them, so the old keys were silently ignored. They are now unset by default, restoring the documented fallback chain. Rendering with default values is unchanged.
 - Render the `health` directive in only the `.` server block. The health plugin is process-wide and can be enabled in just one Server Block, so emitting it in every zone block was invalid. `ready` is kept in every block (its readiness is aggregated across blocks).
 - Correct the `coredns.*.cache.serveStale.refreshMode` schema enum to `immediate`/`verify` (was `immediate`/`background`), matching the CoreDNS cache plugin.
 
-### external-dns [v3.4.0...v3.6.1](https://github.com/giantswarm/external-dns-app/compare/v3.4.0...v3.6.1)
+### external-dns [v3.4.0...v3.7.1](https://github.com/giantswarm/external-dns-app/compare/v3.4.0...v3.7.1)
 
 #### Added
 
@@ -434,6 +495,8 @@
 
 #### Changed
 
+- Upgrade external-dns to [v0.23.0](https://github.com/kubernetes-sigs/external-dns/releases/tag/v0.23.0).
+- Sync to upstream helm chart [1.23.0](https://github.com/kubernetes-sigs/external-dns/releases/tag/external-dns-helm-chart-1.23.0).
 - Run the E2E test suites automatically on release PRs by adding `.github/release-pr-body.md`.
 - Upgrade external-dns to [v0.22.0](https://github.com/kubernetes-sigs/external-dns/releases/tag/v0.22.0).
 - Sync to upstream helm chart [1.22.0](https://github.com/kubernetes-sigs/external-dns/releases/tag/external-dns-helm-chart-1.22.0).
@@ -458,25 +521,9 @@
 #### Fixed
 
 - CRD install job: bump the `kubectl-apply-job` dependency to 0.14.0, whose fallback image is `gsoci.azurecr.io/giantswarm/docker-kubectl` instead of `quay.io/giantswarm/docker-kubectl:1.26.0`, which quay.io now refuses with 401.
+- Values schema: accept arbitrary keys again in free-form maps and pass-through Kubernetes objects (annotations, labels, `nodeSelector`, `affinity`, security contexts, probes, resources, `extraArgs` as a map, `tlsConfig`, `secretConfiguration.data`), and `name` in `imagePullSecrets` items. This broke installs, for example with the IRSA `eks.amazonaws.com/role-arn` service account annotation on CAPA.
+- Values schema: accept the `aws` values that cluster-aws still sets. They have no effect.
 - The `helm.sh/chart` label is valid for long chart versions: the 63-character cut trims the whole trailing run of `-`, `.` and `_`.
-
-### external-dns-crossplane-resources [v0.4.0](https://github.com/giantswarm/external-dns-crossplane-resources/releases/tag/v0.4.0)
-
-#### Added
-
-- Add configurable `serviceAccount.name`/`serviceAccount.namespace` and `azure.mountPath` values.
-
-#### Changed
-
-- Scope AWS values under `aws.*`. Root-level values remain supported as a fallback for backward compatibility.
-- Templatize hardcoded resource, service account and tag values.
-- Scope the IAM trust policy to the exact `serviceAccount` subject instead of a wildcard match.
-- Enable Azure Workload Identity for the `azure` provider in addition to `aks`.
-- Update chart metadata to reflect Azure support.
-
-#### Removed
-
-- Remove unused `baseDomain` value.
 
 ### k8s-dns-node-cache [v2.9.1...v2.11.1](https://github.com/giantswarm/k8s-dns-node-cache-app/compare/v2.9.1...v2.11.1)
 
@@ -496,10 +543,11 @@
 - Make the DNS Service redirected by the `CiliumLocalRedirectPolicy` configurable.
 - The `helm.sh/chart` label is valid for long chart versions: the 63-character cut trims the whole trailing run of `-`, `.` and `_`.
 
-### karpenter [v1.4.0...v2.5.0](https://github.com/giantswarm/karpenter-app/compare/v1.4.0...v2.5.0)
+### karpenter [v1.4.0...v2.6.0](https://github.com/giantswarm/karpenter-app/compare/v1.4.0...v2.6.0)
 
 #### Added
 
+- Add `ec2:DescribeInstanceStatus` permission to the Karpenter IAM role, which Karpenter requires since v1.12 for its interruption health checks.
 - Add `iam:CreateServiceLinkedRole` permission to the Karpenter IAM role, scoped to the `AWSServiceRoleForEC2Spot` service-linked role, so Karpenter can create such role when launching spot instances in accounts where it does not exist yet.
 - Support karpenter on EKS clusters
   - Add `eks:DescribeCluster` permission to discover the cluster endpoint
@@ -519,6 +567,8 @@
 
 #### Changed
 
+- Update upstream Karpenter and its CRDs to v1.14.1. This might roll nodes because Karpenter v1.12 bumps the `EC2NodeClass` hash version from v4 to v5, which can mark existing nodes as drifted.
+- Enable the `StaticCapacity` feature gate (`NodePool.spec.replicas`) in the `karpenter` chart defaults, as already done in `karpenter-bundle`. The feature is still alpha upstream, and we offer it as tech preview.
 - Run the E2E test suites automatically on release PRs by adding `.github/release-pr-body.md`.
 - Bump OCIRepository to v1.
 - Chart: Move PolicyException to `kube-system` to avoid depending on creation of the `policy-exceptions` namespace.
@@ -585,10 +635,13 @@
 
 - The `helm.sh/chart` label is valid for long chart versions: the 63-character cut trims the whole trailing run of `-`, `.` and `_`.
 
-### network-policies [v0.1.3...v0.3.2](https://github.com/giantswarm/network-policies-app/compare/v0.1.3...v0.3.2)
+### network-policies [v0.1.3...v0.5.0](https://github.com/giantswarm/network-policies-app/compare/v0.1.3...v0.5.0)
 
 #### Added
 
+- Add `hubbleRelay` to allow the AKS ACNS `hubble-relay` through the default deny.
+- Add `allowEgressToUpstreamDNS` to allow pods with `dnsPolicy: Default` to reach upstream DNS resolvers.
+- Add `azureWorkloadIdentityWebhook` to allow the AKS workload identity webhook through the default deny.
 - Add `keywords` to `Chart.yaml`.
 - Declare the `io.giantswarm.application.audience` (`all`) and
 - Add optional `denyEgressToIMDS` policy denying pod egress to the instance metadata service. Disabled by default.
@@ -597,6 +650,7 @@
 
 #### Changed
 
+- Move the chart to `helm/network-policies` to match its name, in preparation for devctl-generated CI.
 - Convert the `allow-ingress-from-konnectivity` `CiliumNetworkPolicy` into a `CiliumClusterwideNetworkPolicy` named
 - Always exclude the `karpenter` and `aws-load-balancer-controller` namespaces from `denyEgressToIMDS`.
 - Move the team annotation from the legacy `application.giantswarm.io/team` key to
@@ -618,10 +672,12 @@
 
 - Removed duplicated `app` label which is already added by the selector helper.
 
-### observability-bundle [v2.5.0...v3.5.0](https://github.com/giantswarm/observability-bundle/compare/v2.5.0...v3.5.0)
+### observability-bundle [v2.5.0...v3.6.0](https://github.com/giantswarm/observability-bundle/compare/v2.5.0...v3.6.0)
 
 #### Added
 
+- KSM custom resource state: Add `status_parent_accepted` and `status_parent_resolved_refs` gauges for Gateway API `HTTPRoute`, one series per parent with the condition `reason` as label.
+- KSM custom resource state: Add `target_info` and `status_ancestor_accepted` metrics for Envoy Gateway `SecurityPolicy`, `BackendTrafficPolicy`, `ClientTrafficPolicy` and `EnvoyExtensionPolicy`.
 - Point kube-prometheus-stack's control-plane ServiceMonitors at the alloy-metrics token Secret.
 - Add KSM metrics for Gateway API `ListenerSet` and `ReferenceGrant` resources.
 - Add Backstage audience annotations.
@@ -633,6 +689,7 @@
 
 #### Changed
 
+- *!Breaking change*: Turn `apps.<appName>.dependsOn` from a list into a map from dependency name to `true`/`false`, so that a provider can turn off a single dependency (for example `kyverno-crds` on clusters without the security bundle) instead of overriding the whole list.
 - Update `alloy` apps to 0.23.1 (Alloy v1.19.2).
 - Update `prometheus-operator-crd` to 24.0.0 (Prometheus Operator CRDs v0.94.0).
 - Update `kube-prometheus-stack` to 24.0.0 (chart 91.2.3, Prometheus Operator v0.94.0).
