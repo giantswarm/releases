@@ -39,7 +39,7 @@ spec:
     dependsOn:
     - prometheus-operator-crd
   - name: cilium
-    version: 1.5.4
+    version: 1.5.2
   - name: cilium-crossplane-resources
     version: 0.2.2
   - name: cilium-servicemonitors
@@ -174,8 +174,8 @@ spec:
   - name: flatcar
     version: 4757.2.2
   - name: kubernetes
-    version: 1.35.10
+    version: 1.35.9
   - name: os-tooling
     version: 1.36.0
-  date: "2026-10-28T11:38:27Z"
+  date: "2026-10-28T12:45:07Z"
   state: active
