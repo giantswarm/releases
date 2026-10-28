@@ -5,6 +5,26 @@ releases:
           version: '0.2.0'
         - name: cert-manager
           version: '4.1.1'
+        - name: cilium
+          version: '1.5.2'
+        - name: cloud-provider-aws
+          version: '2.1.0'
+        - name: cluster-autoscaler
+          version: '2.0.5'
+        - name: coredns
+          version: '1.34.0'
+        - name: etcd-defrag
+          version: '1.2.12'
+        - name: external-dns
+          version: '3.6.1'
+        - name: k8s-dns-node-cache
+          version: '2.11.0'
+        - name: karpenter
+          version: '2.5.0'
+        - name: network-policies
+          version: '0.3.2'
+        - name: observability-bundle
+          version: '3.5.0'
         - name: kubernetes
           version: '1.35.9'
     - name: '>= 35.0.0 < 36.0.0'
