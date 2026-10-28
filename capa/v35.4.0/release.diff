@@ -47,12 +47,12 @@ spec:                                                              spec:
     dependsOn:                                                         dependsOn:
     - prometheus-operator-crd                                          - prometheus-operator-crd
   - name: cloud-provider-aws                                         - name: cloud-provider-aws
-    version: 2.1.0                                              |      version: 2.2.0
+    version: 2.1.0                                                     version: 2.1.0
     dependsOn:                                                         dependsOn:
     - cilium                                                           - cilium
     - vertical-pod-autoscaler-crd                                      - vertical-pod-autoscaler-crd
   - name: cluster-autoscaler                                         - name: cluster-autoscaler
-    version: 2.0.5                                              |      version: 2.1.1
+    version: 2.0.5                                                     version: 2.0.5
     dependsOn:                                                         dependsOn:
     - cilium                                                           - cilium
     - kyverno-crds                                                     - kyverno-crds
@@ -61,7 +61,7 @@ spec:                                                              spec:
   - name: cluster-autoscaler-crossplane-resources                    - name: cluster-autoscaler-crossplane-resources
     version: 1.0.0                                                     version: 1.0.0
   - name: coredns                                                    - name: coredns
-    version: 1.34.0                                             |      version: 1.35.0
+    version: 1.34.0                                                    version: 1.34.0
     dependsOn:                                                         dependsOn:
     - cilium                                                           - cilium
   - name: coredns-extensions                                         - name: coredns-extensions
@@ -69,7 +69,7 @@ spec:                                                              spec:
     dependsOn:                                                         dependsOn:
     - vertical-pod-autoscaler-crd                                      - vertical-pod-autoscaler-crd
   - name: etcd-defrag                                                - name: etcd-defrag
-    version: 1.2.12                                             |      version: 1.2.13
+    version: 1.2.12                                                    version: 1.2.12
     dependsOn:                                                         dependsOn:
     - kyverno-crds                                                     - kyverno-crds
   - name: etcd-k8s-res-count-exporter                                - name: etcd-k8s-res-count-exporter
@@ -80,7 +80,7 @@ spec:                                                              spec:
     - prometheus-operator-crd                                          - prometheus-operator-crd
     - vertical-pod-autoscaler-crd                                      - vertical-pod-autoscaler-crd
   - name: external-dns                                               - name: external-dns
-    version: 3.6.1                                              |      version: 3.7.1
+    version: 3.6.1                                                     version: 3.6.1
     dependsOn:                                                         dependsOn:
     - cilium                                                           - cilium
     - prometheus-operator-crd                                          - prometheus-operator-crd
@@ -99,13 +99,13 @@ spec:                                                              spec:
     - prometheus-operator-crd                                          - prometheus-operator-crd
     - vertical-pod-autoscaler-crd                                      - vertical-pod-autoscaler-crd
   - name: k8s-dns-node-cache                                         - name: k8s-dns-node-cache
-    version: 2.11.0                                             |      version: 2.11.1
+    version: 2.11.0                                                    version: 2.11.0
     dependsOn:                                                         dependsOn:
     - cilium                                                           - cilium
     - kyverno-crds                                                     - kyverno-crds
     - prometheus-operator-crd                                          - prometheus-operator-crd
   - name: karpenter                                                  - name: karpenter
-    version: 2.5.0                                              |      version: 2.6.0
+    version: 2.5.0                                                     version: 2.5.0
   - name: karpenter-taint-remover                                    - name: karpenter-taint-remover
     version: 1.1.0                                                     version: 1.1.0
   - name: metrics-server                                             - name: metrics-server
@@ -121,7 +121,7 @@ spec:                                                              spec:
     - prometheus-operator-crd                                          - prometheus-operator-crd
     - vertical-pod-autoscaler-crd                                      - vertical-pod-autoscaler-crd
   - name: network-policies                                           - name: network-policies
-    version: 0.3.2                                              |      version: 0.5.0
+    version: 0.3.2                                                     version: 0.3.2
     dependsOn:                                                         dependsOn:
     - cilium                                                           - cilium
   - name: node-exporter                                              - name: node-exporter
@@ -136,7 +136,7 @@ spec:                                                              spec:
     - kyverno-crds                                                     - kyverno-crds
     - prometheus-operator-crd                                          - prometheus-operator-crd
   - name: observability-bundle                                       - name: observability-bundle
-    version: 3.5.0                                              |      version: 3.6.0
+    version: 3.5.0                                                     version: 3.5.0
   - name: observability-policies                                     - name: observability-policies
     version: 0.0.4                                                     version: 0.0.4
     dependsOn:                                                         dependsOn:
@@ -174,8 +174,8 @@ spec:                                                              spec:
   - name: flatcar                                                    - name: flatcar
     version: 4757.2.2                                                  version: 4757.2.2
   - name: kubernetes                                                 - name: kubernetes
-    version: 1.35.9                                                    version: 1.35.9
+    version: 1.35.9                                             |      version: 1.35.10
   - name: os-tooling                                                 - name: os-tooling
     version: 1.36.0                                                    version: 1.36.0
-  date: "2026-10-26T17:58:52Z"                                  |    date: "2026-10-28T11:35:01Z"
+  date: "2026-10-26T17:58:52Z"                                  |    date: "2026-10-28T11:38:27Z"
   state: active                                                      state: active
