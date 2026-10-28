@@ -105,7 +105,7 @@ spec:
     - kyverno-crds
     - prometheus-operator-crd
   - name: karpenter
-    version: 2.5.0
+    version: 2.6.0
   - name: karpenter-taint-remover
     version: 1.1.0
   - name: metrics-server
@@ -177,5 +177,5 @@ spec:
     version: 1.35.9
   - name: os-tooling
     version: 1.36.0
-  date: "2026-10-28T12:45:07Z"
+  date: "2026-10-28T12:52:26Z"
   state: active
