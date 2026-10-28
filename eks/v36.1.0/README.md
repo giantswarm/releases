@@ -174,19 +174,18 @@
 ### Apps
 
 - aws-ebs-csi-driver from v4.1.1 to v4.3.2
-- aws-ebs-csi-driver-servicemonitors from v0.1.0 to v0.1.2
-- aws-nth-bundle from v1.3.0 to v2.1.1
 - cert-exporter from v2.9.15 to v2.12.1
 - cert-manager from v3.9.4 to v4.1.2
 - cert-manager-crossplane-resources from v0.1.0 to v0.3.0
 - chart-operator-extensions from v1.1.2 to v1.1.3
 - cilium from v1.3.4 to v1.6.2
-- cilium-crossplane-resources from v0.2.1 to v0.2.2
 - cilium-servicemonitors from v0.1.3 to v0.2.0
 - cluster-autoscaler from v1.34.1-1 to v2.1.1
+- Added cluster-autoscaler-crossplane-resources v1.0.0
 - coredns from v1.30.0 to v1.35.0
 - coredns-extensions from v0.1.2 to v0.1.3
 - external-dns from v3.4.0 to v3.7.1
+- Added external-dns-crossplane-resources v0.4.0
 - k8s-dns-node-cache from v2.9.1 to v2.11.1
 - karpenter from v1.4.0 to v2.6.0
 - karpenter-taint-remover from v1.0.1 to v1.1.0
@@ -241,37 +240,6 @@
 - Re-enable metrics, force use of `ServiceMonitor` to avoid rendering without them if CRDs are not installed yet
 - Fix VPA `updateMode` for `ebs-csi-node` DaemonSet from `Auto` to `Initial`. VPA cannot evict DaemonSet pods, so `Auto` mode silently produces recommendations without ever applying them. `Initial` correctly sets resources at pod creation time.
 - Use `.Chart.AppVersion` instead of `.Chart.Version` for OCIRepository tag.
-
-### aws-ebs-csi-driver-servicemonitors [v0.1.0...v0.1.2](https://github.com/giantswarm/aws-ebs-csi-driver-servicemonitors-app/compare/v0.1.0...v0.1.2)
-
-#### Changed
-
-- Migrate to App Build Suite (ABS).
-
-#### Fixed
-
-- Remove duplicate `application.giantswarm.io/team` label in PodMonitor that caused install failure. The label is already included via the common labels helper.
-
-### aws-nth-bundle [v1.3.0...v2.1.1](https://github.com/giantswarm/aws-nth-bundle/compare/v1.3.0...v2.1.1)
-
-#### Added
-
-- Make the `aws-node-termination-handler` HelmRelease `dependsOn` list configurable via `awsNodeTerminationHandler.dependsOn`.
-- Add `cluster.x-k8s.io/cluster-name` label to the HelmReleases.
-- Add Flux `dependsOn` from the `aws-node-termination-handler` HelmRelease to the `prometheus-operator-crd` HelmRelease.
-
-#### Changed
-
-- Bump OCIRepository version to v1.
-- AWS Node Termination Handler: Force resource updates on upgrade.
-- Use `gsoci.azurecr.io/giantswarm/aws-node-termination-handler` for the container image.
-- Fix the Flux HelmRelease remediation policy (always remediate).
-- Deploy Crossplane resources directly from the bundle instead of standalone helmrelease.
-- Clean up values and helm template functions.
-- Remove `cluster-values` ConfigMap reference from `aws-node-termination-handler` HelmRelease. Pass `clusterID` explicitly via inline values instead.
-- Migrate sub-apps from App CRs to Flux HelmRelease CRs.
-- Add `io.giantswarm.application.audience: all` annotation to publish the app to the customer Backstage catalog.
-- Migrate chart metadata annotations to `io.giantswarm.application.*` format.
 
 ### cert-exporter [v2.9.15...v2.12.1](https://github.com/giantswarm/cert-exporter/compare/v2.9.15...v2.12.1)
 
@@ -404,12 +372,6 @@
 - Fix rendering of the certgen job specs (`hubble/tls-cronjob` and `clustermesh-apiserver/tls-cronjob`): the image reference was not converted to the Giant Swarm `cilium.image` helper signature because the image-registries sync patch only processed `*.yaml` templates, so enabling the cronJob method failed with `required list, but got "map"`.
 - Add NetworkPolicies allowing the `hubble-generate-certs` and `clustermesh-apiserver-generate-certs` certgen pods egress to the Kubernetes API.
 
-### cilium-crossplane-resources [v0.2.1...v0.2.2](https://github.com/giantswarm/cilium-crossplane-resources/compare/v0.2.1...v0.2.2)
-
-#### Changed
-
-- CircleCI: Update `architect-orb` so this chart also gets pushed to the OCI registry.
-
 ### cilium-servicemonitors [v0.1.3...v0.2.0](https://github.com/giantswarm/cilium-servicemonitors-app/compare/v0.1.3...v0.2.0)
 
 #### Added
@@ -450,6 +412,16 @@
 
 - RBAC: Allow reading `infrastructure.cluster.x-k8s.io` resources when `clusterAPI.enabled` is set.
 - The `helm.sh/chart` label is valid for long chart versions: the 63-character cut trims the whole trailing run of `-`, `.` and `_`.
+
+### cluster-autoscaler-crossplane-resources [v1.0.0](https://github.com/giantswarm/cluster-autoscaler-crossplane-resources/releases/tag/v1.0.0)
+
+#### Added
+
+- Chart: Add IAM role.
+
+#### Changed
+
+- CircleCI: Push to `cluster-catalog`.
 
 ### coredns [v1.30.0...v1.35.0](https://github.com/giantswarm/coredns-app/compare/v1.30.0...v1.35.0)
 
@@ -524,6 +496,20 @@
 - Values schema: accept arbitrary keys again in free-form maps and pass-through Kubernetes objects (annotations, labels, `nodeSelector`, `affinity`, security contexts, probes, resources, `extraArgs` as a map, `tlsConfig`, `secretConfiguration.data`), and `name` in `imagePullSecrets` items. This broke installs, for example with the IRSA `eks.amazonaws.com/role-arn` service account annotation on CAPA.
 - Values schema: accept the `aws` values that cluster-aws still sets. They have no effect.
 - The `helm.sh/chart` label is valid for long chart versions: the 63-character cut trims the whole trailing run of `-`, `.` and `_`.
+
+### external-dns-crossplane-resources [v0.4.0](https://github.com/giantswarm/external-dns-crossplane-resources/releases/tag/v0.4.0)
+
+#### Added
+
+- Add configurable `serviceAccount.name`/`serviceAccount.namespace` and `azure.mountPath` values.
+
+#### Changed
+
+- Scope AWS values under `aws.*`. Root-level values remain supported as a fallback for backward compatibility.
+- Templatize hardcoded resource, service account and tag values.
+- Scope the IAM trust policy to the exact `serviceAccount` subject instead of a wildcard match.
+- Enable Azure Workload Identity for the `azure` provider in addition to `aks`.
+- Update chart metadata to reflect Azure support.
 
 ### k8s-dns-node-cache [v2.9.1...v2.11.1](https://github.com/giantswarm/k8s-dns-node-cache-app/compare/v2.9.1...v2.11.1)
 
