@@ -5,7 +5,7 @@
 ### Components
 
 - cluster-aws from v10.5.0 to v10.6.0
-- Kubernetes from v1.35.9 to [v1.35.10](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.35.md#v1.35.10)
+- Kubernetes from v1.35.9 to [vv1.35.9](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.35.md#vv1.35.9)
 
 ### cluster-aws [v10.5.0...v10.6.0](https://github.com/giantswarm/cluster-aws/compare/v10.5.0...v10.6.0)
 
