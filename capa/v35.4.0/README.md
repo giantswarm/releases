@@ -20,7 +20,6 @@
 
 ### Apps
 
-- cert-manager from v4.1.1 to v4.1.2
 - cert-manager-crossplane-resources from v0.2.0 to v0.3.0
 - cilium from v1.5.2 to v1.5.4
 - cloud-provider-aws from v2.1.0 to v2.2.0
@@ -32,27 +31,6 @@
 - karpenter from v2.5.0 to v2.6.0
 - network-policies from v0.3.2 to v0.5.0
 - observability-bundle from v3.5.0 to v3.6.0
-
-### cert-manager [v4.1.1...v4.1.2](https://github.com/giantswarm/cert-manager-app/compare/v4.1.1...v4.1.2)
-
-#### Added
-
-- cert-manager-giantswarm-clusterissuer: Allow setting `cnameStrategy` per DNS01 solver with `acme.dns01.cloudflare.cnameStrategy`, `acme.dns01.route53.cnameStrategy` and `acme.dns01.azureDNS.cnameStrategy`, so a `_acme-challenge` CNAME can delegate the challenge to a zone the solver can write to.
-
-#### Changed
-
-- Use `imagePullPolicy: IfNotPresent` for the `cert-manager-giantswarm-clusterissuer` hook Job, so a retried Helm hook reuses the image already present on the node instead of downloading it again.
-- Run the E2E test suites automatically on release PRs by adding `.github/release-pr-body.md`.
-- Increase clusterIssuer job memory limit from 250Mi to 512Mi.
-- The ACME HTTP-01 solver of the `letsencrypt-giantswarm` ClusterIssuer now uses Gateway API (`gatewayHTTPRoute`) instead of an Ingress, and targets Envoy Gateway.
-
-#### Removed
-
-- `giantSwarmClusterIssuer.acme.http01.enabled` and `giantSwarmClusterIssuer.acme.http01.ingressClassName` (which defaulted to `nginx`). Setting either now fails the Helm render with a message pointing at the replacement values.
-
-#### Fixed
-
-- Trim the `helm.sh/chart` label of the Giant Swarm resources (VPAs, PodLogs, proxy ConfigMap) to end on an alphanumeric character. A long dev version cut at 63 characters could end on a `.`, and the API server rejected the resource.
 
 ### cert-manager-crossplane-resources [v0.2.0...v0.3.0](https://github.com/giantswarm/cert-manager-crossplane-resources/compare/v0.2.0...v0.3.0)
 

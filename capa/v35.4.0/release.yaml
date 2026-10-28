@@ -26,7 +26,7 @@ spec:
     - prometheus-operator-crd
     - vertical-pod-autoscaler-crd
   - name: cert-manager
-    version: 4.1.2
+    version: 4.1.1
     dependsOn:
     - alloy-podlogs-crds
     - cilium
@@ -177,5 +177,5 @@ spec:
     version: 1.35.9
   - name: os-tooling
     version: 1.36.0
-  date: "2026-10-28T11:27:52Z"
+  date: "2026-10-28T11:33:51Z"
   state: active
