@@ -87,6 +87,19 @@ if [ -n "$VERSION_OVERRIDE" ]; then
     fi
 
     if [ -z "$LATEST_RELEASE" ]; then
+        # No release exists in the previous minor/major series (e.g. a provider
+        # that skipped versions, like EKS jumping from v34.x to v36.1.0).
+        # Fall back to the latest release older than the target version.
+        LATEST_RELEASE=$(printf '%s\n%s\n' "$ALL_RELEASES" "$NEXT_RELEASE" | sort -uV | grep -x -B1 "$NEXT_RELEASE" | head -n 1)
+        if [ "$LATEST_RELEASE" == "$NEXT_RELEASE" ]; then
+            LATEST_RELEASE=""
+        fi
+        if [ -n "$LATEST_RELEASE" ]; then
+            echo "No release found in the previous minor/major series, falling back to latest older release: ${LATEST_RELEASE}" >&2
+        fi
+    fi
+
+    if [ -z "$LATEST_RELEASE" ]; then
         echo "Error: Could not determine a base release for ${NEXT_RELEASE}."
         exit 1
     fi
