@@ -48,6 +48,7 @@
 ### Apps
 
 - cert-manager-crossplane-resources from v0.2.0 to v0.3.0
+- Added cilium v1.6.1
 - network-policies from v0.3.2 to v0.5.0
 - observability-bundle from v3.5.0 to v3.6.0
 
@@ -61,6 +62,18 @@
 
 - Restrict AWS provider permissions for `ChangeResourceRecordSets` to TXT records related to acme challenges.
 - Create a dedicated role for azure to reduce permissions to TXT records only.
+
+### cilium [v1.6.1](https://github.com/giantswarm/cilium-app/releases/tag/v1.6.1)
+
+#### Added
+
+- Declare the `io.giantswarm.application.audience` (`all`) and
+
+#### Changed
+
+- Upgrade Cilium to [v1.20.2](https://github.com/cilium/cilium/releases/tag/v1.20.2).
+- Move the team annotation from the legacy `application.giantswarm.io/team` key to
+- Point `home` at this repository instead of `https://cilium.io/`, as the standard requires.
 
 ### network-policies [v0.3.2...v0.5.0](https://github.com/giantswarm/network-policies-app/compare/v0.3.2...v0.5.0)
 
