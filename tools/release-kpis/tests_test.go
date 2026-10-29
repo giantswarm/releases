@@ -11,14 +11,15 @@ func testDefs() suiteDefinitions {
 			"capa":           {"standard", "upgrade", "private"},
 			"azure":          {"standard"},
 			"cloud-director": {"standard"},
-			"aks":            {},
+			"aks":            {"standard", "byo-cni"},
 		},
 		CheckNameFormats: map[string]string{
 			"standard": "{capi} Standard Suite",
 			"upgrade":  "{capi} Upgrade Suite",
 			"private":  "{capi} Private Suite",
+			"byo-cni":  "{capi} BYO CNI Suite",
 		},
-		SuitePathProviders: map[string]string{"capa": "capa", "azure": "capz", "cloud-director": "capvcd"},
+		SuitePathProviders: map[string]string{"capa": "capa", "azure": "capz", "cloud-director": "capvcd", "aks": "aks"},
 		RequiredSince:      "2026-08-04",
 		SuiteRequiredSince: map[string]string{"capa/private": "2026-09-15"},
 	}
@@ -49,8 +50,9 @@ func TestExpectedChecks(t *testing.T) {
 			t.Errorf("%s = %q, want %q", k, checks[k], v)
 		}
 	}
-	if n := len(testDefs().expectedChecks([]string{"aks"})); n != 0 {
-		t.Errorf("aks expects %d checks, want 0", n)
+	aks := testDefs().expectedChecks([]string{"aks"})
+	if aks["aks/byo-cni"] != "Release Tests / AKS BYO CNI Suite" {
+		t.Errorf("aks/byo-cni = %q, want %q", aks["aks/byo-cni"], "Release Tests / AKS BYO CNI Suite")
 	}
 }
 
