@@ -4,7 +4,8 @@
   "suiteRequiredSince": {
     "aks/standard": "2026-10-29",
     "aks/upgrade": "2026-10-29",
-    "aks/byo-cni": "2026-10-29"
+    "aks/byo-cni": "2026-10-29",
+    "aks/overlay-acns": "2026-10-29"
   },
   "expectedSuites": {
     "capa": ["standard", "upgrade", "upgrade-major", "cilium-eni-mode", "china", "private"],
@@ -12,7 +13,7 @@
     "vsphere": ["standard", "upgrade", "upgrade-major", "on-capa", "on-capz"],
     "cloud-director": ["standard", "upgrade", "upgrade-major"],
     "eks": ["standard", "upgrade", "upgrade-major"],
-    "aks": ["standard", "upgrade", "byo-cni"],
+    "aks": ["standard", "upgrade", "byo-cni", "overlay-acns"],
     "proxmox": []
   },
   "checkNameFormats": {
@@ -25,7 +26,8 @@
     "cilium-eni-mode": "{capi} Cilium ENI Mode Suite",
     "on-capa": "{capi} on CAPA Suite",
     "on-capz": "{capi} on CAPZ Suite",
-    "byo-cni": "{capi} BYO CNI Suite"
+    "byo-cni": "{capi} BYO CNI Suite",
+    "overlay-acns": "{capi} Overlay ACNS Suite"
   },
   "suitePathProviders": {
     "capa": "capa",
