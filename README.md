@@ -19,6 +19,8 @@ to all Giant Swarm installations.
     - [v36.0.0](https://github.com/giantswarm/releases/tree/master/capa/v36.0.0)
 
 - v35
+  - v35.4
+    - [v35.4.0](https://github.com/giantswarm/releases/tree/master/capa/v35.4.0)
   - v35.3
     - [v35.3.0](https://github.com/giantswarm/releases/tree/master/capa/v35.3.0)
   - v35.2
@@ -610,6 +612,10 @@ to all Giant Swarm installations.
     - [v27.0.0](https://github.com/giantswarm/releases/tree/master/cloud-director/archived/v27.0.0)
 
 ## EKS
+
+- v36
+  - v36.1
+    - [v36.1.0](https://github.com/giantswarm/releases/tree/master/eks/v36.1.0)
 
 - v34
   - v34.0
