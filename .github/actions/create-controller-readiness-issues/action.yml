@@ -74,7 +74,21 @@ runs:
             mutation($projectId: ID!, $contentId: ID!) {
               addProjectV2ItemById(input: {projectId: $projectId, contentId: $contentId}) { item { id } }
             }' -f projectId="$PROJECT_NODE_ID" -f contentId="$node_id" \
-            --jq '.data.addProjectV2ItemById.item.id' 2>/dev/null) || { echo "Warning: could not add to project"; return; }
+            --jq '.data.addProjectV2ItemById.item.id' 2>/dev/null) || item_id=""
+
+          # Board 273's built-in auto-add workflow (or the issue's own `on: issues`
+          # automation in giantswarm/roadmap) can add it first; the add then fails
+          # with "Content already exists in this project", so take the existing item.
+          for _ in 1 2 3 4 5; do
+            [[ -n "$item_id" ]] && break
+            sleep 2
+            item_id=$(GH_TOKEN="$PROJECT_TOKEN" gh api graphql -f query='
+              query($id: ID!) {
+                node(id: $id) { ... on Issue { projectItems(first: 20) { nodes { id project { id } } } } }
+              }' -f id="$node_id" \
+              --jq ".data.node.projectItems.nodes[] | select(.project.id == \"$PROJECT_NODE_ID\") | .id" 2>/dev/null) || item_id=""
+          done
+          [[ -z "$item_id" ]] && echo "Warning: could not add to project" && return
 
           option_id=$(GH_TOKEN="$PROJECT_TOKEN" gh api graphql -f query='
             { organization(login: "giantswarm") { projectV2(number: 273) {
