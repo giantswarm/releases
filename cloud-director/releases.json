@@ -69,6 +69,13 @@
       "releaseTimestamp": "2026-10-27T15:46:01Z",
       "changelogUrl": "https://github.com/giantswarm/releases/blob/master/cloud-director/v36.2.0/README.md",
       "isStable": true
+    },
+    {
+      "version": "37.0.0",
+      "isDeprecated": false,
+      "releaseTimestamp": "2026-11-05T15:08:49Z",
+      "changelogUrl": "https://github.com/giantswarm/releases/blob/master/cloud-director/v37.0.0/README.md",
+      "isStable": true
     }
   ],
   "sourceUrl": "https://github.com/giantswarm/releases",
