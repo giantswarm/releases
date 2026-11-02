@@ -47,7 +47,7 @@ spec:
     - prometheus-operator-crd
     - cilium
   - name: net-exporter
-    version: 1.24.2
+    version: 1.24.1
     dependsOn:
     - prometheus-operator-crd
     - vertical-pod-autoscaler-crd
@@ -98,5 +98,5 @@ spec:
     version: 0.11.0
   - name: kubernetes
     version: 1.36.4
-  date: "2026-11-02T13:32:14Z"
+  date: "2026-11-02T13:33:10Z"
   state: active

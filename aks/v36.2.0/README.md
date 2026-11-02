@@ -52,7 +52,6 @@
 - cert-manager-crossplane-resources from v0.2.0 to v0.3.0
 - Added cilium v1.6.1
 - external-dns from v3.7.1 to v3.7.2
-- net-exporter from v1.24.1 to v1.24.2
 - network-policies from v0.3.2 to v0.5.0
 - observability-bundle from v3.5.0 to v3.6.0
 
@@ -90,17 +89,6 @@
 #### Fixed
 
 - Values schema: accept the values the Giant Swarm platform injects that the stricter schema from 3.7.0 rejected with `values-schema-violation`: `managementCluster`, `global.podSecurityStandards`, and the `externalDNSIP` and `helm` cluster values cluster-apps-operator sets for private clusters and the management cluster. `global` now allows additional properties.
-
-### net-exporter [v1.24.1...v1.24.2](https://github.com/giantswarm/net-exporter/compare/v1.24.1...v1.24.2)
-
-#### Changed
-
-- Move the image base to alpine 3.24.2.
-- Prepare for devctl-generated CI: keep the `control-plane-catalog` publish in `.circleci/custom.yml` and the go deps grouping in `renovate-custom.json5`.
-
-#### Fixed
-
-- Bump `golang.org/x/net` to v0.61.0 to fix CVE-2026-78663.
 
 ### network-policies [v0.3.2...v0.5.0](https://github.com/giantswarm/network-policies-app/compare/v0.3.2...v0.5.0)
 
