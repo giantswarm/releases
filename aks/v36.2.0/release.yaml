@@ -54,7 +54,6 @@ spec:
     - cilium
   - name: network-policies
     version: 0.5.0
-    componentVersion: https://github.com/cilium
     dependsOn:
     - cilium
   - name: node-exporter
