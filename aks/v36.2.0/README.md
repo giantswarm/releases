@@ -6,6 +6,7 @@
 
 - cluster-aks from v0.9.0 to v0.11.0
 - cluster from v9.0.2 to v9.4.0
+- Kubernetes from v1.36.4 to [v1.36.6](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.36.md#v1.36.6)
 
 ### cluster-aks [v0.9.0...v0.11.0](https://github.com/giantswarm/cluster-aks/compare/v0.9.0...v0.11.0)
 
@@ -48,10 +49,18 @@
 
 ### Apps
 
+- cert-exporter from v2.12.1 to v2.12.2
 - cert-manager-crossplane-resources from v0.2.0 to v0.3.0
-- Added cilium v1.6.1
+- external-dns from v3.7.1 to v3.7.2
+- net-exporter from v1.24.1 to v1.24.2
 - network-policies from v0.3.2 to v0.5.0
 - observability-bundle from v3.5.0 to v3.6.0
+
+### cert-exporter [v2.12.1...v2.12.2](https://github.com/giantswarm/cert-exporter/compare/v2.12.1...v2.12.2)
+
+#### Fixed
+
+- The `helm.sh/chart` label is valid for long chart versions: the 63-character cut trims the whole trailing run of `-`, `.` and `_`.
 
 ### cert-manager-crossplane-resources [v0.2.0...v0.3.0](https://github.com/giantswarm/cert-manager-crossplane-resources/compare/v0.2.0...v0.3.0)
 
@@ -64,17 +73,22 @@
 - Restrict AWS provider permissions for `ChangeResourceRecordSets` to TXT records related to acme challenges.
 - Create a dedicated role for azure to reduce permissions to TXT records only.
 
-### cilium [v1.6.1](https://github.com/giantswarm/cilium-app/releases/tag/v1.6.1)
+### external-dns [v3.7.1...v3.7.2](https://github.com/giantswarm/external-dns-app/compare/v3.7.1...v3.7.2)
 
-#### Added
+#### Fixed
 
-- Declare the `io.giantswarm.application.audience` (`all`) and
+- Values schema: accept the values the Giant Swarm platform injects that the stricter schema from 3.7.0 rejected with `values-schema-violation`: `managementCluster`, `global.podSecurityStandards`, and the `externalDNSIP` and `helm` cluster values cluster-apps-operator sets for private clusters and the management cluster. `global` now allows additional properties.
+
+### net-exporter [v1.24.1...v1.24.2](https://github.com/giantswarm/net-exporter/compare/v1.24.1...v1.24.2)
 
 #### Changed
 
-- Upgrade Cilium to [v1.20.2](https://github.com/cilium/cilium/releases/tag/v1.20.2).
-- Move the team annotation from the legacy `application.giantswarm.io/team` key to
-- Point `home` at this repository instead of `https://cilium.io/`, as the standard requires.
+- Move the image base to alpine 3.24.2.
+- Prepare for devctl-generated CI: keep the `control-plane-catalog` publish in `.circleci/custom.yml` and the go deps grouping in `renovate-custom.json5`.
+
+#### Fixed
+
+- Bump `golang.org/x/net` to v0.61.0 to fix CVE-2026-78663.
 
 ### network-policies [v0.3.2...v0.5.0](https://github.com/giantswarm/network-policies-app/compare/v0.3.2...v0.5.0)
 
