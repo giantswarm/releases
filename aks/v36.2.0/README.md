@@ -6,7 +6,6 @@
 
 - cluster-aks from v0.9.0 to v0.11.0
 - cluster from v9.0.2 to v9.4.0
-- Kubernetes from v1.36.4 to [v1.36.6](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.36.md#v1.36.6)
 
 ### cluster-aks [v0.9.0...v0.11.0](https://github.com/giantswarm/cluster-aks/compare/v0.9.0...v0.11.0)
 

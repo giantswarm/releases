@@ -96,6 +96,6 @@ spec:                                                              spec:
     catalog: cluster                                                   catalog: cluster
     version: 0.9.0                                              |      version: 0.11.0
   - name: kubernetes                                                 - name: kubernetes
-    version: 1.36.4                                             |      version: 1.36.6
-  date: "2026-10-21T09:22:15Z"                                  |    date: "2026-11-02T13:27:36Z"
+    version: 1.36.4                                                    version: 1.36.4
+  date: "2026-10-21T09:22:15Z"                                  |    date: "2026-11-02T13:28:27Z"
   state: active                                                      state: active
