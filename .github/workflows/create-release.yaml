@@ -444,6 +444,16 @@ jobs:
           repositories: releases,roadmap
           permission-issues: write
           permission-pull-requests: write
+      - name: Generate giantswarm-project-automation token for the readiness issues' board
+        id: project-token
+        uses: actions/create-github-app-token@64ab729a6294000f5aa4a4bc0b73d1f32bc45510 # v3.3.0
+        with:
+          client-id: ${{ secrets.PROJECT_AUTOMATION_CLIENT_ID }}
+          private-key: ${{ secrets.PROJECT_AUTOMATION_PRIVATE_KEY }}
+          owner: giantswarm
+          repositories: roadmap
+          permission-issues: read
+          permission-organization-projects: write
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - name: Determine next release version
         id: determine_next_release
@@ -604,7 +614,7 @@ jobs:
           version: ${{ steps.determine_next_release.outputs.version }}
           pr_numbers: ${{ steps.create_pr.outputs.pull-request-number }}
           github_token: ${{ steps.issues-token.outputs.token }}
-          project_token: ${{ secrets.ISSUE_AUTOMATION }}
+          project_token: ${{ steps.project-token.outputs.token }}
 
   minor_release_consolidated:
     name: "Minor Release (Consolidated)"
