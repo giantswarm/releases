@@ -7,7 +7,7 @@ spec:
   - name: azure-aks-extras
     version: 0.1.0
   - name: cert-exporter
-    version: 2.12.1
+    version: 2.12.2
     dependsOn:
     - kyverno-crds
     - prometheus-operator-crd
@@ -33,7 +33,7 @@ spec:
     dependsOn:
     - prometheus-operator-crd
   - name: external-dns
-    version: 3.7.1
+    version: 3.7.2
     dependsOn:
     - prometheus-operator-crd
     - vertical-pod-autoscaler-crd
@@ -47,7 +47,7 @@ spec:
     - prometheus-operator-crd
     - cilium
   - name: net-exporter
-    version: 1.24.1
+    version: 1.24.2
     dependsOn:
     - prometheus-operator-crd
     - vertical-pod-autoscaler-crd
@@ -55,6 +55,8 @@ spec:
   - name: network-policies
     version: 0.5.0
     componentVersion: https://github.com/cilium
+    dependsOn:
+    - cilium
   - name: node-exporter
     version: 1.21.0
     dependsOn:
@@ -97,5 +99,5 @@ spec:
     version: 0.11.0
   - name: kubernetes
     version: 1.36.4
-  date: "2026-11-02T13:28:27Z"
+  date: "2026-11-02T13:30:48Z"
   state: active
