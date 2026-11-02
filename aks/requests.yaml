@@ -1,5 +1,5 @@
 releases:
-    - name: '<= 36.2.0'
+    - name: '36.2.0'
       requests:
         - name: net-exporter
           version: '1.24.1'
