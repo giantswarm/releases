@@ -6,6 +6,8 @@ spec:                                                              spec:
   apps:                                                              apps:
   - name: azure-aks-extras                                           - name: azure-aks-extras
     version: 0.1.0                                                     version: 0.1.0
+                                                                >      dependsOn:
+                                                                >      - cilium
   - name: cert-exporter                                              - name: cert-exporter
     version: 2.12.1                                             |      version: 2.12.2
     dependsOn:                                                         dependsOn:
@@ -95,8 +97,8 @@ spec:                                                              spec:
   components:                                                        components:
   - name: cluster-aks                                                - name: cluster-aks
     catalog: cluster                                                   catalog: cluster
-    version: 0.9.0                                              |      version: 0.11.0
+    version: 0.9.0                                              |      version: 0.11.1
   - name: kubernetes                                                 - name: kubernetes
     version: 1.36.4                                                    version: 1.36.4
-  date: "2026-10-21T09:22:15Z"                                  |    date: "2026-11-02T13:34:09Z"
+  date: "2026-10-21T09:22:15Z"                                  |    date: "2026-11-03T09:30:45Z"
   state: active                                                      state: active

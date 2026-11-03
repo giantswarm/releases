@@ -4,17 +4,17 @@
 
 ### Components
 
-- cluster-aks from v0.9.0 to v0.11.0
+- cluster-aks from v0.9.0 to v0.11.1
 - cluster from v9.0.2 to v9.4.0
 
-### cluster-aks [v0.9.0...v0.11.0](https://github.com/giantswarm/cluster-aks/compare/v0.9.0...v0.11.0)
+### cluster-aks [v0.9.0...v0.11.1](https://github.com/giantswarm/cluster-aks/compare/v0.9.0...v0.11.1)
 
 #### Added
 
 - Enable `prometheus-blackbox-exporter` app.
 - Add render-time validation that `outboundType: userDefinedRouting` requires a BYO subnet, and document its route table prerequisite.
 - Add Azure CNI Overlay (`global.controlPlane.networking.networkPluginMode`) and Advanced Container Networking Services observability and security (`global.controlPlane.networking.advancedNetworking`), with render-time validation of unsupported combinations.
-- Add the BYO CNI opt-in `global.connectivity.cni.managed` (default `false`). When `true`, AKS installs no CNI and the cluster runs Giant Swarm's Cilium with AKS BYO CNI values.
+- Add the BYO CNI opt-in `global.connectivity.cni.managed` (default `false`). When `true`, AKS installs no CNI and the cluster runs Giant Swarm's Cilium with AKS BYO CNI values. Not supported yet.
 
 #### Changed
 
@@ -23,6 +23,7 @@
 
 #### Fixed
 
+- Make `azure-aks-extras` honour the app dependencies from the Release, so on BYO CNI clusters it waits for Cilium.
 - Allow the ACNS `hubble-relay` through the network-policies default deny when ACNS observability is on.
 - Fix the security-bundle values key `apps.cloudNativePG` to `apps.cloudnativePG`, so that the cloudnative-pg HelmRelease no longer depends on the `cilium` HelmRelease, which AKS doesn't have.
 
@@ -50,7 +51,7 @@
 
 - cert-exporter from v2.12.1 to v2.12.2
 - cert-manager-crossplane-resources from v0.2.0 to v0.3.0
-- Added cilium v1.6.1, installed only on BYO CNI clusters
+- Added cilium v1.6.1
 - external-dns from v3.7.1 to v3.7.2
 - network-policies from v0.3.2 to v0.5.0
 - observability-bundle from v3.5.0 to v3.6.0
