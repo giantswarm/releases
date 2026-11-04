@@ -10,7 +10,7 @@ Release PRs follow a staged lifecycle managed via PR labels. Stages coordinate h
 
 | Stage | Label | Who can make changes | Purpose |
 |-------|-------|---------------------|---------|
-| Development | `stage/development` | Everyone | Tenet is reviewing and testing core functionality. PR is not yet ready for product team input. |
+| Development | `stage/development` | Team Tenet only | Tenet is reviewing and testing core functionality. Non-Tenet `/update-release` commands are rejected. |
 | Active | `stage/active` | Everyone | Product teams can review, bump components, run tests, and add changes. |
 | Freeze | `stage/freeze` | Team Tenet only | Only bugfixes and critical patches. Non-Tenet `/update-release` commands are rejected. |
 | Release & Publish | _(PR merged)_ | — | Release is finalized and published. |
@@ -56,9 +56,14 @@ Moves the release from Active to Freeze.
 
 ## Stage Gating
 
-### Development (soft gate)
+### Development (hard gate)
 
-The `stage/development` label is informational only. It signals that Tenet is working on the release, but does not block anyone from making changes. The Slack announcement says "Development stage" instead of "ready for product teams".
+During Development:
+- **`/update-release`**: Only Team Tenet members can run this command. Non-members receive a rejection comment with a `-1` reaction, pointing them to the Active stage.
+- **Weekly bump**: The `bump-open-releases.yaml` workflow still bumps minor and patch releases in Development; its `/update-release` comment is posted by `giantswarm-release[bot]`, which the gate lets through.
+- **`/pin-version`**: Not gated (pinning is always allowed).
+
+The Slack announcement says "Development stage" instead of "ready for product teams" and that changes from other teams are rejected until Active.
 
 ### Active (no gate)
 
@@ -77,7 +82,7 @@ During Freeze:
 
 ## Stage Dashboard
 
-Release PRs include a stage dashboard in the PR body (between `<!-- STAGE_DASHBOARD_START -->` and `<!-- STAGE_DASHBOARD_END -->` markers):
+Release PRs include a stage dashboard in the PR body (between `<!-- STAGE_DASHBOARD_START -->` and `<!-- STAGE_DASHBOARD_END -->` markers). Below the table, a one-line note says who can change the release in the current stage, so that the access rule is visible without opening the collapsed instructions:
 
 ```markdown
 | Stage | Status |
@@ -142,7 +147,7 @@ Created via `gh label create`:
 
 - `.github/workflows/release-stages.yaml`: Stage transition workflow
 - `.github/workflows/create-release.yaml`: Adds `stage/development` label on PR creation
-- `.github/workflows/update-release.yaml`: Freeze gating for `/update-release`
+- `.github/workflows/update-release.yaml`: Development and Freeze gating for `/update-release`
 - `.github/workflows/bump-open-releases.yaml`: Excludes frozen PRs from weekly bump
 - `.github/pr-body-templates/consolidated-release-instructions.md`: Stage command docs
 - `.github/pr-body-templates/individual-release-instructions.md`: Stage command docs

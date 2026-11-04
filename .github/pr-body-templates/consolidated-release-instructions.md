@@ -6,7 +6,7 @@ This release PR follows a staged lifecycle managed via PR labels:
 
 | Stage | Label | Description |
 |-------|-------|-------------|
-| **Development** | `stage/development` | Team Tenet is reviewing and testing core functionality. The release is not yet ready for product team input. |
+| **Development** | `stage/development` | Team Tenet is reviewing and testing core functionality. Only Team Tenet members can make changes; `/update-release` from other teams is rejected. |
 | **Active** | `stage/active` | Product teams can now review, bump components, run tests, and add changes. |
 | **Freeze** | `stage/freeze` | Only bugfixes and critical patches are allowed. Only Team Tenet members can make changes. |
 | **Release & Publish** | _(PR merged)_ | The release is finalized and published. |
@@ -50,6 +50,16 @@ Available providers: `aks`, `aws`, `azure`, `cloud-director`, `eks`, `proxmox`, 
 
 *   Update all providers (auto-detected):
     `/update-readme "This release brings component updates across all supported providers."`
+
+</details>
+
+<details>
+<summary>🔄 Rebase onto master</summary>
+
+
+When another release PR merged first, this PR's `releases.json` and `kustomization.yaml` conflict with master. Comment `/rebase` to rebase the branch onto `master`; conflicts in those two files are resolved automatically by taking the union of entries sorted by semver. Conflicts in any other file abort the rebase and leave the PR untouched, so rebase manually in that case.
+
+`/rebase`
 
 </details>
 

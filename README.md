@@ -680,6 +680,21 @@ To target a specific provider:
 
 `/summarize-ai --provider aws`
 
+## Rebase onto master
+
+Release PRs touch the shared `releases.json` and `kustomization.yaml` files of their provider, so a PR that merged first makes every other open release PR conflict. Instead of rebasing by hand, add a comment with:
+
+`/rebase`
+
+This will:
+
+* Rebase the PR branch onto `master`
+* Resolve conflicts in `*/releases.json` and `*/kustomization.yaml` automatically, by taking the union of both sides' entries (minus anything either side removed) sorted by semver
+* Force-push the branch and reply with a comment saying whether conflicts were resolved
+* Abort and leave the PR untouched if any other file conflicts, in which case rebase manually
+
+The command only works for branches in this repository, not for forks. The resolver lives in `tools/rebase-resolver`.
+
 ## Workload Cluster End-to-End Tests
 
 To trigger the Workload Cluster End-to-End tests for each new Release added in a PR, add a comment with the following:

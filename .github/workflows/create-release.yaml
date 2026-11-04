@@ -597,6 +597,8 @@ jobs:
             | Active | :hourglass: Pending |
             | Freeze | :hourglass: Pending |
             | Release & Publish | :hourglass: Pending |
+
+            🔒 **Development stage:** only Team Tenet can change this release. `/update-release` from other teams is rejected until the release moves to **Active**.
             <!-- STAGE_DASHBOARD_END -->
 
             ${{ steps.read_instructions.outputs.content }}
@@ -781,6 +783,8 @@ jobs:
             | Active | :hourglass: Pending |
             | Freeze | :hourglass: Pending |
             | Release & Publish | :hourglass: Pending |
+
+            🔒 **Development stage:** only Team Tenet can change this release. `/update-release` from other teams is rejected until the release moves to **Active**.
             <!-- STAGE_DASHBOARD_END -->
 
             ${{ steps.read_instructions.outputs.content }}
@@ -958,6 +962,8 @@ jobs:
             | Active | :hourglass: Pending |
             | Freeze | :hourglass: Pending |
             | Release & Publish | :hourglass: Pending |
+
+            🔒 **Development stage:** only Team Tenet can change this release. `/update-release` from other teams is rejected until the release moves to **Active**.
             <!-- STAGE_DASHBOARD_END -->
 
             ${{ steps.read_instructions.outputs.content }}
@@ -1118,6 +1124,8 @@ jobs:
             | Active | :hourglass: Pending |
             | Freeze | :hourglass: Pending |
             | Release & Publish | :hourglass: Pending |
+
+            🔒 **Development stage:** only Team Tenet can change this release. `/update-release` from other teams is rejected until the release moves to **Active**.
             <!-- STAGE_DASHBOARD_END -->
 
             ${{ steps.read_instructions.outputs.content }}
@@ -1265,6 +1273,8 @@ jobs:
             | Active | :hourglass: Pending |
             | Freeze | :hourglass: Pending |
             | Release & Publish | :hourglass: Pending |
+
+            🔒 **Development stage:** only Team Tenet can change this release. `/update-release` from other teams is rejected until the release moves to **Active**.
             <!-- STAGE_DASHBOARD_END -->
 
             ${{ steps.read_instructions.outputs.content }}
@@ -1411,6 +1421,8 @@ jobs:
             | Active | :hourglass: Pending |
             | Freeze | :hourglass: Pending |
             | Release & Publish | :hourglass: Pending |
+
+            🔒 **Development stage:** only Team Tenet can change this release. `/update-release` from other teams is rejected until the release moves to **Active**.
             <!-- STAGE_DASHBOARD_END -->
 
             ${{ steps.read_instructions.outputs.content }}
@@ -1565,7 +1577,7 @@ jobs:
                 "type": "section",
                 "text": {
                   "type": "mrkdwn",
-                  "text": "A new workload cluster release PR has been created and is in the *Development* stage. Team Tenet is reviewing and testing core functionality.\n\nProduct teams will be notified when the release moves to the Active stage.\n\n*Release PR:* <$PR_URL|$PR_TITLE>"
+                  "text": "A new workload cluster release PR has been created and is in the *Development* stage. Team Tenet is reviewing and testing core functionality. Changes from other teams (`/update-release`) are rejected until the release moves to the Active stage.\n\nProduct teams will be notified when the release moves to the Active stage.\n\n*Release PR:* <$PR_URL|$PR_TITLE>"
                 }
               },
               {

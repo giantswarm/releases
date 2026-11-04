@@ -112,8 +112,13 @@ jobs:
             core.setOutput('stage', stage);
             console.log(`Release stage: ${stage}, Author: ${commentAuthor}`);
 
-            if (stage === 'freeze') {
-              // During freeze, only Team Tenet members can make changes
+            // Comments posted by our own automation (weekly bump, controller
+            // readiness) are allowed during development; freeze stays strict.
+            const botUsers = ['giantswarm-release[bot]', 'taylorbot', 'github-actions[bot]'];
+            const gated = stage === 'freeze' || (stage === 'development' && !botUsers.includes(commentAuthor));
+
+            if (gated) {
+              // During development and freeze, only Team Tenet members can make changes
               try {
                 const teamClient = getOctokit(process.env.TEAM_TOKEN);
                 const membership = await teamClient.rest.teams.getMembershipForUserInOrg({
@@ -133,8 +138,8 @@ jobs:
               core.setOutput('allowed', 'true');
             }
 
-      - name: Post rejection comment during freeze
-        if: steps.check_stage.outputs.stage == 'freeze' && steps.check_stage.outputs.allowed == 'false'
+      - name: Post rejection comment during development or freeze
+        if: steps.check_stage.outputs.allowed == 'false'
         uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9
         with:
           github-token: ${{ steps.app-token.outputs.token }}
@@ -146,17 +151,22 @@ jobs:
               content: '-1'
             });
 
+            const stage = '${{ steps.check_stage.outputs.stage }}';
+            const body = stage === 'development'
+              ? '**Update Rejected — Release is in Development stage**\n\nOnly Team Tenet members can make changes while Team Tenet is testing core functionality. Product teams can bump components once the release moves to the Active stage (`/stage active`). Contact Team Tenet if you need an exception.'
+              : '**Update Rejected — Release is in Freeze stage**\n\nOnly Team Tenet members can make changes during the Freeze stage. Contact Team Tenet if you need an exception.';
+
             await github.rest.issues.createComment({
               owner: context.repo.owner,
               repo: context.repo.repo,
               issue_number: ${{ github.event.issue.number }},
-              body: '**Update Rejected — Release is in Freeze stage**\n\nOnly Team Tenet members can make changes during the Freeze stage. Contact Team Tenet if you need an exception.'
+              body
             });
 
-      - name: Exit if not allowed during freeze
-        if: steps.check_stage.outputs.stage == 'freeze' && steps.check_stage.outputs.allowed == 'false'
+      - name: Exit if not allowed in the current stage
+        if: steps.check_stage.outputs.allowed == 'false'
         run: |
-          echo "User not allowed to make changes during freeze stage. Exiting."
+          echo "User not allowed to make changes during the ${{ steps.check_stage.outputs.stage }} stage. Exiting."
           exit 1
 
       - name: Detect if automatic bump or manual update

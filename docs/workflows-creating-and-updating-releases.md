@@ -321,9 +321,9 @@ Skips for patch-only upgrades (no minor version change) since those rarely conta
 
 #### 1. Check Release Stage
 - Fetches PR labels to determine current stage
-- During **Freeze** (`stage/freeze`): checks if comment author is a Team Tenet member
-- Non-Tenet users are blocked with a rejection comment and `-1` reaction
-- All other stages allow changes from any user
+- During **Development** (`stage/development`) and **Freeze** (`stage/freeze`): checks if comment author is a Team Tenet member
+- Non-Tenet users are blocked with a rejection comment and `-1` reaction; comments posted by the release automation (`giantswarm-release[bot]`, `taylorbot`, `github-actions[bot]`) are not gated during Development
+- **Active** allows changes from any user
 
 #### 2. React to Comment
 - Adds 👀 (eyes) reaction to show processing has started
@@ -462,7 +462,7 @@ and `release-stages` stay limited to org members. The `/run releases-test-suites
 ## Environment Variables & Secrets
 
 ### Required Secrets
-- `RELEASE_BOT_CLIENT_ID`, `RELEASE_BOT_PRIVATE_KEY`: Client ID and private key of the `giantswarm-release` GitHub App (org secrets). Each job mints its own short-lived token with `actions/create-github-app-token`, scoped to this repository with `pull-requests: write` (plus `contents: write` where the job pushes). The slash-command workflows (`/pin-version`, `/rebase`, `/stage`, `/summarize-ai`, `/update-release`) also get `issues: write`, because reacting to an issue comment needs it even on a pull request; the job tokens of `create-release` and `check-controller-readiness` only comment on and label pull requests and get no `issues` permission. `create-release` also mints a separate readiness-issues token with `issues: write` that covers `giantswarm/roadmap`. `release-stages` adds `members: read` to resolve the teams it requests as reviewers; the read tokens get read-only `contents` org-wide for devctl/opsctl lookups. The freeze-stage gate in `update-release.yaml` uses a separate token with the organization `members: read` permission to look up `team-tenet` membership. The App has no `actions`, `workflows`, `packages`, `projects` or `administration` permission
+- `RELEASE_BOT_CLIENT_ID`, `RELEASE_BOT_PRIVATE_KEY`: Client ID and private key of the `giantswarm-release` GitHub App (org secrets). Each job mints its own short-lived token with `actions/create-github-app-token`, scoped to this repository with `pull-requests: write` (plus `contents: write` where the job pushes). The slash-command workflows (`/pin-version`, `/rebase`, `/stage`, `/summarize-ai`, `/update-release`) also get `issues: write`, because reacting to an issue comment needs it even on a pull request; the job tokens of `create-release` and `check-controller-readiness` only comment on and label pull requests and get no `issues` permission. `create-release` also mints a separate readiness-issues token with `issues: write` that covers `giantswarm/roadmap`. `release-stages` adds `members: read` to resolve the teams it requests as reviewers; the read tokens get read-only `contents` org-wide for devctl/opsctl lookups. The stage gate in `update-release.yaml` uses a separate token with the organization `members: read` permission to look up `team-tenet` membership. The App has no `actions`, `workflows`, `packages`, `projects` or `administration` permission
 - `ANTHROPIC_API_KEY`: For AI-powered breaking change analysis
 - `GRAFANA_API_KEY`: For checking K8s version availability
 - `SLACK_BOT_TOKEN`: For Slack notifications (optional)
