@@ -114,8 +114,8 @@ jobs:
 
             // Comments posted by our own automation (weekly bump, controller
             // readiness) are allowed during development; freeze stays strict.
-            const botUsers = ['giantswarm-release[bot]', 'taylorbot', 'github-actions[bot]'];
-            const gated = stage === 'freeze' || (stage === 'development' && !botUsers.includes(commentAuthor));
+            const isAutomation = commentAuthor === 'giantswarm-release[bot]';
+            const gated = stage === 'freeze' || (stage === 'development' && !isAutomation);
 
             if (gated) {
               // During development and freeze, only Team Tenet members can make changes
@@ -176,7 +176,7 @@ jobs:
           github-token: ${{ steps.app-token.outputs.token }}
           script: |
             const commentAuthor = context.payload.comment.user.login;
-            const botUsers = ['giantswarm-release[bot]', 'taylorbot', 'github-actions[bot]'];
+            const botUsers = ['giantswarm-release[bot]', 'github-actions[bot]'];
             const isAutomatic = botUsers.includes(commentAuthor);
             
             core.setOutput('is_automatic', isAutomatic.toString());

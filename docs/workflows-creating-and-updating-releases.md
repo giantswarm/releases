@@ -322,7 +322,7 @@ Skips for patch-only upgrades (no minor version change) since those rarely conta
 #### 1. Check Release Stage
 - Fetches PR labels to determine current stage
 - During **Development** (`stage/development`) and **Freeze** (`stage/freeze`): checks if comment author is a Team Tenet member
-- Non-Tenet users are blocked with a rejection comment and `-1` reaction; comments posted by the release automation (`giantswarm-release[bot]`, `taylorbot`, `github-actions[bot]`) are not gated during Development
+- Non-Tenet users are blocked with a rejection comment and `-1` reaction; comments posted by the release automation (`giantswarm-release[bot]`) are not gated during Development
 - **Active** allows changes from any user
 
 #### 2. React to Comment
