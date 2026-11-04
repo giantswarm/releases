@@ -176,9 +176,24 @@ jobs:
             echo "provider_list=${PROVIDER_LIST}" >> "$GITHUB_OUTPUT"
           else
             # Default for all scheduled runs (major or minor) and manual runs without any selected providers.
-            PROVIDER_JSON=$(echo "${{ steps.providers.outputs.all_providers }}" | tr ' ' '\n' | jq -R . | jq -sc .)
+            # Exclude providers without any active releases (e.g. proxmox): their individual
+            # matrix jobs would fail because there is no previous release to bump from.
+            FILTERED_PROVIDERS=""
+            for provider in ${{ steps.providers.outputs.all_providers }}; do
+              provider_dir="$provider"
+              if [[ "$provider" == 'aws' ]]; then
+                provider_dir="capa"
+              fi
+              if find "$provider_dir" -maxdepth 1 -type d -name 'v[0-9]*' -not -path '*/archived/*' 2>/dev/null | grep -q .; then
+                FILTERED_PROVIDERS="${FILTERED_PROVIDERS}${provider} "
+              else
+                echo "Excluding provider '$provider': no active releases found."
+              fi
+            done
+            FILTERED_PROVIDERS="${FILTERED_PROVIDERS% }"
+            PROVIDER_JSON=$(echo "$FILTERED_PROVIDERS" | tr ' ' '\n' | jq -R . | jq -sc .)
             echo "provider_matrix=${PROVIDER_JSON}" >> "$GITHUB_OUTPUT"
-            echo "provider_list=${{ steps.providers.outputs.all_providers }}" >> "$GITHUB_OUTPUT"
+            echo "provider_list=${FILTERED_PROVIDERS}" >> "$GITHUB_OUTPUT"
           fi
 
   major_release_decider:
@@ -196,6 +211,8 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - id: decider
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
           IS_MANUAL='${{ needs.dispatcher.outputs.is_manual }}'
           FORCE_CONSOLIDATED='${{ needs.dispatcher.outputs.force_consolidated }}'
@@ -292,6 +309,8 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - id: decider
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
           IS_MANUAL='${{ needs.dispatcher.outputs.is_manual }}'
           FORCE_CONSOLIDATED='${{ needs.dispatcher.outputs.force_consolidated }}'
@@ -807,6 +826,7 @@ jobs:
     needs: [dispatcher, major_release_decider]
     if: needs.major_release_decider.outputs.run_individual == 'true'
     strategy:
+      fail-fast: false
       matrix:
         provider: ${{ fromJSON(needs.major_release_decider.outputs.provider_matrix) }}
     runs-on: ubuntu-latest
@@ -968,6 +988,7 @@ jobs:
     needs: [dispatcher, minor_release_decider]
     if: needs.minor_release_decider.outputs.run_individual == 'true'
     strategy:
+      fail-fast: false
       matrix:
         provider: ${{ fromJSON(needs.minor_release_decider.outputs.provider_matrix) }}
     runs-on: ubuntu-latest
@@ -1141,6 +1162,7 @@ jobs:
     needs: [patch_release_decider]
     if: needs.patch_release_decider.outputs.run_individual == 'true'
     strategy:
+      fail-fast: false
       matrix:
         provider: ${{ fromJSON(needs.patch_release_decider.outputs.provider_matrix) }}
     runs-on: ubuntu-latest
