@@ -12,6 +12,9 @@ Documentation for workflows that create and maintain releases:
 
 These workflows automate the release drafting process and provide commands for updating components and apps.
 
+### [Rebase](../README.md#rebase-onto-master)
+- **Rebase** (`rebase.yaml`) - Rebases a release PR onto `master` via the `/rebase` slash command, auto-resolving `releases.json` and `kustomization.yaml` conflicts with `tools/rebase-resolver`
+
 ### [Summarize Upstream Changes](workflows-creating-and-updating-releases.md#summarize)
 - **Summarize** (`summarize-ai.yaml`) - AI-powered summary of upstream Kubernetes/Flatcar breaking changes via `/summarize-ai` slash command
 

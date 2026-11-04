@@ -312,6 +312,11 @@ jobs:
               }
             });
 
+            const stageNotes = {
+              'active': '🟢 **Active stage:** product teams can review, bump components with `/update-release`, run tests and add changes.',
+              'freeze': '🔒 **Freeze stage:** only Team Tenet can change this release. `/update-release` from other teams is rejected.'
+            };
+            dashboard += `\n${stageNotes[targetStage]}\n`;
             dashboard += '<!-- STAGE_DASHBOARD_END -->';
 
             let newBody;
