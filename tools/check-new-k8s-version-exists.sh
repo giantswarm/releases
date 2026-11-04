@@ -35,6 +35,8 @@ if [[ -z "$STABLE_RELEASES" ]]; then
   if [ -n "$GITHUB_OUTPUT" ]; then
     echo "VERSION_EXISTS=false" >> $GITHUB_OUTPUT
   fi
+  # Also print to stdout so callers capturing output can parse the result.
+  echo "VERSION_EXISTS=false"
 else
   echo "Found new STABLE Kubernetes version(s) for minor ${K8S_TARGET_MINOR}. Proceeding with release creation."
   echo "Stable releases found:"
@@ -42,4 +44,6 @@ else
   if [ -n "$GITHUB_OUTPUT" ]; then
     echo "VERSION_EXISTS=true" >> $GITHUB_OUTPUT
   fi
+  # Also print to stdout so callers capturing output can parse the result.
+  echo "VERSION_EXISTS=true"
 fi
