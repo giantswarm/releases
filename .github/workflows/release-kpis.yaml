@@ -96,6 +96,14 @@ jobs:
               | sort_by(-.failures, -.releases)[:5][]
               | "| \(.suite) | \(.runs) | \(.failures) | \(.releases) |"' \
               "$RUNNER_TEMP/release-lead-time.json"
+            echo
+            jq -r --arg since "$(date -u -d '90 days ago' +%Y-%m-%dT%H:%M:%SZ)" '
+              [.releases[] | select(.merged_at >= $since and .tests_first_run_at != null)]
+              | "Retriggers (releases merged in the last 90 days): \(map(.retriggers) | add) on \(length) releases, "
+                + "\(map(.retriggers_after_failure) | add) after a failure, \(map(.retriggers_after_commit) | add) after a commit, "
+                + "\(map(.retriggers_other) | add) while green or running, \(map(.retriggers_automated) | add) automated; "
+                + "\(map(.suite_reruns_redundant) | add) of \(map(.suite_reruns) | add) suite reruns after a pass."' \
+              "$RUNNER_TEMP/release-lead-time.json"
           } >> "$GITHUB_STEP_SUMMARY"
 
       - name: Publish dashboard to Grafana

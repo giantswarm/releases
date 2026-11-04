@@ -1,7 +1,7 @@
 {
   "uid": "capi-release-kpis",
   "title": "CAPI Release KPIs",
-  "description": "Release process KPIs, computed from merged release PRs by the Release KPIs workflow in giantswarm/releases, which embeds the data into this dashboard. The time range applies to the merge date of the release PRs. Edit tools/release-kpis/dashboard.json in that repository instead of this dashboard, the workflow overwrites it. See https://github.com/giantswarm/roadmap/issues/4382 and https://github.com/giantswarm/roadmap/issues/4385 and https://github.com/giantswarm/roadmap/issues/4398",
+  "description": "Release process KPIs, computed from merged release PRs by the Release KPIs workflow in giantswarm/releases, which embeds the data into this dashboard. The time range applies to the merge date of the release PRs. Edit tools/release-kpis/dashboard.json in that repository instead of this dashboard, the workflow overwrites it. See https://github.com/giantswarm/roadmap/issues/4382 and https://github.com/giantswarm/roadmap/issues/4385 and https://github.com/giantswarm/roadmap/issues/4398, https://github.com/giantswarm/roadmap/issues/4406",
   "tags": [
     "owner:team-tenet",
     "releases",
@@ -46,6 +46,12 @@
       "title": "Roadmap issue: failure rate by suite",
       "type": "link",
       "url": "https://github.com/giantswarm/roadmap/issues/4398",
+      "targetBlank": true
+    },
+    {
+      "title": "Roadmap issue: retrigger rate",
+      "type": "link",
+      "url": "https://github.com/giantswarm/roadmap/issues/4406",
       "targetBlank": true
     }
   ],
@@ -134,7 +140,7 @@
         "h": 14,
         "w": 24,
         "x": 0,
-        "y": 79
+        "y": 93
       },
       "targets": [
         {
@@ -313,6 +319,51 @@
               "selector": "test_friction_days",
               "text": "test_friction_days",
               "type": "number"
+            },
+            {
+              "selector": "retriggers",
+              "text": "retriggers",
+              "type": "number"
+            },
+            {
+              "selector": "retriggers_automated",
+              "text": "retriggers_automated",
+              "type": "number"
+            },
+            {
+              "selector": "retriggers_after_failure",
+              "text": "retriggers_after_failure",
+              "type": "number"
+            },
+            {
+              "selector": "retriggers_after_commit",
+              "text": "retriggers_after_commit",
+              "type": "number"
+            },
+            {
+              "selector": "retriggers_other",
+              "text": "retriggers_other",
+              "type": "number"
+            },
+            {
+              "selector": "retriggered",
+              "text": "retriggered",
+              "type": "number"
+            },
+            {
+              "selector": "suite_runs",
+              "text": "suite_runs",
+              "type": "number"
+            },
+            {
+              "selector": "suite_reruns",
+              "text": "suite_reruns",
+              "type": "number"
+            },
+            {
+              "selector": "suite_reruns_redundant",
+              "text": "suite_reruns_redundant",
+              "type": "number"
             }
           ],
           "filters": [],
@@ -384,6 +435,7 @@
                 "active_days",
                 "freeze_days",
                 "test_runs",
+                "retriggers",
                 "runs_to_green",
                 "time_to_green_days",
                 "test_friction_days",
@@ -413,15 +465,16 @@
               "active_days": 9,
               "freeze_days": 10,
               "test_runs": 11,
-              "runs_to_green": 12,
-              "time_to_green_days": 13,
-              "test_friction_days": 14,
-              "suites_waived": 15,
-              "merged_all_green": 16,
-              "automated": 17,
-              "planned_source": 18,
-              "planned_merge_date": 19,
-              "delay_days": 20
+              "retriggers": 12,
+              "runs_to_green": 13,
+              "time_to_green_days": 14,
+              "test_friction_days": 15,
+              "suites_waived": 16,
+              "merged_all_green": 17,
+              "automated": 18,
+              "planned_source": 19,
+              "planned_merge_date": 20,
+              "delay_days": 21
             },
             "renameByName": {
               "release_type": "type",
@@ -1509,7 +1562,7 @@
         "h": 9,
         "w": 12,
         "x": 0,
-        "y": 10
+        "y": 15
       },
       "targets": [
         {
@@ -1663,7 +1716,7 @@
         "h": 9,
         "w": 12,
         "x": 12,
-        "y": 10
+        "y": 15
       },
       "targets": [
         {
@@ -1835,7 +1888,7 @@
         "h": 9,
         "w": 12,
         "x": 0,
-        "y": 19
+        "y": 24
       },
       "targets": [
         {
@@ -1976,7 +2029,7 @@
         "h": 9,
         "w": 12,
         "x": 12,
-        "y": 19
+        "y": 24
       },
       "targets": [
         {
@@ -2146,11 +2199,11 @@
         "h": 4,
         "w": 24,
         "x": 0,
-        "y": 93
+        "y": 107
       },
       "options": {
         "mode": "markdown",
-        "content": "Data: all merged release PRs since CAPI v25, filtered by the time range (merge date) and the provider variable. Last updated: unknown. Use *Inspect \u2192 Data* on the table to download a CSV.\n\n**Lead time**: PR opened \u2192 merged. **Planned merge date**: written into scheduled release PRs by the create-release workflow; older scheduled PRs only have an estimate (next 1st of the month), shown in the delay chart but not counted in the on-time rate. **Stages**: time between the stage/development, stage/active and stage/freeze labels. **Time to green**: PR opened \u2192 first time every expected E2E suite had passed or been waived. **Test friction**: first test run after the release entered the active stage \u2192 all green, the part of time to green spent on getting the tests green rather than on assembling the release. **Merged with all suites green**: share of releases whose expected suites had all passed or been waived before the merge; suites that were not yet required when a PR was opened only count if they ran. **Runs until green**: test runs up to the all-green state. **Failure rate by suite**: failed runs of a suite divided by its failed plus passed runs, over the selected releases; every rerun on the same commit counts. **Last suite to go green**: the suite whose first pass or waiver came last on a release. Per-release charts are capped at 60 days, hover a clipped bar for its value."
+        "content": "Data: all merged release PRs since CAPI v25, filtered by the time range (merge date) and the provider variable. Last updated: unknown. Use *Inspect \u2192 Data* on the table to download a CSV.\n\n**Lead time**: PR opened \u2192 merged. **Planned merge date**: written into scheduled release PRs by the create-release workflow; older scheduled PRs only have an estimate (next 1st of the month), shown in the delay chart but not counted in the on-time rate. **Stages**: time between the stage/development, stage/active and stage/freeze labels. **Time to green**: PR opened \u2192 first time every expected E2E suite had passed or been waived. **Test friction**: first test run after the release entered the active stage \u2192 all green, the part of time to green spent on getting the tests green rather than on assembling the release. **Merged with all suites green**: share of releases whose expected suites had all passed or been waived before the merge; suites that were not yet required when a PR was opened only count if they ran. **Runs until green**: test runs up to the all-green state. **Failure rate by suite**: failed runs of a suite divided by its failed plus passed runs, over the selected releases; every rerun on the same commit counts. **Last suite to go green**: the suite whose first pass or waiver came last on a release. **Retriggers**: test runs after the first one on a release PR, each classified by whether a suite had failed or commits had been pushed since the previous run. **Suite reruns**: runs of a suite after its first one; a rerun is redundant when the suite had already passed on the same commit. Per-release charts are capped at 60 days, hover a clipped bar for its value."
       }
     },
     {
@@ -2166,7 +2219,7 @@
         "h": 9,
         "w": 24,
         "x": 0,
-        "y": 28
+        "y": 33
       },
       "targets": [
         {
@@ -3015,7 +3068,7 @@
         "h": 9,
         "w": 12,
         "x": 0,
-        "y": 37
+        "y": 42
       },
       "targets": [
         {
@@ -3158,7 +3211,7 @@
         "h": 9,
         "w": 12,
         "x": 12,
-        "y": 37
+        "y": 42
       },
       "targets": [
         {
@@ -3513,7 +3566,7 @@
         "h": 9,
         "w": 12,
         "x": 0,
-        "y": 46
+        "y": 51
       },
       "targets": [
         {
@@ -3668,7 +3721,7 @@
         "h": 9,
         "w": 12,
         "x": 12,
-        "y": 46
+        "y": 51
       },
       "targets": [
         {
@@ -3810,7 +3863,7 @@
         "h": 12,
         "w": 8,
         "x": 0,
-        "y": 55
+        "y": 69
       },
       "targets": [
         {
@@ -4086,7 +4139,7 @@
         "h": 12,
         "w": 8,
         "x": 8,
-        "y": 55
+        "y": 69
       },
       "targets": [
         {
@@ -4239,7 +4292,7 @@
         "h": 12,
         "w": 8,
         "x": 16,
-        "y": 55
+        "y": 69
       },
       "targets": [
         {
@@ -4407,7 +4460,7 @@
         "h": 12,
         "w": 24,
         "x": 0,
-        "y": 67
+        "y": 81
       },
       "targets": [
         {
@@ -4511,6 +4564,26 @@
               "selector": "last_to_green",
               "text": "last_to_green",
               "type": "number"
+            },
+            {
+              "selector": "reruns",
+              "text": "reruns",
+              "type": "number"
+            },
+            {
+              "selector": "reruns_after_failure",
+              "text": "reruns_after_failure",
+              "type": "number"
+            },
+            {
+              "selector": "reruns_after_commit",
+              "text": "reruns_after_commit",
+              "type": "number"
+            },
+            {
+              "selector": "reruns_redundant",
+              "text": "reruns_redundant",
+              "type": "number"
             }
           ],
           "filters": [],
@@ -4582,7 +4655,9 @@
                 "runs_to_green",
                 "failed",
                 "waived",
-                "last_to_green"
+                "last_to_green",
+                "reruns",
+                "reruns_redundant"
               ]
             }
           }
@@ -4593,7 +4668,8 @@
             "renameByName": {
               "merged_at": "merged",
               "runs_to_green": "runs to green",
-              "last_to_green": "last to green"
+              "last_to_green": "last to green",
+              "reruns_redundant": "redundant reruns"
             },
             "indexByName": {
               "PR": 0,
@@ -4608,7 +4684,9 @@
               "waived": 10,
               "runs_to_green": 11,
               "last_to_green": 12,
-              "release": 1
+              "release": 1,
+              "reruns": 13,
+              "reruns_redundant": 14
             }
           }
         }
@@ -4766,6 +4844,1284 @@
           "show": false
         }
       }
+    },
+    {
+      "id": 26,
+      "type": "stat",
+      "title": "Median retriggers per release",
+      "description": "Test runs after the first one on a release PR, that is, /run releases-test-suites comments beyond the first, by anyone. Only releases with per-suite results (since March 2026); 'releases' is their number.",
+      "gridPos": {
+        "h": 5,
+        "w": 5,
+        "x": 0,
+        "y": 10
+      },
+      "datasource": {
+        "type": "datasource",
+        "uid": "-- Dashboard --"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "datasource",
+            "uid": "-- Dashboard --"
+          },
+          "panelId": 7,
+          "withTransforms": false
+        }
+      ],
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "colorMode": "value",
+        "graphMode": "none",
+        "textMode": "value_and_name",
+        "justifyMode": "center",
+        "orientation": "horizontal"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "none",
+          "decimals": 0,
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "orange"
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/[Mm]edian|[Mm]ean/"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "median"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/[Cc]ount/"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "releases"
+              },
+              {
+                "id": "unit",
+                "value": "none"
+              },
+              {
+                "id": "decimals",
+                "value": 0
+              },
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "#8e8e8e"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "transformations": [
+        {
+          "id": "filterByValue",
+          "options": {
+            "type": "include",
+            "match": "all",
+            "filters": [
+              {
+                "fieldName": "merged_at",
+                "config": {
+                  "id": "greaterOrEqual",
+                  "options": {
+                    "value": "${__from}"
+                  }
+                }
+              },
+              {
+                "fieldName": "merged_at",
+                "config": {
+                  "id": "lowerOrEqual",
+                  "options": {
+                    "value": "${__to}"
+                  }
+                }
+              },
+              {
+                "fieldName": "provider",
+                "config": {
+                  "id": "regex",
+                  "options": {
+                    "value": "^${provider:regex}$"
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "id": "filterByValue",
+          "options": {
+            "type": "include",
+            "match": "all",
+            "filters": [
+              {
+                "fieldName": "suites_expected",
+                "config": {
+                  "id": "greater",
+                  "options": {
+                    "value": 0
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "id": "filterFieldsByName",
+          "options": {
+            "include": {
+              "names": [
+                "retriggers"
+              ]
+            }
+          }
+        },
+        {
+          "id": "reduce",
+          "options": {
+            "mode": "reduceFields",
+            "reducers": [
+              "median",
+              "count"
+            ],
+            "includeTimeField": false
+          }
+        }
+      ]
+    },
+    {
+      "id": 27,
+      "type": "stat",
+      "title": "Releases retriggered by a person",
+      "description": "Share of tested releases on which someone, not the automation, retriggered the tests at least once.",
+      "gridPos": {
+        "h": 5,
+        "w": 5,
+        "x": 5,
+        "y": 10
+      },
+      "datasource": {
+        "type": "datasource",
+        "uid": "-- Dashboard --"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "datasource",
+            "uid": "-- Dashboard --"
+          },
+          "panelId": 7,
+          "withTransforms": false
+        }
+      ],
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "colorMode": "value",
+        "graphMode": "none",
+        "textMode": "value_and_name",
+        "justifyMode": "center",
+        "orientation": "horizontal"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percentunit",
+          "decimals": 0,
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "orange"
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/[Mm]edian|[Mm]ean/"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "retriggered"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/[Cc]ount/"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "releases"
+              },
+              {
+                "id": "unit",
+                "value": "none"
+              },
+              {
+                "id": "decimals",
+                "value": 0
+              },
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "#8e8e8e"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "transformations": [
+        {
+          "id": "filterByValue",
+          "options": {
+            "type": "include",
+            "match": "all",
+            "filters": [
+              {
+                "fieldName": "merged_at",
+                "config": {
+                  "id": "greaterOrEqual",
+                  "options": {
+                    "value": "${__from}"
+                  }
+                }
+              },
+              {
+                "fieldName": "merged_at",
+                "config": {
+                  "id": "lowerOrEqual",
+                  "options": {
+                    "value": "${__to}"
+                  }
+                }
+              },
+              {
+                "fieldName": "provider",
+                "config": {
+                  "id": "regex",
+                  "options": {
+                    "value": "^${provider:regex}$"
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "id": "filterByValue",
+          "options": {
+            "type": "include",
+            "match": "all",
+            "filters": [
+              {
+                "fieldName": "suites_expected",
+                "config": {
+                  "id": "greater",
+                  "options": {
+                    "value": 0
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "id": "filterFieldsByName",
+          "options": {
+            "include": {
+              "names": [
+                "retriggered"
+              ]
+            }
+          }
+        },
+        {
+          "id": "reduce",
+          "options": {
+            "mode": "reduceFields",
+            "reducers": [
+              "mean",
+              "count"
+            ],
+            "includeTimeField": false
+          }
+        }
+      ]
+    },
+    {
+      "id": 28,
+      "type": "stat",
+      "title": "Retriggers after a failure",
+      "description": "Share of the manual retriggers that followed a failed suite run. The rest were posted after a new commit or while the suites were green or still running. Summed over the selected releases.",
+      "gridPos": {
+        "h": 5,
+        "w": 5,
+        "x": 10,
+        "y": 10
+      },
+      "datasource": {
+        "type": "datasource",
+        "uid": "-- Dashboard --"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "datasource",
+            "uid": "-- Dashboard --"
+          },
+          "panelId": 7,
+          "withTransforms": false
+        }
+      ],
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "colorMode": "value",
+        "graphMode": "none",
+        "textMode": "value_and_name",
+        "justifyMode": "center",
+        "orientation": "horizontal"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percentunit",
+          "decimals": 0,
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "orange"
+          },
+          "noValue": "none yet"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "after a failure"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "after a failure"
+              }
+            ]
+          }
+        ]
+      },
+      "transformations": [
+        {
+          "id": "filterByValue",
+          "options": {
+            "type": "include",
+            "match": "all",
+            "filters": [
+              {
+                "fieldName": "merged_at",
+                "config": {
+                  "id": "greaterOrEqual",
+                  "options": {
+                    "value": "${__from}"
+                  }
+                }
+              },
+              {
+                "fieldName": "merged_at",
+                "config": {
+                  "id": "lowerOrEqual",
+                  "options": {
+                    "value": "${__to}"
+                  }
+                }
+              },
+              {
+                "fieldName": "provider",
+                "config": {
+                  "id": "regex",
+                  "options": {
+                    "value": "^${provider:regex}$"
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "id": "filterByValue",
+          "options": {
+            "type": "include",
+            "match": "all",
+            "filters": [
+              {
+                "fieldName": "suites_expected",
+                "config": {
+                  "id": "greater",
+                  "options": {
+                    "value": 0
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "id": "filterFieldsByName",
+          "options": {
+            "include": {
+              "names": [
+                "retriggers",
+                "retriggers_automated",
+                "retriggers_after_failure"
+              ]
+            }
+          }
+        },
+        {
+          "id": "reduce",
+          "options": {
+            "mode": "reduceFields",
+            "reducers": [
+              "sum"
+            ],
+            "includeTimeField": false
+          }
+        },
+        {
+          "id": "calculateField",
+          "options": {
+            "mode": "binary",
+            "binary": {
+              "left": "retriggers",
+              "operator": "-",
+              "right": "retriggers_automated"
+            },
+            "alias": "manual",
+            "replaceFields": false
+          }
+        },
+        {
+          "id": "calculateField",
+          "options": {
+            "mode": "binary",
+            "binary": {
+              "left": "retriggers_after_failure",
+              "operator": "/",
+              "right": "manual"
+            },
+            "alias": "after a failure",
+            "replaceFields": false
+          }
+        },
+        {
+          "id": "filterFieldsByName",
+          "options": {
+            "include": {
+              "names": [
+                "after a failure"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": 29,
+      "type": "stat",
+      "title": "Suite reruns after a pass",
+      "description": "Share of all suite reruns that reran a suite which had already passed on the same commit, the cost of rerunning the whole matrix instead of the failed suites. Summed over the selected releases.",
+      "gridPos": {
+        "h": 5,
+        "w": 5,
+        "x": 15,
+        "y": 10
+      },
+      "datasource": {
+        "type": "datasource",
+        "uid": "-- Dashboard --"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "datasource",
+            "uid": "-- Dashboard --"
+          },
+          "panelId": 7,
+          "withTransforms": false
+        }
+      ],
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "colorMode": "value",
+        "graphMode": "none",
+        "textMode": "value_and_name",
+        "justifyMode": "center",
+        "orientation": "horizontal"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percentunit",
+          "decimals": 0,
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "orange"
+          },
+          "noValue": "none yet"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "after a pass"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "after a pass"
+              }
+            ]
+          }
+        ]
+      },
+      "transformations": [
+        {
+          "id": "filterByValue",
+          "options": {
+            "type": "include",
+            "match": "all",
+            "filters": [
+              {
+                "fieldName": "merged_at",
+                "config": {
+                  "id": "greaterOrEqual",
+                  "options": {
+                    "value": "${__from}"
+                  }
+                }
+              },
+              {
+                "fieldName": "merged_at",
+                "config": {
+                  "id": "lowerOrEqual",
+                  "options": {
+                    "value": "${__to}"
+                  }
+                }
+              },
+              {
+                "fieldName": "provider",
+                "config": {
+                  "id": "regex",
+                  "options": {
+                    "value": "^${provider:regex}$"
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "id": "filterByValue",
+          "options": {
+            "type": "include",
+            "match": "all",
+            "filters": [
+              {
+                "fieldName": "suites_expected",
+                "config": {
+                  "id": "greater",
+                  "options": {
+                    "value": 0
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "id": "filterFieldsByName",
+          "options": {
+            "include": {
+              "names": [
+                "suite_reruns",
+                "suite_reruns_redundant"
+              ]
+            }
+          }
+        },
+        {
+          "id": "reduce",
+          "options": {
+            "mode": "reduceFields",
+            "reducers": [
+              "sum"
+            ],
+            "includeTimeField": false
+          }
+        },
+        {
+          "id": "calculateField",
+          "options": {
+            "mode": "binary",
+            "binary": {
+              "left": "suite_reruns_redundant",
+              "operator": "/",
+              "right": "suite_reruns"
+            },
+            "alias": "after a pass",
+            "replaceFields": false
+          }
+        },
+        {
+          "id": "filterFieldsByName",
+          "options": {
+            "include": {
+              "names": [
+                "after a pass"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": 30,
+      "type": "stat",
+      "title": "Median suite runs per release",
+      "description": "Completed E2E suite runs per release PR, every rerun counted, the cost of testing a release. 'releases' is the number of releases with per-suite results the median is computed from.",
+      "gridPos": {
+        "h": 5,
+        "w": 4,
+        "x": 20,
+        "y": 10
+      },
+      "datasource": {
+        "type": "datasource",
+        "uid": "-- Dashboard --"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "datasource",
+            "uid": "-- Dashboard --"
+          },
+          "panelId": 7,
+          "withTransforms": false
+        }
+      ],
+      "options": {
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "colorMode": "value",
+        "graphMode": "none",
+        "textMode": "value_and_name",
+        "justifyMode": "center",
+        "orientation": "horizontal"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "none",
+          "decimals": 0,
+          "color": {
+            "mode": "fixed",
+            "fixedColor": "orange"
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/[Mm]edian|[Mm]ean/"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "median"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/[Cc]ount/"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "releases"
+              },
+              {
+                "id": "unit",
+                "value": "none"
+              },
+              {
+                "id": "decimals",
+                "value": 0
+              },
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "#8e8e8e"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "transformations": [
+        {
+          "id": "filterByValue",
+          "options": {
+            "type": "include",
+            "match": "all",
+            "filters": [
+              {
+                "fieldName": "merged_at",
+                "config": {
+                  "id": "greaterOrEqual",
+                  "options": {
+                    "value": "${__from}"
+                  }
+                }
+              },
+              {
+                "fieldName": "merged_at",
+                "config": {
+                  "id": "lowerOrEqual",
+                  "options": {
+                    "value": "${__to}"
+                  }
+                }
+              },
+              {
+                "fieldName": "provider",
+                "config": {
+                  "id": "regex",
+                  "options": {
+                    "value": "^${provider:regex}$"
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "id": "filterByValue",
+          "options": {
+            "type": "include",
+            "match": "all",
+            "filters": [
+              {
+                "fieldName": "suites_expected",
+                "config": {
+                  "id": "greater",
+                  "options": {
+                    "value": 0
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "id": "filterFieldsByName",
+          "options": {
+            "include": {
+              "names": [
+                "suite_runs"
+              ]
+            }
+          }
+        },
+        {
+          "id": "reduce",
+          "options": {
+            "mode": "reduceFields",
+            "reducers": [
+              "median",
+              "count"
+            ],
+            "includeTimeField": false
+          }
+        }
+      ]
+    },
+    {
+      "id": 31,
+      "type": "barchart",
+      "title": "Retriggers per release",
+      "description": "Test runs after the first one per release PR, by reason: the previous run had a failed suite, new commits had been pushed since, or neither (rerun while the suites were green or still running). Targeted runs of suites that had not run yet land in the last group as well. Automated retriggers are the first run on the active stage and the runs after automatic updates. Only releases with per-suite results. The axis is capped at 30, hover a clipped bar for its value.",
+      "gridPos": {
+        "h": 9,
+        "w": 12,
+        "x": 0,
+        "y": 60
+      },
+      "datasource": {
+        "type": "datasource",
+        "uid": "-- Dashboard --"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "datasource",
+            "uid": "-- Dashboard --"
+          },
+          "panelId": 7,
+          "withTransforms": false
+        }
+      ],
+      "options": {
+        "orientation": "auto",
+        "xField": "name",
+        "xTickLabelRotation": -45,
+        "showValue": "never",
+        "stacking": "normal",
+        "groupWidth": 0.7,
+        "barWidth": 0.9,
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "none",
+          "decimals": 0,
+          "custom": {
+            "fillOpacity": 80,
+            "lineWidth": 1
+          },
+          "max": 30,
+          "min": 0
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "after a failure"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "green"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "after a commit"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "blue"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "while green or running"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "orange"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "automated"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "#8e8e8e"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "transformations": [
+        {
+          "id": "filterByValue",
+          "options": {
+            "type": "include",
+            "match": "all",
+            "filters": [
+              {
+                "fieldName": "merged_at",
+                "config": {
+                  "id": "greaterOrEqual",
+                  "options": {
+                    "value": "${__from}"
+                  }
+                }
+              },
+              {
+                "fieldName": "merged_at",
+                "config": {
+                  "id": "lowerOrEqual",
+                  "options": {
+                    "value": "${__to}"
+                  }
+                }
+              },
+              {
+                "fieldName": "provider",
+                "config": {
+                  "id": "regex",
+                  "options": {
+                    "value": "^${provider:regex}$"
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "id": "filterByValue",
+          "options": {
+            "type": "include",
+            "match": "all",
+            "filters": [
+              {
+                "fieldName": "suites_expected",
+                "config": {
+                  "id": "greater",
+                  "options": {
+                    "value": 0
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "id": "sortBy",
+          "options": {
+            "sort": [
+              {
+                "field": "merged_at",
+                "desc": false
+              }
+            ]
+          }
+        },
+        {
+          "id": "filterFieldsByName",
+          "options": {
+            "include": {
+              "names": [
+                "name",
+                "retriggers_after_failure",
+                "retriggers_after_commit",
+                "retriggers_other",
+                "retriggers_automated"
+              ]
+            }
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "renameByName": {
+              "retriggers_after_failure": "after a failure",
+              "retriggers_after_commit": "after a commit",
+              "retriggers_other": "while green or running",
+              "retriggers_automated": "automated"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": 32,
+      "type": "barchart",
+      "title": "Suite reruns by suite",
+      "description": "Runs of a suite after its first one on a release PR, summed over the selected releases, by reason: the previous run of the suite failed or was cancelled, the previous run tested another commit, or the suite had already passed on the same commit (redundant). Hover for the total.",
+      "gridPos": {
+        "h": 9,
+        "w": 12,
+        "x": 12,
+        "y": 60
+      },
+      "datasource": {
+        "type": "datasource",
+        "uid": "-- Dashboard --"
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "datasource": {
+            "type": "datasource",
+            "uid": "-- Dashboard --"
+          },
+          "panelId": 22,
+          "withTransforms": false
+        }
+      ],
+      "options": {
+        "orientation": "horizontal",
+        "xField": "suite",
+        "xTickLabelRotation": 0,
+        "showValue": "never",
+        "stacking": "normal",
+        "groupWidth": 0.7,
+        "barWidth": 0.8,
+        "legend": {
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "none",
+          "decimals": 0,
+          "min": 0,
+          "custom": {
+            "fillOpacity": 80,
+            "lineWidth": 1
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "after a failure"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "green"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "after a commit"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "blue"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "redundant"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed",
+                  "fixedColor": "red"
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "reruns"
+            },
+            "properties": [
+              {
+                "id": "custom.hideFrom",
+                "value": {
+                  "viz": true,
+                  "legend": true,
+                  "tooltip": false
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "transformations": [
+        {
+          "id": "filterByValue",
+          "options": {
+            "type": "include",
+            "match": "all",
+            "filters": [
+              {
+                "fieldName": "merged_at",
+                "config": {
+                  "id": "greaterOrEqual",
+                  "options": {
+                    "value": "${__from}"
+                  }
+                }
+              },
+              {
+                "fieldName": "merged_at",
+                "config": {
+                  "id": "lowerOrEqual",
+                  "options": {
+                    "value": "${__to}"
+                  }
+                }
+              },
+              {
+                "fieldName": "provider",
+                "config": {
+                  "id": "regex",
+                  "options": {
+                    "value": "^${provider:regex}$"
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          "id": "groupBy",
+          "options": {
+            "fields": {
+              "suite": {
+                "operation": "groupby",
+                "aggregations": []
+              },
+              "reruns_after_failure": {
+                "operation": "aggregate",
+                "aggregations": [
+                  "sum"
+                ]
+              },
+              "reruns_after_commit": {
+                "operation": "aggregate",
+                "aggregations": [
+                  "sum"
+                ]
+              },
+              "reruns_redundant": {
+                "operation": "aggregate",
+                "aggregations": [
+                  "sum"
+                ]
+              },
+              "reruns": {
+                "operation": "aggregate",
+                "aggregations": [
+                  "sum"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "renameByName": {
+              "reruns_after_failure (sum)": "after a failure",
+              "reruns_after_commit (sum)": "after a commit",
+              "reruns_redundant (sum)": "redundant",
+              "reruns (sum)": "reruns"
+            }
+          }
+        },
+        {
+          "id": "sortBy",
+          "options": {
+            "sort": [
+              {
+                "field": "reruns",
+                "desc": true
+              }
+            ]
+          }
+        }
+      ]
     }
   ]
 }

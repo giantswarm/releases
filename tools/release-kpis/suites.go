@@ -44,6 +44,12 @@ type SuiteResult struct {
 	FirstGreenAt *time.Time `json:"first_green_at"`
 	RunsToGreen  *int       `json:"runs_to_green"`
 	LastToGreen  int        `json:"last_to_green"`
+
+	// Reruns are the runs after the first one, by reason; see retriggers.go.
+	Reruns             int `json:"reruns"`
+	RerunsAfterFailure int `json:"reruns_after_failure"`
+	RerunsAfterCommit  int `json:"reruns_after_commit"`
+	RerunsRedundant    int `json:"reruns_redundant"`
 }
 
 // Outcome classes of a check run conclusion.
@@ -94,6 +100,7 @@ func suiteResults(r Release, wanted map[string]string, required map[string]bool,
 
 		runs := append([]checkRun(nil), res.results[name]...)
 		sort.Slice(runs, func(i, j int) bool { return runs[i].CompletedAt.Before(*runs[j].CompletedAt) })
+		var counted []checkRun
 		for _, run := range runs {
 			switch outcome(run.Conclusion) {
 			case outcomeSuccess:
@@ -108,6 +115,7 @@ func suiteResults(r Release, wanted map[string]string, required map[string]bool,
 				continue
 			}
 			row.Runs++
+			counted = append(counted, run)
 			if row.FirstGreenAt == nil && isGreen(run.Conclusion) {
 				t := run.CompletedAt.UTC()
 				row.FirstGreenAt = &t
@@ -115,6 +123,7 @@ func suiteResults(r Release, wanted map[string]string, required map[string]bool,
 				row.RunsToGreen = &n
 			}
 		}
+		row.Reruns, row.RerunsAfterFailure, row.RerunsAfterCommit, row.RerunsRedundant = suiteReruns(counted)
 		if row.Failures > 0 {
 			row.Failed = 1
 		}
