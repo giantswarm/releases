@@ -14,7 +14,7 @@
 - Enable `prometheus-blackbox-exporter` app.
 - Add render-time validation that `outboundType: userDefinedRouting` requires a BYO subnet, and document its route table prerequisite.
 - Add Azure CNI Overlay (`global.controlPlane.networking.networkPluginMode`) and Advanced Container Networking Services observability and security (`global.controlPlane.networking.advancedNetworking`), with render-time validation of unsupported combinations.
-- Add the BYO CNI opt-in `global.connectivity.cni.managed` (default `false`). When `true`, AKS installs no CNI and the cluster runs Giant Swarm's Cilium with AKS BYO CNI values. Not supported yet.
+- Add the BYO CNI opt-in `global.connectivity.cni.managed` (default `false`). When `true`, AKS installs no CNI and the cluster runs Giant Swarm's Cilium with AKS BYO CNI values.
 
 #### Changed
 
@@ -51,7 +51,7 @@
 
 - cert-exporter from v2.12.1 to v2.12.2
 - cert-manager-crossplane-resources from v0.2.0 to v0.3.0
-- Added cilium v1.6.1
+- Added cilium v1.6.1, installed only on BYO CNI clusters
 - external-dns from v3.7.1 to v3.7.2
 - network-policies from v0.3.2 to v0.5.0
 - observability-bundle from v3.5.0 to v3.6.0
