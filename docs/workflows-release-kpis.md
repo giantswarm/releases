@@ -29,6 +29,7 @@ For every release PR the data set records:
 | `development_days`, `active_days`, `freeze_days`, `active_at` | Days spent in each release stage, from the `stage/*` label events, and when the PR first entered the active stage. Only for PRs that went through the stages, since February 2026 |
 | `suites_expected`, `suites_green`, `suites_waived` | E2E suites expected for the PR's new releases (see below), how many passed or were skipped (`neutral`) at least once, how many were waived with `/waive-suite` |
 | `test_runs`, `test_runs_automated` | Number of `/run releases-test-suites` comments on the PR, and how many of them came from the automation (`giantswarm-release[bot]` or `taylorbot`; weekly bump, stage change) |
+| `retriggers`, `retriggers_automated`, `retriggers_after_failure`, `retriggers_after_commit`, `retriggers_other`, `retriggered`, `suite_runs`, `suite_reruns`, `suite_reruns_redundant` | Test runs after the first one by reason, and the cost of testing the release, see [Retrigger rate](#retrigger-rate) |
 | `tests_first_run_at` | Time of the first `/run releases-test-suites` comment |
 | `friction_start_at` | The run the test friction is measured from: the first run after the PR entered the active stage, or the first manual run for PRs without stage labels, or the first run when all runs were automated |
 | `all_green_at` | First time at which every expected suite had passed, or been waived, at least once |
@@ -97,11 +98,41 @@ The same check runs also give the outcome of every suite run. The output has a s
 | `waived` | `1` when the suite was waived with `/waive-suite` |
 | `first_green_at`, `runs_to_green` | The suite's first pass (or its waiver) and the number of runs up to it |
 | `last_to_green` | `1` when this suite's first green set the PR's `all_green_at`, that is, the release waited for it last |
+| `reruns`, `reruns_after_failure`, `reruns_after_commit`, `reruns_redundant` | Runs after the suite's first one, by what preceded them, see [Retrigger rate](#retrigger-rate) |
 
 The dashboard aggregates these rows per suite within the selected time range and providers: the
 failure rate (`failures / (failures + successes)`), how many releases waited for the suite last,
 and on what share of releases the suite failed at least once. A failure is whatever the suite run
 reported; infrastructure problems are included, since they slow a release down just the same.
+
+## Retrigger rate
+
+[roadmap#4406](https://github.com/giantswarm/roadmap/issues/4406). A retrigger is a
+`/run releases-test-suites` comment after the first one on a release PR. Each retrigger is classified
+by what happened since the previous run, in this order:
+
+| Field | Meaning |
+|-------|---------|
+| `retriggers` | Test runs after the first one, by anyone |
+| `retriggers_automated` | Posted by the automation: the first run on the active stage and the runs after automatic updates |
+| `retriggers_after_failure` | A suite run failed since the previous run |
+| `retriggers_after_commit` | No failure, but commits were pushed since the previous run (commit dates and force-push events) |
+| `retriggers_other` | Neither: the tests were rerun while green or still running |
+| `retriggered` | 1 when a person retriggered at least once, 0 otherwise, so that its mean is the share of retriggered releases; unset for PRs without test runs |
+| `suite_runs` | Completed suite runs of the release, every rerun counted, the cost of testing it |
+| `suite_reruns`, `suite_reruns_redundant` | Sums of the per-suite reruns below |
+
+Cancelled runs are not a reason for a retrigger, they are the result of one, so they do not make
+the next retrigger count as after a failure. A targeted run (`TARGET_SUITES=...`) of suites that had
+not run yet counts as a retrigger like any other and lands in `retriggers_other` when nothing failed
+before it. The reasons and `retriggered` are only set for PRs with per-suite results; older PRs only
+have `retriggers`.
+
+On the suite level, every completed run of a suite after its first one on the PR is a rerun
+(`reruns` in the suite results), classified by the previous run of the same suite:
+`reruns_after_failure` when it failed or was cancelled, `reruns_after_commit` when it tested
+another commit, and `reruns_redundant` when the suite had already passed on the same commit. The
+redundant reruns are what rerunning the whole matrix instead of the failed suites costs.
 
 ## Workflow: Release KPIs (`release-kpis.yaml`)
 
@@ -167,6 +198,8 @@ Panels:
 - Median time to green per release type, median test friction, median runs until green and the share of releases merged with all suites green, each with the number of releases
 - Time to green and test runs per release
 - Share of releases merged with all suites green per quarter, and runs until green per release
+- Median retriggers per release, the share of releases retriggered by a person, the share of manual retriggers that followed a failure, the share of suite reruns after a pass, and the median suite runs per release
+- Retriggers per release by reason, and suite reruns by suite and reason
 - Failure rate by suite, the suite each release waited for last, and the share of releases a suite failed on
 - Table of suite results per release
 - Table of all merged release PRs with links. *Inspect → Data* on this panel downloads a CSV.

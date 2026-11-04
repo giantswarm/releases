@@ -155,6 +155,24 @@ type Release struct {
 	MergedAllGreen *int `json:"merged_all_green"`
 	RunsToGreen    *int `json:"runs_to_green"`
 
+	// Retriggers are the test runs after the first one, by reason; see
+	// retriggers.go. The reasons and Retriggered are only set for PRs with
+	// per-suite results. Retriggered is 1 when someone retriggered the tests
+	// and 0 when only the automation did or nobody did, so that its mean is the
+	// share of retriggered releases. SuiteRuns is the number of completed suite runs,
+	// the cost of testing the release; SuiteReruns are those after a suite's
+	// first run and SuiteRerunsRedundant the ones after the suite had already
+	// passed on the same commit.
+	Retriggers             int  `json:"retriggers"`
+	RetriggersAutomated    int  `json:"retriggers_automated"`
+	RetriggersAfterFailure int  `json:"retriggers_after_failure"`
+	RetriggersAfterCommit  int  `json:"retriggers_after_commit"`
+	RetriggersOther        int  `json:"retriggers_other"`
+	Retriggered            *int `json:"retriggered"`
+	SuiteRuns              int  `json:"suite_runs"`
+	SuiteReruns            int  `json:"suite_reruns"`
+	SuiteRerunsRedundant   int  `json:"suite_reruns_redundant"`
+
 	// PlannedMergeDate, DelayDays and OnTime are only set for automated
 	// releases. OnTime is 1 when the release was merged by its planned date and
 	// 0 otherwise, so that its mean is the on-time rate. PlannedSource says
@@ -322,7 +340,9 @@ func main() {
 			}
 			required := defs.requiredSuites(wanted, pr.CreatedAt)
 			applyTestResults(&r, wanted, required, res)
-			suiteRows = append(suiteRows, suiteResults(r, wanted, required, res)...)
+			rows := suiteResults(r, wanted, required, res)
+			applySuiteTotals(&r, rows)
+			suiteRows = append(suiteRows, rows...)
 			if verbose {
 				log.Printf("#%d: %d test runs, %d/%d suites green, %d commits checked", number, r.TestRuns, r.SuitesGreen, r.SuitesExpected, res.checkedShas)
 			}

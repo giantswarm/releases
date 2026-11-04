@@ -144,6 +144,7 @@ type issueComment struct {
 type checkRun struct {
 	Name        string     `json:"name"`
 	Conclusion  string     `json:"conclusion"`
+	HeadSHA     string     `json:"head_sha"`
 	CompletedAt *time.Time `json:"completed_at"`
 }
 
@@ -154,6 +155,7 @@ type testResults struct {
 	firstGreen  map[string]time.Time  // check run name -> first successful completion
 	ran         map[string]bool       // check run name -> at least one run, whatever the outcome
 	results     map[string][]checkRun // check run name -> every completed run
+	commits     []time.Time           // when the commits of the PR were made or force-pushed
 	checkedShas int
 }
 
@@ -192,16 +194,17 @@ func (c *githubClient) collectTestResults(number int, wanted map[string]string, 
 		wantedNames[name] = true
 	}
 
-	shas, err := c.pullRequestCommits(number)
+	commits, err := c.pullRequestCommits(number)
 	if err != nil {
 		return res, err
 	}
-	for i, sha := range shas {
+	for i, cm := range commits {
+		res.commits = append(res.commits, cm.At)
 		if i >= maxCommitsScanned {
 			log.Printf("Warning: #%d has more than %d commits, older results are not counted", number, maxCommitsScanned)
 			break
 		}
-		runs, err := c.checkRuns(sha)
+		runs, err := c.checkRuns(cm.SHA)
 		if err != nil {
 			return res, err
 		}
@@ -244,6 +247,9 @@ func applyTestResults(r *Release, wanted map[string]string, required map[string]
 			r.TestRunsAutomated++
 		}
 	}
+	if len(res.runs) > 1 {
+		r.Retriggers = len(res.runs) - 1
+	}
 	if len(res.runs) > 0 {
 		t := res.runs[0].CreatedAt.UTC()
 		r.TestsFirstRunAt = &t
@@ -277,6 +283,19 @@ func applyTestResults(r *Release, wanted map[string]string, required map[string]
 	if r.SuitesExpected == 0 {
 		return
 	}
+	// The reasons need the suite results, which older PRs do not have.
+	if r.Retriggers > 0 {
+		c := classifyRetriggers(res.runs, res.results, res.commits)
+		r.RetriggersAutomated = c.automated
+		r.RetriggersAfterFailure = c.afterFailure
+		r.RetriggersAfterCommit = c.afterCommit
+		r.RetriggersOther = c.other
+	}
+	retriggered := 0
+	if r.Retriggers-r.RetriggersAutomated > 0 {
+		retriggered = 1
+	}
+	r.Retriggered = &retriggered
 	mergedAllGreen := 0
 	if complete {
 		mergedAllGreen = 1
@@ -346,39 +365,52 @@ func (c *githubClient) issueComments(number int) ([]issueComment, error) {
 	}
 }
 
+// prCommit is a commit that was the head of a pull request at some point, and
+// when it got there.
+type prCommit struct {
+	SHA string
+	At  time.Time
+}
+
 // pullRequestCommits returns the commits that were ever the head of a pull
 // request: its current commits plus the commits its branch was force-pushed away
 // from, which the timeline records. Check runs stay attached to those commits.
-func (c *githubClient) pullRequestCommits(number int) ([]string, error) {
+func (c *githubClient) pullRequestCommits(number int) ([]prCommit, error) {
 	seen := map[string]bool{}
-	var shas []string
-	add := func(sha string) {
+	var commits []prCommit
+	add := func(sha string, at time.Time) {
 		if sha != "" && !seen[sha] {
 			seen[sha] = true
-			shas = append(shas, sha)
+			commits = append(commits, prCommit{SHA: sha, At: at})
 		}
 	}
 
 	for page := 1; ; page++ {
-		var commits []struct {
-			SHA string `json:"sha"`
+		var list []struct {
+			SHA    string `json:"sha"`
+			Commit struct {
+				Committer struct {
+					Date time.Time `json:"date"`
+				} `json:"committer"`
+			} `json:"commit"`
 		}
 		u := fmt.Sprintf("https://api.github.com/repos/%s/pulls/%d/commits?per_page=100&page=%d", c.repo, number, page)
-		if err := c.get(u, &commits); err != nil {
+		if err := c.get(u, &list); err != nil {
 			return nil, err
 		}
-		for _, cm := range commits {
-			add(cm.SHA)
+		for _, cm := range list {
+			add(cm.SHA, cm.Commit.Committer.Date)
 		}
-		if len(commits) < 100 {
+		if len(list) < 100 {
 			break
 		}
 	}
 
 	for page := 1; ; page++ {
 		var events []struct {
-			Event    string `json:"event"`
-			CommitID string `json:"commit_id"`
+			Event     string    `json:"event"`
+			CommitID  string    `json:"commit_id"`
+			CreatedAt time.Time `json:"created_at"`
 		}
 		u := fmt.Sprintf("https://api.github.com/repos/%s/issues/%d/timeline?per_page=100&page=%d", c.repo, number, page)
 		if err := c.get(u, &events); err != nil {
@@ -386,14 +418,14 @@ func (c *githubClient) pullRequestCommits(number int) ([]string, error) {
 		}
 		for _, e := range events {
 			if e.Event == "head_ref_force_pushed" {
-				add(e.CommitID)
+				add(e.CommitID, e.CreatedAt)
 			}
 		}
 		if len(events) < 100 {
 			break
 		}
 	}
-	return shas, nil
+	return commits, nil
 }
 
 // checkRuns lists the check runs of a commit, including earlier runs of the
