@@ -140,7 +140,7 @@
         "h": 14,
         "w": 24,
         "x": 0,
-        "y": 93
+        "y": 100
       },
       "targets": [
         {
@@ -584,6 +584,18 @@
             "matcher": {
               "id": "byName",
               "options": "test runs"
+            },
+            "properties": [
+              {
+                "id": "decimals",
+                "value": 0
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "retriggers"
             },
             "properties": [
               {
@@ -1993,7 +2005,8 @@
           "custom": {
             "fillOpacity": 80,
             "lineWidth": 1
-          }
+          },
+          "decimals": 1
         },
         "overrides": []
       },
@@ -2132,12 +2145,7 @@
           "options": {
             "mode": "reduceRow",
             "reduce": {
-              "reducer": "sum",
-              "include": [
-                "major",
-                "minor",
-                "patch"
-              ]
+              "reducer": "sum"
             },
             "alias": "total",
             "replaceFields": false
@@ -2199,7 +2207,7 @@
         "h": 4,
         "w": 24,
         "x": 0,
-        "y": 107
+        "y": 114
       },
       "options": {
         "mode": "markdown",
@@ -3863,7 +3871,7 @@
         "h": 12,
         "w": 8,
         "x": 0,
-        "y": 69
+        "y": 76
       },
       "targets": [
         {
@@ -4139,7 +4147,7 @@
         "h": 12,
         "w": 8,
         "x": 8,
-        "y": 69
+        "y": 76
       },
       "targets": [
         {
@@ -4292,7 +4300,7 @@
         "h": 12,
         "w": 8,
         "x": 16,
-        "y": 69
+        "y": 76
       },
       "targets": [
         {
@@ -4460,7 +4468,7 @@
         "h": 12,
         "w": 24,
         "x": 0,
-        "y": 81
+        "y": 88
       },
       "targets": [
         {
@@ -5704,7 +5712,7 @@
       "title": "Retriggers per release",
       "description": "Test runs after the first one per release PR, by reason: the previous run had a failed suite, new commits had been pushed since, or neither (rerun while the suites were green or still running). Targeted runs of suites that had not run yet land in the last group as well. Automated retriggers are the first run on the active stage and the runs after automatic updates. Only releases with per-suite results. The axis is capped at 30, hover a clipped bar for its value.",
       "gridPos": {
-        "h": 9,
+        "h": 16,
         "w": 12,
         "x": 0,
         "y": 60
@@ -5915,7 +5923,7 @@
       "title": "Suite reruns by suite",
       "description": "Runs of a suite after its first one on a release PR, summed over the selected releases, by reason: the previous run of the suite failed or was cancelled, the previous run tested another commit, or the suite had already passed on the same commit (redundant). Hover for the total.",
       "gridPos": {
-        "h": 9,
+        "h": 16,
         "w": 12,
         "x": 12,
         "y": 60
