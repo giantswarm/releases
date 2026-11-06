@@ -93,7 +93,7 @@ runs:
           option_id=$(GH_TOKEN="$PROJECT_TOKEN" gh api graphql -f query='
             { organization(login: "giantswarm") { projectV2(number: 273) {
               field(name: "Team") { ... on ProjectV2SingleSelectField { options { id name } } }
-            }}}' --jq ".data.organization.projectV2.field.options[] | select(.name | ascii_downcase | contains(\"$team_short\")) | .id" 2>/dev/null) \
+            }}}' --jq ".data.organization.projectV2.field.options[] | select(.name | ascii_downcase | gsub(\" \"; \"\") | contains(\"$team_short\")) | .id" 2>/dev/null) \
             || { echo "Warning: could not look up Team option"; return; }
 
           [[ -z "$option_id" ]] && echo "Warning: no project Team option matches '$team_short'" && return
