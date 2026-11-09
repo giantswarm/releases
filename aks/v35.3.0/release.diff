@@ -34,7 +34,7 @@ spec:                                                              spec:
     - prometheus-operator-crd                                          - prometheus-operator-crd
                                                                 >      - vertical-pod-autoscaler-crd
   - name: external-dns-crossplane-resources                          - name: external-dns-crossplane-resources
-    catalog: default                                            <  
+    catalog: default                                            <
     version: 0.4.0                                                     version: 0.4.0
   - name: k8s-audit-metrics                                          - name: k8s-audit-metrics
     version: 0.10.13                                                   version: 0.10.13
@@ -53,7 +53,7 @@ spec:                                                              spec:
     - prometheus-operator-crd                                          - prometheus-operator-crd
                                                                 >      - vertical-pod-autoscaler-crd
   - name: network-policies                                           - name: network-policies
-    catalog: cluster                                            <  
+    catalog: cluster                                            <
     version: 0.3.0                                                     version: 0.3.0
   - name: node-exporter                                              - name: node-exporter
     version: 1.20.13                                                   version: 1.20.13
@@ -75,10 +75,10 @@ spec:                                                              spec:
     - prometheus-operator-crd                                          - prometheus-operator-crd
                                                                 >      - vertical-pod-autoscaler-crd
   - name: security-bundle                                            - name: security-bundle
-    catalog: giantswarm                                         <  
+    catalog: giantswarm                                         <
     version: 2.4.0                                                     version: 2.4.0
-    dependsOn:                                                  <  
-    - prometheus-operator-crd                                   <  
+    dependsOn:                                                  <
+    - prometheus-operator-crd                                   <
   - name: teleport-kube-agent                                        - name: teleport-kube-agent
     version: 0.12.0                                                    version: 0.12.0
     dependsOn:                                                         dependsOn:
@@ -93,7 +93,7 @@ spec:                                                              spec:
   components:                                                        components:
   - name: cluster-aks                                                - name: cluster-aks
     catalog: cluster                                            |      version: 0.7.0
-    version: 0.6.0                                              <  
+    version: 0.6.0                                              <
   - name: kubernetes                                                 - name: kubernetes
     version: 1.35.7                                                    version: 1.35.7
   date: "2026-09-15T09:04:22Z"                                  |    date: "2026-09-23T11:51:51Z"
