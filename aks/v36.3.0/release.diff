@@ -96,8 +96,8 @@ spec:                                                              spec:
     version: 4.1.2                                                     version: 4.1.2
   components:                                                        components:
   - name: cluster-aks                                                - name: cluster-aks
-    catalog: cluster                                                   catalog: cluster
-    version: 0.11.1                                             |      version: 0.12.0
+    catalog: cluster                                            |      catalog: cluster-test
+    version: 0.11.1                                             |      version: 0.12.1-r00f7c2f7t20261112183240h0157d90
   - name: kubernetes                                                 - name: kubernetes
     version: 1.36.4                                             |      version: 1.36.5
   date: "2026-11-03T09:30:45Z"                                  |    date: "2026-11-12T19:25:10Z"
