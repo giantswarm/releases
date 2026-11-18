@@ -30,6 +30,15 @@ const payload = process.env.GITHUB_EVENT_PATH && fs.existsSync(process.env.GITHU
 
 const log = (message) => console.log(message)
 
+// Machine-readable results for workflows that run this script as a gate (the
+// `/stage active` coverage gate in release-stages.yaml). Written to GITHUB_OUTPUT
+// when the environment provides one; a no-op otherwise.
+const writeOutputs = (values) => {
+  if (!process.env.GITHUB_OUTPUT) return
+  const lines = Object.entries(values).map(([key, value]) => `${key}=${value}`).join('\n')
+  fs.appendFileSync(process.env.GITHUB_OUTPUT, `${lines}\n`)
+}
+
 // Single request against the repo's REST namespace. `path` is relative to
 // /repos/{owner}/{repo}, e.g. `/pulls/2400`.
 const request = async (path, method = 'GET', body = undefined) => {
@@ -172,6 +181,12 @@ const main = async () => {
   // The check run is updated in place rather than recreated, because pr-gatekeeper
   // refuses to evaluate a name that matches several runs on one commit.
   const publish = async ({ status, conclusion, title, summary }) => {
+    // Evaluate-only mode for the /stage active coverage gate: the result is
+    // consumed through GITHUB_OUTPUT and the check run is left untouched.
+    if (process.env.SKIP_PUBLISH === 'true') {
+      log(`SKIP_PUBLISH=true, not publishing (${title})`)
+      return
+    }
     const existing = await listCheckRuns(headSha, CHECK_NAME)
     const checkPayload = { status, output: { title, summary } }
     if (conclusion) checkPayload.conclusion = conclusion
@@ -216,6 +231,7 @@ const main = async () => {
 
   if (releases.size === 0) {
     log('PR adds no new releases, reporting coverage as not applicable')
+    writeOutputs({ complete: 'true', not_run_suites: '', failed_suites: '', in_progress_suites: '' })
     await publish({
       status: 'completed',
       conclusion: 'success',
@@ -449,13 +465,13 @@ const main = async () => {
         lines.push(`| ${suite} | ⚠️ waived by @${waiver.user} - _${waiver.reason}_ |`)
       } else if (result && FAILED_CONCLUSIONS.includes(result.conclusion)) {
         anyFailed = true
-        outstanding.push({ provider, suite, path: suitePath })
+        outstanding.push({ provider, suite, path: suitePath, state: 'failed' })
         lines.push(`| [${suite}](${result.url}) | ❌ ${result.conclusion} |`)
       } else if (result) {
-        outstanding.push({ provider, suite, path: suitePath })
+        outstanding.push({ provider, suite, path: suitePath, state: 'in_progress' })
         lines.push(`| ${suite} | 🚧 in progress |`)
       } else {
-        outstanding.push({ provider, suite, path: suitePath })
+        outstanding.push({ provider, suite, path: suitePath, state: 'not_run' })
         // Make it obvious which suites the current stage will never start on
         // its own, so a missing result doesn't look like something went wrong.
         const stageNote = suitesRunByStage(provider).includes(suite)
@@ -468,6 +484,14 @@ const main = async () => {
   }
 
   const complete = coveredCount === expectedCount
+
+  const byState = (state) => outstanding.filter(entry => entry.state === state).map(entry => entry.path).join(',')
+  writeOutputs({
+    complete: complete.toString(),
+    not_run_suites: byState('not_run'),
+    failed_suites: byState('failed'),
+    in_progress_suites: byState('in_progress'),
+  })
 
   if (!complete) {
     // While most of what the current stage runs is still outstanding, the plain
