@@ -6,6 +6,8 @@ This document describes the `E2E Coverage` merge gate (`e2e-coverage.yaml`) and 
 
 `releases-test-suites` picks which test suites to run based on the release stage, so a PR in `stage/development` only runs `standard`, `upgrade` and `upgrade-major`. The variant suites (`private`, `china`, `cilium-eni-mode`, `byo-cni`, `overlay-acns`, `on-capa`, `on-capz`) only start automatically once the PR reaches `stage/freeze`.
 
+To validate all flavours earlier, `/stage active` triggers the **full** suite matrix once by passing an explicit `TARGET_SUITES` list (built from `e2e-suites.json`, see below) for every provider the PR adds a release for. `/stage active --skip-tests` skips that trigger, for when the suites were already re-run manually after a fix.
+
 Releases were being merged before reaching Freeze, which meant those variant suites never ran at all — v34.5.0 was merged from `stage/development` having tested only 12 of the 18 suites expected for its providers.
 
 The `E2E Coverage` check closes that gap. It requires the **full** suite set for every newly added release in the PR, whatever stage the PR is currently in, and only reports success once all of them have passed.

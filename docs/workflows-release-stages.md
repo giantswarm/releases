@@ -33,15 +33,18 @@ All other transitions are rejected with an error comment.
 
 ## Commands
 
-### `/stage active`
+### `/stage active [--skip-tests]`
 
 Moves the release from Development to Active.
 
 **What happens:**
 - `stage/development` label is removed, `stage/active` is added
 - Team reviewers are requested: `team-rocket`, `team-phoenix`, `team-shield`, `team-atlas`
+- The **full** E2E test suite matrix is triggered once, for every provider the PR adds a release for (`/run releases-test-suites TARGET_SUITES=...`, built from `.github/scripts/e2e-suites.json`). This validates all flavours before the release is handed to product teams, instead of waiting for Freeze.
 - Slack notification is sent (consolidated releases only)
 - PR body stage dashboard is updated
+
+Pass `--skip-tests` to skip triggering the tests — for example when the previous full run failed, the issue was fixed and the suites were already re-run manually. The flag is only valid with `/stage active`.
 
 ### `/stage freeze`
 

@@ -7,6 +7,10 @@ inputs:
   github_token:
     description: 'The GitHub token to use for authentication'
     required: true
+  target_suites:
+    description: 'Optional comma-separated list of test suites to run (e.g. ./providers/capa/standard). Overrides stage-based suite selection.'
+    required: false
+    default: ''
 runs:
   using: "composite"
   steps:
@@ -15,9 +19,14 @@ runs:
       with:
         github-token: ${{ inputs.github_token }}
         script: |
+          const targetSuites = `${{ inputs.target_suites }}`.trim();
+          let body = '/run releases-test-suites';
+          if (targetSuites !== '') {
+            body += ` TARGET_SUITES=${targetSuites}`;
+          }
           github.rest.issues.createComment({
             issue_number: ${{ inputs.pr_number }},
             owner: context.repo.owner,
             repo: context.repo.repo,
-            body: '/run releases-test-suites'
+            body: body
           })

@@ -13,8 +13,11 @@ This release PR follows a staged lifecycle managed via PR labels:
 
 **Commands:**
 
-*   Move to Active stage (from Development):
+*   Move to Active stage (from Development). This triggers the full E2E test suite matrix once:
     `/stage active`
+
+*   Move to Active stage without triggering the tests (e.g. they were already re-run manually after a fix):
+    `/stage active --skip-tests`
 
 *   Move to Freeze stage (from Active):
     `/stage freeze`

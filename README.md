@@ -716,6 +716,8 @@ The workload cluster E2E tests are enforced by our PR gatekeeper to ensure they 
 
 Which suites `/run releases-test-suites` picks depends on the release stage (`stage/development` runs `standard`, `upgrade` and `upgrade-major`, while the variant suites such as `private`, `china`, `cilium-eni-mode`, `on-capa` and `on-capz` only run at `stage/freeze`). To make sure a release is never merged without the variant suites having run at all, the `E2E Coverage` check requires the **full** set of suites for every new release in the PR, whatever stage the PR is currently in.
 
+To validate all flavours before product teams take over, `/stage active` triggers the full suite matrix once by passing an explicit `TARGET_SUITES` list for every provider the PR adds a release for. Use `/stage active --skip-tests` to skip that trigger, for example when a failing suite was fixed and re-run manually beforehand.
+
 The check lists every expected suite per provider along with a ready-to-use trigger comment for the ones still outstanding. It only turns green once they have all passed, and the PR gatekeeper requires it before merge.
 
 It also names the stage the PR is currently in, which suites a plain `/run releases-test-suites` covers in that stage, and the command to advance to the next one (`/stage active`, then `/stage freeze` — stages move one step at a time). Suites that the current stage does not run are marked accordingly, so a missing result is never mistaken for a problem.
