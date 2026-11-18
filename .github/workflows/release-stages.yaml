@@ -78,14 +78,22 @@ jobs:
             const branch = '${{ steps.pr_details.outputs.branch }}';
 
             // Parse target stage from comment
-            const match = commentBody.match(/^\/stage\s+(active|freeze)\s*$/);
+            const match = commentBody.match(/^\/stage\s+(active|freeze)(\s+--skip-tests)?\s*$/);
             if (!match) {
-              core.setOutput('error', 'Invalid command. Usage: `/stage active` or `/stage freeze`');
+              core.setOutput('error', 'Invalid command. Usage: `/stage active [--skip-tests]` or `/stage freeze`');
               return;
             }
 
             const targetStage = match[1];
+            const skipTests = Boolean(match[2]);
+
+            if (skipTests && targetStage !== 'active') {
+              core.setOutput('error', 'The `--skip-tests` flag is only valid with `/stage active`.');
+              return;
+            }
+
             core.setOutput('target_stage', targetStage);
+            core.setOutput('skip_tests', skipTests.toString());
 
             // Determine current stage from labels
             let currentStage = 'none';
@@ -204,12 +212,49 @@ jobs:
               console.log(`Warning: Could not request all team reviewers: ${e.message}`);
             }
 
+      - name: Compute full test suite list
+        id: full_suites
+        if: steps.validate.outputs.valid == 'true' && steps.validate.outputs.target_stage == 'active' && steps.validate.outputs.skip_tests != 'true'
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+        run: |
+          # Build the full TARGET_SUITES list for every provider this PR adds a
+          # release for, so /stage active runs the complete test matrix once
+          # instead of the reduced stage-based selection.
+          SUITES_JSON=".github/scripts/e2e-suites.json"
+
+          PROVIDERS=$(gh api "repos/${{ github.repository }}/pulls/${{ github.event.issue.number }}/files" --paginate \
+            --jq '.[] | select(.status == "added") | .filename' \
+            | grep -E '^[^/]+/v[0-9]+\.[0-9]+\.[0-9]+[^/]*/release\.yaml$' \
+            | cut -d/ -f1 | sort -u || true)
+
+          TARGET_SUITES=""
+          for DIR in ${PROVIDERS}; do
+            PATH_PROVIDER=$(jq -r --arg dir "$DIR" '.suitePathProviders[$dir] // empty' "$SUITES_JSON")
+            if [[ -z "$PATH_PROVIDER" ]]; then
+              echo "No test suite mapping for provider directory '$DIR', skipping."
+              continue
+            fi
+            for SUITE in $(jq -r --arg dir "$DIR" '.expectedSuites[$dir][]?' "$SUITES_JSON"); do
+              TARGET_SUITES="${TARGET_SUITES}./providers/${PATH_PROVIDER}/${SUITE},"
+            done
+          done
+          TARGET_SUITES=${TARGET_SUITES%,}
+
+          if [[ -n "$TARGET_SUITES" ]]; then
+            echo "Full test suite list: $TARGET_SUITES"
+          else
+            echo "No newly added releases found; falling back to stage-based suite selection."
+          fi
+          echo "target_suites=$TARGET_SUITES" >> "$GITHUB_OUTPUT"
+
       - name: Trigger E2E tests on active stage
-        if: steps.validate.outputs.valid == 'true' && steps.validate.outputs.target_stage == 'active'
+        if: steps.validate.outputs.valid == 'true' && steps.validate.outputs.target_stage == 'active' && steps.validate.outputs.skip_tests != 'true'
         uses: ./.github/actions/trigger-e2e-tests
         with:
           pr_number: ${{ github.event.issue.number }}
           github_token: ${{ steps.app-token.outputs.token }}
+          target_suites: ${{ steps.full_suites.outputs.target_suites }}
 
       - name: Send Slack notification
         if: steps.validate.outputs.valid == 'true' && steps.validate.outputs.is_consolidated == 'true'
@@ -372,6 +417,7 @@ jobs:
             const targetStage = '${{ steps.validate.outputs.target_stage }}';
             const version = '${{ steps.validate.outputs.version }}';
             const isConsolidated = '${{ steps.validate.outputs.is_consolidated }}' === 'true';
+            const skipTests = '${{ steps.validate.outputs.skip_tests }}' === 'true';
 
             let body = `**Release stage changed to \`${targetStage}\`**\n\n`;
 
@@ -379,7 +425,11 @@ jobs:
               body += `Release ${version} is now in the **Active** stage.\n\n`;
               body += `- Product teams have been requested as reviewers\n`;
               body += `- Teams can now bump components, run tests, and add changes\n`;
-              body += `- E2E tests have been triggered automatically\n`;
+              if (skipTests) {
+                body += `- E2E tests were **skipped** (\`--skip-tests\`)\n`;
+              } else {
+                body += `- The full E2E test suite matrix has been triggered automatically\n`;
+              }
               if (isConsolidated) {
                 body += `- A Slack notification has been sent to the release channel\n`;
               }
