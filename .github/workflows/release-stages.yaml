@@ -13,7 +13,9 @@ jobs:
       (github.event.comment.author_association == 'MEMBER' || github.event.comment.author_association == 'OWNER' || github.event.comment.author_association == 'COLLABORATOR')
     runs-on: ubuntu-latest
     permissions:
+      checks: read
       contents: read
+      issues: read
       pull-requests: write
 
     steps:
@@ -78,14 +80,22 @@ jobs:
             const branch = '${{ steps.pr_details.outputs.branch }}';
 
             // Parse target stage from comment
-            const match = commentBody.match(/^\/stage\s+(active|freeze)\s*$/);
+            const match = commentBody.match(/^\/stage\s+(active|freeze)(\s+--skip-tests)?\s*$/);
             if (!match) {
-              core.setOutput('error', 'Invalid command. Usage: `/stage active` or `/stage freeze`');
+              core.setOutput('error', 'Invalid command. Usage: `/stage active [--skip-tests]` or `/stage freeze`');
               return;
             }
 
             const targetStage = match[1];
+            const skipTests = Boolean(match[2]);
+
+            if (skipTests && targetStage !== 'active') {
+              core.setOutput('error', 'The `--skip-tests` flag is only valid with `/stage active`.');
+              return;
+            }
+
             core.setOutput('target_stage', targetStage);
+            core.setOutput('skip_tests', skipTests.toString());
 
             // Determine current stage from labels
             let currentStage = 'none';
@@ -148,8 +158,90 @@ jobs:
               content: '-1'
             });
 
-      - name: Swap stage labels
+      - name: Checkout code
+        if: steps.validate.outputs.valid == 'true' && steps.validate.outputs.target_stage == 'active'
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Get provider lists
+        id: providers
+        if: steps.validate.outputs.valid == 'true' && steps.validate.outputs.target_stage == 'active' && steps.validate.outputs.skip_tests != 'true'
+        uses: ./.github/actions/get-providers
+
+      # All E2E test suites must have run once (and passed or been waived) while the
+      # release is still in Development. The transition to Active is gated on that;
+      # /stage active --skip-tests bypasses the gate. See giantswarm/roadmap#4440.
+      - name: Evaluate E2E coverage gate
+        id: coverage
+        if: steps.validate.outputs.valid == 'true' && steps.validate.outputs.target_stage == 'active' && steps.validate.outputs.skip_tests != 'true'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          CAPI_NAMES: ${{ steps.providers.outputs.capi_names }}
+          SKIP_PUBLISH: 'true'
+        run: node .github/scripts/e2e-coverage.js
+
+      - name: Decide whether the transition proceeds
+        id: decision
         if: steps.validate.outputs.valid == 'true'
+        env:
+          TARGET_STAGE: ${{ steps.validate.outputs.target_stage }}
+          SKIP_TESTS: ${{ steps.validate.outputs.skip_tests }}
+          COVERAGE_COMPLETE: ${{ steps.coverage.outputs.complete }}
+        run: |
+          if [[ "$TARGET_STAGE" != "active" || "$SKIP_TESTS" == "true" || "$COVERAGE_COMPLETE" == "true" ]]; then
+            echo "proceed=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "proceed=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Trigger suites that have not run yet
+        if: steps.decision.outputs.proceed == 'false' && steps.coverage.outputs.not_run_suites != ''
+        uses: ./.github/actions/trigger-e2e-tests
+        with:
+          pr_number: ${{ github.event.issue.number }}
+          github_token: ${{ steps.app-token.outputs.token }}
+          target_suites: ${{ steps.coverage.outputs.not_run_suites }}
+
+      - name: Post blocked-transition comment
+        if: steps.decision.outputs.proceed == 'false'
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9
+        with:
+          github-token: ${{ steps.app-token.outputs.token }}
+          script: |
+            const notRun = '${{ steps.coverage.outputs.not_run_suites }}'.split(',').filter(Boolean);
+            const failed = '${{ steps.coverage.outputs.failed_suites }}'.split(',').filter(Boolean);
+            const inProgress = '${{ steps.coverage.outputs.in_progress_suites }}'.split(',').filter(Boolean);
+
+            const list = (suites) => suites.map(s => `\`${s}\``).join(', ');
+
+            let body = '**Stage transition to `active` blocked**\n\n';
+            body += 'Every E2E test suite must have run once (and passed or been waived) before the release moves to Active, so all flavours are validated during Development.\n\n';
+            if (notRun.length > 0) {
+              body += `- 🚀 Not run yet — **triggered now**: ${list(notRun)}\n`;
+            }
+            if (inProgress.length > 0) {
+              body += `- 🚧 Still in progress: ${list(inProgress)}\n`;
+            }
+            if (failed.length > 0) {
+              body += `- ❌ Failed: ${list(failed)} — fix and re-run with \`/run releases-test-suites TARGET_SUITES=${failed.join(',')}\`, or waive with \`/waive-suite <provider>/<suite> <reason>\`\n`;
+            }
+            body += '\nRe-run `/stage active` once the `E2E Coverage` check is green, or use `/stage active --skip-tests` to switch without the gate.';
+
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: ${{ github.event.issue.number }},
+              body: body
+            });
+
+            await github.rest.reactions.createForIssueComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              comment_id: ${{ github.event.comment.id }},
+              content: '-1'
+            });
+
+      - name: Swap stage labels
+        if: steps.validate.outputs.valid == 'true' && steps.decision.outputs.proceed == 'true'
         uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9
         with:
           github-token: ${{ steps.app-token.outputs.token }}
@@ -180,12 +272,8 @@ jobs:
               labels: [`stage/${targetStage}`]
             });
 
-      - name: Checkout code
-        if: steps.validate.outputs.valid == 'true' && steps.validate.outputs.target_stage == 'active'
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-
       - name: Request reviewers on active stage
-        if: steps.validate.outputs.valid == 'true' && steps.validate.outputs.target_stage == 'active'
+        if: steps.validate.outputs.valid == 'true' && steps.decision.outputs.proceed == 'true' && steps.validate.outputs.target_stage == 'active'
         uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9
         with:
           github-token: ${{ steps.app-token.outputs.token }}
@@ -204,15 +292,8 @@ jobs:
               console.log(`Warning: Could not request all team reviewers: ${e.message}`);
             }
 
-      - name: Trigger E2E tests on active stage
-        if: steps.validate.outputs.valid == 'true' && steps.validate.outputs.target_stage == 'active'
-        uses: ./.github/actions/trigger-e2e-tests
-        with:
-          pr_number: ${{ github.event.issue.number }}
-          github_token: ${{ steps.app-token.outputs.token }}
-
       - name: Send Slack notification
-        if: steps.validate.outputs.valid == 'true' && steps.validate.outputs.is_consolidated == 'true'
+        if: steps.validate.outputs.valid == 'true' && steps.decision.outputs.proceed == 'true' && steps.validate.outputs.is_consolidated == 'true'
         env:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
           SLACK_CHANNEL_ID: ${{ secrets.SLACK_RELEASE_CHANNEL_ID }}
@@ -278,7 +359,7 @@ jobs:
           echo "Slack response: $(echo "$RESPONSE" | jq -r '.ok')"
 
       - name: Update PR body stage dashboard
-        if: steps.validate.outputs.valid == 'true'
+        if: steps.validate.outputs.valid == 'true' && steps.decision.outputs.proceed == 'true'
         uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9
         with:
           github-token: ${{ steps.app-token.outputs.token }}
@@ -338,7 +419,7 @@ jobs:
             });
 
       - name: Add success reaction
-        if: steps.validate.outputs.valid == 'true'
+        if: steps.validate.outputs.valid == 'true' && steps.decision.outputs.proceed == 'true'
         uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9
         with:
           github-token: ${{ steps.app-token.outputs.token }}
@@ -351,7 +432,7 @@ jobs:
             })
 
       - name: Trigger /summarize-ai on freeze
-        if: steps.validate.outputs.valid == 'true' && steps.validate.outputs.target_stage == 'freeze'
+        if: steps.validate.outputs.valid == 'true' && steps.decision.outputs.proceed == 'true' && steps.validate.outputs.target_stage == 'freeze'
         uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9
         with:
           github-token: ${{ steps.app-token.outputs.token }}
@@ -364,7 +445,7 @@ jobs:
             });
 
       - name: Post summary comment
-        if: steps.validate.outputs.valid == 'true'
+        if: steps.validate.outputs.valid == 'true' && steps.decision.outputs.proceed == 'true'
         uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9
         with:
           github-token: ${{ steps.app-token.outputs.token }}
@@ -372,6 +453,7 @@ jobs:
             const targetStage = '${{ steps.validate.outputs.target_stage }}';
             const version = '${{ steps.validate.outputs.version }}';
             const isConsolidated = '${{ steps.validate.outputs.is_consolidated }}' === 'true';
+            const skipTests = '${{ steps.validate.outputs.skip_tests }}' === 'true';
 
             let body = `**Release stage changed to \`${targetStage}\`**\n\n`;
 
@@ -379,7 +461,11 @@ jobs:
               body += `Release ${version} is now in the **Active** stage.\n\n`;
               body += `- Product teams have been requested as reviewers\n`;
               body += `- Teams can now bump components, run tests, and add changes\n`;
-              body += `- E2E tests have been triggered automatically\n`;
+              if (skipTests) {
+                body += `- The E2E coverage gate was **skipped** (\`--skip-tests\`)\n`;
+              } else {
+                body += `- All expected E2E test suites have run (passed or waived) during Development\n`;
+              }
               if (isConsolidated) {
                 body += `- A Slack notification has been sent to the release channel\n`;
               }
