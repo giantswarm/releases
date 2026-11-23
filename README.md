@@ -13,6 +13,7 @@ to all Giant Swarm installations.
 
 - v36
   - v36.2
+    - [v36.2.1](https://github.com/giantswarm/releases/tree/master/capa/v36.2.1)
     - [v36.2.0](https://github.com/giantswarm/releases/tree/master/capa/v36.2.0)
   - v36.1
     - [v36.1.1](https://github.com/giantswarm/releases/tree/master/capa/v36.1.1)
