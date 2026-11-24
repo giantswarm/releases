@@ -54,6 +54,9 @@ jobs:
               repo: context.repo.repo,
               pull_number: ${{ github.event.issue.number }}
             });
+            if (pr.data.head.repo?.full_name !== `${context.repo.owner}/${context.repo.repo}`) {
+              throw new Error('Pull requests from forks are not supported.');
+            }
 
             const labels = pr.data.labels.map(l => l.name);
             const branch = pr.data.head.ref;
@@ -70,12 +73,15 @@ jobs:
       - name: Parse and validate stage transition
         id: validate
         uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9
+        env:
+          PR_LABELS: ${{ steps.pr_details.outputs.labels }}
+          PR_BRANCH: ${{ steps.pr_details.outputs.branch }}
         with:
           github-token: ${{ steps.app-token.outputs.token }}
           script: |
             const commentBody = context.payload.comment.body.trim();
-            const labels = JSON.parse('${{ steps.pr_details.outputs.labels }}'.replace(/'/g, "\\'"));
-            const branch = '${{ steps.pr_details.outputs.branch }}';
+            const labels = JSON.parse(process.env.PR_LABELS);
+            const branch = process.env.PR_BRANCH;
 
             // Parse target stage from comment
             const match = commentBody.match(/^\/stage\s+(active|freeze)\s*$/);
@@ -216,6 +222,8 @@ jobs:
         env:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
           SLACK_CHANNEL_ID: ${{ secrets.SLACK_RELEASE_CHANNEL_ID }}
+          PR_URL: ${{ steps.pr_details.outputs.pr_url }}
+          PR_TITLE: ${{ steps.pr_details.outputs.title }}
         run: |
           # Skip if Slack is not configured
           if [[ -z "$SLACK_BOT_TOKEN" ]] || [[ -z "$SLACK_CHANNEL_ID" ]]; then
@@ -225,8 +233,6 @@ jobs:
 
           TARGET_STAGE="${{ steps.validate.outputs.target_stage }}"
           VERSION="${{ steps.validate.outputs.version }}"
-          PR_URL="${{ steps.pr_details.outputs.pr_url }}"
-          PR_TITLE="${{ steps.pr_details.outputs.title }}"
 
           if [[ "$TARGET_STAGE" == "active" ]]; then
             SLACK_TITLE="Release ${VERSION} — Active Review"
