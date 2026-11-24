@@ -61,6 +61,9 @@ jobs:
               repo: context.repo.repo,
               pull_number: ${{ github.event.issue.number }}
             });
+            if (pr.data.head.repo?.full_name !== `${context.repo.owner}/${context.repo.repo}`) {
+              throw new Error('Pull requests from forks are not supported.');
+            }
             return pr.data.head.ref;
 
       - name: Checkout PR branch
@@ -118,6 +121,12 @@ jobs:
             PIN_SPEC="$APP"
             PIN_NAME=$(echo "$APP" | cut -d'@' -f1)
             PIN_VERSION=$(echo "$APP" | cut -d'@' -f2)
+          fi
+
+          # Values below are reused in later scripts, so only allow safe characters.
+          if [[ ! "$PIN_SPEC" =~ ^[a-zA-Z0-9._-]+@[a-zA-Z0-9.+_-]+$ ]]; then
+            echo "error=invalid_pin_spec" >> "$GITHUB_OUTPUT"
+            exit 0
           fi
 
           echo "pin_type=$PIN_TYPE" >> "$GITHUB_OUTPUT"
@@ -216,6 +225,10 @@ jobs:
             if [[ ! "$UNTIL" =~ ^v ]]; then
               UNTIL="v${UNTIL}"
             fi
+            if [[ ! "$UNTIL" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+              echo "error=invalid_until" >> "$GITHUB_OUTPUT"
+              exit 0
+            fi
             echo "until=$UNTIL" >> "$GITHUB_OUTPUT"
             echo "Until version specified: $UNTIL"
           fi
@@ -262,6 +275,11 @@ jobs:
             } else if (error === 'missing_component_or_app') {
               message += 'Missing `--component` or `--app` parameter.\n\n';
               message += 'Example: `/pin-version --component flatcar@4152.2.3`';
+            } else if (error === 'invalid_pin_spec') {
+              message += 'Invalid `--component` or `--app` value. Expected `name@version`.\n\n';
+              message += 'Example: `/pin-version --component flatcar@4152.2.3`';
+            } else if (error === 'invalid_until') {
+              message += 'Invalid `--until` value. Expected a release version like `v31.0.0`.';
             } else if (error === 'both_component_and_app') {
               message += 'Cannot specify both `--component` and `--app`. Please use one.\n\n';
               message += 'Example: `/pin-version --component flatcar@4152.2.3`';
@@ -377,9 +395,10 @@ jobs:
 
           # Format output
           FULL_LOG_CONTENT=$(printf '%b' "${FULL_LOG_CONTENT}")
-          echo "DEVCTL_OUTPUT_COMMENT<<EOF" >> "$GITHUB_ENV"
+          DELIM="EOF_$(openssl rand -hex 16)"
+          echo "DEVCTL_OUTPUT_COMMENT<<$DELIM" >> "$GITHUB_ENV"
           echo "$FULL_LOG_CONTENT" >> "$GITHUB_ENV"
-          echo "EOF" >> "$GITHUB_ENV"
+          echo "$DELIM" >> "$GITHUB_ENV"
 
       - name: Update requests.yaml with pin constraint
         id: update_requests
@@ -447,9 +466,10 @@ jobs:
 
           # Format output
           REQUESTS_LOG=$(printf '%b' "${REQUESTS_LOG}")
-          echo "REQUESTS_OUTPUT_COMMENT<<EOF" >> "$GITHUB_ENV"
+          DELIM="EOF_$(openssl rand -hex 16)"
+          echo "REQUESTS_OUTPUT_COMMENT<<$DELIM" >> "$GITHUB_ENV"
           echo "$REQUESTS_LOG" >> "$GITHUB_ENV"
-          echo "EOF" >> "$GITHUB_ENV"
+          echo "$DELIM" >> "$GITHUB_ENV"
 
       - name: Commit and push changes
         if: success() && !steps.parse_command.outputs.error
