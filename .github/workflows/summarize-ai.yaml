@@ -50,6 +50,9 @@ jobs:
               repo: context.repo.repo,
               pull_number: ${{ github.event.issue.number }}
             });
+            if (pr.data.head.repo?.full_name !== `${context.repo.owner}/${context.repo.repo}`) {
+              throw new Error('Pull requests from forks are not supported.');
+            }
             return pr.data.head.ref;
 
       - name: Checkout PR branch

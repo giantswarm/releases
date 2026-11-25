@@ -13,6 +13,7 @@ to all Giant Swarm installations.
 
 - v36
   - v36.2
+    - [v36.2.1](https://github.com/giantswarm/releases/tree/master/capa/v36.2.1)
     - [v36.2.0](https://github.com/giantswarm/releases/tree/master/capa/v36.2.0)
   - v36.1
     - [v36.1.1](https://github.com/giantswarm/releases/tree/master/capa/v36.1.1)
@@ -44,7 +45,7 @@ to all Giant Swarm installations.
     - [v34.5.0](https://github.com/giantswarm/releases/tree/master/capa/v34.5.0)
   - v34.4
     - [v34.4.1](https://github.com/giantswarm/releases/tree/master/capa/v34.4.1)
-    - [v34.4.0](https://github.com/giantswarm/releases/tree/master/capa/v34.4.0)
+    - [v34.4.0](https://github.com/giantswarm/releases/tree/master/capa/archived/v34.4.0)
   - v34.3
     - [v34.3.0](https://github.com/giantswarm/releases/tree/master/capa/archived/v34.3.0)
   - v34.2
@@ -212,6 +213,7 @@ to all Giant Swarm installations.
 
 - v36
   - v36.2
+    - [v36.2.1](https://github.com/giantswarm/releases/tree/master/azure/v36.2.1)
     - [v36.2.0](https://github.com/giantswarm/releases/tree/master/azure/v36.2.0)
   - v36.1
     - [v36.1.1](https://github.com/giantswarm/releases/tree/master/azure/v36.1.1)
@@ -434,6 +436,7 @@ to all Giant Swarm installations.
 
 - v36
   - v36.2
+    - [v36.2.1](https://github.com/giantswarm/releases/tree/master/vsphere/v36.2.1)
     - [v36.2.0](https://github.com/giantswarm/releases/tree/master/vsphere/v36.2.0)
   - v36.1
     - [v36.1.1](https://github.com/giantswarm/releases/tree/master/vsphere/v36.1.1)
@@ -525,6 +528,7 @@ to all Giant Swarm installations.
 
 - v36
   - v36.2
+    - [v36.2.1](https://github.com/giantswarm/releases/tree/master/cloud-director/v36.2.1)
     - [v36.2.0](https://github.com/giantswarm/releases/tree/master/cloud-director/v36.2.0)
   - v36.1
     - [v36.1.1](https://github.com/giantswarm/releases/tree/master/cloud-director/v36.1.1)
@@ -623,6 +627,7 @@ to all Giant Swarm installations.
 
 - v36
   - v36.1
+    - [v36.1.1](https://github.com/giantswarm/releases/tree/master/eks/v36.1.1)
     - [v36.1.0](https://github.com/giantswarm/releases/tree/master/eks/v36.1.0)
 
 - v34
@@ -646,6 +651,7 @@ to all Giant Swarm installations.
 
 - v36
   - v36.2
+    - [v36.2.1](https://github.com/giantswarm/releases/tree/master/aks/v36.2.1)
     - [v36.2.0](https://github.com/giantswarm/releases/tree/master/aks/v36.2.0)
   - v36.1
     - [v36.1.0](https://github.com/giantswarm/releases/tree/master/aks/v36.1.0)

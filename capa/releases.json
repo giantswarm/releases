@@ -1,13 +1,6 @@
 {
   "releases": [
     {
-      "version": "34.4.0",
-      "isDeprecated": false,
-      "releaseTimestamp": "2026-06-02T16:36:59Z",
-      "changelogUrl": "https://github.com/giantswarm/releases/blob/master/capa/v34.4.0/README.md",
-      "isStable": true
-    },
-    {
       "version": "34.4.1",
       "isDeprecated": false,
       "releaseTimestamp": "2026-07-14T14:12:08Z",
@@ -114,7 +107,7 @@
     },
     {
       "version": "36.1.1",
-      "isDeprecated": false,
+      "isDeprecated": true,
       "releaseTimestamp": "2026-10-25T16:28:48Z",
       "changelogUrl": "https://github.com/giantswarm/releases/blob/master/capa/v36.1.1/README.md",
       "isStable": true
@@ -124,6 +117,13 @@
       "isDeprecated": false,
       "releaseTimestamp": "2026-10-27T15:44:39Z",
       "changelogUrl": "https://github.com/giantswarm/releases/blob/master/capa/v36.2.0/README.md",
+      "isStable": true
+    },
+    {
+      "version": "36.2.1",
+      "isDeprecated": false,
+      "releaseTimestamp": "2026-11-24T15:57:40Z",
+      "changelogUrl": "https://github.com/giantswarm/releases/blob/master/capa/v36.2.1/README.md",
       "isStable": true
     }
   ],
