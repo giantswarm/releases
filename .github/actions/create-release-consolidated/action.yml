@@ -90,7 +90,7 @@ runs:
 
           if [[ -n "$NOT_OFFERED" ]]; then
             echo "Leaving $provider out of ${{ inputs.version }}: $NOT_OFFERED"
-            EXCLUDED_NOTES="${EXCLUDED_NOTES}ℹ️ **${PROVIDER_UPPER}** is not part of this release: ${NOT_OFFERED}."$'\n\n'
+            EXCLUDED_NOTES="${EXCLUDED_NOTES}> - **${PROVIDER_UPPER}**: ${NOT_OFFERED}"$'\n'
             continue
           fi
           INCLUDED_PROVIDERS="${INCLUDED_PROVIDERS:+$INCLUDED_PROVIDERS }$provider"
@@ -128,9 +128,18 @@ runs:
           echo "No provider offers the Kubernetes version of ${{ inputs.version }}. Aborting."
           exit 1
         fi
-        if [[ -n "$EXCLUDED_NOTES" ]]; then
-          printf '\n%s' "$EXCLUDED_NOTES" >> $LOG_FILE
-        fi
+        # Note for the top of the PR body, empty when no provider was left out.
+        {
+          echo "EXCLUDED_PROVIDERS_NOTE<<EOF"
+          if [[ -n "$EXCLUDED_NOTES" ]]; then
+            echo "> [!WARNING]"
+            echo "> **Not part of this release yet**, as the provider does not offer its Kubernetes version:"
+            printf '%s' "$EXCLUDED_NOTES"
+            echo ">"
+            echo "> Once it does, create the provider's release with a manual run of the [Create Release PR](${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/workflows/create-release.yaml) workflow for version \`${{ inputs.version }}\` and that provider."
+          fi
+          echo "EOF"
+        } >> "$GITHUB_ENV"
         echo "included_providers=$INCLUDED_PROVIDERS" >> "$GITHUB_OUTPUT"
 
         # Output log content to env (for use in PR body)

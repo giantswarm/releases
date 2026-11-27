@@ -578,6 +578,8 @@ jobs:
           body: |
             This PR creates the new CAPI **major release** `${{ steps.determine_next_release.outputs.version }}` for **all providers** (consolidated).
 
+            ${{ env.EXCLUDED_PROVIDERS_NOTE }}
+
             ${{ steps.planned_merge_date.outputs.section }}
 
             Major releases include new Kubernetes versions, significant platform upgrades, and breaking changes across all CAPI providers.
@@ -763,6 +765,8 @@ jobs:
           title: "CAPI: Release ${{ steps.determine_next_release.outputs.version }}."
           body: |
             This PR creates the new CAPI **minor release** `${{ steps.determine_next_release.outputs.version }}` for **all providers** (consolidated).
+
+            ${{ env.EXCLUDED_PROVIDERS_NOTE }}
 
             ${{ steps.planned_merge_date.outputs.section }}
 
@@ -1403,6 +1407,8 @@ jobs:
           title: "CAPI: Release ${{ steps.determine_next_release.outputs.version }}."
           body: |
             This PR creates the new CAPI **patch release** `${{ steps.determine_next_release.outputs.version }}` for **all providers** (consolidated).
+
+            ${{ env.EXCLUDED_PROVIDERS_NOTE }}
 
             Patch releases contain targeted fixes for specific security issues, critical bugs, or component updates.
 
