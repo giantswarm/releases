@@ -172,6 +172,8 @@ Uses `tools/filter-providers-for-release.sh` to:
 - Exclude providers that already have the target version
 - Skip providers where release would be redundant
 
+For consolidated releases, a provider is also left out when `devctl` reports `Kubernetes version not offered`: AKS and EKS add a new Kubernetes minor later than upstream. The PR body names the provider and the reason. Create its release later with a manual run for that provider and version.
+
 #### 4. Create Release Files
 Executes `devctl release create` with:
 - `--base`: Previous version to compare against

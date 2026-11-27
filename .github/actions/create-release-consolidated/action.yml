@@ -27,6 +27,9 @@ outputs:
   provider_labels:
     description: 'Provider labels (newline-separated)'
     value: ${{ steps.create.outputs.provider_labels }}
+  included_providers:
+    description: 'Space-separated list of the providers a release was created for'
+    value: ${{ steps.create.outputs.included_providers }}
 runs:
   using: "composite"
   steps:
@@ -43,6 +46,8 @@ runs:
         LOG_FILE="/tmp/release_output.log"
         touch $LOG_FILE
         first_provider=true
+        INCLUDED_PROVIDERS=""
+        EXCLUDED_NOTES=""
         
         for provider in ${{ inputs.providers }}; do
           echo "--- Creating release for $provider ---"
@@ -58,6 +63,7 @@ runs:
           touch "$PROVIDER_LOG"
 
           # Retry logic (up to 3 attempts)
+          NOT_OFFERED=""
           n=0
           until [ "$n" -ge 3 ]
           do
@@ -66,6 +72,13 @@ runs:
               --name "${{ inputs.version }}" \
               --provider "$provider" \
               --bumpall --overwrite -y --output markdown --changes-only 2>&1 | tee "$PROVIDER_LOG" && break
+            # AKS and EKS add a new Kubernetes minor later than upstream. devctl fails with
+            # this error before it writes any file, so the provider is left out of this
+            # release instead of failing it for all providers.
+            if grep -q 'Kubernetes version not offered' "$PROVIDER_LOG"; then
+              NOT_OFFERED=$(grep -m1 'Kubernetes version not offered' "$PROVIDER_LOG" | sed 's/^Error: //')
+              break
+            fi
             n=$((n+1))
             if [ "$n" -ge 3 ]; then
                 echo "The command has failed 3 times in a row. Aborting."
@@ -74,6 +87,13 @@ runs:
             echo "Command failed. Retrying in 15 seconds..."
             sleep 15
           done
+
+          if [[ -n "$NOT_OFFERED" ]]; then
+            echo "Leaving $provider out of ${{ inputs.version }}: $NOT_OFFERED"
+            EXCLUDED_NOTES="${EXCLUDED_NOTES}ℹ️ **${PROVIDER_UPPER}** is not part of this release: ${NOT_OFFERED}."$'\n\n'
+            continue
+          fi
+          INCLUDED_PROVIDERS="${INCLUDED_PROVIDERS:+$INCLUDED_PROVIDERS }$provider"
 
           # Extract key component versions for the summary line
           K8S_LINE=$(grep -i '^| kubernetes ' "$PROVIDER_LOG" | head -1 || true)
@@ -104,6 +124,15 @@ runs:
           echo "</details>" >> $LOG_FILE
         done
 
+        if [[ -z "$INCLUDED_PROVIDERS" ]]; then
+          echo "No provider offers the Kubernetes version of ${{ inputs.version }}. Aborting."
+          exit 1
+        fi
+        if [[ -n "$EXCLUDED_NOTES" ]]; then
+          printf '\n%s' "$EXCLUDED_NOTES" >> $LOG_FILE
+        fi
+        echo "included_providers=$INCLUDED_PROVIDERS" >> "$GITHUB_OUTPUT"
+
         # Output log content to env (for use in PR body)
         LOG_CONTENT=$(cat /tmp/release_output.log)
         echo "LOG_CONTENT<<EOF" >> "$GITHUB_ENV"
@@ -111,7 +140,7 @@ runs:
         echo "EOF" >> "$GITHUB_ENV"
 
         # Output provider labels to step output (newline-separated)
-        PROVIDER_LABELS=$(echo "${{ inputs.providers }}" | tr ' ' '\n')
+        PROVIDER_LABELS=$(echo "$INCLUDED_PROVIDERS" | tr ' ' '\n')
         echo "PROVIDER_LABELS<<EOF" >> "$GITHUB_OUTPUT"
         echo "$PROVIDER_LABELS" >> "$GITHUB_OUTPUT"
         echo "EOF" >> "$GITHUB_OUTPUT"
