@@ -12,6 +12,8 @@ to all Giant Swarm installations.
 ## AWS
 
 - v36
+  - v36.3
+    - [v36.3.0](https://github.com/giantswarm/releases/tree/master/capa/v36.3.0)
   - v36.2
     - [v36.2.1](https://github.com/giantswarm/releases/tree/master/capa/v36.2.1)
     - [v36.2.0](https://github.com/giantswarm/releases/tree/master/capa/v36.2.0)
@@ -212,6 +214,8 @@ to all Giant Swarm installations.
 ## Azure
 
 - v36
+  - v36.3
+    - [v36.3.0](https://github.com/giantswarm/releases/tree/master/azure/v36.3.0)
   - v36.2
     - [v36.2.1](https://github.com/giantswarm/releases/tree/master/azure/v36.2.1)
     - [v36.2.0](https://github.com/giantswarm/releases/tree/master/azure/v36.2.0)
@@ -435,6 +439,8 @@ to all Giant Swarm installations.
 ## vSphere
 
 - v36
+  - v36.3
+    - [v36.3.0](https://github.com/giantswarm/releases/tree/master/vsphere/v36.3.0)
   - v36.2
     - [v36.2.1](https://github.com/giantswarm/releases/tree/master/vsphere/v36.2.1)
     - [v36.2.0](https://github.com/giantswarm/releases/tree/master/vsphere/v36.2.0)
@@ -527,6 +533,8 @@ to all Giant Swarm installations.
 ## VMware Cloud Director
 
 - v36
+  - v36.3
+    - [v36.3.0](https://github.com/giantswarm/releases/tree/master/cloud-director/v36.3.0)
   - v36.2
     - [v36.2.1](https://github.com/giantswarm/releases/tree/master/cloud-director/v36.2.1)
     - [v36.2.0](https://github.com/giantswarm/releases/tree/master/cloud-director/v36.2.0)
@@ -626,6 +634,8 @@ to all Giant Swarm installations.
 ## EKS
 
 - v36
+  - v36.3
+    - [v36.3.0](https://github.com/giantswarm/releases/tree/master/eks/v36.3.0)
   - v36.1
     - [v36.1.1](https://github.com/giantswarm/releases/tree/master/eks/v36.1.1)
     - [v36.1.0](https://github.com/giantswarm/releases/tree/master/eks/v36.1.0)
@@ -650,6 +660,8 @@ to all Giant Swarm installations.
 ## AKS
 
 - v36
+  - v36.3
+    - [v36.3.0](https://github.com/giantswarm/releases/tree/master/aks/v36.3.0)
   - v36.2
     - [v36.2.1](https://github.com/giantswarm/releases/tree/master/aks/v36.2.1)
     - [v36.2.0](https://github.com/giantswarm/releases/tree/master/aks/v36.2.0)
