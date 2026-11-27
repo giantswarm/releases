@@ -538,7 +538,7 @@ jobs:
         id: update_readme
         if: steps.check_pr.outputs.PR_EXISTS == 'false' && (needs.dispatcher.outputs.release_type != 'major' || steps.k8s_check.outputs.VERSION_EXISTS == 'true')
         run: |
-          for provider in ${{ steps.filter_providers.outputs.filtered_providers }}; do
+          for provider in ${{ steps.create_release.outputs.included_providers }}; do
             ./tools/update-readme.sh "$provider" "${{ steps.determine_next_release.outputs.version }}"
             echo "Successfully updated README.md with ${{ steps.determine_next_release.outputs.version }} for $provider"
           done
@@ -577,6 +577,8 @@ jobs:
           title: "CAPI: Release ${{ steps.determine_next_release.outputs.version }}."
           body: |
             This PR creates the new CAPI **major release** `${{ steps.determine_next_release.outputs.version }}` for **all providers** (consolidated).
+
+            ${{ env.EXCLUDED_PROVIDERS_NOTE }}
 
             ${{ steps.planned_merge_date.outputs.section }}
 
@@ -717,14 +719,14 @@ jobs:
         if: steps.check_pr.outputs.PR_EXISTS == 'false'
         uses: ./.github/actions/check-upgrade-path
         with:
-          providers: ${{ steps.filter_providers.outputs.filtered_providers }}
+          providers: ${{ steps.create_release.outputs.included_providers }}
           version: ${{ steps.determine_next_release.outputs.version }}
 
       - name: Update README.md
         id: update_readme
         if: steps.check_pr.outputs.PR_EXISTS == 'false'
         run: |
-          for provider in ${{ steps.filter_providers.outputs.filtered_providers }}; do
+          for provider in ${{ steps.create_release.outputs.included_providers }}; do
             ./tools/update-readme.sh "$provider" "${{ steps.determine_next_release.outputs.version }}"
             echo "Successfully updated README.md with ${{ steps.determine_next_release.outputs.version }} for $provider"
           done
@@ -763,6 +765,8 @@ jobs:
           title: "CAPI: Release ${{ steps.determine_next_release.outputs.version }}."
           body: |
             This PR creates the new CAPI **minor release** `${{ steps.determine_next_release.outputs.version }}` for **all providers** (consolidated).
+
+            ${{ env.EXCLUDED_PROVIDERS_NOTE }}
 
             ${{ steps.planned_merge_date.outputs.section }}
 
@@ -1379,7 +1383,7 @@ jobs:
         id: update_readme
         if: steps.check_pr.outputs.PR_EXISTS == 'false'
         run: |
-          for provider in ${{ steps.filter_providers.outputs.filtered_providers }}; do
+          for provider in ${{ steps.create_release.outputs.included_providers }}; do
             ./tools/update-readme.sh "$provider" "${{ steps.determine_next_release.outputs.version }}"
             echo "Successfully updated README.md with ${{ steps.determine_next_release.outputs.version }} for $provider"
           done
@@ -1403,6 +1407,8 @@ jobs:
           title: "CAPI: Release ${{ steps.determine_next_release.outputs.version }}."
           body: |
             This PR creates the new CAPI **patch release** `${{ steps.determine_next_release.outputs.version }}` for **all providers** (consolidated).
+
+            ${{ env.EXCLUDED_PROVIDERS_NOTE }}
 
             Patch releases contain targeted fixes for specific security issues, critical bugs, or component updates.
 
