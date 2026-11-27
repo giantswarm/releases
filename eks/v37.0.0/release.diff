@@ -1,7 +1,7 @@
 apiVersion: release.giantswarm.io/v1alpha1                         apiVersion: release.giantswarm.io/v1alpha1
 kind: Release                                                      kind: Release
 metadata:                                                          metadata:
-  name: eks-36.1.0                                              |    name: eks-37.0.0
+  name: eks-36.1.1                                              |    name: eks-37.0.0
 spec:                                                              spec:
   apps:                                                              apps:
   - name: aws-ebs-csi-driver                                         - name: aws-ebs-csi-driver
@@ -90,7 +90,7 @@ spec:                                                              spec:
     - prometheus-operator-crd                                          - prometheus-operator-crd
     - vertical-pod-autoscaler-crd                                      - vertical-pod-autoscaler-crd
   - name: observability-bundle                                       - name: observability-bundle
-    version: 3.6.0                                              |      version: 3.8.1
+    version: 3.6.2                                              |      version: 3.8.1
   - name: observability-policies                                     - name: observability-policies
     version: 0.0.4                                                     version: 0.0.4
     dependsOn:                                                         dependsOn:
@@ -124,10 +124,10 @@ spec:                                                              spec:
   - name: containerd                                                 - name: containerd
     version: 2.3.2                                                     version: 2.3.2
   - name: flatcar                                                    - name: flatcar
-    version: 4757.2.2                                           |      version: 4757.2.3
+    version: 4757.2.2                                           |      version: 4757.2.4
   - name: kubernetes                                                 - name: kubernetes
-    version: 1.36.6                                             |      version: 1.37.2
+    version: 1.36.6                                             |      version: 1.37.3
   - name: os-tooling                                                 - name: os-tooling
-    version: 1.36.0                                                    version: 1.36.0
-  date: "2026-10-28T10:40:41Z"                                  |    date: "2026-11-24T16:24:24Z"
+    version: 1.36.0                                             |      version: 1.39.0
+  date: "2026-11-24T15:57:46Z"                                  |    date: "2026-11-27T14:06:15Z"
   state: active                                                      state: active
