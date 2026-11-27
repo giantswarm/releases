@@ -1,13 +1,14 @@
 # :zap: Giant Swarm Release v36.3.0 for Azure :zap:
 
-## Changes compared to v36.2.0
+## Changes compared to v36.2.1
 
 ### Components
 
 - cluster-azure from v10.5.0 to v10.7.0
 - cluster from v9.4.0 to v9.6.0
-- Flatcar from v4757.2.2 to [v4757.2.3](https://www.flatcar.org/releases/#release-4757.2.3)
-- Kubernetes from v1.36.5 to [v1.36.6](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.36.md#v1.36.6)
+- Flatcar from v4757.2.2 to [v4757.2.4](https://www.flatcar.org/releases/#release-4757.2.4)
+- Kubernetes from v1.36.5 to [v1.36.7](https://github.com/kubernetes/kubernetes/blob/master/CHANGELOG/CHANGELOG-1.36.md#v1.36.7)
+- os-tooling from v1.36.0 to v1.39.0
 
 ### cluster-azure [v10.5.0...v10.7.0](https://github.com/giantswarm/cluster-azure/compare/v10.5.0...v10.7.0)
 
@@ -46,7 +47,7 @@
 - net-exporter from v1.24.1 to v1.25.1
 - network-policies from v0.5.0 to v0.6.0
 - node-exporter from v1.21.0 to v1.21.1
-- observability-bundle from v3.6.0 to v3.8.1
+- observability-bundle from v3.6.2 to v3.8.1
 - prometheus-blackbox-exporter from v0.10.0 to v0.11.0
 - security-bundle from v2.4.0 to v2.5.0
 - teleport-kube-agent from v0.12.0 to v0.13.0
@@ -188,7 +189,7 @@
 
 - The `helm.sh/chart` label is valid for long chart versions: the 63-character cut trims the whole trailing run of `-`, `.` and `_`.
 
-### observability-bundle [v3.6.0...v3.8.1](https://github.com/giantswarm/observability-bundle/compare/v3.6.0...v3.8.1)
+### observability-bundle [v3.6.2...v3.8.1](https://github.com/giantswarm/observability-bundle/compare/v3.6.2...v3.8.1)
 
 #### Changed
 

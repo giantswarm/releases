@@ -124,10 +124,10 @@ spec:
   - name: containerd
     version: 2.3.2
   - name: flatcar
-    version: 4757.2.3
+    version: 4757.2.4
   - name: kubernetes
-    version: 1.36.6
+    version: 1.36.7
   - name: os-tooling
-    version: 1.36.0
-  date: "2026-11-25T05:49:48Z"
+    version: 1.39.0
+  date: "2026-11-27T13:19:41Z"
   state: active
