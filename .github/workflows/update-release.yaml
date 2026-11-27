@@ -376,6 +376,7 @@ jobs:
           FULL_LOG_CONTENT=""
           PROVIDERS_WITH_NO_CHANGES=""
           PROVIDERS_WITH_CHANGES=""
+          SKIPPED_LOG=""
 
           for PROVIDER in $PROVIDERS_TO_UPDATE; do
             PROVIDER_DIR=$PROVIDER
@@ -392,6 +393,23 @@ jobs:
             fi
 
             echo "Updating release '$RELEASE_NAME' for provider '$PROVIDER_DIR'"
+
+            # Without --provider, a requested component only applies to the providers that
+            # have it. devctl would otherwise add it to the release, e.g. flatcar to AKS.
+            if [[ -z "${{ steps.parse_command.outputs.provider }}" ]]; then
+              MISSING_COMPONENTS=""
+              for SPEC in $(echo "${{ steps.parse_command.outputs.devctl_args }}" | grep -oE '\-\-component[= ]+[^ ]+' | sed -E 's/--component[= ]+//' || true); do
+                NAME="${SPEC%%@*}"
+                if [[ -z "$(yq eval '.spec.components[] | select(.name == "'"$NAME"'") | .name' "${PROVIDER_DIR}/${RELEASE_NAME}/release.yaml")" ]]; then
+                  MISSING_COMPONENTS="${MISSING_COMPONENTS:+$MISSING_COMPONENTS, }\`$NAME\`"
+                fi
+              done
+              if [[ -n "$MISSING_COMPONENTS" ]]; then
+                echo "Release '$RELEASE_NAME' for provider '$PROVIDER_DIR' has no component $MISSING_COMPONENTS. Skipping."
+                SKIPPED_LOG="${SKIPPED_LOG}ℹ️ Skipped ${PROVIDER_DIR^^}: its release has no component ${MISSING_COMPONENTS}. Use \`--provider\` to update it anyway.\n\n"
+                continue
+              fi
+            fi
 
             # 3. Read current release versions to preserve pinned components/apps
             CURRENT_RELEASE_FILE="${PROVIDER_DIR}/${RELEASE_NAME}/release.yaml"
@@ -717,6 +735,8 @@ jobs:
               FULL_LOG_CONTENT="ℹ️ No version changes detected for any provider.\n\n"
             fi
           fi
+
+          FULL_LOG_CONTENT="${FULL_LOG_CONTENT}${SKIPPED_LOG}"
 
           # Replace literal '\n' with actual newlines for proper rendering in the GitHub comment.
           FULL_LOG_CONTENT=$(printf '%b' "${FULL_LOG_CONTENT}")
