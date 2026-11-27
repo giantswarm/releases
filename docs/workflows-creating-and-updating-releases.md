@@ -172,6 +172,8 @@ Uses `tools/filter-providers-for-release.sh` to:
 - Exclude providers that already have the target version
 - Skip providers where release would be redundant
 
+For consolidated releases, a provider is also left out when `devctl` reports `Kubernetes version not offered`: AKS and EKS add a new Kubernetes minor later than upstream. A warning at the top of the PR body names the provider and the reason. Create its release later with a manual run for that provider and version.
+
 #### 4. Create Release Files
 Executes `devctl release create` with:
 - `--base`: Previous version to compare against
@@ -332,6 +334,7 @@ Skips for patch-only upgrades (no minor version change) since those rarely conta
 #### 3. Parse Command
 - Extracts provider from `--provider` flag OR
 - Auto-detects from PR's changed files (looks for azure/, capa/, vsphere/, etc.)
+- Without `--provider`, a provider is skipped when its release lacks one of the requested `--component`s (e.g. AKS has no `flatcar`); the reply comment lists the skipped providers. Pass `--provider` to add a component to a release
 - Parses devctl arguments
 - Decodes descriptions (handles special characters via base64)
 
