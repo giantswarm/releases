@@ -76,6 +76,13 @@
       "releaseTimestamp": "2026-11-24T15:58:05Z",
       "changelogUrl": "https://github.com/giantswarm/releases/blob/master/vsphere/v36.2.1/README.md",
       "isStable": true
+    },
+    {
+      "version": "37.0.0",
+      "isDeprecated": false,
+      "releaseTimestamp": "2026-11-27T14:06:16Z",
+      "changelogUrl": "https://github.com/giantswarm/releases/blob/master/vsphere/v37.0.0/README.md",
+      "isStable": true
     }
   ],
   "sourceUrl": "https://github.com/giantswarm/releases",

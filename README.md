@@ -11,6 +11,10 @@ to all Giant Swarm installations.
 
 ## AWS
 
+- v37
+  - v37.0
+    - [v37.0.0](https://github.com/giantswarm/releases/tree/master/capa/v37.0.0)
+
 - v36
   - v36.2
     - [v36.2.1](https://github.com/giantswarm/releases/tree/master/capa/v36.2.1)
@@ -210,6 +214,10 @@ to all Giant Swarm installations.
     - [v25.0.0](https://github.com/giantswarm/releases/tree/master/capa/archived/v25.0.0)
 
 ## Azure
+
+- v37
+  - v37.0
+    - [v37.0.0](https://github.com/giantswarm/releases/tree/master/azure/v37.0.0)
 
 - v36
   - v36.2
@@ -434,6 +442,10 @@ to all Giant Swarm installations.
 
 ## vSphere
 
+- v37
+  - v37.0
+    - [v37.0.0](https://github.com/giantswarm/releases/tree/master/vsphere/v37.0.0)
+
 - v36
   - v36.2
     - [v36.2.1](https://github.com/giantswarm/releases/tree/master/vsphere/v36.2.1)
@@ -525,6 +537,10 @@ to all Giant Swarm installations.
     - [v27.0.0](https://github.com/giantswarm/releases/tree/master/vsphere/archived/v27.0.0)
 
 ## VMware Cloud Director
+
+- v37
+  - v37.0
+    - [v37.0.0](https://github.com/giantswarm/releases/tree/master/cloud-director/v37.0.0)
 
 - v36
   - v36.2
@@ -625,6 +641,10 @@ to all Giant Swarm installations.
 
 ## EKS
 
+- v37
+  - v37.0
+    - [v37.0.0](https://github.com/giantswarm/releases/tree/master/eks/v37.0.0)
+
 - v36
   - v36.1
     - [v36.1.1](https://github.com/giantswarm/releases/tree/master/eks/v36.1.1)
@@ -648,6 +668,10 @@ to all Giant Swarm installations.
 ## Proxmox
 
 ## AKS
+
+- v37
+  - v37.0
+    - [v37.0.0](https://github.com/giantswarm/releases/tree/master/aks/v37.0.0)
 
 - v36
   - v36.2
