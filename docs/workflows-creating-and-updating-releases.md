@@ -334,6 +334,7 @@ Skips for patch-only upgrades (no minor version change) since those rarely conta
 #### 3. Parse Command
 - Extracts provider from `--provider` flag OR
 - Auto-detects from PR's changed files (looks for azure/, capa/, vsphere/, etc.)
+- Without `--provider`, a provider is skipped when its release lacks one of the requested `--component`s (e.g. AKS has no `flatcar`); the reply comment lists the skipped providers. Pass `--provider` to add a component to a release
 - Parses devctl arguments
 - Decodes descriptions (handles special characters via base64)
 
