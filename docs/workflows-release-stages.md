@@ -33,11 +33,17 @@ All other transitions are rejected with an error comment.
 
 ## Commands
 
-### `/stage active`
+### `/stage active [--skip-tests]`
 
 Moves the release from Development to Active.
 
-**What happens:**
+**E2E coverage gate:** every expected E2E test suite (the full matrix, including the variant suites) must have run once — and passed or been waived — before the release moves to Active, so all flavours are validated during Development. The gate evaluates the same coverage as the `E2E Coverage` check (`.github/scripts/e2e-coverage.js`, run in evaluate-only mode).
+
+If coverage is incomplete, the transition is **blocked**: the labels stay as they are, suites that have not run yet are triggered automatically (`/run releases-test-suites TARGET_SUITES=...`), and a comment lists what is outstanding (triggered / in progress / failed). Re-run `/stage active` once the `E2E Coverage` check is green.
+
+Pass `--skip-tests` to bypass the gate — for example when a suite failed, the issue was fixed and the suites were already re-run manually. The flag is only valid with `/stage active`. Note that the `E2E Coverage` merge gate still applies regardless.
+
+**What happens on a successful transition:**
 - `stage/development` label is removed, `stage/active` is added
 - Team reviewers are requested: `team-rocket`, `team-phoenix`, `team-shield`, `team-atlas`
 - Slack notification is sent (consolidated releases only)
